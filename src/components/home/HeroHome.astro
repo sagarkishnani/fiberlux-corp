@@ -1,0 +1,15 @@
+---
+import HeroHomeReact from './HeroHomeReact';
+import { client } from '../../../tina/__generated__/client';
+
+const { data, query, variables } = await client.queries.home({
+  relativePath: 'index.json',
+});
+---
+
+<HeroHomeReact
+  client:load
+  query={query}
+  variables={variables}
+  data={data}
+/>

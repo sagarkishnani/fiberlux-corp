@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { client } from '../../../tina/__generated__/client';
+import BlogDetailReact from '../../components/blog/BlogDetailReact.tsx';
+
+/* ── Static paths from all blog posts ── */
+export async function getStaticPaths() {
+  let paths: { params: { slug: string } }[] = [];
+  try {
+    const postsQuery = await client.queries.postConnection({ last: 100 });
+    const edges = postsQuery.data?.postConnection?.edges || [];
+    paths = edges
+      .filter((e: any) => e?.node)
+      .map((e: any) => ({
+        params: { slug: e!.node!._sys.filename },
+      }));
+  } catch {
+    paths = [];
+  }
+  return paths;
+}
+
+const { slug } = Astro.params;
+
+/* ── Fetch current post ── */
+const postQuery = await client.queries.post({
+  relativePath: `${slug}.mdx`,
+});
+
+const currentPost = postQuery.data?.post;
+
+/* ── Fetch related posts (same tags, excluding current) ── */
+let relatedPosts: any[] = [];
+try {
+  const allPostsQuery = await client.queries.postConnection({
+    sort: 'date',
+    last: 100,
+  });
+  const edges = allPostsQuery.data?.postConnection?.edges || [];
+  const currentTags = (currentPost?.tags || []).filter(Boolean);
+
+  // Score posts by tag overlap, exclude current
+  const scored = edges
+    .filter((e: any) => e?.node && e.node._sys.filename !== slug)
+    .map((e: any) => {
+      const postTags = (e.node.tags || []).filter(Boolean);
+      const overlap = postTags.filter((t: string) =>
+        currentTags.includes(t)
+      ).length;
+      return { post: e.node, score: overlap };
+    })
+    .sort((a: any, b: any) => b.score - a.score)
+    .slice(0, 3);
+
+  relatedPosts = scored.map((s: any) => s.post);
+} catch {
+  relatedPosts = [];
+}
+
+const pageTitle = currentPost?.title || 'Blog';
+const pageDescription =
+  currentPost?.excerpt || 'Lee nuestro artículo sobre tecnología y conectividad empresarial';
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <BlogDetailReact
+    client:load
+    query={postQuery.query}
+    variables={postQuery.variables}
+    data={postQuery.data}
+    relatedPosts={relatedPosts}
+  />
+</BaseLayout>

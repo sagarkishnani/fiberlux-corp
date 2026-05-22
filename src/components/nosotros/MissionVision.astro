@@ -1,0 +1,13 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import MissionVisionReact from './MissionVisionReact.tsx';
+
+const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
+---
+
+<MissionVisionReact
+  client:tina
+  query={aboutQuery.query}
+  variables={aboutQuery.variables}
+  data={aboutQuery.data}
+/>

@@ -1,0 +1,39 @@
+---
+// src/pages/nosotros.astro
+import { client } from '../../../tina/__generated__/client';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MissionVisionReact from '../../components/nosotros/MissionVisionReact.tsx';
+import ValuesReact from '../../components/nosotros/ValuesReact.tsx';
+import HeroNosotrosReact from '../../components/nosotros/HeroNosotrosReact';
+import StatsReact from '../../components/StatsReact';
+
+const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
+const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+---
+
+<BaseLayout title="Nosotros">
+  <HeroNosotrosReact
+  client:load
+  query={aboutQuery.query}
+  variables={aboutQuery.variables}
+  data={aboutQuery.data}
+/>
+  <MissionVisionReact
+    client:load
+    query={aboutQuery.query}
+    variables={aboutQuery.variables}
+    data={aboutQuery.data}
+  />
+  <ValuesReact
+    client:load
+    query={aboutQuery.query}
+    variables={aboutQuery.variables}
+    data={aboutQuery.data}
+  />
+  <StatsReact
+    client:visible
+    query={homeQuery.query}
+    variables={homeQuery.variables}
+    data={homeQuery.data}
+  />
+</BaseLayout>

@@ -1,0 +1,139 @@
+{
+  "hero": {
+    "title": "Soluciones de conectividad y TI para tu empresa",
+    "subtitle": "Impulsamos tu empresa con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
+    "splineSceneUrl": "https://prod.spline.design/iW-vRQIrk1KnbLok/scene.splinecode",
+    "buttons": [
+      {
+        "text": "Ver servicios",
+        "url": "/servicios",
+        "variant": "primary"
+      },
+      {
+        "text": "Conoce más",
+        "url": "/nosotros",
+        "variant": "secondary"
+      }
+    ]
+  },
+  "services": {
+    "title": "Servicios de conectividad empresarial",
+    "items": [
+      {
+        "number": "01",
+        "title": "Seguridad",
+        "description": "Protección integral contra amenazas digitales, infraestructura y datos.",
+        "bullets": [
+          "Ciberseguridad Endpoints",
+          "Ciberseguridad Perímetro",
+          "Video Vigilancia"
+        ],
+        "url": "/servicios/ciberseguridad-endpoints"
+      },
+      {
+        "number": "02",
+        "title": "Conectividad",
+        "description": "Redes rápidas, estables y de alta capacidad.",
+        "bullets": [
+          "Internet Dedicado",
+          "Fibra Oscura",
+          "Wi-Fi Gestionado",
+          "Transmisión de Datos"
+        ],
+        "url": "/servicios/internet-dedicado"
+      },
+      {
+        "number": "03",
+        "title": "Infraestructura Cloud",
+        "description": "Infraestructura cloud digital. Redes y servidores.",
+        "bullets": [
+          "Hosting",
+          "Housing",
+          "SaaS",
+          "Continuidad de negocio"
+        ],
+        "url": "/servicios/saas"
+      },
+      {
+        "number": "04",
+        "title": "Comunicaciones",
+        "description": "Soluciones para una comunicación empresarial integrada.",
+        "bullets": [
+          "Telefonía IP"
+        ],
+        "url": "/servicios/telefonia-ip"
+      },
+      {
+        "number": "05",
+        "title": "Continuidad de negocio",
+        "description": "Respaldamos la continuidad de tus operaciones ante cualquier contingencia.",
+        "bullets": [
+          "Continuidad de negocio"
+        ],
+        "url": "/servicios/continuidad-de-negocio"
+      }
+    ]
+  },
+  "testimonials": {
+    "sectionTitle": "Empresas que confían en nuestra red",
+    "items": [
+      {
+        "quote": "La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir mas sedes a nivel nacional.",
+        "description": "Este año hemos aperturado locales en provincia como Arequipa, Huancayo, Barranca y hemos contado con el servicio de Fiberlux. En el 2022 llegamos a sumar 36 sedes adicionales. Actualmente contamos con 115 sedes.",
+        "name": "Bernardo Olivar",
+        "role": "Jefe de tecnología",
+        "company": "Boticas Hogar y Salud",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
+        "logo": ""
+      },
+      {
+        "quote": "Gracias a Fiberlux, nuestra operación logística no se detiene nunca.",
+        "description": "Desde que migramos a la red de Fiberlux, hemos reducido los tiempos de caída en un 98%. Nuestros almacenes en Lima, Trujillo y Arequipa operan con una conectividad estable las 24 horas.",
+        "name": "Carolina Méndez",
+        "role": "Gerente de Operaciones",
+        "company": "LogiExpress Perú",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face",
+        "logo": ""
+      },
+      {
+        "quote": "La migración a fibra óptica con Fiberlux transformó nuestra atención al cliente.",
+        "description": "Antes teníamos constantes interrupciones en nuestro call center. Con la red dedicada de Fiberlux, ahora atendemos más de 5,000 llamadas diarias sin problemas de latencia ni cortes.",
+        "name": "Ricardo Fuentes",
+        "role": "Director de TI",
+        "company": "Seguros del Pacífico",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
+        "logo": ""
+      }
+    ]
+  },
+  "stats": {
+    "title": "Nuestra red en cifras",
+    "items": [
+      {
+        "number": "+5,500",
+        "label": "Clientes satisfechos",
+        "description": "Empresas que confían en nuestra red en todo el Perú"
+      },
+      {
+        "number": "+14,000 km",
+        "label": "Fibra óptica",
+        "description": "Infraestructura de fibra óptica desplegada"
+      },
+      {
+        "number": "92",
+        "label": "Presencia nacional",
+        "description": "Presentes en 92 ciudades en todo el Perú"
+      },
+      {
+        "number": "100%",
+        "label": "Red propia",
+        "description": "Red privada de fibra óptica de última generación"
+      }
+    ]
+  },
+  "blogPreview": {
+    "title": "Insights & Novedades",
+    "buttonText": "Ver todos",
+    "buttonUrl": "/blog"
+  }
+}

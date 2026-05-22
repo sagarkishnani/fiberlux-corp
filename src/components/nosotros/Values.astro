@@ -1,0 +1,13 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import ValuesReact from './ValuesReact.tsx';
+
+const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
+---
+
+<ValuesReact
+  client:visible
+  query={aboutQuery.query}
+  variables={aboutQuery.variables}
+  data={aboutQuery.data}
+/>

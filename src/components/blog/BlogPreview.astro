@@ -1,0 +1,29 @@
+---
+/**
+ * BlogPreview wrapper — fetches home data + blog posts from TinaCMS
+ * Uses client:visible for carousel JS interaction
+ */
+import { client } from '../../../tina/__generated__/client';
+import BlogPreviewReact from './BlogPreviewReact.tsx';
+
+const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+
+let posts: any[] = [];
+try {
+  const postsQuery = await client.queries.postConnection({
+    first: 6,
+    sort: 'date',
+  });
+  posts = postsQuery.data?.postConnection?.edges || [];
+} catch {
+  posts = [];
+}
+---
+
+<BlogPreviewReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+  posts={posts}
+/>

@@ -1,0 +1,245 @@
+fragment HomeParts on Home {
+  __typename
+  hero {
+    __typename
+    title
+    subtitle
+    splineSceneUrl
+    buttons {
+      __typename
+      text
+      url
+      variant
+    }
+  }
+  services {
+    __typename
+    title
+    items {
+      __typename
+      number
+      title
+      description
+      icon
+      bullets
+      url
+    }
+  }
+  testimonials {
+    __typename
+    sectionTitle
+    items {
+      __typename
+      quote
+      description
+      name
+      role
+      company
+      avatar
+      logo
+    }
+  }
+  stats {
+    __typename
+    title
+    items {
+      __typename
+      number
+      label
+      description
+    }
+  }
+  blogPreview {
+    __typename
+    title
+    buttonText
+    buttonUrl
+  }
+}
+
+fragment ServiceParts on Service {
+  __typename
+  title
+  slug
+  heroSubtitle
+  features {
+    __typename
+    sectionTitle
+    sectionSubtitle
+    items {
+      __typename
+      icon
+      title
+      description
+    }
+  }
+  expandableServices {
+    __typename
+    sectionTitle
+    items {
+      __typename
+      icon
+      title
+      description
+    }
+  }
+  whyUs {
+    __typename
+    title
+    subtitle
+    cards {
+      __typename
+      icon
+      title
+      description
+    }
+  }
+  stats {
+    __typename
+    number
+    label
+  }
+  checklist {
+    __typename
+    title
+    items
+  }
+  experts {
+    __typename
+    title
+    steps {
+      __typename
+      number
+      title
+      description
+    }
+  }
+  contactForm {
+    __typename
+    title
+    subtitle
+    buttonText
+  }
+}
+
+fragment AboutParts on About {
+  __typename
+  hero {
+    __typename
+    title
+    subtitle
+  }
+  missionVisionTitle
+  mission {
+    __typename
+    icon
+    title
+    text
+  }
+  vision {
+    __typename
+    icon
+    title
+    text
+  }
+  missionImage
+  values {
+    __typename
+    title
+    subtitle
+    items {
+      __typename
+      name
+    }
+  }
+  timeline {
+    __typename
+    title
+    startYear
+    endYear
+  }
+  stats {
+    __typename
+    title
+    items {
+      __typename
+      number
+      label
+      description
+    }
+  }
+  team {
+    __typename
+    title
+    members {
+      __typename
+      name
+      role
+      photo
+    }
+  }
+}
+
+fragment PostParts on Post {
+  __typename
+  title
+  excerpt
+  coverImage
+  date
+  readTime
+  tags
+  featured
+  body
+}
+
+fragment ContactParts on Contact {
+  __typename
+  title
+  subtitle
+  email
+  phone
+  address
+  buttonText
+}
+
+fragment GlobalParts on Global {
+  __typename
+  nav {
+    __typename
+    links {
+      __typename
+      text
+      url
+      children {
+        __typename
+        text
+        url
+      }
+    }
+  }
+  footer {
+    __typename
+    tagline
+    columns {
+      __typename
+      title
+      links {
+        __typename
+        text
+        url
+      }
+    }
+    social {
+      __typename
+      platform
+      url
+    }
+    logo
+  }
+  seo {
+    __typename
+    siteName
+    defaultDescription
+    ogImage
+  }
+}

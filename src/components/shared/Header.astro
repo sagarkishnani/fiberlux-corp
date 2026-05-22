@@ -1,0 +1,17 @@
+---
+/**
+ * Header wrapper — fetches global data from TinaCMS
+ * Uses client:load because it needs JS for menu, scroll behavior
+ */
+import { client } from '../../../tina/__generated__/client';
+import HeaderReact from './HeaderReact.tsx';
+
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+---
+
+<HeaderReact
+  client:load
+  query={globalQuery.query}
+  variables={globalQuery.variables}
+  data={globalQuery.data}
+/>

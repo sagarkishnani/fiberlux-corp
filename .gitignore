@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+.tina/__generated__/
+.env
+.DS_Store
+.env.example

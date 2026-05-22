@@ -1,0 +1,56 @@
+---
+/**
+ * /blog — Blog listing page
+ *
+ * Hero: BlogHero with ellipse glow, breadcrumb, title, carousel of featured posts
+ * Body: BlogGrid with tag filters, 3-col grid, numeric pagination
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { client } from '../../../tina/__generated__/client';
+import BlogHero from '../../components/blog/BlogHero.tsx';
+import BlogGrid from '../../components/blog/BlogGrid.tsx';
+
+/* ── Fetch ALL blog posts ── */
+let allPosts: any[] = [];
+let featuredPosts: any[] = [];
+try {
+  const postsQuery = await client.queries.postConnection({
+    sort: 'date',
+    last: 100,
+  });
+  const edges = postsQuery.data?.postConnection?.edges || [];
+  allPosts = edges;
+  featuredPosts = edges.filter((e: any) => e?.node?.featured);
+  // If no featured, use latest 6
+  if (featuredPosts.length === 0) {
+    featuredPosts = edges.slice(0, 6);
+  }
+} catch {
+  allPosts = [];
+  featuredPosts = [];
+}
+
+/* ── Extract all unique tags from posts ── */
+const tagSet = new Set<string>();
+allPosts.forEach((edge: any) => {
+  edge?.node?.tags?.forEach((tag: string | null) => {
+    if (tag) tagSet.add(tag);
+  });
+});
+const availableTags = Array.from(tagSet).sort();
+---
+
+<BaseLayout title="Blog" description="Insights, novedades y tendencias en conectividad y tecnología empresarial">
+  {/* Hero with carousel */}
+  <BlogHero
+    client:load
+    posts={featuredPosts}
+  />
+
+  {/* Grid with filters + pagination */}
+  <BlogGrid
+    client:load
+    posts={allPosts}
+    availableTags={availableTags}
+  />
+</BaseLayout>

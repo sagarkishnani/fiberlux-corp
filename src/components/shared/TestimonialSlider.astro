@@ -1,0 +1,13 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import TestimonialSliderReact from './TestimonialSliderReact.tsx';
+
+const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+---
+
+<TestimonialSliderReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+/>

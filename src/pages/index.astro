@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroHome from "../components/home/HeroHome.astro";
+import Stats from "../components/Stats.astro";
+import BlogPreview from "../components/blog/BlogPreview.astro";
+import StickyCards from "../components/shared/StickyCards.astro";
+import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
+---
+
+<BaseLayout title="Inicio">
+  <main>
+    {/* -mt-16 hace que el hero se solape con el HeaderReact transparente */}
+    <div class="-mt-16">
+      <HeroHome />
+    </div>
+    <div class="-mt-16 relative z-10">
+      <StickyCards />
+    </div>
+    <div class="-mt-6 relative z-25">
+      <TestimonialSlider />
+    </div>
+    <div class="-mt-16 relative z-20">
+      <Stats />
+    </div>
+    <div class="-mt-6 relative z-30">
+      <BlogPreview />
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ── Accessibility control variables ── */
+  --a11y-font-scale: 1;
+  --a11y-spacing-scale: 1;
+  --a11y-letter-spacing: 0em;
+  --a11y-saturation: 1;
+  --a11y-contrast: 1;
+  --a11y-cursor: auto;
+  --a11y-img-visibility: visible;
+  --a11y-invert: 0;
+}
+
+@layer base {
+  /* ── Reset ── */
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: "Poppins", system-ui, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-greyscale-darkest text-greyscale-white;
+    font-size: calc(16px * var(--a11y-font-scale));
+    line-height: calc(24px * var(--a11y-font-scale));
+    letter-spacing: var(--a11y-letter-spacing);
+    filter: saturate(var(--a11y-saturation)) contrast(var(--a11y-contrast))
+      invert(var(--a11y-invert));
+    cursor: var(--a11y-cursor);
+  }
+
+  img,
+  video,
+  svg:not([role="img"]) {
+    visibility: var(--a11y-img-visibility);
+  }
+
+  /* ── Typography defaults ── */
+  h1 {
+    @apply text-heading-xl font-bold;
+  }
+  h2 {
+    @apply text-heading-md font-bold;
+  }
+  h3 {
+    @apply text-heading-sm font-bold;
+  }
+  h4 {
+    @apply text-heading-xs font-bold;
+  }
+  h5 {
+    @apply text-subtitle-md font-semibold;
+  }
+  h6 {
+    @apply text-subtitle-sm font-semibold;
+  }
+  p {
+    @apply text-body-md;
+  }
+
+  /* ── Links ── */
+  a {
+    @apply text-brand-purple-light transition-colors duration-200;
+  }
+  a:hover {
+    @apply text-brand-purple;
+  }
+
+  /* ── Selection ── */
+  ::selection {
+    @apply bg-brand-purple/30 text-greyscale-white;
+  }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           bg-brand-purple text-greyscale-white
+           px-8 py-3 rounded-lg
+           text-body-md font-semibold
+           transition-all duration-200
+           hover:bg-brand-purple-dark
+           active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center
+           border border-greyscale-white text-greyscale-white
+           px-8 py-3 rounded-lg
+           text-body-md font-semibold
+           transition-all duration-200
+           hover:bg-greyscale-white hover:text-greyscale-darkest
+           active:scale-[0.98];
+  }
+
+  /* ── Card base ── */
+  .card {
+    @apply bg-greyscale-dark/50 border border-greyscale-dark
+           rounded-xl p-6
+           transition-all duration-200;
+  }
+  .card:hover {
+    @apply border-brand-purple/50;
+  }
+
+  /* ── Magenta card (service features) ── */
+  .card-magenta {
+    @apply bg-brand-purple/10 border border-brand-purple/20
+           rounded-xl p-6;
+  }
+
+  /* ── Stats item ── */
+  .stat-item {
+    @apply text-center;
+  }
+  .stat-number {
+    @apply text-heading-md font-bold text-greyscale-white;
+  }
+  .stat-label {
+    @apply text-body-sm text-brand-gray;
+  }
+
+  /* ── Section spacing ── */
+  .section {
+    @apply py-20 px-4;
+  }
+  .section-dark {
+    @apply section bg-greyscale-darkest;
+  }
+  .section-magenta {
+    @apply section bg-brand-purple;
+  }
+  .section-white {
+    @apply section bg-greyscale-white text-greyscale-darkest;
+  }
+
+  /* ── Container ── */
+  .container-xl {
+    @apply max-w-[1440px] mx-auto px-16;
+  }
+  .container-lg {
+    @apply max-w-[1200px] mx-auto px-8;
+  }
+}
+
+@layer utilities {
+  .a11y-dyslexia body {
+    font-family: "OpenDyslexic", "Comic Sans MS", sans-serif;
+  }
+
+  /* ── Gradient backgrounds (for hero sections) ── */
+  .bg-gradient-hero {
+    background: radial-gradient(
+      ellipse at 20% 50%,
+      rgba(150, 35, 122, 0.25) 0%,
+      rgba(10, 10, 10, 1) 70%
+    );
+  }
+
+  .bg-gradient-magenta {
+    background: linear-gradient(135deg, #3b0e30 0%, #96237a 50%, #650f50 100%);
+  }
+
+  /* ── Text gradient ── */
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #d5a7ca, #96237a);
+  }
+}

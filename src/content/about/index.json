@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "La red que impulsa a las empresas del Perú",
+    "subtitle": "Más de 15 años desarrollando infraestructura de conectividad de alta calidad para organizaciones que no pueden detenerse."
+  },
+  "missionVisionTitle": "Comprometidos con el desarrollo tecnológico del Perú",
+  "mission": {
+    "icon": "globe",
+    "title": "Misión",
+    "text": "Impulsar el desarrollo de más peruanos a través del acceso a la tecnología."
+  },
+  "vision": {
+    "icon": "sparkles",
+    "title": "Visión",
+    "text": "Ser la empresa tecnológica más confiable y respetada del Perú. Convirtiéndonos en el referente local en innovación para empresas y personas."
+  },
+  "missionImage": "",
+  "values": {
+    "title": "Nuestros valores",
+    "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",
+    "items": [
+      {
+        "name": "Conectividad con propósito"
+      },
+      {
+        "name": "Transparencia"
+      },
+      {
+        "name": "Confiabilidad"
+      },
+      {
+        "name": "Impacto local"
+      },
+      {
+        "name": "Innovación"
+      },
+      {
+        "name": "Resiliencia"
+      }
+    ]
+  },
+  "timeline": {
+    "title": "Más de X años construyendo la red que conecta a las empresas del Perú",
+    "startYear": "2006",
+    "endYear": "2025"
+  },
+  "stats": {
+    "title": "Nuestra red en cifras",
+    "items": [
+      {
+        "number": "+5,500",
+        "label": "Clientes satisfechos",
+        "description": "Empresas que confían en nuestra red en todo el Perú"
+      },
+      {
+        "number": "+14,000 km",
+        "label": "Fibra óptica",
+        "description": "Infraestructura de fibra óptica desplegada"
+      },
+      {
+        "number": "92",
+        "label": "Presencia nacional",
+        "description": "Presentes en 92 ciudades en todo el Perú"
+      },
+      {
+        "number": "100%",
+        "label": "Red propia",
+        "description": "Red privada de fibra óptica de última generación"
+      }
+    ]
+  },
+  "team": {
+    "title": "Nuestro equipo",
+    "members": []
+  }
+}

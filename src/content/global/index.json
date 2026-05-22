@@ -1,0 +1,227 @@
+{
+  "nav": {
+    "links": [
+      {
+        "text": "Inicio",
+        "url": "/"
+      },
+      {
+        "text": "Servicios",
+        "url": "/servicios",
+        "children": [
+          {
+            "text": "Internet Dedicado",
+            "url": "/servicios/internet-dedicado"
+          },
+          {
+            "text": "Transmisión de Datos",
+            "url": "/servicios/transmision-de-datos"
+          },
+          {
+            "text": "Fibra Oscura",
+            "url": "/servicios/fibra-oscura"
+          },
+          {
+            "text": "Wi-Fi Gestionado",
+            "url": "/servicios/wifi-gestionado"
+          },
+          {
+            "text": "Telefonía IP",
+            "url": "/servicios/telefonia-ip"
+          },
+          {
+            "text": "SaaS",
+            "url": "/servicios/saas"
+          },
+          {
+            "text": "Housing",
+            "url": "/servicios/housing"
+          },
+          {
+            "text": "Ciberseguridad Perímetro",
+            "url": "/servicios/ciberseguridad-perimetro"
+          },
+          {
+            "text": "Ciberseguridad Endpoints",
+            "url": "/servicios/ciberseguridad-endpoints"
+          },
+          {
+            "text": "Continuidad de Negocio",
+            "url": "/servicios/continuidad-de-negocio"
+          },
+          {
+            "text": "VSaaS",
+            "url": "/servicios/vsaas"
+          }
+        ]
+      },
+      {
+        "text": "Nosotros",
+        "url": "/nosotros"
+      },
+      {
+        "text": "Blog",
+        "url": "/blog"
+      },
+      {
+        "text": "Contacto",
+        "url": "/contacto"
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Potencia tu conectividad empresarial",
+    "columns": [
+      {
+        "title": "Infraestructura Cloud",
+        "links": [
+          {
+            "text": "Hosting",
+            "url": "/servicios/hosting"
+          },
+          {
+            "text": "Housing",
+            "url": "/servicios/housing"
+          },
+          {
+            "text": "SaaS",
+            "url": "/servicios/saas"
+          },
+          {
+            "text": "Continuidad de negocio",
+            "url": "/servicios/continuidad-de-negocio"
+          }
+        ]
+      },
+      {
+        "title": "Seguridad",
+        "links": [
+          {
+            "text": "Ciberseguridad Endpoints",
+            "url": "/servicios/ciberseguridad-endpoints"
+          },
+          {
+            "text": "Ciberseguridad Perímetro",
+            "url": "/servicios/ciberseguridad-perimetro"
+          },
+          {
+            "text": "Video Vigilancia",
+            "url": "/servicios/vsaas"
+          }
+        ]
+      },
+      {
+        "title": "Conectividad",
+        "links": [
+          {
+            "text": "Internet Dedicado",
+            "url": "/servicios/internet-dedicado"
+          },
+          {
+            "text": "Fibra Oscura",
+            "url": "/servicios/fibra-oscura"
+          },
+          {
+            "text": "Wi-Fi Gestionado",
+            "url": "/servicios/wifi-gestionado"
+          },
+          {
+            "text": "Transmisión de Datos",
+            "url": "/servicios/transmision-de-datos"
+          }
+        ]
+      },
+      {
+        "title": "Comunicaciones",
+        "links": [
+          {
+            "text": "Telefonía IP",
+            "url": "/servicios/telefonia-ip"
+          },
+          {
+            "text": "Housing",
+            "url": "/servicios/housing"
+          },
+          {
+            "text": "SaaS",
+            "url": "/servicios/saas"
+          }
+        ]
+      },
+      {
+        "title": "Sobre nosotros",
+        "links": [
+          {
+            "text": "Nosotros",
+            "url": "/nosotros"
+          },
+          {
+            "text": "Servicios",
+            "url": "/servicios"
+          },
+          {
+            "text": "Soporte técnico",
+            "url": "/soporte"
+          },
+          {
+            "text": "Contacto",
+            "url": "/contacto"
+          }
+        ]
+      },
+      {
+        "title": "Legales",
+        "links": [
+          {
+            "text": "Libro de reclamaciones",
+            "url": "/legales/libro-de-reclamaciones"
+          },
+          {
+            "text": "Tratamiento de datos personales",
+            "url": "/legales/tratamiento-datos"
+          },
+          {
+            "text": "Política de Privacidad",
+            "url": "/legales/politica-privacidad"
+          },
+          {
+            "text": "Manual de derechos ARCO",
+            "url": "/legales/derechos-arco"
+          },
+          {
+            "text": "Política de Videovigilancia",
+            "url": "/legales/politica-videovigilancia"
+          },
+          {
+            "text": "Política SST",
+            "url": "/legales/politica-sst"
+          }
+        ]
+      }
+    ],
+    "social": [
+      {
+        "platform": "Facebook",
+        "url": "https://facebook.com/fiberlux"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "https://linkedin.com/company/fiberlux"
+      },
+      {
+        "platform": "YouTube",
+        "url": "https://youtube.com/fiberlux"
+      },
+      {
+        "platform": "WhatsApp",
+        "url": "https://wa.me/51XXXXXXXXX"
+      }
+    ],
+    "logo": "/images/logo/fiberlux.svg"
+  },
+  "seo": {
+    "siteName": "Fiberlux",
+    "defaultDescription": "Soluciones de conectividad y TI para tu empresa. Red 100% fibra óptica propia en todo el Perú.",
+    "ogImage": ""
+  }
+}

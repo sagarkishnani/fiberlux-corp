@@ -1,0 +1,13 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import StickyCardsReact from "./StickyCardsReact.tsx";
+
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
+---
+
+<StickyCardsReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+/>

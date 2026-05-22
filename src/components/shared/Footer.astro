@@ -1,0 +1,20 @@
+---
+/**
+ * Footer wrapper — fetches data from TinaCMS GraphQL API
+ * and passes it to the React FooterReact component.
+ *
+ * Uses client:tina → only hydrates inside Tina's visual editor.
+ * In production, renders static HTML with zero JS.
+ */
+import { client } from '../../../tina/__generated__/client';
+import FooterReact from './FooterReact';
+
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+---
+
+<FooterReact
+  client:tina
+  query={globalQuery.query}
+  variables={globalQuery.variables}
+  data={globalQuery.data}
+/>
