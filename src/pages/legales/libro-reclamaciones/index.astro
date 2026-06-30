@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import DynamicForm from "../../../components/dynamic-form/DynamicForm.astro";
+---
+
+<BaseLayout
+  title="Libro de Reclamaciones"
+  description="Registra tu reclamo o queja en el Libro de Reclamaciones de Fiberlux Corp."
+>
+  <main>
+    <section style={{ padding: "64px 0 80px", backgroundColor: "#ffffff" }}>
+      <div
+        style={{
+          maxWidth: "780px",
+          margin: "0 auto",
+          padding: "0 24px",
+          fontFamily: "Poppins, sans-serif",
+        }}
+      >
+        <DynamicForm formSlug="libro-reclamaciones" />
+      </div>
+    </section>
+  </main>
+</BaseLayout>
