@@ -37,7 +37,7 @@ Every CMS-driven section uses a pair:
 
 Hydration directives: `client:load` for above-fold interactive components, `client:visible` for below-fold.
 
-Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, and `shared` (cross-page: `Header`, `Footer`, `StickyCards`, testimonial slider, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`).
+Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, `contact`, and `shared` (cross-page: `Header`, `Footer`, `StickyCards`, testimonial slider, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`).
 
 ### Content & collections
 
@@ -51,7 +51,7 @@ Collections:
 - `maintenance` — site-wide maintenance mode (see below).
 - `infoAbonados` — "Información de Abonados" page content.
 - `formConfig` — per-form metadata: `formType`, `label`, `enabled`, `recipients[]`.
-- `dynamicForms` — full form definitions, one JSON file per form (`reclamo`, `queja`, `apelacion`, `libro-reclamaciones`).
+- `dynamicForms` — full form definitions, one JSON file per form (`reclamo`, `queja`, `apelacion`, `libro-reclamaciones`, `contacto`).
 
 ### Forms (CMS-defined dynamic forms)
 
@@ -61,7 +61,7 @@ Forms are authored entirely in the CMS, not hardcoded:
 - `dynamic-form/DynamicForm.astro` loads a form by `formSlug` and renders it through `DynamicFormReact.tsx`, which builds the UI from the field list using the primitives in `shared/FormControls.tsx`.
 - Submission goes through `src/utils/submitForm.ts` → `POST` to **`send-email.php`** (a PHP backend expected on the production server; it is NOT in this repo). Sends JSON normally, or `multipart/form-data` when files are attached. Includes a `website` honeypot field.
 - `src/pages/form-config.json.ts` is a build-time endpoint emitting `/form-config.json` from the `formConfig` collection (the recipient/enabled map the PHP backend reads).
-- Form pages: `/reclamos` (a selector → `reclamo`, `queja`, `apelacion` subpages) and `/legales/libro-reclamaciones`.
+- Form pages: `/reclamos` (a selector → `reclamo`, `queja`, `apelacion` subpages), `/legales/libro-reclamaciones`, and `/contacto` (the contact page composes its own layout but renders the `contacto` form via `DynamicFormReact`).
 
 Paths in form/runtime code are `BASE_URL`-aware (`import.meta.env.BASE_URL`) so the site can deploy under a subpath.
 
