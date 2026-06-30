@@ -80,6 +80,13 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const [step, setStep] = useState(0);
   const [maxScroll, setMaxScroll] = useState(0);
 
+  // Drag state. dragDelta is the live pointer offset; dragStart/moved live in
+  // a ref so move handlers don't churn renders for sub-threshold jitter.
+  const [dragging, setDragging] = useState(false);
+  const [dragDelta, setDragDelta] = useState(0);
+  const dragRef = useRef({ startX: 0, active: false, moved: false });
+  const DRAG_THRESHOLD = 8; // px before a press counts as a drag
+
   const total = items.length;
 
   // Measure card step (card width + gap) and the maximum scroll distance.
@@ -126,6 +133,34 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const prev = () => setIndex((i) => (i <= 0 ? lastIndex : i - 1));
   const next = () => setIndex((i) => (i >= lastIndex ? 0 : i + 1));
 
+  /* ── Pointer drag (mouse + touch) ── */
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (step <= 0) return;
+    dragRef.current = { startX: e.clientX, active: true, moved: false };
+    setDragging(true);
+    setDragDelta(0);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    if (!dragRef.current.active) return;
+    const delta = e.clientX - dragRef.current.startX;
+    if (Math.abs(delta) > DRAG_THRESHOLD) dragRef.current.moved = true;
+    setDragDelta(delta);
+  };
+
+  const endDrag = () => {
+    if (!dragRef.current.active) return;
+    const delta = dragDelta;
+    dragRef.current.active = false;
+    setDragging(false);
+    setDragDelta(0);
+    // Sub-threshold press = tap, not a drag: keep current index.
+    if (Math.abs(delta) < DRAG_THRESHOLD || step <= 0) return;
+    const target = Math.round((baseOffset - delta) / step);
+    setIndex(Math.min(Math.max(target, 0), lastIndex));
+  };
+
   const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
 
   const arrows = (
@@ -170,14 +205,29 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
     );
   };
 
+  // While dragging, follow the pointer (with a little overscroll allowance);
+  // otherwise sit at the snapped offset.
+  const dragOffset = baseOffset - dragDelta;
+  const offset = dragging
+    ? Math.min(Math.max(dragOffset, -40), maxScroll + 40)
+    : baseOffset;
+
   const viewport = (
-    <div ref={viewportRef} className="overflow-hidden">
+    <div
+      ref={viewportRef}
+      className="overflow-hidden touch-pan-y select-none"
+      style={{ cursor: dragging ? 'grabbing' : 'grab' }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+    >
       <div
         ref={trackRef}
         className="flex gap-2"
         style={{
-          transform: `translateX(${-baseOffset}px)`,
-          transition: 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          transform: `translateX(${-offset}px)`,
+          transition: dragging ? 'none' : 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         {items.map((item, i) => card(item, i))}
