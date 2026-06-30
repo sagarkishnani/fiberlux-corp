@@ -1,0 +1,13 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ReclamosSelectorReact from "../../components/reclamos/ReclamosSelectorReact";
+---
+
+<BaseLayout
+  title="Reclamos"
+  description="Formularios de reclamo, apelación y queja ante OSIPTEL."
+>
+  <main>
+    <ReclamosSelectorReact client:load />
+  </main>
+</BaseLayout>

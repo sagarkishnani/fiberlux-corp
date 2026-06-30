@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import DynamicForm from "../../../components/dynamic-form/DynamicForm.astro";
+---
+
+<BaseLayout
+  title="Formulario de Reclamo"
+  description="Registre su reclamo sobre servicios de telecomunicaciones ante OSIPTEL."
+>
+  <main>
+    <section style={{ padding: "64px 0 80px", backgroundColor: "#ffffff" }}>
+      <div
+        style={{
+          maxWidth: "780px",
+          margin: "0 auto",
+          padding: "0 24px",
+          fontFamily: "Poppins, sans-serif",
+        }}
+      >
+        <DynamicForm formSlug="reclamo" />
+      </div>
+    </section>
+  </main>
+</BaseLayout>

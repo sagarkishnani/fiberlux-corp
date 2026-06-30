@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import DynamicForm from "../../../components/dynamic-form/DynamicForm.astro";
+---
+
+<BaseLayout
+  title="Formulario de Apelación"
+  description="Presente un recurso de apelación contra una resolución emitida."
+>
+  <main>
+    <div
+      style={{ maxWidth: "800px", margin: "0 auto", padding: "48px 24px 80px" }}
+    >
+      <DynamicForm formSlug="apelacion" />
+    </div>
+  </main>
+</BaseLayout>
