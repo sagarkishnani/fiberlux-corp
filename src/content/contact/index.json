@@ -1,8 +1,10 @@
 {
-  "title": "Contacto",
-  "subtitle": "¿Tienes alguna consulta? Completa el formulario y nos pondremos en contacto contigo.",
-  "email": "contacto@fiberlux.com.pe",
-  "phone": "+51 XXX XXX XXX",
-  "address": "Arequipa, Perú",
-  "buttonText": "Enviar mensaje"
+  "breadcrumb": "Contacto",
+  "heading": "Ingresa tus datos y un representante te contactará pronto",
+  "intro": "Estamos listos para ayudarte a transformar tu conectividad. Completa el formulario y nuestro equipo se comunicará contigo en las próximas 24 horas.",
+  "cards": [
+    { "icon": "phone", "label": "Teléfono", "value": "(01) 700-1234" },
+    { "icon": "email", "label": "Correo", "value": "info@fiberlux.com" },
+    { "icon": "location", "label": "Oficina", "value": "Lima, Perú" }
+  ]
 }

@@ -194,12 +194,15 @@ fragment PostParts on Post {
 
 fragment ContactParts on Contact {
   __typename
-  title
-  subtitle
-  email
-  phone
-  address
-  buttonText
+  breadcrumb
+  heading
+  intro
+  cards {
+    __typename
+    icon
+    label
+    value
+  }
 }
 
 fragment GlobalParts on Global {

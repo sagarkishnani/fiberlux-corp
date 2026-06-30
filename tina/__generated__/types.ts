@@ -898,26 +898,35 @@ export type PostConnection = Connection & {
   edges?: Maybe<Array<Maybe<PostConnectionEdges>>>;
 };
 
+export type ContactCards = {
+  __typename?: 'ContactCards';
+  icon?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
+};
+
 export type Contact = Node & Document & {
   __typename?: 'Contact';
-  title?: Maybe<Scalars['String']['output']>;
-  subtitle?: Maybe<Scalars['String']['output']>;
-  email?: Maybe<Scalars['String']['output']>;
-  phone?: Maybe<Scalars['String']['output']>;
-  address?: Maybe<Scalars['String']['output']>;
-  buttonText?: Maybe<Scalars['String']['output']>;
+  breadcrumb?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  cards?: Maybe<Array<Maybe<ContactCards>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
 };
 
+export type ContactCardsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  value?: InputMaybe<StringFilter>;
+};
+
 export type ContactFilter = {
-  title?: InputMaybe<StringFilter>;
-  subtitle?: InputMaybe<StringFilter>;
-  email?: InputMaybe<StringFilter>;
-  phone?: InputMaybe<StringFilter>;
-  address?: InputMaybe<StringFilter>;
-  buttonText?: InputMaybe<StringFilter>;
+  breadcrumb?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  cards?: InputMaybe<ContactCardsFilter>;
 };
 
 export type ContactConnectionEdges = {
@@ -1772,13 +1781,17 @@ export type PostMutation = {
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type ContactCardsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ContactMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  subtitle?: InputMaybe<Scalars['String']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
-  phone?: InputMaybe<Scalars['String']['input']>;
-  address?: InputMaybe<Scalars['String']['input']>;
-  buttonText?: InputMaybe<Scalars['String']['input']>;
+  breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  cards?: InputMaybe<Array<InputMaybe<ContactCardsMutation>>>;
 };
 
 export type GlobalNavLinksChildrenMutation = {
@@ -1939,7 +1952,7 @@ export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: str
 
 export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
-export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null };
+export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, heading?: string | null, intro?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
@@ -2032,7 +2045,7 @@ export type ContactQueryVariables = Exact<{
 }>;
 
 
-export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null } };
 
 export type ContactConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2044,7 +2057,7 @@ export type ContactConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null } | null } | null> | null } };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2342,12 +2355,15 @@ export const PostPartsFragmentDoc = gql`
 export const ContactPartsFragmentDoc = gql`
     fragment ContactParts on Contact {
   __typename
-  title
-  subtitle
-  email
-  phone
-  address
-  buttonText
+  breadcrumb
+  heading
+  intro
+  cards {
+    __typename
+    icon
+    label
+    value
+  }
 }
     `;
 export const GlobalPartsFragmentDoc = gql`

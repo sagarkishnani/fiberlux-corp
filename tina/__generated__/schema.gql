@@ -643,25 +643,33 @@ type PostConnection implements Connection {
   edges: [PostConnectionEdges]
 }
 
+type ContactCards {
+  icon: String
+  label: String
+  value: String
+}
+
 type Contact implements Node & Document {
-  title: String
-  subtitle: String
-  email: String
-  phone: String
-  address: String
-  buttonText: String
+  breadcrumb: String
+  heading: String
+  intro: String
+  cards: [ContactCards]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
 }
 
+input ContactCardsFilter {
+  icon: StringFilter
+  label: StringFilter
+  value: StringFilter
+}
+
 input ContactFilter {
-  title: StringFilter
-  subtitle: StringFilter
-  email: StringFilter
-  phone: StringFilter
-  address: StringFilter
-  buttonText: StringFilter
+  breadcrumb: StringFilter
+  heading: StringFilter
+  intro: StringFilter
+  cards: ContactCardsFilter
 }
 
 type ContactConnectionEdges {
@@ -1330,13 +1338,17 @@ input PostMutation {
   body: JSON
 }
 
+input ContactCardsMutation {
+  icon: String
+  label: String
+  value: String
+}
+
 input ContactMutation {
-  title: String
-  subtitle: String
-  email: String
-  phone: String
-  address: String
-  buttonText: String
+  breadcrumb: String
+  heading: String
+  intro: String
+  cards: [ContactCardsMutation]
 }
 
 input GlobalNavLinksChildrenMutation {

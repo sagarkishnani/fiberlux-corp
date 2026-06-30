@@ -623,25 +623,41 @@ var config_default = defineConfig({
         path: "src/content/contact",
         format: "json",
         ui: {
+          router: () => "/contacto",
           allowedActions: { create: false, delete: false }
         },
         fields: [
-          { name: "title", label: "T\xEDtulo", type: "string" },
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "heading", label: "T\xEDtulo principal (H1)", type: "string", ui: { component: "textarea" } },
           {
-            name: "subtitle",
-            label: "Subt\xEDtulo",
+            name: "intro",
+            label: "P\xE1rrafo introductorio",
             type: "string",
             ui: { component: "textarea" }
           },
-          { name: "email", label: "Email de contacto", type: "string" },
-          { name: "phone", label: "Tel\xE9fono", type: "string" },
           {
-            name: "address",
-            label: "Direcci\xF3n",
-            type: "string",
-            ui: { component: "textarea" }
-          },
-          { name: "buttonText", label: "Texto del bot\xF3n", type: "string" }
+            name: "cards",
+            label: "Tarjetas de contacto",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.label || "Tarjeta" })
+            },
+            fields: [
+              {
+                name: "icon",
+                label: "\xCDcono",
+                type: "string",
+                options: [
+                  { value: "phone", label: "Tel\xE9fono" },
+                  { value: "email", label: "Correo" },
+                  { value: "location", label: "Ubicaci\xF3n" }
+                ]
+              },
+              { name: "label", label: "Etiqueta", type: "string" },
+              { name: "value", label: "Valor", type: "string" }
+            ]
+          }
         ]
       },
       /* ══════════════════════════════════════

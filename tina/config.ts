@@ -651,25 +651,41 @@ export default defineConfig({
         path: "src/content/contact",
         format: "json",
         ui: {
+          router: () => "/contacto",
           allowedActions: { create: false, delete: false },
         },
         fields: [
-          { name: "title", label: "Título", type: "string" },
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "heading", label: "Título principal (H1)", type: "string", ui: { component: "textarea" } },
           {
-            name: "subtitle",
-            label: "Subtítulo",
+            name: "intro",
+            label: "Párrafo introductorio",
             type: "string",
             ui: { component: "textarea" },
           },
-          { name: "email", label: "Email de contacto", type: "string" },
-          { name: "phone", label: "Teléfono", type: "string" },
           {
-            name: "address",
-            label: "Dirección",
-            type: "string",
-            ui: { component: "textarea" },
+            name: "cards",
+            label: "Tarjetas de contacto",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.label || "Tarjeta" }),
+            },
+            fields: [
+              {
+                name: "icon",
+                label: "Ícono",
+                type: "string",
+                options: [
+                  { value: "phone", label: "Teléfono" },
+                  { value: "email", label: "Correo" },
+                  { value: "location", label: "Ubicación" },
+                ],
+              },
+              { name: "label", label: "Etiqueta", type: "string" },
+              { name: "value", label: "Valor", type: "string" },
+            ],
           },
-          { name: "buttonText", label: "Texto del botón", type: "string" },
         ],
       },
 
