@@ -541,9 +541,25 @@ export default defineConfig({
             label: "Timeline",
             type: "object",
             fields: [
-              { name: "title", label: "Título", type: "string" },
-              { name: "startYear", label: "Año inicio", type: "string" },
-              { name: "endYear", label: "Año fin", type: "string" },
+              { name: "title", label: "Antítulo (eyebrow)", type: "string" },
+              { name: "startYear", label: "Año inicio (etiqueta barra)", type: "string" },
+              { name: "endYear", label: "Año fin (etiqueta barra)", type: "string" },
+              {
+                name: "milestones",
+                label: "Hitos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.year || "Hito" }) },
+                fields: [
+                  { name: "year", label: "Año", type: "string" },
+                  {
+                    name: "heading",
+                    label: "Texto del hito",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                ],
+              },
             ],
           },
 

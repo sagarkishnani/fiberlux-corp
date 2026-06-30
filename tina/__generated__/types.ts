@@ -711,11 +711,18 @@ export type AboutValues = {
   items?: Maybe<Array<Maybe<AboutValuesItems>>>;
 };
 
+export type AboutTimelineMilestones = {
+  __typename?: 'AboutTimelineMilestones';
+  year?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+};
+
 export type AboutTimeline = {
   __typename?: 'AboutTimeline';
   title?: Maybe<Scalars['String']['output']>;
   startYear?: Maybe<Scalars['String']['output']>;
   endYear?: Maybe<Scalars['String']['output']>;
+  milestones?: Maybe<Array<Maybe<AboutTimelineMilestones>>>;
 };
 
 export type AboutStatsItems = {
@@ -787,10 +794,16 @@ export type AboutValuesFilter = {
   items?: InputMaybe<AboutValuesItemsFilter>;
 };
 
+export type AboutTimelineMilestonesFilter = {
+  year?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+};
+
 export type AboutTimelineFilter = {
   title?: InputMaybe<StringFilter>;
   startYear?: InputMaybe<StringFilter>;
   endYear?: InputMaybe<StringFilter>;
+  milestones?: InputMaybe<AboutTimelineMilestonesFilter>;
 };
 
 export type AboutStatsItemsFilter = {
@@ -1730,10 +1743,16 @@ export type AboutValuesMutation = {
   items?: InputMaybe<Array<InputMaybe<AboutValuesItemsMutation>>>;
 };
 
+export type AboutTimelineMilestonesMutation = {
+  year?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type AboutTimelineMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   startYear?: InputMaybe<Scalars['String']['input']>;
   endYear?: InputMaybe<Scalars['String']['input']>;
+  milestones?: InputMaybe<Array<InputMaybe<AboutTimelineMilestonesMutation>>>;
 };
 
 export type AboutStatsItemsMutation = {
@@ -1948,7 +1967,7 @@ export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'Home
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, heroSubtitle?: string | null, features?: { __typename: 'ServiceFeatures', sectionTitle?: string | null, sectionSubtitle?: string | null, items?: Array<{ __typename: 'ServiceFeaturesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, expandableServices?: { __typename: 'ServiceExpandableServices', sectionTitle?: string | null, items?: Array<{ __typename: 'ServiceExpandableServicesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, whyUs?: { __typename: 'ServiceWhyUs', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceWhyUsCards', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, stats?: Array<{ __typename: 'ServiceStats', number?: string | null, label?: string | null } | null> | null, checklist?: { __typename: 'ServiceChecklist', title?: string | null, items?: Array<string | null> | null } | null, experts?: { __typename: 'ServiceExperts', title?: string | null, steps?: Array<{ __typename: 'ServiceExpertsSteps', number?: string | null, title?: string | null, description?: string | null } | null> | null } | null, contactForm?: { __typename: 'ServiceContactForm', title?: string | null, subtitle?: string | null, buttonText?: string | null } | null };
 
-export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
+export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
 export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
@@ -2007,7 +2026,7 @@ export type AboutQueryVariables = Exact<{
 }>;
 
 
-export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
+export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
 
 export type AboutConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2019,7 +2038,7 @@ export type AboutConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
+export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
 
 export type PostQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2316,6 +2335,11 @@ export const AboutPartsFragmentDoc = gql`
     title
     startYear
     endYear
+    milestones {
+      __typename
+      year
+      heading
+    }
   }
   stats {
     __typename

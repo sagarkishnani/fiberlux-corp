@@ -157,6 +157,11 @@ fragment AboutParts on About {
     title
     startYear
     endYear
+    milestones {
+      __typename
+      year
+      heading
+    }
   }
   stats {
     __typename

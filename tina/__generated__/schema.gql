@@ -467,10 +467,16 @@ type AboutValues {
   items: [AboutValuesItems]
 }
 
+type AboutTimelineMilestones {
+  year: String
+  heading: String
+}
+
 type AboutTimeline {
   title: String
   startYear: String
   endYear: String
+  milestones: [AboutTimelineMilestones]
 }
 
 type AboutStatsItems {
@@ -537,10 +543,16 @@ input AboutValuesFilter {
   items: AboutValuesItemsFilter
 }
 
+input AboutTimelineMilestonesFilter {
+  year: StringFilter
+  heading: StringFilter
+}
+
 input AboutTimelineFilter {
   title: StringFilter
   startYear: StringFilter
   endYear: StringFilter
+  milestones: AboutTimelineMilestonesFilter
 }
 
 input AboutStatsItemsFilter {
@@ -1287,10 +1299,16 @@ input AboutValuesMutation {
   items: [AboutValuesItemsMutation]
 }
 
+input AboutTimelineMilestonesMutation {
+  year: String
+  heading: String
+}
+
 input AboutTimelineMutation {
   title: String
   startYear: String
   endYear: String
+  milestones: [AboutTimelineMilestonesMutation]
 }
 
 input AboutStatsItemsMutation {
