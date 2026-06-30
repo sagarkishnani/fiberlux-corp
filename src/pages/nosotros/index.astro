@@ -7,6 +7,7 @@ import ValuesReact from '../../components/nosotros/ValuesReact.tsx';
 import HeroNosotrosReact from '../../components/nosotros/HeroNosotrosReact';
 import TimelineReact from '../../components/nosotros/TimelineReact.tsx';
 import StatsReact from '../../components/StatsReact';
+import RubrosReact from '../../components/nosotros/RubrosReact.tsx';
 
 const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
@@ -42,5 +43,11 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
     query={homeQuery.query}
     variables={homeQuery.variables}
     data={homeQuery.data}
+  />
+  <RubrosReact
+    client:visible
+    query={aboutQuery.query}
+    variables={aboutQuery.variables}
+    data={aboutQuery.data}
   />
 </BaseLayout>

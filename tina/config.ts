@@ -563,6 +563,51 @@ export default defineConfig({
             ],
           },
 
+          // ── Rubros ──
+          {
+            name: "rubros",
+            label: "Rubros (sección Nosotros)",
+            type: "object",
+            fields: [
+              { name: "title", label: "Título", type: "string" },
+              {
+                name: "items",
+                label: "Rubros",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.label || "Rubro" }) },
+                fields: [
+                  {
+                    name: "icon",
+                    label: "Ícono",
+                    type: "string",
+                    options: [
+                      { value: "mineria", label: "Minería" },
+                      { value: "restaurantes", label: "Restaurantes" },
+                      { value: "educacion", label: "Educación" },
+                      { value: "hoteleria", label: "Hotelería" },
+                      { value: "salud", label: "Salud / Clínicas" },
+                      { value: "retail", label: "Retail / Comercio" },
+                      { value: "banca", label: "Banca y Finanzas" },
+                      { value: "industria", label: "Industria / Manufactura" },
+                      { value: "logistica", label: "Logística y Transporte" },
+                      { value: "gobierno", label: "Gobierno / Sector público" },
+                      { value: "construccion", label: "Construcción / Inmobiliaria" },
+                      { value: "agroindustria", label: "Agroindustria" },
+                      { value: "tecnologia", label: "Tecnología / Software" },
+                      { value: "energia", label: "Energía" },
+                      { value: "telecomunicaciones", label: "Telecomunicaciones" },
+                      { value: "turismo", label: "Turismo" },
+                      { value: "entretenimiento", label: "Entretenimiento" },
+                      { value: "corporativo", label: "Corporativo / Oficinas" },
+                    ],
+                  },
+                  { name: "label", label: "Nombre del rubro", type: "string" },
+                ],
+              },
+            ],
+          },
+
           // ── Stats ──
           {
             name: "stats",
