@@ -219,6 +219,30 @@ fragment ContactParts on Contact {
   }
 }
 
+fragment SoporteTecnicoParts on SoporteTecnico {
+  __typename
+  breadcrumb
+  heading
+  intro
+  sectionTitle
+  sectionSubtitle
+  channels {
+    __typename
+    type
+    tabLabel
+    title
+    subtitle
+    defaultOpen
+    rows {
+      __typename
+      label
+      value
+      optionLabel
+      message
+    }
+  }
+}
+
 fragment GlobalParts on Global {
   __typename
   nav {

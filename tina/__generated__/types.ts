@@ -92,6 +92,8 @@ export type Query = {
   postConnection: PostConnection;
   contact: Contact;
   contactConnection: ContactConnection;
+  soporteTecnico: SoporteTecnico;
+  soporteTecnicoConnection: SoporteTecnicoConnection;
   global: Global;
   globalConnection: GlobalConnection;
   maintenance: Maintenance;
@@ -201,6 +203,21 @@ export type QueryContactConnectionArgs = {
 };
 
 
+export type QuerySoporteTecnicoArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySoporteTecnicoConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SoporteTecnicoFilter>;
+};
+
+
 export type QueryGlobalArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -281,6 +298,7 @@ export type DocumentFilter = {
   about?: InputMaybe<AboutFilter>;
   post?: InputMaybe<PostFilter>;
   contact?: InputMaybe<ContactFilter>;
+  soporteTecnico?: InputMaybe<SoporteTecnicoFilter>;
   global?: InputMaybe<GlobalFilter>;
   maintenance?: InputMaybe<MaintenanceFilter>;
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
@@ -325,7 +343,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | About | Post | Contact | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -979,6 +997,75 @@ export type ContactConnection = Connection & {
   edges?: Maybe<Array<Maybe<ContactConnectionEdges>>>;
 };
 
+export type SoporteTecnicoChannelsRows = {
+  __typename?: 'SoporteTecnicoChannelsRows';
+  label?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['String']['output']>;
+  optionLabel?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type SoporteTecnicoChannels = {
+  __typename?: 'SoporteTecnicoChannels';
+  type?: Maybe<Scalars['String']['output']>;
+  tabLabel?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  defaultOpen?: Maybe<Scalars['Boolean']['output']>;
+  rows?: Maybe<Array<Maybe<SoporteTecnicoChannelsRows>>>;
+};
+
+export type SoporteTecnico = Node & Document & {
+  __typename?: 'SoporteTecnico';
+  breadcrumb?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  sectionTitle?: Maybe<Scalars['String']['output']>;
+  sectionSubtitle?: Maybe<Scalars['String']['output']>;
+  channels?: Maybe<Array<Maybe<SoporteTecnicoChannels>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type SoporteTecnicoChannelsRowsFilter = {
+  label?: InputMaybe<StringFilter>;
+  value?: InputMaybe<StringFilter>;
+  optionLabel?: InputMaybe<StringFilter>;
+  message?: InputMaybe<StringFilter>;
+};
+
+export type SoporteTecnicoChannelsFilter = {
+  type?: InputMaybe<StringFilter>;
+  tabLabel?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  defaultOpen?: InputMaybe<BooleanFilter>;
+  rows?: InputMaybe<SoporteTecnicoChannelsRowsFilter>;
+};
+
+export type SoporteTecnicoFilter = {
+  breadcrumb?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  sectionTitle?: InputMaybe<StringFilter>;
+  sectionSubtitle?: InputMaybe<StringFilter>;
+  channels?: InputMaybe<SoporteTecnicoChannelsFilter>;
+};
+
+export type SoporteTecnicoConnectionEdges = {
+  __typename?: 'SoporteTecnicoConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<SoporteTecnico>;
+};
+
+export type SoporteTecnicoConnection = Connection & {
+  __typename?: 'SoporteTecnicoConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<SoporteTecnicoConnectionEdges>>>;
+};
+
 export type GlobalNavLinksChildren = {
   __typename?: 'GlobalNavLinksChildren';
   text?: Maybe<Scalars['String']['output']>;
@@ -1406,6 +1493,8 @@ export type Mutation = {
   createPost: Post;
   updateContact: Contact;
   createContact: Contact;
+  updateSoporteTecnico: SoporteTecnico;
+  createSoporteTecnico: SoporteTecnico;
   updateGlobal: Global;
   createGlobal: Global;
   updateMaintenance: Maintenance;
@@ -1512,6 +1601,18 @@ export type MutationCreateContactArgs = {
 };
 
 
+export type MutationUpdateSoporteTecnicoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SoporteTecnicoMutation;
+};
+
+
+export type MutationCreateSoporteTecnicoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SoporteTecnicoMutation;
+};
+
+
 export type MutationUpdateGlobalArgs = {
   relativePath: Scalars['String']['input'];
   params: GlobalMutation;
@@ -1577,6 +1678,7 @@ export type DocumentUpdateMutation = {
   about?: InputMaybe<AboutMutation>;
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
+  soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -1591,6 +1693,7 @@ export type DocumentMutation = {
   about?: InputMaybe<AboutMutation>;
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
+  soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -1848,6 +1951,31 @@ export type ContactMutation = {
   cards?: InputMaybe<Array<InputMaybe<ContactCardsMutation>>>;
 };
 
+export type SoporteTecnicoChannelsRowsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
+  optionLabel?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SoporteTecnicoChannelsMutation = {
+  type?: InputMaybe<Scalars['String']['input']>;
+  tabLabel?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  defaultOpen?: InputMaybe<Scalars['Boolean']['input']>;
+  rows?: InputMaybe<Array<InputMaybe<SoporteTecnicoChannelsRowsMutation>>>;
+};
+
+export type SoporteTecnicoMutation = {
+  breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  sectionTitle?: InputMaybe<Scalars['String']['input']>;
+  sectionSubtitle?: InputMaybe<Scalars['String']['input']>;
+  channels?: InputMaybe<Array<InputMaybe<SoporteTecnicoChannelsMutation>>>;
+};
+
 export type GlobalNavLinksChildrenMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -2008,6 +2136,8 @@ export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: s
 
 export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, heading?: string | null, intro?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null };
 
+export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, heading?: string | null, intro?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
+
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
@@ -2112,6 +2242,25 @@ export type ContactConnectionQueryVariables = Exact<{
 
 
 export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null } | null } | null> | null } };
+
+export type SoporteTecnicoQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type SoporteTecnicoQuery = { __typename?: 'Query', soporteTecnico: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } };
+
+export type SoporteTecnicoConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SoporteTecnicoFilter>;
+}>;
+
+
+export type SoporteTecnicoConnectionQuery = { __typename?: 'Query', soporteTecnicoConnection: { __typename?: 'SoporteTecnicoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SoporteTecnicoConnectionEdges', cursor: string, node?: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } | null } | null> | null } };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2431,6 +2580,31 @@ export const ContactPartsFragmentDoc = gql`
     icon
     label
     value
+  }
+}
+    `;
+export const SoporteTecnicoPartsFragmentDoc = gql`
+    fragment SoporteTecnicoParts on SoporteTecnico {
+  __typename
+  breadcrumb
+  heading
+  intro
+  sectionTitle
+  sectionSubtitle
+  channels {
+    __typename
+    type
+    tabLabel
+    title
+    subtitle
+    defaultOpen
+    rows {
+      __typename
+      label
+      value
+      optionLabel
+      message
+    }
   }
 }
     `;
@@ -2864,6 +3038,63 @@ export const ContactConnectionDocument = gql`
   }
 }
     ${ContactPartsFragmentDoc}`;
+export const SoporteTecnicoDocument = gql`
+    query soporteTecnico($relativePath: String!) {
+  soporteTecnico(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...SoporteTecnicoParts
+  }
+}
+    ${SoporteTecnicoPartsFragmentDoc}`;
+export const SoporteTecnicoConnectionDocument = gql`
+    query soporteTecnicoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: SoporteTecnicoFilter) {
+  soporteTecnicoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...SoporteTecnicoParts
+      }
+    }
+  }
+}
+    ${SoporteTecnicoPartsFragmentDoc}`;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -3181,6 +3412,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     contactConnection(variables?: ContactConnectionQueryVariables, options?: C): Promise<{data: ContactConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactConnectionQueryVariables, query: string}> {
         return requester<{data: ContactConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ContactConnectionQueryVariables, query: string}, ContactConnectionQueryVariables>(ContactConnectionDocument, variables, options);
+      },
+    soporteTecnico(variables: SoporteTecnicoQueryVariables, options?: C): Promise<{data: SoporteTecnicoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SoporteTecnicoQueryVariables, query: string}> {
+        return requester<{data: SoporteTecnicoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SoporteTecnicoQueryVariables, query: string}, SoporteTecnicoQueryVariables>(SoporteTecnicoDocument, variables, options);
+      },
+    soporteTecnicoConnection(variables?: SoporteTecnicoConnectionQueryVariables, options?: C): Promise<{data: SoporteTecnicoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SoporteTecnicoConnectionQueryVariables, query: string}> {
+        return requester<{data: SoporteTecnicoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SoporteTecnicoConnectionQueryVariables, query: string}, SoporteTecnicoConnectionQueryVariables>(SoporteTecnicoConnectionDocument, variables, options);
       },
     global(variables: GlobalQueryVariables, options?: C): Promise<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}> {
         return requester<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}, GlobalQueryVariables>(GlobalDocument, variables, options);

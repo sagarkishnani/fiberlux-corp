@@ -273,6 +273,61 @@ query contactConnection($before: String, $after: String, $first: Float, $last: F
   }
 }
 
+query soporteTecnico($relativePath: String!) {
+  soporteTecnico(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...SoporteTecnicoParts
+  }
+}
+
+query soporteTecnicoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: SoporteTecnicoFilter) {
+  soporteTecnicoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...SoporteTecnicoParts
+      }
+    }
+  }
+}
+
 query global($relativePath: String!) {
   global(relativePath: $relativePath) {
     ... on Document {

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
+import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
+import StickyCards from "../../components/shared/StickyCards.astro";
+import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
+---
+
+<BaseLayout
+  title="Soporte técnico"
+  description="Contáctate con nuestros ingenieros especializados. Soporte técnico de Fiberlux Corp por WhatsApp, llamada o correo."
+>
+  <main>
+    <HeroSoporte />
+    <CanalesSoporte />
+    <StickyCards />
+    <TestimonialSlider />
+  </main>
+</BaseLayout>

@@ -751,6 +751,89 @@ export default defineConfig({
       },
 
       /* ══════════════════════════════════════
+         SOPORTE TÉCNICO (página)
+         ══════════════════════════════════════ */
+      {
+        name: "soporteTecnico",
+        label: "Soporte Técnico (página)",
+        path: "src/content/soporte-tecnico",
+        format: "json",
+        ui: {
+          router: () => "/soporte-tecnico",
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          // ── Hero ──
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "heading", label: "Título principal (H1)", type: "string", ui: { component: "textarea" } },
+          {
+            name: "intro",
+            label: "Párrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+
+          // ── Sección Soporte Técnico (acordeón) ──
+          { name: "sectionTitle", label: "Título de sección", type: "string" },
+          {
+            name: "sectionSubtitle",
+            label: "Subtítulo de sección",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "channels",
+            label: "Canales de contacto",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.title || "Canal" }),
+            },
+            fields: [
+              {
+                name: "type",
+                label: "Tipo",
+                type: "string",
+                options: [
+                  { value: "whatsapp", label: "WhatsApp" },
+                  { value: "call", label: "Llamada" },
+                  { value: "email", label: "Correo" },
+                ],
+              },
+              { name: "tabLabel", label: "Etiqueta de pestaña", type: "string" },
+              { name: "title", label: "Título del panel", type: "string" },
+              {
+                name: "subtitle",
+                label: "Subtítulo del panel",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "defaultOpen", label: "Abierto por defecto", type: "boolean" },
+              {
+                name: "rows",
+                label: "Filas",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.label || "Fila" }),
+                },
+                fields: [
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  {
+                    name: "value",
+                    label: "Valor (teléfono / WhatsApp / correo)",
+                    type: "string",
+                  },
+                  { name: "optionLabel", label: "Texto opción (solo visual)", type: "string" },
+                  { name: "message", label: "Mensaje pre-cargado (solo WhatsApp)", type: "string" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
          GLOBAL (Nav, Footer, SEO)
          ══════════════════════════════════════ */
       {
