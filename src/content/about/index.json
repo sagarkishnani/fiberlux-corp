@@ -40,9 +40,27 @@
     ]
   },
   "timeline": {
-    "title": "Más de X años construyendo la red que conecta a las empresas del Perú",
+    "title": "Nuestra historia",
     "startYear": "2006",
-    "endYear": "2025"
+    "endYear": "2025",
+    "milestones": [
+      {
+        "year": "2006",
+        "heading": "Más de X años construyendo la red que conecta a las empresas del Perú"
+      },
+      {
+        "year": "2012",
+        "heading": "Placeholder: expansión de la red de fibra óptica a nivel nacional"
+      },
+      {
+        "year": "2019",
+        "heading": "Placeholder: consolidación como referente B2B en conectividad"
+      },
+      {
+        "year": "2025",
+        "heading": "Placeholder: red propia presente en 92 ciudades del Perú"
+      }
+    ]
   },
   "stats": {
     "title": "Nuestra red en cifras",
