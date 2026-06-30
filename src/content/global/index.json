@@ -71,6 +71,7 @@
   },
   "footer": {
     "tagline": "Potencia tu conectividad empresarial",
+    "copyright": "© {year} Fiberlux. Todos los derechos reservados",
     "columns": [
       {
         "title": "Infraestructura Cloud",

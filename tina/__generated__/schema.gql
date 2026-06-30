@@ -707,6 +707,7 @@ type GlobalFooterSocial {
 
 type GlobalFooter {
   tagline: String
+  copyright: String
   columns: [GlobalFooterColumns]
   social: [GlobalFooterSocial]
   logo: String
@@ -759,6 +760,7 @@ input GlobalFooterSocialFilter {
 
 input GlobalFooterFilter {
   tagline: StringFilter
+  copyright: StringFilter
   columns: GlobalFooterColumnsFilter
   social: GlobalFooterSocialFilter
   logo: ImageFilter
@@ -1369,6 +1371,7 @@ input GlobalFooterSocialMutation {
 
 input GlobalFooterMutation {
   tagline: String
+  copyright: String
   columns: [GlobalFooterColumnsMutation]
   social: [GlobalFooterSocialMutation]
   logo: String

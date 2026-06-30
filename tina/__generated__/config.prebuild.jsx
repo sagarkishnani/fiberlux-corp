@@ -693,6 +693,12 @@ var config_default = defineConfig({
             fields: [
               { name: "tagline", label: "Tagline", type: "string" },
               {
+                name: "copyright",
+                label: "Texto de copyright",
+                type: "string",
+                description: "Usa {year} para insertar el a\xF1o actual autom\xE1ticamente. Ej: \xA9 {year} Fiberlux. Todos los derechos reservados"
+              },
+              {
                 name: "columns",
                 label: "Columnas",
                 type: "object",

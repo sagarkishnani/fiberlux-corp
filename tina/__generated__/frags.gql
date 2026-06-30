@@ -220,6 +220,7 @@ fragment GlobalParts on Global {
   footer {
     __typename
     tagline
+    copyright
     columns {
       __typename
       title

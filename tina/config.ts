@@ -723,6 +723,13 @@ export default defineConfig({
             fields: [
               { name: "tagline", label: "Tagline", type: "string" },
               {
+                name: "copyright",
+                label: "Texto de copyright",
+                type: "string",
+                description:
+                  "Usa {year} para insertar el año actual automáticamente. Ej: © {year} Fiberlux. Todos los derechos reservados",
+              },
+              {
                 name: "columns",
                 label: "Columnas",
                 type: "object",

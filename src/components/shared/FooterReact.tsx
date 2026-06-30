@@ -64,6 +64,9 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
 
   const currentYear = new Date().getFullYear();
   const logoSrc = (footer as any).logo || DEFAULT_LOGO;
+  const copyrightTemplate =
+    (footer as any).copyright || '© {year} Fiberlux. Todos los derechos reservados';
+  const copyrightText = copyrightTemplate.replace('{year}', String(currentYear));
 
   return (
     <footer className="bg-brand-purple rounded-t-xl">
@@ -151,8 +154,11 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
           {/* Copyright — same 2-col sub-grid as the links above */}
           <div className="col-span-2 grid grid-cols-2">
             <div /> {/* empty — aligns with first link column */}
-            <p className="leading-[14px] text-white">
-              © {currentYear} Fiberlux. Todos los derechos reservados
+            <p
+              className="leading-[14px] text-white"
+              data-tina-field={tinaField(footer, 'copyright')}
+            >
+              {copyrightText}
             </p>
           </div>
         </div>
