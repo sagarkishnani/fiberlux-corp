@@ -1,6 +1,6 @@
 # SPEC 06 — Página "Soporte Técnico" (`/soporte-tecnico`)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 02 (patrón de página dual + tema oscuro corp + reuso de Header/Footer). Reutiliza `StickyCards` y `TestimonialSlider` (componentes compartidos alimentados por la colección `home`).
 > **Date:** 2026-06-30
 > **Objective:** Construir la ruta `/soporte-tecnico` según los frames de Figma (desktop y mobile): un hero oscuro con breadcrumb / H1 / intro y un **placeholder reservado para un elemento 3D (pendiente, fuera de alcance)**, una sección "Soporte Técnico" con un **acordeón horizontal estilo Effortel** de canales editables (WhatsApp / Llamada / Correo) cuyas filas son accionables (`wa.me` / `tel:` / `mailto:`), y debajo las secciones reutilizadas de **Servicios** (`StickyCards` del Home) y **Testimonios** (`TestimonialSlider`), todo editable desde una nueva colección `soporteTecnico` en TinaCMS.
