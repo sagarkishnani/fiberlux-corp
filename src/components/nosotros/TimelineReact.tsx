@@ -15,6 +15,19 @@ interface TimelineProps {
   data: AboutQuery;
 }
 
+/* ── Reduced-motion hook ── */
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return reduced;
+}
+
 /* ── Count-up hook ──
    Animates from the previously displayed value to `target`.
    If `target` is null (non-numeric year), it skips animation.
@@ -82,6 +95,9 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const milestones = tinaItems.length > 0 ? tinaItems : fallbackItems;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [navTick, setNavTick] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
 
   const total = milestones.length;
   const safeIndex = total > 0 ? activeIndex % total : 0;
@@ -89,12 +105,25 @@ export default function TimelineReact({ query, variables, data: initialData }: T
 
   // Count-up of the giant year (all hooks must run before the early return)
   const curYearNum = parseInt(active?.year || '', 10);
-  const animatedYear = useCountUp(isNaN(curYearNum) ? null : curYearNum, true);
+  const animatedYear = useCountUp(isNaN(curYearNum) ? null : curYearNum, !reducedMotion);
   const yearDisplay = isNaN(curYearNum) ? active?.year : animatedYear;
+
+  // Autoplay: advances every 5s; paused on hover; navTick restarts the timer
+  // whenever the user uses the arrows so it doesn't jump right after a click.
+  useEffect(() => {
+    if (paused || reducedMotion || total <= 1) return;
+    const id = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % total);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [paused, reducedMotion, total, navTick]);
 
   if (milestones.length === 0) return null;
 
-  const goTo = (i: number) => setActiveIndex(((i % total) + total) % total);
+  const goTo = (i: number) => {
+    setActiveIndex(((i % total) + total) % total);
+    setNavTick((t) => t + 1);
+  };
   const prev = () => goTo(safeIndex - 1);
   const next = () => goTo(safeIndex + 1);
 
@@ -105,7 +134,41 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   return (
     <section className="bg-white overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6 py-12 md:py-20">
-        <div className="relative overflow-hidden rounded-[16px] bg-[#080618] min-h-[560px] md:min-h-[680px]">
+        <div
+          className="relative overflow-hidden rounded-[16px] bg-[#080618] min-h-[560px] md:min-h-[680px]"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocusCapture={() => setPaused(true)}
+          onBlurCapture={() => setPaused(false)}
+        >
+
+          {/* Background — CSS approximation of the Figma magenta light beams */}
+          <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+            {/* Corner radial glow (top-right) */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(75% 60% at 88% 2%, rgba(150,35,122,0.55) 0%, rgba(150,35,122,0.18) 32%, rgba(8,6,24,0) 62%)',
+              }}
+            />
+            {/* Bright diagonal beam */}
+            <div
+              className="absolute -top-1/3 right-[6%] h-[170%] w-[220px] rotate-[35deg] origin-top opacity-80 blur-[40px]"
+              style={{
+                background:
+                  'linear-gradient(to bottom, rgba(214,77,184,0.9) 0%, rgba(150,35,122,0.35) 45%, rgba(150,35,122,0) 80%)',
+              }}
+            />
+            {/* Softer secondary beam */}
+            <div
+              className="absolute -top-1/3 right-[20%] h-[160%] w-[340px] rotate-[35deg] origin-top opacity-40 blur-[60px]"
+              style={{
+                background:
+                  'linear-gradient(to bottom, rgba(150,35,122,0.7) 0%, rgba(150,35,122,0) 70%)',
+              }}
+            />
+          </div>
 
           {/* Arrows — top-left */}
           <div className="absolute z-20 top-8 left-6 md:top-12 md:left-[92px]">
@@ -130,7 +193,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           </div>
 
           {/* Giant year — centered, behind */}
-          <div className="pointer-events-none absolute inset-x-0 top-[110px] md:top-[120px] flex justify-center">
+          <div className="pointer-events-none absolute inset-x-0 top-[110px] md:top-[120px] z-10 flex justify-center">
             <span
               className="font-bold leading-none tracking-tighter text-[#836d7d] text-[120px] md:text-[255px] tabular-nums"
               data-tina-field={activeRef ? tinaField(activeRef, 'year') : undefined}
@@ -140,7 +203,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           </div>
 
           {/* Bottom block: heading + bar + labels */}
-          <div className="absolute left-6 right-6 md:left-[92px] md:right-[92px] bottom-10 md:bottom-[60px]">
+          <div className="absolute left-6 right-6 md:left-[92px] md:right-[92px] bottom-10 md:bottom-[60px] z-10">
             {timeline?.title && (
               <p
                 className="text-sm uppercase tracking-[0.15em] text-[#909da4] mb-4"
@@ -195,6 +258,10 @@ export default function TimelineReact({ query, variables, data: initialData }: T
         }
         .timeline-heading {
           animation: timelineHeadingIn 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .timeline-bar-fill { transition: none; }
+          .timeline-heading { animation: none; }
         }
       `}</style>
     </section>
