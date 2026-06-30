@@ -60,6 +60,19 @@ const ICONS: Record<string, IconType> = {
 };
 const FALLBACK_ICON: IconType = FaBuilding;
 
+/* ── Reduced-motion hook ── */
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+  return reduced;
+}
+
 export default function RubrosReact({ query, variables, data: initialData }: RubrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
@@ -86,6 +99,11 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const [dragDelta, setDragDelta] = useState(0);
   const dragRef = useRef({ startX: 0, active: false, moved: false });
   const DRAG_THRESHOLD = 8; // px before a press counts as a drag
+
+  // Autoplay control
+  const [paused, setPaused] = useState(false);
+  const [navTick, setNavTick] = useState(0);
+  const reducedMotion = usePrefersReducedMotion();
 
   const total = items.length;
 
@@ -126,12 +144,28 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
     setIndex((i) => Math.min(i, lastIndex));
   }, [lastIndex]);
 
+  // Autoplay: advance every 5s; paused on hover/focus, while dragging, and on
+  // arrow use (navTick restarts the timer). Disabled with reduced motion.
+  useEffect(() => {
+    if (paused || dragging || reducedMotion || lastIndex <= 0) return;
+    const id = setInterval(() => {
+      setIndex((i) => (i >= lastIndex ? 0 : i + 1));
+    }, 5000);
+    return () => clearInterval(id);
+  }, [paused, dragging, reducedMotion, lastIndex, navTick]);
+
   if (total === 0) return null;
 
   const baseOffset = Math.min(index * step, maxScroll);
 
-  const prev = () => setIndex((i) => (i <= 0 ? lastIndex : i - 1));
-  const next = () => setIndex((i) => (i >= lastIndex ? 0 : i + 1));
+  const prev = () => {
+    setIndex((i) => (i <= 0 ? lastIndex : i - 1));
+    setNavTick((t) => t + 1);
+  };
+  const next = () => {
+    setIndex((i) => (i >= lastIndex ? 0 : i + 1));
+    setNavTick((t) => t + 1);
+  };
 
   /* ── Pointer drag (mouse + touch) ── */
   const onPointerDown = (e: React.PointerEvent) => {
@@ -236,7 +270,13 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   );
 
   return (
-    <section className="rounded-t-[16px] bg-[#0a0a0a] px-6 pb-[100px] pt-[72px] md:px-[88px]">
+    <section
+      className="rounded-t-[16px] bg-[#0a0a0a] px-6 pb-[100px] pt-[72px] md:px-[88px]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       <div className="mx-auto max-w-[1440px]">
         {/* Desktop header: title left, arrows right */}
         <div className="mb-12 hidden items-start justify-between gap-6 md:flex">
