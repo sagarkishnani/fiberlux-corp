@@ -328,6 +328,61 @@ query globalConnection($before: String, $after: String, $first: Float, $last: Fl
   }
 }
 
+query infoAbonados($relativePath: String!) {
+  infoAbonados(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...InfoAbonadosParts
+  }
+}
+
+query infoAbonadosConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: InfoAbonadosFilter) {
+  infoAbonadosConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...InfoAbonadosParts
+      }
+    }
+  }
+}
+
 query formConfig($relativePath: String!) {
   formConfig(relativePath: $relativePath) {
     ... on Document {

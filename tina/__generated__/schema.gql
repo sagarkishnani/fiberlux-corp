@@ -66,6 +66,8 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
+  infoAbonados(relativePath: String): InfoAbonados!
+  infoAbonadosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoAbonadosFilter): InfoAbonadosConnection!
   formConfig(relativePath: String): FormConfig!
   formConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormConfigFilter): FormConfigConnection!
   dynamicForms(relativePath: String): DynamicForms!
@@ -79,6 +81,7 @@ input DocumentFilter {
   post: PostFilter
   contact: ContactFilter
   global: GlobalFilter
+  infoAbonados: InfoAbonadosFilter
   formConfig: FormConfigFilter
   dynamicForms: DynamicFormsFilter
 }
@@ -106,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | Global | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | About | Post | Contact | Global | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -781,6 +784,58 @@ type GlobalConnection implements Connection {
   edges: [GlobalConnectionEdges]
 }
 
+type InfoAbonadosSectionsDocuments {
+  title: String
+  url: String
+  icon: String
+  visible: Boolean
+}
+
+type InfoAbonadosSections {
+  title: String
+  visible: Boolean
+  documents: [InfoAbonadosSectionsDocuments]
+}
+
+type InfoAbonados implements Node & Document {
+  title: String
+  description: String
+  sections: [InfoAbonadosSections]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input InfoAbonadosSectionsDocumentsFilter {
+  title: StringFilter
+  url: StringFilter
+  icon: StringFilter
+  visible: BooleanFilter
+}
+
+input InfoAbonadosSectionsFilter {
+  title: StringFilter
+  visible: BooleanFilter
+  documents: InfoAbonadosSectionsDocumentsFilter
+}
+
+input InfoAbonadosFilter {
+  title: StringFilter
+  description: StringFilter
+  sections: InfoAbonadosSectionsFilter
+}
+
+type InfoAbonadosConnectionEdges {
+  cursor: String!
+  node: InfoAbonados
+}
+
+type InfoAbonadosConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [InfoAbonadosConnectionEdges]
+}
+
 type FormConfigForms {
   formType: String
   label: String
@@ -981,6 +1036,8 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
+  updateInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
+  createInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
   updateFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
   createFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
   updateDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
@@ -994,6 +1051,7 @@ input DocumentUpdateMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
   relativePath: String
@@ -1006,6 +1064,7 @@ input DocumentMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
 }
@@ -1286,6 +1345,25 @@ input GlobalMutation {
   nav: GlobalNavMutation
   footer: GlobalFooterMutation
   seo: GlobalSeoMutation
+}
+
+input InfoAbonadosSectionsDocumentsMutation {
+  title: String
+  url: String
+  icon: String
+  visible: Boolean
+}
+
+input InfoAbonadosSectionsMutation {
+  title: String
+  visible: Boolean
+  documents: [InfoAbonadosSectionsDocumentsMutation]
+}
+
+input InfoAbonadosMutation {
+  title: String
+  description: String
+  sections: [InfoAbonadosSectionsMutation]
 }
 
 input FormConfigFormsMutation {

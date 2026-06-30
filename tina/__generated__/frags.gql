@@ -244,6 +244,24 @@ fragment GlobalParts on Global {
   }
 }
 
+fragment InfoAbonadosParts on InfoAbonados {
+  __typename
+  title
+  description
+  sections {
+    __typename
+    title
+    visible
+    documents {
+      __typename
+      title
+      url
+      icon
+      visible
+    }
+  }
+}
+
 fragment FormConfigParts on FormConfig {
   __typename
   forms {

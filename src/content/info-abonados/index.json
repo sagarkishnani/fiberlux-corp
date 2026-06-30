@@ -1,0 +1,27 @@
+{
+  "title": "Información a abonados y usuarios",
+  "description": "Documentos, reglamentos y contratos disponibles para nuestros abonados y usuarios.",
+  "sections": [
+    {
+      "title": "Reglamentos",
+      "visible": true,
+      "documents": [
+        { "title": "Norma de Condiciones de Uso", "url": "/documents/RES-000132-2025-CD-OSIPTEL-CONDICIONES-DE-USO.pdf", "icon": "document", "visible": true },
+        { "title": "Reglamento de Reclamos", "url": "/documents/RCD-099-2022-CD-OSIPTEL-Reglamento-de-Reclamos.pdf", "icon": "document", "visible": true },
+        { "title": "Reglamento de Portabilidad", "url": "/documents/REGLAMENTO-DE-PORTABILIDAD.pdf", "icon": "document", "visible": true }
+      ]
+    },
+    {
+      "title": "Contratos",
+      "visible": true,
+      "documents": [
+        { "title": "Contrato Tipo Servicios Empaquetados", "url": "/documents/1.-EMPAQUETADOS_2025_V2.pdf", "icon": "document", "visible": true },
+        { "title": "Contrato Fiberlux Negocios", "url": "/documents/2.-NEGOCIOS_2025_V2.pdf", "icon": "document", "visible": true },
+        { "title": "Contrato Fiberlux Negocios Mesh", "url": "/documents/3.-NEGOCIOS_MESH_2025_V2.pdf", "icon": "document", "visible": true },
+        { "title": "Anexo 1 – Solicitud de Servicios IP FIJA", "url": "/documents/Anexo-1-Solicitud-de-Servicios-IP-FIJA.pdf", "icon": "document", "visible": true },
+        { "title": "Anexo 2 – Solicitud de Servicios Telefonía Fija", "url": "/documents/Anexo-2-Solicitud-de-Servicios-Telefonia-Fija.pdf", "icon": "document", "visible": true },
+        { "title": "Formato de solicitud de Portabilidad", "url": "/documents/FORMATO-DE-SOLICITUD-DE-PORTABILIDAD.pdf", "icon": "document", "visible": true }
+      ]
+    }
+  ]
+}

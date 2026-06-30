@@ -94,6 +94,8 @@ export type Query = {
   contactConnection: ContactConnection;
   global: Global;
   globalConnection: GlobalConnection;
+  infoAbonados: InfoAbonados;
+  infoAbonadosConnection: InfoAbonadosConnection;
   formConfig: FormConfig;
   formConfigConnection: FormConfigConnection;
   dynamicForms: DynamicForms;
@@ -212,6 +214,21 @@ export type QueryGlobalConnectionArgs = {
 };
 
 
+export type QueryInfoAbonadosArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryInfoAbonadosConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<InfoAbonadosFilter>;
+};
+
+
 export type QueryFormConfigArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -248,6 +265,7 @@ export type DocumentFilter = {
   post?: InputMaybe<PostFilter>;
   contact?: InputMaybe<ContactFilter>;
   global?: InputMaybe<GlobalFilter>;
+  infoAbonados?: InputMaybe<InfoAbonadosFilter>;
   formConfig?: InputMaybe<FormConfigFilter>;
   dynamicForms?: InputMaybe<DynamicFormsFilter>;
 };
@@ -289,7 +307,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | About | Post | Contact | Global | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | About | Post | Contact | Global | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1020,6 +1038,63 @@ export type GlobalConnection = Connection & {
   edges?: Maybe<Array<Maybe<GlobalConnectionEdges>>>;
 };
 
+export type InfoAbonadosSectionsDocuments = {
+  __typename?: 'InfoAbonadosSectionsDocuments';
+  title?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  visible?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type InfoAbonadosSections = {
+  __typename?: 'InfoAbonadosSections';
+  title?: Maybe<Scalars['String']['output']>;
+  visible?: Maybe<Scalars['Boolean']['output']>;
+  documents?: Maybe<Array<Maybe<InfoAbonadosSectionsDocuments>>>;
+};
+
+export type InfoAbonados = Node & Document & {
+  __typename?: 'InfoAbonados';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  sections?: Maybe<Array<Maybe<InfoAbonadosSections>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type InfoAbonadosSectionsDocumentsFilter = {
+  title?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringFilter>;
+  visible?: InputMaybe<BooleanFilter>;
+};
+
+export type InfoAbonadosSectionsFilter = {
+  title?: InputMaybe<StringFilter>;
+  visible?: InputMaybe<BooleanFilter>;
+  documents?: InputMaybe<InfoAbonadosSectionsDocumentsFilter>;
+};
+
+export type InfoAbonadosFilter = {
+  title?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  sections?: InputMaybe<InfoAbonadosSectionsFilter>;
+};
+
+export type InfoAbonadosConnectionEdges = {
+  __typename?: 'InfoAbonadosConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<InfoAbonados>;
+};
+
+export type InfoAbonadosConnection = Connection & {
+  __typename?: 'InfoAbonadosConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<InfoAbonadosConnectionEdges>>>;
+};
+
 export type FormConfigForms = {
   __typename?: 'FormConfigForms';
   formType?: Maybe<Scalars['String']['output']>;
@@ -1232,6 +1307,8 @@ export type Mutation = {
   createContact: Contact;
   updateGlobal: Global;
   createGlobal: Global;
+  updateInfoAbonados: InfoAbonados;
+  createInfoAbonados: InfoAbonados;
   updateFormConfig: FormConfig;
   createFormConfig: FormConfig;
   updateDynamicForms: DynamicForms;
@@ -1344,6 +1421,18 @@ export type MutationCreateGlobalArgs = {
 };
 
 
+export type MutationUpdateInfoAbonadosArgs = {
+  relativePath: Scalars['String']['input'];
+  params: InfoAbonadosMutation;
+};
+
+
+export type MutationCreateInfoAbonadosArgs = {
+  relativePath: Scalars['String']['input'];
+  params: InfoAbonadosMutation;
+};
+
+
 export type MutationUpdateFormConfigArgs = {
   relativePath: Scalars['String']['input'];
   params: FormConfigMutation;
@@ -1374,6 +1463,7 @@ export type DocumentUpdateMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
@@ -1386,6 +1476,7 @@ export type DocumentMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
 };
@@ -1668,6 +1759,25 @@ export type GlobalMutation = {
   seo?: InputMaybe<GlobalSeoMutation>;
 };
 
+export type InfoAbonadosSectionsDocumentsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type InfoAbonadosSectionsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+  documents?: InputMaybe<Array<InputMaybe<InfoAbonadosSectionsDocumentsMutation>>>;
+};
+
+export type InfoAbonadosMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  sections?: InputMaybe<Array<InputMaybe<InfoAbonadosSectionsMutation>>>;
+};
+
 export type FormConfigFormsMutation = {
   formType?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
@@ -1751,6 +1861,8 @@ export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: s
 export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
+
+export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: string | null, description?: string | null, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null };
 
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
@@ -1869,6 +1981,25 @@ export type GlobalConnectionQueryVariables = Exact<{
 
 
 export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type InfoAbonadosQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type InfoAbonadosQuery = { __typename?: 'Query', infoAbonados: { __typename: 'InfoAbonados', id: string, title?: string | null, description?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } };
+
+export type InfoAbonadosConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<InfoAbonadosFilter>;
+}>;
+
+
+export type InfoAbonadosConnectionQuery = { __typename?: 'Query', infoAbonadosConnection: { __typename?: 'InfoAbonadosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoAbonadosConnectionEdges', cursor: string, node?: { __typename: 'InfoAbonados', id: string, title?: string | null, description?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } | null } | null> | null } };
 
 export type FormConfigQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2157,6 +2288,25 @@ export const GlobalPartsFragmentDoc = gql`
     siteName
     defaultDescription
     ogImage
+  }
+}
+    `;
+export const InfoAbonadosPartsFragmentDoc = gql`
+    fragment InfoAbonadosParts on InfoAbonados {
+  __typename
+  title
+  description
+  sections {
+    __typename
+    title
+    visible
+    documents {
+      __typename
+      title
+      url
+      icon
+      visible
+    }
   }
 }
     `;
@@ -2573,6 +2723,63 @@ export const GlobalConnectionDocument = gql`
   }
 }
     ${GlobalPartsFragmentDoc}`;
+export const InfoAbonadosDocument = gql`
+    query infoAbonados($relativePath: String!) {
+  infoAbonados(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...InfoAbonadosParts
+  }
+}
+    ${InfoAbonadosPartsFragmentDoc}`;
+export const InfoAbonadosConnectionDocument = gql`
+    query infoAbonadosConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: InfoAbonadosFilter) {
+  infoAbonadosConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...InfoAbonadosParts
+      }
+    }
+  }
+}
+    ${InfoAbonadosPartsFragmentDoc}`;
 export const FormConfigDocument = gql`
     query formConfig($relativePath: String!) {
   formConfig(relativePath: $relativePath) {
@@ -2725,6 +2932,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     globalConnection(variables?: GlobalConnectionQueryVariables, options?: C): Promise<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}> {
         return requester<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}, GlobalConnectionQueryVariables>(GlobalConnectionDocument, variables, options);
+      },
+    infoAbonados(variables: InfoAbonadosQueryVariables, options?: C): Promise<{data: InfoAbonadosQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosQueryVariables, query: string}> {
+        return requester<{data: InfoAbonadosQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosQueryVariables, query: string}, InfoAbonadosQueryVariables>(InfoAbonadosDocument, variables, options);
+      },
+    infoAbonadosConnection(variables?: InfoAbonadosConnectionQueryVariables, options?: C): Promise<{data: InfoAbonadosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosConnectionQueryVariables, query: string}> {
+        return requester<{data: InfoAbonadosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosConnectionQueryVariables, query: string}, InfoAbonadosConnectionQueryVariables>(InfoAbonadosConnectionDocument, variables, options);
       },
     formConfig(variables: FormConfigQueryVariables, options?: C): Promise<{data: FormConfigQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigQueryVariables, query: string}> {
         return requester<{data: FormConfigQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigQueryVariables, query: string}, FormConfigQueryVariables>(FormConfigDocument, variables, options);

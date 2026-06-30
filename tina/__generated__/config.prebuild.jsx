@@ -767,6 +767,66 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         INFORMACIÓN A ABONADOS
+         ══════════════════════════════════════ */
+      {
+        name: "infoAbonados",
+        label: "Informaci\xF3n a Abonados",
+        path: "src/content/info-abonados",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => "/informacion-abonados"
+        },
+        fields: [
+          { name: "title", label: "T\xEDtulo de la p\xE1gina", type: "string" },
+          {
+            name: "description",
+            label: "Descripci\xF3n",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "sections",
+            label: "Secciones",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.title || "Secci\xF3n" }) },
+            fields: [
+              { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "visible", label: "Visible", type: "boolean" },
+              {
+                name: "documents",
+                label: "Documentos",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.title || "Documento" })
+                },
+                fields: [
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "url", label: "URL del documento", type: "string" },
+                  {
+                    name: "icon",
+                    label: "\xCDcono",
+                    type: "string",
+                    options: [
+                      { value: "document", label: "Documento" },
+                      { value: "shield", label: "Escudo (seguridad)" },
+                      { value: "scale", label: "Balanza (legal)" },
+                      { value: "clipboard", label: "Portapapeles" },
+                      { value: "folder", label: "Carpeta" },
+                      { value: "certificate", label: "Certificado" }
+                    ]
+                  },
+                  { name: "visible", label: "Visible", type: "boolean" }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          CONFIGURACIÓN DE FORMULARIOS (recipients)
          ══════════════════════════════════════ */
       {
