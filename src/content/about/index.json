@@ -62,6 +62,17 @@
       }
     ]
   },
+  "rubros": {
+    "title": "Rubros con los que trabajamos",
+    "items": [
+      { "icon": "mineria", "label": "Minería" },
+      { "icon": "restaurantes", "label": "Restaurantes" },
+      { "icon": "educacion", "label": "Educación" },
+      { "icon": "hoteleria", "label": "Hotelería" },
+      { "icon": "salud", "label": "Salud" },
+      { "icon": "retail", "label": "Retail" }
+    ]
+  },
   "stats": {
     "title": "Nuestra red en cifras",
     "items": [
