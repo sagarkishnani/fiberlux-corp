@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+
+/* ── Animation constants (measured from effortel.com/about) ── */
+const SLIDE_MS = 1000;
 
 /* ── Types ── */
 interface Milestone {
@@ -14,6 +17,8 @@ interface TimelineProps {
   variables: AboutQueryVariables;
   data: AboutQuery;
 }
+
+type Direction = 'next' | 'prev';
 
 /* ── Reduced-motion hook ── */
 function usePrefersReducedMotion(): boolean {
@@ -28,45 +33,82 @@ function usePrefersReducedMotion(): boolean {
   return reduced;
 }
 
-/* ── Count-up hook ──
-   Animates from the previously displayed value to `target`.
-   If `target` is null (non-numeric year), it skips animation.
-   Cancels any in-flight frame before starting a new one. */
-function useCountUp(target: number | null, animate: boolean, duration = 700): number {
-  const [value, setValue] = useState(target ?? 0);
-  const valueRef = useRef(target ?? 0);
-  const rafRef = useRef<number | null>(null);
+/* ── SlideWindow ──
+   Vertical slide transition (effortel-style) for a single piece of content.
+   When `activeKey` changes it renders BOTH the outgoing and the incoming
+   content inside an `overflow:hidden` window and animates them in sync:
+   - next: outgoing slides up & out the top, incoming slides up from below.
+   - prev: outgoing slides down & out the bottom, incoming slides in from above.
+   With reduced motion it swaps the content instantly (no second render).
+   The incoming element flows normally so the window always fits the current
+   content height; the outgoing element is overlaid absolutely. */
+interface Anim {
+  outgoing: number;
+  direction: Direction;
+  nonce: number;
+}
 
-  useEffect(() => {
-    if (target == null) return;
-    if (!animate) {
-      valueRef.current = target;
-      setValue(target);
-      return;
+function SlideWindow({
+  activeKey,
+  direction,
+  reduced,
+  windowClass = '',
+  render,
+}: {
+  activeKey: number;
+  direction: Direction;
+  reduced: boolean;
+  windowClass?: string;
+  render: (idx: number) => ReactNode;
+}) {
+  // "Storing information from previous renders" pattern: detect the change
+  // synchronously during render so the incoming element mounts already
+  // carrying its enter-animation class (no one-frame flash).
+  const [prevKey, setPrevKey] = useState(activeKey);
+  const [anim, setAnim] = useState<Anim | null>(null);
+  const nonceRef = useRef(0);
+
+  if (activeKey !== prevKey) {
+    const outgoing = prevKey;
+    setPrevKey(activeKey);
+    if (reduced) {
+      setAnim(null);
+    } else {
+      nonceRef.current += 1;
+      setAnim({ outgoing, direction, nonce: nonceRef.current });
     }
-    const from = valueRef.current;
-    const to = target;
-    if (from === to) return;
+  }
 
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-      const current = Math.round(from + (to - from) * eased);
-      valueRef.current = current;
-      setValue(current);
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    };
-    rafRef.current = requestAnimationFrame(tick);
+  // Clear the outgoing layer once the slide has finished (or is superseded).
+  const animNonce = anim?.nonce;
+  useEffect(() => {
+    if (animNonce == null) return;
+    const t = setTimeout(() => {
+      setAnim((cur) => (cur && cur.nonce === animNonce ? null : cur));
+    }, SLIDE_MS);
+    return () => clearTimeout(t);
+  }, [animNonce]);
 
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [target, animate, duration]);
+  const inClass = anim ? `tl-anim tl-in-${anim.direction}` : '';
 
-  return value;
+  return (
+    <div className={`relative overflow-hidden ${windowClass}`}>
+      {/* Incoming / current — in normal flow, defines the window size */}
+      <div key={`cur-${activeKey}`} className={inClass}>
+        {render(activeKey)}
+      </div>
+      {/* Outgoing — overlaid, slides out */}
+      {anim && (
+        <div
+          key={`out-${anim.outgoing}-${anim.nonce}`}
+          className={`absolute inset-0 tl-anim tl-out-${anim.direction}`}
+          aria-hidden="true"
+        >
+          {render(anim.outgoing)}
+        </div>
+      )}
+    </div>
+  );
 }
 
 /* ── Helpers ── */
@@ -95,6 +137,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const milestones = tinaItems.length > 0 ? tinaItems : fallbackItems;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<Direction>('next');
   const [paused, setPaused] = useState(false);
   const [navTick, setNavTick] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
@@ -103,16 +146,12 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const safeIndex = total > 0 ? activeIndex % total : 0;
   const active = milestones[safeIndex];
 
-  // Count-up of the giant year (all hooks must run before the early return)
-  const curYearNum = parseInt(active?.year || '', 10);
-  const animatedYear = useCountUp(isNaN(curYearNum) ? null : curYearNum, !reducedMotion);
-  const yearDisplay = isNaN(curYearNum) ? active?.year : animatedYear;
-
   // Autoplay: advances every 5s; paused on hover; navTick restarts the timer
   // whenever the user uses the arrows so it doesn't jump right after a click.
   useEffect(() => {
     if (paused || reducedMotion || total <= 1) return;
     const id = setInterval(() => {
+      setDirection('next');
       setActiveIndex((i) => (i + 1) % total);
     }, 5000);
     return () => clearInterval(id);
@@ -120,16 +159,48 @@ export default function TimelineReact({ query, variables, data: initialData }: T
 
   if (milestones.length === 0) return null;
 
-  const goTo = (i: number) => {
+  const goTo = (i: number, dir: Direction) => {
+    setDirection(dir);
     setActiveIndex(((i % total) + total) % total);
     setNavTick((t) => t + 1);
   };
-  const prev = () => goTo(safeIndex - 1);
-  const next = () => goTo(safeIndex + 1);
+  const prev = () => goTo(safeIndex - 1, 'prev');
+  const next = () => goTo(safeIndex + 1, 'next');
 
-  const activeRef = tinaItems[safeIndex] || fallbackItems[safeIndex];
+  const itemAt = (i: number) => milestones[((i % total) + total) % total];
+  const refAt = (i: number) => {
+    const k = ((i % total) + total) % total;
+    return tinaItems[k] || fallbackItems[k];
+  };
 
   const progress = barProgress(active?.year || '', startYear, endYear);
+
+  /* ── Index-aware renderers (used by both layers of SlideWindow) ── */
+  const renderYear = (i: number, sizeCls: string) => {
+    const item = itemAt(i);
+    const ref = refAt(i);
+    return (
+      <span
+        className={`block font-bold leading-none tracking-tighter tabular-nums text-[#836d7d] ${sizeCls}`}
+        data-tina-field={ref ? tinaField(ref, 'year') : undefined}
+      >
+        {item?.year}
+      </span>
+    );
+  };
+
+  const renderHeading = (i: number, sizeCls: string) => {
+    const item = itemAt(i);
+    const ref = refAt(i);
+    return (
+      <h2
+        className={`max-w-[900px] font-medium leading-[1.15] tracking-tight text-white ${sizeCls}`}
+        data-tina-field={ref ? tinaField(ref, 'heading') : undefined}
+      >
+        {item?.heading}
+      </h2>
+    );
+  };
 
   /* ── Shared pieces (reused by the desktop and mobile layouts) ── */
   const arrows = (
@@ -161,25 +232,6 @@ export default function TimelineReact({ query, variables, data: initialData }: T
       {timeline.title}
     </p>
   ) : null;
-
-  const renderHeading = (sizeCls: string) => (
-    <h2
-      key={safeIndex}
-      className={`timeline-heading max-w-[900px] font-medium leading-[1.15] tracking-tight text-white ${sizeCls}`}
-      data-tina-field={activeRef ? tinaField(activeRef, 'heading') : undefined}
-    >
-      {active?.heading}
-    </h2>
-  );
-
-  const renderYear = (sizeCls: string) => (
-    <span
-      className={`font-bold leading-none tracking-tighter tabular-nums text-[#836d7d] ${sizeCls}`}
-      data-tina-field={activeRef ? tinaField(activeRef, 'year') : undefined}
-    >
-      {yearDisplay}
-    </span>
-  );
 
   const bar = (
     <div className="relative h-[2px] w-full overflow-hidden rounded-full bg-[#394247]">
@@ -245,19 +297,31 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           </div>
 
           {/* ── Desktop layout (year on top, heading below) ── */}
-          <div className="relative z-10 mx-auto hidden max-w-[1440px] md:block md:min-h-[680px]">
+          <div className="relative z-10 mx-auto hidden max-w-[1440px] md:block md:min-h-[852px]">
             {/* Arrows — top-left */}
             <div className="absolute left-[92px] top-12 z-20">{arrows}</div>
 
             {/* Giant year — centered, behind */}
             <div className="pointer-events-none absolute inset-x-0 top-[120px] z-10 flex justify-center">
-              {renderYear('text-[255px]')}
+              <SlideWindow
+                activeKey={safeIndex}
+                direction={direction}
+                reduced={reducedMotion}
+                windowClass="inline-block"
+                render={(i) => renderYear(i, 'text-[255px]')}
+              />
             </div>
 
             {/* Bottom block: heading + bar + labels */}
             <div className="absolute bottom-[60px] left-[92px] right-[92px] z-10">
               {eyebrow}
-              {renderHeading('mb-8 text-[48px]')}
+              <SlideWindow
+                activeKey={safeIndex}
+                direction={direction}
+                reduced={reducedMotion}
+                windowClass="mb-8"
+                render={(i) => renderHeading(i, 'text-[48px]')}
+              />
               {bar}
               {labels}
             </div>
@@ -266,9 +330,20 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           {/* ── Mobile layout (heading on top, year below, arrows at bottom) ── */}
           <div className="relative z-10 flex min-h-[520px] flex-col px-6 pb-10 pt-14 md:hidden">
             {eyebrow}
-            {renderHeading('text-[28px]')}
+            <SlideWindow
+              activeKey={safeIndex}
+              direction={direction}
+              reduced={reducedMotion}
+              render={(i) => renderHeading(i, 'text-[28px]')}
+            />
             <div className="my-4 flex justify-end">
-              {renderYear('text-[88px] opacity-60')}
+              <SlideWindow
+                activeKey={safeIndex}
+                direction={direction}
+                reduced={reducedMotion}
+                windowClass="inline-block"
+                render={(i) => renderYear(i, 'text-[88px] opacity-60')}
+              />
             </div>
             <div className="mt-auto">
               {bar}
@@ -281,16 +356,35 @@ export default function TimelineReact({ query, variables, data: initialData }: T
         .timeline-bar-fill {
           transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
         }
-        @keyframes timelineHeadingIn {
-          0% { opacity: 0; transform: translateY(12px); }
-          100% { opacity: 1; transform: translateY(0); }
+        .tl-anim {
+          animation-duration: ${SLIDE_MS}ms;
+          animation-timing-function: cubic-bezier(0.544, 0.001, 0, 0.995);
+          animation-fill-mode: both;
+          will-change: transform;
         }
-        .timeline-heading {
-          animation: timelineHeadingIn 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        .tl-in-next { animation-name: tlInNext; }
+        .tl-out-next { animation-name: tlOutNext; }
+        .tl-in-prev { animation-name: tlInPrev; }
+        .tl-out-prev { animation-name: tlOutPrev; }
+        @keyframes tlInNext {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+        @keyframes tlOutNext {
+          from { transform: translateY(0); }
+          to { transform: translateY(-100%); }
+        }
+        @keyframes tlInPrev {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(0); }
+        }
+        @keyframes tlOutPrev {
+          from { transform: translateY(0); }
+          to { transform: translateY(100%); }
         }
         @media (prefers-reduced-motion: reduce) {
           .timeline-bar-fill { transition: none; }
-          .timeline-heading { animation: none; }
+          .tl-anim { animation: none !important; }
         }
       `}</style>
     </section>
