@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
@@ -13,6 +13,47 @@ interface TimelineProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+}
+
+/* ── Count-up hook ──
+   Animates from the previously displayed value to `target`.
+   If `target` is null (non-numeric year), it skips animation.
+   Cancels any in-flight frame before starting a new one. */
+function useCountUp(target: number | null, animate: boolean, duration = 700): number {
+  const [value, setValue] = useState(target ?? 0);
+  const valueRef = useRef(target ?? 0);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (target == null) return;
+    if (!animate) {
+      valueRef.current = target;
+      setValue(target);
+      return;
+    }
+    const from = valueRef.current;
+    const to = target;
+    if (from === to) return;
+
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      const current = Math.round(from + (to - from) * eased);
+      valueRef.current = current;
+      setValue(current);
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+    rafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [target, animate, duration]);
+
+  return value;
 }
 
 /* ── Helpers ── */
@@ -42,15 +83,21 @@ export default function TimelineReact({ query, variables, data: initialData }: T
 
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const total = milestones.length;
+  const safeIndex = total > 0 ? activeIndex % total : 0;
+  const active = milestones[safeIndex];
+
+  // Count-up of the giant year (all hooks must run before the early return)
+  const curYearNum = parseInt(active?.year || '', 10);
+  const animatedYear = useCountUp(isNaN(curYearNum) ? null : curYearNum, true);
+  const yearDisplay = isNaN(curYearNum) ? active?.year : animatedYear;
+
   if (milestones.length === 0) return null;
 
-  const total = milestones.length;
-  const safeIndex = activeIndex % total;
   const goTo = (i: number) => setActiveIndex(((i % total) + total) % total);
   const prev = () => goTo(safeIndex - 1);
   const next = () => goTo(safeIndex + 1);
 
-  const active = milestones[safeIndex];
   const activeRef = tinaItems[safeIndex] || fallbackItems[safeIndex];
 
   const progress = barProgress(active?.year || '', startYear, endYear);
@@ -85,10 +132,10 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           {/* Giant year — centered, behind */}
           <div className="pointer-events-none absolute inset-x-0 top-[110px] md:top-[120px] flex justify-center">
             <span
-              className="font-bold leading-none tracking-tighter text-[#836d7d] text-[120px] md:text-[255px]"
+              className="font-bold leading-none tracking-tighter text-[#836d7d] text-[120px] md:text-[255px] tabular-nums"
               data-tina-field={activeRef ? tinaField(activeRef, 'year') : undefined}
             >
-              {active?.year}
+              {yearDisplay}
             </span>
           </div>
 
@@ -104,7 +151,8 @@ export default function TimelineReact({ query, variables, data: initialData }: T
             )}
 
             <h2
-              className="text-white font-medium leading-[1.15] tracking-tight text-[28px] md:text-[48px] max-w-[900px] mb-8"
+              key={safeIndex}
+              className="timeline-heading text-white font-medium leading-[1.15] tracking-tight text-[28px] md:text-[48px] max-w-[900px] mb-8"
               data-tina-field={activeRef ? tinaField(activeRef, 'heading') : undefined}
             >
               {active?.heading}
@@ -113,7 +161,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
             {/* Progress bar */}
             <div className="relative h-[2px] w-full rounded-full bg-[#394247] overflow-hidden">
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#080618] to-[#96237a]"
+                className="timeline-bar-fill absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#080618] to-[#96237a]"
                 style={{ width: `${progress * 100}%` }}
               />
             </div>
@@ -136,6 +184,19 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           </div>
         </div>
       </div>
+
+      <style>{`
+        .timeline-bar-fill {
+          transition: width 700ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes timelineHeadingIn {
+          0% { opacity: 0; transform: translateY(12px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .timeline-heading {
+          animation: timelineHeadingIn 600ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+      `}</style>
     </section>
   );
 }
