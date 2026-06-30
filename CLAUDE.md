@@ -37,7 +37,9 @@ Every CMS-driven section uses a pair:
 
 Hydration directives: `client:load` for above-fold interactive components, `client:visible` for below-fold.
 
-Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, `contact`, and `shared` (cross-page: `Header`, `Footer`, `StickyCards`, testimonial slider, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`).
+Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, `contact`, and `shared` (cross-page: `Header`, `Footer`, `StickyCards`, testimonial slider, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`). A few components (e.g. `StatsReact`) live directly under `src/components/`.
+
+Some pages compose several islands in the page file itself rather than via paired `.astro` wrappers. `src/pages/nosotros/index.astro` resolves the `about` query once and passes it to `HeroNosotrosReact`, `MissionVisionReact`, `ValuesReact`, and `TimelineReact` (plus `StatsReact` fed by the `home` query). The `nosotros` Timeline renders an editable animated history strip driven by `about.timeline` (eyebrow `title`, `startYear`/`endYear` bar labels, and a `milestones[]` list of `{ year, heading }`).
 
 ### Content & collections
 
@@ -90,3 +92,7 @@ Spline scenes are embedded via `@splinetool/react-spline` in `HeroHome`. Scene U
 ### CMS admin panel
 
 Accessible at `/admin` in dev. Media uploads go to `public/uploads/` (media root `uploads`, public folder `public`).
+
+### Specs & references (workflow)
+
+Larger features are spec-driven. `specs/` holds numbered markdown specs (`01-legales-osiptel-y-editabilidad.md`, `02-pagina-contacto-formulario.md`, `03-nosotros-timeline-historia.md`); each is built on its own `spec-NN-*` branch and merged via PR. `references/` holds the design reference screenshots (desktop + mobile) a spec is implemented against — used for visual QA. When implementing or modifying a feature that has a spec, read the matching `specs/NN-*.md` first.
