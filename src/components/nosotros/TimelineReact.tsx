@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
@@ -39,12 +40,18 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const fallbackItems = (fallbackTimeline?.milestones || []).filter(Boolean) as Milestone[];
   const milestones = tinaItems.length > 0 ? tinaItems : fallbackItems;
 
+  const [activeIndex, setActiveIndex] = useState(0);
+
   if (milestones.length === 0) return null;
 
-  // Static for now (interaction lands in step 6)
-  const activeIndex = 0;
-  const active = milestones[activeIndex];
-  const activeRef = tinaItems[activeIndex] || fallbackItems[activeIndex];
+  const total = milestones.length;
+  const safeIndex = activeIndex % total;
+  const goTo = (i: number) => setActiveIndex(((i % total) + total) % total);
+  const prev = () => goTo(safeIndex - 1);
+  const next = () => goTo(safeIndex + 1);
+
+  const active = milestones[safeIndex];
+  const activeRef = tinaItems[safeIndex] || fallbackItems[safeIndex];
 
   const progress = barProgress(active?.year || '', startYear, endYear);
 
@@ -59,16 +66,18 @@ export default function TimelineReact({ query, variables, data: initialData }: T
               <button
                 type="button"
                 aria-label="Hito anterior"
-                className="flex items-center justify-center w-[49px] h-[49px] bg-[#141223] opacity-30"
+                onClick={prev}
+                className="flex items-center justify-center w-[49px] h-[49px] bg-[#141223] text-white opacity-40 transition-opacity hover:opacity-100"
               >
-                <FaArrowLeft className="text-white text-sm" />
+                <FaArrowLeft className="text-sm" />
               </button>
               <button
                 type="button"
                 aria-label="Hito siguiente"
-                className="flex items-center justify-center w-[49px] h-[49px] bg-[#96237a]"
+                onClick={next}
+                className="flex items-center justify-center w-[49px] h-[49px] bg-[#96237a] text-white transition-colors hover:bg-[#b02a92]"
               >
-                <FaArrowRight className="text-white text-sm" />
+                <FaArrowRight className="text-sm" />
               </button>
             </div>
           </div>
