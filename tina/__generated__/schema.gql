@@ -66,6 +66,10 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
+  formConfig(relativePath: String): FormConfig!
+  formConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormConfigFilter): FormConfigConnection!
+  dynamicForms(relativePath: String): DynamicForms!
+  dynamicFormsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DynamicFormsFilter): DynamicFormsConnection!
 }
 
 input DocumentFilter {
@@ -75,6 +79,8 @@ input DocumentFilter {
   post: PostFilter
   contact: ContactFilter
   global: GlobalFilter
+  formConfig: FormConfigFilter
+  dynamicForms: DynamicFormsFilter
 }
 
 type DocumentConnectionEdges {
@@ -100,7 +106,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | Global | Folder
+union DocumentNode = Home | Service | About | Post | Contact | Global | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -775,6 +781,188 @@ type GlobalConnection implements Connection {
   edges: [GlobalConnectionEdges]
 }
 
+type FormConfigForms {
+  formType: String
+  label: String
+  enabled: Boolean
+  recipients: [String]
+}
+
+type FormConfig implements Node & Document {
+  forms: [FormConfigForms]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input FormConfigFormsFilter {
+  formType: StringFilter
+  label: StringFilter
+  enabled: BooleanFilter
+  recipients: StringFilter
+}
+
+input FormConfigFilter {
+  forms: FormConfigFormsFilter
+}
+
+type FormConfigConnectionEdges {
+  cursor: String!
+  node: FormConfig
+}
+
+type FormConfigConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [FormConfigConnectionEdges]
+}
+
+type DynamicFormsFieldsValidation {
+  minLength: Float
+  maxLength: Float
+  pattern: String
+  patternMessage: String
+}
+
+type DynamicFormsFieldsOptions {
+  value: String
+  label: String
+  description: String
+}
+
+type DynamicFormsFieldsConditionalField {
+  dependsOn: String
+  showWhen: String
+}
+
+type DynamicFormsFields {
+  fieldType: String!
+  name: String
+  label: String
+  placeholder: String
+  required: Boolean
+  width: String
+  order: Float
+  orderMobile: Float
+  sectionNumber: Float
+  noteContent: String
+  rows: Float
+  validation: DynamicFormsFieldsValidation
+  errorMessage: String
+  helpText: String
+  defaultValue: String
+  options: [DynamicFormsFieldsOptions]
+  accept: String
+  maxFileSize: Float
+  multiple: Boolean
+  linkText: String
+  linkUrl: String
+  conditionalField: DynamicFormsFieldsConditionalField
+}
+
+type DynamicForms implements Node & Document {
+  formId: String!
+  formTitle: String
+  badge: String
+  description: String
+  styleVariant: String
+  submitButtonText: String
+  successTitle: String
+  successMessage: String
+  errorMessage: String
+  validationMessage: String
+  showCorrelativo: Boolean
+  privacyText: String
+  privacyUrl: String
+  dataUrl: String
+  fields: [DynamicFormsFields]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input DynamicFormsFieldsValidationFilter {
+  minLength: NumberFilter
+  maxLength: NumberFilter
+  pattern: StringFilter
+  patternMessage: StringFilter
+}
+
+input DynamicFormsFieldsOptionsFilter {
+  value: StringFilter
+  label: StringFilter
+  description: StringFilter
+}
+
+input DynamicFormsFieldsConditionalFieldFilter {
+  dependsOn: StringFilter
+  showWhen: StringFilter
+}
+
+input DynamicFormsFieldsFilter {
+  fieldType: StringFilter
+  name: StringFilter
+  label: StringFilter
+  placeholder: StringFilter
+  required: BooleanFilter
+  width: StringFilter
+  order: NumberFilter
+  orderMobile: NumberFilter
+  sectionNumber: NumberFilter
+  noteContent: StringFilter
+  rows: NumberFilter
+  validation: DynamicFormsFieldsValidationFilter
+  errorMessage: StringFilter
+  helpText: StringFilter
+  defaultValue: StringFilter
+  options: DynamicFormsFieldsOptionsFilter
+  accept: StringFilter
+  maxFileSize: NumberFilter
+  multiple: BooleanFilter
+  linkText: StringFilter
+  linkUrl: StringFilter
+  conditionalField: DynamicFormsFieldsConditionalFieldFilter
+}
+
+input DynamicFormsFilter {
+  formId: StringFilter
+  formTitle: StringFilter
+  badge: StringFilter
+  description: StringFilter
+  styleVariant: StringFilter
+  submitButtonText: StringFilter
+  successTitle: StringFilter
+  successMessage: StringFilter
+  errorMessage: StringFilter
+  validationMessage: StringFilter
+  showCorrelativo: BooleanFilter
+  privacyText: StringFilter
+  privacyUrl: StringFilter
+  dataUrl: StringFilter
+  fields: DynamicFormsFieldsFilter
+}
+
+type DynamicFormsConnectionEdges {
+  cursor: String!
+  node: DynamicForms
+}
+
+type DynamicFormsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [DynamicFormsConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -793,6 +981,10 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
+  updateFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
+  createFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
+  updateDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
+  createDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
 }
 
 input DocumentUpdateMutation {
@@ -802,6 +994,8 @@ input DocumentUpdateMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  formConfig: FormConfigMutation
+  dynamicForms: DynamicFormsMutation
   relativePath: String
 }
 
@@ -812,6 +1006,8 @@ input DocumentMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  formConfig: FormConfigMutation
+  dynamicForms: DynamicFormsMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -1090,6 +1286,78 @@ input GlobalMutation {
   nav: GlobalNavMutation
   footer: GlobalFooterMutation
   seo: GlobalSeoMutation
+}
+
+input FormConfigFormsMutation {
+  formType: String
+  label: String
+  enabled: Boolean
+  recipients: [String]
+}
+
+input FormConfigMutation {
+  forms: [FormConfigFormsMutation]
+}
+
+input DynamicFormsFieldsValidationMutation {
+  minLength: Float
+  maxLength: Float
+  pattern: String
+  patternMessage: String
+}
+
+input DynamicFormsFieldsOptionsMutation {
+  value: String
+  label: String
+  description: String
+}
+
+input DynamicFormsFieldsConditionalFieldMutation {
+  dependsOn: String
+  showWhen: String
+}
+
+input DynamicFormsFieldsMutation {
+  fieldType: String
+  name: String
+  label: String
+  placeholder: String
+  required: Boolean
+  width: String
+  order: Float
+  orderMobile: Float
+  sectionNumber: Float
+  noteContent: String
+  rows: Float
+  validation: DynamicFormsFieldsValidationMutation
+  errorMessage: String
+  helpText: String
+  defaultValue: String
+  options: [DynamicFormsFieldsOptionsMutation]
+  accept: String
+  maxFileSize: Float
+  multiple: Boolean
+  linkText: String
+  linkUrl: String
+  conditionalField: DynamicFormsFieldsConditionalFieldMutation
+}
+
+input DynamicFormsMutation {
+  formId: String
+  formTitle: String
+  badge: String
+  description: String
+  styleVariant: String
+  submitButtonText: String
+  successTitle: String
+  successMessage: String
+  errorMessage: String
+  validationMessage: String
+  showCorrelativo: Boolean
+  privacyText: String
+  privacyUrl: String
+  dataUrl: String
+  fields: [DynamicFormsFieldsMutation]
 }
 
 schema {

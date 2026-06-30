@@ -1,0 +1,262 @@
+{
+  "formId": "reclamo",
+  "formTitle": "Formulario de Reclamo de Servicios",
+  "badge": "ATENCIÓN AL CLIENTE",
+  "description": "Completa el siguiente formulario para registrar tu reclamo sobre nuestros servicios.",
+  "styleVariant": "default",
+  "submitButtonText": "Ingresar reclamo",
+  "successTitle": "¡Reclamo registrado!",
+  "successMessage": "Tu reclamo ha sido registrado correctamente. Te contactaremos pronto.",
+  "errorMessage": "Ocurrió un error al enviar tu reclamo. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa todos los campos obligatorios.",
+  "showCorrelativo": true,
+  "fields": [
+    {
+      "fieldType": "section_header",
+      "label": "Ingreso de Datos de usuario – Razón Social",
+      "sectionNumber": 1,
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "nombre",
+      "label": "Nombre",
+      "placeholder": "Nombre",
+      "required": true,
+      "width": "half",
+      "order": 2
+    },
+    {
+      "fieldType": "text",
+      "name": "apellido",
+      "label": "Apellido",
+      "placeholder": "Apellido",
+      "required": true,
+      "width": "half",
+      "order": 3
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Selecciona",
+      "required": true,
+      "width": "half",
+      "order": 4,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "pasaporte", "label": "Pasaporte" },
+        { "value": "ruc", "label": "RUC" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "numDoc",
+      "label": "N° de documento",
+      "placeholder": "N° de Documento",
+      "required": true,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "text",
+      "name": "direccion",
+      "label": "Dirección",
+      "placeholder": "Dirección",
+      "required": true,
+      "width": "full",
+      "order": 6
+    },
+    {
+      "fieldType": "text",
+      "name": "distrito",
+      "label": "Distrito",
+      "placeholder": "Distrito",
+      "required": true,
+      "width": "half",
+      "order": 7
+    },
+    {
+      "fieldType": "text",
+      "name": "ciudad",
+      "label": "Ciudad",
+      "placeholder": "Ciudad",
+      "required": true,
+      "width": "half",
+      "order": 8
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos de Representante",
+      "sectionNumber": 2,
+      "order": 9
+    },
+    {
+      "fieldType": "text",
+      "name": "repNombre",
+      "label": "Nombre",
+      "placeholder": "Nombre",
+      "width": "half",
+      "order": 10
+    },
+    {
+      "fieldType": "text",
+      "name": "repApellido",
+      "label": "Apellido",
+      "placeholder": "Apellido",
+      "width": "half",
+      "order": 11
+    },
+    {
+      "fieldType": "select",
+      "name": "repTipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Selecciona",
+      "width": "half",
+      "order": 12,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "pasaporte", "label": "Pasaporte" },
+        { "value": "ruc", "label": "RUC" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "repNumDoc",
+      "label": "N° de documento",
+      "placeholder": "N° de Documento",
+      "width": "half",
+      "order": 13
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos del reclamo",
+      "sectionNumber": 3,
+      "order": 14
+    },
+    {
+      "fieldType": "text",
+      "name": "contactNombre",
+      "label": "Nombre de contacto",
+      "placeholder": "Nombre de contacto",
+      "required": true,
+      "width": "half",
+      "order": 15
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "Teléfono de contacto",
+      "placeholder": "Teléfono de contacto",
+      "required": true,
+      "width": "half",
+      "order": 16
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Correo de contacto",
+      "placeholder": "Correo de contacto",
+      "required": true,
+      "width": "full",
+      "order": 17
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Servicios",
+      "order": 18
+    },
+    {
+      "fieldType": "select",
+      "name": "servicioSelec",
+      "label": "Tipo de servicio",
+      "placeholder": "Selecciona un servicio",
+      "required": true,
+      "width": "half",
+      "order": 19,
+      "options": [
+        { "value": "telefonia", "label": "Telefonía" },
+        { "value": "internet", "label": "Internet" },
+        { "value": "otros", "label": "Otros" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "otroServicio",
+      "label": "Otro servicio (si aplica)",
+      "placeholder": "Especifica el servicio",
+      "width": "half",
+      "order": 20
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Materias Reclamables",
+      "order": 21
+    },
+    {
+      "fieldType": "select",
+      "name": "materiaReclamo",
+      "label": "Materia del reclamo",
+      "placeholder": "Selecciona la materia reclamable",
+      "required": true,
+      "width": "full",
+      "order": 22,
+      "options": [
+        { "value": "facturacion", "label": "Facturación y cobro" },
+        { "value": "calidad", "label": "Calidad e idoneidad en la prestación del servicio" },
+        { "value": "incumplimiento", "label": "Incumplimiento de condiciones contractuales, ofertas y promociones" },
+        { "value": "falta_servicio", "label": "Falta de servicio" },
+        { "value": "instalacion", "label": "Instalación, activación o traslado del servicio" },
+        { "value": "falta_baja", "label": "Falta de ejecución de baja o suspensión del servicio" },
+        { "value": "recargas", "label": "Recargas" },
+        { "value": "contratacion_no_solicitada", "label": "Contratación no solicitada" },
+        { "value": "migracion", "label": "Migración" },
+        { "value": "portabilidad", "label": "Portabilidad" },
+        { "value": "otras", "label": "Otras materias reclamables" }
+      ]
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Para brindar un mejor servicio se recomienda ingresar el monto del recibo reclamado.",
+      "order": 23
+    },
+    {
+      "fieldType": "currency",
+      "name": "montoReclamo",
+      "label": "Monto del reclamo",
+      "width": "full",
+      "order": 24
+    },
+    {
+      "fieldType": "textarea",
+      "name": "observaciones",
+      "label": "Observaciones",
+      "placeholder": "Detalla tu reclamo aquí...",
+      "required": true,
+      "width": "full",
+      "order": 25,
+      "rows": 4
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Documentos adjuntos",
+      "sectionNumber": 4,
+      "order": 26
+    },
+    {
+      "fieldType": "upload",
+      "name": "adjuntos",
+      "label": "",
+      "width": "full",
+      "order": 27,
+      "accept": ".pdf,.doc,.docx,.jpg,.png",
+      "multiple": true,
+      "helpText": "Máximo cinco documentos que no superen 10 Mb en total."
+    }
+  ]
+}

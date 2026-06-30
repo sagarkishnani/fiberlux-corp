@@ -1,0 +1,21 @@
+---
+import client from "../../../tina/__generated__/client";
+import DynamicFormReact from "./DynamicFormReact";
+
+interface Props {
+  formSlug: string;
+}
+
+const { formSlug } = Astro.props;
+
+const result = await client.queries.dynamicForms({
+  relativePath: `${formSlug}.json`,
+});
+---
+
+<DynamicFormReact
+  query={result.query}
+  variables={result.variables}
+  data={result.data}
+  client:load
+/>

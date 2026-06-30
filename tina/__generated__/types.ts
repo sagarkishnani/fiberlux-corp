@@ -94,6 +94,10 @@ export type Query = {
   contactConnection: ContactConnection;
   global: Global;
   globalConnection: GlobalConnection;
+  formConfig: FormConfig;
+  formConfigConnection: FormConfigConnection;
+  dynamicForms: DynamicForms;
+  dynamicFormsConnection: DynamicFormsConnection;
 };
 
 
@@ -207,6 +211,36 @@ export type QueryGlobalConnectionArgs = {
   filter?: InputMaybe<GlobalFilter>;
 };
 
+
+export type QueryFormConfigArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFormConfigConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FormConfigFilter>;
+};
+
+
+export type QueryDynamicFormsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDynamicFormsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<DynamicFormsFilter>;
+};
+
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
@@ -214,6 +248,8 @@ export type DocumentFilter = {
   post?: InputMaybe<PostFilter>;
   contact?: InputMaybe<ContactFilter>;
   global?: InputMaybe<GlobalFilter>;
+  formConfig?: InputMaybe<FormConfigFilter>;
+  dynamicForms?: InputMaybe<DynamicFormsFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -253,7 +289,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | About | Post | Contact | Global | Folder;
+export type DocumentNode = Home | Service | About | Post | Contact | Global | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -984,6 +1020,199 @@ export type GlobalConnection = Connection & {
   edges?: Maybe<Array<Maybe<GlobalConnectionEdges>>>;
 };
 
+export type FormConfigForms = {
+  __typename?: 'FormConfigForms';
+  formType?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  recipients?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type FormConfig = Node & Document & {
+  __typename?: 'FormConfig';
+  forms?: Maybe<Array<Maybe<FormConfigForms>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type FormConfigFormsFilter = {
+  formType?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  enabled?: InputMaybe<BooleanFilter>;
+  recipients?: InputMaybe<StringFilter>;
+};
+
+export type FormConfigFilter = {
+  forms?: InputMaybe<FormConfigFormsFilter>;
+};
+
+export type FormConfigConnectionEdges = {
+  __typename?: 'FormConfigConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<FormConfig>;
+};
+
+export type FormConfigConnection = Connection & {
+  __typename?: 'FormConfigConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<FormConfigConnectionEdges>>>;
+};
+
+export type DynamicFormsFieldsValidation = {
+  __typename?: 'DynamicFormsFieldsValidation';
+  minLength?: Maybe<Scalars['Float']['output']>;
+  maxLength?: Maybe<Scalars['Float']['output']>;
+  pattern?: Maybe<Scalars['String']['output']>;
+  patternMessage?: Maybe<Scalars['String']['output']>;
+};
+
+export type DynamicFormsFieldsOptions = {
+  __typename?: 'DynamicFormsFieldsOptions';
+  value?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+};
+
+export type DynamicFormsFieldsConditionalField = {
+  __typename?: 'DynamicFormsFieldsConditionalField';
+  dependsOn?: Maybe<Scalars['String']['output']>;
+  showWhen?: Maybe<Scalars['String']['output']>;
+};
+
+export type DynamicFormsFields = {
+  __typename?: 'DynamicFormsFields';
+  fieldType: Scalars['String']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  placeholder?: Maybe<Scalars['String']['output']>;
+  required?: Maybe<Scalars['Boolean']['output']>;
+  width?: Maybe<Scalars['String']['output']>;
+  order?: Maybe<Scalars['Float']['output']>;
+  orderMobile?: Maybe<Scalars['Float']['output']>;
+  sectionNumber?: Maybe<Scalars['Float']['output']>;
+  noteContent?: Maybe<Scalars['String']['output']>;
+  rows?: Maybe<Scalars['Float']['output']>;
+  validation?: Maybe<DynamicFormsFieldsValidation>;
+  errorMessage?: Maybe<Scalars['String']['output']>;
+  helpText?: Maybe<Scalars['String']['output']>;
+  defaultValue?: Maybe<Scalars['String']['output']>;
+  options?: Maybe<Array<Maybe<DynamicFormsFieldsOptions>>>;
+  accept?: Maybe<Scalars['String']['output']>;
+  maxFileSize?: Maybe<Scalars['Float']['output']>;
+  multiple?: Maybe<Scalars['Boolean']['output']>;
+  linkText?: Maybe<Scalars['String']['output']>;
+  linkUrl?: Maybe<Scalars['String']['output']>;
+  conditionalField?: Maybe<DynamicFormsFieldsConditionalField>;
+};
+
+export type DynamicForms = Node & Document & {
+  __typename?: 'DynamicForms';
+  formId: Scalars['String']['output'];
+  formTitle?: Maybe<Scalars['String']['output']>;
+  badge?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  styleVariant?: Maybe<Scalars['String']['output']>;
+  submitButtonText?: Maybe<Scalars['String']['output']>;
+  successTitle?: Maybe<Scalars['String']['output']>;
+  successMessage?: Maybe<Scalars['String']['output']>;
+  errorMessage?: Maybe<Scalars['String']['output']>;
+  validationMessage?: Maybe<Scalars['String']['output']>;
+  showCorrelativo?: Maybe<Scalars['Boolean']['output']>;
+  privacyText?: Maybe<Scalars['String']['output']>;
+  privacyUrl?: Maybe<Scalars['String']['output']>;
+  dataUrl?: Maybe<Scalars['String']['output']>;
+  fields?: Maybe<Array<Maybe<DynamicFormsFields>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
+export type DynamicFormsFieldsValidationFilter = {
+  minLength?: InputMaybe<NumberFilter>;
+  maxLength?: InputMaybe<NumberFilter>;
+  pattern?: InputMaybe<StringFilter>;
+  patternMessage?: InputMaybe<StringFilter>;
+};
+
+export type DynamicFormsFieldsOptionsFilter = {
+  value?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+};
+
+export type DynamicFormsFieldsConditionalFieldFilter = {
+  dependsOn?: InputMaybe<StringFilter>;
+  showWhen?: InputMaybe<StringFilter>;
+};
+
+export type DynamicFormsFieldsFilter = {
+  fieldType?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  placeholder?: InputMaybe<StringFilter>;
+  required?: InputMaybe<BooleanFilter>;
+  width?: InputMaybe<StringFilter>;
+  order?: InputMaybe<NumberFilter>;
+  orderMobile?: InputMaybe<NumberFilter>;
+  sectionNumber?: InputMaybe<NumberFilter>;
+  noteContent?: InputMaybe<StringFilter>;
+  rows?: InputMaybe<NumberFilter>;
+  validation?: InputMaybe<DynamicFormsFieldsValidationFilter>;
+  errorMessage?: InputMaybe<StringFilter>;
+  helpText?: InputMaybe<StringFilter>;
+  defaultValue?: InputMaybe<StringFilter>;
+  options?: InputMaybe<DynamicFormsFieldsOptionsFilter>;
+  accept?: InputMaybe<StringFilter>;
+  maxFileSize?: InputMaybe<NumberFilter>;
+  multiple?: InputMaybe<BooleanFilter>;
+  linkText?: InputMaybe<StringFilter>;
+  linkUrl?: InputMaybe<StringFilter>;
+  conditionalField?: InputMaybe<DynamicFormsFieldsConditionalFieldFilter>;
+};
+
+export type DynamicFormsFilter = {
+  formId?: InputMaybe<StringFilter>;
+  formTitle?: InputMaybe<StringFilter>;
+  badge?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  styleVariant?: InputMaybe<StringFilter>;
+  submitButtonText?: InputMaybe<StringFilter>;
+  successTitle?: InputMaybe<StringFilter>;
+  successMessage?: InputMaybe<StringFilter>;
+  errorMessage?: InputMaybe<StringFilter>;
+  validationMessage?: InputMaybe<StringFilter>;
+  showCorrelativo?: InputMaybe<BooleanFilter>;
+  privacyText?: InputMaybe<StringFilter>;
+  privacyUrl?: InputMaybe<StringFilter>;
+  dataUrl?: InputMaybe<StringFilter>;
+  fields?: InputMaybe<DynamicFormsFieldsFilter>;
+};
+
+export type DynamicFormsConnectionEdges = {
+  __typename?: 'DynamicFormsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<DynamicForms>;
+};
+
+export type DynamicFormsConnection = Connection & {
+  __typename?: 'DynamicFormsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<DynamicFormsConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -1003,6 +1232,10 @@ export type Mutation = {
   createContact: Contact;
   updateGlobal: Global;
   createGlobal: Global;
+  updateFormConfig: FormConfig;
+  createFormConfig: FormConfig;
+  updateDynamicForms: DynamicForms;
+  createDynamicForms: DynamicForms;
 };
 
 
@@ -1110,6 +1343,30 @@ export type MutationCreateGlobalArgs = {
   params: GlobalMutation;
 };
 
+
+export type MutationUpdateFormConfigArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FormConfigMutation;
+};
+
+
+export type MutationCreateFormConfigArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FormConfigMutation;
+};
+
+
+export type MutationUpdateDynamicFormsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: DynamicFormsMutation;
+};
+
+
+export type MutationCreateDynamicFormsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: DynamicFormsMutation;
+};
+
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
@@ -1117,6 +1374,8 @@ export type DocumentUpdateMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  formConfig?: InputMaybe<FormConfigMutation>;
+  dynamicForms?: InputMaybe<DynamicFormsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1127,6 +1386,8 @@ export type DocumentMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  formConfig?: InputMaybe<FormConfigMutation>;
+  dynamicForms?: InputMaybe<DynamicFormsMutation>;
 };
 
 export type HomeHeroButtonsMutation = {
@@ -1407,6 +1668,78 @@ export type GlobalMutation = {
   seo?: InputMaybe<GlobalSeoMutation>;
 };
 
+export type FormConfigFormsMutation = {
+  formType?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  recipients?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type FormConfigMutation = {
+  forms?: InputMaybe<Array<InputMaybe<FormConfigFormsMutation>>>;
+};
+
+export type DynamicFormsFieldsValidationMutation = {
+  minLength?: InputMaybe<Scalars['Float']['input']>;
+  maxLength?: InputMaybe<Scalars['Float']['input']>;
+  pattern?: InputMaybe<Scalars['String']['input']>;
+  patternMessage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DynamicFormsFieldsOptionsMutation = {
+  value?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DynamicFormsFieldsConditionalFieldMutation = {
+  dependsOn?: InputMaybe<Scalars['String']['input']>;
+  showWhen?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DynamicFormsFieldsMutation = {
+  fieldType?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  placeholder?: InputMaybe<Scalars['String']['input']>;
+  required?: InputMaybe<Scalars['Boolean']['input']>;
+  width?: InputMaybe<Scalars['String']['input']>;
+  order?: InputMaybe<Scalars['Float']['input']>;
+  orderMobile?: InputMaybe<Scalars['Float']['input']>;
+  sectionNumber?: InputMaybe<Scalars['Float']['input']>;
+  noteContent?: InputMaybe<Scalars['String']['input']>;
+  rows?: InputMaybe<Scalars['Float']['input']>;
+  validation?: InputMaybe<DynamicFormsFieldsValidationMutation>;
+  errorMessage?: InputMaybe<Scalars['String']['input']>;
+  helpText?: InputMaybe<Scalars['String']['input']>;
+  defaultValue?: InputMaybe<Scalars['String']['input']>;
+  options?: InputMaybe<Array<InputMaybe<DynamicFormsFieldsOptionsMutation>>>;
+  accept?: InputMaybe<Scalars['String']['input']>;
+  maxFileSize?: InputMaybe<Scalars['Float']['input']>;
+  multiple?: InputMaybe<Scalars['Boolean']['input']>;
+  linkText?: InputMaybe<Scalars['String']['input']>;
+  linkUrl?: InputMaybe<Scalars['String']['input']>;
+  conditionalField?: InputMaybe<DynamicFormsFieldsConditionalFieldMutation>;
+};
+
+export type DynamicFormsMutation = {
+  formId?: InputMaybe<Scalars['String']['input']>;
+  formTitle?: InputMaybe<Scalars['String']['input']>;
+  badge?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  styleVariant?: InputMaybe<Scalars['String']['input']>;
+  submitButtonText?: InputMaybe<Scalars['String']['input']>;
+  successTitle?: InputMaybe<Scalars['String']['input']>;
+  successMessage?: InputMaybe<Scalars['String']['input']>;
+  errorMessage?: InputMaybe<Scalars['String']['input']>;
+  validationMessage?: InputMaybe<Scalars['String']['input']>;
+  showCorrelativo?: InputMaybe<Scalars['Boolean']['input']>;
+  privacyText?: InputMaybe<Scalars['String']['input']>;
+  privacyUrl?: InputMaybe<Scalars['String']['input']>;
+  dataUrl?: InputMaybe<Scalars['String']['input']>;
+  fields?: InputMaybe<Array<InputMaybe<DynamicFormsFieldsMutation>>>;
+};
+
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, heroSubtitle?: string | null, features?: { __typename: 'ServiceFeatures', sectionTitle?: string | null, sectionSubtitle?: string | null, items?: Array<{ __typename: 'ServiceFeaturesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, expandableServices?: { __typename: 'ServiceExpandableServices', sectionTitle?: string | null, items?: Array<{ __typename: 'ServiceExpandableServicesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, whyUs?: { __typename: 'ServiceWhyUs', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceWhyUsCards', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, stats?: Array<{ __typename: 'ServiceStats', number?: string | null, label?: string | null } | null> | null, checklist?: { __typename: 'ServiceChecklist', title?: string | null, items?: Array<string | null> | null } | null, experts?: { __typename: 'ServiceExperts', title?: string | null, steps?: Array<{ __typename: 'ServiceExpertsSteps', number?: string | null, title?: string | null, description?: string | null } | null> | null } | null, contactForm?: { __typename: 'ServiceContactForm', title?: string | null, subtitle?: string | null, buttonText?: string | null } | null };
@@ -1418,6 +1751,10 @@ export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: s
 export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
+
+export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
+
+export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1532,6 +1869,44 @@ export type GlobalConnectionQueryVariables = Exact<{
 
 
 export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type FormConfigQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type FormConfigQuery = { __typename?: 'Query', formConfig: { __typename: 'FormConfig', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null } };
+
+export type FormConfigConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FormConfigFilter>;
+}>;
+
+
+export type FormConfigConnectionQuery = { __typename?: 'Query', formConfigConnection: { __typename?: 'FormConfigConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FormConfigConnectionEdges', cursor: string, node?: { __typename: 'FormConfig', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null } | null } | null> | null } };
+
+export type DynamicFormsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type DynamicFormsQuery = { __typename?: 'Query', dynamicForms: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } };
+
+export type DynamicFormsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<DynamicFormsFilter>;
+}>;
+
+
+export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -1782,6 +2157,77 @@ export const GlobalPartsFragmentDoc = gql`
     siteName
     defaultDescription
     ogImage
+  }
+}
+    `;
+export const FormConfigPartsFragmentDoc = gql`
+    fragment FormConfigParts on FormConfig {
+  __typename
+  forms {
+    __typename
+    formType
+    label
+    enabled
+    recipients
+  }
+}
+    `;
+export const DynamicFormsPartsFragmentDoc = gql`
+    fragment DynamicFormsParts on DynamicForms {
+  __typename
+  formId
+  formTitle
+  badge
+  description
+  styleVariant
+  submitButtonText
+  successTitle
+  successMessage
+  errorMessage
+  validationMessage
+  showCorrelativo
+  privacyText
+  privacyUrl
+  dataUrl
+  fields {
+    __typename
+    fieldType
+    name
+    label
+    placeholder
+    required
+    width
+    order
+    orderMobile
+    sectionNumber
+    noteContent
+    rows
+    validation {
+      __typename
+      minLength
+      maxLength
+      pattern
+      patternMessage
+    }
+    errorMessage
+    helpText
+    defaultValue
+    options {
+      __typename
+      value
+      label
+      description
+    }
+    accept
+    maxFileSize
+    multiple
+    linkText
+    linkUrl
+    conditionalField {
+      __typename
+      dependsOn
+      showWhen
+    }
   }
 }
     `;
@@ -2127,6 +2573,120 @@ export const GlobalConnectionDocument = gql`
   }
 }
     ${GlobalPartsFragmentDoc}`;
+export const FormConfigDocument = gql`
+    query formConfig($relativePath: String!) {
+  formConfig(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FormConfigParts
+  }
+}
+    ${FormConfigPartsFragmentDoc}`;
+export const FormConfigConnectionDocument = gql`
+    query formConfigConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FormConfigFilter) {
+  formConfigConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FormConfigParts
+      }
+    }
+  }
+}
+    ${FormConfigPartsFragmentDoc}`;
+export const DynamicFormsDocument = gql`
+    query dynamicForms($relativePath: String!) {
+  dynamicForms(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...DynamicFormsParts
+  }
+}
+    ${DynamicFormsPartsFragmentDoc}`;
+export const DynamicFormsConnectionDocument = gql`
+    query dynamicFormsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: DynamicFormsFilter) {
+  dynamicFormsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...DynamicFormsParts
+      }
+    }
+  }
+}
+    ${DynamicFormsPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -2165,6 +2725,18 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     globalConnection(variables?: GlobalConnectionQueryVariables, options?: C): Promise<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}> {
         return requester<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}, GlobalConnectionQueryVariables>(GlobalConnectionDocument, variables, options);
+      },
+    formConfig(variables: FormConfigQueryVariables, options?: C): Promise<{data: FormConfigQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigQueryVariables, query: string}> {
+        return requester<{data: FormConfigQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigQueryVariables, query: string}, FormConfigQueryVariables>(FormConfigDocument, variables, options);
+      },
+    formConfigConnection(variables?: FormConfigConnectionQueryVariables, options?: C): Promise<{data: FormConfigConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigConnectionQueryVariables, query: string}> {
+        return requester<{data: FormConfigConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormConfigConnectionQueryVariables, query: string}, FormConfigConnectionQueryVariables>(FormConfigConnectionDocument, variables, options);
+      },
+    dynamicForms(variables: DynamicFormsQueryVariables, options?: C): Promise<{data: DynamicFormsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsQueryVariables, query: string}> {
+        return requester<{data: DynamicFormsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsQueryVariables, query: string}, DynamicFormsQueryVariables>(DynamicFormsDocument, variables, options);
+      },
+    dynamicFormsConnection(variables?: DynamicFormsConnectionQueryVariables, options?: C): Promise<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}> {
+        return requester<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}, DynamicFormsConnectionQueryVariables>(DynamicFormsConnectionDocument, variables, options);
       }
     };
   }

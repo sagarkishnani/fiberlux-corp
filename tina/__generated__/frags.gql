@@ -243,3 +243,72 @@ fragment GlobalParts on Global {
     ogImage
   }
 }
+
+fragment FormConfigParts on FormConfig {
+  __typename
+  forms {
+    __typename
+    formType
+    label
+    enabled
+    recipients
+  }
+}
+
+fragment DynamicFormsParts on DynamicForms {
+  __typename
+  formId
+  formTitle
+  badge
+  description
+  styleVariant
+  submitButtonText
+  successTitle
+  successMessage
+  errorMessage
+  validationMessage
+  showCorrelativo
+  privacyText
+  privacyUrl
+  dataUrl
+  fields {
+    __typename
+    fieldType
+    name
+    label
+    placeholder
+    required
+    width
+    order
+    orderMobile
+    sectionNumber
+    noteContent
+    rows
+    validation {
+      __typename
+      minLength
+      maxLength
+      pattern
+      patternMessage
+    }
+    errorMessage
+    helpText
+    defaultValue
+    options {
+      __typename
+      value
+      label
+      description
+    }
+    accept
+    maxFileSize
+    multiple
+    linkText
+    linkUrl
+    conditionalField {
+      __typename
+      dependsOn
+      showWhen
+    }
+  }
+}

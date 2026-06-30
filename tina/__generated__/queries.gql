@@ -327,3 +327,113 @@ query globalConnection($before: String, $after: String, $first: Float, $last: Fl
     }
   }
 }
+
+query formConfig($relativePath: String!) {
+  formConfig(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FormConfigParts
+  }
+}
+
+query formConfigConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FormConfigFilter) {
+  formConfigConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FormConfigParts
+      }
+    }
+  }
+}
+
+query dynamicForms($relativePath: String!) {
+  dynamicForms(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...DynamicFormsParts
+  }
+}
+
+query dynamicFormsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: DynamicFormsFilter) {
+  dynamicFormsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...DynamicFormsParts
+      }
+    }
+  }
+}
