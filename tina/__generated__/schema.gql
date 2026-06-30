@@ -66,6 +66,8 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
+  maintenance(relativePath: String): Maintenance!
+  maintenanceConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MaintenanceFilter): MaintenanceConnection!
   infoAbonados(relativePath: String): InfoAbonados!
   infoAbonadosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoAbonadosFilter): InfoAbonadosConnection!
   formConfig(relativePath: String): FormConfig!
@@ -81,6 +83,7 @@ input DocumentFilter {
   post: PostFilter
   contact: ContactFilter
   global: GlobalFilter
+  maintenance: MaintenanceFilter
   infoAbonados: InfoAbonadosFilter
   formConfig: FormConfigFilter
   dynamicForms: DynamicFormsFilter
@@ -109,7 +112,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | Global | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | About | Post | Contact | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -784,6 +787,38 @@ type GlobalConnection implements Connection {
   edges: [GlobalConnectionEdges]
 }
 
+type Maintenance implements Node & Document {
+  enabled: Boolean
+  title: String
+  message: String
+  showContact: Boolean
+  contactText: String
+  contactUrl: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input MaintenanceFilter {
+  enabled: BooleanFilter
+  title: StringFilter
+  message: StringFilter
+  showContact: BooleanFilter
+  contactText: StringFilter
+  contactUrl: StringFilter
+}
+
+type MaintenanceConnectionEdges {
+  cursor: String!
+  node: Maintenance
+}
+
+type MaintenanceConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [MaintenanceConnectionEdges]
+}
+
 type InfoAbonadosSectionsDocuments {
   title: String
   url: String
@@ -1036,6 +1071,8 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
+  updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
+  createMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
   updateInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
   createInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
   updateFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
@@ -1051,6 +1088,7 @@ input DocumentUpdateMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
@@ -1064,6 +1102,7 @@ input DocumentMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
@@ -1345,6 +1384,15 @@ input GlobalMutation {
   nav: GlobalNavMutation
   footer: GlobalFooterMutation
   seo: GlobalSeoMutation
+}
+
+input MaintenanceMutation {
+  enabled: Boolean
+  title: String
+  message: String
+  showContact: Boolean
+  contactText: String
+  contactUrl: String
 }
 
 input InfoAbonadosSectionsDocumentsMutation {

@@ -94,6 +94,8 @@ export type Query = {
   contactConnection: ContactConnection;
   global: Global;
   globalConnection: GlobalConnection;
+  maintenance: Maintenance;
+  maintenanceConnection: MaintenanceConnection;
   infoAbonados: InfoAbonados;
   infoAbonadosConnection: InfoAbonadosConnection;
   formConfig: FormConfig;
@@ -214,6 +216,21 @@ export type QueryGlobalConnectionArgs = {
 };
 
 
+export type QueryMaintenanceArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryMaintenanceConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<MaintenanceFilter>;
+};
+
+
 export type QueryInfoAbonadosArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -265,6 +282,7 @@ export type DocumentFilter = {
   post?: InputMaybe<PostFilter>;
   contact?: InputMaybe<ContactFilter>;
   global?: InputMaybe<GlobalFilter>;
+  maintenance?: InputMaybe<MaintenanceFilter>;
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
   formConfig?: InputMaybe<FormConfigFilter>;
   dynamicForms?: InputMaybe<DynamicFormsFilter>;
@@ -307,7 +325,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | About | Post | Contact | Global | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | About | Post | Contact | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1038,6 +1056,41 @@ export type GlobalConnection = Connection & {
   edges?: Maybe<Array<Maybe<GlobalConnectionEdges>>>;
 };
 
+export type Maintenance = Node & Document & {
+  __typename?: 'Maintenance';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  showContact?: Maybe<Scalars['Boolean']['output']>;
+  contactText?: Maybe<Scalars['String']['output']>;
+  contactUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type MaintenanceFilter = {
+  enabled?: InputMaybe<BooleanFilter>;
+  title?: InputMaybe<StringFilter>;
+  message?: InputMaybe<StringFilter>;
+  showContact?: InputMaybe<BooleanFilter>;
+  contactText?: InputMaybe<StringFilter>;
+  contactUrl?: InputMaybe<StringFilter>;
+};
+
+export type MaintenanceConnectionEdges = {
+  __typename?: 'MaintenanceConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Maintenance>;
+};
+
+export type MaintenanceConnection = Connection & {
+  __typename?: 'MaintenanceConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<MaintenanceConnectionEdges>>>;
+};
+
 export type InfoAbonadosSectionsDocuments = {
   __typename?: 'InfoAbonadosSectionsDocuments';
   title?: Maybe<Scalars['String']['output']>;
@@ -1307,6 +1360,8 @@ export type Mutation = {
   createContact: Contact;
   updateGlobal: Global;
   createGlobal: Global;
+  updateMaintenance: Maintenance;
+  createMaintenance: Maintenance;
   updateInfoAbonados: InfoAbonados;
   createInfoAbonados: InfoAbonados;
   updateFormConfig: FormConfig;
@@ -1421,6 +1476,18 @@ export type MutationCreateGlobalArgs = {
 };
 
 
+export type MutationUpdateMaintenanceArgs = {
+  relativePath: Scalars['String']['input'];
+  params: MaintenanceMutation;
+};
+
+
+export type MutationCreateMaintenanceArgs = {
+  relativePath: Scalars['String']['input'];
+  params: MaintenanceMutation;
+};
+
+
 export type MutationUpdateInfoAbonadosArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoAbonadosMutation;
@@ -1463,6 +1530,7 @@ export type DocumentUpdateMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
@@ -1476,6 +1544,7 @@ export type DocumentMutation = {
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
   global?: InputMaybe<GlobalMutation>;
+  maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
@@ -1759,6 +1828,15 @@ export type GlobalMutation = {
   seo?: InputMaybe<GlobalSeoMutation>;
 };
 
+export type MaintenanceMutation = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  showContact?: InputMaybe<Scalars['Boolean']['input']>;
+  contactText?: InputMaybe<Scalars['String']['input']>;
+  contactUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type InfoAbonadosSectionsDocumentsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -1861,6 +1939,8 @@ export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: s
 export type ContactPartsFragment = { __typename: 'Contact', title?: string | null, subtitle?: string | null, email?: string | null, phone?: string | null, address?: string | null, buttonText?: string | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
+
+export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
 export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: string | null, description?: string | null, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null };
 
@@ -1981,6 +2061,25 @@ export type GlobalConnectionQueryVariables = Exact<{
 
 
 export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, logo?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type MaintenanceQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type MaintenanceQuery = { __typename?: 'Query', maintenance: { __typename: 'Maintenance', id: string, enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type MaintenanceConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<MaintenanceFilter>;
+}>;
+
+
+export type MaintenanceConnectionQuery = { __typename?: 'Query', maintenanceConnection: { __typename?: 'MaintenanceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MaintenanceConnectionEdges', cursor: string, node?: { __typename: 'Maintenance', id: string, enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type InfoAbonadosQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2289,6 +2388,17 @@ export const GlobalPartsFragmentDoc = gql`
     defaultDescription
     ogImage
   }
+}
+    `;
+export const MaintenancePartsFragmentDoc = gql`
+    fragment MaintenanceParts on Maintenance {
+  __typename
+  enabled
+  title
+  message
+  showContact
+  contactText
+  contactUrl
 }
     `;
 export const InfoAbonadosPartsFragmentDoc = gql`
@@ -2723,6 +2833,63 @@ export const GlobalConnectionDocument = gql`
   }
 }
     ${GlobalPartsFragmentDoc}`;
+export const MaintenanceDocument = gql`
+    query maintenance($relativePath: String!) {
+  maintenance(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...MaintenanceParts
+  }
+}
+    ${MaintenancePartsFragmentDoc}`;
+export const MaintenanceConnectionDocument = gql`
+    query maintenanceConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: MaintenanceFilter) {
+  maintenanceConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...MaintenanceParts
+      }
+    }
+  }
+}
+    ${MaintenancePartsFragmentDoc}`;
 export const InfoAbonadosDocument = gql`
     query infoAbonados($relativePath: String!) {
   infoAbonados(relativePath: $relativePath) {
@@ -2932,6 +3099,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     globalConnection(variables?: GlobalConnectionQueryVariables, options?: C): Promise<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}> {
         return requester<{data: GlobalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalConnectionQueryVariables, query: string}, GlobalConnectionQueryVariables>(GlobalConnectionDocument, variables, options);
+      },
+    maintenance(variables: MaintenanceQueryVariables, options?: C): Promise<{data: MaintenanceQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MaintenanceQueryVariables, query: string}> {
+        return requester<{data: MaintenanceQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MaintenanceQueryVariables, query: string}, MaintenanceQueryVariables>(MaintenanceDocument, variables, options);
+      },
+    maintenanceConnection(variables?: MaintenanceConnectionQueryVariables, options?: C): Promise<{data: MaintenanceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MaintenanceConnectionQueryVariables, query: string}> {
+        return requester<{data: MaintenanceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MaintenanceConnectionQueryVariables, query: string}, MaintenanceConnectionQueryVariables>(MaintenanceConnectionDocument, variables, options);
       },
     infoAbonados(variables: InfoAbonadosQueryVariables, options?: C): Promise<{data: InfoAbonadosQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosQueryVariables, query: string}> {
         return requester<{data: InfoAbonadosQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoAbonadosQueryVariables, query: string}, InfoAbonadosQueryVariables>(InfoAbonadosDocument, variables, options);

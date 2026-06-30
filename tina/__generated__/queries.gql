@@ -328,6 +328,61 @@ query globalConnection($before: String, $after: String, $first: Float, $last: Fl
   }
 }
 
+query maintenance($relativePath: String!) {
+  maintenance(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...MaintenanceParts
+  }
+}
+
+query maintenanceConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: MaintenanceFilter) {
+  maintenanceConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...MaintenanceParts
+      }
+    }
+  }
+}
+
 query infoAbonados($relativePath: String!) {
   infoAbonados(relativePath: $relativePath) {
     ... on Document {

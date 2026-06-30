@@ -244,6 +244,16 @@ fragment GlobalParts on Global {
   }
 }
 
+fragment MaintenanceParts on Maintenance {
+  __typename
+  enabled
+  title
+  message
+  showContact
+  contactText
+  contactUrl
+}
+
 fragment InfoAbonadosParts on InfoAbonados {
   __typename
   title

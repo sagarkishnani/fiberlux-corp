@@ -767,6 +767,52 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         MODO MANTENIMIENTO
+         ══════════════════════════════════════ */
+      {
+        name: "maintenance",
+        label: "Modo Mantenimiento",
+        path: "src/content/maintenance",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            name: "enabled",
+            label: "Activar modo mantenimiento",
+            type: "boolean",
+            description: "Al activar, TODAS las p\xE1ginas mostrar\xE1n la pantalla de mantenimiento despu\xE9s del pr\xF3ximo deploy."
+          },
+          {
+            name: "title",
+            label: "T\xEDtulo",
+            type: "string"
+          },
+          {
+            name: "message",
+            label: "Mensaje",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "showContact",
+            label: "Mostrar contacto",
+            type: "boolean"
+          },
+          {
+            name: "contactText",
+            label: "Texto de contacto",
+            type: "string"
+          },
+          {
+            name: "contactUrl",
+            label: "URL de contacto",
+            type: "string"
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          INFORMACIÓN A ABONADOS
          ══════════════════════════════════════ */
       {
