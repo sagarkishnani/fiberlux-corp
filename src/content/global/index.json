@@ -174,7 +174,15 @@
         "links": [
           {
             "text": "Libro de reclamaciones",
-            "url": "/legales/libro-de-reclamaciones"
+            "url": "/legales/libro-reclamaciones"
+          },
+          {
+            "text": "Reclamos",
+            "url": "/reclamos"
+          },
+          {
+            "text": "Información a Abonados",
+            "url": "/informacion-abonados"
           },
           {
             "text": "Tratamiento de datos personales",
