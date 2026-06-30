@@ -66,6 +66,14 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
+  maintenance(relativePath: String): Maintenance!
+  maintenanceConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MaintenanceFilter): MaintenanceConnection!
+  infoAbonados(relativePath: String): InfoAbonados!
+  infoAbonadosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoAbonadosFilter): InfoAbonadosConnection!
+  formConfig(relativePath: String): FormConfig!
+  formConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormConfigFilter): FormConfigConnection!
+  dynamicForms(relativePath: String): DynamicForms!
+  dynamicFormsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DynamicFormsFilter): DynamicFormsConnection!
 }
 
 input DocumentFilter {
@@ -75,6 +83,10 @@ input DocumentFilter {
   post: PostFilter
   contact: ContactFilter
   global: GlobalFilter
+  maintenance: MaintenanceFilter
+  infoAbonados: InfoAbonadosFilter
+  formConfig: FormConfigFilter
+  dynamicForms: DynamicFormsFilter
 }
 
 type DocumentConnectionEdges {
@@ -100,7 +112,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | Global | Folder
+union DocumentNode = Home | Service | About | Post | Contact | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -695,6 +707,7 @@ type GlobalFooterSocial {
 
 type GlobalFooter {
   tagline: String
+  copyright: String
   columns: [GlobalFooterColumns]
   social: [GlobalFooterSocial]
   logo: String
@@ -747,6 +760,7 @@ input GlobalFooterSocialFilter {
 
 input GlobalFooterFilter {
   tagline: StringFilter
+  copyright: StringFilter
   columns: GlobalFooterColumnsFilter
   social: GlobalFooterSocialFilter
   logo: ImageFilter
@@ -775,6 +789,272 @@ type GlobalConnection implements Connection {
   edges: [GlobalConnectionEdges]
 }
 
+type Maintenance implements Node & Document {
+  enabled: Boolean
+  title: String
+  message: String
+  showContact: Boolean
+  contactText: String
+  contactUrl: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input MaintenanceFilter {
+  enabled: BooleanFilter
+  title: StringFilter
+  message: StringFilter
+  showContact: BooleanFilter
+  contactText: StringFilter
+  contactUrl: StringFilter
+}
+
+type MaintenanceConnectionEdges {
+  cursor: String!
+  node: Maintenance
+}
+
+type MaintenanceConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [MaintenanceConnectionEdges]
+}
+
+type InfoAbonadosSectionsDocuments {
+  title: String
+  url: String
+  icon: String
+  visible: Boolean
+}
+
+type InfoAbonadosSections {
+  title: String
+  visible: Boolean
+  documents: [InfoAbonadosSectionsDocuments]
+}
+
+type InfoAbonados implements Node & Document {
+  title: String
+  description: String
+  sections: [InfoAbonadosSections]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input InfoAbonadosSectionsDocumentsFilter {
+  title: StringFilter
+  url: StringFilter
+  icon: StringFilter
+  visible: BooleanFilter
+}
+
+input InfoAbonadosSectionsFilter {
+  title: StringFilter
+  visible: BooleanFilter
+  documents: InfoAbonadosSectionsDocumentsFilter
+}
+
+input InfoAbonadosFilter {
+  title: StringFilter
+  description: StringFilter
+  sections: InfoAbonadosSectionsFilter
+}
+
+type InfoAbonadosConnectionEdges {
+  cursor: String!
+  node: InfoAbonados
+}
+
+type InfoAbonadosConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [InfoAbonadosConnectionEdges]
+}
+
+type FormConfigForms {
+  formType: String
+  label: String
+  enabled: Boolean
+  recipients: [String]
+}
+
+type FormConfig implements Node & Document {
+  forms: [FormConfigForms]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input FormConfigFormsFilter {
+  formType: StringFilter
+  label: StringFilter
+  enabled: BooleanFilter
+  recipients: StringFilter
+}
+
+input FormConfigFilter {
+  forms: FormConfigFormsFilter
+}
+
+type FormConfigConnectionEdges {
+  cursor: String!
+  node: FormConfig
+}
+
+type FormConfigConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [FormConfigConnectionEdges]
+}
+
+type DynamicFormsFieldsValidation {
+  minLength: Float
+  maxLength: Float
+  pattern: String
+  patternMessage: String
+}
+
+type DynamicFormsFieldsOptions {
+  value: String
+  label: String
+  description: String
+}
+
+type DynamicFormsFieldsConditionalField {
+  dependsOn: String
+  showWhen: String
+}
+
+type DynamicFormsFields {
+  fieldType: String!
+  name: String
+  label: String
+  placeholder: String
+  required: Boolean
+  width: String
+  order: Float
+  orderMobile: Float
+  sectionNumber: Float
+  noteContent: String
+  rows: Float
+  validation: DynamicFormsFieldsValidation
+  errorMessage: String
+  helpText: String
+  defaultValue: String
+  options: [DynamicFormsFieldsOptions]
+  accept: String
+  maxFileSize: Float
+  multiple: Boolean
+  linkText: String
+  linkUrl: String
+  conditionalField: DynamicFormsFieldsConditionalField
+}
+
+type DynamicForms implements Node & Document {
+  formId: String!
+  formTitle: String
+  badge: String
+  description: String
+  styleVariant: String
+  submitButtonText: String
+  successTitle: String
+  successMessage: String
+  errorMessage: String
+  validationMessage: String
+  showCorrelativo: Boolean
+  privacyText: String
+  privacyUrl: String
+  dataUrl: String
+  fields: [DynamicFormsFields]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input DynamicFormsFieldsValidationFilter {
+  minLength: NumberFilter
+  maxLength: NumberFilter
+  pattern: StringFilter
+  patternMessage: StringFilter
+}
+
+input DynamicFormsFieldsOptionsFilter {
+  value: StringFilter
+  label: StringFilter
+  description: StringFilter
+}
+
+input DynamicFormsFieldsConditionalFieldFilter {
+  dependsOn: StringFilter
+  showWhen: StringFilter
+}
+
+input DynamicFormsFieldsFilter {
+  fieldType: StringFilter
+  name: StringFilter
+  label: StringFilter
+  placeholder: StringFilter
+  required: BooleanFilter
+  width: StringFilter
+  order: NumberFilter
+  orderMobile: NumberFilter
+  sectionNumber: NumberFilter
+  noteContent: StringFilter
+  rows: NumberFilter
+  validation: DynamicFormsFieldsValidationFilter
+  errorMessage: StringFilter
+  helpText: StringFilter
+  defaultValue: StringFilter
+  options: DynamicFormsFieldsOptionsFilter
+  accept: StringFilter
+  maxFileSize: NumberFilter
+  multiple: BooleanFilter
+  linkText: StringFilter
+  linkUrl: StringFilter
+  conditionalField: DynamicFormsFieldsConditionalFieldFilter
+}
+
+input DynamicFormsFilter {
+  formId: StringFilter
+  formTitle: StringFilter
+  badge: StringFilter
+  description: StringFilter
+  styleVariant: StringFilter
+  submitButtonText: StringFilter
+  successTitle: StringFilter
+  successMessage: StringFilter
+  errorMessage: StringFilter
+  validationMessage: StringFilter
+  showCorrelativo: BooleanFilter
+  privacyText: StringFilter
+  privacyUrl: StringFilter
+  dataUrl: StringFilter
+  fields: DynamicFormsFieldsFilter
+}
+
+type DynamicFormsConnectionEdges {
+  cursor: String!
+  node: DynamicForms
+}
+
+type DynamicFormsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [DynamicFormsConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -793,6 +1073,14 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
+  updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
+  createMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
+  updateInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
+  createInfoAbonados(relativePath: String!, params: InfoAbonadosMutation!): InfoAbonados!
+  updateFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
+  createFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
+  updateDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
+  createDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
 }
 
 input DocumentUpdateMutation {
@@ -802,6 +1090,10 @@ input DocumentUpdateMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  maintenance: MaintenanceMutation
+  infoAbonados: InfoAbonadosMutation
+  formConfig: FormConfigMutation
+  dynamicForms: DynamicFormsMutation
   relativePath: String
 }
 
@@ -812,6 +1104,10 @@ input DocumentMutation {
   post: PostMutation
   contact: ContactMutation
   global: GlobalMutation
+  maintenance: MaintenanceMutation
+  infoAbonados: InfoAbonadosMutation
+  formConfig: FormConfigMutation
+  dynamicForms: DynamicFormsMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -1075,6 +1371,7 @@ input GlobalFooterSocialMutation {
 
 input GlobalFooterMutation {
   tagline: String
+  copyright: String
   columns: [GlobalFooterColumnsMutation]
   social: [GlobalFooterSocialMutation]
   logo: String
@@ -1090,6 +1387,106 @@ input GlobalMutation {
   nav: GlobalNavMutation
   footer: GlobalFooterMutation
   seo: GlobalSeoMutation
+}
+
+input MaintenanceMutation {
+  enabled: Boolean
+  title: String
+  message: String
+  showContact: Boolean
+  contactText: String
+  contactUrl: String
+}
+
+input InfoAbonadosSectionsDocumentsMutation {
+  title: String
+  url: String
+  icon: String
+  visible: Boolean
+}
+
+input InfoAbonadosSectionsMutation {
+  title: String
+  visible: Boolean
+  documents: [InfoAbonadosSectionsDocumentsMutation]
+}
+
+input InfoAbonadosMutation {
+  title: String
+  description: String
+  sections: [InfoAbonadosSectionsMutation]
+}
+
+input FormConfigFormsMutation {
+  formType: String
+  label: String
+  enabled: Boolean
+  recipients: [String]
+}
+
+input FormConfigMutation {
+  forms: [FormConfigFormsMutation]
+}
+
+input DynamicFormsFieldsValidationMutation {
+  minLength: Float
+  maxLength: Float
+  pattern: String
+  patternMessage: String
+}
+
+input DynamicFormsFieldsOptionsMutation {
+  value: String
+  label: String
+  description: String
+}
+
+input DynamicFormsFieldsConditionalFieldMutation {
+  dependsOn: String
+  showWhen: String
+}
+
+input DynamicFormsFieldsMutation {
+  fieldType: String
+  name: String
+  label: String
+  placeholder: String
+  required: Boolean
+  width: String
+  order: Float
+  orderMobile: Float
+  sectionNumber: Float
+  noteContent: String
+  rows: Float
+  validation: DynamicFormsFieldsValidationMutation
+  errorMessage: String
+  helpText: String
+  defaultValue: String
+  options: [DynamicFormsFieldsOptionsMutation]
+  accept: String
+  maxFileSize: Float
+  multiple: Boolean
+  linkText: String
+  linkUrl: String
+  conditionalField: DynamicFormsFieldsConditionalFieldMutation
+}
+
+input DynamicFormsMutation {
+  formId: String
+  formTitle: String
+  badge: String
+  description: String
+  styleVariant: String
+  submitButtonText: String
+  successTitle: String
+  successMessage: String
+  errorMessage: String
+  validationMessage: String
+  showCorrelativo: Boolean
+  privacyText: String
+  privacyUrl: String
+  dataUrl: String
+  fields: [DynamicFormsFieldsMutation]
 }
 
 schema {

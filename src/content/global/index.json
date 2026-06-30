@@ -71,6 +71,7 @@
   },
   "footer": {
     "tagline": "Potencia tu conectividad empresarial",
+    "copyright": "© {year} Fiberlux. Todos los derechos reservados",
     "columns": [
       {
         "title": "Infraestructura Cloud",
@@ -174,7 +175,15 @@
         "links": [
           {
             "text": "Libro de reclamaciones",
-            "url": "/legales/libro-de-reclamaciones"
+            "url": "/legales/libro-reclamaciones"
+          },
+          {
+            "text": "Reclamos",
+            "url": "/reclamos"
+          },
+          {
+            "text": "Información a Abonados",
+            "url": "/informacion-abonados"
           },
           {
             "text": "Tratamiento de datos personales",

@@ -1,0 +1,227 @@
+{
+  "formId": "libro_reclamaciones",
+  "formTitle": "Libro de reclamaciones",
+  "badge": "ATENCIÓN AL CLIENTE",
+  "description": "Completa el siguiente formulario para registrar tu reclamo o queja. Nos comprometemos a atender tu solicitud en el plazo establecido por ley.",
+  "styleVariant": "default",
+  "submitButtonText": "Ingresar queja",
+  "successTitle": "¡Registro completado!",
+  "successMessage": "Tu registro en el Libro de Reclamaciones ha sido procesado. Te responderemos en el plazo establecido por ley.",
+  "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa todos los campos obligatorios.",
+  "showCorrelativo": true,
+  "fields": [
+    {
+      "fieldType": "section_header",
+      "label": "Identificación del consumidor",
+      "sectionNumber": 1,
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "nombreCompleto",
+      "label": "Nombre completo",
+      "placeholder": "Ingresa tu nombre completo",
+      "required": true,
+      "width": "full",
+      "order": 2
+    },
+    {
+      "fieldType": "text",
+      "name": "direccionCons",
+      "label": "Dirección",
+      "placeholder": "Ingresa tu dirección",
+      "required": true,
+      "width": "full",
+      "order": 3
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Selecciona",
+      "required": true,
+      "width": "half",
+      "order": 4,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "pasaporte", "label": "Pasaporte" },
+        { "value": "ruc", "label": "RUC" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "numDoc",
+      "label": "Número de documento",
+      "placeholder": "Ej: 12345678",
+      "required": true,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Correo electrónico",
+      "placeholder": "tu@correo.com",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "Teléfono",
+      "placeholder": "+51 999 999 999",
+      "required": true,
+      "width": "half",
+      "order": 7
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "* La respuesta de este reclamo o queja se enviará a través del mail indicado.",
+      "order": 8
+    },
+    {
+      "fieldType": "divider",
+      "order": 9
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Identificación del bien contratado",
+      "sectionNumber": 2,
+      "order": 10
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoBien",
+      "label": "Tipo de bien",
+      "placeholder": "Selecciona",
+      "required": true,
+      "width": "half",
+      "order": 11,
+      "options": [
+        { "value": "producto", "label": "Producto" },
+        { "value": "servicio", "label": "Servicio" }
+      ]
+    },
+    {
+      "fieldType": "currency",
+      "name": "montoReclamado",
+      "label": "Monto reclamado",
+      "width": "half",
+      "order": 12
+    },
+    {
+      "fieldType": "textarea",
+      "name": "descripcionBien",
+      "label": "Descripción del bien contratado",
+      "placeholder": "Describe el producto o servicio contratado...",
+      "required": true,
+      "width": "full",
+      "order": 13,
+      "rows": 4
+    },
+    {
+      "fieldType": "divider",
+      "order": 14
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Detalle de reclamación o pedido",
+      "sectionNumber": 3,
+      "order": 15
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoSolicitud",
+      "label": "Tipo de solicitud",
+      "placeholder": "Selecciona",
+      "required": true,
+      "width": "full",
+      "order": 16,
+      "options": [
+        { "value": "reclamo", "label": "Reclamo" },
+        { "value": "queja", "label": "Queja" }
+      ]
+    },
+    {
+      "fieldType": "textarea",
+      "name": "detalle",
+      "label": "Detalle",
+      "placeholder": "Describe el motivo de tu reclamo o queja...",
+      "required": true,
+      "width": "full",
+      "order": 17,
+      "rows": 4
+    },
+    {
+      "fieldType": "textarea",
+      "name": "pedido",
+      "label": "Pedido",
+      "placeholder": "Indica qué solución esperas recibir...",
+      "required": true,
+      "width": "full",
+      "order": 18,
+      "rows": 4
+    },
+    {
+      "fieldType": "upload",
+      "name": "evidencia",
+      "label": "Evidencia (opcional)",
+      "width": "full",
+      "order": 19,
+      "accept": ".pdf,.doc,.docx,.jpg,.png",
+      "multiple": true,
+      "helpText": "Máximo 5 documentos que no superen 10 Mb en total."
+    },
+    {
+      "fieldType": "divider",
+      "order": 20
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Observaciones y acciones adoptadas por el proveedor",
+      "sectionNumber": 4,
+      "order": 21
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "*La respuesta de este reclamo o queja se enviará a través del mail indicado.",
+      "order": 22
+    },
+    {
+      "fieldType": "divider",
+      "order": 23
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Validación de seguridad",
+      "sectionNumber": 5,
+      "order": 24
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "notRobot",
+      "label": "No soy un robot",
+      "required": true,
+      "width": "full",
+      "order": 25,
+      "errorMessage": "Requerido"
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "* La formulación del reclamo no impide acudir a otras vías de solución de controversias ni es requisito previo para interponer una denuncia ante el INDECOPI.",
+      "order": 26
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "* El proveedor deberá dar respuesta al reclamo en un plazo no mayor a treinta (30) días calendario, pudiendo ampliar el plazo hasta por treinta (30) días más, previa comunicación con el consumidor.",
+      "order": 27
+    }
+  ]
+}

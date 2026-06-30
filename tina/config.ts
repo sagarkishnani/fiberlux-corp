@@ -723,6 +723,13 @@ export default defineConfig({
             fields: [
               { name: "tagline", label: "Tagline", type: "string" },
               {
+                name: "copyright",
+                label: "Texto de copyright",
+                type: "string",
+                description:
+                  "Usa {year} para insertar el año actual automáticamente. Ej: © {year} Fiberlux. Todos los derechos reservados",
+              },
+              {
                 name: "columns",
                 label: "Columnas",
                 type: "object",
@@ -792,6 +799,561 @@ export default defineConfig({
                 name: "ogImage",
                 label: "Imagen OG por defecto",
                 type: "image",
+              },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         MODO MANTENIMIENTO
+         ══════════════════════════════════════ */
+      {
+        name: "maintenance",
+        label: "Modo Mantenimiento",
+        path: "src/content/maintenance",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          {
+            name: "enabled",
+            label: "Activar modo mantenimiento",
+            type: "boolean",
+            description:
+              "Al activar, TODAS las páginas mostrarán la pantalla de mantenimiento después del próximo deploy.",
+          },
+          {
+            name: "title",
+            label: "Título",
+            type: "string",
+          },
+          {
+            name: "message",
+            label: "Mensaje",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "showContact",
+            label: "Mostrar contacto",
+            type: "boolean",
+          },
+          {
+            name: "contactText",
+            label: "Texto de contacto",
+            type: "string",
+          },
+          {
+            name: "contactUrl",
+            label: "URL de contacto",
+            type: "string",
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         INFORMACIÓN A ABONADOS
+         ══════════════════════════════════════ */
+      {
+        name: "infoAbonados",
+        label: "Información a Abonados",
+        path: "src/content/info-abonados",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false },
+          router: () => "/informacion-abonados",
+        },
+        fields: [
+          { name: "title", label: "Título de la página", type: "string" },
+          {
+            name: "description",
+            label: "Descripción",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "sections",
+            label: "Secciones",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.title || "Sección" }) },
+            fields: [
+              { name: "title", label: "Título de sección", type: "string" },
+              { name: "visible", label: "Visible", type: "boolean" },
+              {
+                name: "documents",
+                label: "Documentos",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.title || "Documento" }),
+                },
+                fields: [
+                  { name: "title", label: "Título", type: "string" },
+                  { name: "url", label: "URL del documento", type: "string" },
+                  {
+                    name: "icon",
+                    label: "Ícono",
+                    type: "string",
+                    options: [
+                      { value: "document", label: "Documento" },
+                      { value: "shield", label: "Escudo (seguridad)" },
+                      { value: "scale", label: "Balanza (legal)" },
+                      { value: "clipboard", label: "Portapapeles" },
+                      { value: "folder", label: "Carpeta" },
+                      { value: "certificate", label: "Certificado" },
+                    ],
+                  },
+                  { name: "visible", label: "Visible", type: "boolean" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         CONFIGURACIÓN DE FORMULARIOS (recipients)
+         ══════════════════════════════════════ */
+      {
+        name: "formConfig",
+        label: "Configuración de formularios",
+        path: "src/content/form-config",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          {
+            name: "forms",
+            label: "Formularios",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.label || item?.formType || "Formulario",
+              }),
+            },
+            fields: [
+              {
+                name: "formType",
+                label: "Tipo (no modificar)",
+                type: "string",
+                description:
+                  "Identificador interno del formulario. No cambiar.",
+              },
+              {
+                name: "label",
+                label: "Nombre visible",
+                type: "string",
+              },
+              {
+                name: "enabled",
+                label: "Activo",
+                type: "boolean",
+                description:
+                  "Si está desactivado, el formulario no enviará correos.",
+              },
+              {
+                name: "recipients",
+                label: "Correos destinatarios",
+                type: "string",
+                list: true,
+                description:
+                  "Agrega uno o más correos. Cada formulario puede tener diferentes destinatarios.",
+              },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         FORMULARIOS DINÁMICOS
+         ══════════════════════════════════════ */
+      {
+        name: "dynamicForms",
+        label: "Formularios Dinámicos",
+        path: "src/content/dynamic-forms",
+        format: "json",
+        ui: {
+          router: ({ document }) => {
+            const slug = document._sys.filename;
+            const routes: Record<string, string> = {
+              reclamo: "/reclamos/reclamo",
+              apelacion: "/reclamos/apelacion",
+              queja: "/reclamos/queja",
+              "libro-reclamaciones": "/legales/libro-reclamaciones",
+            };
+            return routes[slug] || `/${slug}`;
+          },
+        },
+        fields: [
+          /* ── General ── */
+          {
+            name: "formId",
+            label: "ID del formulario",
+            type: "string",
+            required: true,
+            description:
+              "Identificador único. Debe coincidir con formType en 'Configuración de formularios' para el envío de correos.",
+          },
+          {
+            name: "formTitle",
+            label: "Título del formulario",
+            type: "string",
+          },
+          {
+            name: "badge",
+            label: "Badge (opcional)",
+            type: "string",
+            description:
+              "Texto pequeño encima del título. Solo aplica en estilo Estándar.",
+          },
+          {
+            name: "description",
+            label: "Descripción",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "styleVariant",
+            label: "Estilo visual",
+            type: "string",
+            options: [
+              { value: "default", label: "Estándar (formularios OSIPTEL)" },
+              { value: "contact", label: "Contacto (estilo Tailwind)" },
+            ],
+            description: "Define la apariencia visual del formulario.",
+          },
+
+          /* ── Submit & Messages ── */
+          {
+            name: "submitButtonText",
+            label: "Texto botón enviar",
+            type: "string",
+          },
+          {
+            name: "successTitle",
+            label: "Título de éxito",
+            type: "string",
+            description:
+              "Título que se muestra después de enviar exitosamente.",
+          },
+          {
+            name: "successMessage",
+            label: "Mensaje de éxito",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "errorMessage",
+            label: "Mensaje de error (servidor)",
+            type: "string",
+            description: "Se muestra cuando falla el envío al servidor.",
+          },
+          {
+            name: "validationMessage",
+            label: "Mensaje de validación",
+            type: "string",
+            description:
+              "Se muestra cuando el usuario intenta enviar con campos inválidos. Ej: 'Por favor completa los campos marcados en rojo'.",
+          },
+          {
+            name: "showCorrelativo",
+            label: "Mostrar N° correlativo",
+            type: "boolean",
+            description:
+              "Mostrar número de correlativo en la pantalla de éxito (si el servidor lo retorna).",
+          },
+
+          /* ── Privacy ── */
+          {
+            name: "privacyText",
+            label: "Texto de privacidad",
+            type: "string",
+          },
+          {
+            name: "privacyUrl",
+            label: "URL Política de Privacidad",
+            type: "string",
+          },
+          {
+            name: "dataUrl",
+            label: "URL Tratamiento de Datos",
+            type: "string",
+          },
+
+          /* ══════════════════════════════════════════════
+       FIELDS — Array dinámico de campos
+       ══════════════════════════════════════════════ */
+          {
+            name: "fields",
+            label: "Campos del formulario",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => {
+                const type = item?.fieldType || "campo";
+                const label = item?.label || item?.name || "";
+                const icons: Record<string, string> = {
+                  section_header: "📌",
+                  divider: "──",
+                  note: "📝",
+                  text: "Aa",
+                  email: "✉",
+                  tel: "📞",
+                  number: "#",
+                  textarea: "¶",
+                  select: "▼",
+                  radio: "◉",
+                  radioGroup: "◉◉",
+                  checkbox: "☑",
+                  checkboxGroup: "☑☑",
+                  upload: "📎",
+                  currency: "S/",
+                  date: "📅",
+                  hidden: "👁‍🗨",
+                };
+                const icon = icons[type] || "•";
+                return { label: `${icon} ${type} — ${label}` };
+              },
+            },
+            fields: [
+              {
+                name: "fieldType",
+                label: "Tipo de campo",
+                type: "string",
+                required: true,
+                options: [
+                  {
+                    value: "section_header",
+                    label: "📌 Encabezado de sección",
+                  },
+                  { value: "divider", label: "── Separador" },
+                  { value: "note", label: "📝 Nota / Texto" },
+                  { value: "text", label: "Texto" },
+                  { value: "email", label: "Email" },
+                  { value: "tel", label: "Teléfono" },
+                  { value: "number", label: "Número" },
+                  { value: "textarea", label: "Área de texto" },
+                  { value: "select", label: "Desplegable" },
+                  { value: "radio", label: "Radio (inline)" },
+                  {
+                    value: "radioGroup",
+                    label: "Radio (cards con descripción)",
+                  },
+                  { value: "checkbox", label: "Casilla de verificación" },
+                  { value: "checkboxGroup", label: "Grupo de casillas" },
+                  { value: "upload", label: "Subir archivo" },
+                  { value: "currency", label: "Moneda (S/)" },
+                  { value: "date", label: "Fecha (día/mes/año)" },
+                  { value: "hidden", label: "Campo oculto" },
+                ],
+              },
+              {
+                name: "name",
+                label: "Nombre interno",
+                type: "string",
+                description:
+                  "Identificador único del campo. Se usa como key en el JSON enviado. Sin espacios ni tildes. Ej: nombreCompleto, tipoDoc, adjuntos.",
+              },
+              {
+                name: "label",
+                label: "Etiqueta visible",
+                type: "string",
+                description: "Para section_header es el título de la sección.",
+              },
+              {
+                name: "placeholder",
+                label: "Placeholder",
+                type: "string",
+              },
+              {
+                name: "required",
+                label: "Obligatorio",
+                type: "boolean",
+              },
+              {
+                name: "width",
+                label: "Ancho",
+                type: "string",
+                options: [
+                  { value: "full", label: "Completo (100%)" },
+                  { value: "half", label: "Mitad (50%) — 2 por fila" },
+                  { value: "third", label: "Tercio (33%) — 3 por fila" },
+                ],
+                description: "En mobile siempre se muestra al 100%.",
+              },
+              {
+                name: "order",
+                label: "Orden (desktop)",
+                type: "number",
+                description:
+                  "Orden de aparición en desktop. Menor = más arriba.",
+              },
+              {
+                name: "orderMobile",
+                label: "Orden (mobile)",
+                type: "number",
+                description:
+                  "Orden en mobile. Si se deja vacío, usa el orden de desktop.",
+              },
+
+              /* ── Campos específicos por tipo ── */
+              {
+                name: "sectionNumber",
+                label: "Número de sección",
+                type: "number",
+                description:
+                  "Solo para section_header. Número que se muestra en el círculo.",
+              },
+              {
+                name: "noteContent",
+                label: "Contenido de nota",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "Solo para note. El texto del párrafo.",
+              },
+              {
+                name: "rows",
+                label: "Filas",
+                type: "number",
+                description: "Solo para textarea. Default: 4.",
+              },
+
+              /* ── Validation ── */
+              {
+                name: "validation",
+                label: "Validación",
+                type: "object",
+                fields: [
+                  {
+                    name: "minLength",
+                    label: "Largo mínimo",
+                    type: "number",
+                  },
+                  {
+                    name: "maxLength",
+                    label: "Largo máximo",
+                    type: "number",
+                  },
+                  {
+                    name: "pattern",
+                    label: "Patrón (regex)",
+                    type: "string",
+                    description:
+                      "Expresión regular. Ej: ^\\d{11}$ para RUC de 11 dígitos, ^\\d{8}$ para DNI.",
+                  },
+                  {
+                    name: "patternMessage",
+                    label: "Mensaje del patrón",
+                    type: "string",
+                    description:
+                      "Mensaje cuando el valor no cumple el patrón. Ej: 'El RUC debe tener 11 dígitos'.",
+                  },
+                ],
+              },
+              {
+                name: "errorMessage",
+                label: "Mensaje de error personalizado",
+                type: "string",
+                description:
+                  "Si se deja vacío, se genera un mensaje automático según la validación que falle.",
+              },
+              {
+                name: "helpText",
+                label: "Texto de ayuda",
+                type: "string",
+                description:
+                  "Texto pequeño debajo del campo. Para upload aparece como instrucción de archivos.",
+              },
+              {
+                name: "defaultValue",
+                label: "Valor por defecto",
+                type: "string",
+              },
+
+              /* ── Options (select, radio, radioGroup, checkboxGroup) ── */
+              {
+                name: "options",
+                label: "Opciones",
+                type: "object",
+                list: true,
+                description: "Para select, radio, radioGroup y checkboxGroup.",
+                ui: {
+                  itemProps: (item) => ({ label: item?.label || "Opción" }),
+                },
+                fields: [
+                  { name: "value", label: "Valor", type: "string" },
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  {
+                    name: "description",
+                    label: "Descripción",
+                    type: "string",
+                    description:
+                      "Solo para radioGroup (aparece debajo del título en la tarjeta).",
+                  },
+                ],
+              },
+
+              /* ── Upload config ── */
+              {
+                name: "accept",
+                label: "Tipos de archivo",
+                type: "string",
+                description: "Solo para upload. Ej: .pdf,.jpg,.png,.doc,.docx",
+              },
+              {
+                name: "maxFileSize",
+                label: "Tamaño máximo (MB)",
+                type: "number",
+                description: "Solo para upload.",
+              },
+              {
+                name: "multiple",
+                label: "Múltiples archivos",
+                type: "boolean",
+                description: "Solo para upload. Default: true.",
+              },
+              {
+                name: "linkText",
+                label: "Texto del enlace",
+                type: "string",
+                description:
+                  "Solo para checkbox. Parte del label que se convierte en enlace. Ej: 'Política de Privacidad'.",
+              },
+              {
+                name: "linkUrl",
+                label: "URL del enlace",
+                type: "string",
+                description:
+                  "Solo para checkbox. URL a la que apunta el enlace.",
+              },
+
+              /* ── Conditional ── */
+              {
+                name: "conditionalField",
+                label: "Campo condicional",
+                type: "object",
+                description:
+                  "Solo mostrar este campo si otro campo tiene un valor específico.",
+                fields: [
+                  {
+                    name: "dependsOn",
+                    label: "Depende del campo (nombre interno)",
+                    type: "string",
+                    description: "El 'name' del campo del cual depende.",
+                  },
+                  {
+                    name: "showWhen",
+                    label: "Mostrar cuando el valor es",
+                    type: "string",
+                    description:
+                      "Valor exacto. Para checkbox usa 'true' o 'false'.",
+                  },
+                ],
               },
             ],
           },

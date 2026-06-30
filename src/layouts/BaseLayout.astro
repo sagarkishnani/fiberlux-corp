@@ -1,6 +1,7 @@
 ---
 import Footer from "../components/shared/Footer.astro";
 import Header from "../components/shared/Header.astro";
+import client from "../../tina/__generated__/client";
 
 interface Props {
   title?: string;
@@ -11,6 +12,19 @@ const {
   title = "Fiberlux",
   description = "Soluciones de conectividad y TI para tu empresa",
 } = Astro.props;
+
+// ─── Maintenance mode check ───
+let maintenanceMode = false;
+let maintenanceData: any = null;
+try {
+  const maintenanceResult = await client.queries.maintenance({
+    relativePath: "index.json",
+  });
+  maintenanceData = maintenanceResult.data?.maintenance;
+  maintenanceMode = maintenanceData?.enabled === true;
+} catch {
+  // If collection doesn't exist yet, continue normally
+}
 ---
 
 <!doctype html>
@@ -18,32 +32,100 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <meta
+      name="description"
+      content={maintenanceMode ? "Sitio en mantenimiento" : description}
+    />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} | Fiberlux</title>
+    <title>
+      {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
+    </title>
   </head>
   <body>
-    <Header />
-    <slot />
-    <div class="-mt-6 relative z-40">
-      <Footer />
-    </div>
+    {
+      maintenanceMode ? (
+        <main style="background: linear-gradient(180deg, #96237A 0%, #650F50 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 0 20px;">
+          <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; max-width: 520px;">
+            <img
+              src="/images/logo/fiberlux.svg"
+              alt="Fiberlux"
+              style="height: clamp(28px, 5vw, 40px); margin-bottom: clamp(28px, 5vw, 48px); opacity: 0.9; filter: brightness(0) invert(1);"
+            />
+
+            <div style="width: clamp(56px, 12vw, 72px); height: clamp(56px, 12vw, 72px); border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: clamp(20px, 4vw, 28px);">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="width: clamp(24px, 5vw, 32px); height: clamp(24px, 5vw, 32px);"
+              >
+                <path
+                  d="M12 15V17M6 21H18C18.5304 21 19.0391 20.7893 19.4142 20.4142C19.7893 20.0391 20 19.5304 20 19V13C20 12.4696 19.7893 11.9609 19.4142 11.5858C19.0391 11.2107 18.5304 11 18 11H6C5.46957 11 4.96086 11.2107 4.58579 11.5858C4.21071 11.9609 4 12.4696 4 13V19C4 19.5304 4.21071 20.0391 4.58579 20.4142C4.96086 20.7893 5.46957 21 6 21ZM16 11V7C16 5.93913 15.5786 4.92172 14.8284 4.17157C14.0783 3.42143 13.0609 3 12 3C10.9391 3 9.92172 3.42143 9.17157 4.17157C8.42143 4.92172 8 5.93913 8 7V11H16Z"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+
+            <h1 style="font-family: Poppins, sans-serif; font-weight: 700; color: #fff; margin: 0 0 16px; font-size: clamp(24px, 6vw, 44px); line-height: 1.2;">
+              {maintenanceData?.title || "Estamos en mantenimiento"}
+            </h1>
+
+            <p style="font-family: Poppins, sans-serif; color: rgba(255,255,255,0.7); margin: 0 0 clamp(28px, 5vw, 40px); font-size: clamp(14px, 3vw, 18px); line-height: 1.7; max-width: 480px;">
+              {
+                maintenanceData?.message ||
+                  "Estamos realizando mejoras para ofrecerte una mejor experiencia. Volveremos pronto."
+              }
+            </p>
+
+            {maintenanceData?.showContact && maintenanceData?.contactText && (
+              <a
+                href={maintenanceData.contactUrl || "#"}
+                style="display: inline-flex; align-items: center; justify-content: center; padding: 14px 32px; border-radius: 999px; background: #fff; color: #650F50; font-family: Poppins, sans-serif; font-size: clamp(13px, 2.5vw, 15px); font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.1);"
+              >
+                {maintenanceData.contactText}
+              </a>
+            )}
+          </div>
+
+          <p style="font-family: Poppins, sans-serif; color: rgba(255,255,255,0.35); font-size: 11px; padding-bottom: clamp(20px, 4vw, 32px);">
+            © 2026 Fiberlux. Todos los derechos reservados
+          </p>
+        </main>
+      ) : (
+        <Fragment>
+          <Header />
+          <slot />
+          <div class="-mt-6 relative z-40">
+            <Footer />
+          </div>
+        </Fragment>
+      )
+    }
   </body>
 </html>
 
-<script>
-  import Lenis from "lenis";
+{
+  !maintenanceMode && (
+    <script>
+      import Lenis from "lenis";
 
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-  });
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
 
-  function raf(time: number) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
+      function raf(time: number) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
 
-  requestAnimationFrame(raf);
-</script>
+      requestAnimationFrame(raf);
+    </script>
+  )
+}

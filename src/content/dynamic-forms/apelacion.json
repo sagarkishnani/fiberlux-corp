@@ -1,0 +1,287 @@
+{
+  "formId": "apelacion",
+  "formTitle": "Formulario de Apelación",
+  "badge": "OSIPTEL",
+  "description": "Recurso de apelación ante OSIPTEL. Complete todos los campos obligatorios para procesar su solicitud.",
+  "styleVariant": "default",
+  "submitButtonText": "Enviar",
+  "successTitle": "¡Apelación registrada!",
+  "successMessage": "Su recurso de apelación ha sido registrado correctamente.",
+  "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa todos los campos obligatorios.",
+  "showCorrelativo": false,
+  "fields": [
+    {
+      "fieldType": "section_header",
+      "label": "Datos de cliente – Razón Social",
+      "sectionNumber": 1,
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "nombre",
+      "label": "Nombres y apellidos / Razón Social",
+      "required": true,
+      "width": "full",
+      "order": 2
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Seleccionar",
+      "required": true,
+      "width": "half",
+      "order": 3,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "ruc", "label": "RUC" },
+        { "value": "pasaporte", "label": "Pasaporte" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "numDoc",
+      "label": "Nro. de documento",
+      "required": true,
+      "width": "half",
+      "order": 4
+    },
+    {
+      "fieldType": "text",
+      "name": "numAbonado",
+      "label": "N° de abonado",
+      "required": true,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "text",
+      "name": "servicio",
+      "label": "Servicio",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
+      "fieldType": "text",
+      "name": "direccion",
+      "label": "Dirección",
+      "required": true,
+      "width": "full",
+      "order": 7
+    },
+    {
+      "fieldType": "text",
+      "name": "distrito",
+      "label": "Distrito",
+      "required": true,
+      "width": "half",
+      "order": 8
+    },
+    {
+      "fieldType": "text",
+      "name": "provincia",
+      "label": "Provincia",
+      "required": true,
+      "width": "half",
+      "order": 9
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "N° de teléfono",
+      "required": true,
+      "width": "half",
+      "order": 10
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Dirección de correo electrónico",
+      "required": true,
+      "width": "half",
+      "order": 11
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "autorizaCorreo",
+      "label": "Autorizo ser notificado en esta dirección de correo electrónico.",
+      "width": "full",
+      "order": 12
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos del representante",
+      "sectionNumber": 2,
+      "order": 13
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "En caso el reclamo fuera presentado por un representante, completar los siguientes datos:",
+      "order": 14
+    },
+    {
+      "fieldType": "text",
+      "name": "repNombre",
+      "label": "Nombre del representante",
+      "required": true,
+      "width": "half",
+      "order": 15
+    },
+    {
+      "fieldType": "text",
+      "name": "repApellido",
+      "label": "Apellidos del representante",
+      "required": true,
+      "width": "half",
+      "order": 16
+    },
+    {
+      "fieldType": "select",
+      "name": "repTipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Seleccionar",
+      "required": true,
+      "width": "half",
+      "order": 17,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "ruc", "label": "RUC" },
+        { "value": "pasaporte", "label": "Pasaporte" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "repNumDoc",
+      "label": "Nro. de documento",
+      "required": true,
+      "width": "half",
+      "order": 18
+    },
+    {
+      "fieldType": "upload",
+      "name": "cartaPoder",
+      "label": "Carta poder simple",
+      "width": "full",
+      "order": 19,
+      "accept": ".pdf,.jpg,.jpeg,.png,.doc,.docx",
+      "multiple": false,
+      "helpText": "Adjuntar carta poder simple con firma del usuario o declaración jurada sobre su designación como representante. Máximo 10 Mb de tamaño."
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos del recurso de apelación",
+      "sectionNumber": 3,
+      "order": 20
+    },
+    {
+      "fieldType": "text",
+      "name": "resolucionNum",
+      "label": "Recurso de apelación contra la Resolución N°",
+      "required": true,
+      "width": "full",
+      "order": 21
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Fecha de la Resolución",
+      "order": 22
+    },
+    {
+      "fieldType": "text",
+      "name": "resDia",
+      "label": "",
+      "placeholder": "Día",
+      "required": true,
+      "width": "third",
+      "order": 23
+    },
+    {
+      "fieldType": "text",
+      "name": "resMes",
+      "label": "",
+      "placeholder": "Mes",
+      "required": true,
+      "width": "third",
+      "order": 24
+    },
+    {
+      "fieldType": "text",
+      "name": "resAnio",
+      "label": "",
+      "placeholder": "Año",
+      "required": true,
+      "width": "third",
+      "order": 25
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Fecha de notificación de la Resolución",
+      "order": 26
+    },
+    {
+      "fieldType": "text",
+      "name": "notifDia",
+      "label": "",
+      "placeholder": "Día",
+      "required": true,
+      "width": "third",
+      "order": 27
+    },
+    {
+      "fieldType": "text",
+      "name": "notifMes",
+      "label": "",
+      "placeholder": "Mes",
+      "required": true,
+      "width": "third",
+      "order": 28
+    },
+    {
+      "fieldType": "text",
+      "name": "notifAnio",
+      "label": "",
+      "placeholder": "Año",
+      "required": true,
+      "width": "third",
+      "order": 29
+    },
+    {
+      "fieldType": "textarea",
+      "name": "mensaje",
+      "label": "Mensaje",
+      "placeholder": "Detalle su recurso de apelación...",
+      "width": "full",
+      "order": 30,
+      "rows": 5,
+      "validation": { "maxLength": 700 }
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "Si el espacio no fuese suficiente, puede adjuntar las hojas adicionales que requiera. Por tanto, solicito elevar el presente recurso al TRASU.",
+      "order": 31
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Documentos adjuntos",
+      "sectionNumber": 4,
+      "order": 32
+    },
+    {
+      "fieldType": "upload",
+      "name": "adjuntos",
+      "label": "Seleccionar archivo",
+      "width": "full",
+      "order": 33,
+      "accept": ".pdf,.jpg,.jpeg,.png,.doc,.docx",
+      "multiple": true,
+      "helpText": "Máximo cinco documentos que no superen los 10 Mb en total."
+    }
+  ]
+}

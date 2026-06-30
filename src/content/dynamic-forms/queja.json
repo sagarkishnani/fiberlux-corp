@@ -1,0 +1,205 @@
+{
+  "formId": "queja",
+  "formTitle": "Formulario de Queja",
+  "badge": "OSIPTEL",
+  "description": "Interponga su queja por transgresión de las normas de procedimiento. Complete todos los campos obligatorios.",
+  "styleVariant": "default",
+  "submitButtonText": "Ingresar Queja",
+  "successTitle": "¡Queja registrada!",
+  "successMessage": "Su queja ha sido registrada correctamente.",
+  "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa todos los campos obligatorios.",
+  "showCorrelativo": false,
+  "fields": [
+    {
+      "fieldType": "section_header",
+      "label": "Datos de cliente – Razón Social",
+      "sectionNumber": 1,
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "nombre",
+      "label": "Nombres y apellidos / Razón Social",
+      "required": true,
+      "width": "full",
+      "order": 2
+    },
+    {
+      "fieldType": "select",
+      "name": "tipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Seleccionar",
+      "required": true,
+      "width": "half",
+      "order": 3,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "ruc", "label": "RUC" },
+        { "value": "pasaporte", "label": "Pasaporte" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "numDoc",
+      "label": "Nro. de documento",
+      "required": true,
+      "width": "half",
+      "order": 4
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "N° de teléfono",
+      "required": true,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Dirección de correo electrónico",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "autorizaCorreo",
+      "label": "Autorizo ser notificado en esta dirección de correo electrónico.",
+      "width": "full",
+      "order": 7
+    },
+    {
+      "fieldType": "radio",
+      "name": "servicioSelec",
+      "label": "Servicios",
+      "required": true,
+      "width": "full",
+      "order": 8,
+      "options": [
+        { "value": "internet", "label": "Internet" },
+        { "value": "telefonia", "label": "Telefonía" },
+        { "value": "otros", "label": "Otros" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "numAbonado",
+      "label": "Número de abonado",
+      "required": true,
+      "width": "full",
+      "order": 9
+    },
+    {
+      "fieldType": "text",
+      "name": "direccion",
+      "label": "Dirección",
+      "required": true,
+      "width": "full",
+      "order": 10
+    },
+    {
+      "fieldType": "text",
+      "name": "distrito",
+      "label": "Distrito",
+      "required": true,
+      "width": "half",
+      "order": 11
+    },
+    {
+      "fieldType": "text",
+      "name": "ciudad",
+      "label": "Ciudad",
+      "required": true,
+      "width": "half",
+      "order": 12
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos del representante",
+      "sectionNumber": 2,
+      "order": 13
+    },
+    {
+      "fieldType": "note",
+      "noteContent": "En caso el reclamo fuera presentado por un representante, completar los siguientes datos:",
+      "order": 14
+    },
+    {
+      "fieldType": "text",
+      "name": "repNombre",
+      "label": "Nombre del representante",
+      "required": true,
+      "width": "half",
+      "order": 15
+    },
+    {
+      "fieldType": "text",
+      "name": "repApellido",
+      "label": "Apellidos del representante",
+      "required": true,
+      "width": "half",
+      "order": 16
+    },
+    {
+      "fieldType": "select",
+      "name": "repTipoDoc",
+      "label": "Tipo de documento",
+      "placeholder": "Seleccionar",
+      "required": true,
+      "width": "half",
+      "order": 17,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "ruc", "label": "RUC" },
+        { "value": "pasaporte", "label": "Pasaporte" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "repNumDoc",
+      "label": "Nro. de documento",
+      "required": true,
+      "width": "half",
+      "order": 18
+    },
+
+    {
+      "fieldType": "section_header",
+      "label": "Datos de la queja",
+      "sectionNumber": 3,
+      "order": 19
+    },
+    {
+      "fieldType": "radioGroup",
+      "name": "motivoQueja",
+      "label": "Interpongo queja por la transgresión de las normas de procedimiento cometida en mi reclamo",
+      "required": true,
+      "width": "full",
+      "order": 20,
+      "options": [
+        { "value": "no_presentacion", "label": "No permitir la presentación del reclamo / recurso / queja" },
+        { "value": "no_contestacion", "label": "No contestación oportuna del reclamo / Recurso de consideración" },
+        { "value": "suspension_tramite", "label": "Suspensión del servicio a pesar de tener reclamo en trámite" },
+        { "value": "no_elevar", "label": "No elevar la apelación / No elevar la queja" },
+        { "value": "requerimiento_pago", "label": "Requerimiento de Pago de Monto reclamado" },
+        { "value": "incumplimiento", "label": "Incumplimiento de la resolución" },
+        { "value": "otros_defectos", "label": "Otros defectos de tramitación (Señalar en qué consisten)" }
+      ]
+    },
+    {
+      "fieldType": "textarea",
+      "name": "mensaje",
+      "label": "Mensaje",
+      "placeholder": "Detalle su queja...",
+      "width": "full",
+      "order": 21,
+      "rows": 5,
+      "validation": { "maxLength": 700 }
+    }
+  ]
+}

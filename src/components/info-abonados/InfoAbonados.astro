@@ -1,0 +1,13 @@
+---
+import client from "../../../tina/__generated__/client";
+import InfoAbonadosReact from "./InfoAbonadosReact";
+
+const result = await client.queries.infoAbonados({ relativePath: "index.json" });
+---
+
+<InfoAbonadosReact
+  query={result.query}
+  variables={result.variables}
+  data={result.data}
+  client:visible
+/>

@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "title": "Estamos en mantenimiento",
+  "message": "Estamos realizando mejoras para ofrecerte una mejor experiencia. Volveremos pronto.",
+  "showContact": false,
+  "contactText": "Contáctanos",
+  "contactUrl": "/nosotros"
+}
