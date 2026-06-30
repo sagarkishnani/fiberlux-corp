@@ -1,6 +1,6 @@
 # SPEC 05 — Sección "Rubros con los que trabajamos" (carrusel) en Nosotros
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 03 / 04 (reutiliza el patrón de carrusel + autoplay + flechas del Timeline de Nosotros)
 > **Date:** 2026-06-30
 > **Objective:** Añadir en `/nosotros`, **debajo de los counters (`StatsReact`)**, una sección "Rubros con los que trabajamos" con un carrusel de tarjetas (ícono magenta + nombre del rubro) navegable por flechas con autoplay, totalmente editable desde TinaCMS (colección `about`, lista de rubros con ícono elegido de un set predefinido), replicando los frames de Figma desktop y mobile.
