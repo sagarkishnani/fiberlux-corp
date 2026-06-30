@@ -479,6 +479,16 @@ type AboutTimeline {
   milestones: [AboutTimelineMilestones]
 }
 
+type AboutRubrosItems {
+  icon: String
+  label: String
+}
+
+type AboutRubros {
+  title: String
+  items: [AboutRubrosItems]
+}
+
 type AboutStatsItems {
   number: String
   label: String
@@ -509,6 +519,7 @@ type About implements Node & Document {
   missionImage: String
   values: AboutValues
   timeline: AboutTimeline
+  rubros: AboutRubros
   stats: AboutStats
   team: AboutTeam
   id: ID!
@@ -555,6 +566,16 @@ input AboutTimelineFilter {
   milestones: AboutTimelineMilestonesFilter
 }
 
+input AboutRubrosItemsFilter {
+  icon: StringFilter
+  label: StringFilter
+}
+
+input AboutRubrosFilter {
+  title: StringFilter
+  items: AboutRubrosItemsFilter
+}
+
 input AboutStatsItemsFilter {
   number: StringFilter
   label: StringFilter
@@ -585,6 +606,7 @@ input AboutFilter {
   missionImage: ImageFilter
   values: AboutValuesFilter
   timeline: AboutTimelineFilter
+  rubros: AboutRubrosFilter
   stats: AboutStatsFilter
   team: AboutTeamFilter
 }
@@ -1311,6 +1333,16 @@ input AboutTimelineMutation {
   milestones: [AboutTimelineMilestonesMutation]
 }
 
+input AboutRubrosItemsMutation {
+  icon: String
+  label: String
+}
+
+input AboutRubrosMutation {
+  title: String
+  items: [AboutRubrosItemsMutation]
+}
+
 input AboutStatsItemsMutation {
   number: String
   label: String
@@ -1341,6 +1373,7 @@ input AboutMutation {
   missionImage: String
   values: AboutValuesMutation
   timeline: AboutTimelineMutation
+  rubros: AboutRubrosMutation
   stats: AboutStatsMutation
   team: AboutTeamMutation
 }

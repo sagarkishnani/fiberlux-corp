@@ -163,6 +163,15 @@ fragment AboutParts on About {
       heading
     }
   }
+  rubros {
+    __typename
+    title
+    items {
+      __typename
+      icon
+      label
+    }
+  }
   stats {
     __typename
     title
