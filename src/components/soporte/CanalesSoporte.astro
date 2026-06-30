@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import CanalesSoporteReact from "./CanalesSoporte.tsx";
+
+const soporteQuery = await client.queries.soporteTecnico({
+  relativePath: "index.json",
+});
+---
+
+<CanalesSoporteReact
+  client:visible
+  query={soporteQuery.query}
+  variables={soporteQuery.variables}
+  data={soporteQuery.data}
+/>
