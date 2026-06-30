@@ -1,0 +1,13 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import TimelineReact from './TimelineReact.tsx';
+
+const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
+---
+
+<TimelineReact
+  client:visible
+  query={aboutQuery.query}
+  variables={aboutQuery.variables}
+  data={aboutQuery.data}
+/>

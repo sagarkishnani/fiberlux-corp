@@ -517,9 +517,25 @@ var config_default = defineConfig({
             label: "Timeline",
             type: "object",
             fields: [
-              { name: "title", label: "T\xEDtulo", type: "string" },
-              { name: "startYear", label: "A\xF1o inicio", type: "string" },
-              { name: "endYear", label: "A\xF1o fin", type: "string" }
+              { name: "title", label: "Ant\xEDtulo (eyebrow)", type: "string" },
+              { name: "startYear", label: "A\xF1o inicio (etiqueta barra)", type: "string" },
+              { name: "endYear", label: "A\xF1o fin (etiqueta barra)", type: "string" },
+              {
+                name: "milestones",
+                label: "Hitos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.year || "Hito" }) },
+                fields: [
+                  { name: "year", label: "A\xF1o", type: "string" },
+                  {
+                    name: "heading",
+                    label: "Texto del hito",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  }
+                ]
+              }
             ]
           },
           // ── Stats ──

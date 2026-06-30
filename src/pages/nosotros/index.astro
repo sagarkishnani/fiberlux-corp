@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import MissionVisionReact from '../../components/nosotros/MissionVisionReact.tsx';
 import ValuesReact from '../../components/nosotros/ValuesReact.tsx';
 import HeroNosotrosReact from '../../components/nosotros/HeroNosotrosReact';
+import TimelineReact from '../../components/nosotros/TimelineReact.tsx';
 import StatsReact from '../../components/StatsReact';
 
 const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
@@ -26,6 +27,12 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
   />
   <ValuesReact
     client:load
+    query={aboutQuery.query}
+    variables={aboutQuery.variables}
+    data={aboutQuery.data}
+  />
+  <TimelineReact
+    client:visible
     query={aboutQuery.query}
     variables={aboutQuery.variables}
     data={aboutQuery.data}
