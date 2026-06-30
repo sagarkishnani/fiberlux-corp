@@ -261,7 +261,10 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
         className="flex gap-2"
         style={{
           transform: `translateX(${-offset}px)`,
-          transition: dragging ? 'none' : 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          transition:
+            dragging || reducedMotion
+              ? 'none'
+              : 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         {items.map((item, i) => card(item, i))}
