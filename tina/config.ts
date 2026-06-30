@@ -1039,7 +1039,8 @@ export default defineConfig({
             type: "string",
             options: [
               { value: "default", label: "Estándar (formularios OSIPTEL)" },
-              { value: "contact", label: "Contacto (estilo Tailwind)" },
+              { value: "contact", label: "Contacto (estilo Tailwind, claro)" },
+              { value: "contact-dark", label: "Contacto (oscuro / corp)" },
             ],
             description: "Define la apariencia visual del formulario.",
           },

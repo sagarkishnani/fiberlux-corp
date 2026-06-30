@@ -1,0 +1,103 @@
+{
+  "formId": "contacto",
+  "formTitle": "¿Conversamos?",
+  "description": "Completa tus datos y te responderemos pronto.",
+  "styleVariant": "contact-dark",
+  "submitButtonText": "Enviar",
+  "successTitle": "¡Mensaje enviado!",
+  "successMessage": "Gracias por escribirnos. Un representante te contactará pronto.",
+  "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa los campos obligatorios.",
+  "showCorrelativo": false,
+  "fields": [
+    {
+      "fieldType": "text",
+      "name": "nombre",
+      "label": "Nombre",
+      "placeholder": "Tu nombre",
+      "required": true,
+      "width": "half",
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "apellido",
+      "label": "Apellido",
+      "placeholder": "Tu apellido",
+      "required": true,
+      "width": "half",
+      "order": 2
+    },
+    {
+      "fieldType": "select",
+      "name": "servicio",
+      "label": "Servicio de tu interés",
+      "placeholder": "Selecciona un servicio",
+      "required": true,
+      "width": "full",
+      "order": 3,
+      "options": [
+        { "value": "conectividad-empresarial", "label": "Conectividad empresarial" },
+        { "value": "ciberseguridad-gestionada", "label": "Ciberseguridad gestionada" },
+        { "value": "datacenter-cloud", "label": "Data Center, Cloud y Continuidad de Negocio" },
+        { "value": "servicios-gestionados", "label": "Servicios gestionados" }
+      ]
+    },
+    {
+      "fieldType": "text",
+      "name": "empresa",
+      "label": "Empresa",
+      "placeholder": "Nombre de la empresa",
+      "required": false,
+      "width": "half",
+      "order": 4
+    },
+    {
+      "fieldType": "text",
+      "name": "ruc",
+      "label": "RUC",
+      "placeholder": "20XXXXXXXXX",
+      "required": false,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "Teléfono / Celular",
+      "placeholder": "+51 999 999 999",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Correo",
+      "placeholder": "tu@correo.com",
+      "required": true,
+      "width": "half",
+      "order": 7
+    },
+    {
+      "fieldType": "textarea",
+      "name": "comentario",
+      "label": "Cuéntanos",
+      "placeholder": "Cuéntanos cómo podemos ayudarte...",
+      "required": false,
+      "width": "full",
+      "order": 8,
+      "rows": 4
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "consentimiento",
+      "label": "¿Nos brinda su consentimiento para el tratamiento de datos personales?",
+      "required": true,
+      "width": "full",
+      "order": 9,
+      "linkText": "tratamiento de datos personales",
+      "linkUrl": "/legales/tratamiento-datos"
+    }
+  ]
+}
