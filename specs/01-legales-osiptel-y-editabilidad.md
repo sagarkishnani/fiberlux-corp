@@ -1,6 +1,6 @@
 # SPEC 01 — Portar legales OSIPTEL y editabilidad total desde fiberlux-negocios a fiberlux-corp
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** Ninguna
 > **Date:** 2026-06-30
 > **Objective:** Portar a fiberlux-corp el subsistema de formularios dinámicos y las páginas legales obligatorias de OSIPTEL de fiberlux-negocios, más el modo mantenimiento, y dejar 100% editable en Tina todo el contenido textual e imágenes de los bloques existentes de corp, sin alterar sus estilos.

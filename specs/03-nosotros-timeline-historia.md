@@ -1,6 +1,6 @@
 # SPEC 03 — Sección Historia (timeline animado) en Nosotros
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** —
 > **Date:** 2026-06-30
 > **Objective:** Construir una sección "Historia" en `/nosotros` (entre Valores y Stats) que recorra los hitos de la empresa con un año gigante de fondo animado (count-up), barra de progreso proporcional y navegación por flechas con autoplay, replicando el frame de Figma con fondo aproximado en CSS y todos los hitos editables en TinaCMS.

@@ -131,16 +131,90 @@ export default function TimelineReact({ query, variables, data: initialData }: T
 
   const progress = barProgress(active?.year || '', startYear, endYear);
 
+  /* ── Shared pieces (reused by the desktop and mobile layouts) ── */
+  const arrows = (
+    <div className="flex w-fit overflow-hidden rounded-[12px] border-2 border-[#282445] bg-[#141223]">
+      <button
+        type="button"
+        aria-label="Hito anterior"
+        onClick={prev}
+        className="flex h-[49px] w-[49px] items-center justify-center bg-[#141223] text-white opacity-40 transition-opacity hover:opacity-100"
+      >
+        <FaArrowLeft className="text-sm" />
+      </button>
+      <button
+        type="button"
+        aria-label="Hito siguiente"
+        onClick={next}
+        className="flex h-[49px] w-[49px] items-center justify-center bg-[#96237a] text-white transition-colors hover:bg-[#b02a92]"
+      >
+        <FaArrowRight className="text-sm" />
+      </button>
+    </div>
+  );
+
+  const eyebrow = timeline?.title ? (
+    <p
+      className="mb-4 text-sm uppercase tracking-[0.15em] text-[#909da4]"
+      data-tina-field={tinaField(timeline, 'title')}
+    >
+      {timeline.title}
+    </p>
+  ) : null;
+
+  const renderHeading = (sizeCls: string) => (
+    <h2
+      key={safeIndex}
+      className={`timeline-heading max-w-[900px] font-medium leading-[1.15] tracking-tight text-white ${sizeCls}`}
+      data-tina-field={activeRef ? tinaField(activeRef, 'heading') : undefined}
+    >
+      {active?.heading}
+    </h2>
+  );
+
+  const renderYear = (sizeCls: string) => (
+    <span
+      className={`font-bold leading-none tracking-tighter tabular-nums text-[#836d7d] ${sizeCls}`}
+      data-tina-field={activeRef ? tinaField(activeRef, 'year') : undefined}
+    >
+      {yearDisplay}
+    </span>
+  );
+
+  const bar = (
+    <div className="relative h-[2px] w-full overflow-hidden rounded-full bg-[#394247]">
+      <div
+        className="timeline-bar-fill absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#080618] to-[#96237a]"
+        style={{ width: `${progress * 100}%` }}
+      />
+    </div>
+  );
+
+  const labels = (
+    <div className="mt-3 flex justify-between">
+      <span
+        className="text-base uppercase tracking-tight text-[#909da4]"
+        data-tina-field={timeline ? tinaField(timeline, 'startYear') : undefined}
+      >
+        {startYear}
+      </span>
+      <span
+        className="text-base uppercase tracking-tight text-[#909da4]"
+        data-tina-field={timeline ? tinaField(timeline, 'endYear') : undefined}
+      >
+        {endYear}
+      </span>
+    </div>
+  );
+
   return (
-    <section className="bg-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-6 py-12 md:py-20">
-        <div
-          className="relative overflow-hidden rounded-[16px] bg-[#080618] min-h-[560px] md:min-h-[680px]"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-        >
+    <section
+      className="relative overflow-hidden rounded-t-3xl bg-[#080618]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
 
           {/* Background — CSS approximation of the Figma magenta light beams */}
           <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
@@ -170,83 +244,38 @@ export default function TimelineReact({ query, variables, data: initialData }: T
             />
           </div>
 
-          {/* Arrows — top-left */}
-          <div className="absolute z-20 top-8 left-6 md:top-12 md:left-[92px]">
-            <div className="flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden">
-              <button
-                type="button"
-                aria-label="Hito anterior"
-                onClick={prev}
-                className="flex items-center justify-center w-[49px] h-[49px] bg-[#141223] text-white opacity-40 transition-opacity hover:opacity-100"
-              >
-                <FaArrowLeft className="text-sm" />
-              </button>
-              <button
-                type="button"
-                aria-label="Hito siguiente"
-                onClick={next}
-                className="flex items-center justify-center w-[49px] h-[49px] bg-[#96237a] text-white transition-colors hover:bg-[#b02a92]"
-              >
-                <FaArrowRight className="text-sm" />
-              </button>
+          {/* ── Desktop layout (year on top, heading below) ── */}
+          <div className="relative z-10 mx-auto hidden max-w-[1440px] md:block md:min-h-[680px]">
+            {/* Arrows — top-left */}
+            <div className="absolute left-[92px] top-12 z-20">{arrows}</div>
+
+            {/* Giant year — centered, behind */}
+            <div className="pointer-events-none absolute inset-x-0 top-[120px] z-10 flex justify-center">
+              {renderYear('text-[255px]')}
+            </div>
+
+            {/* Bottom block: heading + bar + labels */}
+            <div className="absolute bottom-[60px] left-[92px] right-[92px] z-10">
+              {eyebrow}
+              {renderHeading('mb-8 text-[48px]')}
+              {bar}
+              {labels}
             </div>
           </div>
 
-          {/* Giant year — centered, behind */}
-          <div className="pointer-events-none absolute inset-x-0 top-[110px] md:top-[120px] z-10 flex justify-center">
-            <span
-              className="font-bold leading-none tracking-tighter text-[#836d7d] text-[120px] md:text-[255px] tabular-nums"
-              data-tina-field={activeRef ? tinaField(activeRef, 'year') : undefined}
-            >
-              {yearDisplay}
-            </span>
-          </div>
-
-          {/* Bottom block: heading + bar + labels */}
-          <div className="absolute left-6 right-6 md:left-[92px] md:right-[92px] bottom-10 md:bottom-[60px] z-10">
-            {timeline?.title && (
-              <p
-                className="text-sm uppercase tracking-[0.15em] text-[#909da4] mb-4"
-                data-tina-field={timeline ? tinaField(timeline, 'title') : undefined}
-              >
-                {timeline.title}
-              </p>
-            )}
-
-            <h2
-              key={safeIndex}
-              className="timeline-heading text-white font-medium leading-[1.15] tracking-tight text-[28px] md:text-[48px] max-w-[900px] mb-8"
-              data-tina-field={activeRef ? tinaField(activeRef, 'heading') : undefined}
-            >
-              {active?.heading}
-            </h2>
-
-            {/* Progress bar */}
-            <div className="relative h-[2px] w-full rounded-full bg-[#394247] overflow-hidden">
-              <div
-                className="timeline-bar-fill absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#080618] to-[#96237a]"
-                style={{ width: `${progress * 100}%` }}
-              />
+          {/* ── Mobile layout (heading on top, year below, arrows at bottom) ── */}
+          <div className="relative z-10 flex min-h-[520px] flex-col px-6 pb-10 pt-14 md:hidden">
+            {eyebrow}
+            {renderHeading('text-[28px]')}
+            <div className="my-4 flex justify-end">
+              {renderYear('text-[88px] opacity-60')}
             </div>
-
-            {/* Year labels */}
-            <div className="flex justify-between mt-3">
-              <span
-                className="text-base uppercase tracking-tight text-[#909da4]"
-                data-tina-field={timeline ? tinaField(timeline, 'startYear') : undefined}
-              >
-                {startYear}
-              </span>
-              <span
-                className="text-base uppercase tracking-tight text-[#909da4]"
-                data-tina-field={timeline ? tinaField(timeline, 'endYear') : undefined}
-              >
-                {endYear}
-              </span>
+            <div className="mt-auto">
+              {bar}
+              {labels}
+              <div className="mt-8">{arrows}</div>
             </div>
           </div>
-        </div>
-      </div>
 
       <style>{`
         .timeline-bar-fill {

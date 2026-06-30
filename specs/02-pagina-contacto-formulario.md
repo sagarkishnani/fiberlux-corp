@@ -1,6 +1,6 @@
 # SPEC 02 — Página de Contacto (Figma) con formulario funcional sobre el motor de formularios dinámicos
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 01
 > **Date:** 2026-06-30
 > **Objective:** Construir la página `/contacto` de fiberlux-corp según el frame de Figma, con su formulario funcional montado sobre el motor de formularios dinámicos (nuevo `formType: "contacto"`) en una variante visual oscura acorde al tema corp, dejando todo el contenido editable en Tina.
