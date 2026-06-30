@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroSoporteReact from "./HeroSoporteReact.tsx";
+
+const soporteQuery = await client.queries.soporteTecnico({
+  relativePath: "index.json",
+});
+---
+
+<HeroSoporteReact
+  client:load
+  query={soporteQuery.query}
+  variables={soporteQuery.variables}
+  data={soporteQuery.data}
+/>
