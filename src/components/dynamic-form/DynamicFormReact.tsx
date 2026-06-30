@@ -71,7 +71,7 @@ interface FormConfig {
   formTitle?: string;
   badge?: string;
   description?: string;
-  styleVariant?: "default" | "contact";
+  styleVariant?: "default" | "contact" | "contact-dark";
   submitButtonText?: string;
   successTitle?: string;
   successMessage?: string;
@@ -123,16 +123,35 @@ const contactInputOk = "border-greyscale-light focus:border-brand-purple focus:r
 const contactInputErr = "border-red-400 focus:border-red-400 focus:ring-red-400/20";
 const contactErrorCls = "text-caption-sm text-red-500 mt-1";
 
+/* Dark (corp) class sets — used by styleVariant "contact-dark" */
+const contactLabelDarkCls =
+  "block text-caption-sm font-medium text-greyscale-light mb-2";
+const contactInputDarkCls =
+  "w-full border rounded-xl px-4 py-3.5 text-body-sm text-greyscale-white placeholder:text-greyscale-medium focus:outline-none focus:ring-1 transition-all bg-white/[0.04]";
+const contactInputDarkOk = "border-white/10 focus:border-brand-purple focus:ring-brand-purple/30";
+const contactInputDarkErr = "border-red-400/70 focus:border-red-400 focus:ring-red-400/20";
+
+/* Resolve the class set for the active contact theme */
+function contactCls(dark?: boolean) {
+  return {
+    label: dark ? contactLabelDarkCls : contactLabelCls,
+    input: dark ? contactInputDarkCls : contactInputCls,
+    ok: dark ? contactInputDarkOk : contactInputOk,
+    err: dark ? contactInputDarkErr : contactInputErr,
+  };
+}
+
 function ContactInput({
-  label, placeholder, type = "text", value, onChange, required, maxLength, error,
+  label, placeholder, type = "text", value, onChange, required, maxLength, error, dark,
 }: {
   label: string; placeholder?: string; type?: string; value: string;
-  onChange: (v: string) => void; required?: boolean; maxLength?: number; error?: string;
+  onChange: (v: string) => void; required?: boolean; maxLength?: number; error?: string; dark?: boolean;
 }) {
+  const c = contactCls(dark);
   return (
     <div>
       {label && (
-        <label className={contactLabelCls}>
+        <label className={c.label}>
           {label} {required && <span className="text-brand-purple">*</span>}
         </label>
       )}
@@ -142,7 +161,7 @@ function ContactInput({
         value={value}
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}
         maxLength={maxLength}
-        className={`${contactInputCls} ${error ? contactInputErr : contactInputOk}`}
+        className={`${c.input} ${error ? c.err : c.ok}`}
       />
       {error && <p className={contactErrorCls}>{error}</p>}
     </div>
@@ -150,24 +169,26 @@ function ContactInput({
 }
 
 function ContactSelect({
-  label, placeholder, options, value, onChange, required, error,
+  label, placeholder, options, value, onChange, required, error, dark,
 }: {
   label: string; placeholder?: string; options: FieldOption[]; value: string;
-  onChange: (v: string) => void; required?: boolean; error?: string;
+  onChange: (v: string) => void; required?: boolean; error?: string; dark?: boolean;
 }) {
+  const c = contactCls(dark);
+  const arrowColor = dark ? "%23B0B0B0" : "%236B7280";
   return (
     <div>
       {label && (
-        <label className={contactLabelCls}>
+        <label className={c.label}>
           {label} {required && <span className="text-brand-purple">*</span>}
         </label>
       )}
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`${contactInputCls} appearance-none ${error ? contactInputErr : contactInputOk}`}
+        className={`${c.input} appearance-none ${dark && !value ? "text-greyscale-medium" : ""} ${error ? c.err : c.ok}`}
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='${arrowColor}' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
           backgroundRepeat: "no-repeat",
           backgroundPosition: "right 16px center",
           backgroundSize: "12px",
@@ -177,7 +198,7 @@ function ContactSelect({
           {placeholder || "Selecciona una opción"}
         </option>
         {options.map((opt, i) => (
-          <option key={i} value={opt.value}>
+          <option key={i} value={opt.value} className="text-greyscale-darkest">
             {opt.label}
           </option>
         ))}
@@ -188,15 +209,16 @@ function ContactSelect({
 }
 
 function ContactTextarea({
-  label, placeholder, value, onChange, rows = 4, required, maxLength, error,
+  label, placeholder, value, onChange, rows = 4, required, maxLength, error, dark,
 }: {
   label: string; placeholder?: string; value: string; onChange: (v: string) => void;
-  rows?: number; required?: boolean; maxLength?: number; error?: string;
+  rows?: number; required?: boolean; maxLength?: number; error?: string; dark?: boolean;
 }) {
+  const c = contactCls(dark);
   return (
     <div>
       {label && (
-        <label className={contactLabelCls}>
+        <label className={c.label}>
           {label} {required && <span className="text-brand-purple">*</span>}
         </label>
       )}
@@ -206,7 +228,7 @@ function ContactTextarea({
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}
         rows={rows}
         maxLength={maxLength}
-        className={`${contactInputCls} resize-none ${error ? contactInputErr : contactInputOk}`}
+        className={`${c.input} resize-none ${error ? c.err : c.ok}`}
       />
       <div className="flex justify-between mt-1">
         {error ? <p className={contactErrorCls}>{error}</p> : <span />}
@@ -221,9 +243,9 @@ function ContactTextarea({
 }
 
 function ContactCheckbox({
-  checked, onChange, children, error,
+  checked, onChange, children, error, dark,
 }: {
-  checked: boolean; onChange: (v: boolean) => void; children: React.ReactNode; error?: string;
+  checked: boolean; onChange: (v: boolean) => void; children: React.ReactNode; error?: string; dark?: boolean;
 }) {
   return (
     <div>
@@ -232,9 +254,9 @@ function ContactCheckbox({
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
-          className="mt-1 w-4 h-4 accent-brand-purple rounded border-greyscale-light"
+          className={`mt-1 w-4 h-4 accent-brand-purple rounded ${dark ? "border-white/20" : "border-greyscale-light"}`}
         />
-        <span className="text-caption-sm text-greyscale-dark leading-relaxed">{children}</span>
+        <span className={`text-caption-sm leading-relaxed ${dark ? "text-greyscale-light" : "text-greyscale-dark"}`}>{children}</span>
       </label>
       {error && <p className="text-caption-sm text-red-500 mt-1 ml-7">{error}</p>}
     </div>
@@ -242,9 +264,9 @@ function ContactCheckbox({
 }
 
 function ContactSubmitButton({
-  text, onClick, disabled,
+  text, onClick, disabled, dark,
 }: {
-  text: string; onClick: () => void; disabled?: boolean;
+  text: string; onClick: () => void; disabled?: boolean; dark?: boolean;
 }) {
   return (
     <button
@@ -254,6 +276,8 @@ function ContactSubmitButton({
       className={`w-full py-4 rounded-xl text-greyscale-white text-body-md font-semibold transition-all ${
         disabled
           ? "bg-brand-purple/60 cursor-not-allowed"
+          : dark
+          ? "bg-gradient-to-r from-brand-purple to-brand-purple-dark hover:from-brand-purple-dark hover:to-brand-purple-darkest active:scale-[0.99]"
           : "bg-brand-purple hover:bg-brand-purple-dark active:scale-[0.99]"
       }`}
     >
@@ -275,20 +299,22 @@ function CheckboxLabel({
   label: string;
   linkText?: string;
   linkUrl?: string;
-  variant: "contact" | "default";
+  variant: "contact" | "contact-dark" | "default";
 }) {
   if (!linkText || !linkUrl) return <>{label}</>;
 
   const parts = label.split(linkText);
 
   const linkStyle =
-    variant === "contact"
-      ? undefined
-      : { color: "#96237A", textDecoration: "underline" };
+    variant === "default"
+      ? { color: "#96237A", textDecoration: "underline" }
+      : undefined;
 
   const linkClass =
     variant === "contact"
       ? "text-brand-purple underline hover:text-brand-purple-dark"
+      : variant === "contact-dark"
+      ? "text-[#D070B8] underline hover:text-[#E693CE]"
       : undefined;
 
   return (
@@ -325,7 +351,8 @@ export default function DynamicFormReact({ query, variables, data: initialData }
 
   const fields: FormField[] = (formConfig.fields || []).filter(Boolean);
   const variant = formConfig.styleVariant || "default";
-  const isContact = variant === "contact";
+  const isDark = variant === "contact-dark";
+  const isContact = variant === "contact" || isDark;
 
   /* ── State ── */
   const [values, setValues] = useState<Record<string, any>>(() => {
@@ -535,7 +562,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
                 <path d="M5 13l4 4L19 7" stroke="#22C55E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
-            <p className="text-subtitle-sm font-semibold text-greyscale-darkest">
+            <p className={`text-subtitle-sm font-semibold ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
               {formConfig.successMessage || "¡Gracias! Tu mensaje ha sido enviado."}
             </p>
           </div>
@@ -577,7 +604,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
       return (
         <div data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
           {isContact ? (
-            <h3 className="text-body-md font-bold text-greyscale-darkest mt-4 mb-2">
+            <h3 className={`text-body-md font-bold mt-4 mb-2 ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
               {field.label}
             </h3>
           ) : (
@@ -589,7 +616,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
 
     if (field.fieldType === "divider") {
       return isContact ? (
-        <div className="border-t border-greyscale-light" />
+        <div className={`border-t ${isDark ? "border-white/10" : "border-greyscale-light"}`} />
       ) : (
         <FormDivider />
       );
@@ -632,6 +659,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             required={required}
             maxLength={maxLen}
             error={err}
+            dark={isDark}
           />
         );
       }
@@ -646,6 +674,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             onChange={(v) => updateField(name, v)}
             required={required}
             error={err}
+            dark={isDark}
           />
         );
       }
@@ -660,6 +689,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             onChange={(v) => updateField(name, v)}
             required={required}
             error={err}
+            dark={isDark}
           />
         );
       }
@@ -675,6 +705,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             required={required}
             maxLength={maxLen}
             error={err}
+            dark={isDark}
           />
         );
       }
@@ -685,13 +716,16 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             checked={!!val}
             onChange={(v) => updateField(name, v)}
             error={err}
+            dark={isDark}
           >
-            <CheckboxLabel
-              label={label}
-              linkText={field.linkText}
-              linkUrl={field.linkUrl}
-              variant="contact"
-            />
+            <span data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
+              <CheckboxLabel
+                label={label}
+                linkText={field.linkText}
+                linkUrl={field.linkUrl}
+                variant={isDark ? "contact-dark" : "contact"}
+              />
+            </span>
           </ContactCheckbox>
         );
       }
@@ -893,14 +927,26 @@ export default function DynamicFormReact({ query, variables, data: initialData }
         </div>
       )}
 
-      {/* Contact variant: title inside the form area */}
-      {isContact && formConfig.formTitle && (
-        <h2
-          className="text-subtitle-md font-bold! text-greyscale-darkest mb-8"
-          data-tina-field={tinaField(formConfig, "formTitle")}
-        >
-          {formConfig.formTitle}
-        </h2>
+      {/* Contact variant: title (and subtitle for dark) inside the form area */}
+      {isContact && (formConfig.formTitle || (isDark && formConfig.description)) && (
+        <div className="mb-8">
+          {formConfig.formTitle && (
+            <h2
+              className={`text-subtitle-md font-bold! ${isDark ? "text-greyscale-white mb-2" : "text-greyscale-darkest"}`}
+              data-tina-field={tinaField(formConfig, "formTitle")}
+            >
+              {formConfig.formTitle}
+            </h2>
+          )}
+          {isDark && formConfig.description && (
+            <p
+              className="text-body-sm text-greyscale-light"
+              data-tina-field={tinaField(formConfig, "description")}
+            >
+              {formConfig.description}
+            </p>
+          )}
+        </div>
       )}
 
       {/* Fields grid */}
@@ -957,6 +1003,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
             text={sending ? "Enviando..." : (formConfig.submitButtonText || "Enviar")}
             onClick={handleSubmit}
             disabled={sending}
+            dark={isDark}
           />
         ) : (
           <FormSubmitButton

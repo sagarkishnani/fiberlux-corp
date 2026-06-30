@@ -1,0 +1,19 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import ContactReact from './ContactReact.tsx';
+
+const contactQuery = await client.queries.contact({ relativePath: 'index.json' });
+const formQuery = await client.queries.dynamicForms({ relativePath: 'contacto.json' });
+---
+
+<ContactReact
+  client:load
+  query={contactQuery.query}
+  variables={contactQuery.variables}
+  data={contactQuery.data}
+  form={{
+    query: formQuery.query,
+    variables: formQuery.variables,
+    data: formQuery.data,
+  }}
+/>

@@ -5,3 +5,5 @@ dist/
 .env
 .DS_Store
 .env.example
+.playwright-mcp
+.playwright-screens
