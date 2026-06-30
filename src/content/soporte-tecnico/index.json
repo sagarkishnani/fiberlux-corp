@@ -1,0 +1,46 @@
+{
+  "breadcrumb": "Soporte técnico",
+  "heading": "Contáctate con nuestros ingenieros especializados",
+  "intro": "En el Grupo Fiberlux estamos comprometidos con la calidad de la atención a nuestros clientes; por ello contamos con un equipo totalmente personalizado pensado en su empresa.",
+  "sectionTitle": "Soporte Técnico",
+  "sectionSubtitle": "Contáctate con nuestros especialistas al (01) 748 0606. Elige el canal que mejor se adapte a tus necesidades:",
+  "channels": [
+    {
+      "type": "whatsapp",
+      "tabLabel": "Contáctate por WhatsApp",
+      "title": "Contáctate por WhatsApp",
+      "subtitle": "Escríbenos por WhatsApp y un especialista te atenderá.",
+      "defaultOpen": false,
+      "rows": [
+        {
+          "label": "Soporte",
+          "value": "51900000000",
+          "optionLabel": "",
+          "message": "Hola, necesito soporte técnico"
+        }
+      ]
+    },
+    {
+      "type": "call",
+      "tabLabel": "Contáctate por llamada",
+      "title": "Contáctate por llamada",
+      "subtitle": "Llama directamente a nuestro equipo especializado. Selecciona la opción que corresponda a tu necesidad.",
+      "defaultOpen": true,
+      "rows": [
+        { "label": "NOC", "value": "(01) 748 0606", "optionLabel": "Opción 1", "message": "" },
+        { "label": "Telefonía", "value": "(01) 748 0606", "optionLabel": "Opción 2", "message": "" },
+        { "label": "SOC", "value": "(01) 748 0606", "optionLabel": "Opción 3", "message": "" }
+      ]
+    },
+    {
+      "type": "email",
+      "tabLabel": "Contáctate por correo",
+      "title": "Contáctate por correo",
+      "subtitle": "Envíanos un correo y te responderemos a la brevedad.",
+      "defaultOpen": false,
+      "rows": [
+        { "label": "Soporte", "value": "soporte@fiberlux.pe", "optionLabel": "", "message": "" }
+      ]
+    }
+  ]
+}

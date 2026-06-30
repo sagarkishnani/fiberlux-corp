@@ -64,6 +64,8 @@ type Query {
   postConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PostFilter): PostConnection!
   contact(relativePath: String): Contact!
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
+  soporteTecnico(relativePath: String): SoporteTecnico!
+  soporteTecnicoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SoporteTecnicoFilter): SoporteTecnicoConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
   maintenance(relativePath: String): Maintenance!
@@ -82,6 +84,7 @@ input DocumentFilter {
   about: AboutFilter
   post: PostFilter
   contact: ContactFilter
+  soporteTecnico: SoporteTecnicoFilter
   global: GlobalFilter
   maintenance: MaintenanceFilter
   infoAbonados: InfoAbonadosFilter
@@ -112,7 +115,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -717,6 +720,70 @@ type ContactConnection implements Connection {
   edges: [ContactConnectionEdges]
 }
 
+type SoporteTecnicoChannelsRows {
+  label: String
+  value: String
+  optionLabel: String
+  message: String
+}
+
+type SoporteTecnicoChannels {
+  type: String
+  tabLabel: String
+  title: String
+  subtitle: String
+  defaultOpen: Boolean
+  rows: [SoporteTecnicoChannelsRows]
+}
+
+type SoporteTecnico implements Node & Document {
+  breadcrumb: String
+  heading: String
+  intro: String
+  sectionTitle: String
+  sectionSubtitle: String
+  channels: [SoporteTecnicoChannels]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input SoporteTecnicoChannelsRowsFilter {
+  label: StringFilter
+  value: StringFilter
+  optionLabel: StringFilter
+  message: StringFilter
+}
+
+input SoporteTecnicoChannelsFilter {
+  type: StringFilter
+  tabLabel: StringFilter
+  title: StringFilter
+  subtitle: StringFilter
+  defaultOpen: BooleanFilter
+  rows: SoporteTecnicoChannelsRowsFilter
+}
+
+input SoporteTecnicoFilter {
+  breadcrumb: StringFilter
+  heading: StringFilter
+  intro: StringFilter
+  sectionTitle: StringFilter
+  sectionSubtitle: StringFilter
+  channels: SoporteTecnicoChannelsFilter
+}
+
+type SoporteTecnicoConnectionEdges {
+  cursor: String!
+  node: SoporteTecnico
+}
+
+type SoporteTecnicoConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [SoporteTecnicoConnectionEdges]
+}
+
 type GlobalNavLinksChildren {
   text: String
   url: String
@@ -1113,6 +1180,8 @@ type Mutation {
   createPost(relativePath: String!, params: PostMutation!): Post!
   updateContact(relativePath: String!, params: ContactMutation!): Contact!
   createContact(relativePath: String!, params: ContactMutation!): Contact!
+  updateSoporteTecnico(relativePath: String!, params: SoporteTecnicoMutation!): SoporteTecnico!
+  createSoporteTecnico(relativePath: String!, params: SoporteTecnicoMutation!): SoporteTecnico!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
   updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
@@ -1131,6 +1200,7 @@ input DocumentUpdateMutation {
   about: AboutMutation
   post: PostMutation
   contact: ContactMutation
+  soporteTecnico: SoporteTecnicoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1145,6 +1215,7 @@ input DocumentMutation {
   about: AboutMutation
   post: PostMutation
   contact: ContactMutation
+  soporteTecnico: SoporteTecnicoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1400,6 +1471,31 @@ input ContactMutation {
   heading: String
   intro: String
   cards: [ContactCardsMutation]
+}
+
+input SoporteTecnicoChannelsRowsMutation {
+  label: String
+  value: String
+  optionLabel: String
+  message: String
+}
+
+input SoporteTecnicoChannelsMutation {
+  type: String
+  tabLabel: String
+  title: String
+  subtitle: String
+  defaultOpen: Boolean
+  rows: [SoporteTecnicoChannelsRowsMutation]
+}
+
+input SoporteTecnicoMutation {
+  breadcrumb: String
+  heading: String
+  intro: String
+  sectionTitle: String
+  sectionSubtitle: String
+  channels: [SoporteTecnicoChannelsMutation]
 }
 
 input GlobalNavLinksChildrenMutation {
