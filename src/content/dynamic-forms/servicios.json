@@ -1,0 +1,93 @@
+{
+  "formId": "servicios",
+  "formTitle": "",
+  "description": "",
+  "styleVariant": "contact-dark",
+  "submitButtonText": "Contactar",
+  "successTitle": "¡Datos enviados!",
+  "successMessage": "Gracias. Nuestro equipo comercial te contactará pronto.",
+  "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa los campos obligatorios.",
+  "showCorrelativo": false,
+  "fields": [
+    {
+      "fieldType": "text",
+      "name": "empresa",
+      "label": "Empresa",
+      "placeholder": "Empresa",
+      "required": true,
+      "width": "half",
+      "order": 1
+    },
+    {
+      "fieldType": "text",
+      "name": "ruc",
+      "label": "RUC",
+      "placeholder": "RUC",
+      "required": false,
+      "width": "half",
+      "order": 2
+    },
+    {
+      "fieldType": "text",
+      "name": "nombre",
+      "label": "Nombre",
+      "placeholder": "Nombre",
+      "required": true,
+      "width": "half",
+      "order": 3
+    },
+    {
+      "fieldType": "text",
+      "name": "apellidos",
+      "label": "Apellidos",
+      "placeholder": "Apellidos",
+      "required": true,
+      "width": "half",
+      "order": 4
+    },
+    {
+      "fieldType": "select",
+      "name": "servicio",
+      "label": "Servicio de interés",
+      "placeholder": "Servicio de interés",
+      "required": true,
+      "width": "full",
+      "order": 5,
+      "options": [
+        { "value": "conectividad-empresarial", "label": "Conectividad empresarial" },
+        { "value": "ciberseguridad-gestionada", "label": "Ciberseguridad gestionada" },
+        { "value": "datacenter-cloud", "label": "Data Center, Cloud y Continuidad de Negocio" },
+        { "value": "servicios-gestionados", "label": "Servicios gestionados" }
+      ]
+    },
+    {
+      "fieldType": "tel",
+      "name": "telefono",
+      "label": "Teléfono / Celular",
+      "placeholder": "Teléfono / Celular",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
+      "fieldType": "email",
+      "name": "correo",
+      "label": "Correo",
+      "placeholder": "Correo",
+      "required": true,
+      "width": "half",
+      "order": 7
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "consentimiento",
+      "label": "¿Nos brinda su consentimiento para el tratamiento de datos personales?",
+      "required": true,
+      "width": "full",
+      "order": 8,
+      "linkText": "tratamiento de datos personales",
+      "linkUrl": "/legales/tratamiento-datos"
+    }
+  ]
+}
