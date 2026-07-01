@@ -71,7 +71,7 @@
   },
   "footer": {
     "tagline": "Potencia tu conectividad empresarial",
-    "copyright": "© {year} Fiberlux. Todos los derechos reservados",
+    "copyright": "Copyright © {year} Fiberlux. Diseño y desarrollo por",
     "columns": [
       {
         "title": "Servicios",
@@ -204,7 +204,9 @@
         "url": "https://youtube.com/fiberlux"
       }
     ],
-    "logo": "/images/logo/fiberlux.svg"
+    "logo": "/images/logo/fiberlux.svg",
+    "agencyLogo": "/images/logo/twn.svg",
+    "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio"
   },
   "seo": {
     "siteName": "Fiberlux",
