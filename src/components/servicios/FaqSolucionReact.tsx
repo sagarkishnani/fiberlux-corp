@@ -2,15 +2,13 @@ import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import type {
-  ServiceQuery,
-  ServiceQueryVariables,
-} from "../../../tina/__generated__/types";
 
 interface FaqProps {
   query: string;
-  variables: ServiceQueryVariables;
-  data: ServiceQuery;
+  variables: { relativePath: string };
+  /** Data from either the `service` (nivel-1) or `subservicio` (nivel-2) query;
+   *  both expose a `faq` object with the same shape. */
+  data: any;
 }
 
 interface FaqItem {
@@ -40,10 +38,10 @@ export default function FaqSolucionReact({
   variables,
   data: initialData,
 }: FaqProps) {
-  const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
+  const { data } = useTina({ query, variables, data: initialData });
   const [open, setOpen] = useState<number | null>(null);
 
-  const faq = data?.service?.faq;
+  const faq = data?.service?.faq ?? data?.subservicio?.faq;
   if (!faq) return null;
 
   const items = (faq.items || []).filter(Boolean) as FaqItem[];
