@@ -4,9 +4,10 @@ import DynamicFormReact from "./DynamicFormReact";
 
 interface Props {
   formSlug: string;
+  prefill?: Record<string, string>;
 }
 
-const { formSlug } = Astro.props;
+const { formSlug, prefill } = Astro.props;
 
 const result = await client.queries.dynamicForms({
   relativePath: `${formSlug}.json`,
@@ -17,5 +18,6 @@ const result = await client.queries.dynamicForms({
   query={result.query}
   variables={result.variables}
   data={result.data}
+  prefill={prefill}
   client:load
 />
