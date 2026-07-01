@@ -71,81 +71,26 @@
   },
   "footer": {
     "tagline": "Potencia tu conectividad empresarial",
-    "copyright": "© {year} Fiberlux. Todos los derechos reservados",
+    "copyright": "Copyright © {year} Fiberlux. Diseño y desarrollo por",
     "columns": [
       {
-        "title": "Infraestructura Cloud",
+        "title": "Servicios",
         "links": [
           {
-            "text": "Hosting",
-            "url": "/servicios/hosting"
+            "text": "Conectividad empresarial",
+            "url": "/servicios/conectividad-empresarial"
           },
           {
-            "text": "Housing",
-            "url": "/servicios/housing"
+            "text": "Ciberseguridad gestionada",
+            "url": "/servicios/ciberseguridad-gestionada"
           },
           {
-            "text": "SaaS",
-            "url": "/servicios/saas"
+            "text": "Data Center, Cloud y Continuidad de Negocio",
+            "url": "/servicios/data-center-cloud"
           },
           {
-            "text": "Continuidad de negocio",
-            "url": "/servicios/continuidad-de-negocio"
-          }
-        ]
-      },
-      {
-        "title": "Seguridad",
-        "links": [
-          {
-            "text": "Ciberseguridad Endpoints",
-            "url": "/servicios/ciberseguridad-endpoints"
-          },
-          {
-            "text": "Ciberseguridad Perímetro",
-            "url": "/servicios/ciberseguridad-perimetro"
-          },
-          {
-            "text": "Video Vigilancia",
-            "url": "/servicios/vsaas"
-          }
-        ]
-      },
-      {
-        "title": "Conectividad",
-        "links": [
-          {
-            "text": "Internet Dedicado",
-            "url": "/servicios/internet-dedicado"
-          },
-          {
-            "text": "Fibra Oscura",
-            "url": "/servicios/fibra-oscura"
-          },
-          {
-            "text": "Wi-Fi Gestionado",
-            "url": "/servicios/wifi-gestionado"
-          },
-          {
-            "text": "Transmisión de Datos",
-            "url": "/servicios/transmision-de-datos"
-          }
-        ]
-      },
-      {
-        "title": "Comunicaciones",
-        "links": [
-          {
-            "text": "Telefonía IP",
-            "url": "/servicios/telefonia-ip"
-          },
-          {
-            "text": "Housing",
-            "url": "/servicios/housing"
-          },
-          {
-            "text": "SaaS",
-            "url": "/servicios/saas"
+            "text": "Servicios gestionados",
+            "url": "/servicios/servicios-gestionados"
           }
         ]
       },
@@ -157,8 +102,8 @@
             "url": "/nosotros"
           },
           {
-            "text": "Servicios",
-            "url": "/servicios"
+            "text": "Blog",
+            "url": "/blog"
           },
           {
             "text": "Soporte técnico",
@@ -178,32 +123,61 @@
             "url": "/legales/libro-reclamaciones"
           },
           {
-            "text": "Reclamos",
-            "url": "/reclamos"
-          },
-          {
-            "text": "Información a Abonados",
-            "url": "/informacion-abonados"
-          },
-          {
             "text": "Tratamiento de datos personales",
             "url": "/legales/tratamiento-datos"
+          },
+          {
+            "text": "Política de Cookies",
+            "url": "/legales/politica-cookies"
           },
           {
             "text": "Política de Privacidad",
             "url": "/legales/politica-privacidad"
           },
           {
+            "text": "Política de videovigilancia",
+            "url": "/legales/politica-videovigilancia"
+          },
+          {
+            "text": "Política de SST",
+            "url": "/legales/politica-sst"
+          },
+          {
             "text": "Manual de derechos ARCO",
             "url": "/legales/derechos-arco"
           },
           {
-            "text": "Política de Videovigilancia",
-            "url": "/legales/politica-videovigilancia"
+            "text": "Formulario de solicitud de derechos ARCO",
+            "url": "/legales/formulario-derechos-arco"
           },
           {
-            "text": "Política SST",
-            "url": "/legales/politica-sst"
+            "text": "Guía de presentación de Reclamos de OSIPTEL",
+            "url": "/legales/guia-reclamos-osiptel"
+          },
+          {
+            "text": "Formulario de reclamo",
+            "url": "/reclamos/reclamo"
+          },
+          {
+            "text": "Formulario de apelación",
+            "url": "/reclamos/apelacion"
+          },
+          {
+            "text": "Formulario de queja",
+            "url": "/reclamos/queja"
+          }
+        ]
+      },
+      {
+        "title": "Solicitudes",
+        "links": [
+          {
+            "text": "Cancelación de servicio",
+            "url": "/solicitudes/cancelacion-servicio"
+          },
+          {
+            "text": "Suspensión temporal del servicio",
+            "url": "/solicitudes/suspension-temporal"
           }
         ]
       }
@@ -218,15 +192,21 @@
         "url": "https://linkedin.com/company/fiberlux"
       },
       {
-        "platform": "YouTube",
-        "url": "https://youtube.com/fiberlux"
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/fiberlux_peru"
       },
       {
         "platform": "WhatsApp",
         "url": "https://wa.me/51XXXXXXXXX"
+      },
+      {
+        "platform": "YouTube",
+        "url": "https://youtube.com/fiberlux"
       }
     ],
-    "logo": "/images/logo/fiberlux.svg"
+    "logo": "/images/logo/fiberlux.svg",
+    "agencyLogo": "/images/logo/twn.svg",
+    "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio"
   },
   "seo": {
     "siteName": "Fiberlux",

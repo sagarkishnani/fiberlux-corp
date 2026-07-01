@@ -277,6 +277,8 @@ fragment GlobalParts on Global {
       url
     }
     logo
+    agencyLogo
+    agencyUrl
   }
   seo {
     __typename

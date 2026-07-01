@@ -820,6 +820,8 @@ type GlobalFooter {
   columns: [GlobalFooterColumns]
   social: [GlobalFooterSocial]
   logo: String
+  agencyLogo: String
+  agencyUrl: String
 }
 
 type GlobalSeo {
@@ -873,6 +875,8 @@ input GlobalFooterFilter {
   columns: GlobalFooterColumnsFilter
   social: GlobalFooterSocialFilter
   logo: ImageFilter
+  agencyLogo: ImageFilter
+  agencyUrl: StringFilter
 }
 
 input GlobalSeoFilter {
@@ -1534,6 +1538,8 @@ input GlobalFooterMutation {
   columns: [GlobalFooterColumnsMutation]
   social: [GlobalFooterSocialMutation]
   logo: String
+  agencyLogo: String
+  agencyUrl: String
 }
 
 input GlobalSeoMutation {

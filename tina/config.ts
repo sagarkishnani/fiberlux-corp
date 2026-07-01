@@ -939,6 +939,14 @@ export default defineConfig({
                 ],
               },
               { name: "logo", label: "Logo del footer", type: "image" },
+              { name: "agencyLogo", label: "Logo de la agencia (crédito)", type: "image" },
+              {
+                name: "agencyUrl",
+                label: "URL de la agencia (crédito)",
+                type: "string",
+                description:
+                  "Enlace del wordmark de crédito en el pie (se abre en pestaña nueva).",
+              },
             ],
           },
 
