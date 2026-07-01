@@ -67,22 +67,56 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
   const copyrightTemplate =
     (footer as any).copyright || '© {year} Fiberlux. Todos los derechos reservados';
   const copyrightText = copyrightTemplate.replace('{year}', String(currentYear));
+  const agencyLogo = (footer as any).agencyLogo as string | null | undefined;
+  const agencyUrl = (footer as any).agencyUrl as string | null | undefined;
+
+  /* Split the link groups into two visual columns (ceil(n/2) on the left). */
+  const columns = (footer.columns ?? []).filter(Boolean) as ColumnItem[];
+  const splitAt = Math.ceil(columns.length / 2);
+  const visualColumns = [columns.slice(0, splitAt), columns.slice(splitAt)];
+
+  const renderColumn = (column: ColumnItem, key: number) => (
+    <div key={key}>
+      <h3
+        className="text-[18px] leading-[18px] font-semibold text-white mb-4"
+        data-tina-field={tinaField(column, 'title')}
+      >
+        {column.title}
+      </h3>
+      <ul className="space-y-2.5">
+        {column.links?.map((link: LinkItem | null, j: number) => {
+          if (!link) return null;
+          return (
+            <li key={j}>
+              <a
+                href={link.url || '#'}
+                className="leading-[20px] text-white/70 hover:text-white transition-colors duration-200"
+                data-tina-field={tinaField(link, 'text')}
+              >
+                {link.text}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 
   return (
     <footer className="bg-brand-purple rounded-t-xl">
       {/* ═══ Main content ═══ */}
-      <div className="max-w-[1440px] mx-auto px-16 pt-20 pb-10">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-16 pt-16 sm:pt-20 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
-          {/* Left: Tagline + Social */}
-          <div className="flex flex-col justify-between">
+          {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
+          <div className="order-2 md:order-1 flex flex-col justify-between gap-10">
             <h2
-              className="text-[56px] leading-[60px] font-semibold text-white"
+              className="text-[32px] leading-[36px] sm:text-[56px] sm:leading-[60px] font-semibold text-white"
               data-tina-field={tinaField(footer, 'tagline')}
             >
               {footer.tagline}
             </h2>
-            <div className="flex gap-3 mt-8">
+            <div className="flex flex-wrap gap-3">
               {footer.social?.map((item: SocialItem | null, i: number) => {
                 if (!item) return null;
                 const Icon = iconMap[item.platform || ''];
@@ -104,45 +138,21 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
             </div>
           </div>
 
-          {/* Right: Link columns */}
-          <div className="col-span-2 grid grid-cols-2 sm:grid-cols-2 gap-x-0 gap-y-8">
-            {footer.columns?.map((column: ColumnItem | null, i: number) => {
-              if (!column) return null;
-              return (
-                <div key={i}>
-                  <h3
-                    className="text-[18px] leading-[18px] font-semibold text-white mb-4"
-                    data-tina-field={tinaField(column, 'title')}
-                  >
-                    {column.title}
-                  </h3>
-                  <ul className="space-y-2.5">
-                    {column.links?.map((link: LinkItem | null, j: number) => {
-                      if (!link) return null;
-                      return (
-                        <li key={j}>
-                          <a
-                            href={link.url || '#'}
-                            className="leading-[20px] text-white/70 hover:text-white transition-colors duration-200"
-                            data-tina-field={tinaField(link, 'text')}
-                          >
-                            {link.text}
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
+          {/* Right: Link groups in two visual columns — first on mobile */}
+          <div className="order-1 md:order-2 col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
+            {visualColumns.map((group, gi) => (
+              <div key={gi} className="flex flex-col gap-10">
+                {group.map((column, ci) => renderColumn(column, ci))}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* ═══ Bottom bar — same grid as main content ═══ */}
+      {/* ═══ Bottom bar ═══ */}
       <div className="border-t border-white/10">
-        <div className="max-w-[1440px] mx-auto px-16 py-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-          {/* Logo — first column */}
+        <div className="max-w-[1440px] mx-auto px-6 sm:px-16 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          {/* Fiberlux logo */}
           <div data-tina-field={tinaField(footer as any, 'logo')}>
             <img
               src={logoSrc}
@@ -151,16 +161,29 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
             />
           </div>
 
-          {/* Copyright — same 2-col sub-grid as the links above */}
-          <div className="col-span-2 grid grid-cols-2">
-            <div /> {/* empty — aligns with first link column */}
-            <p
-              className="leading-[14px] text-white"
-              data-tina-field={tinaField(footer, 'copyright')}
-            >
-              {copyrightText}
-            </p>
-          </div>
+          {/* Copyright + agency credit */}
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-white/80">
+            <span data-tina-field={tinaField(footer, 'copyright')}>{copyrightText}</span>
+            {agencyLogo &&
+              (agencyUrl ? (
+                <a
+                  href={agencyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TWNSTUDIOS"
+                  data-tina-field={tinaField(footer as any, 'agencyLogo')}
+                >
+                  <img src={agencyLogo} alt="TWNSTUDIOS" className="h-4 w-auto brightness-0 invert" />
+                </a>
+              ) : (
+                <img
+                  src={agencyLogo}
+                  alt="TWNSTUDIOS"
+                  className="h-4 w-auto brightness-0 invert"
+                  data-tina-field={tinaField(footer as any, 'agencyLogo')}
+                />
+              ))}
+          </p>
         </div>
       </div>
     </footer>
