@@ -17,58 +17,58 @@
     ]
   },
   "services": {
-    "title": "Servicios de conectividad empresarial",
+    "title": "Nuestras soluciones",
     "items": [
       {
         "number": "01",
-        "title": "Seguridad",
-        "description": "Protección integral contra amenazas digitales, infraestructura y datos.",
+        "title": "Conectividad empresarial",
+        "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
+        "icon": "/uploads/soluciones/conectividad.svg",
         "bullets": [
-          "Ciberseguridad Endpoints",
-          "Ciberseguridad Perímetro",
-          "Video Vigilancia"
-        ],
-        "url": "/servicios/ciberseguridad-endpoints"
-      },
-      {
-        "number": "02",
-        "title": "Conectividad",
-        "description": "Redes rápidas, estables y de alta capacidad.",
-        "bullets": [
-          "Internet Dedicado",
+          "Internet Dedicado (Simétrico)",
+          "Lan2Lan (Transmisión de Datos)",
           "Fibra Oscura",
-          "Wi-Fi Gestionado",
-          "Transmisión de Datos"
+          "Accesos Satelitales"
         ],
         "url": "/servicios/internet-dedicado"
       },
       {
-        "number": "03",
-        "title": "Infraestructura Cloud",
-        "description": "Infraestructura cloud digital. Redes y servidores.",
+        "number": "02",
+        "title": "Ciberseguridad",
+        "description": "Protege tu operación crítica con ciberseguridad.",
+        "icon": "/uploads/soluciones/ciberseguridad.svg",
         "bullets": [
-          "Hosting",
-          "Housing",
-          "SaaS",
-          "Continuidad de negocio"
+          "Seguridad Perimetral y de Red",
+          "Seguridad de Endpoints y Servidores",
+          "Respaldo Crítico",
+          "Gestión de identidad",
+          "Programas de concientización",
+          "Seguridad en el desarrollo de aplicaciones"
+        ],
+        "url": "/servicios/ciberseguridad-endpoints"
+      },
+      {
+        "number": "03",
+        "title": "Data Center, Cloud y Continuidad de Negocio",
+        "description": "Infraestructura de Clase Mundial para el corazón de tu Negocio.",
+        "icon": "/uploads/soluciones/datacenter.svg",
+        "bullets": [
+          "Colocación y Hosting (Housing)",
+          "Servidor en la Nube (Cloud Privada)",
+          "Recuperación ante Desastres (Disaster Recovery)",
+          "Privacidad y Auditoría"
         ],
         "url": "/servicios/saas"
       },
       {
         "number": "04",
-        "title": "Comunicaciones",
-        "description": "Soluciones para una comunicación empresarial integrada.",
+        "title": "Servicios gestionados",
+        "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
+        "icon": "/uploads/soluciones/servicios-gestionados.svg",
         "bullets": [
-          "Telefonía IP"
-        ],
-        "url": "/servicios/telefonia-ip"
-      },
-      {
-        "number": "05",
-        "title": "Continuidad de negocio",
-        "description": "Respaldamos la continuidad de tus operaciones ante cualquier contingencia.",
-        "bullets": [
-          "Continuidad de negocio"
+          "Videovigilancia y Seguridad Electrónica (CCTV)",
+          "Networking y Conectividad Inalámbrica",
+          "Equipamiento Core y Almacenamiento"
         ],
         "url": "/servicios/continuidad-de-negocio"
       }
