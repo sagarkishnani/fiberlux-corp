@@ -4,6 +4,7 @@ import { client } from "../../../../tina/__generated__/client";
 import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro";
 import Beneficios from "../../../components/servicios/Beneficios.astro";
 import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
+import Stats from "../../../components/Stats.astro";
 
 /* ── Static paths from all sub-service documents ── */
 export async function getStaticPaths() {
@@ -45,5 +46,6 @@ const metaDescription =
     <HeroSubservicio relativePath={relativePath} />
     <Beneficios relativePath={relativePath} />
     <CasosDeUso relativePath={relativePath} />
+    <Stats title={sub?.whyUsTitle ?? undefined} />
   </main>
 </BaseLayout>
