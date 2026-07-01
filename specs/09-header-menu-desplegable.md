@@ -1,6 +1,6 @@
 # SPEC 09 — Header: menú desplegable multinivel (hover desktop / drill mobile)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 07 (fijó las 4 soluciones y sus URLs en el footer; se reutilizan aquí). Reutiliza el shell del overlay actual de `HeaderReact.tsx`.
 > **Fecha:** 2026-06-30
 > **Objetivo:** Rediseñar el menú overlay del Header para que en **desktop** al hacer hover sobre *Servicios* o *Nosotros* se revele su submenú a la derecha (y el click del texto navegue), y en **mobile** el texto navegue mientras la **flecha** expande el nivel inferior en una jerarquía CMS de 3 niveles (Servicios → 4 soluciones → sub-servicios; Nosotros → Casos de éxito, Blog).
