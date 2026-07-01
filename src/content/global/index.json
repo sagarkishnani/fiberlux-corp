@@ -2,66 +2,192 @@
   "nav": {
     "links": [
       {
-        "text": "Inicio",
-        "url": "/"
-      },
-      {
         "text": "Servicios",
         "url": "/servicios",
         "children": [
           {
-            "text": "Internet Dedicado",
-            "url": "/servicios/internet-dedicado"
+            "text": "Conectividad empresarial",
+            "url": "/servicios/conectividad-empresarial",
+            "children": [
+              {
+                "text": "Internet Corporativo",
+                "url": "/servicios/conectividad-empresarial/internet-corporativo"
+              },
+              {
+                "text": "Internet Corporativo de Alta Disponibilidad",
+                "url": "/servicios/conectividad-empresarial/internet-alta-disponibilidad"
+              },
+              {
+                "text": "Conectividad satelital",
+                "url": "/servicios/conectividad-empresarial/conectividad-satelital"
+              },
+              {
+                "text": "Radioenlaces Empresariales",
+                "url": "/servicios/conectividad-empresarial/radioenlaces-empresariales"
+              },
+              {
+                "text": "Transmisión de datos (L2L)",
+                "url": "/servicios/conectividad-empresarial/transmision-de-datos-l2l"
+              },
+              {
+                "text": "Fibra Oscura",
+                "url": "/servicios/conectividad-empresarial/fibra-oscura"
+              },
+              {
+                "text": "SD-WAN",
+                "url": "/servicios/conectividad-empresarial/sd-wan"
+              },
+              {
+                "text": "Balanceo de enlaces",
+                "url": "/servicios/conectividad-empresarial/balanceo-de-enlaces"
+              }
+            ]
           },
           {
-            "text": "Transmisión de Datos",
-            "url": "/servicios/transmision-de-datos"
+            "text": "Ciberseguridad gestionada",
+            "url": "/servicios/ciberseguridad-gestionada",
+            "children": [
+              {
+                "text": "NGFW y Seguridad Perimetral",
+                "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
+              },
+              {
+                "text": "VPN Segura y Acceso Remoto",
+                "url": "/servicios/ciberseguridad-gestionada/vpn-segura"
+              },
+              {
+                "text": "EDR / XDR / MDR",
+                "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr"
+              },
+              {
+                "text": "Seguridad de correo y filtrado web",
+                "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
+              },
+              {
+                "text": "MFA y Control de Identidad",
+                "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad"
+              },
+              {
+                "text": "ZTNA y Control de Acceso Seguro",
+                "url": "/servicios/ciberseguridad-gestionada/ztna"
+              },
+              {
+                "text": "NAC (Network Access Control)",
+                "url": "/servicios/ciberseguridad-gestionada/nac"
+              },
+              {
+                "text": "WAF y Protección de Aplicaciones",
+                "url": "/servicios/ciberseguridad-gestionada/waf"
+              },
+              {
+                "text": "Anti-DDoS",
+                "url": "/servicios/ciberseguridad-gestionada/anti-ddos"
+              },
+              {
+                "text": "Concientización en Phishing",
+                "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing"
+              },
+              {
+                "text": "CYBER SOC 24/7 y Monitoreo",
+                "url": "/servicios/ciberseguridad-gestionada/soc-24-7"
+              },
+              {
+                "text": "Correlación de eventos (SIEM/SOAR)",
+                "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos"
+              },
+              {
+                "text": "Pentesting y Evaluación de Vulnerabilidades",
+                "url": "/servicios/ciberseguridad-gestionada/pentesting"
+              }
+            ]
           },
           {
-            "text": "Fibra Oscura",
-            "url": "/servicios/fibra-oscura"
+            "text": "Data Center, Cloud y Continuidad de Negocio",
+            "url": "/servicios/data-center-cloud",
+            "children": [
+              {
+                "text": "Housing y Colocación",
+                "url": "/servicios/data-center-cloud/housing-colocacion"
+              },
+              {
+                "text": "Nube Privada",
+                "url": "/servicios/data-center-cloud/nube-privada"
+              },
+              {
+                "text": "Nube Pública",
+                "url": "/servicios/data-center-cloud/nube-publica"
+              },
+              {
+                "text": "Backup as a Service (BaaS)",
+                "url": "/servicios/data-center-cloud/baas"
+              },
+              {
+                "text": "Disaster Recovery (DRaaS)",
+                "url": "/servicios/data-center-cloud/draas"
+              },
+              {
+                "text": "Storage y Cómputo Empresarial",
+                "url": "/servicios/data-center-cloud/storage-computo"
+              },
+              {
+                "text": "Arquitectura basada en Microservicios",
+                "url": "/servicios/data-center-cloud/microservicios"
+              }
+            ]
           },
           {
-            "text": "Wi-Fi Gestionado",
-            "url": "/servicios/wifi-gestionado"
-          },
-          {
-            "text": "Telefonía IP",
-            "url": "/servicios/telefonia-ip"
-          },
-          {
-            "text": "SaaS",
-            "url": "/servicios/saas"
-          },
-          {
-            "text": "Housing",
-            "url": "/servicios/housing"
-          },
-          {
-            "text": "Ciberseguridad Perímetro",
-            "url": "/servicios/ciberseguridad-perimetro"
-          },
-          {
-            "text": "Ciberseguridad Endpoints",
-            "url": "/servicios/ciberseguridad-endpoints"
-          },
-          {
-            "text": "Continuidad de Negocio",
-            "url": "/servicios/continuidad-de-negocio"
-          },
-          {
-            "text": "VSaaS",
-            "url": "/servicios/vsaas"
+            "text": "Servicios gestionados",
+            "url": "/servicios/servicios-gestionados",
+            "children": [
+              {
+                "text": "Mesa de Ayuda",
+                "url": "/servicios/servicios-gestionados/mesa-de-ayuda"
+              },
+              {
+                "text": "Comunicaciones Unificadas",
+                "url": "/servicios/servicios-gestionados/comunicaciones-unificadas"
+              },
+              {
+                "text": "Colaboración Empresarial",
+                "url": "/servicios/servicios-gestionados/colaboracion-empresarial"
+              },
+              {
+                "text": "Gestión de Redes LAN",
+                "url": "/servicios/servicios-gestionados/gestion-redes-lan"
+              },
+              {
+                "text": "WiFi Gestionado",
+                "url": "/servicios/servicios-gestionados/wifi-gestionado"
+              },
+              {
+                "text": "Gestión de Endpoints",
+                "url": "/servicios/servicios-gestionados/gestion-endpoints"
+              },
+              {
+                "text": "Videovigilancia gestionada",
+                "url": "/servicios/servicios-gestionados/videovigilancia-gestionada"
+              }
+            ]
           }
         ]
       },
       {
         "text": "Nosotros",
-        "url": "/nosotros"
+        "url": "/nosotros",
+        "children": [
+          {
+            "text": "Casos de éxito",
+            "url": "/casos-de-exito"
+          },
+          {
+            "text": "Blog",
+            "url": "/blog"
+          }
+        ]
       },
       {
-        "text": "Blog",
-        "url": "/blog"
+        "text": "Soporte técnico",
+        "url": "/soporte-tecnico"
       },
       {
         "text": "Contacto",

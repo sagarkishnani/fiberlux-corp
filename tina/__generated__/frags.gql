@@ -255,6 +255,11 @@ fragment GlobalParts on Global {
         __typename
         text
         url
+        children {
+          __typename
+          text
+          url
+        }
       }
     }
   }

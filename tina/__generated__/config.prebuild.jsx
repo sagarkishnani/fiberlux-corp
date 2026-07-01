@@ -833,9 +833,25 @@ var config_default = defineConfig({
                     label: "Submen\xFA",
                     type: "object",
                     list: true,
+                    ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
-                      { name: "url", label: "URL", type: "string" }
+                      { name: "url", label: "URL", type: "string" },
+                      {
+                        name: "children",
+                        label: "Sub-servicios (solo mobile)",
+                        type: "object",
+                        list: true,
+                        ui: {
+                          itemProps: (item) => ({
+                            label: item?.text || "Sub-servicio"
+                          })
+                        },
+                        fields: [
+                          { name: "text", label: "Texto", type: "string" },
+                          { name: "url", label: "URL", type: "string" }
+                        ]
+                      }
                     ]
                   }
                 ]
