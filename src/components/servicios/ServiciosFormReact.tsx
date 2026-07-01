@@ -69,11 +69,17 @@ export default function ServiciosFormReact({
 
       <style>{`
         .servicios-form-glow {
-          background: radial-gradient(
-            70% 60% at 50% 120%,
-            rgba(150, 35, 122, 0.35) 0%,
-            rgba(150, 35, 122, 0) 60%
-          );
+          background:
+            radial-gradient(52% 58% at 88% 4%, rgba(190, 70, 158, 0.42) 0%, rgba(150, 35, 122, 0) 55%),
+            radial-gradient(40% 52% at 1% 55%, rgba(150, 35, 122, 0.34) 0%, rgba(150, 35, 122, 0) 62%),
+            radial-gradient(48% 46% at 22% 108%, rgba(150, 35, 122, 0.22) 0%, rgba(150, 35, 122, 0) 60%);
+        }
+        @media (max-width: 1023px) {
+          .servicios-form-glow {
+            background:
+              radial-gradient(70% 30% at 82% 2%, rgba(190, 70, 158, 0.38) 0%, rgba(150, 35, 122, 0) 55%),
+              radial-gradient(80% 26% at 10% 60%, rgba(150, 35, 122, 0.30) 0%, rgba(150, 35, 122, 0) 62%);
+          }
         }
       `}</style>
     </section>
