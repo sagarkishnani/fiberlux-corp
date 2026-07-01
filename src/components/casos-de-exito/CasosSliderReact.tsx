@@ -58,24 +58,68 @@ export default function CasosSliderReact({
     return () => el.removeEventListener("scroll", onScroll);
   }, [items.length]);
 
-  /* ── Drag to scroll ── */
+  /* ── Drag to scroll (with momentum + smooth snap) ── */
   const isDragging = useRef(false);
   const hasDragged = useRef(false);
   const startX = useRef(0);
   const startScrollLeft = useRef(0);
+  const lastX = useRef(0);
+  const velocity = useRef(0);
+  const momentumId = useRef<number | null>(null);
 
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
+  const stopMomentum = () => {
+    if (momentumId.current !== null) {
+      cancelAnimationFrame(momentumId.current);
+      momentumId.current = null;
+    }
+  };
+
+  /* Ease onto the slide nearest the viewport centre, then restore CSS snap. */
+  const snapToNearest = () => {
     const el = carouselRef.current;
     if (!el) return;
+    const children = Array.from(el.querySelectorAll<HTMLElement>(".caso-slide"));
+    if (!children.length) return;
+    const targetCenter = el.scrollLeft + el.offsetWidth / 2;
+    let nearest = children[0];
+    let minDist = Infinity;
+    children.forEach((child) => {
+      const center = child.offsetLeft + child.offsetWidth / 2;
+      const dist = Math.abs(center - targetCenter);
+      if (dist < minDist) {
+        minDist = dist;
+        nearest = child;
+      }
+    });
+    const left = nearest.offsetLeft + nearest.offsetWidth / 2 - el.offsetWidth / 2;
+    el.scrollTo({ left, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    // Re-enable CSS snap only after the smooth settle, so it doesn't jump-cut the animation.
+    window.setTimeout(
+      () => {
+        const n = carouselRef.current;
+        if (n) n.style.scrollSnapType = "";
+      },
+      prefersReducedMotion ? 0 : 450,
+    );
+  };
+
+  useEffect(() => () => stopMomentum(), []);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    stopMomentum();
     isDragging.current = true;
     hasDragged.current = false;
     startX.current = e.pageX;
+    lastX.current = e.pageX;
+    velocity.current = 0;
     startScrollLeft.current = el.scrollLeft;
     el.style.cursor = "grabbing";
     el.style.scrollSnapType = "none";
-  }, []);
+  };
 
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
+  const onMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current) return;
     e.preventDefault();
     const el = carouselRef.current;
@@ -83,16 +127,38 @@ export default function CasosSliderReact({
     const dx = e.pageX - startX.current;
     if (Math.abs(dx) > 5) hasDragged.current = true;
     el.scrollLeft = startScrollLeft.current - dx;
-  }, []);
+    // Low-pass filtered velocity (px/frame) → smooth release momentum.
+    velocity.current = 0.8 * velocity.current + 0.2 * (lastX.current - e.pageX);
+    lastX.current = e.pageX;
+  };
 
-  const onMouseUp = useCallback(() => {
+  const onMouseUp = () => {
+    if (!isDragging.current) return;
     isDragging.current = false;
     const el = carouselRef.current;
-    if (el) {
-      el.style.cursor = "grab";
-      el.style.scrollSnapType = "";
+    if (!el) return;
+    el.style.cursor = "grab";
+
+    if (prefersReducedMotion || Math.abs(velocity.current) < 0.6) {
+      snapToNearest();
+      return;
     }
-  }, []);
+
+    const decay = 0.92;
+    const step = () => {
+      const node = carouselRef.current;
+      if (!node) return;
+      node.scrollLeft += velocity.current;
+      velocity.current *= decay;
+      if (Math.abs(velocity.current) < 0.6) {
+        momentumId.current = null;
+        snapToNearest();
+        return;
+      }
+      momentumId.current = requestAnimationFrame(step);
+    };
+    momentumId.current = requestAnimationFrame(step);
+  };
 
   /* Cancel the click that follows a drag so it doesn't open the modal. */
   const onClickCapture = useCallback((e: React.MouseEvent) => {
