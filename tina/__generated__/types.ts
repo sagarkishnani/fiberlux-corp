@@ -100,6 +100,8 @@ export type Query = {
   serviciosConnection: ServiciosConnection;
   casosDeExito: CasosDeExito;
   casosDeExitoConnection: CasosDeExitoConnection;
+  formasDePago: FormasDePago;
+  formasDePagoConnection: FormasDePagoConnection;
   global: Global;
   globalConnection: GlobalConnection;
   maintenance: Maintenance;
@@ -269,6 +271,21 @@ export type QueryCasosDeExitoConnectionArgs = {
 };
 
 
+export type QueryFormasDePagoArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFormasDePagoConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FormasDePagoFilter>;
+};
+
+
 export type QueryGlobalArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -353,6 +370,7 @@ export type DocumentFilter = {
   soporteTecnico?: InputMaybe<SoporteTecnicoFilter>;
   servicios?: InputMaybe<ServiciosFilter>;
   casosDeExito?: InputMaybe<CasosDeExitoFilter>;
+  formasDePago?: InputMaybe<FormasDePagoFilter>;
   global?: InputMaybe<GlobalFilter>;
   maintenance?: InputMaybe<MaintenanceFilter>;
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
@@ -397,7 +415,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1327,6 +1345,91 @@ export type CasosDeExitoConnection = Connection & {
   edges?: Maybe<Array<Maybe<CasosDeExitoConnectionEdges>>>;
 };
 
+export type FormasDePagoBanksMethodsSteps = {
+  __typename?: 'FormasDePagoBanksMethodsSteps';
+  title?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['JSON']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+};
+
+export type FormasDePagoBanksMethods = {
+  __typename?: 'FormasDePagoBanksMethods';
+  label?: Maybe<Scalars['String']['output']>;
+  steps?: Maybe<Array<Maybe<FormasDePagoBanksMethodsSteps>>>;
+};
+
+export type FormasDePagoBanks = {
+  __typename?: 'FormasDePagoBanks';
+  name?: Maybe<Scalars['String']['output']>;
+  optionLabel?: Maybe<Scalars['String']['output']>;
+  methods?: Maybe<Array<Maybe<FormasDePagoBanksMethods>>>;
+};
+
+export type FormasDePagoSeo = {
+  __typename?: 'FormasDePagoSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type FormasDePago = Node & Document & {
+  __typename?: 'FormasDePago';
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  bankSelectLabel?: Maybe<Scalars['String']['output']>;
+  methodSelectLabel?: Maybe<Scalars['String']['output']>;
+  banks?: Maybe<Array<Maybe<FormasDePagoBanks>>>;
+  seo?: Maybe<FormasDePagoSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type FormasDePagoBanksMethodsStepsFilter = {
+  title?: InputMaybe<StringFilter>;
+  description?: InputMaybe<RichTextFilter>;
+  image?: InputMaybe<ImageFilter>;
+};
+
+export type FormasDePagoBanksMethodsFilter = {
+  label?: InputMaybe<StringFilter>;
+  steps?: InputMaybe<FormasDePagoBanksMethodsStepsFilter>;
+};
+
+export type FormasDePagoBanksFilter = {
+  name?: InputMaybe<StringFilter>;
+  optionLabel?: InputMaybe<StringFilter>;
+  methods?: InputMaybe<FormasDePagoBanksMethodsFilter>;
+};
+
+export type FormasDePagoSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type FormasDePagoFilter = {
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  bankSelectLabel?: InputMaybe<StringFilter>;
+  methodSelectLabel?: InputMaybe<StringFilter>;
+  banks?: InputMaybe<FormasDePagoBanksFilter>;
+  seo?: InputMaybe<FormasDePagoSeoFilter>;
+};
+
+export type FormasDePagoConnectionEdges = {
+  __typename?: 'FormasDePagoConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<FormasDePago>;
+};
+
+export type FormasDePagoConnection = Connection & {
+  __typename?: 'FormasDePagoConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<FormasDePagoConnectionEdges>>>;
+};
+
 export type GlobalNavLinksChildrenChildren = {
   __typename?: 'GlobalNavLinksChildrenChildren';
   text?: Maybe<Scalars['String']['output']>;
@@ -1807,6 +1910,8 @@ export type Mutation = {
   createServicios: Servicios;
   updateCasosDeExito: CasosDeExito;
   createCasosDeExito: CasosDeExito;
+  updateFormasDePago: FormasDePago;
+  createFormasDePago: FormasDePago;
   updateGlobal: Global;
   createGlobal: Global;
   updateMaintenance: Maintenance;
@@ -1961,6 +2066,18 @@ export type MutationCreateCasosDeExitoArgs = {
 };
 
 
+export type MutationUpdateFormasDePagoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FormasDePagoMutation;
+};
+
+
+export type MutationCreateFormasDePagoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FormasDePagoMutation;
+};
+
+
 export type MutationUpdateGlobalArgs = {
   relativePath: Scalars['String']['input'];
   params: GlobalMutation;
@@ -2030,6 +2147,7 @@ export type DocumentUpdateMutation = {
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
   casosDeExito?: InputMaybe<CasosDeExitoMutation>;
+  formasDePago?: InputMaybe<FormasDePagoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -2048,6 +2166,7 @@ export type DocumentMutation = {
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
   casosDeExito?: InputMaybe<CasosDeExitoMutation>;
+  formasDePago?: InputMaybe<FormasDePagoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -2405,6 +2524,38 @@ export type CasosDeExitoMutation = {
   seo?: InputMaybe<CasosDeExitoSeoMutation>;
 };
 
+export type FormasDePagoBanksMethodsStepsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['JSON']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FormasDePagoBanksMethodsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  steps?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMethodsStepsMutation>>>;
+};
+
+export type FormasDePagoBanksMutation = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  optionLabel?: InputMaybe<Scalars['String']['input']>;
+  methods?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMethodsMutation>>>;
+};
+
+export type FormasDePagoSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FormasDePagoMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  bankSelectLabel?: InputMaybe<Scalars['String']['input']>;
+  methodSelectLabel?: InputMaybe<Scalars['String']['input']>;
+  banks?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMutation>>>;
+  seo?: InputMaybe<FormasDePagoSeoMutation>;
+};
+
 export type GlobalNavLinksChildrenChildrenMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -2594,6 +2745,8 @@ export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: str
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
+export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
@@ -2774,6 +2927,25 @@ export type CasosDeExitoConnectionQueryVariables = Exact<{
 
 
 export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type FormasDePagoQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type FormasDePagoQuery = { __typename?: 'Query', formasDePago: { __typename: 'FormasDePago', id: string, heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type FormasDePagoConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FormasDePagoFilter>;
+}>;
+
+
+export type FormasDePagoConnectionQuery = { __typename?: 'Query', formasDePagoConnection: { __typename?: 'FormasDePagoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FormasDePagoConnectionEdges', cursor: string, node?: { __typename: 'FormasDePago', id: string, heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3187,6 +3359,36 @@ export const CasosDeExitoPartsFragmentDoc = gql`
     author
     role
     badge
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+    `;
+export const FormasDePagoPartsFragmentDoc = gql`
+    fragment FormasDePagoParts on FormasDePago {
+  __typename
+  heading
+  intro
+  bankSelectLabel
+  methodSelectLabel
+  banks {
+    __typename
+    name
+    optionLabel
+    methods {
+      __typename
+      label
+      steps {
+        __typename
+        title
+        description
+        image
+      }
+    }
   }
   seo {
     __typename
@@ -3872,6 +4074,63 @@ export const CasosDeExitoConnectionDocument = gql`
   }
 }
     ${CasosDeExitoPartsFragmentDoc}`;
+export const FormasDePagoDocument = gql`
+    query formasDePago($relativePath: String!) {
+  formasDePago(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FormasDePagoParts
+  }
+}
+    ${FormasDePagoPartsFragmentDoc}`;
+export const FormasDePagoConnectionDocument = gql`
+    query formasDePagoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FormasDePagoFilter) {
+  formasDePagoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FormasDePagoParts
+      }
+    }
+  }
+}
+    ${FormasDePagoPartsFragmentDoc}`;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -4213,6 +4472,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     casosDeExitoConnection(variables?: CasosDeExitoConnectionQueryVariables, options?: C): Promise<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}> {
         return requester<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}, CasosDeExitoConnectionQueryVariables>(CasosDeExitoConnectionDocument, variables, options);
+      },
+    formasDePago(variables: FormasDePagoQueryVariables, options?: C): Promise<{data: FormasDePagoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoQueryVariables, query: string}> {
+        return requester<{data: FormasDePagoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoQueryVariables, query: string}, FormasDePagoQueryVariables>(FormasDePagoDocument, variables, options);
+      },
+    formasDePagoConnection(variables?: FormasDePagoConnectionQueryVariables, options?: C): Promise<{data: FormasDePagoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoConnectionQueryVariables, query: string}> {
+        return requester<{data: FormasDePagoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoConnectionQueryVariables, query: string}, FormasDePagoConnectionQueryVariables>(FormasDePagoConnectionDocument, variables, options);
       },
     global(variables: GlobalQueryVariables, options?: C): Promise<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}> {
         return requester<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}, GlobalQueryVariables>(GlobalDocument, variables, options);

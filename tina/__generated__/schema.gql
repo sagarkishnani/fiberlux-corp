@@ -72,6 +72,8 @@ type Query {
   serviciosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiciosFilter): ServiciosConnection!
   casosDeExito(relativePath: String): CasosDeExito!
   casosDeExitoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CasosDeExitoFilter): CasosDeExitoConnection!
+  formasDePago(relativePath: String): FormasDePago!
+  formasDePagoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormasDePagoFilter): FormasDePagoConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
   maintenance(relativePath: String): Maintenance!
@@ -94,6 +96,7 @@ input DocumentFilter {
   soporteTecnico: SoporteTecnicoFilter
   servicios: ServiciosFilter
   casosDeExito: CasosDeExitoFilter
+  formasDePago: FormasDePagoFilter
   global: GlobalFilter
   maintenance: MaintenanceFilter
   infoAbonados: InfoAbonadosFilter
@@ -124,7 +127,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -985,6 +988,84 @@ type CasosDeExitoConnection implements Connection {
   edges: [CasosDeExitoConnectionEdges]
 }
 
+type FormasDePagoBanksMethodsSteps {
+  title: String
+  description: JSON
+  image: String
+}
+
+type FormasDePagoBanksMethods {
+  label: String
+  steps: [FormasDePagoBanksMethodsSteps]
+}
+
+type FormasDePagoBanks {
+  name: String
+  optionLabel: String
+  methods: [FormasDePagoBanksMethods]
+}
+
+type FormasDePagoSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type FormasDePago implements Node & Document {
+  heading: String
+  intro: String
+  bankSelectLabel: String
+  methodSelectLabel: String
+  banks: [FormasDePagoBanks]
+  seo: FormasDePagoSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input FormasDePagoBanksMethodsStepsFilter {
+  title: StringFilter
+  description: RichTextFilter
+  image: ImageFilter
+}
+
+input FormasDePagoBanksMethodsFilter {
+  label: StringFilter
+  steps: FormasDePagoBanksMethodsStepsFilter
+}
+
+input FormasDePagoBanksFilter {
+  name: StringFilter
+  optionLabel: StringFilter
+  methods: FormasDePagoBanksMethodsFilter
+}
+
+input FormasDePagoSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input FormasDePagoFilter {
+  heading: StringFilter
+  intro: StringFilter
+  bankSelectLabel: StringFilter
+  methodSelectLabel: StringFilter
+  banks: FormasDePagoBanksFilter
+  seo: FormasDePagoSeoFilter
+}
+
+type FormasDePagoConnectionEdges {
+  cursor: String!
+  node: FormasDePago
+}
+
+type FormasDePagoConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [FormasDePagoConnectionEdges]
+}
+
 type GlobalNavLinksChildrenChildren {
   text: String
   url: String
@@ -1431,6 +1512,8 @@ type Mutation {
   createServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
   updateCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
   createCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
+  updateFormasDePago(relativePath: String!, params: FormasDePagoMutation!): FormasDePago!
+  createFormasDePago(relativePath: String!, params: FormasDePagoMutation!): FormasDePago!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
   updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
@@ -1453,6 +1536,7 @@ input DocumentUpdateMutation {
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
   casosDeExito: CasosDeExitoMutation
+  formasDePago: FormasDePagoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1471,6 +1555,7 @@ input DocumentMutation {
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
   casosDeExito: CasosDeExitoMutation
+  formasDePago: FormasDePagoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1826,6 +1911,38 @@ input CasosDeExitoMutation {
   sectionTitle: String
   items: [CasosDeExitoItemsMutation]
   seo: CasosDeExitoSeoMutation
+}
+
+input FormasDePagoBanksMethodsStepsMutation {
+  title: String
+  description: JSON
+  image: String
+}
+
+input FormasDePagoBanksMethodsMutation {
+  label: String
+  steps: [FormasDePagoBanksMethodsStepsMutation]
+}
+
+input FormasDePagoBanksMutation {
+  name: String
+  optionLabel: String
+  methods: [FormasDePagoBanksMethodsMutation]
+}
+
+input FormasDePagoSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input FormasDePagoMutation {
+  heading: String
+  intro: String
+  bankSelectLabel: String
+  methodSelectLabel: String
+  banks: [FormasDePagoBanksMutation]
+  seo: FormasDePagoSeoMutation
 }
 
 input GlobalNavLinksChildrenChildrenMutation {

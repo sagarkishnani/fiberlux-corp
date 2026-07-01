@@ -315,6 +315,35 @@ fragment CasosDeExitoParts on CasosDeExito {
   }
 }
 
+fragment FormasDePagoParts on FormasDePago {
+  __typename
+  heading
+  intro
+  bankSelectLabel
+  methodSelectLabel
+  banks {
+    __typename
+    name
+    optionLabel
+    methods {
+      __typename
+      label
+      steps {
+        __typename
+        title
+        description
+        image
+      }
+    }
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+
 fragment GlobalParts on Global {
   __typename
   nav {
