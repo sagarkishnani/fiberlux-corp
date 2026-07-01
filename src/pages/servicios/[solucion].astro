@@ -3,6 +3,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import HeroSolucion from "../../components/servicios/HeroSolucion.astro";
 import ValorSolucion from "../../components/servicios/ValorSolucion.astro";
+import Partners from "../../components/shared/Partners.astro";
+import CatalogoSoluciones from "../../components/servicios/CatalogoSoluciones.astro";
 
 /* ── Static paths from all solution documents ── */
 export async function getStaticPaths() {
@@ -38,5 +40,7 @@ const metaDescription =
   <main>
     <HeroSolucion relativePath={relativePath} />
     <ValorSolucion relativePath={relativePath} />
+    <Partners />
+    <CatalogoSoluciones relativePath={relativePath} />
   </main>
 </BaseLayout>
