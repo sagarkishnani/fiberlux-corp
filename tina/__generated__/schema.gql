@@ -784,9 +784,15 @@ type SoporteTecnicoConnection implements Connection {
   edges: [SoporteTecnicoConnectionEdges]
 }
 
+type GlobalNavLinksChildrenChildren {
+  text: String
+  url: String
+}
+
 type GlobalNavLinksChildren {
   text: String
   url: String
+  children: [GlobalNavLinksChildrenChildren]
 }
 
 type GlobalNavLinks {
@@ -839,9 +845,15 @@ type Global implements Node & Document {
   _values: JSON!
 }
 
+input GlobalNavLinksChildrenChildrenFilter {
+  text: StringFilter
+  url: StringFilter
+}
+
 input GlobalNavLinksChildrenFilter {
   text: StringFilter
   url: StringFilter
+  children: GlobalNavLinksChildrenChildrenFilter
 }
 
 input GlobalNavLinksFilter {
@@ -1502,9 +1514,15 @@ input SoporteTecnicoMutation {
   channels: [SoporteTecnicoChannelsMutation]
 }
 
+input GlobalNavLinksChildrenChildrenMutation {
+  text: String
+  url: String
+}
+
 input GlobalNavLinksChildrenMutation {
   text: String
   url: String
+  children: [GlobalNavLinksChildrenChildrenMutation]
 }
 
 input GlobalNavLinksMutation {
