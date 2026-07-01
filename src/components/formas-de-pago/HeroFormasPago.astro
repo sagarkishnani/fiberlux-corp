@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroFormasPagoReact from "./HeroFormasPagoReact.tsx";
+
+const formasQuery = await client.queries.formasDePago({
+  relativePath: "index.json",
+});
+---
+
+<HeroFormasPagoReact
+  client:load
+  query={formasQuery.query}
+  variables={formasQuery.variables}
+  data={formasQuery.data}
+/>
