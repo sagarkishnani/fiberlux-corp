@@ -196,20 +196,13 @@ export default function CasosSliderReact({
           )}
         </div>
 
-        {/* Desktop arrows: at the start of the card, aligned to the video's height */}
-        {items.length > 1 && (
-          <div
-            className="hidden md:block absolute top-[240px] -translate-y-1/2 z-20"
-            style={{ left: "max(1.5rem, calc((100vw - 880px) / 2))" }}
-          >
-            {arrowsPill}
-          </div>
-        )}
       </div>
 
-      {/* Mobile arrows: below the stacked card */}
+      {/* Arrows: below the video, aligned to its left edge */}
       {items.length > 1 && (
-        <div className="md:hidden px-6 mt-8">{arrowsPill}</div>
+        <div className="px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))] mt-8">
+          {arrowsPill}
+        </div>
       )}
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />

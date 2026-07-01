@@ -104,7 +104,16 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
           data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
         />
       ) : (
-        <div className="h-12" aria-hidden="true" />
+        <div
+          className="inline-flex items-center gap-2 h-12 px-4 rounded-md bg-white/10 border border-white/10 w-fit"
+          data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
+          aria-label="Logo del cliente (placeholder)"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="text-white/50" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M6 21V7l6-4 6 4v14M10 9h.01M14 9h.01M10 13h.01M14 13h.01M10 17h.01M14 17h.01" />
+          </svg>
+          <span className="text-white/50 text-[11px] uppercase tracking-[1.5px] font-medium">Logo</span>
+        </div>
       )}
       <QuoteMark />
       <p
