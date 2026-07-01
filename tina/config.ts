@@ -217,13 +217,14 @@ export default defineConfig({
          ══════════════════════════════════════ */
       {
         name: "service",
-        label: "Servicios",
+        label: "Servicios (soluciones)",
         path: "src/content/services",
         format: "json",
         ui: {
+          router: ({ document }) => `/servicios/${document._sys.filename}`,
           filename: {
             slugify: (values) =>
-              (values?.title || "")
+              (values?.slug || values?.title || "")
                 .toLowerCase()
                 .replace(/\s+/g, "-")
                 .replace(/[^a-z0-9-]/g, ""),
@@ -232,177 +233,204 @@ export default defineConfig({
         fields: [
           {
             name: "title",
-            label: "Nombre del servicio",
+            label: "Nombre de la solución",
             type: "string",
             required: true,
             isTitle: true,
           },
           { name: "slug", label: "URL slug", type: "string", required: true },
-          {
-            name: "heroSubtitle",
-            label: "Subtítulo del hero",
-            type: "string",
-            ui: { component: "textarea" },
-          },
 
-          // ── Grilla magenta ──
+          // ── Hero (form ¿Conversamos? = DynamicForm servicios) ──
           {
-            name: "features",
-            label: "Características (grilla magenta)",
+            name: "hero",
+            label: "Hero",
             type: "object",
             fields: [
               {
-                name: "sectionTitle",
-                label: "Título de sección",
-                type: "string",
-              },
-              {
-                name: "sectionSubtitle",
-                label: "Subtítulo",
+                name: "heading",
+                label: "Título (H1)",
                 type: "string",
                 ui: { component: "textarea" },
               },
               {
-                name: "items",
-                label: "Features",
-                type: "object",
-                list: true,
-                ui: {
-                  itemProps: (item) => ({ label: item?.title || "Feature" }),
-                  max: 6,
-                },
-                fields: [
-                  { name: "icon", label: "Ícono", type: "image" },
-                  { name: "title", label: "Título", type: "string" },
-                  {
-                    name: "description",
-                    label: "Descripción",
-                    type: "string",
-                    ui: { component: "textarea" },
-                  },
-                ],
+                name: "intro",
+                label: "Párrafo intro",
+                type: "string",
+                ui: { component: "textarea" },
               },
-            ],
-          },
-
-          // ── Sección servicios expandibles ──
-          {
-            name: "expandableServices",
-            label: "Servicios expandibles",
-            type: "object",
-            fields: [
-              { name: "sectionTitle", label: "Título", type: "string" },
               {
-                name: "items",
-                label: "Items",
-                type: "object",
-                list: true,
-                ui: { itemProps: (item) => ({ label: item?.title || "Tab" }) },
-                fields: [
-                  { name: "icon", label: "Ícono", type: "image" },
-                  { name: "title", label: "Título", type: "string" },
-                  {
-                    name: "description",
-                    label: "Descripción",
-                    type: "string",
-                    ui: { component: "textarea" },
-                  },
-                ],
+                name: "ctaLabel",
+                label: "Texto botón (ancla al catálogo)",
+                type: "string",
+              },
+              {
+                name: "formTitle",
+                label: "Título del form del hero",
+                type: "string",
               },
             ],
           },
 
-          // ── ¿Por qué elegirnos? ──
+          // ── "El valor de la resiliencia" (bento 3 cards) ──
           {
-            name: "whyUs",
-            label: "¿Por qué elegirnos?",
+            name: "valor",
+            label: "El valor de la resiliencia",
             type: "object",
             fields: [
-              { name: "title", label: "Título", type: "string" },
-              { name: "subtitle", label: "Subtítulo", type: "string" },
+              { name: "title", label: "Título de sección", type: "string" },
+              {
+                name: "subtitle",
+                label: "Subtítulo de sección",
+                type: "string",
+                ui: { component: "textarea" },
+              },
               {
                 name: "cards",
                 label: "Cards",
                 type: "object",
                 list: true,
                 ui: {
-                  itemProps: (item) => ({ label: item?.title || "Card" }),
-                  max: 4,
+                  itemProps: (item) => ({ label: item?.heading || "Card" }),
+                  min: 3,
+                  max: 3,
                 },
                 fields: [
-                  { name: "icon", label: "Ícono", type: "image" },
-                  { name: "title", label: "Título", type: "string" },
+                  { name: "heading", label: "Título", type: "string" },
                   {
-                    name: "description",
-                    label: "Descripción",
+                    name: "text",
+                    label: "Texto",
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  { name: "image", label: "Imagen/gráfico", type: "image" },
                 ],
               },
             ],
           },
 
-          // ── Stats bar ──
+          // ── "Catálogo de soluciones" (hover-reveal; items placeholder → nivel-2) ──
           {
-            name: "stats",
-            label: "Barra de estadísticas",
-            type: "object",
-            list: true,
-            ui: { itemProps: (item) => ({ label: item?.label || "Stat" }) },
-            fields: [
-              { name: "number", label: "Número", type: "string" },
-              { name: "label", label: "Etiqueta", type: "string" },
-            ],
-          },
-
-          // ── Checklist ──
-          {
-            name: "checklist",
-            label: "Características (checklist)",
+            name: "catalogo",
+            label: "Catálogo de soluciones",
             type: "object",
             fields: [
-              { name: "title", label: "Título", type: "string" },
-              { name: "items", label: "Items", type: "string", list: true },
-            ],
-          },
-
-          // ── Expertos ──
-          {
-            name: "experts",
-            label: "Sección expertos",
-            type: "object",
-            fields: [
-              { name: "title", label: "Título", type: "string" },
+              { name: "title", label: "Título de sección", type: "string" },
               {
-                name: "steps",
-                label: "Pasos",
+                name: "items",
+                label: "Items",
                 type: "object",
                 list: true,
-                ui: { itemProps: (item) => ({ label: item?.title || "Paso" }) },
+                ui: { itemProps: (item) => ({ label: item?.title || "Item" }) },
                 fields: [
-                  { name: "number", label: "Número", type: "string" },
+                  {
+                    name: "icon",
+                    label: "Ícono",
+                    type: "string",
+                    options: [
+                      { value: "internet", label: "Internet / Fibra" },
+                      { value: "disponibilidad", label: "Alta disponibilidad" },
+                      { value: "satelital", label: "Satelital" },
+                      { value: "radioenlace", label: "Radioenlace" },
+                      { value: "transmision", label: "Transmisión de datos" },
+                      { value: "fibra-oscura", label: "Fibra oscura" },
+                      { value: "sd-wan", label: "SD-WAN" },
+                      { value: "balanceo", label: "Balanceo de enlaces" },
+                      { value: "firewall", label: "Firewall / Perimetral" },
+                      { value: "vpn", label: "VPN" },
+                      { value: "edr", label: "EDR / XDR / MDR" },
+                      { value: "correo", label: "Seguridad de correo" },
+                      { value: "mfa", label: "MFA / Identidad" },
+                      { value: "ztna", label: "ZTNA" },
+                      { value: "waf", label: "WAF" },
+                      { value: "ddos", label: "Anti-DDoS" },
+                      { value: "soc", label: "SOC 24/7" },
+                      { value: "pentesting", label: "Pentesting" },
+                      { value: "cloud", label: "Cloud / Nube" },
+                      { value: "backup", label: "Backup / BaaS" },
+                      { value: "storage", label: "Storage / Cómputo" },
+                      { value: "mesa-ayuda", label: "Mesa de ayuda" },
+                      { value: "wifi", label: "WiFi gestionado" },
+                      { value: "videovigilancia", label: "Videovigilancia" },
+                      { value: "generico", label: "Genérico" },
+                    ],
+                  },
                   { name: "title", label: "Título", type: "string" },
                   {
                     name: "description",
-                    label: "Descripción",
+                    label: "Descripción (se revela en hover)",
                     type: "string",
                     ui: { component: "textarea" },
+                  },
+                  { name: "buttonLabel", label: "Texto del botón", type: "string" },
+                  {
+                    name: "url",
+                    label: "URL (placeholder → nivel-2)",
+                    type: "string",
+                  },
+                  {
+                    name: "colSpan",
+                    label: "Columnas que ocupa (desktop)",
+                    type: "string",
+                    options: [
+                      { value: "1", label: "1 columna" },
+                      { value: "2", label: "2 columnas" },
+                      { value: "3", label: "3 columnas (ancho completo)" },
+                    ],
+                  },
+                  {
+                    name: "featured",
+                    label: "Destacado (fondo magenta + descripción visible)",
+                    type: "boolean",
                   },
                 ],
               },
             ],
           },
 
-          // ── Formulario config ──
+          // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
           {
-            name: "contactForm",
-            label: "Formulario de contacto",
+            name: "whyUsTitle",
+            label: "Título '¿Por qué Fiberlux?'",
+            type: "string",
+          },
+
+          // ── "Preguntas frecuentes" (acordeón, respuesta rich-text) ──
+          {
+            name: "faq",
+            label: "Preguntas frecuentes",
             type: "object",
             fields: [
-              { name: "title", label: "Título del formulario", type: "string" },
-              { name: "subtitle", label: "Subtítulo", type: "string" },
-              { name: "buttonText", label: "Texto del botón", type: "string" },
+              { name: "title", label: "Título de sección", type: "string" },
+              {
+                name: "items",
+                label: "Preguntas",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.question || "Pregunta" }),
+                },
+                fields: [
+                  { name: "question", label: "Pregunta", type: "string" },
+                  { name: "answer", label: "Respuesta", type: "rich-text" },
+                ],
+              },
+            ],
+          },
+
+          // ── SEO / meta (por servicio; cae a global.seo si vacío) ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta título", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" },
             ],
           },
         ],
@@ -997,6 +1025,29 @@ export default defineConfig({
                 type: "string",
                 description:
                   "Enlace del wordmark de crédito en el pie (se abre en pestaña nueva).",
+              },
+            ],
+          },
+
+          // ── Partners tecnológicos ──
+          {
+            name: "partners",
+            label: "Partners tecnológicos",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "title", label: "Título", type: "string" },
+              {
+                name: "logos",
+                label: "Logos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.alt || "Logo" }) },
+                fields: [
+                  { name: "image", label: "Logo", type: "image" },
+                  { name: "alt", label: "Alt / Nombre", type: "string" },
+                  { name: "url", label: "Enlace (opcional)", type: "string" },
+                ],
               },
             ],
           },

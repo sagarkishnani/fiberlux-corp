@@ -1,0 +1,27 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroSolucionReact from "./HeroSolucionReact.tsx";
+
+interface Props {
+  relativePath: string;
+}
+
+const { relativePath } = Astro.props;
+
+const serviceQuery = await client.queries.service({ relativePath });
+const formQuery = await client.queries.dynamicForms({
+  relativePath: "servicios.json",
+});
+---
+
+<HeroSolucionReact
+  client:load
+  query={serviceQuery.query}
+  variables={serviceQuery.variables}
+  data={serviceQuery.data}
+  form={{
+    query: formQuery.query,
+    variables: formQuery.variables,
+    data: formQuery.data,
+  }}
+/>

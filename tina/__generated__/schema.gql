@@ -282,157 +282,140 @@ type HomeConnection implements Connection {
   edges: [HomeConnectionEdges]
 }
 
-type ServiceFeaturesItems {
-  icon: String
-  title: String
-  description: String
+type ServiceHero {
+  heading: String
+  intro: String
+  ctaLabel: String
+  formTitle: String
 }
 
-type ServiceFeatures {
-  sectionTitle: String
-  sectionSubtitle: String
-  items: [ServiceFeaturesItems]
+type ServiceValorCards {
+  heading: String
+  text: String
+  image: String
 }
 
-type ServiceExpandableServicesItems {
-  icon: String
-  title: String
-  description: String
-}
-
-type ServiceExpandableServices {
-  sectionTitle: String
-  items: [ServiceExpandableServicesItems]
-}
-
-type ServiceWhyUsCards {
-  icon: String
-  title: String
-  description: String
-}
-
-type ServiceWhyUs {
+type ServiceValor {
   title: String
   subtitle: String
-  cards: [ServiceWhyUsCards]
+  cards: [ServiceValorCards]
 }
 
-type ServiceStats {
-  number: String
-  label: String
-}
-
-type ServiceChecklist {
-  title: String
-  items: [String]
-}
-
-type ServiceExpertsSteps {
-  number: String
+type ServiceCatalogoItems {
+  icon: String
   title: String
   description: String
+  buttonLabel: String
+  url: String
+  colSpan: String
+  featured: Boolean
 }
 
-type ServiceExperts {
+type ServiceCatalogo {
   title: String
-  steps: [ServiceExpertsSteps]
+  items: [ServiceCatalogoItems]
 }
 
-type ServiceContactForm {
+type ServiceFaqItems {
+  question: String
+  answer: JSON
+}
+
+type ServiceFaq {
   title: String
-  subtitle: String
-  buttonText: String
+  items: [ServiceFaqItems]
+}
+
+type ServiceSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
 }
 
 type Service implements Node & Document {
   title: String!
   slug: String!
-  heroSubtitle: String
-  features: ServiceFeatures
-  expandableServices: ServiceExpandableServices
-  whyUs: ServiceWhyUs
-  stats: [ServiceStats]
-  checklist: ServiceChecklist
-  experts: ServiceExperts
-  contactForm: ServiceContactForm
+  hero: ServiceHero
+  valor: ServiceValor
+  catalogo: ServiceCatalogo
+  whyUsTitle: String
+  faq: ServiceFaq
+  seo: ServiceSeo
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
 }
 
-input ServiceFeaturesItemsFilter {
-  icon: ImageFilter
-  title: StringFilter
-  description: StringFilter
+input ServiceHeroFilter {
+  heading: StringFilter
+  intro: StringFilter
+  ctaLabel: StringFilter
+  formTitle: StringFilter
 }
 
-input ServiceFeaturesFilter {
-  sectionTitle: StringFilter
-  sectionSubtitle: StringFilter
-  items: ServiceFeaturesItemsFilter
+input ServiceValorCardsFilter {
+  heading: StringFilter
+  text: StringFilter
+  image: ImageFilter
 }
 
-input ServiceExpandableServicesItemsFilter {
-  icon: ImageFilter
-  title: StringFilter
-  description: StringFilter
-}
-
-input ServiceExpandableServicesFilter {
-  sectionTitle: StringFilter
-  items: ServiceExpandableServicesItemsFilter
-}
-
-input ServiceWhyUsCardsFilter {
-  icon: ImageFilter
-  title: StringFilter
-  description: StringFilter
-}
-
-input ServiceWhyUsFilter {
+input ServiceValorFilter {
   title: StringFilter
   subtitle: StringFilter
-  cards: ServiceWhyUsCardsFilter
+  cards: ServiceValorCardsFilter
 }
 
-input ServiceStatsFilter {
-  number: StringFilter
-  label: StringFilter
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
 }
 
-input ServiceChecklistFilter {
-  title: StringFilter
-  items: StringFilter
-}
-
-input ServiceExpertsStepsFilter {
-  number: StringFilter
+input ServiceCatalogoItemsFilter {
+  icon: StringFilter
   title: StringFilter
   description: StringFilter
+  buttonLabel: StringFilter
+  url: StringFilter
+  colSpan: StringFilter
+  featured: BooleanFilter
 }
 
-input ServiceExpertsFilter {
+input ServiceCatalogoFilter {
   title: StringFilter
-  steps: ServiceExpertsStepsFilter
+  items: ServiceCatalogoItemsFilter
 }
 
-input ServiceContactFormFilter {
+input RichTextFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+}
+
+input ServiceFaqItemsFilter {
+  question: StringFilter
+  answer: RichTextFilter
+}
+
+input ServiceFaqFilter {
   title: StringFilter
-  subtitle: StringFilter
-  buttonText: StringFilter
+  items: ServiceFaqItemsFilter
+}
+
+input ServiceSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
 }
 
 input ServiceFilter {
   title: StringFilter
   slug: StringFilter
-  heroSubtitle: StringFilter
-  features: ServiceFeaturesFilter
-  expandableServices: ServiceExpandableServicesFilter
-  whyUs: ServiceWhyUsFilter
-  stats: ServiceStatsFilter
-  checklist: ServiceChecklistFilter
-  experts: ServiceExpertsFilter
-  contactForm: ServiceContactFormFilter
+  hero: ServiceHeroFilter
+  valor: ServiceValorFilter
+  catalogo: ServiceCatalogoFilter
+  whyUsTitle: StringFilter
+  faq: ServiceFaqFilter
+  seo: ServiceSeoFilter
 }
 
 type ServiceConnectionEdges {
@@ -650,17 +633,6 @@ input DatetimeFilter {
   in: [String]
 }
 
-input BooleanFilter {
-  eq: Boolean
-  exists: Boolean
-}
-
-input RichTextFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-}
-
 input PostFilter {
   title: StringFilter
   excerpt: StringFilter
@@ -865,6 +837,18 @@ type GlobalFooter {
   agencyUrl: String
 }
 
+type GlobalPartnersLogos {
+  image: String
+  alt: String
+  url: String
+}
+
+type GlobalPartners {
+  eyebrow: String
+  title: String
+  logos: [GlobalPartnersLogos]
+}
+
 type GlobalSeo {
   siteName: String
   defaultDescription: String
@@ -874,6 +858,7 @@ type GlobalSeo {
 type Global implements Node & Document {
   nav: GlobalNav
   footer: GlobalFooter
+  partners: GlobalPartners
   seo: GlobalSeo
   id: ID!
   _sys: SystemInfo!
@@ -926,6 +911,18 @@ input GlobalFooterFilter {
   agencyUrl: StringFilter
 }
 
+input GlobalPartnersLogosFilter {
+  image: ImageFilter
+  alt: StringFilter
+  url: StringFilter
+}
+
+input GlobalPartnersFilter {
+  eyebrow: StringFilter
+  title: StringFilter
+  logos: GlobalPartnersLogosFilter
+}
+
 input GlobalSeoFilter {
   siteName: StringFilter
   defaultDescription: StringFilter
@@ -935,6 +932,7 @@ input GlobalSeoFilter {
 input GlobalFilter {
   nav: GlobalNavFilter
   footer: GlobalFooterFilter
+  partners: GlobalPartnersFilter
   seo: GlobalSeoFilter
 }
 
@@ -1345,79 +1343,65 @@ input HomeMutation {
   blogPreview: HomeBlogPreviewMutation
 }
 
-input ServiceFeaturesItemsMutation {
-  icon: String
-  title: String
-  description: String
+input ServiceHeroMutation {
+  heading: String
+  intro: String
+  ctaLabel: String
+  formTitle: String
 }
 
-input ServiceFeaturesMutation {
-  sectionTitle: String
-  sectionSubtitle: String
-  items: [ServiceFeaturesItemsMutation]
+input ServiceValorCardsMutation {
+  heading: String
+  text: String
+  image: String
 }
 
-input ServiceExpandableServicesItemsMutation {
-  icon: String
-  title: String
-  description: String
-}
-
-input ServiceExpandableServicesMutation {
-  sectionTitle: String
-  items: [ServiceExpandableServicesItemsMutation]
-}
-
-input ServiceWhyUsCardsMutation {
-  icon: String
-  title: String
-  description: String
-}
-
-input ServiceWhyUsMutation {
+input ServiceValorMutation {
   title: String
   subtitle: String
-  cards: [ServiceWhyUsCardsMutation]
+  cards: [ServiceValorCardsMutation]
 }
 
-input ServiceStatsMutation {
-  number: String
-  label: String
-}
-
-input ServiceChecklistMutation {
-  title: String
-  items: [String]
-}
-
-input ServiceExpertsStepsMutation {
-  number: String
+input ServiceCatalogoItemsMutation {
+  icon: String
   title: String
   description: String
+  buttonLabel: String
+  url: String
+  colSpan: String
+  featured: Boolean
 }
 
-input ServiceExpertsMutation {
+input ServiceCatalogoMutation {
   title: String
-  steps: [ServiceExpertsStepsMutation]
+  items: [ServiceCatalogoItemsMutation]
 }
 
-input ServiceContactFormMutation {
+input ServiceFaqItemsMutation {
+  question: String
+  answer: JSON
+}
+
+input ServiceFaqMutation {
   title: String
-  subtitle: String
-  buttonText: String
+  items: [ServiceFaqItemsMutation]
+}
+
+input ServiceSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
 }
 
 input ServiceMutation {
   title: String
   slug: String
-  heroSubtitle: String
-  features: ServiceFeaturesMutation
-  expandableServices: ServiceExpandableServicesMutation
-  whyUs: ServiceWhyUsMutation
-  stats: [ServiceStatsMutation]
-  checklist: ServiceChecklistMutation
-  experts: ServiceExpertsMutation
-  contactForm: ServiceContactFormMutation
+  hero: ServiceHeroMutation
+  valor: ServiceValorMutation
+  catalogo: ServiceCatalogoMutation
+  whyUsTitle: String
+  faq: ServiceFaqMutation
+  seo: ServiceSeoMutation
 }
 
 input AboutHeroMutation {
@@ -1608,6 +1592,18 @@ input GlobalFooterMutation {
   agencyUrl: String
 }
 
+input GlobalPartnersLogosMutation {
+  image: String
+  alt: String
+  url: String
+}
+
+input GlobalPartnersMutation {
+  eyebrow: String
+  title: String
+  logos: [GlobalPartnersLogosMutation]
+}
+
 input GlobalSeoMutation {
   siteName: String
   defaultDescription: String
@@ -1617,6 +1613,7 @@ input GlobalSeoMutation {
 input GlobalMutation {
   nav: GlobalNavMutation
   footer: GlobalFooterMutation
+  partners: GlobalPartnersMutation
   seo: GlobalSeoMutation
 }
 

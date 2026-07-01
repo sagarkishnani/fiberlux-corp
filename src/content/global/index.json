@@ -334,6 +334,37 @@
     "agencyLogo": "/images/logo/twn.svg",
     "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio"
   },
+  "partners": {
+    "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "title": "Trabajamos con los líderes de la industria",
+    "logos": [
+      {
+        "image": "/uploads/partners/huawei.svg",
+        "alt": "Huawei",
+        "url": ""
+      },
+      {
+        "image": "/uploads/partners/aruba.svg",
+        "alt": "Aruba",
+        "url": ""
+      },
+      {
+        "image": "/uploads/partners/hikvision.svg",
+        "alt": "Hikvision",
+        "url": ""
+      },
+      {
+        "image": "/uploads/partners/h3c.png",
+        "alt": "H3C",
+        "url": ""
+      },
+      {
+        "image": "/uploads/partners/fortinet.svg",
+        "alt": "Fortinet",
+        "url": ""
+      }
+    ]
+  },
   "seo": {
     "siteName": "Fiberlux",
     "defaultDescription": "Soluciones de conectividad y TI para tu empresa. Red 100% fibra óptica propia en todo el Perú.",

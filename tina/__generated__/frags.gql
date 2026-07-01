@@ -61,64 +61,53 @@ fragment ServiceParts on Service {
   __typename
   title
   slug
-  heroSubtitle
-  features {
+  hero {
     __typename
-    sectionTitle
-    sectionSubtitle
-    items {
-      __typename
-      icon
-      title
-      description
-    }
+    heading
+    intro
+    ctaLabel
+    formTitle
   }
-  expandableServices {
-    __typename
-    sectionTitle
-    items {
-      __typename
-      icon
-      title
-      description
-    }
-  }
-  whyUs {
+  valor {
     __typename
     title
     subtitle
     cards {
       __typename
+      heading
+      text
+      image
+    }
+  }
+  catalogo {
+    __typename
+    title
+    items {
+      __typename
       icon
       title
       description
+      buttonLabel
+      url
+      colSpan
+      featured
     }
   }
-  stats {
-    __typename
-    number
-    label
-  }
-  checklist {
+  whyUsTitle
+  faq {
     __typename
     title
-    items
-  }
-  experts {
-    __typename
-    title
-    steps {
+    items {
       __typename
-      number
-      title
-      description
+      question
+      answer
     }
   }
-  contactForm {
+  seo {
     __typename
-    title
-    subtitle
-    buttonText
+    metaTitle
+    metaDescription
+    ogImage
   }
 }
 
@@ -294,6 +283,17 @@ fragment GlobalParts on Global {
     logo
     agencyLogo
     agencyUrl
+  }
+  partners {
+    __typename
+    eyebrow
+    title
+    logos {
+      __typename
+      image
+      alt
+      url
+    }
   }
   seo {
     __typename

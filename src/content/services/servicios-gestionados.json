@@ -1,0 +1,178 @@
+{
+  "title": "Servicios Gestionados",
+  "slug": "servicios-gestionados",
+  "hero": {
+    "heading": "Servicios gestionados de infraestructura tecnológica de alto nivel",
+    "intro": "Delegamos la operación de tu tecnología: mesa de ayuda, comunicaciones, redes y endpoints gestionados por especialistas.",
+    "ctaLabel": "Ver soluciones",
+    "formTitle": "¿Conversamos?"
+  },
+  "valor": {
+    "title": "El valor de la resiliencia",
+    "subtitle": "La operación no se detiene: se gestiona de extremo a extremo.",
+    "cards": [
+      {
+        "heading": "El desafío",
+        "text": "Gestionar la infraestructura de TI internamente consume recursos y distrae del negocio principal.",
+        "image": "/uploads/servicios/valor-desafio.svg"
+      },
+      {
+        "heading": "Nuestra solución",
+        "text": "Operamos y gestionamos tu tecnología de extremo a extremo con especialistas dedicados y monitoreo proactivo.",
+        "image": "/uploads/servicios/valor-solucion.svg"
+      },
+      {
+        "heading": "Industrias destacadas",
+        "text": "Aplicable a empresas que buscan optimizar su operación TI y enfocarse en su core de negocio.",
+        "image": ""
+      }
+    ]
+  },
+  "catalogo": {
+    "title": "Catálogo de soluciones",
+    "items": [
+      {
+        "icon": "mesa-ayuda",
+        "title": "Mesa de Ayuda",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/mesa-de-ayuda",
+        "colSpan": "2",
+        "featured": true
+      },
+      {
+        "icon": "generico",
+        "title": "Comunicaciones Unificadas",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/comunicaciones-unificadas",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "generico",
+        "title": "Colaboración Empresarial",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/colaboracion-empresarial",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "generico",
+        "title": "Gestión de Redes LAN",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/gestion-redes-lan",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "wifi",
+        "title": "WiFi Gestionado",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/wifi-gestionado",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "generico",
+        "title": "Gestión de Endpoints",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/gestion-endpoints",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "videovigilancia",
+        "title": "Videovigilancia Gestionada",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/servicios-gestionados/videovigilancia-gestionada",
+        "colSpan": "1",
+        "featured": false
+      }
+    ]
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye un servicio gestionado?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo funciona la mesa de ayuda?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué SLA ofrecen?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Puedo gestionar solo una parte de mi infraestructura?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Servicios Gestionados de TI",
+    "metaDescription": "Mesa de ayuda, comunicaciones unificadas, redes, WiFi y endpoints gestionados por especialistas de Fiberlux con monitoreo 24/7.",
+    "ogImage": ""
+  }
+}

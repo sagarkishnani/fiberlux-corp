@@ -1,0 +1,232 @@
+{
+  "title": "Ciberseguridad Gestionada",
+  "slug": "ciberseguridad-gestionada",
+  "hero": {
+    "heading": "Ciberseguridad gestionada para proteger tu operación crítica",
+    "intro": "Protección integral contra amenazas digitales con firewalls gestionados, EDR/XDR, anti-DDoS y un SOC que monitorea tu red 24/7.",
+    "ctaLabel": "Ver soluciones",
+    "formTitle": "¿Conversamos?"
+  },
+  "valor": {
+    "title": "El valor de la resiliencia",
+    "subtitle": "La seguridad moderna no asume confianza: valida cada acceso.",
+    "cards": [
+      {
+        "heading": "El desafío",
+        "text": "Un incidente de seguridad expone datos sensibles, detiene la operación y compromete la confianza de tus clientes.",
+        "image": "/uploads/servicios/valor-desafio.svg"
+      },
+      {
+        "heading": "Nuestra solución",
+        "text": "Seguridad perimetral, de endpoints e identidad gestionadas de extremo a extremo, con detección y respuesta proactiva desde nuestro SOC 24/7.",
+        "image": "/uploads/servicios/valor-solucion.svg"
+      },
+      {
+        "heading": "Industrias destacadas",
+        "text": "Aplicable a empresas que manejan información crítica y requieren cumplir estándares de seguridad y continuidad.",
+        "image": ""
+      }
+    ]
+  },
+  "catalogo": {
+    "title": "Catálogo de soluciones",
+    "items": [
+      {
+        "icon": "firewall",
+        "title": "NGFW / Seguridad Perimetral",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral",
+        "colSpan": "2",
+        "featured": true
+      },
+      {
+        "icon": "vpn",
+        "title": "VPN Segura",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/vpn-segura",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "edr",
+        "title": "EDR / XDR / MDR",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "correo",
+        "title": "Seguridad de Correo y Filtrado Web",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "mfa",
+        "title": "MFA y Control de Identidad",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "ztna",
+        "title": "ZTNA",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/ztna",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "generico",
+        "title": "NAC",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/nac",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "waf",
+        "title": "WAF",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/waf",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "ddos",
+        "title": "Anti-DDoS",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/anti-ddos",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "generico",
+        "title": "Concientización y Phishing",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "soc",
+        "title": "SOC 24/7",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/soc-24-7",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "soc",
+        "title": "Correlación de Eventos (SIEM)",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos",
+        "colSpan": "1",
+        "featured": false
+      },
+      {
+        "icon": "pentesting",
+        "title": "Pentesting",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/ciberseguridad-gestionada/pentesting",
+        "colSpan": "1",
+        "featured": false
+      }
+    ]
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué es un SOC y cómo protege a mi empresa?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué diferencia hay entre EDR, XDR y MDR?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo ayuda la ciberseguridad gestionada a cumplir normativas?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué incluye el monitoreo 24/7?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Ciberseguridad Gestionada y SOC 24/7",
+    "metaDescription": "Seguridad perimetral, EDR/XDR, anti-DDoS y SOC 24/7 gestionados por Fiberlux para proteger la operación crítica de tu empresa.",
+    "ogImage": ""
+  }
+}

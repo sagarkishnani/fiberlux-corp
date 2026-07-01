@@ -1,0 +1,18 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import FaqSolucionReact from "./FaqSolucionReact.tsx";
+
+interface Props {
+  relativePath: string;
+}
+
+const { relativePath } = Astro.props;
+const serviceQuery = await client.queries.service({ relativePath });
+---
+
+<FaqSolucionReact
+  client:visible
+  query={serviceQuery.query}
+  variables={serviceQuery.variables}
+  data={serviceQuery.data}
+/>

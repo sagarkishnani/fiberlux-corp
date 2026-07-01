@@ -2,6 +2,14 @@
 import { client } from '../../tina/__generated__/client';
 import StatsReact from './StatsReact.tsx';
 
+interface Props {
+  /** Optional heading override (e.g. "¿Por qué Fiberlux?" on solution pages).
+   *  When omitted, falls back to the home `stats.title`. */
+  title?: string;
+}
+
+const { title } = Astro.props;
+
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 ---
 
@@ -10,4 +18,5 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
   query={homeQuery.query}
   variables={homeQuery.variables}
   data={homeQuery.data}
+  titleOverride={title}
 />

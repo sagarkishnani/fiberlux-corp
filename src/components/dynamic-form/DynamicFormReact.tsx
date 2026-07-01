@@ -342,9 +342,12 @@ interface DynamicFormProps {
   query: string;
   variables: { relativePath: string };
   data: any;
+  /** When true, suppresses the form's internal title/description header
+   *  (used when a host section — e.g. the solution hero — renders its own). */
+  hideHeader?: boolean;
 }
 
-export default function DynamicFormReact({ query, variables, data: initialData }: DynamicFormProps) {
+export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false }: DynamicFormProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const formConfig: FormConfig = data?.dynamicForms || initialData?.dynamicForms;
   if (!formConfig) return null;
@@ -917,7 +920,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
       `}</style>
 
       {/* Page header — only for default variant */}
-      {!isContact && (formConfig.badge || formConfig.formTitle || formConfig.description) && (
+      {!hideHeader && !isContact && (formConfig.badge || formConfig.formTitle || formConfig.description) && (
         <div data-tina-field={tinaField(formConfig, "formTitle")}>
           <FormPageHeader
             badge={formConfig.badge}
@@ -928,7 +931,7 @@ export default function DynamicFormReact({ query, variables, data: initialData }
       )}
 
       {/* Contact variant: title (and subtitle for dark) inside the form area */}
-      {isContact && (formConfig.formTitle || (isDark && formConfig.description)) && (
+      {!hideHeader && isContact && (formConfig.formTitle || (isDark && formConfig.description)) && (
         <div className="mb-8">
           {formConfig.formTitle && (
             <h2

@@ -537,169 +537,149 @@ export type HomeConnection = Connection & {
   edges?: Maybe<Array<Maybe<HomeConnectionEdges>>>;
 };
 
-export type ServiceFeaturesItems = {
-  __typename?: 'ServiceFeaturesItems';
-  icon?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
+export type ServiceHero = {
+  __typename?: 'ServiceHero';
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  formTitle?: Maybe<Scalars['String']['output']>;
 };
 
-export type ServiceFeatures = {
-  __typename?: 'ServiceFeatures';
-  sectionTitle?: Maybe<Scalars['String']['output']>;
-  sectionSubtitle?: Maybe<Scalars['String']['output']>;
-  items?: Maybe<Array<Maybe<ServiceFeaturesItems>>>;
+export type ServiceValorCards = {
+  __typename?: 'ServiceValorCards';
+  heading?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
 };
 
-export type ServiceExpandableServicesItems = {
-  __typename?: 'ServiceExpandableServicesItems';
-  icon?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-};
-
-export type ServiceExpandableServices = {
-  __typename?: 'ServiceExpandableServices';
-  sectionTitle?: Maybe<Scalars['String']['output']>;
-  items?: Maybe<Array<Maybe<ServiceExpandableServicesItems>>>;
-};
-
-export type ServiceWhyUsCards = {
-  __typename?: 'ServiceWhyUsCards';
-  icon?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-};
-
-export type ServiceWhyUs = {
-  __typename?: 'ServiceWhyUs';
+export type ServiceValor = {
+  __typename?: 'ServiceValor';
   title?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
-  cards?: Maybe<Array<Maybe<ServiceWhyUsCards>>>;
+  cards?: Maybe<Array<Maybe<ServiceValorCards>>>;
 };
 
-export type ServiceStats = {
-  __typename?: 'ServiceStats';
-  number?: Maybe<Scalars['String']['output']>;
-  label?: Maybe<Scalars['String']['output']>;
-};
-
-export type ServiceChecklist = {
-  __typename?: 'ServiceChecklist';
-  title?: Maybe<Scalars['String']['output']>;
-  items?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-};
-
-export type ServiceExpertsSteps = {
-  __typename?: 'ServiceExpertsSteps';
-  number?: Maybe<Scalars['String']['output']>;
+export type ServiceCatalogoItems = {
+  __typename?: 'ServiceCatalogoItems';
+  icon?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  buttonLabel?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+  colSpan?: Maybe<Scalars['String']['output']>;
+  featured?: Maybe<Scalars['Boolean']['output']>;
 };
 
-export type ServiceExperts = {
-  __typename?: 'ServiceExperts';
+export type ServiceCatalogo = {
+  __typename?: 'ServiceCatalogo';
   title?: Maybe<Scalars['String']['output']>;
-  steps?: Maybe<Array<Maybe<ServiceExpertsSteps>>>;
+  items?: Maybe<Array<Maybe<ServiceCatalogoItems>>>;
 };
 
-export type ServiceContactForm = {
-  __typename?: 'ServiceContactForm';
+export type ServiceFaqItems = {
+  __typename?: 'ServiceFaqItems';
+  question?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type ServiceFaq = {
+  __typename?: 'ServiceFaq';
   title?: Maybe<Scalars['String']['output']>;
-  subtitle?: Maybe<Scalars['String']['output']>;
-  buttonText?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceFaqItems>>>;
+};
+
+export type ServiceSeo = {
+  __typename?: 'ServiceSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
 };
 
 export type Service = Node & Document & {
   __typename?: 'Service';
   title: Scalars['String']['output'];
   slug: Scalars['String']['output'];
-  heroSubtitle?: Maybe<Scalars['String']['output']>;
-  features?: Maybe<ServiceFeatures>;
-  expandableServices?: Maybe<ServiceExpandableServices>;
-  whyUs?: Maybe<ServiceWhyUs>;
-  stats?: Maybe<Array<Maybe<ServiceStats>>>;
-  checklist?: Maybe<ServiceChecklist>;
-  experts?: Maybe<ServiceExperts>;
-  contactForm?: Maybe<ServiceContactForm>;
+  hero?: Maybe<ServiceHero>;
+  valor?: Maybe<ServiceValor>;
+  catalogo?: Maybe<ServiceCatalogo>;
+  whyUsTitle?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<ServiceFaq>;
+  seo?: Maybe<ServiceSeo>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
 };
 
-export type ServiceFeaturesItemsFilter = {
-  icon?: InputMaybe<ImageFilter>;
-  title?: InputMaybe<StringFilter>;
-  description?: InputMaybe<StringFilter>;
+export type ServiceHeroFilter = {
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  formTitle?: InputMaybe<StringFilter>;
 };
 
-export type ServiceFeaturesFilter = {
-  sectionTitle?: InputMaybe<StringFilter>;
-  sectionSubtitle?: InputMaybe<StringFilter>;
-  items?: InputMaybe<ServiceFeaturesItemsFilter>;
+export type ServiceValorCardsFilter = {
+  heading?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
 };
 
-export type ServiceExpandableServicesItemsFilter = {
-  icon?: InputMaybe<ImageFilter>;
-  title?: InputMaybe<StringFilter>;
-  description?: InputMaybe<StringFilter>;
-};
-
-export type ServiceExpandableServicesFilter = {
-  sectionTitle?: InputMaybe<StringFilter>;
-  items?: InputMaybe<ServiceExpandableServicesItemsFilter>;
-};
-
-export type ServiceWhyUsCardsFilter = {
-  icon?: InputMaybe<ImageFilter>;
-  title?: InputMaybe<StringFilter>;
-  description?: InputMaybe<StringFilter>;
-};
-
-export type ServiceWhyUsFilter = {
+export type ServiceValorFilter = {
   title?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
-  cards?: InputMaybe<ServiceWhyUsCardsFilter>;
+  cards?: InputMaybe<ServiceValorCardsFilter>;
 };
 
-export type ServiceStatsFilter = {
-  number?: InputMaybe<StringFilter>;
-  label?: InputMaybe<StringFilter>;
+export type BooleanFilter = {
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type ServiceChecklistFilter = {
-  title?: InputMaybe<StringFilter>;
-  items?: InputMaybe<StringFilter>;
-};
-
-export type ServiceExpertsStepsFilter = {
-  number?: InputMaybe<StringFilter>;
+export type ServiceCatalogoItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  buttonLabel?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+  colSpan?: InputMaybe<StringFilter>;
+  featured?: InputMaybe<BooleanFilter>;
 };
 
-export type ServiceExpertsFilter = {
+export type ServiceCatalogoFilter = {
   title?: InputMaybe<StringFilter>;
-  steps?: InputMaybe<ServiceExpertsStepsFilter>;
+  items?: InputMaybe<ServiceCatalogoItemsFilter>;
 };
 
-export type ServiceContactFormFilter = {
+export type RichTextFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ServiceFaqItemsFilter = {
+  question?: InputMaybe<StringFilter>;
+  answer?: InputMaybe<RichTextFilter>;
+};
+
+export type ServiceFaqFilter = {
   title?: InputMaybe<StringFilter>;
-  subtitle?: InputMaybe<StringFilter>;
-  buttonText?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceFaqItemsFilter>;
+};
+
+export type ServiceSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
 };
 
 export type ServiceFilter = {
   title?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
-  heroSubtitle?: InputMaybe<StringFilter>;
-  features?: InputMaybe<ServiceFeaturesFilter>;
-  expandableServices?: InputMaybe<ServiceExpandableServicesFilter>;
-  whyUs?: InputMaybe<ServiceWhyUsFilter>;
-  stats?: InputMaybe<ServiceStatsFilter>;
-  checklist?: InputMaybe<ServiceChecklistFilter>;
-  experts?: InputMaybe<ServiceExpertsFilter>;
-  contactForm?: InputMaybe<ServiceContactFormFilter>;
+  hero?: InputMaybe<ServiceHeroFilter>;
+  valor?: InputMaybe<ServiceValorFilter>;
+  catalogo?: InputMaybe<ServiceCatalogoFilter>;
+  whyUsTitle?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<ServiceFaqFilter>;
+  seo?: InputMaybe<ServiceSeoFilter>;
 };
 
 export type ServiceConnectionEdges = {
@@ -936,17 +916,6 @@ export type DatetimeFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type BooleanFilter = {
-  eq?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-export type RichTextFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
 export type PostFilter = {
   title?: InputMaybe<StringFilter>;
   excerpt?: InputMaybe<StringFilter>;
@@ -1173,6 +1142,20 @@ export type GlobalFooter = {
   agencyUrl?: Maybe<Scalars['String']['output']>;
 };
 
+export type GlobalPartnersLogos = {
+  __typename?: 'GlobalPartnersLogos';
+  image?: Maybe<Scalars['String']['output']>;
+  alt?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type GlobalPartners = {
+  __typename?: 'GlobalPartners';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  logos?: Maybe<Array<Maybe<GlobalPartnersLogos>>>;
+};
+
 export type GlobalSeo = {
   __typename?: 'GlobalSeo';
   siteName?: Maybe<Scalars['String']['output']>;
@@ -1184,6 +1167,7 @@ export type Global = Node & Document & {
   __typename?: 'Global';
   nav?: Maybe<GlobalNav>;
   footer?: Maybe<GlobalFooter>;
+  partners?: Maybe<GlobalPartners>;
   seo?: Maybe<GlobalSeo>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -1236,6 +1220,18 @@ export type GlobalFooterFilter = {
   agencyUrl?: InputMaybe<StringFilter>;
 };
 
+export type GlobalPartnersLogosFilter = {
+  image?: InputMaybe<ImageFilter>;
+  alt?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type GlobalPartnersFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  logos?: InputMaybe<GlobalPartnersLogosFilter>;
+};
+
 export type GlobalSeoFilter = {
   siteName?: InputMaybe<StringFilter>;
   defaultDescription?: InputMaybe<StringFilter>;
@@ -1245,6 +1241,7 @@ export type GlobalSeoFilter = {
 export type GlobalFilter = {
   nav?: InputMaybe<GlobalNavFilter>;
   footer?: InputMaybe<GlobalFooterFilter>;
+  partners?: InputMaybe<GlobalPartnersFilter>;
   seo?: InputMaybe<GlobalSeoFilter>;
 };
 
@@ -1854,79 +1851,65 @@ export type HomeMutation = {
   blogPreview?: InputMaybe<HomeBlogPreviewMutation>;
 };
 
-export type ServiceFeaturesItemsMutation = {
-  icon?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
+export type ServiceHeroMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  formTitle?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ServiceFeaturesMutation = {
-  sectionTitle?: InputMaybe<Scalars['String']['input']>;
-  sectionSubtitle?: InputMaybe<Scalars['String']['input']>;
-  items?: InputMaybe<Array<InputMaybe<ServiceFeaturesItemsMutation>>>;
+export type ServiceValorCardsMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ServiceExpandableServicesItemsMutation = {
-  icon?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ServiceExpandableServicesMutation = {
-  sectionTitle?: InputMaybe<Scalars['String']['input']>;
-  items?: InputMaybe<Array<InputMaybe<ServiceExpandableServicesItemsMutation>>>;
-};
-
-export type ServiceWhyUsCardsMutation = {
-  icon?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ServiceWhyUsMutation = {
+export type ServiceValorMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
-  cards?: InputMaybe<Array<InputMaybe<ServiceWhyUsCardsMutation>>>;
+  cards?: InputMaybe<Array<InputMaybe<ServiceValorCardsMutation>>>;
 };
 
-export type ServiceStatsMutation = {
-  number?: InputMaybe<Scalars['String']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ServiceChecklistMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  items?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ServiceExpertsStepsMutation = {
-  number?: InputMaybe<Scalars['String']['input']>;
+export type ServiceCatalogoItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  colSpan?: InputMaybe<Scalars['String']['input']>;
+  featured?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type ServiceExpertsMutation = {
+export type ServiceCatalogoMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
-  steps?: InputMaybe<Array<InputMaybe<ServiceExpertsStepsMutation>>>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCatalogoItemsMutation>>>;
 };
 
-export type ServiceContactFormMutation = {
+export type ServiceFaqItemsMutation = {
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ServiceFaqMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
-  subtitle?: InputMaybe<Scalars['String']['input']>;
-  buttonText?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceFaqItemsMutation>>>;
+};
+
+export type ServiceSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ServiceMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
-  heroSubtitle?: InputMaybe<Scalars['String']['input']>;
-  features?: InputMaybe<ServiceFeaturesMutation>;
-  expandableServices?: InputMaybe<ServiceExpandableServicesMutation>;
-  whyUs?: InputMaybe<ServiceWhyUsMutation>;
-  stats?: InputMaybe<Array<InputMaybe<ServiceStatsMutation>>>;
-  checklist?: InputMaybe<ServiceChecklistMutation>;
-  experts?: InputMaybe<ServiceExpertsMutation>;
-  contactForm?: InputMaybe<ServiceContactFormMutation>;
+  hero?: InputMaybe<ServiceHeroMutation>;
+  valor?: InputMaybe<ServiceValorMutation>;
+  catalogo?: InputMaybe<ServiceCatalogoMutation>;
+  whyUsTitle?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<ServiceFaqMutation>;
+  seo?: InputMaybe<ServiceSeoMutation>;
 };
 
 export type AboutHeroMutation = {
@@ -2117,6 +2100,18 @@ export type GlobalFooterMutation = {
   agencyUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GlobalPartnersLogosMutation = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GlobalPartnersMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  logos?: InputMaybe<Array<InputMaybe<GlobalPartnersLogosMutation>>>;
+};
+
 export type GlobalSeoMutation = {
   siteName?: InputMaybe<Scalars['String']['input']>;
   defaultDescription?: InputMaybe<Scalars['String']['input']>;
@@ -2126,6 +2121,7 @@ export type GlobalSeoMutation = {
 export type GlobalMutation = {
   nav?: InputMaybe<GlobalNavMutation>;
   footer?: InputMaybe<GlobalFooterMutation>;
+  partners?: InputMaybe<GlobalPartnersMutation>;
   seo?: InputMaybe<GlobalSeoMutation>;
 };
 
@@ -2231,7 +2227,7 @@ export type DynamicFormsMutation = {
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
-export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, heroSubtitle?: string | null, features?: { __typename: 'ServiceFeatures', sectionTitle?: string | null, sectionSubtitle?: string | null, items?: Array<{ __typename: 'ServiceFeaturesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, expandableServices?: { __typename: 'ServiceExpandableServices', sectionTitle?: string | null, items?: Array<{ __typename: 'ServiceExpandableServicesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, whyUs?: { __typename: 'ServiceWhyUs', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceWhyUsCards', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, stats?: Array<{ __typename: 'ServiceStats', number?: string | null, label?: string | null } | null> | null, checklist?: { __typename: 'ServiceChecklist', title?: string | null, items?: Array<string | null> | null } | null, experts?: { __typename: 'ServiceExperts', title?: string | null, steps?: Array<{ __typename: 'ServiceExpertsSteps', number?: string | null, title?: string | null, description?: string | null } | null> | null } | null, contactForm?: { __typename: 'ServiceContactForm', title?: string | null, subtitle?: string | null, buttonText?: string | null } | null };
+export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
@@ -2243,7 +2239,7 @@ export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadc
 
 export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, formSubtitle?: string | null };
 
-export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
+export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
@@ -2277,7 +2273,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, slug: string, heroSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: { __typename: 'ServiceFeatures', sectionTitle?: string | null, sectionSubtitle?: string | null, items?: Array<{ __typename: 'ServiceFeaturesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, expandableServices?: { __typename: 'ServiceExpandableServices', sectionTitle?: string | null, items?: Array<{ __typename: 'ServiceExpandableServicesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, whyUs?: { __typename: 'ServiceWhyUs', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceWhyUsCards', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, stats?: Array<{ __typename: 'ServiceStats', number?: string | null, label?: string | null } | null> | null, checklist?: { __typename: 'ServiceChecklist', title?: string | null, items?: Array<string | null> | null } | null, experts?: { __typename: 'ServiceExperts', title?: string | null, steps?: Array<{ __typename: 'ServiceExpertsSteps', number?: string | null, title?: string | null, description?: string | null } | null> | null } | null, contactForm?: { __typename: 'ServiceContactForm', title?: string | null, subtitle?: string | null, buttonText?: string | null } | null } };
+export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type ServiceConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2289,7 +2285,7 @@ export type ServiceConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, heroSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: { __typename: 'ServiceFeatures', sectionTitle?: string | null, sectionSubtitle?: string | null, items?: Array<{ __typename: 'ServiceFeaturesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, expandableServices?: { __typename: 'ServiceExpandableServices', sectionTitle?: string | null, items?: Array<{ __typename: 'ServiceExpandableServicesItems', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, whyUs?: { __typename: 'ServiceWhyUs', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceWhyUsCards', icon?: string | null, title?: string | null, description?: string | null } | null> | null } | null, stats?: Array<{ __typename: 'ServiceStats', number?: string | null, label?: string | null } | null> | null, checklist?: { __typename: 'ServiceChecklist', title?: string | null, items?: Array<string | null> | null } | null, experts?: { __typename: 'ServiceExperts', title?: string | null, steps?: Array<{ __typename: 'ServiceExpertsSteps', number?: string | null, title?: string | null, description?: string | null } | null> | null } | null, contactForm?: { __typename: 'ServiceContactForm', title?: string | null, subtitle?: string | null, buttonText?: string | null } | null } | null } | null> | null } };
+export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type AboutQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2391,7 +2387,7 @@ export type GlobalQueryVariables = Exact<{
 }>;
 
 
-export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } };
+export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } };
 
 export type GlobalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2403,7 +2399,7 @@ export type GlobalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type MaintenanceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2546,64 +2542,53 @@ export const ServicePartsFragmentDoc = gql`
   __typename
   title
   slug
-  heroSubtitle
-  features {
+  hero {
     __typename
-    sectionTitle
-    sectionSubtitle
-    items {
-      __typename
-      icon
-      title
-      description
-    }
+    heading
+    intro
+    ctaLabel
+    formTitle
   }
-  expandableServices {
-    __typename
-    sectionTitle
-    items {
-      __typename
-      icon
-      title
-      description
-    }
-  }
-  whyUs {
+  valor {
     __typename
     title
     subtitle
     cards {
       __typename
+      heading
+      text
+      image
+    }
+  }
+  catalogo {
+    __typename
+    title
+    items {
+      __typename
       icon
       title
       description
+      buttonLabel
+      url
+      colSpan
+      featured
     }
   }
-  stats {
-    __typename
-    number
-    label
-  }
-  checklist {
+  whyUsTitle
+  faq {
     __typename
     title
-    items
-  }
-  experts {
-    __typename
-    title
-    steps {
+    items {
       __typename
-      number
-      title
-      description
+      question
+      answer
     }
   }
-  contactForm {
+  seo {
     __typename
-    title
-    subtitle
-    buttonText
+    metaTitle
+    metaDescription
+    ogImage
   }
 }
     `;
@@ -2785,6 +2770,17 @@ export const GlobalPartsFragmentDoc = gql`
     logo
     agencyLogo
     agencyUrl
+  }
+  partners {
+    __typename
+    eyebrow
+    title
+    logos {
+      __typename
+      image
+      alt
+      url
+    }
   }
   seo {
     __typename
