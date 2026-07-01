@@ -1,6 +1,6 @@
 # SPEC 15 — Blog: poblado de contenido, portadas desde Figma y QA visual
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:**
 > - Reutiliza la colección `post` y su schema (`tina/config.ts`), sin cambios de estructura.
 > - Reutiliza los componentes del blog: `BlogGrid` / `BlogGridCard` (listado), `BlogHero` / `BlogCard` (carrusel del hero), `BlogPreview` / `BlogPreviewReact` (Insights del home), `BlogDetailReact` (detalle).
@@ -193,3 +193,19 @@ Archivos extraídos del Figma (frame `1574-8819`) a `public/images/blog/`:
 - Tocar Header / Footer / maintenance / Lenis.
 
 Cada uno de estos, si aterriza, va en su propio spec.
+
+---
+
+## Notas de implementación (2026-07-01)
+
+Implementado en la rama `spec-15-blog`. QA visual con dev server (modo local) + Playwright MCP (desktop 1440px, mobile 400px); screenshots en `.playwright-screens/` (gitignored). `astro build` completo: **38 páginas, sin errores**, incluidas las **12 rutas `/blog/<slug>`**. El paso `tinacms build` requiere credenciales de TinaCloud (no disponibles en modo local) — misma limitación de entorno de specs previas; corre en deploy.
+
+**Desviación aprobada — set de portadas.** Solo **2 de las 5** portadas del Figma se extrajeron limpias: `cover-guide.png` (card "MVNO / The Ultimate Guide") y `cover-laptop.jpg` (foto laptop B&N). Las ilustraciones **Cloud / AI / 5G** son SVG importados de Webflow con máscaras que **renderizan vacío** en cualquier export/screenshot del MCP (PNG 149 bytes / 1×1, SVG `null`); se intentó por contenedor, por nodo de ilustración, por grupo padre y en formato SVG. Con acuerdo del usuario se completó el set con **4 portadas SVG on-brand generadas** (gradientes Fiberlux + motivo por tema): `cover-cloud.svg`, `cover-security.svg`, `cover-network.svg`, `cover-data.svg`. Set final = **6 portadas** repartidas cíclicamente (cada una ×2, sin repetición contigua). La "foto Da Nang" del modelo resultó ser la misma imagen laptop en dos tamaños.
+
+**Sin ajustes de estilo.** El QA visual de las 4 superficies (listado, hero-carrusel, Insights del home vs frame `1574-8819`, detalle) calzó con las referencias **sin tocar código** de componentes; la latitud de ajustes quedó sin usar porque las tarjetas ya coincidían con el Figma de specs previas.
+
+**Observaciones fuera de alcance (para otra spec):**
+- `BlogPreview.astro` (Insights del home) consulta `first: 6, sort: 'date'` → muestra los posts **más antiguos** primero. Para una sección "Novedades" lo natural sería `last: 6` (más recientes). Comportamiento preexistente; no se tocó por estar fuera de alcance (cambiar queries del listado).
+- El detalle emite 1 warning de **hydration mismatch** en `ShareButtons` (href de compartir con `https://fiberlux.com/...` en SSR vs `localhost` en cliente). Componente preexistente, solo en dev local; no lo introdujo esta spec.
+
+**Featured:** 4 posts `featured: true` (`mvno`, `telefonia-ip`, `sd-wan`, `data-center`). El hero de `/blog` los prioriza; el Insights del home no filtra por `featured` (toma por fecha, ver observación).
