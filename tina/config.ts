@@ -1093,6 +1093,93 @@ export default defineConfig({
       },
 
       /* ══════════════════════════════════════
+         CASOS DE ÉXITO (página)
+         ══════════════════════════════════════ */
+      {
+        name: "casosDeExito",
+        label: "Casos de éxito (página)",
+        path: "src/content/casos-de-exito",
+        format: "json",
+        ui: {
+          router: () => "/casos-de-exito",
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          // ── Hero ──
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          {
+            name: "heading",
+            label: "Título principal (H1)",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "intro",
+            label: "Párrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          { name: "heroImage", label: "Imagen de fondo del hero", type: "image" },
+
+          // ── Sección carrusel ──
+          { name: "sectionTitle", label: "Título de la sección", type: "string" },
+          {
+            name: "items",
+            label: "Casos",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.author || "Caso de éxito" }),
+            },
+            fields: [
+              { name: "poster", label: "Poster del video (imagen)", type: "image" },
+              {
+                name: "youtubeUrl",
+                label: "URL de YouTube (opcional)",
+                type: "string",
+                description:
+                  "Si se completa, el modal embebe el video de YouTube (tiene prioridad sobre el mp4).",
+              },
+              {
+                name: "videoFile",
+                label: "Video mp4 auto-alojado (opcional)",
+                type: "image",
+                description:
+                  "Sube aquí un archivo .mp4. Se usa solo si no hay URL de YouTube.",
+              },
+              { name: "logo", label: "Logo del cliente", type: "image" },
+              {
+                name: "quote",
+                label: "Cita / testimonio",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "author", label: "Nombre del autor", type: "string" },
+              { name: "role", label: "Cargo (mayúsculas)", type: "string" },
+              { name: "badge", label: "Texto del badge", type: "string" },
+            ],
+          },
+
+          // ── SEO / Meta ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta título", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
          GLOBAL (Nav, Footer, SEO)
          ══════════════════════════════════════ */
       {

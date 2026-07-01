@@ -98,6 +98,8 @@ export type Query = {
   soporteTecnicoConnection: SoporteTecnicoConnection;
   servicios: Servicios;
   serviciosConnection: ServiciosConnection;
+  casosDeExito: CasosDeExito;
+  casosDeExitoConnection: CasosDeExitoConnection;
   global: Global;
   globalConnection: GlobalConnection;
   maintenance: Maintenance;
@@ -252,6 +254,21 @@ export type QueryServiciosConnectionArgs = {
 };
 
 
+export type QueryCasosDeExitoArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCasosDeExitoConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CasosDeExitoFilter>;
+};
+
+
 export type QueryGlobalArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -335,6 +352,7 @@ export type DocumentFilter = {
   contact?: InputMaybe<ContactFilter>;
   soporteTecnico?: InputMaybe<SoporteTecnicoFilter>;
   servicios?: InputMaybe<ServiciosFilter>;
+  casosDeExito?: InputMaybe<CasosDeExitoFilter>;
   global?: InputMaybe<GlobalFilter>;
   maintenance?: InputMaybe<MaintenanceFilter>;
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
@@ -379,7 +397,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1236,6 +1254,79 @@ export type ServiciosConnection = Connection & {
   edges?: Maybe<Array<Maybe<ServiciosConnectionEdges>>>;
 };
 
+export type CasosDeExitoItems = {
+  __typename?: 'CasosDeExitoItems';
+  poster?: Maybe<Scalars['String']['output']>;
+  youtubeUrl?: Maybe<Scalars['String']['output']>;
+  videoFile?: Maybe<Scalars['String']['output']>;
+  logo?: Maybe<Scalars['String']['output']>;
+  quote?: Maybe<Scalars['String']['output']>;
+  author?: Maybe<Scalars['String']['output']>;
+  role?: Maybe<Scalars['String']['output']>;
+  badge?: Maybe<Scalars['String']['output']>;
+};
+
+export type CasosDeExitoSeo = {
+  __typename?: 'CasosDeExitoSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type CasosDeExito = Node & Document & {
+  __typename?: 'CasosDeExito';
+  breadcrumb?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  heroImage?: Maybe<Scalars['String']['output']>;
+  sectionTitle?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<CasosDeExitoItems>>>;
+  seo?: Maybe<CasosDeExitoSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CasosDeExitoItemsFilter = {
+  poster?: InputMaybe<ImageFilter>;
+  youtubeUrl?: InputMaybe<StringFilter>;
+  videoFile?: InputMaybe<ImageFilter>;
+  logo?: InputMaybe<ImageFilter>;
+  quote?: InputMaybe<StringFilter>;
+  author?: InputMaybe<StringFilter>;
+  role?: InputMaybe<StringFilter>;
+  badge?: InputMaybe<StringFilter>;
+};
+
+export type CasosDeExitoSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type CasosDeExitoFilter = {
+  breadcrumb?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  heroImage?: InputMaybe<ImageFilter>;
+  sectionTitle?: InputMaybe<StringFilter>;
+  items?: InputMaybe<CasosDeExitoItemsFilter>;
+  seo?: InputMaybe<CasosDeExitoSeoFilter>;
+};
+
+export type CasosDeExitoConnectionEdges = {
+  __typename?: 'CasosDeExitoConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CasosDeExito>;
+};
+
+export type CasosDeExitoConnection = Connection & {
+  __typename?: 'CasosDeExitoConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CasosDeExitoConnectionEdges>>>;
+};
+
 export type GlobalNavLinksChildrenChildren = {
   __typename?: 'GlobalNavLinksChildrenChildren';
   text?: Maybe<Scalars['String']['output']>;
@@ -1714,6 +1805,8 @@ export type Mutation = {
   createSoporteTecnico: SoporteTecnico;
   updateServicios: Servicios;
   createServicios: Servicios;
+  updateCasosDeExito: CasosDeExito;
+  createCasosDeExito: CasosDeExito;
   updateGlobal: Global;
   createGlobal: Global;
   updateMaintenance: Maintenance;
@@ -1856,6 +1949,18 @@ export type MutationCreateServiciosArgs = {
 };
 
 
+export type MutationUpdateCasosDeExitoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CasosDeExitoMutation;
+};
+
+
+export type MutationCreateCasosDeExitoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CasosDeExitoMutation;
+};
+
+
 export type MutationUpdateGlobalArgs = {
   relativePath: Scalars['String']['input'];
   params: GlobalMutation;
@@ -1924,6 +2029,7 @@ export type DocumentUpdateMutation = {
   contact?: InputMaybe<ContactMutation>;
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
+  casosDeExito?: InputMaybe<CasosDeExitoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -1941,6 +2047,7 @@ export type DocumentMutation = {
   contact?: InputMaybe<ContactMutation>;
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
+  casosDeExito?: InputMaybe<CasosDeExitoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
@@ -2271,6 +2378,33 @@ export type ServiciosMutation = {
   formSubtitle?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CasosDeExitoItemsMutation = {
+  poster?: InputMaybe<Scalars['String']['input']>;
+  youtubeUrl?: InputMaybe<Scalars['String']['input']>;
+  videoFile?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  quote?: InputMaybe<Scalars['String']['input']>;
+  author?: InputMaybe<Scalars['String']['input']>;
+  role?: InputMaybe<Scalars['String']['input']>;
+  badge?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CasosDeExitoSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CasosDeExitoMutation = {
+  breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  heroImage?: InputMaybe<Scalars['String']['input']>;
+  sectionTitle?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<CasosDeExitoItemsMutation>>>;
+  seo?: InputMaybe<CasosDeExitoSeoMutation>;
+};
+
 export type GlobalNavLinksChildrenChildrenMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
@@ -2458,6 +2592,8 @@ export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadc
 
 export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, formSubtitle?: string | null };
 
+export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
@@ -2619,6 +2755,25 @@ export type ServiciosConnectionQueryVariables = Exact<{
 
 
 export type ServiciosConnectionQuery = { __typename?: 'Query', serviciosConnection: { __typename?: 'ServiciosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiciosConnectionEdges', cursor: string, node?: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, formSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type CasosDeExitoQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CasosDeExitoQuery = { __typename?: 'Query', casosDeExito: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type CasosDeExitoConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CasosDeExitoFilter>;
+}>;
+
+
+export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3012,6 +3167,33 @@ export const ServiciosPartsFragmentDoc = gql`
   ctaLabel
   formTitle
   formSubtitle
+}
+    `;
+export const CasosDeExitoPartsFragmentDoc = gql`
+    fragment CasosDeExitoParts on CasosDeExito {
+  __typename
+  breadcrumb
+  heading
+  intro
+  heroImage
+  sectionTitle
+  items {
+    __typename
+    poster
+    youtubeUrl
+    videoFile
+    logo
+    quote
+    author
+    role
+    badge
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
 }
     `;
 export const GlobalPartsFragmentDoc = gql`
@@ -3633,6 +3815,63 @@ export const ServiciosConnectionDocument = gql`
   }
 }
     ${ServiciosPartsFragmentDoc}`;
+export const CasosDeExitoDocument = gql`
+    query casosDeExito($relativePath: String!) {
+  casosDeExito(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CasosDeExitoParts
+  }
+}
+    ${CasosDeExitoPartsFragmentDoc}`;
+export const CasosDeExitoConnectionDocument = gql`
+    query casosDeExitoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CasosDeExitoFilter) {
+  casosDeExitoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CasosDeExitoParts
+      }
+    }
+  }
+}
+    ${CasosDeExitoPartsFragmentDoc}`;
 export const GlobalDocument = gql`
     query global($relativePath: String!) {
   global(relativePath: $relativePath) {
@@ -3968,6 +4207,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     serviciosConnection(variables?: ServiciosConnectionQueryVariables, options?: C): Promise<{data: ServiciosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiciosConnectionQueryVariables, query: string}> {
         return requester<{data: ServiciosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiciosConnectionQueryVariables, query: string}, ServiciosConnectionQueryVariables>(ServiciosConnectionDocument, variables, options);
+      },
+    casosDeExito(variables: CasosDeExitoQueryVariables, options?: C): Promise<{data: CasosDeExitoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoQueryVariables, query: string}> {
+        return requester<{data: CasosDeExitoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoQueryVariables, query: string}, CasosDeExitoQueryVariables>(CasosDeExitoDocument, variables, options);
+      },
+    casosDeExitoConnection(variables?: CasosDeExitoConnectionQueryVariables, options?: C): Promise<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}> {
+        return requester<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}, CasosDeExitoConnectionQueryVariables>(CasosDeExitoConnectionDocument, variables, options);
       },
     global(variables: GlobalQueryVariables, options?: C): Promise<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}> {
         return requester<{data: GlobalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: GlobalQueryVariables, query: string}, GlobalQueryVariables>(GlobalDocument, variables, options);

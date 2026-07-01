@@ -70,6 +70,8 @@ type Query {
   soporteTecnicoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SoporteTecnicoFilter): SoporteTecnicoConnection!
   servicios(relativePath: String): Servicios!
   serviciosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiciosFilter): ServiciosConnection!
+  casosDeExito(relativePath: String): CasosDeExito!
+  casosDeExitoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CasosDeExitoFilter): CasosDeExitoConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
   maintenance(relativePath: String): Maintenance!
@@ -91,6 +93,7 @@ input DocumentFilter {
   contact: ContactFilter
   soporteTecnico: SoporteTecnicoFilter
   servicios: ServiciosFilter
+  casosDeExito: CasosDeExitoFilter
   global: GlobalFilter
   maintenance: MaintenanceFilter
   infoAbonados: InfoAbonadosFilter
@@ -121,7 +124,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -914,6 +917,74 @@ type ServiciosConnection implements Connection {
   edges: [ServiciosConnectionEdges]
 }
 
+type CasosDeExitoItems {
+  poster: String
+  youtubeUrl: String
+  videoFile: String
+  logo: String
+  quote: String
+  author: String
+  role: String
+  badge: String
+}
+
+type CasosDeExitoSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type CasosDeExito implements Node & Document {
+  breadcrumb: String
+  heading: String
+  intro: String
+  heroImage: String
+  sectionTitle: String
+  items: [CasosDeExitoItems]
+  seo: CasosDeExitoSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CasosDeExitoItemsFilter {
+  poster: ImageFilter
+  youtubeUrl: StringFilter
+  videoFile: ImageFilter
+  logo: ImageFilter
+  quote: StringFilter
+  author: StringFilter
+  role: StringFilter
+  badge: StringFilter
+}
+
+input CasosDeExitoSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input CasosDeExitoFilter {
+  breadcrumb: StringFilter
+  heading: StringFilter
+  intro: StringFilter
+  heroImage: ImageFilter
+  sectionTitle: StringFilter
+  items: CasosDeExitoItemsFilter
+  seo: CasosDeExitoSeoFilter
+}
+
+type CasosDeExitoConnectionEdges {
+  cursor: String!
+  node: CasosDeExito
+}
+
+type CasosDeExitoConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CasosDeExitoConnectionEdges]
+}
+
 type GlobalNavLinksChildrenChildren {
   text: String
   url: String
@@ -1358,6 +1429,8 @@ type Mutation {
   createSoporteTecnico(relativePath: String!, params: SoporteTecnicoMutation!): SoporteTecnico!
   updateServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
   createServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
+  updateCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
+  createCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
   updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
@@ -1379,6 +1452,7 @@ input DocumentUpdateMutation {
   contact: ContactMutation
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
+  casosDeExito: CasosDeExitoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1396,6 +1470,7 @@ input DocumentMutation {
   contact: ContactMutation
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
+  casosDeExito: CasosDeExitoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1724,6 +1799,33 @@ input ServiciosMutation {
   ctaLabel: String
   formTitle: String
   formSubtitle: String
+}
+
+input CasosDeExitoItemsMutation {
+  poster: String
+  youtubeUrl: String
+  videoFile: String
+  logo: String
+  quote: String
+  author: String
+  role: String
+  badge: String
+}
+
+input CasosDeExitoSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input CasosDeExitoMutation {
+  breadcrumb: String
+  heading: String
+  intro: String
+  heroImage: String
+  sectionTitle: String
+  items: [CasosDeExitoItemsMutation]
+  seo: CasosDeExitoSeoMutation
 }
 
 input GlobalNavLinksChildrenChildrenMutation {

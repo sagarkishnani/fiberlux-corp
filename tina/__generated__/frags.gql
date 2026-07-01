@@ -289,6 +289,32 @@ fragment ServiciosParts on Servicios {
   formSubtitle
 }
 
+fragment CasosDeExitoParts on CasosDeExito {
+  __typename
+  breadcrumb
+  heading
+  intro
+  heroImage
+  sectionTitle
+  items {
+    __typename
+    poster
+    youtubeUrl
+    videoFile
+    logo
+    quote
+    author
+    role
+    badge
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+
 fragment GlobalParts on Global {
   __typename
   nav {
