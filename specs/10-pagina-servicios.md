@@ -1,6 +1,6 @@
 # SPEC 10 — Página "Servicios" (`/servicios`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 08 (reusa `StickyCards` / colección `home`). Reutiliza el patrón de página dual + hero oscuro de SPEC 06 y el motor de formularios dinámicos (`DynamicForm` → `send-email.php`).
 > **Fecha:** 2026-06-30
 > **Objetivo:** Construir la ruta `/servicios` según el frame desktop de Figma (hero oscuro sin 3D, sección "Nuestras soluciones" reusando `StickyCards`, y un formulario "Déjanos tus datos y te contactaremos"), todo editable desde TinaCMS.
