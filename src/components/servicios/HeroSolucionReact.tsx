@@ -38,8 +38,24 @@ export default function HeroSolucionReact({
       className="relative overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      {/* Ambient magenta glow toward the right, behind the form */}
-      <div className="absolute inset-0 z-0 solucion-hero-glow" />
+      {/* Magenta gradient backdrop image */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
+        style={{
+          backgroundImage: `url(${base}images/services/hero-img.png)`,
+          backgroundPosition: "75% center",
+        }}
+        aria-hidden="true"
+      />
+      {/* Dark overlay so the left-column copy stays legible */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          background:
+            "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0.15) 62%, rgba(10,10,10,0) 100%)",
+        }}
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 pt-28 pb-20 lg:pt-36 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -110,25 +126,6 @@ export default function HeroSolucionReact({
           </div>
         </div>
       </div>
-
-      <style>{`
-        .solucion-hero-glow {
-          background: radial-gradient(
-            60% 75% at 78% 40%,
-            rgba(150, 35, 122, 0.30) 0%,
-            rgba(150, 35, 122, 0) 62%
-          );
-        }
-        @media (max-width: 1023px) {
-          .solucion-hero-glow {
-            background: radial-gradient(
-              85% 45% at 80% 8%,
-              rgba(150, 35, 122, 0.22) 0%,
-              rgba(150, 35, 122, 0) 60%
-            );
-          }
-        }
-      `}</style>
     </section>
   );
 }
