@@ -16,6 +16,7 @@ interface ServiciosFormProps {
   variables: ServiciosQueryVariables;
   data: ServiciosQuery;
   form: FormIsland;
+  prefill?: Record<string, string>;
 }
 
 export default function ServiciosFormReact({
@@ -23,6 +24,7 @@ export default function ServiciosFormReact({
   variables,
   data: initialData,
   form,
+  prefill,
 }: ServiciosFormProps) {
   const { data } = useTina<ServiciosQuery>({ query, variables, data: initialData });
 
@@ -63,6 +65,7 @@ export default function ServiciosFormReact({
             query={form.query}
             variables={form.variables}
             data={form.data}
+            prefill={prefill}
           />
         </div>
       </div>

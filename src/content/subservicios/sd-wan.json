@@ -1,0 +1,64 @@
+{
+  "title": "SD-WAN",
+  "slug": "sd-wan",
+  "solucionSlug": "conectividad-empresarial",
+  "solucionTitle": "Conectividad Empresarial",
+  "hero": {
+    "heading": "SD-WAN",
+    "intro": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
+    "note": "",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "soporte",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "SD-WAN | Fiberlux Corp",
+    "metaDescription": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
+    "ogImage": ""
+  }
+}

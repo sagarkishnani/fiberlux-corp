@@ -345,9 +345,13 @@ interface DynamicFormProps {
   /** When true, suppresses the form's internal title/description header
    *  (used when a host section — e.g. the solution hero — renders its own). */
   hideHeader?: boolean;
+  /** Optional initial values keyed by field `name`. Used to pre-select fields
+   *  (e.g. the "servicio" select on a sub-service page). Only applies to matching
+   *  fields; when omitted the form starts with its normal defaults. */
+  prefill?: Record<string, string>;
 }
 
-export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false }: DynamicFormProps) {
+export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false, prefill }: DynamicFormProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const formConfig: FormConfig = data?.dynamicForms || initialData?.dynamicForms;
   if (!formConfig) return null;
@@ -362,7 +366,11 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
     const init: Record<string, any> = {};
     for (const f of fields) {
       if (f.name && !isStructural(f.fieldType)) {
-        init[f.name] = getDefaultValue(f);
+        const prefilled = prefill?.[f.name];
+        init[f.name] =
+          prefilled !== undefined && prefilled !== ""
+            ? prefilled
+            : getDefaultValue(f);
       }
     }
     return init;

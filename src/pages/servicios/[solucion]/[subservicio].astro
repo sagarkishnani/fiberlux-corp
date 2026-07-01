@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { client } from "../../../../tina/__generated__/client";
+import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro";
+import Beneficios from "../../../components/servicios/Beneficios.astro";
+import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
+import Stats from "../../../components/Stats.astro";
+import ServiciosForm from "../../../components/servicios/ServiciosForm.astro";
+import BlogPreview from "../../../components/blog/BlogPreview.astro";
+import FaqSubservicio from "../../../components/servicios/FaqSubservicio.astro";
+
+/* ── Static paths from all sub-service documents ── */
+export async function getStaticPaths() {
+  let paths: { params: { solucion: string; subservicio: string } }[] = [];
+  try {
+    const conn = await client.queries.subservicioConnection({ last: 200 });
+    const edges = conn.data?.subservicioConnection?.edges || [];
+    paths = edges
+      .filter((e: any) => e?.node?.solucionSlug)
+      .map((e: any) => ({
+        params: {
+          solucion: e!.node!.solucionSlug as string,
+          subservicio: e!.node!._sys.filename,
+        },
+      }));
+  } catch {
+    paths = [];
+  }
+  return paths;
+}
+
+const { subservicio } = Astro.params;
+const relativePath = `${subservicio}.json`;
+
+/* ── SEO / meta (per-subservicio, falls back to global.seo) ── */
+const subQuery = await client.queries.subservicio({ relativePath });
+const sub = subQuery.data?.subservicio;
+
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const globalSeo = globalQuery.data?.global?.seo;
+
+const metaTitle = sub?.seo?.metaTitle || sub?.title || "Servicios";
+const metaDescription =
+  sub?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <main>
+    <HeroSubservicio relativePath={relativePath} />
+    <Beneficios relativePath={relativePath} />
+    <CasosDeUso relativePath={relativePath} />
+    <Stats title={sub?.whyUsTitle ?? undefined} />
+    <ServiciosForm prefill={{ servicio: sub?.solucionSlug ?? "" }} />
+    <BlogPreview />
+    <FaqSubservicio relativePath={relativePath} />
+  </main>
+</BaseLayout>

@@ -111,6 +111,53 @@ fragment ServiceParts on Service {
   }
 }
 
+fragment SubservicioParts on Subservicio {
+  __typename
+  title
+  slug
+  solucionSlug
+  solucionTitle
+  hero {
+    __typename
+    heading
+    intro
+    note
+    ctaLabel
+    formTitle
+  }
+  beneficios {
+    __typename
+    title
+    items {
+      __typename
+      icon
+      title
+      text
+    }
+  }
+  casosDeUso {
+    __typename
+    eyebrow
+    statement
+  }
+  whyUsTitle
+  faq {
+    __typename
+    title
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+
 fragment AboutParts on About {
   __typename
   hero {

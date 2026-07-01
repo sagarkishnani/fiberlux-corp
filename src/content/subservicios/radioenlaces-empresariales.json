@@ -1,0 +1,64 @@
+{
+  "title": "Radioenlaces Empresariales",
+  "slug": "radioenlaces-empresariales",
+  "solucionSlug": "conectividad-empresarial",
+  "solucionTitle": "Conectividad Empresarial",
+  "hero": {
+    "heading": "Radioenlaces Empresariales",
+    "intro": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
+    "note": "",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "soporte",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Radioenlaces Empresariales | Fiberlux Corp",
+    "metaDescription": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
+    "ogImage": ""
+  }
+}

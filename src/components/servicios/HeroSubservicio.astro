@@ -1,0 +1,30 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroSubservicioReact from "./HeroSubservicioReact.tsx";
+
+interface Props {
+  relativePath: string;
+}
+
+const { relativePath } = Astro.props;
+
+const subQuery = await client.queries.subservicio({ relativePath });
+const formQuery = await client.queries.dynamicForms({
+  relativePath: "servicios.json",
+});
+
+const solucionSlug = subQuery.data?.subservicio?.solucionSlug ?? "";
+---
+
+<HeroSubservicioReact
+  client:load
+  query={subQuery.query}
+  variables={subQuery.variables}
+  data={subQuery.data}
+  form={{
+    query: formQuery.query,
+    variables: formQuery.variables,
+    data: formQuery.data,
+  }}
+  prefill={{ servicio: solucionSlug }}
+/>

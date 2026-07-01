@@ -417,6 +417,189 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         SUB-SERVICIOS (nivel 2)
+         ══════════════════════════════════════ */
+      {
+        name: "subservicio",
+        label: "Sub-servicios (nivel 2)",
+        path: "src/content/subservicios",
+        format: "json",
+        ui: {
+          router: ({ document }) => `/servicios/${document.solucionSlug}/${document._sys.filename}`,
+          filename: {
+            slugify: (values) => (values?.slug || values?.title || "").toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")
+          }
+        },
+        fields: [
+          {
+            name: "title",
+            label: "Nombre del sub-servicio",
+            type: "string",
+            required: true,
+            isTitle: true
+          },
+          { name: "slug", label: "URL slug", type: "string", required: true },
+          {
+            name: "solucionSlug",
+            label: "Soluci\xF3n padre (slug)",
+            type: "string",
+            required: true,
+            options: [
+              { value: "conectividad-empresarial", label: "Conectividad Empresarial" },
+              { value: "ciberseguridad-gestionada", label: "Ciberseguridad Gestionada" },
+              { value: "data-center-cloud", label: "Data Center, Cloud y Continuidad" },
+              { value: "servicios-gestionados", label: "Servicios Gestionados" }
+            ]
+          },
+          {
+            name: "solucionTitle",
+            label: "Soluci\xF3n padre (nombre para breadcrumb)",
+            type: "string"
+          },
+          // ── Hero ──
+          {
+            name: "hero",
+            label: "Hero",
+            type: "object",
+            fields: [
+              {
+                name: "heading",
+                label: "T\xEDtulo (H1)",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "intro",
+                label: "P\xE1rrafo intro",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "note",
+                label: "Caja de nota",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "ctaLabel",
+                label: "Texto bot\xF3n (ancla al form inferior)",
+                type: "string"
+              },
+              {
+                name: "formTitle",
+                label: "T\xEDtulo del form del hero",
+                type: "string"
+              }
+            ]
+          },
+          // ── "Beneficios" (cards ícono + título + texto) ──
+          {
+            name: "beneficios",
+            label: "Beneficios",
+            type: "object",
+            fields: [
+              { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              {
+                name: "items",
+                label: "Cards",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.title || "Beneficio" })
+                },
+                fields: [
+                  {
+                    name: "icon",
+                    label: "\xCDcono",
+                    type: "string",
+                    options: [
+                      { value: "velocidad", label: "Velocidad / Rendimiento" },
+                      { value: "simetria", label: "Carga y descarga sim\xE9trica" },
+                      { value: "soporte", label: "Soporte / Atenci\xF3n" },
+                      { value: "escudo", label: "Seguridad / Escudo" },
+                      { value: "disponibilidad", label: "Alta disponibilidad" },
+                      { value: "nube", label: "Nube / Cloud" },
+                      { value: "reloj", label: "24/7 / Tiempo" },
+                      { value: "red", label: "Red / Conectividad" },
+                      { value: "ahorro", label: "Ahorro / Costo" },
+                      { value: "cobertura", label: "Cobertura / Alcance" },
+                      { value: "escalabilidad", label: "Escalabilidad" },
+                      { value: "generico", label: "Gen\xE9rico" }
+                    ]
+                  },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  {
+                    name: "text",
+                    label: "Texto",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  }
+                ]
+              }
+            ]
+          },
+          // ── "Casos de uso" (statement rich-text con resaltado) ──
+          {
+            name: "casosDeUso",
+            label: "Casos de uso",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Eyebrow", type: "string" },
+              {
+                name: "statement",
+                label: "Statement",
+                type: "rich-text",
+                description: "Usa negrita (bold) para resaltar palabras en magenta."
+              }
+            ]
+          },
+          // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
+          {
+            name: "whyUsTitle",
+            label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?'",
+            type: "string"
+          },
+          // ── "Preguntas frecuentes" (propio del sub-servicio) ──
+          {
+            name: "faq",
+            label: "Preguntas frecuentes",
+            type: "object",
+            fields: [
+              { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              {
+                name: "items",
+                label: "Preguntas",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.question || "Pregunta" })
+                },
+                fields: [
+                  { name: "question", label: "Pregunta", type: "string" },
+                  { name: "answer", label: "Respuesta", type: "rich-text" }
+                ]
+              }
+            ]
+          },
+          // ── SEO / meta (cae a global.seo si vacío) ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta t\xEDtulo", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          NOSOTROS
          ══════════════════════════════════════ */
       {
