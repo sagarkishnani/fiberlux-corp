@@ -904,7 +904,14 @@ var config_default = defineConfig({
                   { name: "url", label: "URL", type: "string" }
                 ]
               },
-              { name: "logo", label: "Logo del footer", type: "image" }
+              { name: "logo", label: "Logo del footer", type: "image" },
+              { name: "agencyLogo", label: "Logo de la agencia (cr\xE9dito)", type: "image" },
+              {
+                name: "agencyUrl",
+                label: "URL de la agencia (cr\xE9dito)",
+                type: "string",
+                description: "Enlace del wordmark de cr\xE9dito en el pie (se abre en pesta\xF1a nueva)."
+              }
             ]
           },
           // ── SEO defaults ──
