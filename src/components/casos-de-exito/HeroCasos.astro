@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroCasosReact from "./HeroCasosReact.tsx";
+
+const casosQuery = await client.queries.casosDeExito({
+  relativePath: "index.json",
+});
+---
+
+<HeroCasosReact
+  client:load
+  query={casosQuery.query}
+  variables={casosQuery.variables}
+  data={casosQuery.data}
+/>
