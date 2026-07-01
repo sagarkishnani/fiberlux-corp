@@ -279,6 +279,12 @@ export default defineConfig({
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
               {
+                name: "subtitle",
+                label: "Subtítulo de sección",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
                 name: "cards",
                 label: "Cards",
                 type: "object",

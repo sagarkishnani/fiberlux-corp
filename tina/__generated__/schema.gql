@@ -297,6 +297,7 @@ type ServiceValorCards {
 
 type ServiceValor {
   title: String
+  subtitle: String
   cards: [ServiceValorCards]
 }
 
@@ -358,6 +359,7 @@ input ServiceValorCardsFilter {
 
 input ServiceValorFilter {
   title: StringFilter
+  subtitle: StringFilter
   cards: ServiceValorCardsFilter
 }
 
@@ -1352,6 +1354,7 @@ input ServiceValorCardsMutation {
 
 input ServiceValorMutation {
   title: String
+  subtitle: String
   cards: [ServiceValorCardsMutation]
 }
 

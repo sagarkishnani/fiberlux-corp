@@ -264,6 +264,12 @@ var config_default = defineConfig({
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
               {
+                name: "subtitle",
+                label: "Subt\xEDtulo de secci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
                 name: "cards",
                 label: "Cards",
                 type: "object",
