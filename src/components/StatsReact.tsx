@@ -7,6 +7,8 @@ interface StatsProps {
   query: string;
   variables: HomeQueryVariables;
   data: HomeQuery;
+  /** Optional heading override; falls back to home `stats.title`. */
+  titleOverride?: string;
 }
 
 interface StatItem {
@@ -163,13 +165,14 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
 /**
  * StatsReact — "Nuestra red en cifras" section
  */
-export default function StatsReact({ query, variables, data: initialData }: StatsProps) {
+export default function StatsReact({ query, variables, data: initialData, titleOverride }: StatsProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
   const stats = data?.home?.stats;
   if (!stats) return null;
 
   const items = (stats.items || []).filter(Boolean) as StatItem[];
+  const heading = titleOverride || stats.title;
 
   return (
     <section className="bg-brand-purple rounded-t-3xl py-20">
@@ -180,7 +183,7 @@ export default function StatsReact({ query, variables, data: initialData }: Stat
           className="text-subtitle-lg text-white mb-12"
           data-tina-field={tinaField(stats, 'title')}
         >
-          {stats.title}
+          {heading}
         </h2>
 
         {/* Stats grid */}

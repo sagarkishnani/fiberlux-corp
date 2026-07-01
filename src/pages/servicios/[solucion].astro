@@ -5,6 +5,7 @@ import HeroSolucion from "../../components/servicios/HeroSolucion.astro";
 import ValorSolucion from "../../components/servicios/ValorSolucion.astro";
 import Partners from "../../components/shared/Partners.astro";
 import CatalogoSoluciones from "../../components/servicios/CatalogoSoluciones.astro";
+import Stats from "../../components/Stats.astro";
 
 /* ── Static paths from all solution documents ── */
 export async function getStaticPaths() {
@@ -42,5 +43,6 @@ const metaDescription =
     <ValorSolucion relativePath={relativePath} />
     <Partners />
     <CatalogoSoluciones relativePath={relativePath} />
+    <Stats title={service?.whyUsTitle ?? undefined} />
   </main>
 </BaseLayout>
