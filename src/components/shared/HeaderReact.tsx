@@ -23,15 +23,21 @@ interface HeaderProps {
   data: GlobalQuery;
 }
 
-interface NavLink {
+interface NavGrandChild {
   text?: string | null;
   url?: string | null;
-  children?: (NavChild | null)[] | null;
 }
 
 interface NavChild {
   text?: string | null;
   url?: string | null;
+  children?: (NavGrandChild | null)[] | null;
+}
+
+interface NavLink {
+  text?: string | null;
+  url?: string | null;
+  children?: (NavChild | null)[] | null;
 }
 
 interface SocialItem {
@@ -56,52 +62,35 @@ const DEFAULT_LOGO = "/images/logo/fiberlux.svg";
 const SCROLL_THRESHOLD = 50;
 const MOBILE_BREAKPOINT = 768;
 
-/* ── Service category groups ── */
-const categoryGroups = [
-  {
-    name: "Infraestructura Cloud",
-    items: [
-      { text: "Hosting", url: "/servicios/hosting" },
-      { text: "Housing", url: "/servicios/housing" },
-      { text: "SaaS", url: "/servicios/saas" },
-      {
-        text: "Continuidad de negocio",
-        url: "/servicios/continuidad-de-negocio",
-      },
-    ],
-  },
-  {
-    name: "Conectividad",
-    items: [
-      { text: "Internet Dedicado", url: "/servicios/internet-dedicado" },
-      { text: "Fibra Oscura", url: "/servicios/fibra-oscura" },
-      { text: "Wi-Fi Gestionado", url: "/servicios/wifi-gestionado" },
-      { text: "Transmisión de Datos", url: "/servicios/transmision-de-datos" },
-    ],
-  },
-  {
-    name: "Seguridad",
-    items: [
-      {
-        text: "Ciberseguridad Endpoints",
-        url: "/servicios/ciberseguridad-endpoints",
-      },
-      {
-        text: "Ciberseguridad Perímetro",
-        url: "/servicios/ciberseguridad-perimetro",
-      },
-      { text: "Video Vigilancia", url: "/servicios/vsaas" },
-    ],
-  },
-  {
-    name: "Comunicaciones",
-    items: [
-      { text: "Telefonía IP", url: "/servicios/telefonia-ip" },
-      { text: "Housing", url: "/servicios/housing" },
-      { text: "SaaS", url: "/servicios/saas" },
-    ],
-  },
-];
+/* ── Icons ── */
+const ChevronRight = ({ className = "" }: { className?: string }) => (
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+    aria-hidden="true"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+  </svg>
+);
+
+const ChevronLeft = ({ className = "" }: { className?: string }) => (
+  <svg
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    strokeWidth={2}
+    aria-hidden="true"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+  </svg>
+);
+
+const hasChildren = (item?: NavLink | NavChild | null): boolean =>
+  !!item?.children && item.children.filter(Boolean).length > 0;
 
 export default function HeaderReact({
   query,
@@ -121,8 +110,10 @@ export default function HeaderReact({
 
   /* ── State ── */
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showServices, setShowServices] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  // Desktop: index of the top-level item revealing its submenu (or null).
+  const [desktopActive, setDesktopActive] = useState<number | null>(null);
+  // Mobile: drill path of indices ([] = top level, [i] = children of link i, …).
+  const [mobilePath, setMobilePath] = useState<number[]>([]);
   const [scrolled, setScrolled] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -130,12 +121,31 @@ export default function HeaderReact({
 
   /* ── Derived data ── */
   const logoSrc = headerConfig?.logo || DEFAULT_LOGO;
-  const ctaText = headerConfig?.ctaText || "Paga tu recibo";
-  const ctaUrl = headerConfig?.ctaUrl || "#";
 
-  const allLinks = (nav?.links || []).filter(Boolean) as NavLink[];
-  const mainLinks = allLinks.filter((l) => l.text !== "Inicio");
+  const mainLinks = ((nav?.links || []).filter(Boolean) as NavLink[]).filter(
+    (l) => l.text !== "Inicio"
+  );
   const socialLinks = (footer?.social || []).filter(Boolean) as SocialItem[];
+
+  /* ── Mobile drill helpers ── */
+  const resetNav = useCallback(() => {
+    setDesktopActive(null);
+    setMobilePath([]);
+  }, []);
+
+  // Resolve the node + its children for the current mobile drill path.
+  const nodeAtPath = (path: number[]) => {
+    let children: (NavChild | NavGrandChild | null)[] = mainLinks;
+    let node: NavLink | NavChild | null = null;
+    for (const idx of path) {
+      node = (children[idx] as NavChild) || null;
+      children = (node?.children || []).filter(Boolean);
+    }
+    return {
+      node,
+      children: children.filter(Boolean) as (NavChild | NavGrandChild)[],
+    };
+  };
 
   /* ── Scroll handler ── */
   const handleScroll = useCallback(() => {
@@ -153,8 +163,13 @@ export default function HeaderReact({
   }, [menuOpen]);
 
   const handleResize = useCallback(() => {
-    isMobile.current = window.innerWidth < MOBILE_BREAKPOINT;
-  }, []);
+    const nowMobile = window.innerWidth < MOBILE_BREAKPOINT;
+    if (nowMobile !== isMobile.current) {
+      // Crossed the breakpoint — reset navigation state to avoid residue.
+      resetNav();
+    }
+    isMobile.current = nowMobile;
+  }, [resetNav]);
 
   useEffect(() => {
     handleResize();
@@ -172,37 +187,23 @@ export default function HeaderReact({
       setHeaderVisible(true);
     } else {
       document.body.style.overflow = "";
-      setShowServices(false);
-      setActiveCategory(null);
+      resetNav();
     }
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, resetNav]);
 
   /* ── Handlers ── */
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => {
     setMenuOpen(false);
-    setShowServices(false);
-    setActiveCategory(null);
+    resetNav();
   };
 
-  const handleLinkClick = (link: NavLink) => {
-    if (link.children && link.children.length > 0) {
-      setShowServices((prev) => !prev);
-      setActiveCategory(null);
-      return;
-    }
-    closeMenu();
-  };
-
-  const openCategory = (name: string) => setActiveCategory(name);
-  const goBack = () => setActiveCategory(null);
-
-  const activeCategoryData = activeCategory
-    ? categoryGroups.find((g) => g.name === activeCategory)
-    : null;
+  const drillInto = (index: number) =>
+    setMobilePath((prev) => [...prev, index]);
+  const goBack = () => setMobilePath((prev) => prev.slice(0, -1));
 
   /* ── Header background logic ── */
   const headerBg = menuOpen
@@ -210,6 +211,14 @@ export default function HeaderReact({
     : scrolled
     ? "bg-greyscale-darkest/80 backdrop-blur-md"
     : "bg-transparent";
+
+  /* ── Mobile drill data ── */
+  const depth = mobilePath.length;
+  const { node: currentNode, children: currentChildren } =
+    nodeAtPath(mobilePath);
+  // At depth 1 (a top-level parent is open) show the other top-level items.
+  const siblingLinks =
+    depth === 1 ? mainLinks.filter((_, i) => i !== mobilePath[0]) : [];
 
   return (
     <>
@@ -272,29 +281,6 @@ export default function HeaderReact({
               className="h-5 w-auto brightness-0 invert"
             />
           </a>
-
-          {/* Right: CTA (desktop) */}
-          {/* <a
-            href={ctaUrl}
-            className="hidden md:flex items-center gap-1.5 text-white text-sm font-medium hover:text-brand-purple-light transition-colors z-50"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {ctaText}
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M7 17L17 7M17 7H7M17 7v10"
-              />
-            </svg>
-          </a> */}
         </div>
       </header>
 
@@ -320,55 +306,28 @@ export default function HeaderReact({
           <div className="max-w-[1440px] mx-auto px-6 md:px-16 w-full flex-1 flex flex-col">
             {/* ── DESKTOP MENU — two column grid ── */}
             <div className="hidden md:grid md:grid-cols-[1fr_1fr] flex-1 gap-16">
-              {/* Left: Main navigation — aligned top */}
+              {/* Left: Main navigation */}
               <nav
                 className="flex flex-col justify-start pt-16 gap-1 items-start"
                 aria-label="Navegación principal"
               >
                 {mainLinks.map((link, i) => {
-                  const hasChildren =
-                    link.children && link.children.length > 0;
-                  const isActive = hasChildren && showServices;
-
-                  if (hasChildren) {
-                    return (
-                      <div
-                        key={i}
-                        onMouseEnter={() => {
-                          setShowServices(true);
-                          setActiveCategory(null);
-                        }}
-                        className="inline-block"
-                      >
-                        <a
-                          href={link.url || "#"}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleLinkClick(link);
-                          }}
-                          className={`
-                            inline text-[48px] leading-[64px] font-semibold transition-all
-                            nav-link-hover
-                            ${isActive ? "nav-link-active" : ""}
-                          `}
-                          data-tina-field={tinaField(link as any, "text")}
-                        >
-                          {link.text}
-                        </a>
-                      </div>
-                    );
-                  }
+                  const withChildren = hasChildren(link);
+                  const isActive = withChildren && desktopActive === i;
 
                   return (
                     <a
                       key={i}
                       href={link.url || "#"}
-                      onClick={closeMenu}
-                      onMouseEnter={() => {
-                        setShowServices(false);
-                        setActiveCategory(null);
-                      }}
-                      className="inline text-[48px] leading-[64px] font-semibold text-white transition-all nav-link-hover"
+                      onClick={withChildren ? undefined : closeMenu}
+                      onMouseEnter={() =>
+                        setDesktopActive(withChildren ? i : null)
+                      }
+                      className={`
+                        inline text-[48px] leading-[64px] font-semibold text-white transition-all
+                        nav-link-hover
+                        ${isActive ? "nav-link-active" : ""}
+                      `}
                       data-tina-field={tinaField(link as any, "text")}
                     >
                       {link.text}
@@ -377,215 +336,144 @@ export default function HeaderReact({
                 })}
               </nav>
 
-              {/* Right: Service categories — aligned top with nav */}
+              {/* Right: Submenu of the hovered item (level 2) */}
               <div
                 className={`
                 flex flex-col justify-start pt-16 transition-all duration-300
                 ${
-                  showServices
+                  desktopActive !== null
                     ? "opacity-100 translate-x-0"
                     : "opacity-0 translate-x-8 pointer-events-none"
                 }
               `}
               >
-                {!activeCategory ? (
-                  <nav
-                    className="flex flex-col gap-4"
-                    aria-label="Categorías de servicios"
-                  >
-                    {categoryGroups.map((cat, i) => (
-                      <button
-                        key={i}
-                        onClick={() => openCategory(cat.name)}
-                        className="flex items-center justify-between text-white text-base hover:text-white/80 transition-colors group text-left"
+                <nav
+                  className="flex flex-col gap-4"
+                  aria-label="Submenú"
+                  key={desktopActive}
+                >
+                  {desktopActive !== null &&
+                    ((mainLinks[desktopActive]?.children || []).filter(
+                      Boolean
+                    ) as NavChild[]).map((child, j) => (
+                      <a
+                        key={j}
+                        href={child.url || "#"}
+                        onClick={closeMenu}
+                        className="flex items-center justify-between gap-6 text-white text-lg hover:text-white/80 transition-colors group text-left animate-fadeIn"
                       >
-                        <span>{cat.name}</span>
-                        <svg
-                          className="w-5 h-5 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </button>
+                        <span>{child.text}</span>
+                        <ChevronRight className="w-5 h-5 shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                      </a>
                     ))}
-                  </nav>
-                ) : (
-                  <div className="animate-fadeIn">
-                    <button
-                      onClick={goBack}
-                      className="flex items-center gap-2 text-white/60 text-sm mb-4 hover:text-white transition-colors"
-                    >
-                      <svg
-                        className="w-3.5 h-3.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15 19l-7-7 7-7"
-                        />
-                      </svg>
-                      Atrás
-                    </button>
-                    <h3 className="text-white text-2xl font-bold mb-6">
-                      {activeCategory}
-                    </h3>
-                    <nav
-                      className="flex flex-col gap-3"
-                      aria-label={`Servicios de ${activeCategory}`}
-                    >
-                      {activeCategoryData?.items.map((item, j) => (
-                        <a
-                          key={j}
-                          href={item.url}
-                          onClick={closeMenu}
-                          className="text-white/80 text-base hover:text-white transition-colors"
-                        >
-                          {item.text}
-                        </a>
-                      ))}
-                    </nav>
-                  </div>
-                )}
+                </nav>
               </div>
             </div>
 
             {/* ── MOBILE MENU ── */}
             <div className="flex md:hidden flex-col flex-1">
-              {!showServices && !activeCategory ? (
-                <>
-                  <nav
-                    className="flex flex-col gap-1 mb-auto pt-4"
-                    aria-label="Navegación principal"
-                  >
-                    {mainLinks.map((link, i) => {
-                      const hasChildren =
-                        link.children && link.children.length > 0;
-                      return hasChildren ? (
-                        <button
-                          key={i}
-                          onClick={() => setShowServices(true)}
-                          className="text-left text-white text-[32px] leading-[44px] font-semibold hover:text-white/80 transition-colors"
-                        >
-                          {link.text}
-                        </button>
-                      ) : (
+              {depth === 0 ? (
+                <nav
+                  className="flex flex-col gap-1 mb-auto pt-4"
+                  aria-label="Navegación principal"
+                >
+                  {mainLinks.map((link, i) =>
+                    hasChildren(link) ? (
+                      <div key={i} className="flex items-center justify-between">
                         <a
-                          key={i}
                           href={link.url || "#"}
                           onClick={closeMenu}
                           className="text-white text-[32px] leading-[44px] font-semibold hover:text-white/80 transition-colors"
                         >
                           {link.text}
                         </a>
+                        <button
+                          onClick={() => drillInto(i)}
+                          className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
+                          aria-label={`Ver opciones de ${link.text}`}
+                        >
+                          <ChevronRight className="w-6 h-6" />
+                        </button>
+                      </div>
+                    ) : (
+                      <a
+                        key={i}
+                        href={link.url || "#"}
+                        onClick={closeMenu}
+                        className="text-white text-[32px] leading-[44px] font-semibold hover:text-white/80 transition-colors"
+                      >
+                        {link.text}
+                      </a>
+                    )
+                  )}
+                </nav>
+              ) : (
+                <div className="pt-4 animate-fadeIn mb-auto">
+                  <button
+                    onClick={goBack}
+                    className="flex items-center gap-2 text-white/60 text-sm mb-6 hover:text-white transition-colors"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    Atrás
+                  </button>
+
+                  <p className="text-white text-2xl font-semibold mb-5">
+                    {currentNode?.text}
+                  </p>
+
+                  <nav className="flex flex-col gap-1">
+                    {currentChildren.map((child, j) => {
+                      const childWithChildren = hasChildren(child as NavChild);
+                      return childWithChildren ? (
+                        <div
+                          key={j}
+                          className="flex items-center justify-between"
+                        >
+                          <a
+                            href={child.url || "#"}
+                            onClick={closeMenu}
+                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                          >
+                            {child.text}
+                          </a>
+                          <button
+                            onClick={() => drillInto(j)}
+                            className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
+                            aria-label={`Ver opciones de ${child.text}`}
+                          >
+                            <ChevronRight className="w-5 h-5" />
+                          </button>
+                        </div>
+                      ) : (
+                        <a
+                          key={j}
+                          href={child.url || "#"}
+                          onClick={closeMenu}
+                          className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                        >
+                          {child.text}
+                        </a>
                       );
                     })}
                   </nav>
 
-                  <a
-                    href={ctaUrl}
-                    className="mt-6 inline-flex items-center justify-center border border-white text-white rounded-full px-6 py-2.5 text-sm font-medium self-start hover:bg-white hover:text-brand-purple transition-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {ctaText}
-                  </a>
-                </>
-              ) : !activeCategory ? (
-                <div className="pt-4 animate-fadeIn">
-                  <button
-                    onClick={() => setShowServices(false)}
-                    className="flex items-center gap-2 text-white/60 text-sm mb-6 hover:text-white transition-colors"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                    Atrás
-                  </button>
-                  <p className="text-white/50 text-xs uppercase tracking-wider mb-4">
-                    Servicios
-                  </p>
-                  <nav className="flex flex-col gap-1">
-                    {categoryGroups.map((cat, i) => (
-                      <button
-                        key={i}
-                        onClick={() => openCategory(cat.name)}
-                        className="flex items-center justify-between text-white text-lg py-2.5 hover:text-white/80 transition-colors text-left"
-                      >
-                        <span>{cat.name}</span>
-                        <svg
-                          className="w-4 h-4 opacity-60"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={2}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </button>
-                    ))}
-                  </nav>
-                </div>
-              ) : (
-                <div className="pt-4 animate-fadeIn">
-                  <button
-                    onClick={goBack}
-                    className="flex items-center gap-2 text-white/60 text-sm mb-4 hover:text-white transition-colors"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                    Atrás
-                  </button>
-                  <h3 className="text-white text-xl font-bold mb-6">
-                    {activeCategory}
-                  </h3>
-                  <nav className="flex flex-col gap-1">
-                    {activeCategoryData?.items.map((item, j) => (
-                      <a
-                        key={j}
-                        href={item.url}
-                        onClick={closeMenu}
-                        className="text-white/80 text-base py-2 hover:text-white transition-colors"
-                      >
-                        {item.text}
-                      </a>
-                    ))}
-                  </nav>
+                  {/* Sibling top-level items under a divider */}
+                  {siblingLinks.length > 0 && (
+                    <div className="mt-6 pt-6 border-t border-white/20">
+                      <nav className="flex flex-col gap-1">
+                        {siblingLinks.map((link, i) => (
+                          <a
+                            key={i}
+                            href={link.url || "#"}
+                            onClick={closeMenu}
+                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                          >
+                            {link.text}
+                          </a>
+                        ))}
+                      </nav>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
