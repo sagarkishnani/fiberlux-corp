@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import HeroFormasPago from "../../components/formas-de-pago/HeroFormasPago.astro";
+import FormasPagoSelector from "../../components/formas-de-pago/FormasPagoSelector.astro";
 
 const formasQuery = await client.queries.formasDePago({
   relativePath: "index.json",
@@ -18,5 +19,6 @@ const description =
 <BaseLayout title={title} description={description}>
   <main>
     <HeroFormasPago />
+    <FormasPagoSelector />
   </main>
 </BaseLayout>
