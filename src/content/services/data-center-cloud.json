@@ -1,0 +1,163 @@
+{
+  "title": "Data Center, Cloud y Continuidad de Negocio",
+  "slug": "data-center-cloud",
+  "hero": {
+    "heading": "Infraestructura de clase mundial para el corazón de tu negocio",
+    "intro": "Colocación, nube privada y pública, respaldo y recuperación ante desastres con los más altos estándares de disponibilidad.",
+    "ctaLabel": "Ver soluciones",
+    "formTitle": "¿Conversamos?"
+  },
+  "valor": {
+    "title": "El valor de la resiliencia",
+    "cards": [
+      {
+        "heading": "El desafío",
+        "text": "Una caída de infraestructura o la pérdida de datos detiene el negocio y pone en riesgo su continuidad.",
+        "image": "/uploads/servicios/valor-desafio.svg"
+      },
+      {
+        "heading": "Nuestra solución",
+        "text": "Data center, nube y planes de continuidad diseñados para garantizar disponibilidad, respaldo y recuperación ante desastres.",
+        "image": "/uploads/servicios/valor-solucion.svg"
+      },
+      {
+        "heading": "Industrias destacadas",
+        "text": "Aplicable a empresas que necesitan alojar cargas críticas, escalar cómputo y asegurar la continuidad de su operación.",
+        "image": "/uploads/servicios/valor-industrias.svg"
+      }
+    ]
+  },
+  "catalogo": {
+    "title": "Catálogo de soluciones",
+    "items": [
+      {
+        "icon": "storage",
+        "title": "Housing / Colocación",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/housing-colocacion"
+      },
+      {
+        "icon": "cloud",
+        "title": "Nube Privada",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/nube-privada"
+      },
+      {
+        "icon": "cloud",
+        "title": "Nube Pública",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/nube-publica"
+      },
+      {
+        "icon": "backup",
+        "title": "Backup as a Service (BaaS)",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/baas"
+      },
+      {
+        "icon": "backup",
+        "title": "Disaster Recovery (DRaaS)",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/draas"
+      },
+      {
+        "icon": "storage",
+        "title": "Storage y Cómputo",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/storage-computo"
+      },
+      {
+        "icon": "generico",
+        "title": "Microservicios",
+        "description": "",
+        "buttonLabel": "Conocer más",
+        "url": "/servicios/data-center-cloud/microservicios"
+      }
+    ]
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué diferencia hay entre nube privada y pública?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué es DRaaS y por qué lo necesito?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Dónde están ubicados los data centers?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo garantizan la disponibilidad de mi infraestructura?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Data Center, Cloud y Continuidad | Fiberlux Corp",
+    "metaDescription": "Colocación, nube privada y pública, BaaS y DRaaS con los más altos estándares de disponibilidad y continuidad de negocio.",
+    "ogImage": ""
+  }
+}
