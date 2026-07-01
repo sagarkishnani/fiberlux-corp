@@ -1129,6 +1129,118 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         FORMAS DE PAGO (página)
+         ══════════════════════════════════════ */
+      {
+        name: "formasDePago",
+        label: "Formas de pago (p\xE1gina)",
+        path: "src/content/formas-de-pago",
+        format: "json",
+        ui: {
+          router: () => "/formas-de-pago",
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          // ── Hero ──
+          {
+            name: "heading",
+            label: "T\xEDtulo (H1)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "intro",
+            label: "P\xE1rrafo intro (opcional)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          // ── Etiquetas de los selectores ──
+          {
+            name: "bankSelectLabel",
+            label: "Placeholder selector de banco",
+            type: "string"
+          },
+          {
+            name: "methodSelectLabel",
+            label: "Placeholder selector de m\xE9todo",
+            type: "string"
+          },
+          // ── Bancos (nivel 1) ──
+          {
+            name: "banks",
+            label: "Bancos",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.name || "Banco" }) },
+            fields: [
+              { name: "name", label: "Nombre del banco", type: "string" },
+              {
+                name: "optionLabel",
+                label: "Texto en el dropdown",
+                type: "string",
+                description: 'Ej: "Desde BBVA".'
+              },
+              // ── Métodos (nivel 2) ──
+              {
+                name: "methods",
+                label: "M\xE9todos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.label || "M\xE9todo" }) },
+                fields: [
+                  {
+                    name: "label",
+                    label: "Texto en el dropdown",
+                    type: "string",
+                    description: 'Ej: "Desde la aplicaci\xF3n".'
+                  },
+                  // ── Pasos (nivel 3) ──
+                  {
+                    name: "steps",
+                    label: "Pasos",
+                    type: "object",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({ label: item?.title || "Paso" })
+                    },
+                    fields: [
+                      { name: "title", label: "T\xEDtulo del paso", type: "string" },
+                      {
+                        name: "description",
+                        label: "Descripci\xF3n",
+                        type: "rich-text",
+                        description: "Usa negrita (bold) para resaltar palabras en magenta."
+                      },
+                      {
+                        name: "image",
+                        label: "Imagen del paso",
+                        type: "image"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          // ── SEO / meta (cae a global.seo si vacío) ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta t\xEDtulo", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          GLOBAL (Nav, Footer, SEO)
          ══════════════════════════════════════ */
       {

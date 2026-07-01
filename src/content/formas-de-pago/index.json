@@ -1,0 +1,90 @@
+{
+  "heading": "Selecciona tu banco y paga tus recibos de manera sencilla",
+  "intro": "",
+  "bankSelectLabel": "Selecciona tu banco",
+  "methodSelectLabel": "Selecciona el método",
+  "banks": [
+    {
+      "name": "BBVA",
+      "optionLabel": "Desde BBVA",
+      "methods": [
+        {
+          "label": "Desde la aplicación",
+          "steps": [
+            {
+              "title": "Banca Móvil Personas – Paso 1",
+              "description": "Seleccione la opción de: **Pagar Servicio**",
+              "image": ""
+            },
+            {
+              "title": "Banca Móvil Personas – Paso 2",
+              "description": "Seleccionar: **Agregar servicio a pagar**",
+              "image": ""
+            },
+            {
+              "title": "Banca Móvil Personas – Paso 3",
+              "description": "Escribir **FIBERLUX TECH** en el cuadro de búsqueda y seleccionar el tipo de moneda según la factura\n\n- ME para dólares\n- MN para soles",
+              "image": ""
+            },
+            {
+              "title": "Banca Móvil Personas – Paso 4",
+              "description": "Colocar su número de DNI o RUC que figura en la factura",
+              "image": ""
+            },
+            {
+              "title": "Banca Móvil Personas – Paso 5",
+              "description": "Seleccionar el servicio a pagar. La deuda figura en orden de antigüedad, así que verá primero la deuda más vencida.",
+              "image": ""
+            }
+          ]
+        },
+        {
+          "label": "Desde la web",
+          "steps": [
+            {
+              "title": "Banca por Internet – Paso 1",
+              "description": "**[Contenido por completar]** — describe aquí el primer paso para pagar desde la web de BBVA.",
+              "image": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BCP",
+      "optionLabel": "Desde BCP",
+      "methods": [
+        {
+          "label": "Desde la aplicación",
+          "steps": [
+            {
+              "title": "Banca Móvil – Paso 1",
+              "description": "**[Contenido por completar]** — describe aquí el primer paso para pagar desde la app de BCP.",
+              "image": ""
+            },
+            {
+              "title": "Banca Móvil – Paso 2",
+              "description": "**[Contenido por completar]** — describe aquí el segundo paso para pagar desde la app de BCP.",
+              "image": ""
+            }
+          ]
+        },
+        {
+          "label": "Desde la web",
+          "steps": [
+            {
+              "title": "Banca por Internet – Paso 1",
+              "description": "**[Contenido por completar]** — describe aquí el primer paso para pagar desde la web de BCP.",
+              "image": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "seo": {
+    "metaTitle": "Formas de pago | Fiberlux Corp",
+    "metaDescription": "Aprende a pagar tus recibos de Fiberlux desde tu banco de forma sencilla, paso a paso.",
+    "ogImage": ""
+  }
+}
