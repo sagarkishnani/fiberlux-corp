@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import CasosSliderReact from "./CasosSliderReact.tsx";
+
+const casosQuery = await client.queries.casosDeExito({
+  relativePath: "index.json",
+});
+---
+
+<CasosSliderReact
+  client:visible
+  query={casosQuery.query}
+  variables={casosQuery.variables}
+  data={casosQuery.data}
+/>

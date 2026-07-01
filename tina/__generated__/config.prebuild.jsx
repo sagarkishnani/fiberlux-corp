@@ -1047,6 +1047,88 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         CASOS DE ÉXITO (página)
+         ══════════════════════════════════════ */
+      {
+        name: "casosDeExito",
+        label: "Casos de \xE9xito (p\xE1gina)",
+        path: "src/content/casos-de-exito",
+        format: "json",
+        ui: {
+          router: () => "/casos-de-exito",
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          // ── Hero ──
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          {
+            name: "heading",
+            label: "T\xEDtulo principal (H1)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "intro",
+            label: "P\xE1rrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          { name: "heroImage", label: "Imagen de fondo del hero", type: "image" },
+          // ── Sección carrusel ──
+          { name: "sectionTitle", label: "T\xEDtulo de la secci\xF3n", type: "string" },
+          {
+            name: "items",
+            label: "Casos",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.author || "Caso de \xE9xito" })
+            },
+            fields: [
+              { name: "poster", label: "Poster del video (imagen)", type: "image" },
+              {
+                name: "youtubeUrl",
+                label: "URL de YouTube (opcional)",
+                type: "string",
+                description: "Si se completa, el modal embebe el video de YouTube (tiene prioridad sobre el mp4)."
+              },
+              {
+                name: "videoFile",
+                label: "Video mp4 auto-alojado (opcional)",
+                type: "image",
+                description: "Sube aqu\xED un archivo .mp4. Se usa solo si no hay URL de YouTube."
+              },
+              { name: "logo", label: "Logo del cliente", type: "image" },
+              {
+                name: "quote",
+                label: "Cita / testimonio",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "author", label: "Nombre del autor", type: "string" },
+              { name: "role", label: "Cargo (may\xFAsculas)", type: "string" },
+              { name: "badge", label: "Texto del badge", type: "string" }
+            ]
+          },
+          // ── SEO / Meta ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta t\xEDtulo", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          GLOBAL (Nav, Footer, SEO)
          ══════════════════════════════════════ */
       {
