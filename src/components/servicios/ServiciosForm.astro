@@ -1,0 +1,23 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import ServiciosFormReact from "./ServiciosFormReact.tsx";
+
+const serviciosQuery = await client.queries.servicios({
+  relativePath: "index.json",
+});
+const formQuery = await client.queries.dynamicForms({
+  relativePath: "servicios.json",
+});
+---
+
+<ServiciosFormReact
+  client:load
+  query={serviciosQuery.query}
+  variables={serviciosQuery.variables}
+  data={serviciosQuery.data}
+  form={{
+    query: formQuery.query,
+    variables: formQuery.variables,
+    data: formQuery.data,
+  }}
+/>

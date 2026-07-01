@@ -66,6 +66,8 @@ type Query {
   contactConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ContactFilter): ContactConnection!
   soporteTecnico(relativePath: String): SoporteTecnico!
   soporteTecnicoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SoporteTecnicoFilter): SoporteTecnicoConnection!
+  servicios(relativePath: String): Servicios!
+  serviciosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiciosFilter): ServiciosConnection!
   global(relativePath: String): Global!
   globalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: GlobalFilter): GlobalConnection!
   maintenance(relativePath: String): Maintenance!
@@ -85,6 +87,7 @@ input DocumentFilter {
   post: PostFilter
   contact: ContactFilter
   soporteTecnico: SoporteTecnicoFilter
+  servicios: ServiciosFilter
   global: GlobalFilter
   maintenance: MaintenanceFilter
   infoAbonados: InfoAbonadosFilter
@@ -115,7 +118,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -784,6 +787,38 @@ type SoporteTecnicoConnection implements Connection {
   edges: [SoporteTecnicoConnectionEdges]
 }
 
+type Servicios implements Node & Document {
+  breadcrumb: String
+  heading: String
+  intro: String
+  ctaLabel: String
+  formTitle: String
+  formSubtitle: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input ServiciosFilter {
+  breadcrumb: StringFilter
+  heading: StringFilter
+  intro: StringFilter
+  ctaLabel: StringFilter
+  formTitle: StringFilter
+  formSubtitle: StringFilter
+}
+
+type ServiciosConnectionEdges {
+  cursor: String!
+  node: Servicios
+}
+
+type ServiciosConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [ServiciosConnectionEdges]
+}
+
 type GlobalNavLinksChildrenChildren {
   text: String
   url: String
@@ -1198,6 +1233,8 @@ type Mutation {
   createContact(relativePath: String!, params: ContactMutation!): Contact!
   updateSoporteTecnico(relativePath: String!, params: SoporteTecnicoMutation!): SoporteTecnico!
   createSoporteTecnico(relativePath: String!, params: SoporteTecnicoMutation!): SoporteTecnico!
+  updateServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
+  createServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
   createGlobal(relativePath: String!, params: GlobalMutation!): Global!
   updateMaintenance(relativePath: String!, params: MaintenanceMutation!): Maintenance!
@@ -1217,6 +1254,7 @@ input DocumentUpdateMutation {
   post: PostMutation
   contact: ContactMutation
   soporteTecnico: SoporteTecnicoMutation
+  servicios: ServiciosMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1232,6 +1270,7 @@ input DocumentMutation {
   post: PostMutation
   contact: ContactMutation
   soporteTecnico: SoporteTecnicoMutation
+  servicios: ServiciosMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
   infoAbonados: InfoAbonadosMutation
@@ -1512,6 +1551,15 @@ input SoporteTecnicoMutation {
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannelsMutation]
+}
+
+input ServiciosMutation {
+  breadcrumb: String
+  heading: String
+  intro: String
+  ctaLabel: String
+  formTitle: String
+  formSubtitle: String
 }
 
 input GlobalNavLinksChildrenChildrenMutation {

@@ -29,6 +29,12 @@
       "label": "Formulario de Contacto",
       "enabled": true,
       "recipients": ["placeholder@fiberlux.pe"]
+    },
+    {
+      "formType": "servicios",
+      "label": "Servicios — Déjanos tus datos",
+      "enabled": true,
+      "recipients": ["placeholder@fiberlux.pe"]
     }
   ]
 }

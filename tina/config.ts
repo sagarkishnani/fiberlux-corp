@@ -834,6 +834,41 @@ export default defineConfig({
       },
 
       /* ══════════════════════════════════════
+         SERVICIOS (página landing)
+         ══════════════════════════════════════ */
+      {
+        name: "servicios",
+        label: "Servicios (página)",
+        path: "src/content/servicios",
+        format: "json",
+        ui: {
+          router: () => "/servicios",
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          // ── Hero ──
+          { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "heading", label: "Título principal (H1)", type: "string", ui: { component: "textarea" } },
+          {
+            name: "intro",
+            label: "Párrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          { name: "ctaLabel", label: "Texto del botón del hero", type: "string" },
+
+          // ── Bloque de formulario ──
+          { name: "formTitle", label: "Título del bloque de formulario", type: "string" },
+          {
+            name: "formSubtitle",
+            label: "Subtítulo del bloque de formulario",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
          GLOBAL (Nav, Footer, SEO)
          ══════════════════════════════════════ */
       {

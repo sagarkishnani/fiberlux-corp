@@ -243,6 +243,16 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   }
 }
 
+fragment ServiciosParts on Servicios {
+  __typename
+  breadcrumb
+  heading
+  intro
+  ctaLabel
+  formTitle
+  formSubtitle
+}
+
 fragment GlobalParts on Global {
   __typename
   nav {

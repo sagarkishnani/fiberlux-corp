@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import HeroServiciosReact from "./HeroServiciosReact.tsx";
+
+const serviciosQuery = await client.queries.servicios({
+  relativePath: "index.json",
+});
+---
+
+<HeroServiciosReact
+  client:load
+  query={serviciosQuery.query}
+  variables={serviciosQuery.variables}
+  data={serviciosQuery.data}
+/>
