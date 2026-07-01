@@ -14,27 +14,27 @@
             {
               "title": "Banca Móvil Personas – Paso 1",
               "description": "Seleccione la opción de: **Pagar Servicio**",
-              "image": "/uploads/formas-pago/bbva-app-paso1.png"
+              "image": ""
             },
             {
               "title": "Banca Móvil Personas – Paso 2",
               "description": "Seleccionar: **Agregar servicio a pagar**",
-              "image": "/uploads/formas-pago/bbva-app-paso2.png"
+              "image": ""
             },
             {
               "title": "Banca Móvil Personas – Paso 3",
               "description": "Escribir **FIBERLUX TECH** en el cuadro de búsqueda y seleccionar el tipo de moneda según la factura\n\n- ME para dólares\n- MN para soles",
-              "image": "/uploads/formas-pago/bbva-app-paso3.png"
+              "image": ""
             },
             {
               "title": "Banca Móvil Personas – Paso 4",
               "description": "Colocar su número de DNI o RUC que figura en la factura",
-              "image": "/uploads/formas-pago/bbva-app-paso4.png"
+              "image": ""
             },
             {
               "title": "Banca Móvil Personas – Paso 5",
               "description": "Seleccionar el servicio a pagar. La deuda figura en orden de antigüedad, así que verá primero la deuda más vencida.",
-              "image": "/uploads/formas-pago/bbva-app-paso5.png"
+              "image": ""
             }
           ]
         },
