@@ -1,0 +1,44 @@
+{
+  "breadcrumb": "Casos de éxito",
+  "heading": "Casos de éxito",
+  "intro": "Descubre cómo hemos ayudado a nuestros clientes cubriendo sus necesidades en conectividad, seguridad y comunicación a través de soluciones de Transformación Digital.",
+  "heroImage": "",
+  "sectionTitle": "Casos de éxito",
+  "items": [
+    {
+      "poster": "",
+      "youtubeUrl": "",
+      "videoFile": "",
+      "logo": "",
+      "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales. Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.",
+      "author": "Browsi Gálvez",
+      "role": "Gerente general de Cámara de Comercio e Industria",
+      "badge": "Casos de éxito con Fiberlux"
+    },
+    {
+      "poster": "",
+      "youtubeUrl": "",
+      "videoFile": "",
+      "logo": "",
+      "quote": "[Placeholder] Testimonio pendiente. Reemplaza este texto con la cita real del caso de éxito.",
+      "author": "Cliente pendiente",
+      "role": "Cargo pendiente",
+      "badge": "Casos de éxito con Fiberlux"
+    },
+    {
+      "poster": "",
+      "youtubeUrl": "",
+      "videoFile": "",
+      "logo": "",
+      "quote": "[Placeholder] Testimonio pendiente. Reemplaza este texto con la cita real del caso de éxito.",
+      "author": "Cliente pendiente",
+      "role": "Cargo pendiente",
+      "badge": "Casos de éxito con Fiberlux"
+    }
+  ],
+  "seo": {
+    "metaTitle": "Casos de éxito",
+    "metaDescription": "Conoce cómo empresas líderes potencian su conectividad, seguridad y comunicación con las soluciones de Fiberlux Corp.",
+    "ogImage": ""
+  }
+}
