@@ -1,0 +1,172 @@
+{
+  "title": "Internet Corporativo",
+  "slug": "internet-corporativo",
+  "solucionSlug": "conectividad-empresarial",
+  "solucionTitle": "Conectividad Empresarial",
+  "hero": {
+    "heading": "Internet Corporativo",
+    "intro": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
+    "note": "Ideal si tu red compartida colapsa en horas pico, asfixiando tus sistemas de gestión y subida de archivos a la nube.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Velocidad constante garantizada",
+        "text": "Ancho de banda dedicado en cualquier horario, sin caídas por saturación de red compartida."
+      },
+      {
+        "icon": "simetria",
+        "title": "Carga y descarga simétrica",
+        "text": "Ideal para videollamadas fluidas y subida de bases de datos, con el mismo ancho en ambas direcciones."
+      },
+      {
+        "icon": "soporte",
+        "title": "Soporte de alta prioridad",
+        "text": "Resolución inmediata ante incidencias con SLA dedicado y atención preferente 24/7."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": {
+      "type": "root",
+      "children": [
+        {
+          "type": "p",
+          "children": [
+            {
+              "type": "text",
+              "text": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde "
+            },
+            {
+              "type": "text",
+              "text": "cada minuto de desconexión",
+              "bold": true
+            },
+            {
+              "type": "text",
+              "text": " signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué planes de internet hogar ofrece Fiberlux?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué significa \"velocidad simétrica\"?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo verifico si Fiberlux tiene cobertura en mi zona?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cuánto demora la instalación y cuál es su costo?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué equipos instalan en mi casa?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cuánto tiempo dura el contrato?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Internet Corporativo | Fiberlux Corp",
+    "metaDescription": "Fibra óptica 100% simétrica, dedicada y sin compartición, con ancho de banda garantizado y soporte 24/7.",
+    "ogImage": ""
+  }
+}

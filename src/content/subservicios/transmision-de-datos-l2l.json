@@ -1,0 +1,138 @@
+{
+  "title": "Transmisión de datos (Lan To Lan – L2L)",
+  "slug": "transmision-de-datos-l2l",
+  "solucionSlug": "conectividad-empresarial",
+  "solucionTitle": "Conectividad Empresarial",
+  "hero": {
+    "heading": "Transmisión de datos (Lan To Lan – L2L)",
+    "intro": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
+    "note": "",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      },
+      {
+        "icon": "soporte",
+        "title": "Beneficio por definir",
+        "text": "Contenido por completar."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": {
+      "type": "root",
+      "children": [
+        {
+          "type": "p",
+          "children": [
+            {
+              "type": "text",
+              "text": "Contenido por completar — describe aquí los "
+            },
+            {
+              "type": "text",
+              "text": "casos de uso",
+              "bold": true
+            },
+            {
+              "type": "text",
+              "text": " ideales para este servicio."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Transmisión de datos (Lan To Lan – L2L) | Fiberlux Corp",
+    "metaDescription": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
+    "ogImage": ""
+  }
+}
