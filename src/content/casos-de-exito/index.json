@@ -6,8 +6,8 @@
   "sectionTitle": "Casos de éxito",
   "items": [
     {
-      "poster": "",
-      "youtubeUrl": "",
+      "poster": "https://img.youtube.com/vi/aqz-KE-bpKQ/maxresdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
       "videoFile": "",
       "logo": "",
       "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales. Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.",
@@ -16,23 +16,23 @@
       "badge": "Casos de éxito con Fiberlux"
     },
     {
-      "poster": "",
-      "youtubeUrl": "",
+      "poster": "https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LXb3EKWsInQ",
       "videoFile": "",
       "logo": "",
-      "quote": "[Placeholder] Testimonio pendiente. Reemplaza este texto con la cita real del caso de éxito.",
-      "author": "Cliente pendiente",
-      "role": "Cargo pendiente",
+      "quote": "[Video de prueba] Desde que migramos a la red de Fiberlux redujimos los tiempos de caída casi por completo; nuestras sedes operan con conectividad estable las 24 horas.",
+      "author": "María Torres",
+      "role": "Gerente de TI de Retail Andina",
       "badge": "Casos de éxito con Fiberlux"
     },
     {
-      "poster": "",
-      "youtubeUrl": "",
+      "poster": "https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ScMzIvxBSi4",
       "videoFile": "",
       "logo": "",
-      "quote": "[Placeholder] Testimonio pendiente. Reemplaza este texto con la cita real del caso de éxito.",
-      "author": "Cliente pendiente",
-      "role": "Cargo pendiente",
+      "quote": "[Video de prueba] La solución de Fiberlux nos permitió escalar operaciones sin preocuparnos por la infraestructura de red. El soporte ha sido excelente.",
+      "author": "Carlos Ruiz",
+      "role": "Director de Operaciones de Logística del Sur",
       "badge": "Casos de éxito con Fiberlux"
     }
   ],

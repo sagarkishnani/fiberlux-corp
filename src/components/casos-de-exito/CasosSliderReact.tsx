@@ -117,8 +117,40 @@ export default function CasosSliderReact({
 
   const hasItems = items.length > 0;
 
+  /* ── Prev/Next pill (shared desktop overlay + mobile) ── */
+  const arrowsPill = (
+    <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
+      <button
+        type="button"
+        onClick={() => scroll("left")}
+        disabled={!canGoPrev}
+        aria-label="Anterior"
+        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+          canGoPrev ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
+        }`}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        onClick={() => scroll("right")}
+        disabled={!canGoNext}
+        aria-label="Siguiente"
+        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+          canGoNext ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
+        }`}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  );
+
   return (
-    <section className="bg-greyscale-darkest pt-20 pb-32 rounded-t-2xl">
+    <section className="bg-greyscale-darkest pt-20 pb-32">
       <div className="max-w-[1440px] mx-auto">
         <h2
           className="text-[32px] md:text-[48px] leading-[1.15] font-medium text-white text-center mb-16"
@@ -129,72 +161,55 @@ export default function CasosSliderReact({
       </div>
 
       {/* Carousel */}
-      <div
-        ref={carouselRef}
-        className="flex gap-14 overflow-x-auto snap-x snap-mandatory pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
-        style={{ cursor: hasItems ? "grab" : "default" }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-        onClickCapture={onClickCapture}
-      >
-        {hasItems ? (
-          items.map((item, i) => (
-            <div
-              key={i}
-              className={`caso-slide snap-center shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
-                i === activeIndex ? "opacity-100" : "opacity-25"
-              }`}
-            >
-              <CasoCard
-                caso={item as Caso}
-                tinaItem={page?.items?.[i]}
-                onPlay={() => setModalCaso(item as Caso)}
-              />
+      <div className="relative">
+        <div
+          ref={carouselRef}
+          className="flex gap-14 overflow-x-auto snap-x snap-mandatory pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
+          style={{ cursor: hasItems ? "grab" : "default" }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
+          onClickCapture={onClickCapture}
+        >
+          {hasItems ? (
+            items.map((item, i) => (
+              <div
+                key={i}
+                className={`caso-slide snap-center shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
+                  i === activeIndex ? "opacity-100" : "opacity-25"
+                }`}
+              >
+                <CasoCard
+                  caso={item as Caso}
+                  tinaItem={page?.items?.[i]}
+                  onPlay={() => setModalCaso(item as Caso)}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="caso-slide snap-center shrink-0 w-full max-w-[880px]">
+              <div className="bg-white/[0.04] border border-white/10 h-[400px] flex items-center justify-center text-white/20 text-sm">
+                Casos de éxito — próximamente
+              </div>
             </div>
-          ))
-        ) : (
-          <div className="caso-slide snap-center shrink-0 w-full max-w-[880px]">
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 h-[400px] flex items-center justify-center text-white/20 text-sm">
-              Casos de éxito — próximamente
-            </div>
+          )}
+        </div>
+
+        {/* Desktop arrows: at the start of the card, aligned to the video's height */}
+        {items.length > 1 && (
+          <div
+            className="hidden md:block absolute top-[240px] -translate-y-1/2 z-20"
+            style={{ left: "max(1.5rem, calc((100vw - 880px) / 2))" }}
+          >
+            {arrowsPill}
           </div>
         )}
       </div>
 
-      {/* Navigation arrows (design: pill at bottom-left of the centered content) */}
+      {/* Mobile arrows: below the stacked card */}
       {items.length > 1 && (
-        <div className="max-w-[1440px] mx-auto px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))] mt-8">
-          <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden">
-            <button
-              type="button"
-              onClick={() => scroll("left")}
-              disabled={!canGoPrev}
-              aria-label="Anterior"
-              className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-                canGoPrev ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
-              }`}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              type="button"
-              onClick={() => scroll("right")}
-              disabled={!canGoNext}
-              aria-label="Siguiente"
-              className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-                canGoNext ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
-              }`}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
+        <div className="md:hidden px-6 mt-8">{arrowsPill}</div>
       )}
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />
