@@ -54,7 +54,7 @@ export default function PartnersReact({ query, variables, data: initialData }: P
                 src={logo.image || ""}
                 alt={logo.alt || "Partner"}
                 loading="lazy"
-                className="h-7 md:h-9 w-auto object-contain opacity-70 grayscale brightness-0 invert transition-opacity duration-300 hover:opacity-100"
+                className="partner-logo h-7 md:h-9 w-auto object-contain"
                 data-tina-field={tinaField(logo as any, "image")}
               />
             );
@@ -68,6 +68,19 @@ export default function PartnersReact({ query, variables, data: initialData }: P
           })}
         </div>
       </div>
+
+      <style>{`
+        /* Mobile: always full color. */
+        .partner-logo { opacity: 1; filter: none; transition: filter 0.35s ease, opacity 0.35s ease; }
+        /* Desktop (>= md): light monochrome by default, full color on hover. */
+        @media (min-width: 768px) {
+          .partner-logo { filter: brightness(0) invert(1); opacity: 0.6; }
+          .partner-logo:hover { filter: none; opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .partner-logo { transition: none; }
+        }
+      `}</style>
     </section>
   );
 }

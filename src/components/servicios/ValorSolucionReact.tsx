@@ -1,4 +1,5 @@
 import { useTina, tinaField } from "tinacms/dist/react";
+import { FaArrowRight } from "react-icons/fa6";
 import type {
   ServiceQuery,
   ServiceQueryVariables,
@@ -105,6 +106,12 @@ export default function ValorSolucionReact({
           {/* Right bottom — Industrias destacadas (brand magenta) */}
           {industries && (
             <article className="relative flex flex-col overflow-hidden rounded-3xl p-7 md:p-9 bg-gradient-to-br from-[#96237A] to-[#650F50]">
+              <span
+                aria-hidden="true"
+                className="absolute top-6 right-6 inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/15 text-white"
+              >
+                <FaArrowRight size={18} className="-rotate-45" />
+              </span>
               <CardBody card={industries} />
               {industries.image && (
                 <CardImage src={industries.image} alt={industries.heading || ""} />

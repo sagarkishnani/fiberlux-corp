@@ -83,7 +83,7 @@ const PER_PAGE = 4;
 function ItemIcon({ name }: { name?: string | null }) {
   const Icon = (name && ICONS[name]) || FaLayerGroup;
   return (
-    <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#96237A]/15 text-[#c65fac]">
+    <span className="relative z-10 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#96237A]/15 text-[#c65fac]">
       <Icon size={20} />
     </span>
   );
@@ -126,18 +126,24 @@ export default function CatalogoSolucionesReact({
               <CardTag
                 key={i}
                 {...(item.url ? { href: item.url } : {})}
-                className="catalog-card group relative flex flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-7 transition-colors duration-300 hover:border-[#96237A]/60 hover:bg-white/[0.06]"
+                className="catalog-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-7 transition-colors duration-300 hover:border-[#96237A]/60 hover:bg-white/[0.06]"
               >
+                {/* Circular gradient blur glow — reveals on hover */}
+                <span
+                  aria-hidden="true"
+                  className="catalog-glow pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
+                />
+
                 <ItemIcon name={item.icon} />
                 <h3
-                  className="mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
+                  className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
                   data-tina-field={tinaField(item as any, "title")}
                 >
                   {item.title}
                 </h3>
 
                 {/* Reveal on hover / focus — smooth height + fade */}
-                <div className="catalog-reveal grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+                <div className="catalog-reveal relative z-10 grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
                   <div className="overflow-hidden">
                     {item.description && (
                       <p
@@ -212,8 +218,17 @@ export default function CatalogoSolucionesReact({
       </div>
 
       <style>{`
+        .catalog-glow {
+          background: radial-gradient(
+            circle at 32% 24%,
+            rgba(150, 35, 122, 0.55) 0%,
+            rgba(150, 35, 122, 0.18) 32%,
+            rgba(150, 35, 122, 0) 62%
+          );
+          filter: blur(28px);
+        }
         @media (prefers-reduced-motion: reduce) {
-          .catalog-card, .catalog-reveal { transition-duration: 0.01ms !important; }
+          .catalog-card, .catalog-reveal, .catalog-glow { transition-duration: 0.01ms !important; }
         }
       `}</style>
     </section>
