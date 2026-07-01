@@ -1,0 +1,18 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import CasosDeUsoReact from "./CasosDeUsoReact.tsx";
+
+interface Props {
+  relativePath: string;
+}
+
+const { relativePath } = Astro.props;
+const subQuery = await client.queries.subservicio({ relativePath });
+---
+
+<CasosDeUsoReact
+  client:visible
+  query={subQuery.query}
+  variables={subQuery.variables}
+  data={subQuery.data}
+/>

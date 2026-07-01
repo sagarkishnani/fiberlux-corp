@@ -32,29 +32,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": {
-      "type": "root",
-      "children": [
-        {
-          "type": "p",
-          "children": [
-            {
-              "type": "text",
-              "text": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde "
-            },
-            {
-              "type": "text",
-              "text": "cada minuto de desconexión",
-              "bold": true
-            },
-            {
-              "type": "text",
-              "text": " signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica."
-            }
-          ]
-        }
-      ]
-    }
+    "statement": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde **cada minuto de desconexión** signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,105 +40,27 @@
     "items": [
       {
         "question": "¿Qué planes de internet hogar ofrece Fiberlux?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Qué significa \"velocidad simétrica\"?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Cómo verifico si Fiberlux tiene cobertura en mi zona?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Cuánto demora la instalación y cuál es su costo?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Qué equipos instalan en mi casa?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Cuánto tiempo dura el contrato?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       }
     ]
   },

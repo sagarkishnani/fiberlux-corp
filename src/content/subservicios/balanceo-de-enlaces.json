@@ -32,29 +32,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": {
-      "type": "root",
-      "children": [
-        {
-          "type": "p",
-          "children": [
-            {
-              "type": "text",
-              "text": "Contenido por completar — describe aquí los "
-            },
-            {
-              "type": "text",
-              "text": "casos de uso",
-              "bold": true
-            },
-            {
-              "type": "text",
-              "text": " ideales para este servicio."
-            }
-          ]
-        }
-      ]
-    }
+    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,71 +40,19 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": ""
       }
     ]
   },

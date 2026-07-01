@@ -3,6 +3,7 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { client } from "../../../../tina/__generated__/client";
 import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro";
 import Beneficios from "../../../components/servicios/Beneficios.astro";
+import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
 
 /* ── Static paths from all sub-service documents ── */
 export async function getStaticPaths() {
@@ -43,5 +44,6 @@ const metaDescription =
   <main>
     <HeroSubservicio relativePath={relativePath} />
     <Beneficios relativePath={relativePath} />
+    <CasosDeUso relativePath={relativePath} />
   </main>
 </BaseLayout>
