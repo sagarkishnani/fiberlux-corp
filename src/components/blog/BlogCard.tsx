@@ -30,7 +30,7 @@ export default function BlogCard({
 }: BlogCardProps) {
   return (
     <a href={`/blog/${slug}`} className="block group h-full" draggable={false}>
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full min-h-[320px] md:min-h-[400px] transition-all duration-300">
+      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full min-h-[280px] md:min-h-[340px] transition-all duration-300">
         <div className="relative overflow-hidden">
           {coverImage ? (
             <img

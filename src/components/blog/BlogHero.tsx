@@ -29,7 +29,11 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
     const measure = () => {
       if (contentRef.current) {
         const rect = contentRef.current.getBoundingClientRect();
-        setLeftPad(rect.left);
+        const paddingLeft =
+          parseFloat(getComputedStyle(contentRef.current).paddingLeft) || 0;
+        // Align the carousel's first card with the inner content (title + arrows),
+        // not the container's outer edge — rect.left excludes the px-16 padding.
+        setLeftPad(rect.left + paddingLeft);
       }
     };
     measure();
@@ -142,6 +146,10 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
             cursor: 'grab',
             paddingLeft: `${leftPad}px`,
             paddingRight: 0,
+            // Without this, snap-mandatory pulls the first card flush to the
+            // container edge and cancels the padding — keep the snap start
+            // aligned with the padding so the first card lines up with the title/arrows.
+            scrollPaddingLeft: `${leftPad}px`,
           }}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
@@ -156,7 +164,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
                 return (
                   <article
                     key={post._sys.filename}
-                    className="snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                    className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
                   >
                     <BlogCard
                       title={post.title || 'Sin título'}
@@ -172,7 +180,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
             : [1, 2, 3].map((_, i) => (
                 <article
                   key={i}
-                  className="snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                  className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
                 >
                   <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[400px] flex items-center justify-center text-white/20 text-sm">
                     Blog card — próximamente
