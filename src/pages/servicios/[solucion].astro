@@ -8,6 +8,7 @@ import CatalogoSoluciones from "../../components/servicios/CatalogoSoluciones.as
 import Stats from "../../components/Stats.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 import BlogPreview from "../../components/blog/BlogPreview.astro";
+import FaqSolucion from "../../components/servicios/FaqSolucion.astro";
 
 /* ── Static paths from all solution documents ── */
 export async function getStaticPaths() {
@@ -48,5 +49,6 @@ const metaDescription =
     <Stats title={service?.whyUsTitle ?? undefined} />
     <ServiciosForm />
     <BlogPreview />
+    <FaqSolucion relativePath={relativePath} />
   </main>
 </BaseLayout>
