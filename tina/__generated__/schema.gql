@@ -58,6 +58,8 @@ type Query {
   homeConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HomeFilter): HomeConnection!
   service(relativePath: String): Service!
   serviceConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiceFilter): ServiceConnection!
+  subservicio(relativePath: String): Subservicio!
+  subservicioConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SubservicioFilter): SubservicioConnection!
   about(relativePath: String): About!
   aboutConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: AboutFilter): AboutConnection!
   post(relativePath: String): Post!
@@ -83,6 +85,7 @@ type Query {
 input DocumentFilter {
   home: HomeFilter
   service: ServiceFilter
+  subservicio: SubservicioFilter
   about: AboutFilter
   post: PostFilter
   contact: ContactFilter
@@ -118,7 +121,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -427,6 +430,126 @@ type ServiceConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [ServiceConnectionEdges]
+}
+
+type SubservicioHero {
+  heading: String
+  intro: String
+  note: String
+  ctaLabel: String
+  formTitle: String
+}
+
+type SubservicioBeneficiosItems {
+  icon: String
+  title: String
+  text: String
+}
+
+type SubservicioBeneficios {
+  title: String
+  items: [SubservicioBeneficiosItems]
+}
+
+type SubservicioCasosDeUso {
+  eyebrow: String
+  statement: JSON
+}
+
+type SubservicioFaqItems {
+  question: String
+  answer: JSON
+}
+
+type SubservicioFaq {
+  title: String
+  items: [SubservicioFaqItems]
+}
+
+type SubservicioSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type Subservicio implements Node & Document {
+  title: String!
+  slug: String!
+  solucionSlug: String!
+  solucionTitle: String
+  hero: SubservicioHero
+  beneficios: SubservicioBeneficios
+  casosDeUso: SubservicioCasosDeUso
+  whyUsTitle: String
+  faq: SubservicioFaq
+  seo: SubservicioSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input SubservicioHeroFilter {
+  heading: StringFilter
+  intro: StringFilter
+  note: StringFilter
+  ctaLabel: StringFilter
+  formTitle: StringFilter
+}
+
+input SubservicioBeneficiosItemsFilter {
+  icon: StringFilter
+  title: StringFilter
+  text: StringFilter
+}
+
+input SubservicioBeneficiosFilter {
+  title: StringFilter
+  items: SubservicioBeneficiosItemsFilter
+}
+
+input SubservicioCasosDeUsoFilter {
+  eyebrow: StringFilter
+  statement: RichTextFilter
+}
+
+input SubservicioFaqItemsFilter {
+  question: StringFilter
+  answer: RichTextFilter
+}
+
+input SubservicioFaqFilter {
+  title: StringFilter
+  items: SubservicioFaqItemsFilter
+}
+
+input SubservicioSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input SubservicioFilter {
+  title: StringFilter
+  slug: StringFilter
+  solucionSlug: StringFilter
+  solucionTitle: StringFilter
+  hero: SubservicioHeroFilter
+  beneficios: SubservicioBeneficiosFilter
+  casosDeUso: SubservicioCasosDeUsoFilter
+  whyUsTitle: StringFilter
+  faq: SubservicioFaqFilter
+  seo: SubservicioSeoFilter
+}
+
+type SubservicioConnectionEdges {
+  cursor: String!
+  node: Subservicio
+}
+
+type SubservicioConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [SubservicioConnectionEdges]
 }
 
 type AboutHero {
@@ -1223,6 +1346,8 @@ type Mutation {
   createHome(relativePath: String!, params: HomeMutation!): Home!
   updateService(relativePath: String!, params: ServiceMutation!): Service!
   createService(relativePath: String!, params: ServiceMutation!): Service!
+  updateSubservicio(relativePath: String!, params: SubservicioMutation!): Subservicio!
+  createSubservicio(relativePath: String!, params: SubservicioMutation!): Subservicio!
   updateAbout(relativePath: String!, params: AboutMutation!): About!
   createAbout(relativePath: String!, params: AboutMutation!): About!
   updatePost(relativePath: String!, params: PostMutation!): Post!
@@ -1248,6 +1373,7 @@ type Mutation {
 input DocumentUpdateMutation {
   home: HomeMutation
   service: ServiceMutation
+  subservicio: SubservicioMutation
   about: AboutMutation
   post: PostMutation
   contact: ContactMutation
@@ -1264,6 +1390,7 @@ input DocumentUpdateMutation {
 input DocumentMutation {
   home: HomeMutation
   service: ServiceMutation
+  subservicio: SubservicioMutation
   about: AboutMutation
   post: PostMutation
   contact: ContactMutation
@@ -1402,6 +1529,59 @@ input ServiceMutation {
   whyUsTitle: String
   faq: ServiceFaqMutation
   seo: ServiceSeoMutation
+}
+
+input SubservicioHeroMutation {
+  heading: String
+  intro: String
+  note: String
+  ctaLabel: String
+  formTitle: String
+}
+
+input SubservicioBeneficiosItemsMutation {
+  icon: String
+  title: String
+  text: String
+}
+
+input SubservicioBeneficiosMutation {
+  title: String
+  items: [SubservicioBeneficiosItemsMutation]
+}
+
+input SubservicioCasosDeUsoMutation {
+  eyebrow: String
+  statement: JSON
+}
+
+input SubservicioFaqItemsMutation {
+  question: String
+  answer: JSON
+}
+
+input SubservicioFaqMutation {
+  title: String
+  items: [SubservicioFaqItemsMutation]
+}
+
+input SubservicioSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input SubservicioMutation {
+  title: String
+  slug: String
+  solucionSlug: String
+  solucionTitle: String
+  hero: SubservicioHeroMutation
+  beneficios: SubservicioBeneficiosMutation
+  casosDeUso: SubservicioCasosDeUsoMutation
+  whyUsTitle: String
+  faq: SubservicioFaqMutation
+  seo: SubservicioSeoMutation
 }
 
 input AboutHeroMutation {

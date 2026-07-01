@@ -86,6 +86,8 @@ export type Query = {
   homeConnection: HomeConnection;
   service: Service;
   serviceConnection: ServiceConnection;
+  subservicio: Subservicio;
+  subservicioConnection: SubservicioConnection;
   about: About;
   aboutConnection: AboutConnection;
   post: Post;
@@ -157,6 +159,21 @@ export type QueryServiceConnectionArgs = {
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<ServiceFilter>;
+};
+
+
+export type QuerySubservicioArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySubservicioConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SubservicioFilter>;
 };
 
 
@@ -312,6 +329,7 @@ export type QueryDynamicFormsConnectionArgs = {
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
+  subservicio?: InputMaybe<SubservicioFilter>;
   about?: InputMaybe<AboutFilter>;
   post?: InputMaybe<PostFilter>;
   contact?: InputMaybe<ContactFilter>;
@@ -361,7 +379,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -693,6 +711,136 @@ export type ServiceConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<ServiceConnectionEdges>>>;
+};
+
+export type SubservicioHero = {
+  __typename?: 'SubservicioHero';
+  heading?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  formTitle?: Maybe<Scalars['String']['output']>;
+};
+
+export type SubservicioBeneficiosItems = {
+  __typename?: 'SubservicioBeneficiosItems';
+  icon?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+export type SubservicioBeneficios = {
+  __typename?: 'SubservicioBeneficios';
+  title?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<SubservicioBeneficiosItems>>>;
+};
+
+export type SubservicioCasosDeUso = {
+  __typename?: 'SubservicioCasosDeUso';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  statement?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type SubservicioFaqItems = {
+  __typename?: 'SubservicioFaqItems';
+  question?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type SubservicioFaq = {
+  __typename?: 'SubservicioFaq';
+  title?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<SubservicioFaqItems>>>;
+};
+
+export type SubservicioSeo = {
+  __typename?: 'SubservicioSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type Subservicio = Node & Document & {
+  __typename?: 'Subservicio';
+  title: Scalars['String']['output'];
+  slug: Scalars['String']['output'];
+  solucionSlug: Scalars['String']['output'];
+  solucionTitle?: Maybe<Scalars['String']['output']>;
+  hero?: Maybe<SubservicioHero>;
+  beneficios?: Maybe<SubservicioBeneficios>;
+  casosDeUso?: Maybe<SubservicioCasosDeUso>;
+  whyUsTitle?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<SubservicioFaq>;
+  seo?: Maybe<SubservicioSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type SubservicioHeroFilter = {
+  heading?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<StringFilter>;
+  note?: InputMaybe<StringFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  formTitle?: InputMaybe<StringFilter>;
+};
+
+export type SubservicioBeneficiosItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+};
+
+export type SubservicioBeneficiosFilter = {
+  title?: InputMaybe<StringFilter>;
+  items?: InputMaybe<SubservicioBeneficiosItemsFilter>;
+};
+
+export type SubservicioCasosDeUsoFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  statement?: InputMaybe<RichTextFilter>;
+};
+
+export type SubservicioFaqItemsFilter = {
+  question?: InputMaybe<StringFilter>;
+  answer?: InputMaybe<RichTextFilter>;
+};
+
+export type SubservicioFaqFilter = {
+  title?: InputMaybe<StringFilter>;
+  items?: InputMaybe<SubservicioFaqItemsFilter>;
+};
+
+export type SubservicioSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type SubservicioFilter = {
+  title?: InputMaybe<StringFilter>;
+  slug?: InputMaybe<StringFilter>;
+  solucionSlug?: InputMaybe<StringFilter>;
+  solucionTitle?: InputMaybe<StringFilter>;
+  hero?: InputMaybe<SubservicioHeroFilter>;
+  beneficios?: InputMaybe<SubservicioBeneficiosFilter>;
+  casosDeUso?: InputMaybe<SubservicioCasosDeUsoFilter>;
+  whyUsTitle?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<SubservicioFaqFilter>;
+  seo?: InputMaybe<SubservicioSeoFilter>;
+};
+
+export type SubservicioConnectionEdges = {
+  __typename?: 'SubservicioConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Subservicio>;
+};
+
+export type SubservicioConnection = Connection & {
+  __typename?: 'SubservicioConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<SubservicioConnectionEdges>>>;
 };
 
 export type AboutHero = {
@@ -1554,6 +1702,8 @@ export type Mutation = {
   createHome: Home;
   updateService: Service;
   createService: Service;
+  updateSubservicio: Subservicio;
+  createSubservicio: Subservicio;
   updateAbout: About;
   createAbout: About;
   updatePost: Post;
@@ -1631,6 +1781,18 @@ export type MutationUpdateServiceArgs = {
 export type MutationCreateServiceArgs = {
   relativePath: Scalars['String']['input'];
   params: ServiceMutation;
+};
+
+
+export type MutationUpdateSubservicioArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SubservicioMutation;
+};
+
+
+export type MutationCreateSubservicioArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SubservicioMutation;
 };
 
 
@@ -1756,6 +1918,7 @@ export type MutationCreateDynamicFormsArgs = {
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
+  subservicio?: InputMaybe<SubservicioMutation>;
   about?: InputMaybe<AboutMutation>;
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
@@ -1772,6 +1935,7 @@ export type DocumentUpdateMutation = {
 export type DocumentMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
+  subservicio?: InputMaybe<SubservicioMutation>;
   about?: InputMaybe<AboutMutation>;
   post?: InputMaybe<PostMutation>;
   contact?: InputMaybe<ContactMutation>;
@@ -1910,6 +2074,59 @@ export type ServiceMutation = {
   whyUsTitle?: InputMaybe<Scalars['String']['input']>;
   faq?: InputMaybe<ServiceFaqMutation>;
   seo?: InputMaybe<ServiceSeoMutation>;
+};
+
+export type SubservicioHeroMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  formTitle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SubservicioBeneficiosItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SubservicioBeneficiosMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<SubservicioBeneficiosItemsMutation>>>;
+};
+
+export type SubservicioCasosDeUsoMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  statement?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type SubservicioFaqItemsMutation = {
+  question?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type SubservicioFaqMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<SubservicioFaqItemsMutation>>>;
+};
+
+export type SubservicioSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SubservicioMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  solucionSlug?: InputMaybe<Scalars['String']['input']>;
+  solucionTitle?: InputMaybe<Scalars['String']['input']>;
+  hero?: InputMaybe<SubservicioHeroMutation>;
+  beneficios?: InputMaybe<SubservicioBeneficiosMutation>;
+  casosDeUso?: InputMaybe<SubservicioCasosDeUsoMutation>;
+  whyUsTitle?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<SubservicioFaqMutation>;
+  seo?: InputMaybe<SubservicioSeoMutation>;
 };
 
 export type AboutHeroMutation = {
@@ -2229,6 +2446,8 @@ export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'Home
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
+export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, whyUsTitle?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+
 export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, subtitle?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, text?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, text?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, subtitle?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
 export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
@@ -2286,6 +2505,25 @@ export type ServiceConnectionQueryVariables = Exact<{
 
 
 export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type SubservicioQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type SubservicioQuery = { __typename?: 'Query', subservicio: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type SubservicioConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SubservicioFilter>;
+}>;
+
+
+export type SubservicioConnectionQuery = { __typename?: 'Query', subservicioConnection: { __typename?: 'SubservicioConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SubservicioConnectionEdges', cursor: string, node?: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type AboutQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2573,6 +2811,54 @@ export const ServicePartsFragmentDoc = gql`
       colSpan
       featured
     }
+  }
+  whyUsTitle
+  faq {
+    __typename
+    title
+    items {
+      __typename
+      question
+      answer
+    }
+  }
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+    `;
+export const SubservicioPartsFragmentDoc = gql`
+    fragment SubservicioParts on Subservicio {
+  __typename
+  title
+  slug
+  solucionSlug
+  solucionTitle
+  hero {
+    __typename
+    heading
+    intro
+    note
+    ctaLabel
+    formTitle
+  }
+  beneficios {
+    __typename
+    title
+    items {
+      __typename
+      icon
+      title
+      text
+    }
+  }
+  casosDeUso {
+    __typename
+    eyebrow
+    statement
   }
   whyUsTitle
   faq {
@@ -3005,6 +3291,63 @@ export const ServiceConnectionDocument = gql`
   }
 }
     ${ServicePartsFragmentDoc}`;
+export const SubservicioDocument = gql`
+    query subservicio($relativePath: String!) {
+  subservicio(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...SubservicioParts
+  }
+}
+    ${SubservicioPartsFragmentDoc}`;
+export const SubservicioConnectionDocument = gql`
+    query subservicioConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: SubservicioFilter) {
+  subservicioConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...SubservicioParts
+      }
+    }
+  }
+}
+    ${SubservicioPartsFragmentDoc}`;
 export const AboutDocument = gql`
     query about($relativePath: String!) {
   about(relativePath: $relativePath) {
@@ -3589,6 +3932,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     serviceConnection(variables?: ServiceConnectionQueryVariables, options?: C): Promise<{data: ServiceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceConnectionQueryVariables, query: string}> {
         return requester<{data: ServiceConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiceConnectionQueryVariables, query: string}, ServiceConnectionQueryVariables>(ServiceConnectionDocument, variables, options);
+      },
+    subservicio(variables: SubservicioQueryVariables, options?: C): Promise<{data: SubservicioQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SubservicioQueryVariables, query: string}> {
+        return requester<{data: SubservicioQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SubservicioQueryVariables, query: string}, SubservicioQueryVariables>(SubservicioDocument, variables, options);
+      },
+    subservicioConnection(variables?: SubservicioConnectionQueryVariables, options?: C): Promise<{data: SubservicioConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SubservicioConnectionQueryVariables, query: string}> {
+        return requester<{data: SubservicioConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: SubservicioConnectionQueryVariables, query: string}, SubservicioConnectionQueryVariables>(SubservicioConnectionDocument, variables, options);
       },
     about(variables: AboutQueryVariables, options?: C): Promise<{data: AboutQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutQueryVariables, query: string}> {
         return requester<{data: AboutQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AboutQueryVariables, query: string}, AboutQueryVariables>(AboutDocument, variables, options);
