@@ -1,6 +1,6 @@
 # SPEC 14 — Página "Formas de pago" (`/formas-de-pago`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:**
 > - Reutiliza `BaseLayout` (Header + Footer + maintenance + Lenis).
 > - Reutiliza el patrón **hero oscuro corp** y el patrón **dual `.astro` + `React.tsx` con `useTina`** de specs previas (06/13).
@@ -274,3 +274,15 @@ Introduce **una colección nueva** (`formasDePago`, documento único). Estructur
 - Rediseñar Header / Footer / maintenance / Lenis / hero 3D.
 
 Cada uno de estos, si aterriza, va en su propio spec.
+
+---
+
+## Notas de implementación (2026-07-01)
+
+Implementado en la rama `spec-14-pagina-formas-de-pago`. Verificación funcional y visual con el dev server en modo local + Playwright MCP (desktop 1440px y mobile 400px), screenshots en `.playwright-screens/`.
+
+- **`astro build` completo (29 páginas, sin errores).** El paso `tinacms build` de `npm run build` requiere credenciales de TinaCloud (`clientId`/`token`), no disponibles en modo local — misma limitación de entorno que todas las specs previas; corre en el entorno de deploy. El cliente Tina se regeneró vía dev server (`tinacms dev`) y `/formas-de-pago` se generó estático con todo el contenido embebido (H1, pasos de BBVA y opción BCP presentes en el HTML), confirmando el filtrado en cliente.
+- **Swap verificado:** cambiar a BCP intercambia los pasos y resetea el método a "Desde la aplicación"; cambiar el método a "Desde la web" muestra su paso placeholder. Sin errores en consola.
+- **Imágenes de pasos:** el sembrado dejó todos los `image` **vacíos** (en lugar de rutas placeholder que darían 404); así se renderiza el recuadro placeholder limpio ("Imagen del paso"). Las imágenes reales se suben desde el CMS por paso.
+- **SEO `ogImage`:** modelado y editable, pero `BaseLayout` hoy solo emite `<title>` y `<meta name="description">` (no Open Graph) — misma limitación transversal documentada en SPEC 13; pendiente para una spec de SEO.
+- **Magenta:** el énfasis (`bold`) se pinta con el override local de `TinaMarkdown` (`text-[#c65fac]`), consistente con `CasosDeUsoReact`; no afecta el render global.
