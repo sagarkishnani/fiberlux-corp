@@ -38,6 +38,8 @@ export default function BlogPreviewReact({
   const carouselRef = useRef<HTMLDivElement>(null);
   const titleH2Ref = useRef<HTMLHeadingElement>(null);
   const [leftPad, setLeftPad] = useState(64);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const title = blogPreview?.title || "Insights & Novedades";
   const buttonText = blogPreview?.buttonText || "Ver todos";
@@ -55,6 +57,25 @@ export default function BlogPreviewReact({
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
   }, []);
+
+  /* ── Track scroll position to enable/disable the arrows ── */
+  const updateArrows = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+    const el = carouselRef.current;
+    el?.addEventListener("scroll", updateArrows, { passive: true });
+    window.addEventListener("resize", updateArrows);
+    return () => {
+      el?.removeEventListener("scroll", updateArrows);
+      window.removeEventListener("resize", updateArrows);
+    };
+  }, [updateArrows]);
 
   /* ── Drag to scroll ── */
   const isDragging = useRef(false);
@@ -150,6 +171,9 @@ export default function BlogPreviewReact({
               cursor: "grab",
               paddingLeft: `${leftPad}px`,
               paddingRight: 0,
+              // Keep snap-mandatory from cancelling the padding so the first card
+              // rests aligned and scrollLeft is 0 at start (arrow logic depends on it).
+              scrollPaddingLeft: `${leftPad}px`,
             }}
             onMouseDown={onMouseDown}
             onMouseMove={onMouseMove}
@@ -193,10 +217,15 @@ export default function BlogPreviewReact({
 
         {/* Navigation arrows */}
         <div className="max-w-[1440px] mx-auto">
-          <div className="flex gap-1 mt-6">
+          <div className="flex gap-0 mt-6">
             <button
               onClick={() => scroll("left")}
-              className="w-11 h-11 rounded-full bg-greyscale-dark/60 flex items-center justify-center text-white/50 hover:text-white hover:bg-greyscale-dark transition-all"
+              disabled={!canScrollLeft}
+              className={`w-11 h-11 rounded-l-xl flex items-center justify-center transition-all ${
+                canScrollLeft
+                  ? "bg-brand-purple text-white hover:bg-brand-purple-dark"
+                  : "bg-greyscale-dark/50 text-white/30 cursor-not-allowed"
+              }`}
               aria-label="Anterior"
             >
               <svg
@@ -215,7 +244,12 @@ export default function BlogPreviewReact({
             </button>
             <button
               onClick={() => scroll("right")}
-              className="w-11 h-11 rounded-full bg-brand-purple flex items-center justify-center text-white hover:bg-brand-purple-dark transition-all"
+              disabled={!canScrollRight}
+              className={`w-11 h-11 rounded-r-xl flex items-center justify-center transition-all ${
+                canScrollRight
+                  ? "bg-brand-purple text-white hover:bg-brand-purple-dark"
+                  : "bg-greyscale-dark/50 text-white/30 cursor-not-allowed"
+              }`}
               aria-label="Siguiente"
             >
               <svg
