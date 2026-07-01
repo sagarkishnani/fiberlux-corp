@@ -89,6 +89,8 @@ fragment ServiceParts on Service {
       description
       buttonLabel
       url
+      colSpan
+      featured
     }
   }
   whyUsTitle

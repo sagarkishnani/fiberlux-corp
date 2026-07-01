@@ -48,7 +48,15 @@ interface Item {
   description?: string | null;
   buttonLabel?: string | null;
   url?: string | null;
+  colSpan?: string | null;
+  featured?: boolean | null;
 }
+
+const SPAN_CLASS: Record<string, string> = {
+  "1": "lg:col-span-1",
+  "2": "lg:col-span-2",
+  "3": "lg:col-span-3",
+};
 
 const ICONS: Record<string, IconType> = {
   internet: FaGlobe,
@@ -118,52 +126,89 @@ export default function CatalogoSolucionesReact({
           </h2>
         )}
 
-        {/* ════ DESKTOP — hover-reveal grid ════ */}
+        {/* ════ DESKTOP — configurable-span grid ════ */}
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {items.map((item, i) => {
             const CardTag = item.url ? "a" : "div";
+            const span = SPAN_CLASS[item.colSpan || "1"] || "lg:col-span-1";
+            const featured = !!item.featured;
+            const number = String(i + 1).padStart(2, "0");
+
+            const content = (
+              <>
+                {item.description && (
+                  <p
+                    className={`text-body-sm ${featured ? "text-white/75 max-w-[440px]" : "text-greyscale-light"}`}
+                    data-tina-field={tinaField(item as any, "description")}
+                  >
+                    {item.description}
+                  </p>
+                )}
+                {item.buttonLabel && item.description && (
+                  <span
+                    className={`mt-4 inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 transition-colors ${
+                      featured
+                        ? "bg-white text-[#3B0E30] hover:bg-white/90"
+                        : "bg-[#96237A] text-white hover:bg-[#650F50]"
+                    }`}
+                    data-tina-field={tinaField(item as any, "buttonLabel")}
+                  >
+                    {item.buttonLabel}
+                    <FaArrowRight size={12} />
+                  </span>
+                )}
+              </>
+            );
+
             return (
               <CardTag
                 key={i}
                 {...(item.url ? { href: item.url } : {})}
-                className="catalog-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-7 transition-colors duration-300 hover:border-[#96237A]/60 hover:bg-white/[0.06]"
+                className={`catalog-card group relative flex flex-col overflow-hidden rounded-2xl border p-6 lg:p-7 transition-colors duration-300 ${span} ${
+                  featured
+                    ? "border-[#96237A]/40 bg-[radial-gradient(120%_120%_at_85%_0%,#5a1a4a_0%,#2a0a24_48%,#160512_100%)] min-h-[300px] justify-start"
+                    : "border-white/10 bg-white/[0.03] hover:border-[#96237A]/60 hover:bg-white/[0.06]"
+                }`}
               >
-                {/* Circular gradient blur glow — reveals on hover */}
-                <span
-                  aria-hidden="true"
-                  className="catalog-glow pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
-                />
+                {/* Circular gradient blur glow — reveals on hover (non-featured) */}
+                {!featured && (
+                  <span
+                    aria-hidden="true"
+                    className="catalog-glow pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
+                  />
+                )}
+
+                {/* Number badge */}
+                <span className="absolute top-6 right-6 z-10 font-mono text-xs text-white/35 tabular-nums">
+                  {number}
+                </span>
 
                 <ItemIcon name={item.icon} />
-                <h3
-                  className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
-                  data-tina-field={tinaField(item as any, "title")}
-                >
-                  {item.title}
-                </h3>
 
-                {/* Reveal on hover / focus — smooth height + fade */}
-                <div className="catalog-reveal relative z-10 grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
-                  <div className="overflow-hidden">
-                    {item.description && (
-                      <p
-                        className="mt-3 text-body-sm text-greyscale-light"
-                        data-tina-field={tinaField(item as any, "description")}
-                      >
-                        {item.description}
-                      </p>
-                    )}
-                    {item.buttonLabel && (
-                      <span
-                        className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white bg-[#96237A] hover:bg-[#650F50] rounded-full px-4 py-2 transition-colors"
-                        data-tina-field={tinaField(item as any, "buttonLabel")}
-                      >
-                        {item.buttonLabel}
-                        <FaArrowRight size={12} />
-                      </span>
-                    )}
+                {featured ? (
+                  <div className="relative z-10 mt-auto pt-10">
+                    <h3
+                      className="text-[22px] lg:text-[28px] font-semibold text-greyscale-white mb-3"
+                      data-tina-field={tinaField(item as any, "title")}
+                    >
+                      {item.title}
+                    </h3>
+                    {content}
                   </div>
-                </div>
+                ) : (
+                  <>
+                    <h3
+                      className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
+                      data-tina-field={tinaField(item as any, "title")}
+                    >
+                      {item.title}
+                    </h3>
+                    {/* Reveal on hover / focus — smooth height + fade */}
+                    <div className="catalog-reveal relative z-10 grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+                      <div className="overflow-hidden pt-3">{content}</div>
+                    </div>
+                  </>
+                )}
               </CardTag>
             );
           })}

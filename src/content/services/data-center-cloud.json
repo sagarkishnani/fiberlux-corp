@@ -36,49 +36,63 @@
         "title": "Housing / Colocación",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/housing-colocacion"
+        "url": "/servicios/data-center-cloud/housing-colocacion",
+        "colSpan": "2",
+        "featured": true
       },
       {
         "icon": "cloud",
         "title": "Nube Privada",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/nube-privada"
+        "url": "/servicios/data-center-cloud/nube-privada",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "cloud",
         "title": "Nube Pública",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/nube-publica"
+        "url": "/servicios/data-center-cloud/nube-publica",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "backup",
         "title": "Backup as a Service (BaaS)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/baas"
+        "url": "/servicios/data-center-cloud/baas",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "backup",
         "title": "Disaster Recovery (DRaaS)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/draas"
+        "url": "/servicios/data-center-cloud/draas",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "storage",
         "title": "Storage y Cómputo",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/storage-computo"
+        "url": "/servicios/data-center-cloud/storage-computo",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "Microservicios",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/microservicios"
+        "url": "/servicios/data-center-cloud/microservicios",
+        "colSpan": "1",
+        "featured": false
       }
     ]
   },

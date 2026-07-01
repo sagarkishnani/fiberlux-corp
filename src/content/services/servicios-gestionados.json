@@ -36,49 +36,63 @@
         "title": "Mesa de Ayuda",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/mesa-de-ayuda"
+        "url": "/servicios/servicios-gestionados/mesa-de-ayuda",
+        "colSpan": "2",
+        "featured": true
       },
       {
         "icon": "generico",
         "title": "Comunicaciones Unificadas",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/comunicaciones-unificadas"
+        "url": "/servicios/servicios-gestionados/comunicaciones-unificadas",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "Colaboración Empresarial",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/colaboracion-empresarial"
+        "url": "/servicios/servicios-gestionados/colaboracion-empresarial",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "Gestión de Redes LAN",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/gestion-redes-lan"
+        "url": "/servicios/servicios-gestionados/gestion-redes-lan",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "wifi",
         "title": "WiFi Gestionado",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/wifi-gestionado"
+        "url": "/servicios/servicios-gestionados/wifi-gestionado",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "Gestión de Endpoints",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/gestion-endpoints"
+        "url": "/servicios/servicios-gestionados/gestion-endpoints",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "videovigilancia",
         "title": "Videovigilancia Gestionada",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/videovigilancia-gestionada"
+        "url": "/servicios/servicios-gestionados/videovigilancia-gestionada",
+        "colSpan": "1",
+        "featured": false
       }
     ]
   },

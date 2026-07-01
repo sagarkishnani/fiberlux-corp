@@ -367,6 +367,21 @@ export default defineConfig({
                     label: "URL (placeholder → nivel-2)",
                     type: "string",
                   },
+                  {
+                    name: "colSpan",
+                    label: "Columnas que ocupa (desktop)",
+                    type: "string",
+                    options: [
+                      { value: "1", label: "1 columna" },
+                      { value: "2", label: "2 columnas" },
+                      { value: "3", label: "3 columnas (ancho completo)" },
+                    ],
+                  },
+                  {
+                    name: "featured",
+                    label: "Destacado (fondo magenta + descripción visible)",
+                    type: "boolean",
+                  },
                 ],
               },
             ],

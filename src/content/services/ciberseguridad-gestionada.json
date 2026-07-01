@@ -36,91 +36,117 @@
         "title": "NGFW / Seguridad Perimetral",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
+        "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral",
+        "colSpan": "2",
+        "featured": true
       },
       {
         "icon": "vpn",
         "title": "VPN Segura",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/vpn-segura"
+        "url": "/servicios/ciberseguridad-gestionada/vpn-segura",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "edr",
         "title": "EDR / XDR / MDR",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr"
+        "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "correo",
         "title": "Seguridad de Correo y Filtrado Web",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
+        "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "mfa",
         "title": "MFA y Control de Identidad",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad"
+        "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "ztna",
         "title": "ZTNA",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/ztna"
+        "url": "/servicios/ciberseguridad-gestionada/ztna",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "NAC",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/nac"
+        "url": "/servicios/ciberseguridad-gestionada/nac",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "waf",
         "title": "WAF",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/waf"
+        "url": "/servicios/ciberseguridad-gestionada/waf",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "ddos",
         "title": "Anti-DDoS",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/anti-ddos"
+        "url": "/servicios/ciberseguridad-gestionada/anti-ddos",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "generico",
         "title": "Concientización y Phishing",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing"
+        "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "soc",
         "title": "SOC 24/7",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/soc-24-7"
+        "url": "/servicios/ciberseguridad-gestionada/soc-24-7",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "soc",
         "title": "Correlación de Eventos (SIEM)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos"
+        "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos",
+        "colSpan": "1",
+        "featured": false
       },
       {
         "icon": "pentesting",
         "title": "Pentesting",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/pentesting"
+        "url": "/servicios/ciberseguridad-gestionada/pentesting",
+        "colSpan": "1",
+        "featured": false
       }
     ]
   },

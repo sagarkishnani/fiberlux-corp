@@ -307,6 +307,8 @@ type ServiceCatalogoItems {
   description: String
   buttonLabel: String
   url: String
+  colSpan: String
+  featured: Boolean
 }
 
 type ServiceCatalogo {
@@ -363,12 +365,19 @@ input ServiceValorFilter {
   cards: ServiceValorCardsFilter
 }
 
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
+}
+
 input ServiceCatalogoItemsFilter {
   icon: StringFilter
   title: StringFilter
   description: StringFilter
   buttonLabel: StringFilter
   url: StringFilter
+  colSpan: StringFilter
+  featured: BooleanFilter
 }
 
 input ServiceCatalogoFilter {
@@ -622,11 +631,6 @@ input DatetimeFilter {
   eq: String
   exists: Boolean
   in: [String]
-}
-
-input BooleanFilter {
-  eq: Boolean
-  exists: Boolean
 }
 
 input PostFilter {
@@ -1364,6 +1368,8 @@ input ServiceCatalogoItemsMutation {
   description: String
   buttonLabel: String
   url: String
+  colSpan: String
+  featured: Boolean
 }
 
 input ServiceCatalogoMutation {
