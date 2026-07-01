@@ -94,32 +94,110 @@
     "items": [
       {
         "question": "¿Qué planes de conectividad ofrece Fiberlux para empresas?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "question": "¿Qué significa \"velocidad simétrica\"?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "question": "¿Cómo verifico si Fiberlux tiene cobertura en mi zona?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "question": "¿Cuánto demora la instalación y cuál es su costo?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "question": "¿Qué equipos instalan en mi sede?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       },
       {
         "question": "¿Cuánto tiempo dura el contrato?",
-        "answer": { "type": "root", "children": [{ "type": "p", "children": [{ "type": "text", "text": "" }] }] }
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
       }
     ]
   },
   "seo": {
-    "metaTitle": "Conectividad Empresarial | Fiberlux Corp",
+    "metaTitle": "Conectividad Empresarial para tu empresa",
     "metaDescription": "Internet dedicado, SD-WAN, fibra oscura y enlaces satelitales respaldados por el NOC 24/7 de Fiberlux. Conectividad resiliente para operaciones críticas.",
     "ogImage": ""
   }

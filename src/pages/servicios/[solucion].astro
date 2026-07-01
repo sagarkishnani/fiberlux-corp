@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { client } from "../../../tina/__generated__/client";
+import HeroSolucion from "../../components/servicios/HeroSolucion.astro";
+
+/* ── Static paths from all solution documents ── */
+export async function getStaticPaths() {
+  let paths: { params: { solucion: string } }[] = [];
+  try {
+    const conn = await client.queries.serviceConnection({ last: 100 });
+    const edges = conn.data?.serviceConnection?.edges || [];
+    paths = edges
+      .filter((e: any) => e?.node)
+      .map((e: any) => ({ params: { solucion: e!.node!._sys.filename } }));
+  } catch {
+    paths = [];
+  }
+  return paths;
+}
+
+const { solucion } = Astro.params;
+const relativePath = `${solucion}.json`;
+
+/* ── SEO / meta (per-service, falls back to global.seo) ── */
+const serviceQuery = await client.queries.service({ relativePath });
+const service = serviceQuery.data?.service;
+
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const globalSeo = globalQuery.data?.global?.seo;
+
+const metaTitle = service?.seo?.metaTitle || service?.title || "Servicios";
+const metaDescription =
+  service?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <main>
+    <HeroSolucion relativePath={relativePath} />
+  </main>
+</BaseLayout>
