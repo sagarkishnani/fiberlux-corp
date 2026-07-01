@@ -1,6 +1,6 @@
 # SPEC 07 — Footer según referencias (links + crédito de agencia)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 06 (que fijó el link "Soporte técnico" → `/soporte-tecnico` en `global`). Reutiliza el patrón dual + `client:tina` del `Footer` compartido.
 > **Date:** 2026-06-30
 > **Objective:** Reestructurar el contenido y layout del `Footer` compartido para que coincida con `references/footer.png` (desktop) y `references/mobile.png`: 4 grupos de links (Servicios, Sobre nosotros, Legales, Solicitudes) en 2 columnas visuales, redes con Instagram añadido, y crédito "Diseño y desarrollo por TWNSTUDIOS" enlazado — todo editable desde la colección `global`.
