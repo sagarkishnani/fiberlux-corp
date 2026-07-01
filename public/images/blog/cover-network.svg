@@ -1,0 +1,36 @@
+<svg width="640" height="400" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Redes y conectividad">
+  <defs>
+    <linearGradient id="netBg" x1="0" y1="0" x2="640" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3B0E30"/>
+      <stop offset="0.5" stop-color="#650F50"/>
+      <stop offset="1" stop-color="#96237A"/>
+    </linearGradient>
+    <radialGradient id="netGlow" cx="0.75" cy="0.3" r="0.7">
+      <stop offset="0" stop-color="#E08FCF" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#E08FCF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#netBg)"/>
+  <rect width="640" height="400" fill="url(#netGlow)"/>
+  <g stroke="#ffffff" stroke-opacity="0.45" stroke-width="2">
+    <line x1="360" y1="90" x2="470" y2="150"/>
+    <line x1="470" y1="150" x2="560" y2="110"/>
+    <line x1="470" y1="150" x2="520" y2="245"/>
+    <line x1="520" y1="245" x2="600" y2="300"/>
+    <line x1="360" y1="90" x2="410" y2="210"/>
+    <line x1="410" y1="210" x2="520" y2="245"/>
+    <line x1="410" y1="210" x2="430" y2="320"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="360" cy="90" r="9"/>
+    <circle cx="470" cy="150" r="13"/>
+    <circle cx="560" cy="110" r="8"/>
+    <circle cx="520" cy="245" r="11"/>
+    <circle cx="600" cy="300" r="8"/>
+    <circle cx="410" cy="210" r="10"/>
+    <circle cx="430" cy="320" r="8"/>
+  </g>
+  <text x="48" y="120" font-family="Poppins, 'Segoe UI', sans-serif" font-size="30" font-weight="700" fill="#ffffff" fill-opacity="0.85" letter-spacing="2">FIBERLUX</text>
+  <text x="46" y="330" font-family="Poppins, 'Segoe UI', sans-serif" font-size="72" font-weight="800" fill="#ffffff">Redes</text>
+  <text x="48" y="366" font-family="Poppins, 'Segoe UI', sans-serif" font-size="22" font-weight="500" fill="#ffffff" fill-opacity="0.7">Conectividad empresarial</text>
+</svg>
