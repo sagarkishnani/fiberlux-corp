@@ -5,6 +5,8 @@ import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro
 import Beneficios from "../../../components/servicios/Beneficios.astro";
 import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
 import Stats from "../../../components/Stats.astro";
+import ServiciosForm from "../../../components/servicios/ServiciosForm.astro";
+import BlogPreview from "../../../components/blog/BlogPreview.astro";
 
 /* ── Static paths from all sub-service documents ── */
 export async function getStaticPaths() {
@@ -47,5 +49,7 @@ const metaDescription =
     <Beneficios relativePath={relativePath} />
     <CasosDeUso relativePath={relativePath} />
     <Stats title={sub?.whyUsTitle ?? undefined} />
+    <ServiciosForm prefill={{ servicio: sub?.solucionSlug ?? "" }} />
+    <BlogPreview />
   </main>
 </BaseLayout>

@@ -2,6 +2,12 @@
 import { client } from "../../../tina/__generated__/client";
 import ServiciosFormReact from "./ServiciosFormReact.tsx";
 
+interface Props {
+  prefill?: Record<string, string>;
+}
+
+const { prefill } = Astro.props;
+
 const serviciosQuery = await client.queries.servicios({
   relativePath: "index.json",
 });
@@ -20,4 +26,5 @@ const formQuery = await client.queries.dynamicForms({
     variables: formQuery.variables,
     data: formQuery.data,
   }}
+  prefill={prefill}
 />
