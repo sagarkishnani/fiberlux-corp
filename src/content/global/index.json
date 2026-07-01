@@ -238,6 +238,10 @@
           {
             "text": "Contacto",
             "url": "/contacto"
+          },
+          {
+            "text": "Formas de pago",
+            "url": "/formas-de-pago"
           }
         ]
       },
