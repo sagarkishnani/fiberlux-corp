@@ -3,41 +3,7 @@
   "title": "Derechos ARCO Fiberlux Tech",
   "updatedAt": "2026-01-01T00:00:00.000Z",
   "embeddedFormSlug": "derechos-arco",
-  "body": {
-    "type": "root",
-    "children": [
-      {
-        "type": "h3",
-        "children": [{ "type": "text", "text": "Derechos ARCO Fiberlux Tech" }]
-      },
-      {
-        "type": "p",
-        "children": [
-          { "type": "text", "text": "FIBERLUX TECH S.A.C. (en adelante, FIBERLUX), identificada con RUC N° 20601442936 y con domicilio en [completar dirección], es responsable del tratamiento de sus datos personales. Como titular de datos personales, usted puede ejercer los derechos de acceso, rectificación, cancelación y oposición (derechos ARCO) reconocidos por la Ley N° 29733, Ley de Protección de Datos Personales, y su reglamento." }
-        ]
-      },
-      {
-        "type": "p",
-        "children": [
-          { "type": "text", "text": "Los derechos ARCO le permiten: " },
-          { "type": "text", "text": "acceder", "bold": true },
-          { "type": "text", "text": " a sus datos personales; " },
-          { "type": "text", "text": "rectificar", "bold": true },
-          { "type": "text", "text": " los datos inexactos o incompletos; " },
-          { "type": "text", "text": "cancelar", "bold": true },
-          { "type": "text", "text": " los datos cuando ya no sean necesarios; y " },
-          { "type": "text", "text": "oponerse", "bold": true },
-          { "type": "text", "text": " a su tratamiento por motivos legítimos." }
-        ]
-      },
-      {
-        "type": "p",
-        "children": [
-          { "type": "text", "text": "Para ejercer cualquiera de estos derechos, complete el siguiente formulario. FIBERLUX atenderá su solicitud dentro de los plazos establecidos por la normativa vigente. [completar detalle de plazos y canal de respuesta]" }
-        ]
-      }
-    ]
-  },
+  "body": "### Derechos ARCO Fiberlux Tech\n\nFIBERLUX TECH S.A.C. (en adelante, FIBERLUX), identificada con RUC N° 20601442936 y con domicilio en [completar dirección], es responsable del tratamiento de sus datos personales. Como titular de datos personales, usted puede ejercer los derechos de acceso, rectificación, cancelación y oposición (derechos ARCO) reconocidos por la Ley N° 29733, Ley de Protección de Datos Personales, y su reglamento.\n\nLos derechos ARCO le permiten: **acceder** a sus datos personales; **rectificar** los datos inexactos o incompletos; **cancelar** los datos cuando ya no sean necesarios; y **oponerse** a su tratamiento por motivos legítimos.\n\nPara ejercer cualquiera de estos derechos, complete el siguiente formulario. FIBERLUX atenderá su solicitud dentro de los plazos establecidos por la normativa vigente. [completar detalle de plazos y canal de respuesta]",
   "seo": {
     "metaTitle": "Manual de derechos ARCO | Fiberlux",
     "metaDescription": "Ejerce tus derechos de acceso, rectificación, cancelación y oposición (ARCO) sobre tus datos personales en Fiberlux.",

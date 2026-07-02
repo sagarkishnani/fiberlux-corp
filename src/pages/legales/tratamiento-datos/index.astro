@@ -1,0 +1,22 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LegalPage from "../../../components/legal/LegalPage.astro";
+import { client } from "../../../../tina/__generated__/client";
+
+let seo: any = null;
+try {
+  const res = await client.queries.legal({ relativePath: "tratamiento-datos.json" });
+  seo = res.data?.legal?.seo || null;
+} catch {}
+---
+
+<BaseLayout
+  title="Tratamiento de datos personales"
+  description={seo?.metaDescription ||
+    "Información sobre el tratamiento de datos personales de los usuarios de Fiberlux."}
+  headerTheme="light"
+>
+  <main>
+    <LegalPage slug="tratamiento-datos" />
+  </main>
+</BaseLayout>
