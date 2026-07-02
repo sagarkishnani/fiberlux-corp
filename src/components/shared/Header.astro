@@ -6,6 +6,12 @@
 import { client } from '../../../tina/__generated__/client';
 import HeaderReact from './HeaderReact.tsx';
 
+interface Props {
+  theme?: 'light' | 'dark';
+}
+
+const { theme = 'dark' } = Astro.props;
+
 const globalQuery = await client.queries.global({ relativePath: 'index.json' });
 ---
 
@@ -14,4 +20,5 @@ const globalQuery = await client.queries.global({ relativePath: 'index.json' });
   query={globalQuery.query}
   variables={globalQuery.variables}
   data={globalQuery.data}
+  theme={theme}
 />

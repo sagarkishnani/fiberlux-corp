@@ -6,11 +6,13 @@ import client from "../../tina/__generated__/client";
 interface Props {
   title?: string;
   description?: string;
+  headerTheme?: "light" | "dark";
 }
 
 const {
   title = "Fiberlux",
   description = "Soluciones de conectividad y TI para tu empresa",
+  headerTheme = "dark",
 } = Astro.props;
 
 // ─── Maintenance mode check ───
@@ -98,7 +100,7 @@ try {
         </main>
       ) : (
         <Fragment>
-          <Header />
+          <Header theme={headerTheme} />
           <slot />
           <div class="-mt-6 relative z-40">
             <Footer />
