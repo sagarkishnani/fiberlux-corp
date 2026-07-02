@@ -112,6 +112,10 @@ export type Query = {
   formConfigConnection: FormConfigConnection;
   dynamicForms: DynamicForms;
   dynamicFormsConnection: DynamicFormsConnection;
+  legal: Legal;
+  legalConnection: LegalConnection;
+  cookieConsent: CookieConsent;
+  cookieConsentConnection: CookieConsentConnection;
 };
 
 
@@ -360,6 +364,36 @@ export type QueryDynamicFormsConnectionArgs = {
   filter?: InputMaybe<DynamicFormsFilter>;
 };
 
+
+export type QueryLegalArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryLegalConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+};
+
+
+export type QueryCookieConsentArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCookieConsentConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CookieConsentFilter>;
+};
+
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
@@ -376,6 +410,8 @@ export type DocumentFilter = {
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
   formConfig?: InputMaybe<FormConfigFilter>;
   dynamicForms?: InputMaybe<DynamicFormsFilter>;
+  legal?: InputMaybe<LegalFilter>;
+  cookieConsent?: InputMaybe<CookieConsentFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -415,7 +451,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1885,6 +1921,110 @@ export type DynamicFormsConnection = Connection & {
   edges?: Maybe<Array<Maybe<DynamicFormsConnectionEdges>>>;
 };
 
+export type LegalSeo = {
+  __typename?: 'LegalSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type Legal = Node & Document & {
+  __typename?: 'Legal';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  embeddedFormSlug?: Maybe<Scalars['String']['output']>;
+  seo?: Maybe<LegalSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type LegalSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type LegalFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  body?: InputMaybe<RichTextFilter>;
+  embeddedFormSlug?: InputMaybe<StringFilter>;
+  seo?: InputMaybe<LegalSeoFilter>;
+};
+
+export type LegalConnectionEdges = {
+  __typename?: 'LegalConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Legal>;
+};
+
+export type LegalConnection = Connection & {
+  __typename?: 'LegalConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
+};
+
+export type CookieConsentCategories = {
+  __typename?: 'CookieConsentCategories';
+  key?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  alwaysActive?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type CookieConsent = Node & Document & {
+  __typename?: 'CookieConsent';
+  title?: Maybe<Scalars['String']['output']>;
+  intro?: Maybe<Scalars['JSON']['output']>;
+  showMoreText?: Maybe<Scalars['String']['output']>;
+  showMoreUrl?: Maybe<Scalars['String']['output']>;
+  btnReject?: Maybe<Scalars['String']['output']>;
+  btnSave?: Maybe<Scalars['String']['output']>;
+  btnAccept?: Maybe<Scalars['String']['output']>;
+  alwaysActiveLabel?: Maybe<Scalars['String']['output']>;
+  categories?: Maybe<Array<Maybe<CookieConsentCategories>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CookieConsentCategoriesFilter = {
+  key?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  alwaysActive?: InputMaybe<BooleanFilter>;
+};
+
+export type CookieConsentFilter = {
+  title?: InputMaybe<StringFilter>;
+  intro?: InputMaybe<RichTextFilter>;
+  showMoreText?: InputMaybe<StringFilter>;
+  showMoreUrl?: InputMaybe<StringFilter>;
+  btnReject?: InputMaybe<StringFilter>;
+  btnSave?: InputMaybe<StringFilter>;
+  btnAccept?: InputMaybe<StringFilter>;
+  alwaysActiveLabel?: InputMaybe<StringFilter>;
+  categories?: InputMaybe<CookieConsentCategoriesFilter>;
+};
+
+export type CookieConsentConnectionEdges = {
+  __typename?: 'CookieConsentConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CookieConsent>;
+};
+
+export type CookieConsentConnection = Connection & {
+  __typename?: 'CookieConsentConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CookieConsentConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -1922,6 +2062,10 @@ export type Mutation = {
   createFormConfig: FormConfig;
   updateDynamicForms: DynamicForms;
   createDynamicForms: DynamicForms;
+  updateLegal: Legal;
+  createLegal: Legal;
+  updateCookieConsent: CookieConsent;
+  createCookieConsent: CookieConsent;
 };
 
 
@@ -2137,6 +2281,30 @@ export type MutationCreateDynamicFormsArgs = {
   params: DynamicFormsMutation;
 };
 
+
+export type MutationUpdateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
+export type MutationCreateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
+export type MutationUpdateCookieConsentArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CookieConsentMutation;
+};
+
+
+export type MutationCreateCookieConsentArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CookieConsentMutation;
+};
+
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
@@ -2153,6 +2321,8 @@ export type DocumentUpdateMutation = {
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
+  legal?: InputMaybe<LegalMutation>;
+  cookieConsent?: InputMaybe<CookieConsentMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2172,6 +2342,8 @@ export type DocumentMutation = {
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
+  legal?: InputMaybe<LegalMutation>;
+  cookieConsent?: InputMaybe<CookieConsentMutation>;
 };
 
 export type HomeHeroButtonsMutation = {
@@ -2727,6 +2899,40 @@ export type DynamicFormsMutation = {
   fields?: InputMaybe<Array<InputMaybe<DynamicFormsFieldsMutation>>>;
 };
 
+export type LegalSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
+  embeddedFormSlug?: InputMaybe<Scalars['String']['input']>;
+  seo?: InputMaybe<LegalSeoMutation>;
+};
+
+export type CookieConsentCategoriesMutation = {
+  key?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  alwaysActive?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CookieConsentMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  intro?: InputMaybe<Scalars['JSON']['input']>;
+  showMoreText?: InputMaybe<Scalars['String']['input']>;
+  showMoreUrl?: InputMaybe<Scalars['String']['input']>;
+  btnReject?: InputMaybe<Scalars['String']['input']>;
+  btnSave?: InputMaybe<Scalars['String']['input']>;
+  btnAccept?: InputMaybe<Scalars['String']['input']>;
+  alwaysActiveLabel?: InputMaybe<Scalars['String']['input']>;
+  categories?: InputMaybe<Array<InputMaybe<CookieConsentCategoriesMutation>>>;
+};
+
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
@@ -2756,6 +2962,10 @@ export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: st
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
 export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
+
+export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+
+export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3041,6 +3251,44 @@ export type DynamicFormsConnectionQueryVariables = Exact<{
 
 
 export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
+
+export type LegalQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type LegalConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+}>;
+
+
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type CookieConsentQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CookieConsentQuery = { __typename?: 'Query', cookieConsent: { __typename: 'CookieConsent', id: string, title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null } };
+
+export type CookieConsentConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CookieConsentFilter>;
+}>;
+
+
+export type CookieConsentConnectionQuery = { __typename?: 'Query', cookieConsentConnection: { __typename?: 'CookieConsentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CookieConsentConnectionEdges', cursor: string, node?: { __typename: 'CookieConsent', id: string, title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -3558,6 +3806,42 @@ export const DynamicFormsPartsFragmentDoc = gql`
       dependsOn
       showWhen
     }
+  }
+}
+    `;
+export const LegalPartsFragmentDoc = gql`
+    fragment LegalParts on Legal {
+  __typename
+  eyebrow
+  title
+  updatedAt
+  body
+  embeddedFormSlug
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}
+    `;
+export const CookieConsentPartsFragmentDoc = gql`
+    fragment CookieConsentParts on CookieConsent {
+  __typename
+  title
+  intro
+  showMoreText
+  showMoreUrl
+  btnReject
+  btnSave
+  btnAccept
+  alwaysActiveLabel
+  categories {
+    __typename
+    key
+    name
+    description
+    alwaysActive
   }
 }
     `;
@@ -4416,6 +4700,120 @@ export const DynamicFormsConnectionDocument = gql`
   }
 }
     ${DynamicFormsPartsFragmentDoc}`;
+export const LegalDocument = gql`
+    query legal($relativePath: String!) {
+  legal(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...LegalParts
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const LegalConnectionDocument = gql`
+    query legalConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LegalFilter) {
+  legalConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...LegalParts
+      }
+    }
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const CookieConsentDocument = gql`
+    query cookieConsent($relativePath: String!) {
+  cookieConsent(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CookieConsentParts
+  }
+}
+    ${CookieConsentPartsFragmentDoc}`;
+export const CookieConsentConnectionDocument = gql`
+    query cookieConsentConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CookieConsentFilter) {
+  cookieConsentConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CookieConsentParts
+      }
+    }
+  }
+}
+    ${CookieConsentPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -4508,6 +4906,18 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     dynamicFormsConnection(variables?: DynamicFormsConnectionQueryVariables, options?: C): Promise<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}> {
         return requester<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}, DynamicFormsConnectionQueryVariables>(DynamicFormsConnectionDocument, variables, options);
+      },
+    legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
+        return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);
+      },
+    legalConnection(variables?: LegalConnectionQueryVariables, options?: C): Promise<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}> {
+        return requester<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}, LegalConnectionQueryVariables>(LegalConnectionDocument, variables, options);
+      },
+    cookieConsent(variables: CookieConsentQueryVariables, options?: C): Promise<{data: CookieConsentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentQueryVariables, query: string}> {
+        return requester<{data: CookieConsentQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentQueryVariables, query: string}, CookieConsentQueryVariables>(CookieConsentDocument, variables, options);
+      },
+    cookieConsentConnection(variables?: CookieConsentConnectionQueryVariables, options?: C): Promise<{data: CookieConsentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentConnectionQueryVariables, query: string}> {
+        return requester<{data: CookieConsentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentConnectionQueryVariables, query: string}, CookieConsentConnectionQueryVariables>(CookieConsentConnectionDocument, variables, options);
       }
     };
   }

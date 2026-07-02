@@ -2032,6 +2032,108 @@ export default defineConfig({
           },
         ],
       },
+
+      /* ══════════════════════════════════════
+         LEGALES (páginas de contenido)
+         ══════════════════════════════════════ */
+      {
+        name: "legal",
+        label: "Legales (páginas de contenido)",
+        path: "src/content/legal",
+        format: "json",
+        ui: {
+          router: ({ document }) => `/legales/${document._sys.filename}`,
+        },
+        fields: [
+          { name: "eyebrow", label: "Eyebrow", type: "string" },
+          {
+            name: "title",
+            label: "Título (H1)",
+            type: "string",
+            isTitle: true,
+            required: true,
+          },
+          { name: "updatedAt", label: "Última actualización", type: "datetime" },
+          { name: "body", label: "Contenido", type: "rich-text" },
+          {
+            name: "embeddedFormSlug",
+            label: "Formulario embebido (slug dynamicForms)",
+            type: "string",
+            description:
+              "Opcional. Si se define, incrusta ese formulario dinámico debajo del contenido. Ej: derechos-arco.",
+          },
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta título", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" },
+            ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         CONSENTIMIENTO DE COOKIES (modal)
+         ══════════════════════════════════════ */
+      {
+        name: "cookieConsent",
+        label: "Consentimiento de cookies (modal)",
+        path: "src/content/cookie-consent",
+        format: "json",
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          { name: "title", label: "Título del modal", type: "string" },
+          { name: "intro", label: "Texto introductorio", type: "rich-text" },
+          {
+            name: "showMoreText",
+            label: "Texto del enlace 'Mostrar más'",
+            type: "string",
+          },
+          {
+            name: "showMoreUrl",
+            label: "URL 'Mostrar más'",
+            type: "string",
+          },
+          { name: "btnReject", label: "Texto botón rechazar", type: "string" },
+          { name: "btnSave", label: "Texto botón guardar", type: "string" },
+          { name: "btnAccept", label: "Texto botón aceptar", type: "string" },
+          {
+            name: "alwaysActiveLabel",
+            label: "Etiqueta 'siempre activa'",
+            type: "string",
+          },
+          {
+            name: "categories",
+            label: "Categorías",
+            type: "object",
+            list: true,
+            ui: { itemProps: (c) => ({ label: c?.name || "Categoría" }) },
+            fields: [
+              { name: "key", label: "Clave", type: "string" },
+              { name: "name", label: "Nombre", type: "string" },
+              {
+                name: "description",
+                label: "Descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
+                name: "alwaysActive",
+                label: "Siempre activa",
+                type: "boolean",
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 });

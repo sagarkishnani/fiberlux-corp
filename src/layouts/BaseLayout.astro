@@ -1,6 +1,7 @@
 ---
 import Footer from "../components/shared/Footer.astro";
 import Header from "../components/shared/Header.astro";
+import CookieConsent from "../components/cookies/CookieConsent.astro";
 import client from "../../tina/__generated__/client";
 
 interface Props {
@@ -105,6 +106,7 @@ try {
           <div class="-mt-6 relative z-40">
             <Footer />
           </div>
+          <CookieConsent />
         </Fragment>
       )
     }

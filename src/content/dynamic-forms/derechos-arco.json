@@ -1,0 +1,51 @@
+{
+  "formId": "derechos-arco",
+  "formTitle": "Formato de solicitud de Derechos Fiberlux",
+  "styleVariant": "default",
+  "submitButtonText": "Enviar",
+  "successTitle": "¡Solicitud enviada!",
+  "successMessage": "Tu solicitud de ejercicio de derechos ARCO ha sido registrada. Te responderemos dentro de los plazos legales.",
+  "errorMessage": "Ocurrió un error al enviar tu solicitud. Inténtalo de nuevo.",
+  "validationMessage": "Por favor completa los campos obligatorios.",
+  "privacyText": "He leído y acepto la Política de Privacidad.",
+  "privacyUrl": "/legales/politica-privacidad",
+  "fields": [
+    { "fieldType": "section_header", "label": "Datos del titular de datos personales", "sectionNumber": 1, "order": 1 },
+    { "fieldType": "text", "name": "nombre", "label": "Nombre", "placeholder": "Nombre", "required": true, "width": "half", "order": 2 },
+    { "fieldType": "text", "name": "apellido", "label": "Apellido", "placeholder": "Apellido", "required": true, "width": "half", "order": 3 },
+    { "fieldType": "select", "name": "tipoDoc", "label": "Tipo de documento", "placeholder": "Selecciona", "required": true, "width": "half", "order": 4,
+      "options": [
+        { "value": "dni", "label": "DNI" },
+        { "value": "ce", "label": "Carné de Extranjería" },
+        { "value": "pasaporte", "label": "Pasaporte" },
+        { "value": "ruc", "label": "RUC" }
+      ] },
+    { "fieldType": "text", "name": "numDoc", "label": "N° de documento", "placeholder": "N° de documento", "required": true, "width": "half", "order": 5 },
+    { "fieldType": "email", "name": "correo", "label": "Correo electrónico", "placeholder": "correo@empresa.com", "required": true, "width": "half", "order": 6 },
+    { "fieldType": "tel", "name": "telefono", "label": "Teléfono", "placeholder": "+51 999 999 999", "required": true, "width": "half", "order": 7 },
+    { "fieldType": "text", "name": "direccion", "label": "Dirección", "placeholder": "Dirección", "width": "full", "order": 8 },
+
+    { "fieldType": "section_header", "label": "Datos del representante legal", "sectionNumber": 2, "order": 9 },
+    { "fieldType": "checkbox", "name": "esRepresentante", "label": "Actúo como representante legal del titular de los datos", "width": "full", "order": 10 },
+    { "fieldType": "text", "name": "repNombre", "label": "Nombre del representante", "placeholder": "Nombre y apellido", "width": "half", "order": 11,
+      "conditionalField": { "dependsOn": "esRepresentante", "showWhen": "true" } },
+    { "fieldType": "text", "name": "repDoc", "label": "N° de documento del representante", "placeholder": "N° de documento", "width": "half", "order": 12,
+      "conditionalField": { "dependsOn": "esRepresentante", "showWhen": "true" } },
+
+    { "fieldType": "section_header", "label": "Seleccione el tipo de solicitud que desea ingresar", "sectionNumber": 3, "order": 13 },
+    { "fieldType": "radioGroup", "name": "tipoSolicitud", "label": "Tipo de solicitud", "required": true, "width": "full", "order": 14,
+      "options": [
+        { "value": "acceso", "label": "Acceso", "description": "Solicitar información sobre qué datos personales suyos tratamos y con qué finalidad." },
+        { "value": "rectificacion", "label": "Rectificación", "description": "Corregir datos personales inexactos, incompletos o desactualizados." },
+        { "value": "cancelacion", "label": "Cancelación", "description": "Solicitar la supresión de sus datos cuando ya no sean necesarios para la finalidad." },
+        { "value": "oposicion", "label": "Oposición", "description": "Oponerse al tratamiento de sus datos personales por motivos legítimos." }
+      ] },
+
+    { "fieldType": "section_header", "label": "Detalle de solicitud", "sectionNumber": 4, "order": 15 },
+    { "fieldType": "textarea", "name": "detalle", "label": "Describe tu solicitud", "placeholder": "Detalla tu solicitud…", "required": true, "rows": 4, "width": "full", "order": 16 },
+    { "fieldType": "upload", "name": "adjunto", "label": "Adjuntar archivo", "helpText": "Adjunta una copia de tu documento de identidad (PDF, JPG o PNG).", "accept": ".pdf,.jpg,.jpeg,.png", "width": "full", "order": 17 },
+    { "fieldType": "checkbox", "name": "declaro", "label": "Declaro que la información proporcionada es veraz y exacta.", "required": true, "width": "full", "order": 18 },
+    { "fieldType": "checkbox", "name": "autorizo", "label": "Autorizo el tratamiento de mis datos personales para atender la presente solicitud.", "required": true, "width": "full", "order": 19,
+      "linkText": "tratamiento de mis datos personales", "linkUrl": "/legales/tratamiento-datos" }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Personalizar las preferencias de consentimiento",
+  "intro": "Usamos cookies para ayudarte a navegar de manera eficiente y realizar ciertas funciones. Encontrará información detallada sobre cada una de las cookies bajo cada categoría de consentimiento a continuación.\n\nLas cookies categorizadas como \"Necesarias\" se guardan en su navegador, ya que son esenciales para permitir las funcionalidades básicas del sitio web.",
+  "showMoreText": "Mostrar más",
+  "showMoreUrl": "/legales/politica-cookies",
+  "btnReject": "Rechazar todo",
+  "btnSave": "Guardar mis preferencias",
+  "btnAccept": "Aceptar todo",
+  "alwaysActiveLabel": "Siempre activa",
+  "categories": [
+    {
+      "key": "necesaria",
+      "name": "Necesaria",
+      "alwaysActive": true,
+      "description": "Las cookies necesarias son cruciales para las funciones básicas del sitio web y el sitio web no funcionará de la forma prevista sin ellas. Estas cookies no almacenan ningún dato de identificación personal."
+    },
+    {
+      "key": "funcional",
+      "name": "Funcional",
+      "alwaysActive": false,
+      "description": "Las cookies funcionales ayudan a realizar ciertas funcionalidades, como compartir el contenido del sitio web en plataformas de redes sociales, recopilar comentarios y otras características de terceros."
+    },
+    {
+      "key": "analitica",
+      "name": "Analítica",
+      "alwaysActive": false,
+      "description": "Las cookies analíticas se utilizan para comprender cómo interactúan los visitantes con el sitio web. Estas cookies ayudan a proporcionar información sobre métricas como el número de visitantes, el porcentaje de rebote, la fuente de tráfico, etc."
+    }
+  ]
+}

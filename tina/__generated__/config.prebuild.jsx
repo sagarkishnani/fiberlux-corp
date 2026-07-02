@@ -1934,6 +1934,105 @@ var config_default = defineConfig({
             ]
           }
         ]
+      },
+      /* ══════════════════════════════════════
+         LEGALES (páginas de contenido)
+         ══════════════════════════════════════ */
+      {
+        name: "legal",
+        label: "Legales (p\xE1ginas de contenido)",
+        path: "src/content/legal",
+        format: "json",
+        ui: {
+          router: ({ document }) => `/legales/${document._sys.filename}`
+        },
+        fields: [
+          { name: "eyebrow", label: "Eyebrow", type: "string" },
+          {
+            name: "title",
+            label: "T\xEDtulo (H1)",
+            type: "string",
+            isTitle: true,
+            required: true
+          },
+          { name: "updatedAt", label: "\xDAltima actualizaci\xF3n", type: "datetime" },
+          { name: "body", label: "Contenido", type: "rich-text" },
+          {
+            name: "embeddedFormSlug",
+            label: "Formulario embebido (slug dynamicForms)",
+            type: "string",
+            description: "Opcional. Si se define, incrusta ese formulario din\xE1mico debajo del contenido. Ej: derechos-arco."
+          },
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta t\xEDtulo", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
+         CONSENTIMIENTO DE COOKIES (modal)
+         ══════════════════════════════════════ */
+      {
+        name: "cookieConsent",
+        label: "Consentimiento de cookies (modal)",
+        path: "src/content/cookie-consent",
+        format: "json",
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          { name: "title", label: "T\xEDtulo del modal", type: "string" },
+          { name: "intro", label: "Texto introductorio", type: "rich-text" },
+          {
+            name: "showMoreText",
+            label: "Texto del enlace 'Mostrar m\xE1s'",
+            type: "string"
+          },
+          {
+            name: "showMoreUrl",
+            label: "URL 'Mostrar m\xE1s'",
+            type: "string"
+          },
+          { name: "btnReject", label: "Texto bot\xF3n rechazar", type: "string" },
+          { name: "btnSave", label: "Texto bot\xF3n guardar", type: "string" },
+          { name: "btnAccept", label: "Texto bot\xF3n aceptar", type: "string" },
+          {
+            name: "alwaysActiveLabel",
+            label: "Etiqueta 'siempre activa'",
+            type: "string"
+          },
+          {
+            name: "categories",
+            label: "Categor\xEDas",
+            type: "object",
+            list: true,
+            ui: { itemProps: (c) => ({ label: c?.name || "Categor\xEDa" }) },
+            fields: [
+              { name: "key", label: "Clave", type: "string" },
+              { name: "name", label: "Nombre", type: "string" },
+              {
+                name: "description",
+                label: "Descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "alwaysActive",
+                label: "Siempre activa",
+                type: "boolean"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

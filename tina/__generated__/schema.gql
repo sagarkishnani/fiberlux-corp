@@ -84,6 +84,10 @@ type Query {
   formConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormConfigFilter): FormConfigConnection!
   dynamicForms(relativePath: String): DynamicForms!
   dynamicFormsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DynamicFormsFilter): DynamicFormsConnection!
+  legal(relativePath: String): Legal!
+  legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
+  cookieConsent(relativePath: String): CookieConsent!
+  cookieConsentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CookieConsentFilter): CookieConsentConnection!
 }
 
 input DocumentFilter {
@@ -102,6 +106,8 @@ input DocumentFilter {
   infoAbonados: InfoAbonadosFilter
   formConfig: FormConfigFilter
   dynamicForms: DynamicFormsFilter
+  legal: LegalFilter
+  cookieConsent: CookieConsentFilter
 }
 
 type DocumentConnectionEdges {
@@ -127,7 +133,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -1488,6 +1494,102 @@ type DynamicFormsConnection implements Connection {
   edges: [DynamicFormsConnectionEdges]
 }
 
+type LegalSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type Legal implements Node & Document {
+  eyebrow: String
+  title: String!
+  updatedAt: String
+  body: JSON
+  embeddedFormSlug: String
+  seo: LegalSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input LegalSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input LegalFilter {
+  eyebrow: StringFilter
+  title: StringFilter
+  updatedAt: DatetimeFilter
+  body: RichTextFilter
+  embeddedFormSlug: StringFilter
+  seo: LegalSeoFilter
+}
+
+type LegalConnectionEdges {
+  cursor: String!
+  node: Legal
+}
+
+type LegalConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [LegalConnectionEdges]
+}
+
+type CookieConsentCategories {
+  key: String
+  name: String
+  description: String
+  alwaysActive: Boolean
+}
+
+type CookieConsent implements Node & Document {
+  title: String
+  intro: JSON
+  showMoreText: String
+  showMoreUrl: String
+  btnReject: String
+  btnSave: String
+  btnAccept: String
+  alwaysActiveLabel: String
+  categories: [CookieConsentCategories]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CookieConsentCategoriesFilter {
+  key: StringFilter
+  name: StringFilter
+  description: StringFilter
+  alwaysActive: BooleanFilter
+}
+
+input CookieConsentFilter {
+  title: StringFilter
+  intro: RichTextFilter
+  showMoreText: StringFilter
+  showMoreUrl: StringFilter
+  btnReject: StringFilter
+  btnSave: StringFilter
+  btnAccept: StringFilter
+  alwaysActiveLabel: StringFilter
+  categories: CookieConsentCategoriesFilter
+}
+
+type CookieConsentConnectionEdges {
+  cursor: String!
+  node: CookieConsent
+}
+
+type CookieConsentConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CookieConsentConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -1524,6 +1626,10 @@ type Mutation {
   createFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
   updateDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
   createDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
+  updateLegal(relativePath: String!, params: LegalMutation!): Legal!
+  createLegal(relativePath: String!, params: LegalMutation!): Legal!
+  updateCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
+  createCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
 }
 
 input DocumentUpdateMutation {
@@ -1542,6 +1648,8 @@ input DocumentUpdateMutation {
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
+  legal: LegalMutation
+  cookieConsent: CookieConsentMutation
   relativePath: String
 }
 
@@ -1561,6 +1669,8 @@ input DocumentMutation {
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
+  legal: LegalMutation
+  cookieConsent: CookieConsentMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -2114,6 +2224,40 @@ input DynamicFormsMutation {
   privacyUrl: String
   dataUrl: String
   fields: [DynamicFormsFieldsMutation]
+}
+
+input LegalSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input LegalMutation {
+  eyebrow: String
+  title: String
+  updatedAt: String
+  body: JSON
+  embeddedFormSlug: String
+  seo: LegalSeoMutation
+}
+
+input CookieConsentCategoriesMutation {
+  key: String
+  name: String
+  description: String
+  alwaysActive: Boolean
+}
+
+input CookieConsentMutation {
+  title: String
+  intro: JSON
+  showMoreText: String
+  showMoreUrl: String
+  btnReject: String
+  btnSave: String
+  btnAccept: String
+  alwaysActiveLabel: String
+  categories: [CookieConsentCategoriesMutation]
 }
 
 schema {
