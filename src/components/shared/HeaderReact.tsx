@@ -128,6 +128,9 @@ export default function HeaderReact({
   // menu overlay is purple, so controls go white in both themes).
   const isLight = theme === "light";
   const controlsDark = isLight && !menuOpen;
+  const barColor = controlsDark ? "bg-greyscale-darkest" : "bg-white";
+  const controlText = controlsDark ? "text-greyscale-darkest" : "text-white";
+  const logoFilter = controlsDark ? "brightness-0" : "brightness-0 invert";
 
   const mainLinks = ((nav?.links || []).filter(Boolean) as NavLink[]).filter(
     (l) => l.text !== "Inicio"
@@ -244,26 +247,26 @@ export default function HeaderReact({
           {/* Left: Hamburger / Close */}
           <button
             onClick={toggleMenu}
-            className="flex items-center gap-3 text-white text-sm font-medium z-50"
+            className={`flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
             aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={menuOpen}
           >
             <div className="w-7 h-3.5 relative flex flex-col justify-between">
               <span
                 className={`
-                block h-[2px] bg-white rounded-full transition-all duration-300 origin-center
+                block h-[2px] ${barColor} rounded-full transition-all duration-300 origin-center
                 ${menuOpen ? "rotate-0 translate-y-[5.5px] w-7 opacity-100" : "w-7"}
               `}
               />
               <span
                 className={`
-                block h-[2px] bg-white rounded-full transition-all duration-300
+                block h-[2px] ${barColor} rounded-full transition-all duration-300
                 ${menuOpen ? "opacity-0 w-0" : "w-7 opacity-100"}
               `}
               />
               <span
                 className={`
-                block h-[2px] bg-white rounded-full transition-all duration-300 origin-center
+                block h-[2px] ${barColor} rounded-full transition-all duration-300 origin-center
                 ${menuOpen ? "rotate-0 -translate-y-[5.5px] w-0 opacity-0" : "w-7"}
               `}
               />
@@ -287,7 +290,7 @@ export default function HeaderReact({
             <img
               src={logoSrc}
               alt="Fiberlux"
-              className="h-5 w-auto brightness-0 invert"
+              className={`h-5 w-auto ${logoFilter}`}
             />
           </a>
         </div>
