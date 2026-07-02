@@ -23,19 +23,44 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
   const carouselRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [leftPad, setLeftPad] = useState(80);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   /* ── Measure left padding from content container ── */
   useEffect(() => {
     const measure = () => {
       if (contentRef.current) {
         const rect = contentRef.current.getBoundingClientRect();
-        setLeftPad(rect.left);
+        const paddingLeft =
+          parseFloat(getComputedStyle(contentRef.current).paddingLeft) || 0;
+        // Align the carousel's first card with the inner content (title + arrows),
+        // not the container's outer edge — rect.left excludes the px-16 padding.
+        setLeftPad(rect.left + paddingLeft);
       }
     };
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
+
+  /* ── Track scroll position to enable/disable the arrows ── */
+  const updateArrows = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    updateArrows();
+    const el = carouselRef.current;
+    el?.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    return () => {
+      el?.removeEventListener('scroll', updateArrows);
+      window.removeEventListener('resize', updateArrows);
+    };
+  }, [updateArrows]);
 
   /* ── Drag to scroll ── */
   const isDragging = useRef(false);
@@ -142,6 +167,10 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
             cursor: 'grab',
             paddingLeft: `${leftPad}px`,
             paddingRight: 0,
+            // Without this, snap-mandatory pulls the first card flush to the
+            // container edge and cancels the padding — keep the snap start
+            // aligned with the padding so the first card lines up with the title/arrows.
+            scrollPaddingLeft: `${leftPad}px`,
           }}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
@@ -156,7 +185,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
                 return (
                   <article
                     key={post._sys.filename}
-                    className="snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                    className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
                   >
                     <BlogCard
                       title={post.title || 'Sin título'}
@@ -172,7 +201,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
             : [1, 2, 3].map((_, i) => (
                 <article
                   key={i}
-                  className="snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                  className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
                 >
                   <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[400px] flex items-center justify-center text-white/20 text-sm">
                     Blog card — próximamente
@@ -189,7 +218,12 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
         <div className="flex gap-0 mt-6">
           <button
             onClick={() => scroll('left')}
-            className="w-11 h-11 rounded-l-xl bg-greyscale-dark/50 flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-greyscale-dark/70 transition-all"
+            disabled={!canScrollLeft}
+            className={`w-11 h-11 rounded-l-xl flex items-center justify-center transition-all ${
+              canScrollLeft
+                ? 'bg-brand-purple text-white hover:bg-brand-purple-dark'
+                : 'bg-greyscale-dark/50 text-white/30 cursor-not-allowed'
+            }`}
             aria-label="Anterior"
           >
             <svg
@@ -208,7 +242,12 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
           </button>
           <button
             onClick={() => scroll('right')}
-            className="w-11 h-11 rounded-r-xl bg-brand-purple flex items-center justify-center text-white hover:bg-brand-purple-dark transition-all"
+            disabled={!canScrollRight}
+            className={`w-11 h-11 rounded-r-xl flex items-center justify-center transition-all ${
+              canScrollRight
+                ? 'bg-brand-purple text-white hover:bg-brand-purple-dark'
+                : 'bg-greyscale-dark/50 text-white/30 cursor-not-allowed'
+            }`}
             aria-label="Siguiente"
           >
             <svg

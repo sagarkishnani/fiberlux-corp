@@ -1,0 +1,26 @@
+<svg width="640" height="400" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ciberseguridad">
+  <defs>
+    <linearGradient id="secBg" x1="0" y1="0" x2="640" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1A0716"/>
+      <stop offset="0.6" stop-color="#3B0E30"/>
+      <stop offset="1" stop-color="#650F50"/>
+    </linearGradient>
+    <radialGradient id="secGlow" cx="0.7" cy="0.35" r="0.6">
+      <stop offset="0" stop-color="#96237A" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#96237A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#secBg)"/>
+  <rect width="640" height="400" fill="url(#secGlow)"/>
+  <g transform="translate(430 130)" fill="none" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" stroke-linecap="round" opacity="0.92">
+    <path d="M70 6 L128 30 V96 C128 140 102 168 70 182 C38 168 12 140 12 96 V30 Z"/>
+    <path d="M48 92 l16 18 l30 -38" stroke-width="7"/>
+  </g>
+  <g stroke="#D46FBE" stroke-opacity="0.4" stroke-width="2">
+    <circle cx="500" cy="222" r="118" fill="none"/>
+    <circle cx="500" cy="222" r="150" fill="none"/>
+  </g>
+  <text x="48" y="120" font-family="Poppins, 'Segoe UI', sans-serif" font-size="30" font-weight="700" fill="#ffffff" fill-opacity="0.85" letter-spacing="2">FIBERLUX</text>
+  <text x="46" y="330" font-family="Poppins, 'Segoe UI', sans-serif" font-size="60" font-weight="800" fill="#ffffff">Seguridad</text>
+  <text x="48" y="366" font-family="Poppins, 'Segoe UI', sans-serif" font-size="22" font-weight="500" fill="#ffffff" fill-opacity="0.7">Gestionada 24/7</text>
+</svg>
