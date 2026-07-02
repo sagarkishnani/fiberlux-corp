@@ -1,0 +1,56 @@
+{
+  "eyebrow": "— LEGAL",
+  "title": "Tratamiento de datos personales",
+  "updatedAt": "2026-01-01T00:00:00.000Z",
+  "body": {
+    "type": "root",
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          { "type": "text", "text": "El USUARIO, persona natural titular de los datos personales, otorga previa, informada, expresa y plena autorización para que sus datos personales, indicados e ingresados en " },
+          { "type": "a", "url": "https://fiberlux.com", "children": [{ "type": "text", "text": "https://fiberlux.com" }] },
+          { "type": "text", "text": ", queden incorporados en el banco de datos denominado \"Usuarios de medios digitales\", inscrito en el Registro Nacional de Protección de Datos Personales, y/o \"Clientes actuales y potenciales\", de conformidad con las disposiciones legales sobre protección de datos personales. [completar código de banco de datos]" }
+        ]
+      },
+      {
+        "type": "p",
+        "children": [
+          { "type": "text", "text": "En base a la autorización previa, usted acepta el uso de sus datos personales para:", "bold": true }
+        ]
+      },
+      {
+        "type": "ol",
+        "children": [
+          { "type": "li", "children": [{ "type": "lic", "children": [{ "type": "text", "text": "El contacto para participar en estudios de investigación de mercado." }] }] },
+          { "type": "li", "children": [{ "type": "lic", "children": [{ "type": "text", "text": "El envío de anuncios comerciales." }] }] },
+          { "type": "li", "children": [{ "type": "lic", "children": [{ "type": "text", "text": "La comercialización de productos o servicios." }] }] },
+          { "type": "li", "children": [{ "type": "lic", "children": [{ "type": "text", "text": "La entrega de información sobre líneas de interés del USUARIO." }] }] }
+        ]
+      },
+      {
+        "type": "p",
+        "children": [
+          { "type": "text", "text": "Lo anteriormente señalado podrá ser realizado por FIBERLUX por cuenta propia o a través de terceros, quienes únicamente podrán realizar el tratamiento de los datos con la finalidad antes descrita en calidad de encargados, para lo cual no se necesita consentimiento previo; sin embargo, de existir dicho supuesto será debidamente informado a los suscriptores de acuerdo a lo dispuesto por el artículo 15° de la Ley N° 29733, Ley de Protección de Datos Personales." }
+        ]
+      },
+      {
+        "type": "p",
+        "children": [
+          { "type": "text", "text": "Para acceder a la información contenida en el enlace es requisito indispensable y obligatorio contar con el presente consentimiento sobre el tratamiento de sus datos personales, produciendo su negativa la imposibilidad de brindar el servicio de forma idónea y eficaz. El plazo de duración de dicho consentimiento es indefinido. Asimismo, usted ha sido informado de que FIBERLUX podrá tratar, transferir, acceder, utilizar o facilitar la información brindada —para tales finalidades— con las demás empresas de su Grupo Económico." }
+        ]
+      },
+      {
+        "type": "blockquote",
+        "children": [
+          { "type": "text", "text": "Adicionalmente, usted declara haber sido informado por FIBERLUX sobre el ejercicio de los derechos de acceso, rectificación, cancelación y oposición como titular de tales datos personales." }
+        ]
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Tratamiento de datos personales | Fiberlux",
+    "metaDescription": "Información sobre el tratamiento de datos personales de los usuarios de Fiberlux.",
+    "ogImage": ""
+  }
+}
