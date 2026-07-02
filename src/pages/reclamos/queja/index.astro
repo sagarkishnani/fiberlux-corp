@@ -6,12 +6,20 @@ import DynamicForm from "../../../components/dynamic-form/DynamicForm.astro";
 <BaseLayout
   title="Formulario de Queja"
   description="Interponga su queja por transgresión de normas de procedimiento."
+  headerTheme="light"
 >
   <main>
-    <div
-      style={{ maxWidth: "800px", margin: "0 auto", padding: "48px 24px 80px" }}
-    >
-      <DynamicForm formSlug="queja" />
-    </div>
+    <section style={{ padding: "64px 0 80px", backgroundColor: "#ffffff" }}>
+      <div
+        style={{
+          maxWidth: "800px",
+          margin: "0 auto",
+          padding: "0 24px",
+          fontFamily: "Poppins, sans-serif",
+        }}
+      >
+        <DynamicForm formSlug="queja" />
+      </div>
+    </section>
   </main>
 </BaseLayout>
