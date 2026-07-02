@@ -1,0 +1,24 @@
+---
+/**
+ * CookieConsent wrapper — resolves the cookieConsent single-doc from TinaCMS.
+ * Mounted globally in BaseLayout; the React island decides visibility on the client.
+ */
+import { client } from "../../../tina/__generated__/client";
+import CookieConsentReact from "./CookieConsentReact.tsx";
+
+let result: any = null;
+try {
+  result = await client.queries.cookieConsent({ relativePath: "index.json" });
+} catch {}
+---
+
+{
+  result && (
+    <CookieConsentReact
+      client:idle
+      query={result.query}
+      variables={result.variables}
+      data={result.data}
+    />
+  )
+}
