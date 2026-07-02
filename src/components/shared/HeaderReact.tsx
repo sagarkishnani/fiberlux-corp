@@ -21,6 +21,7 @@ interface HeaderProps {
   query: string;
   variables: GlobalQueryVariables;
   data: GlobalQuery;
+  theme?: "light" | "dark";
 }
 
 interface NavGrandChild {
@@ -96,6 +97,7 @@ export default function HeaderReact({
   query,
   variables,
   data: initialData,
+  theme = "dark",
 }: HeaderProps) {
   const { data } = useTina<GlobalQuery>({
     query,
@@ -121,6 +123,11 @@ export default function HeaderReact({
 
   /* ── Derived data ── */
   const logoSrc = headerConfig?.logo || DEFAULT_LOGO;
+
+  // Light theme: dark controls, but only while the menu is closed (the open
+  // menu overlay is purple, so controls go white in both themes).
+  const isLight = theme === "light";
+  const controlsDark = isLight && !menuOpen;
 
   const mainLinks = ((nav?.links || []).filter(Boolean) as NavLink[]).filter(
     (l) => l.text !== "Inicio"
