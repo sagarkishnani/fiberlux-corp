@@ -295,6 +295,10 @@
           {
             "text": "Formulario de queja",
             "url": "/reclamos/queja"
+          },
+          {
+            "text": "Preferencias de cookies",
+            "url": "#preferencias-cookies"
           }
         ]
       },
