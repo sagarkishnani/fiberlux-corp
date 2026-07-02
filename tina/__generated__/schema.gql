@@ -86,6 +86,8 @@ type Query {
   dynamicFormsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DynamicFormsFilter): DynamicFormsConnection!
   legal(relativePath: String): Legal!
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
+  cookieConsent(relativePath: String): CookieConsent!
+  cookieConsentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CookieConsentFilter): CookieConsentConnection!
 }
 
 input DocumentFilter {
@@ -105,6 +107,7 @@ input DocumentFilter {
   formConfig: FormConfigFilter
   dynamicForms: DynamicFormsFilter
   legal: LegalFilter
+  cookieConsent: CookieConsentFilter
 }
 
 type DocumentConnectionEdges {
@@ -130,7 +133,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -1535,6 +1538,58 @@ type LegalConnection implements Connection {
   edges: [LegalConnectionEdges]
 }
 
+type CookieConsentCategories {
+  key: String
+  name: String
+  description: String
+  alwaysActive: Boolean
+}
+
+type CookieConsent implements Node & Document {
+  title: String
+  intro: JSON
+  showMoreText: String
+  showMoreUrl: String
+  btnReject: String
+  btnSave: String
+  btnAccept: String
+  alwaysActiveLabel: String
+  categories: [CookieConsentCategories]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CookieConsentCategoriesFilter {
+  key: StringFilter
+  name: StringFilter
+  description: StringFilter
+  alwaysActive: BooleanFilter
+}
+
+input CookieConsentFilter {
+  title: StringFilter
+  intro: RichTextFilter
+  showMoreText: StringFilter
+  showMoreUrl: StringFilter
+  btnReject: StringFilter
+  btnSave: StringFilter
+  btnAccept: StringFilter
+  alwaysActiveLabel: StringFilter
+  categories: CookieConsentCategoriesFilter
+}
+
+type CookieConsentConnectionEdges {
+  cursor: String!
+  node: CookieConsent
+}
+
+type CookieConsentConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CookieConsentConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -1573,6 +1628,8 @@ type Mutation {
   createDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
   updateLegal(relativePath: String!, params: LegalMutation!): Legal!
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
+  updateCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
+  createCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
 }
 
 input DocumentUpdateMutation {
@@ -1592,6 +1649,7 @@ input DocumentUpdateMutation {
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
   legal: LegalMutation
+  cookieConsent: CookieConsentMutation
   relativePath: String
 }
 
@@ -1612,6 +1670,7 @@ input DocumentMutation {
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
   legal: LegalMutation
+  cookieConsent: CookieConsentMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -2180,6 +2239,25 @@ input LegalMutation {
   body: JSON
   embeddedFormSlug: String
   seo: LegalSeoMutation
+}
+
+input CookieConsentCategoriesMutation {
+  key: String
+  name: String
+  description: String
+  alwaysActive: Boolean
+}
+
+input CookieConsentMutation {
+  title: String
+  intro: JSON
+  showMoreText: String
+  showMoreUrl: String
+  btnReject: String
+  btnSave: String
+  btnAccept: String
+  alwaysActiveLabel: String
+  categories: [CookieConsentCategoriesMutation]
 }
 
 schema {
