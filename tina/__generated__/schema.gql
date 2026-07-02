@@ -84,6 +84,8 @@ type Query {
   formConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormConfigFilter): FormConfigConnection!
   dynamicForms(relativePath: String): DynamicForms!
   dynamicFormsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DynamicFormsFilter): DynamicFormsConnection!
+  legal(relativePath: String): Legal!
+  legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
 }
 
 input DocumentFilter {
@@ -102,6 +104,7 @@ input DocumentFilter {
   infoAbonados: InfoAbonadosFilter
   formConfig: FormConfigFilter
   dynamicForms: DynamicFormsFilter
+  legal: LegalFilter
 }
 
 type DocumentConnectionEdges {
@@ -127,7 +130,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -1488,6 +1491,50 @@ type DynamicFormsConnection implements Connection {
   edges: [DynamicFormsConnectionEdges]
 }
 
+type LegalSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type Legal implements Node & Document {
+  eyebrow: String
+  title: String!
+  updatedAt: String
+  body: JSON
+  embeddedFormSlug: String
+  seo: LegalSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input LegalSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input LegalFilter {
+  eyebrow: StringFilter
+  title: StringFilter
+  updatedAt: DatetimeFilter
+  body: RichTextFilter
+  embeddedFormSlug: StringFilter
+  seo: LegalSeoFilter
+}
+
+type LegalConnectionEdges {
+  cursor: String!
+  node: Legal
+}
+
+type LegalConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [LegalConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -1524,6 +1571,8 @@ type Mutation {
   createFormConfig(relativePath: String!, params: FormConfigMutation!): FormConfig!
   updateDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
   createDynamicForms(relativePath: String!, params: DynamicFormsMutation!): DynamicForms!
+  updateLegal(relativePath: String!, params: LegalMutation!): Legal!
+  createLegal(relativePath: String!, params: LegalMutation!): Legal!
 }
 
 input DocumentUpdateMutation {
@@ -1542,6 +1591,7 @@ input DocumentUpdateMutation {
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
+  legal: LegalMutation
   relativePath: String
 }
 
@@ -1561,6 +1611,7 @@ input DocumentMutation {
   infoAbonados: InfoAbonadosMutation
   formConfig: FormConfigMutation
   dynamicForms: DynamicFormsMutation
+  legal: LegalMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -2114,6 +2165,21 @@ input DynamicFormsMutation {
   privacyUrl: String
   dataUrl: String
   fields: [DynamicFormsFieldsMutation]
+}
+
+input LegalSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input LegalMutation {
+  eyebrow: String
+  title: String
+  updatedAt: String
+  body: JSON
+  embeddedFormSlug: String
+  seo: LegalSeoMutation
 }
 
 schema {

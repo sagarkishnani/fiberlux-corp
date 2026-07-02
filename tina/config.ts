@@ -2032,6 +2032,53 @@ export default defineConfig({
           },
         ],
       },
+
+      /* ══════════════════════════════════════
+         LEGALES (páginas de contenido)
+         ══════════════════════════════════════ */
+      {
+        name: "legal",
+        label: "Legales (páginas de contenido)",
+        path: "src/content/legal",
+        format: "json",
+        ui: {
+          router: ({ document }) => `/legales/${document._sys.filename}`,
+        },
+        fields: [
+          { name: "eyebrow", label: "Eyebrow", type: "string" },
+          {
+            name: "title",
+            label: "Título (H1)",
+            type: "string",
+            isTitle: true,
+            required: true,
+          },
+          { name: "updatedAt", label: "Última actualización", type: "datetime" },
+          { name: "body", label: "Contenido", type: "rich-text" },
+          {
+            name: "embeddedFormSlug",
+            label: "Formulario embebido (slug dynamicForms)",
+            type: "string",
+            description:
+              "Opcional. Si se define, incrusta ese formulario dinámico debajo del contenido. Ej: derechos-arco.",
+          },
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta título", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" },
+            ],
+          },
+        ],
+      },
     ],
   },
 });

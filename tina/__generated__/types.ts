@@ -112,6 +112,8 @@ export type Query = {
   formConfigConnection: FormConfigConnection;
   dynamicForms: DynamicForms;
   dynamicFormsConnection: DynamicFormsConnection;
+  legal: Legal;
+  legalConnection: LegalConnection;
 };
 
 
@@ -360,6 +362,21 @@ export type QueryDynamicFormsConnectionArgs = {
   filter?: InputMaybe<DynamicFormsFilter>;
 };
 
+
+export type QueryLegalArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryLegalConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+};
+
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
@@ -376,6 +393,7 @@ export type DocumentFilter = {
   infoAbonados?: InputMaybe<InfoAbonadosFilter>;
   formConfig?: InputMaybe<FormConfigFilter>;
   dynamicForms?: InputMaybe<DynamicFormsFilter>;
+  legal?: InputMaybe<LegalFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -415,7 +433,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1885,6 +1903,54 @@ export type DynamicFormsConnection = Connection & {
   edges?: Maybe<Array<Maybe<DynamicFormsConnectionEdges>>>;
 };
 
+export type LegalSeo = {
+  __typename?: 'LegalSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type Legal = Node & Document & {
+  __typename?: 'Legal';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  embeddedFormSlug?: Maybe<Scalars['String']['output']>;
+  seo?: Maybe<LegalSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type LegalSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type LegalFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  body?: InputMaybe<RichTextFilter>;
+  embeddedFormSlug?: InputMaybe<StringFilter>;
+  seo?: InputMaybe<LegalSeoFilter>;
+};
+
+export type LegalConnectionEdges = {
+  __typename?: 'LegalConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Legal>;
+};
+
+export type LegalConnection = Connection & {
+  __typename?: 'LegalConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -1922,6 +1988,8 @@ export type Mutation = {
   createFormConfig: FormConfig;
   updateDynamicForms: DynamicForms;
   createDynamicForms: DynamicForms;
+  updateLegal: Legal;
+  createLegal: Legal;
 };
 
 
@@ -2137,6 +2205,18 @@ export type MutationCreateDynamicFormsArgs = {
   params: DynamicFormsMutation;
 };
 
+
+export type MutationUpdateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
+export type MutationCreateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
@@ -2153,6 +2233,7 @@ export type DocumentUpdateMutation = {
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
+  legal?: InputMaybe<LegalMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2172,6 +2253,7 @@ export type DocumentMutation = {
   infoAbonados?: InputMaybe<InfoAbonadosMutation>;
   formConfig?: InputMaybe<FormConfigMutation>;
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
+  legal?: InputMaybe<LegalMutation>;
 };
 
 export type HomeHeroButtonsMutation = {
@@ -2727,6 +2809,21 @@ export type DynamicFormsMutation = {
   fields?: InputMaybe<Array<InputMaybe<DynamicFormsFieldsMutation>>>;
 };
 
+export type LegalSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
+  embeddedFormSlug?: InputMaybe<Scalars['String']['input']>;
+  seo?: InputMaybe<LegalSeoMutation>;
+};
+
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
@@ -2756,6 +2853,8 @@ export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: st
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
 export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
+
+export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3041,6 +3140,25 @@ export type DynamicFormsConnectionQueryVariables = Exact<{
 
 
 export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
+
+export type LegalQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type LegalConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+}>;
+
+
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -3558,6 +3676,22 @@ export const DynamicFormsPartsFragmentDoc = gql`
       dependsOn
       showWhen
     }
+  }
+}
+    `;
+export const LegalPartsFragmentDoc = gql`
+    fragment LegalParts on Legal {
+  __typename
+  eyebrow
+  title
+  updatedAt
+  body
+  embeddedFormSlug
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
   }
 }
     `;
@@ -4416,6 +4550,63 @@ export const DynamicFormsConnectionDocument = gql`
   }
 }
     ${DynamicFormsPartsFragmentDoc}`;
+export const LegalDocument = gql`
+    query legal($relativePath: String!) {
+  legal(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...LegalParts
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const LegalConnectionDocument = gql`
+    query legalConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LegalFilter) {
+  legalConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...LegalParts
+      }
+    }
+  }
+}
+    ${LegalPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -4508,6 +4699,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     dynamicFormsConnection(variables?: DynamicFormsConnectionQueryVariables, options?: C): Promise<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}> {
         return requester<{data: DynamicFormsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DynamicFormsConnectionQueryVariables, query: string}, DynamicFormsConnectionQueryVariables>(DynamicFormsConnectionDocument, variables, options);
+      },
+    legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
+        return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);
+      },
+    legalConnection(variables?: LegalConnectionQueryVariables, options?: C): Promise<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}> {
+        return requester<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}, LegalConnectionQueryVariables>(LegalConnectionDocument, variables, options);
       }
     };
   }
