@@ -5,6 +5,7 @@
  */
 import { client } from "../../../tina/__generated__/client";
 import LegalPageReact from "./LegalPageReact.tsx";
+import DynamicForm from "../dynamic-form/DynamicForm.astro";
 
 interface Props {
   slug: string;
@@ -13,6 +14,7 @@ interface Props {
 const { slug } = Astro.props;
 
 const result = await client.queries.legal({ relativePath: `${slug}.json` });
+const embeddedFormSlug = result.data?.legal?.embeddedFormSlug;
 ---
 
 <section style={{ backgroundColor: "#ffffff" }}>
@@ -22,4 +24,19 @@ const result = await client.queries.legal({ relativePath: `${slug}.json` });
     variables={result.variables}
     data={result.data}
   />
+
+  {
+    embeddedFormSlug && (
+      <div
+        style={{
+          maxWidth: "820px",
+          margin: "0 auto",
+          padding: "8px 24px 80px",
+          fontFamily: "Poppins, sans-serif",
+        }}
+      >
+        <DynamicForm formSlug={embeddedFormSlug} />
+      </div>
+    )
+  }
 </section>
