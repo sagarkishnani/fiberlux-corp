@@ -216,7 +216,9 @@ export default function HeaderReact({
   const headerBg = menuOpen
     ? "bg-brand-purple"
     : scrolled
-    ? "bg-greyscale-darkest/80 backdrop-blur-md"
+    ? isLight
+      ? "bg-white/80 backdrop-blur-md border-b border-black/5"
+      : "bg-greyscale-darkest/80 backdrop-blur-md"
     : "bg-transparent";
 
   /* ── Mobile drill data ── */
