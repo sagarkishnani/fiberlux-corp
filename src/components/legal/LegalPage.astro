@@ -1,0 +1,25 @@
+---
+/**
+ * LegalPage — resolves a `legal` collection doc by slug and renders it.
+ * Content via LegalPageReact; the embedded form (if any) is added in a later step.
+ */
+import { client } from "../../../tina/__generated__/client";
+import LegalPageReact from "./LegalPageReact.tsx";
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const result = await client.queries.legal({ relativePath: `${slug}.json` });
+---
+
+<section style={{ backgroundColor: "#ffffff" }}>
+  <LegalPageReact
+    client:load
+    query={result.query}
+    variables={result.variables}
+    data={result.data}
+  />
+</section>
