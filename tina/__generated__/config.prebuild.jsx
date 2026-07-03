@@ -954,6 +954,12 @@ var config_default = defineConfig({
             type: "string",
             ui: { component: "textarea" }
           },
+          {
+            name: "splineSceneUrl",
+            label: "URL de la escena de Spline (hero)",
+            type: "string",
+            description: "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vac\xEDo = sin 3D."
+          },
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "T\xEDtulo de secci\xF3n", type: "string" },
           {
@@ -1036,6 +1042,12 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           { name: "ctaLabel", label: "Texto del bot\xF3n del hero", type: "string" },
+          {
+            name: "splineSceneUrl",
+            label: "URL de la escena de Spline (hero)",
+            type: "string",
+            description: "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vac\xEDo = sin 3D."
+          },
           // ── Bloque de formulario ──
           { name: "formTitle", label: "T\xEDtulo del bloque de formulario", type: "string" },
           {

@@ -1,8 +1,6 @@
-import { useEffect, useState, lazy, Suspense } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
-
-const Spline = lazy(() => import("@splinetool/react-spline"));
+import SplineScene from "../shared/SplineScene";
 
 interface HeroHomeProps {
   query: string;
@@ -17,13 +15,6 @@ export default function HeroHomeReact({
 }: HeroHomeProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
   const hero = data?.home?.hero || initialData?.home?.hero;
-
-  const [splineLoaded, setSplineLoaded] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.matchMedia("(max-width: 768px)").matches);
-  }, []);
 
   if (!hero) return null;
 
@@ -41,40 +32,21 @@ export default function HeroHomeReact({
             transform: "translateZ(0)",
           }}
         >
-          {/* Placeholder mientras carga */}
-          {!splineLoaded && (
-            <div
-              className="absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(ellipse at 70% 50%, rgba(150,35,122,0.15) 0%, transparent 70%)",
-              }}
-            />
-          )}
+          {/* Fondo ambiental (siempre detrás de la escena / loader) */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 70% 50%, rgba(150,35,122,0.2) 0%, transparent 70%)",
+            }}
+          />
 
-          {hero.splineSceneUrl && !isMobile ? (
-            <Suspense fallback={null}>
-              {/* <Spline
-                scene={hero.splineSceneUrl}
-                onLoad={() => setSplineLoaded(true)}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  background: "transparent",
-                  opacity: splineLoaded ? 1 : 0,
-                  transition: "opacity 0.8s ease",
-                }}
-              /> */}
-            </Suspense>
-          ) : (
-            <div
-              className="w-full h-full"
-              style={{
-                background:
-                  "radial-gradient(ellipse at 70% 50%, rgba(150,35,122,0.2) 0%, transparent 70%)",
-              }}
-            />
-          )}
+          {/* Escena 3D (carga condicional + loader + revelación + pausa) */}
+          <SplineScene
+            scene={hero.splineSceneUrl}
+            className="absolute inset-0"
+          />
         </div>
       </div>
 

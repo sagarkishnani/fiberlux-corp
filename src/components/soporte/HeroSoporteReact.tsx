@@ -3,6 +3,7 @@ import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
+import SplineScene from "../shared/SplineScene";
 
 interface HeroSoporteProps {
   query: string;
@@ -63,12 +64,20 @@ export default function HeroSoporteReact({
             </p>
           </div>
 
-          {/* ════ RIGHT — reserved space for the (pending) 3D element ════ */}
+          {/* ════ RIGHT — elemento 3D (desktop) ════ */}
           <div
-            className="hidden lg:block w-full"
-            style={{ minHeight: 360 }}
-            aria-hidden="true"
-          />
+            className="hidden lg:block relative w-full"
+            style={{ minHeight: 440 }}
+          >
+            {page.splineSceneUrl && (
+              <SplineScene
+                scene={page.splineSceneUrl}
+                allowMobile={false}
+                featherEdges
+                className="absolute inset-0"
+              />
+            )}
+          </div>
         </div>
       </div>
 
