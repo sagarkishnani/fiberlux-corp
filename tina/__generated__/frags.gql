@@ -260,6 +260,7 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   breadcrumb
   heading
   intro
+  splineSceneUrl
   sectionTitle
   sectionSubtitle
   channels {
@@ -285,6 +286,7 @@ fragment ServiciosParts on Servicios {
   heading
   intro
   ctaLabel
+  splineSceneUrl
   formTitle
   formSubtitle
 }

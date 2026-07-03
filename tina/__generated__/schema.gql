@@ -850,6 +850,7 @@ type SoporteTecnico implements Node & Document {
   breadcrumb: String
   heading: String
   intro: String
+  splineSceneUrl: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannels]
@@ -878,6 +879,7 @@ input SoporteTecnicoFilter {
   breadcrumb: StringFilter
   heading: StringFilter
   intro: StringFilter
+  splineSceneUrl: StringFilter
   sectionTitle: StringFilter
   sectionSubtitle: StringFilter
   channels: SoporteTecnicoChannelsFilter
@@ -899,6 +901,7 @@ type Servicios implements Node & Document {
   heading: String
   intro: String
   ctaLabel: String
+  splineSceneUrl: String
   formTitle: String
   formSubtitle: String
   id: ID!
@@ -911,6 +914,7 @@ input ServiciosFilter {
   heading: StringFilter
   intro: StringFilter
   ctaLabel: StringFilter
+  splineSceneUrl: StringFilter
   formTitle: StringFilter
   formSubtitle: StringFilter
 }
@@ -1982,6 +1986,7 @@ input SoporteTecnicoMutation {
   breadcrumb: String
   heading: String
   intro: String
+  splineSceneUrl: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannelsMutation]
@@ -1992,6 +1997,7 @@ input ServiciosMutation {
   heading: String
   intro: String
   ctaLabel: String
+  splineSceneUrl: String
   formTitle: String
   formSubtitle: String
 }
