@@ -91,7 +91,7 @@ Spline scenes are embedded via `@splinetool/react-spline` in `HeroHome`. Scene U
 
 ### CMS admin panel
 
-Accessible at `/admin` in dev. Media uploads go to `public/uploads/` (media root `uploads`, public folder `public`).
+Accessible at `/admin` in dev. Media uploads go to `public/` (media root ``, public folder `public`).
 
 ### Specs & references (workflow)
 

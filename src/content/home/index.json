@@ -23,7 +23,7 @@
         "number": "01",
         "title": "Conectividad empresarial",
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
-        "icon": "/uploads/soluciones/conectividad.svg",
+        "icon": "/images/soluciones/conectividad.svg",
         "bullets": [
           "Internet Dedicado (Simétrico)",
           "Lan2Lan (Transmisión de Datos)",
@@ -36,7 +36,7 @@
         "number": "02",
         "title": "Ciberseguridad",
         "description": "Protege tu operación crítica con ciberseguridad.",
-        "icon": "/uploads/soluciones/ciberseguridad.svg",
+        "icon": "/images/soluciones/ciberseguridad.svg",
         "bullets": [
           "Seguridad Perimetral y de Red",
           "Seguridad de Endpoints y Servidores",
@@ -51,7 +51,7 @@
         "number": "03",
         "title": "Data Center, Cloud y Continuidad de Negocio",
         "description": "Infraestructura de Clase Mundial para el corazón de tu Negocio.",
-        "icon": "/uploads/soluciones/datacenter.svg",
+        "icon": "/images/soluciones/datacenter.svg",
         "bullets": [
           "Colocación y Hosting (Housing)",
           "Servidor en la Nube (Cloud Privada)",
@@ -64,7 +64,7 @@
         "number": "04",
         "title": "Servicios gestionados",
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
-        "icon": "/uploads/soluciones/servicios-gestionados.svg",
+        "icon": "/images/soluciones/servicios-gestionados.svg",
         "bullets": [
           "Videovigilancia y Seguridad Electrónica (CCTV)",
           "Networking y Conectividad Inalámbrica",
