@@ -169,7 +169,7 @@ export default function BlogPreviewReact({
             className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none blog-carousel"
             style={{
               cursor: "grab",
-              paddingLeft: `${leftPad}px`,
+              // paddingLeft: `${leftPad}px`,
               paddingRight: 0,
               // Keep snap-mandatory from cancelling the padding so the first card
               // rests aligned and scrollLeft is 0 at start (arrow logic depends on it).

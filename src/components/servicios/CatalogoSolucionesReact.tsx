@@ -115,7 +115,7 @@ export default function CatalogoSolucionesReact({
   const pageItems = items.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   return (
-    <section id="catalogo" className="bg-greyscale-darkest py-16 md:py-24 scroll-mt-24">
+    <section id="catalogo" className="bg-greyscale-darkest py-16 md:py-24 scroll-mt-24 mb-4">
       <div className="max-w-[1440px] mx-auto px-6 md:px-16">
         {catalogo.title && (
           <h2

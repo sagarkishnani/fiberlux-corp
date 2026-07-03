@@ -154,11 +154,13 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
         <div className="max-w-[1440px] mx-auto px-6 sm:px-16 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Fiberlux logo */}
           <div data-tina-field={tinaField(footer as any, 'logo')}>
+            <a href="/">
             <img
               src={logoSrc}
               alt="Fiberlux"
               className="h-6 w-auto brightness-0 invert"
             />
+            </a>
           </div>
 
           {/* Copyright + agency credit */}

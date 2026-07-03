@@ -49,9 +49,13 @@ const metaDescription =
     <HeroSubservicio relativePath={relativePath} />
     <Beneficios relativePath={relativePath} />
     <CasosDeUso relativePath={relativePath} />
-    <Stats title={sub?.whyUsTitle ?? undefined} />
+    <div class="-mt-16 relative z-20">
+      <Stats title={sub?.whyUsTitle ?? undefined} />
+    </div>
     <ServiciosForm prefill={{ servicio: sub?.solucionSlug ?? "" }} />
-    <BlogPreview />
+    <div class="-mt-16 relative z-20">
+      <BlogPreview />
+    </div>
     <FaqSubservicio relativePath={relativePath} />
   </main>
 </BaseLayout>

@@ -54,7 +54,7 @@ export default function CasosDeUsoReact({
   if (!casos.eyebrow && !showStatement) return null;
 
   return (
-    <section className="bg-greyscale-darkest pb-16 md:pb-24">
+    <section className="bg-greyscale-darkest pb-16 md:pb-24 mb-8">
       <div className="max-w-[1264px] mx-auto px-6 md:px-16">
         {casos.eyebrow && (
           <div className="border-t border-white/10 pt-8">

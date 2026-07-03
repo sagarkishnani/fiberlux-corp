@@ -46,9 +46,13 @@ const metaDescription =
     <ValorSolucion relativePath={relativePath} />
     <Partners />
     <CatalogoSoluciones relativePath={relativePath} />
-    <Stats title={service?.whyUsTitle ?? undefined} />
+    <div class="-mt-16 relative z-20">
+      <Stats title={service?.whyUsTitle ?? undefined} />
+    </div>
     <ServiciosForm />
-    <BlogPreview />
+    <div class="-mt-16 relative z-25">
+      <BlogPreview />
+    </div>
     <FaqSolucion relativePath={relativePath} />
   </main>
 </BaseLayout>

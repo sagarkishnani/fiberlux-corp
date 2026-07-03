@@ -1,25 +1,25 @@
 ---
 // src/pages/nosotros.astro
-import { client } from '../../../tina/__generated__/client';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import MissionVisionReact from '../../components/nosotros/MissionVisionReact.tsx';
-import ValuesReact from '../../components/nosotros/ValuesReact.tsx';
-import HeroNosotrosReact from '../../components/nosotros/HeroNosotrosReact';
-import TimelineReact from '../../components/nosotros/TimelineReact.tsx';
-import StatsReact from '../../components/StatsReact';
-import RubrosReact from '../../components/nosotros/RubrosReact.tsx';
+import { client } from "../../../tina/__generated__/client";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MissionVisionReact from "../../components/nosotros/MissionVisionReact.tsx";
+import ValuesReact from "../../components/nosotros/ValuesReact.tsx";
+import HeroNosotrosReact from "../../components/nosotros/HeroNosotrosReact";
+import TimelineReact from "../../components/nosotros/TimelineReact.tsx";
+import StatsReact from "../../components/StatsReact";
+import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
 
-const aboutQuery = await client.queries.about({ relativePath: 'index.json' });
-const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+const aboutQuery = await client.queries.about({ relativePath: "index.json" });
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
 ---
 
 <BaseLayout title="Nosotros">
   <HeroNosotrosReact
-  client:load
-  query={aboutQuery.query}
-  variables={aboutQuery.variables}
-  data={aboutQuery.data}
-/>
+    client:load
+    query={aboutQuery.query}
+    variables={aboutQuery.variables}
+    data={aboutQuery.data}
+  />
   <MissionVisionReact
     client:load
     query={aboutQuery.query}
@@ -38,16 +38,20 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
     variables={aboutQuery.variables}
     data={aboutQuery.data}
   />
-  <StatsReact
-    client:visible
-    query={homeQuery.query}
-    variables={homeQuery.variables}
-    data={homeQuery.data}
-  />
-  <RubrosReact
-    client:visible
-    query={aboutQuery.query}
-    variables={aboutQuery.variables}
-    data={aboutQuery.data}
-  />
+  <div class="-mt-16 relative z-20">
+    <StatsReact
+      client:visible
+      query={homeQuery.query}
+      variables={homeQuery.variables}
+      data={homeQuery.data}
+    />
+  </div>
+  <div class="-mt-16 relative z-30">
+    <RubrosReact
+      client:visible
+      query={aboutQuery.query}
+      variables={aboutQuery.variables}
+      data={aboutQuery.data}
+    />
+  </div>
 </BaseLayout>
