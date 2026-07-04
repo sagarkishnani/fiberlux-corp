@@ -2,19 +2,33 @@
 import Footer from "../components/shared/Footer.astro";
 import Header from "../components/shared/Header.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
+import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
 import client from "../../tina/__generated__/client";
 
 interface Props {
   title?: string;
   description?: string;
   headerTheme?: "light" | "dark";
+  /** Nombre del servicio/solución para personalizar el mensaje de WhatsApp. */
+  whatsappContext?: string;
+  /** Tipo de página para el mensaje de WhatsApp. */
+  whatsappKind?: "servicio" | "solución";
 }
 
 const {
   title = "Fiberlux",
   description = "Soluciones de conectividad y TI para tu empresa",
   headerTheme = "dark",
+  whatsappContext,
+  whatsappKind = "servicio",
 } = Astro.props;
+
+// ─── WhatsApp floating button message (context-aware) ───
+const whatsappMessage = whatsappContext
+  ? `¡Hola Fiberlux! Deseo información sobre ${
+      whatsappKind === "solución" ? "la solución" : "el servicio"
+    } de ${whatsappContext}.`
+  : undefined;
 
 // ─── Maintenance mode check ───
 let maintenanceMode = false;
@@ -107,6 +121,7 @@ try {
             <Footer />
           </div>
           <CookieConsent />
+          <WhatsAppButton client:idle message={whatsappMessage} />
         </Fragment>
       )
     }

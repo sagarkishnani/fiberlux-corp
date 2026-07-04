@@ -40,7 +40,12 @@ const metaDescription =
   service?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
 ---
 
-<BaseLayout title={metaTitle} description={metaDescription}>
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  whatsappContext={service?.title ?? undefined}
+  whatsappKind="solución"
+>
   <main>
     <HeroSolucion relativePath={relativePath} />
     <ValorSolucion relativePath={relativePath} />
