@@ -396,7 +396,7 @@ export default function HeaderReact({
                           </a>
                           {hasGrand && (
                             <div
-                              className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                              className={`grid transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                 subActive
                                   ? "grid-rows-[1fr] opacity-100"
                                   : "grid-rows-[0fr] opacity-0"
