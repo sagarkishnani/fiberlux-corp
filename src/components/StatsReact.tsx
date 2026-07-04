@@ -125,7 +125,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
     <div ref={ref} className="mt-4 mb-4 md:mt-16 md:mb-16 flex flex-col gap-4">
       {/* Card */}
       <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-between min-h-[180px] md:min-h-[380px]"
+        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-between min-h-[200px] md:min-h-[380px]"
         data-tina-field={tinaField(item as any, 'number')}
       >
         {/* Label top */}
@@ -133,18 +133,18 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
           {item.label}
         </p>
 
-        {/* Big number bottom */}
-        <p className="m-auto">
+        {/* Big number — bottom-left on mobile, centered on desktop */}
+        <p className="mt-auto md:m-auto">
           {prefix && (
-            <span className="text-white text-[40px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold">
+            <span className="text-white text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
               {prefix}
             </span>
           )}
-          <span className="text-white text-[40px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold">
+          <span className="text-white text-[44px] leading-[48px] sm:text-[56px] sm:leading-[60px] font-bold">
             {displayNumber}
           </span>
           {suffix && (
-            <span className="text-white/90 text-[28px] leading-[32px] font-semibold ml-1">
+            <span className="text-white/90 text-[24px] leading-[28px] sm:text-[28px] sm:leading-[32px] font-semibold ml-1.5">
               {suffix}
             </span>
           )}
