@@ -240,7 +240,7 @@ export default function HeaderReact({
       {/* ═══ HEADER BAR ═══ */}
       <header
         className={`
-          fixed top-0 left-0 right-0 z-50
+          fixed top-0 left-0 right-0 z-[80]
           transition-all duration-300
           ${headerBg}
           ${headerVisible ? "translate-y-0" : "-translate-y-full"}
@@ -302,7 +302,7 @@ export default function HeaderReact({
       {/* ═══ MENU OVERLAY ═══ */}
       <div
         className={`
-          fixed top-0 left-0 right-0 z-40
+          fixed top-0 left-0 right-0 z-[70]
           bg-brand-purple
           h-screen md:h-[calc(100vh-80px)]
           md:rounded-b-[48px]
