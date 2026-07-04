@@ -122,10 +122,10 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const displayNumber = formatNumber(count, decimals, hasCommas);
 
   return (
-    <div ref={ref} className="mt-16 mb-16 flex flex-col gap-4">
+    <div ref={ref} className="mt-4 mb-4 md:mt-16 md:mb-16 flex flex-col gap-4">
       {/* Card */}
       <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-between min-h-[380px]"
+        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-between min-h-[180px] md:min-h-[380px]"
         data-tina-field={tinaField(item as any, 'number')}
       >
         {/* Label top */}
