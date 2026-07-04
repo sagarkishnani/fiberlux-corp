@@ -1,0 +1,65 @@
+{
+  "title": "Videovigilancia Gestionada",
+  "slug": "videovigilancia-gestionada",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Videovigilancia Gestionada",
+    "intro": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
+    "note": "Ideal para organizaciones que requieren visibilidad permanente de sus instalaciones sin asumir la complejidad de administrar la infraestructura internamente.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "disponibilidad",
+        "title": "Monitoreo centralizado",
+        "text": "Supervisa cámaras y dispositivos desde un solo lugar."
+      },
+      {
+        "icon": "escudo",
+        "title": "Mayor control y visibilidad",
+        "text": "Protege activos, instalaciones y operaciones."
+      },
+      {
+        "icon": "red",
+        "title": "Acceso remoto seguro",
+        "text": "Visualización en tiempo real y acceso a grabaciones desde cualquier lugar."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Oficinas corporativas, centros logísticos, plantas industriales, instituciones educativas, salud, retail y organizaciones con **múltiples sedes**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Videovigilancia Gestionada | Fiberlux Corp",
+    "metaDescription": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
+    "ogImage": ""
+  }
+}

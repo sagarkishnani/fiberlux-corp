@@ -1,0 +1,70 @@
+{
+  "title": "Microservicios",
+  "slug": "microservicios",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Microservicios",
+    "intro": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
+    "note": "Ideal para organizaciones que desarrollan o modernizan aplicaciones empresariales y requieren mayor flexibilidad, disponibilidad y velocidad de despliegue.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escalabilidad",
+        "title": "Escalabilidad dinámica",
+        "text": "Aplicaciones y servicios que crecen según la demanda."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Mayor resiliencia",
+        "text": "Funciones distribuidas en componentes independientes."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Despliegues más rápidos",
+        "text": "Entregas consistentes mediante contenedores Docker."
+      },
+      {
+        "icon": "soporte",
+        "title": "Gestión con Kubernetes",
+        "text": "Orquestación centralizada y automatizada de cargas de trabajo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Plataformas digitales, aplicaciones empresariales modernas, entornos DevOps, e-commerce y **fintechs**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Microservicios | Fiberlux Corp",
+    "metaDescription": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
+    "ogImage": ""
+  }
+}

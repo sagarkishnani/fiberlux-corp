@@ -1,0 +1,65 @@
+{
+  "title": "Gestión de Redes LAN",
+  "slug": "gestion-redes-lan",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Gestión de Redes LAN",
+    "intro": "Diseño, configuración, actualización y administración proactiva de la infraestructura de red LAN, incluyendo switches, segmentación y políticas de conectividad.",
+    "note": "Ideal para organizaciones que requieren una red estable, segura y preparada para soportar aplicaciones críticas y múltiples dispositivos.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "soporte",
+        "title": "Administración centralizada",
+        "text": "Gestiona toda la infraestructura LAN desde un punto."
+      },
+      {
+        "icon": "escudo",
+        "title": "Segmentación y control de accesos",
+        "text": "Aísla el tráfico y refuerza la seguridad interna."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Mayor rendimiento interno",
+        "text": "Monitoreo y gestión proactiva de la red."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Campus universitarios, centros corporativos, plantas industriales y organizaciones con **múltiples áreas o edificios**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Gestión de Redes LAN | Fiberlux Corp",
+    "metaDescription": "Diseño, configuración, actualización y administración proactiva de la infraestructura de red LAN, incluyendo switches, segmentación y políticas de conectividad.",
+    "ogImage": ""
+  }
+}

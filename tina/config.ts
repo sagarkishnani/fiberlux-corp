@@ -402,6 +402,29 @@ export default defineConfig({
             ],
           },
 
+          // ── Partners tecnológicos (por categoría; marquee propio de la solución) ──
+          {
+            name: "partners",
+            label: "Partners tecnológicos",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "title", label: "Título", type: "string" },
+              {
+                name: "logos",
+                label: "Logos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.alt || "Logo" }) },
+                fields: [
+                  { name: "image", label: "Logo", type: "image" },
+                  { name: "alt", label: "Alt / Nombre", type: "string" },
+                  { name: "url", label: "Enlace (opcional)", type: "string" },
+                ],
+              },
+            ],
+          },
+
           // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
           {
             name: "whyUsTitle",
@@ -415,6 +438,13 @@ export default defineConfig({
             label: "Preguntas frecuentes",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar sección",
+                type: "boolean",
+                description:
+                  "Desactívalo para ocultar el bloque de preguntas frecuentes en esta página.",
+              },
               { name: "title", label: "Título de sección", type: "string" },
               {
                 name: "items",
@@ -611,6 +641,13 @@ export default defineConfig({
             label: "Preguntas frecuentes",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar sección",
+                type: "boolean",
+                description:
+                  "Desactívalo para ocultar el bloque de preguntas frecuentes en esta página.",
+              },
               { name: "title", label: "Título de sección", type: "string" },
               {
                 name: "items",

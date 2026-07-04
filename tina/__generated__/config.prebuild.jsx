@@ -383,6 +383,28 @@ var config_default = defineConfig({
               }
             ]
           },
+          // ── Partners tecnológicos (por categoría; marquee propio de la solución) ──
+          {
+            name: "partners",
+            label: "Partners tecnol\xF3gicos",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "title", label: "T\xEDtulo", type: "string" },
+              {
+                name: "logos",
+                label: "Logos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item) => ({ label: item?.alt || "Logo" }) },
+                fields: [
+                  { name: "image", label: "Logo", type: "image" },
+                  { name: "alt", label: "Alt / Nombre", type: "string" },
+                  { name: "url", label: "Enlace (opcional)", type: "string" }
+                ]
+              }
+            ]
+          },
           // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
           {
             name: "whyUsTitle",
@@ -395,6 +417,12 @@ var config_default = defineConfig({
             label: "Preguntas frecuentes",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar secci\xF3n",
+                type: "boolean",
+                description: "Desact\xEDvalo para ocultar el bloque de preguntas frecuentes en esta p\xE1gina."
+              },
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
               {
                 name: "items",
@@ -578,6 +606,12 @@ var config_default = defineConfig({
             label: "Preguntas frecuentes",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar secci\xF3n",
+                type: "boolean",
+                description: "Desact\xEDvalo para ocultar el bloque de preguntas frecuentes en esta p\xE1gina."
+              },
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
               {
                 name: "items",

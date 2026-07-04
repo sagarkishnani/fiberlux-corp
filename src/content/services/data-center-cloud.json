@@ -8,7 +8,7 @@
     "formTitle": "¿Conversamos?"
   },
   "valor": {
-    "title": "El valor de la resiliencia",
+    "title": "Tus operaciones no pueden parar",
     "subtitle": "La continuidad no se negocia: se respalda en cada capa.",
     "cards": [
       {
@@ -19,7 +19,13 @@
       {
         "heading": "Nuestra solución",
         "text": "Data center, nube y planes de continuidad diseñados para garantizar disponibilidad, respaldo y recuperación ante desastres.",
-        "tags": ["Colocación", "Nube privada", "Nube pública", "Backup", "DRaaS"],
+        "tags": [
+          "Colocación",
+          "Nube privada",
+          "Nube pública",
+          "Backup",
+          "DRaaS"
+        ],
         "image": ""
       },
       {
@@ -97,8 +103,40 @@
       }
     ]
   },
+  "partners": {
+    "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "title": "Trabajamos con los líderes de la industria",
+    "logos": [
+      {
+        "image": "/images/partners/huawei.svg",
+        "alt": "Huawei",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/acronis.svg",
+        "alt": "Acronis",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/aws.svg",
+        "alt": "AWS",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/azure.svg",
+        "alt": "Azure",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/veeam.svg",
+        "alt": "Veeam",
+        "url": ""
+      }
+    ]
+  },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
+    "visible": true,
     "title": "Preguntas frecuentes",
     "items": [
       {

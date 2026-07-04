@@ -1,0 +1,65 @@
+{
+  "title": "Mesa de Ayuda",
+  "slug": "mesa-de-ayuda",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Mesa de Ayuda",
+    "intro": "Tercerización estratégica del soporte técnico (Nivel 1 y 2). Un canal único de contacto (Help Desk) operado por especialistas para asistir a tu personal.",
+    "note": "Ideal para liberar al equipo de ingeniería de TI de la burocracia técnica y el reseteo de contraseñas, para que se enfoquen en la transformación digital.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "soporte",
+        "title": "Resolución remota y ágil",
+        "text": "Atiende incidencias diarias y eleva la satisfacción del colaborador."
+      },
+      {
+        "icon": "red",
+        "title": "Trazabilidad analítica",
+        "text": "Encuentra la causa raíz de los fallos ofimáticos repetitivos."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Menor costo operativo",
+        "text": "Sin necesidad de un departamento de soporte interno masivo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Cadenas de retail y tiendas comerciales con personal de atención que requiere **asistencia constante a nivel nacional**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Mesa de Ayuda | Fiberlux Corp",
+    "metaDescription": "Tercerización estratégica del soporte técnico (Nivel 1 y 2). Un canal único de contacto (Help Desk) operado por especialistas para asistir a tu personal.",
+    "ogImage": ""
+  }
+}

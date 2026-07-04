@@ -1,0 +1,65 @@
+{
+  "title": "NGFW / Seguridad Perimetral",
+  "slug": "ngfw-seguridad-perimetral",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "NGFW / Seguridad Perimetral",
+    "intro": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
+    "note": "Ideal frente a firewalls obsoletos que son ciegos ante el malware moderno que se oculta en aplicaciones legítimas o tráfico cifrado.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Bloqueo proactivo de intrusiones",
+        "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red."
+      },
+      {
+        "icon": "red",
+        "title": "Visibilidad granular",
+        "text": "Identifica y bloquea aplicaciones específicas con control detallado del tráfico."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Protección sin sacrificar velocidad",
+        "text": "Protege el perímetro principal de la empresa sin afectar el ancho de banda."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Para cualquier empresa mediana o grande que necesite **proteger el perímetro de su red** y controlar a qué sitios web pueden acceder sus colaboradores."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "NGFW / Seguridad Perimetral | Fiberlux Corp",
+    "metaDescription": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
+    "ogImage": ""
+  }
+}

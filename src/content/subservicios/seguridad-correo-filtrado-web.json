@@ -1,0 +1,65 @@
+{
+  "title": "Seguridad de Correo y Filtrado Web",
+  "slug": "seguridad-correo-filtrado-web",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "Seguridad de Correo y Filtrado Web",
+    "intro": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
+    "note": "Ideal para mitigar el riesgo del eslabón más débil (el error humano), evitando que un colaborador comprometa la infraestructura con un simple clic.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Menos phishing e ingeniería social",
+        "text": "Reducción drástica de infecciones por tácticas de phishing."
+      },
+      {
+        "icon": "generico",
+        "title": "Bandejas limpias",
+        "text": "Correos corporativos libres de spam extorsivo."
+      },
+      {
+        "icon": "red",
+        "title": "Cumplimiento de políticas de uso",
+        "text": "Bloqueo de dominios de alto riesgo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Corporaciones con alto volumen de **personal administrativo y atención al cliente**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Seguridad de Correo y Filtrado Web | Fiberlux Corp",
+    "metaDescription": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
+    "ogImage": ""
+  }
+}

@@ -13,7 +13,9 @@ const formQuery = await client.queries.dynamicForms({
   relativePath: "servicios.json",
 });
 
-const solucionSlug = subQuery.data?.subservicio?.solucionSlug ?? "";
+/* Prefill the "servicio" select with THIS sub-service (its filename matches the
+ * option `value` in servicios.json), not the parent solución slug. */
+const subServicioSlug = relativePath.replace(/\.json$/, "");
 ---
 
 <HeroSubservicioReact
@@ -26,5 +28,5 @@ const solucionSlug = subQuery.data?.subservicio?.solucionSlug ?? "";
     variables: formQuery.variables,
     data: formQuery.data,
   }}
-  prefill={{ servicio: solucionSlug }}
+  prefill={{ servicio: subServicioSlug }}
 />

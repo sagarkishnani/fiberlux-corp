@@ -1,0 +1,65 @@
+{
+  "title": "NAC",
+  "slug": "nac",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "NAC",
+    "intro": "Control de acceso a la red que verifica la identidad, estado y cumplimiento de seguridad de usuarios y dispositivos antes de permitir su conexión a los recursos corporativos.",
+    "note": "Ideal para organizaciones que necesitan controlar quién y qué se conecta a la red, con múltiples usuarios, dispositivos corporativos, invitados o equipos de terceros.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "soporte",
+        "title": "Control centralizado de acceso",
+        "text": "Administra desde un punto el acceso a la red corporativa."
+      },
+      {
+        "icon": "escudo",
+        "title": "Verificación previa",
+        "text": "Valida usuarios y dispositivos antes de otorgar conectividad."
+      },
+      {
+        "icon": "red",
+        "title": "Segmentación automática",
+        "text": "Segmenta según perfiles, roles o niveles de confianza."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Campus educativos, hospitales, plantas industriales y organizaciones con **políticas de acceso diferenciadas** para colaboradores, visitantes y proveedores."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "NAC | Fiberlux Corp",
+    "metaDescription": "Control de acceso a la red que verifica la identidad, estado y cumplimiento de seguridad de usuarios y dispositivos antes de permitir su conexión a los recursos corporativos.",
+    "ogImage": ""
+  }
+}

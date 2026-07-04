@@ -1,0 +1,65 @@
+{
+  "title": "Anti-DDoS",
+  "slug": "anti-ddos",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "Anti-DDoS",
+    "intro": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
+    "note": "Ideal para proteger portales críticos de ataques masivos que buscan inundar los servidores con tráfico basura y colapsar el sitio.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "disponibilidad",
+        "title": "Disponibilidad web 24/7",
+        "text": "Mantén el sitio en línea incluso bajo ataques de saturación global."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Filtrado invisible",
+        "text": "El cliente real sigue operando sin percibir lentitud."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Protege tu facturación online",
+        "text": "Asegura las ventas en fechas comerciales vitales."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Retail masivo (**Cyber Days**), medios de comunicación, bancos y universidades."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Anti-DDoS | Fiberlux Corp",
+    "metaDescription": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
+    "ogImage": ""
+  }
+}

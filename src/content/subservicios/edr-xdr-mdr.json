@@ -1,0 +1,70 @@
+{
+  "title": "EDR / XDR / MDR",
+  "slug": "edr-xdr-mdr",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "EDR / XDR / MDR",
+    "intro": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
+    "note": "Ideal para frenar el ransomware hiperavanzado que evade los antivirus tradicionales y se ejecuta directamente en las laptops de directivos y colaboradores.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Protección multicapa",
+        "text": "Antivirus empresarial con capacidades avanzadas de detección y respuesta."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Aislamiento automático",
+        "text": "Cualquier equipo infectado se aísla antes de que contagie toda la red."
+      },
+      {
+        "icon": "reloj",
+        "title": "Análisis en tiempo real",
+        "text": "Detecta comportamiento anómalo y bloquea amenazas sin firma conocida."
+      },
+      {
+        "icon": "generico",
+        "title": "Trazabilidad forense",
+        "text": "Entiende el origen exacto del ataque para prevenir futuros incidentes."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Clínicas protegiendo historiales médicos, despachos legales, instituciones financieras y organizaciones con **equipos distribuidos o trabajo híbrido**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "EDR / XDR / MDR | Fiberlux Corp",
+    "metaDescription": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
+    "ogImage": ""
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "title": "Backup as a Service (BaaS)",
+  "slug": "baas",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Backup as a Service (BaaS)",
+    "intro": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
+    "note": "Ideal para evitar la pérdida catastrófica de información por ransomware, donde los respaldos manuales en discos locales también terminan encriptados.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Recuperación garantizada",
+        "text": "Recupera tus datos ante secuestros digitales o borrados accidentales."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Respaldos inmutables",
+        "text": "Bloquea cualquier intento externo de modificación."
+      },
+      {
+        "icon": "generico",
+        "title": "Cumplimiento normativo",
+        "text": "Retención legal de la información corporativa."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Estudios contables, despachos legales, repositorios de facturación electrónica y organizaciones que requieren **proteger información crítica** y cumplir exigencias regulatorias."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Backup as a Service (BaaS) | Fiberlux Corp",
+    "metaDescription": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
+    "ogImage": ""
+  }
+}

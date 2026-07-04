@@ -1,0 +1,65 @@
+{
+  "title": "MFA y Control de Identidad",
+  "slug": "mfa-control-identidad",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "MFA y Control de Identidad",
+    "intro": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
+    "note": "Ideal para proteger sistemas financieros y bases de datos contra el robo de credenciales y las contraseñas débiles en el mercado negro.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Neutraliza el robo de contraseñas",
+        "text": "El atacante no puede entrar sin el dispositivo físico del usuario."
+      },
+      {
+        "icon": "soporte",
+        "title": "Auditoría clara",
+        "text": "Sabe quién aprueba accesos a plataformas críticas."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Máxima seguridad, mínima fricción",
+        "text": "Protección fuerte sin entorpecer al colaborador legítimo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Accesos administrativos de TI, **portales bancarios** y entrada al ERP central."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "MFA y Control de Identidad | Fiberlux Corp",
+    "metaDescription": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
+    "ogImage": ""
+  }
+}

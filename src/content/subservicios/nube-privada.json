@@ -1,0 +1,65 @@
+{
+  "title": "Nube Privada",
+  "slug": "nube-privada",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Nube Privada",
+    "intro": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
+    "note": "Ideal para sectores altamente regulados que exigen la agilidad de la nube, pero cuyas leyes prohíben alojar datos confidenciales en entornos compartidos.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Privacidad y soberanía de datos",
+        "text": "Control total sobre dónde y cómo residen tus datos."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Rendimiento predecible",
+        "text": "Recursos dedicados que no compartes con terceros."
+      },
+      {
+        "icon": "escalabilidad",
+        "title": "Aprovisionamiento ágil",
+        "text": "Servidores virtuales según la demanda, con control absoluto de la topología."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Instituciones de salud (**historias clínicas**), aseguradoras y entidades del sistema financiero."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Nube Privada | Fiberlux Corp",
+    "metaDescription": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
+    "ogImage": ""
+  }
+}

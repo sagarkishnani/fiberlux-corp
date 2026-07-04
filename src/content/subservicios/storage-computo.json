@@ -1,0 +1,65 @@
+{
+  "title": "Storage y Cómputo",
+  "slug": "storage-computo",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Storage y Cómputo",
+    "intro": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
+    "note": "Ideal para empresas cuyo crecimiento exponencial de archivos pesados de video, voz o imágenes satura el almacenamiento local.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escalabilidad",
+        "title": "Almacenamiento sin límites",
+        "text": "Crece sin invertir en cabinas de discos físicos."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Optimización de costos",
+        "text": "Separa datos en uso de datos históricos con cold storage de bajo costo."
+      },
+      {
+        "icon": "escudo",
+        "title": "Acceso seguro y clasificado",
+        "text": "Control sobre la información no estructurada de la empresa."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Empresas que requieren **optimizar recursos**, centralizar aplicaciones críticas o almacenar grandes volúmenes de información de forma segura y escalable."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Storage y Cómputo | Fiberlux Corp",
+    "metaDescription": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
+    "ogImage": ""
+  }
+}

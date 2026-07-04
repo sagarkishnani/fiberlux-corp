@@ -1,0 +1,65 @@
+{
+  "title": "Colaboración Empresarial",
+  "slug": "colaboracion-empresarial",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Colaboración Empresarial",
+    "intro": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
+    "note": "Ideal para erradicar las cadenas de correos infinitas con versiones 'final.pdf' que causan confusión, sobreescrituras y demoras.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "red",
+        "title": "Documentación centralizada",
+        "text": "Toda la información del proyecto en un solo lugar."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Control de versiones automático",
+        "text": "Evita la pérdida de trabajo intelectual."
+      },
+      {
+        "icon": "soporte",
+        "title": "Flujos de aprobación ágiles",
+        "text": "Coordina departamentos operativos sin fricción."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Agencias creativas, estudios de arquitectura y despachos de **planeamiento estratégico e ingeniería**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Colaboración Empresarial | Fiberlux Corp",
+    "metaDescription": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
+    "ogImage": ""
+  }
+}

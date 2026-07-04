@@ -339,12 +339,25 @@ type ServiceCatalogo {
   items: [ServiceCatalogoItems]
 }
 
+type ServicePartnersLogos {
+  image: String
+  alt: String
+  url: String
+}
+
+type ServicePartners {
+  eyebrow: String
+  title: String
+  logos: [ServicePartnersLogos]
+}
+
 type ServiceFaqItems {
   question: String
   answer: JSON
 }
 
 type ServiceFaq {
+  visible: Boolean
   title: String
   items: [ServiceFaqItems]
 }
@@ -361,6 +374,7 @@ type Service implements Node & Document {
   hero: ServiceHero
   valor: ServiceValor
   catalogo: ServiceCatalogo
+  partners: ServicePartners
   whyUsTitle: String
   faq: ServiceFaq
   seo: ServiceSeo
@@ -404,6 +418,18 @@ input ServiceCatalogoFilter {
   items: ServiceCatalogoItemsFilter
 }
 
+input ServicePartnersLogosFilter {
+  image: ImageFilter
+  alt: StringFilter
+  url: StringFilter
+}
+
+input ServicePartnersFilter {
+  eyebrow: StringFilter
+  title: StringFilter
+  logos: ServicePartnersLogosFilter
+}
+
 input RichTextFilter {
   startsWith: String
   eq: String
@@ -416,6 +442,7 @@ input ServiceFaqItemsFilter {
 }
 
 input ServiceFaqFilter {
+  visible: BooleanFilter
   title: StringFilter
   items: ServiceFaqItemsFilter
 }
@@ -432,6 +459,7 @@ input ServiceFilter {
   hero: ServiceHeroFilter
   valor: ServiceValorFilter
   catalogo: ServiceCatalogoFilter
+  partners: ServicePartnersFilter
   whyUsTitle: StringFilter
   faq: ServiceFaqFilter
   seo: ServiceSeoFilter
@@ -478,6 +506,7 @@ type SubservicioFaqItems {
 }
 
 type SubservicioFaq {
+  visible: Boolean
   title: String
   items: [SubservicioFaqItems]
 }
@@ -534,6 +563,7 @@ input SubservicioFaqItemsFilter {
 }
 
 input SubservicioFaqFilter {
+  visible: BooleanFilter
   title: StringFilter
   items: SubservicioFaqItemsFilter
 }
@@ -1798,12 +1828,25 @@ input ServiceCatalogoMutation {
   items: [ServiceCatalogoItemsMutation]
 }
 
+input ServicePartnersLogosMutation {
+  image: String
+  alt: String
+  url: String
+}
+
+input ServicePartnersMutation {
+  eyebrow: String
+  title: String
+  logos: [ServicePartnersLogosMutation]
+}
+
 input ServiceFaqItemsMutation {
   question: String
   answer: JSON
 }
 
 input ServiceFaqMutation {
+  visible: Boolean
   title: String
   items: [ServiceFaqItemsMutation]
 }
@@ -1820,6 +1863,7 @@ input ServiceMutation {
   hero: ServiceHeroMutation
   valor: ServiceValorMutation
   catalogo: ServiceCatalogoMutation
+  partners: ServicePartnersMutation
   whyUsTitle: String
   faq: ServiceFaqMutation
   seo: ServiceSeoMutation
@@ -1855,6 +1899,7 @@ input SubservicioFaqItemsMutation {
 }
 
 input SubservicioFaqMutation {
+  visible: Boolean
   title: String
   items: [SubservicioFaqItemsMutation]
 }

@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import HeroSolucion from "../../components/servicios/HeroSolucion.astro";
 import ValorSolucion from "../../components/servicios/ValorSolucion.astro";
-import Partners from "../../components/shared/Partners.astro";
+import ServicePartners from "../../components/shared/ServicePartners.astro";
 import CatalogoSoluciones from "../../components/servicios/CatalogoSoluciones.astro";
 import Stats from "../../components/Stats.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
@@ -49,7 +49,7 @@ const metaDescription =
   <main>
     <HeroSolucion relativePath={relativePath} />
     <ValorSolucion relativePath={relativePath} />
-    <Partners />
+    <ServicePartners relativePath={relativePath} />
     <CatalogoSoluciones relativePath={relativePath} />
     <div class="-mt-16 relative z-20">
       <Stats title={service?.whyUsTitle ?? undefined} />

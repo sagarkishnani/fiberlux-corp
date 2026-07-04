@@ -1,0 +1,65 @@
+{
+  "title": "SOC 24/7",
+  "slug": "soc-24-7",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "SOC 24/7",
+    "intro": "Un equipo de ingenieros expertos que vigila, correlaciona eventos y responde a amenazas de forma ininterrumpida.",
+    "note": "Ideal para organizaciones sin presupuesto para un equipo interno de tres turnos, pero que enfrentan amenazas constantes a toda hora.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "reloj",
+        "title": "Protección los 365 días",
+        "text": "Vigilancia activa con tiempos de respuesta inmediatos."
+      },
+      {
+        "icon": "escudo",
+        "title": "Inteligencia de amenazas actualizada",
+        "text": "Anticipa nuevos métodos de ataque."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Detección y respuesta sin brechas",
+        "text": "Cierra la distancia entre detectar un incidente y neutralizarlo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Toda empresa bajo **normativas estrictas de cumplimiento** o cuya operación dependa de su continuidad digital."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "SOC 24/7 | Fiberlux Corp",
+    "metaDescription": "Un equipo de ingenieros expertos que vigila, correlaciona eventos y responde a amenazas de forma ininterrumpida.",
+    "ogImage": ""
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "title": "Housing / Colocación",
+  "slug": "housing-colocacion",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Housing / Colocación",
+    "intro": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center. El cliente mantiene la propiedad del hardware; nosotros garantizamos el ecosistema físico.",
+    "note": "Ideal para organizaciones que asfixian su presupuesto (CAPEX) acondicionando y refrigerando cuartos de servidores propios, improvisados y vulnerables.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "ahorro",
+        "title": "Sin gastos de energía y clima",
+        "text": "Elimina la inversión propia en enfriamiento de precisión y energía ininterrumpida."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Condiciones ambientales perfectas",
+        "text": "Maximiza la vida útil de tu hardware."
+      },
+      {
+        "icon": "red",
+        "title": "Conectividad superior",
+        "text": "Ubicado en el corazón de los principales ecosistemas digitales."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Organizaciones con infraestructura on-premise que requieren mayor **disponibilidad, seguridad física y conectividad** para sus servidores críticos."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Housing / Colocación | Fiberlux Corp",
+    "metaDescription": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center. El cliente mantiene la propiedad del hardware; nosotros garantizamos el ecosistema físico.",
+    "ogImage": ""
+  }
+}

@@ -36,6 +36,7 @@
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
+    "visible": true,
     "title": "Preguntas frecuentes",
     "items": [
       {

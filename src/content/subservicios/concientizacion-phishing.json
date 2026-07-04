@@ -1,0 +1,65 @@
+{
+  "title": "Concientización y Phishing",
+  "slug": "concientizacion-phishing",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "Concientización y Phishing",
+    "intro": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
+    "note": "Ideal para reducir el riesgo de incidentes originados por errores humanos y fortalecer la primera línea de defensa.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Colaboradores más alertas",
+        "text": "Mayor capacidad para identificar correos y enlaces sospechosos."
+      },
+      {
+        "icon": "generico",
+        "title": "Menos robo de credenciales",
+        "text": "Reduce el riesgo de fuga de información sensible."
+      },
+      {
+        "icon": "soporte",
+        "title": "Cultura de seguridad",
+        "text": "Fortalece la conciencia con campañas y simulaciones continuas."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Empresas con trabajo híbrido o remoto, entidades financieras, instituciones educativas y organizaciones que manejan **información confidencial**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Concientización y Phishing | Fiberlux Corp",
+    "metaDescription": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
+    "ogImage": ""
+  }
+}

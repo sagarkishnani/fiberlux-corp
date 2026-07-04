@@ -1,0 +1,70 @@
+{
+  "title": "Nube Pública",
+  "slug": "nube-publica",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Nube Pública",
+    "intro": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
+    "note": "Ideal para empresas que buscan acelerar proyectos, optimizar costos y aprovechar la escalabilidad de la nube pública con un socio especializado.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Aprovisionamiento en minutos",
+        "text": "Despliega servidores virtuales casi al instante."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Pago por uso (OPEX)",
+        "text": "Modelo flexible que optimiza tu inversión."
+      },
+      {
+        "icon": "escalabilidad",
+        "title": "Escala y redimensiona",
+        "text": "Ajusta recursos según las cargas de trabajo."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Replicación entre sitios",
+        "text": "Fortalece la disponibilidad y protección de la información crítica."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Startups en hipercrecimiento, plataformas de e-commerce, entornos de desarrollo, sistemas ERP y **organizaciones multisede** con picos de demanda."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Nube Pública | Fiberlux Corp",
+    "metaDescription": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
+    "ogImage": ""
+  }
+}

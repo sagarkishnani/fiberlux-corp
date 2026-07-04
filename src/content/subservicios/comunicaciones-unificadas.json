@@ -1,0 +1,65 @@
+{
+  "title": "Comunicaciones Unificadas",
+  "slug": "comunicaciones-unificadas",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Comunicaciones Unificadas",
+    "intro": "La evolución de la Telefonía IP: unifica la central telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con Microsoft Teams, WhatsApp, CRMs y más.",
+    "note": "Ideal para empresas donde el WhatsApp personal y múltiples herramientas aisladas generan pérdida de control de la información y fragmentan a los equipos.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Control corporativo de la información",
+        "text": "Gobierna el flujo de la información compartida."
+      },
+      {
+        "icon": "velocidad",
+        "title": "Productividad ágil",
+        "text": "Sabe al instante si un colega está disponible, ocupado o en reunión."
+      },
+      {
+        "icon": "red",
+        "title": "Todo en una plataforma",
+        "text": "Portabilidad de números, equipos, licenciamiento e integración con Teams y WhatsApp."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Corporaciones con modelos de **trabajo híbrido** y Contact Centers con enfoque omnicanal."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Comunicaciones Unificadas | Fiberlux Corp",
+    "metaDescription": "La evolución de la Telefonía IP: unifica la central telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con Microsoft Teams, WhatsApp, CRMs y más.",
+    "ogImage": ""
+  }
+}

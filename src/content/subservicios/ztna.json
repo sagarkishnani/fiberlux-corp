@@ -1,0 +1,65 @@
+{
+  "title": "ZTNA",
+  "slug": "ztna",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "ZTNA",
+    "intro": "Arquitectura Zero Trust Network Access (Confianza Cero) que otorga acceso granular solo a una aplicación específica, manteniendo el resto de la red invisible.",
+    "note": "Ideal para autenticar usuarios y dar acceso a proveedores externos, consultores o auditores a herramientas específicas, sin exponer toda la red con una VPN total.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Superficie de ataque mínima",
+        "text": "Reduce drásticamente la exposición de la red corporativa."
+      },
+      {
+        "icon": "red",
+        "title": "Colaboración hipersegura con terceros",
+        "text": "Accesos controlados para desarrolladores y proveedores externos."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Validación continua",
+        "text": "Verifica la postura de seguridad del dispositivo externo en cada acceso."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Integración con auditores externos, partners de software, colaboradores temporales, remotos o que **se conectan desde diversas ubicaciones**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "ZTNA | Fiberlux Corp",
+    "metaDescription": "Arquitectura Zero Trust Network Access (Confianza Cero) que otorga acceso granular solo a una aplicación específica, manteniendo el resto de la red invisible.",
+    "ogImage": ""
+  }
+}

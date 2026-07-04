@@ -43,6 +43,9 @@ export default function FaqSolucionReact({
 
   const faq = data?.service?.faq ?? data?.subservicio?.faq;
   if (!faq) return null;
+  /* Editable toggle from the CMS — hide the whole section when turned off.
+   * `undefined` (legacy content without the field) stays visible. */
+  if (faq.visible === false) return null;
 
   const items = (faq.items || []).filter(Boolean) as FaqItem[];
   if (items.length === 0) return null;

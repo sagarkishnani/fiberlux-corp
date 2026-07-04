@@ -1,0 +1,65 @@
+{
+  "title": "WiFi Gestionado",
+  "slug": "wifi-gestionado",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "WiFi Gestionado",
+    "intro": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
+    "note": "Ideal para espacios de alta concurrencia donde la calidad de la conectividad inalámbrica es clave para la operación y la experiencia de usuario.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "cobertura",
+        "title": "Cobertura optimizada",
+        "text": "WiFi diseñado para entornos empresariales exigentes."
+      },
+      {
+        "icon": "red",
+        "title": "Acceso segmentado",
+        "text": "Gestión de acceso para colaboradores, visitantes y dispositivos."
+      },
+      {
+        "icon": "soporte",
+        "title": "Proyectos llave en mano",
+        "text": "Diseño, arrendamiento de equipos, instalación, gestión y soporte."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Campus universitarios, hoteles, centros comerciales, hospitales y **oficinas corporativas de gran escala**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "WiFi Gestionado | Fiberlux Corp",
+    "metaDescription": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
+    "ogImage": ""
+  }
+}

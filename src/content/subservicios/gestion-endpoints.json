@@ -1,0 +1,65 @@
+{
+  "title": "Gestión de Endpoints",
+  "slug": "gestion-endpoints",
+  "solucionSlug": "servicios-gestionados",
+  "solucionTitle": "Servicios Gestionados",
+  "hero": {
+    "heading": "Gestión de Endpoints",
+    "intro": "Administración centralizada (MDM/UEM). Plataformas cloud que controlan el inventario, despliegue de software y políticas de todos los portátiles y móviles de la empresa.",
+    "note": "Ideal para organizaciones grandes donde aplicar un parche de seguridad equipo por equipo tomaría meses de logística insostenible.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "velocidad",
+        "title": "Actualizaciones masivas",
+        "text": "Despliegues de software invisibles para toda la flota de equipos."
+      },
+      {
+        "icon": "escudo",
+        "title": "Borrado remoto ante robo",
+        "text": "Bloquea o borra una laptop corporativa al instante."
+      },
+      {
+        "icon": "red",
+        "title": "Ambiente estandarizado",
+        "text": "Alta estandarización del entorno de trabajo en toda la compañía."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Corporativos protegiendo **laptops gerenciales** y flotas de transporte controlando tabletas de ruta."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Gestión de Endpoints | Fiberlux Corp",
+    "metaDescription": "Administración centralizada (MDM/UEM). Plataformas cloud que controlan el inventario, despliegue de software y políticas de todos los portátiles y móviles de la empresa.",
+    "ogImage": ""
+  }
+}

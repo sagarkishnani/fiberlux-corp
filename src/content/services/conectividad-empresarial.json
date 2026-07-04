@@ -19,7 +19,13 @@
       {
         "heading": "Nuestra solución",
         "text": "Integramos internet empresarial, transmisión de datos multisede, fibra oscura y SD-WAN respaldados por fibra óptica, enlaces satelitales, microondas o LTE — con monitoreo y atención proactiva desde nuestro NOC 24/7.",
-        "tags": ["Fibra óptica", "Satelital", "Microondas", "LTE", "SD-WAN"],
+        "tags": [
+          "Fibra óptica",
+          "Satelital",
+          "Microondas",
+          "LTE",
+          "SD-WAN"
+        ],
         "image": ""
       },
       {
@@ -106,8 +112,60 @@
       }
     ]
   },
+  "partners": {
+    "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "title": "Trabajamos con los líderes de la industria",
+    "logos": [
+      {
+        "image": "/images/partners/huawei.svg",
+        "alt": "Huawei",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/aruba.svg",
+        "alt": "Aruba HPE",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/hikvision.svg",
+        "alt": "Hikvision",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/h3c.svg",
+        "alt": "H3C",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/fortinet.svg",
+        "alt": "Fortinet",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/peplink.svg",
+        "alt": "Peplink",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/ubiquiti.svg",
+        "alt": "Ubiquiti",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/mikrotik.svg",
+        "alt": "Mikrotik",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/cisco.svg",
+        "alt": "Cisco",
+        "url": ""
+      }
+    ]
+  },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
+    "visible": true,
     "title": "Preguntas frecuentes",
     "items": [
       {

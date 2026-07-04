@@ -95,9 +95,21 @@ fragment ServiceParts on Service {
       featured
     }
   }
+  partners {
+    __typename
+    eyebrow
+    title
+    logos {
+      __typename
+      image
+      alt
+      url
+    }
+  }
   whyUsTitle
   faq {
     __typename
+    visible
     title
     items {
       __typename
@@ -145,6 +157,7 @@ fragment SubservicioParts on Subservicio {
   whyUsTitle
   faq {
     __typename
+    visible
     title
     items {
       __typename

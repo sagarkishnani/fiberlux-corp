@@ -1,0 +1,65 @@
+{
+  "title": "WAF",
+  "slug": "waf",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "WAF",
+    "intro": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
+    "note": "Ideal para plataformas web y ecommerces expuestos a ataques cibernéticos.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "escudo",
+        "title": "Bloqueo de exploits",
+        "text": "Detiene vulnerabilidades web antes de que toquen el servidor."
+      },
+      {
+        "icon": "generico",
+        "title": "Cumplimiento PCI-DSS",
+        "text": "Ayuda a cumplir normativas financieras de pago."
+      },
+      {
+        "icon": "red",
+        "title": "Protección OWASP Top 10",
+        "text": "Mitiga las vulnerabilidades del estándar OWASP, reduciendo el riesgo de explotación."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Tiendas de **e-commerce**, pasarelas de pago y portales de trámites ciudadanos."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "WAF | Fiberlux Corp",
+    "metaDescription": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
+    "ogImage": ""
+  }
+}

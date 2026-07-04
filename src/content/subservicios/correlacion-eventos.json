@@ -1,0 +1,65 @@
+{
+  "title": "Correlación de Eventos (SIEM)",
+  "slug": "correlacion-eventos",
+  "solucionSlug": "ciberseguridad-gestionada",
+  "solucionTitle": "Ciberseguridad Gestionada",
+  "hero": {
+    "heading": "Correlación de Eventos (SIEM)",
+    "intro": "Servicio que centraliza y correlaciona eventos de seguridad de múltiples fuentes mediante SIEM, complementado con capacidades SOAR para automatizar la respuesta ante incidentes.",
+    "note": "Ideal para mejorar la visibilidad del entorno tecnológico, acelerar la detección de amenazas y optimizar la gestión operativa de la seguridad.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "red",
+        "title": "Correlación inteligente",
+        "text": "Reduce falsas alarmas y evita la sobrecarga de los equipos de seguridad."
+      },
+      {
+        "icon": "escudo",
+        "title": "Detección temprana",
+        "text": "Identifica amenazas y comportamientos anómalos a tiempo."
+      },
+      {
+        "icon": "reloj",
+        "title": "Respuesta automatizada (SOAR)",
+        "text": "Acelera la contención con automatización, reduciendo tiempos de reacción."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Banca y Seguros, Gobierno, Salud, Retail, Infraestructura Crítica y organizaciones con **requerimientos avanzados de monitoreo y cumplimiento**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Correlación de Eventos (SIEM) | Fiberlux Corp",
+    "metaDescription": "Servicio que centraliza y correlaciona eventos de seguridad de múltiples fuentes mediante SIEM, complementado con capacidades SOAR para automatizar la respuesta ante incidentes.",
+    "ogImage": ""
+  }
+}

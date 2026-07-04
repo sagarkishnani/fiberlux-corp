@@ -1,0 +1,65 @@
+{
+  "title": "Disaster Recovery (DRaaS)",
+  "slug": "draas",
+  "solucionSlug": "data-center-cloud",
+  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "hero": {
+    "heading": "Disaster Recovery (DRaaS)",
+    "intro": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
+    "note": "Ideal para empresas donde el downtime es inadmisible y restaurar desde un backup tradicional tomaría días de inactividad.",
+    "ctaLabel": "Solicitar cotización",
+    "formTitle": "¿Conversamos?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "icon": "reloj",
+        "title": "Recuperación casi instantánea",
+        "text": "RTO/RPO medidos en minutos."
+      },
+      {
+        "icon": "disponibilidad",
+        "title": "Failover automático",
+        "text": "La operación salta al sitio alterno automáticamente."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Sin data center duplicado",
+        "text": "Elimina el costo de construir un centro de datos físico espejo."
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Operaciones mission-critical como **entidades financieras**, logística portuaria y portales de transacciones."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": true,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Disaster Recovery (DRaaS) | Fiberlux Corp",
+    "metaDescription": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
+    "ogImage": ""
+  }
+}
