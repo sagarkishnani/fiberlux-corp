@@ -29,7 +29,7 @@ export default function HeroFormasPagoReact({
       className="relative overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 pt-40 pb-10 lg:pt-48 lg:pb-12">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 pt-28 pb-10 md:pt-40 lg:pt-48 lg:pb-12">
         <h1
           className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white max-w-[820px] tracking-[-1.6px]"
           data-tina-field={tinaField(page, "heading")}
