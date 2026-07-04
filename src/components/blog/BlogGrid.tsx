@@ -79,7 +79,7 @@ export default function BlogGrid({
   return (
     <section
       id="blog-grid-section"
-      className="py-20 md:py-24 bg-white rounded-t-3xl"
+      className="py-14 md:py-24 bg-white rounded-t-3xl"
     >
       <div className="max-w-[1440px] mx-auto px-6 md:px-16">
         {/* Section title — italic bold, matching Figma */}

@@ -136,8 +136,8 @@ export default function BlogPreviewReact({
   const hasPosts = posts.length > 0;
 
   return (
-    <section className="bg-greyscale-darkest rounded-t-3xl py-20 pb-40">
-      <div className="max-w-[1440px] mx-auto">
+    <section className="bg-greyscale-darkest rounded-t-3xl py-14 pb-24 md:py-20 md:pb-40">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         {/* Header */}
         <div className="">
           <div className="flex items-center justify-between mb-12">
