@@ -114,6 +114,8 @@ export default function HeaderReact({
   const [menuOpen, setMenuOpen] = useState(false);
   // Desktop: index of the top-level item revealing its submenu (or null).
   const [desktopActive, setDesktopActive] = useState<number | null>(null);
+  // Desktop: index of the level-2 item whose solutions (level-3) are expanded.
+  const [desktopSubActive, setDesktopSubActive] = useState<number | null>(null);
   // Mobile: drill path of indices ([] = top level, [i] = children of link i, …).
   const [mobilePath, setMobilePath] = useState<number[]>([]);
   const [scrolled, setScrolled] = useState(false);
@@ -140,6 +142,7 @@ export default function HeaderReact({
   /* ── Mobile drill helpers ── */
   const resetNav = useCallback(() => {
     setDesktopActive(null);
+    setDesktopSubActive(null);
     setMobilePath([]);
   }, []);
 
@@ -332,9 +335,10 @@ export default function HeaderReact({
                       key={i}
                       href={link.url || "#"}
                       onClick={withChildren ? undefined : closeMenu}
-                      onMouseEnter={() =>
-                        setDesktopActive(withChildren ? i : null)
-                      }
+                      onMouseEnter={() => {
+                        setDesktopActive(withChildren ? i : null);
+                        setDesktopSubActive(null);
+                      }}
                       className={`
                         inline text-[48px] leading-[64px] font-semibold text-white transition-all
                         nav-link-hover
@@ -367,17 +371,55 @@ export default function HeaderReact({
                   {desktopActive !== null &&
                     ((mainLinks[desktopActive]?.children || []).filter(
                       Boolean
-                    ) as NavChild[]).map((child, j) => (
-                      <a
-                        key={j}
-                        href={child.url || "#"}
-                        onClick={closeMenu}
-                        className="flex items-center justify-between gap-6 text-white text-lg hover:text-white/80 transition-colors group text-left animate-fadeIn"
-                      >
-                        <span>{child.text}</span>
-                        <ChevronRight className="w-5 h-5 shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                      </a>
-                    ))}
+                    ) as NavChild[]).map((child, j) => {
+                      const grandChildren = (child.children || []).filter(
+                        Boolean
+                      ) as NavGrandChild[];
+                      const hasGrand = grandChildren.length > 0;
+                      const subActive = desktopSubActive === j;
+
+                      return (
+                        <div
+                          key={j}
+                          className="animate-fadeIn"
+                          onMouseEnter={() =>
+                            setDesktopSubActive(hasGrand ? j : null)
+                          }
+                        >
+                          <a
+                            href={child.url || "#"}
+                            onClick={closeMenu}
+                            className="flex items-center justify-between gap-6 text-white text-lg hover:text-white/80 transition-colors group text-left"
+                          >
+                            <span>{child.text}</span>
+                            <ChevronRight className="w-5 h-5 shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                          </a>
+                          {hasGrand && (
+                            <div
+                              className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                                subActive
+                                  ? "max-h-[640px] opacity-100 mt-3"
+                                  : "max-h-0 opacity-0"
+                              }`}
+                            >
+                              <ul className="flex flex-col gap-1 pl-4 border-l border-white/20">
+                                {grandChildren.map((gc, k) => (
+                                  <li key={k}>
+                                    <a
+                                      href={gc.url || "#"}
+                                      onClick={closeMenu}
+                                      className="block text-white/70 text-[15px] py-1 hover:text-white transition-colors"
+                                    >
+                                      {gc.text}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                 </nav>
               </div>
             </div>
