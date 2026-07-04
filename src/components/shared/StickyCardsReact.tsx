@@ -57,7 +57,7 @@ export default function StickyCardsReact({
   const stack = !isMobile && !reduceMotion;
 
   return (
-    <section className="relative bg-[#0a0a0a] py-20 lg:py-32">
+    <section className="relative bg-[#0a0a0a] py-14 md:py-20 lg:py-32">
       {/* Keyframes for the subtle visual float — injected to avoid Tailwind JIT staleness. */}
       <style>{`
         @keyframes sc-float {
