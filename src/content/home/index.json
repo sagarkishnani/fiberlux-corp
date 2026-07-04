@@ -57,10 +57,12 @@
         "description": "Infraestructura de Clase Mundial para el corazón de tu Negocio.",
         "icon": "/images/soluciones/datacenter.svg",
         "bullets": [
-          "Colocación y Hosting (Housing)",
-          "Servidor en la Nube (Cloud Privada)",
-          "Recuperación ante Desastres (Disaster Recovery)",
-          "Privacidad y Auditoría"
+          "Housing y colocación",
+          "Nube Pública y Privada",
+          "Backup as a Service (BaaS)",
+          "Disaster Recovery (DRaaS)",
+          "Storage y Cómputo Empresarial",
+          "Arquitectura basada en Microservicios"
         ],
         "url": "/servicios/saas"
       },
