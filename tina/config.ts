@@ -309,6 +309,14 @@ export default defineConfig({
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  {
+                    name: "tags",
+                    label: "Etiquetas (chips)",
+                    description:
+                      "Tecnologías/servicios mostrados como chips. Se usan en la card 'Nuestra solución'.",
+                    type: "string",
+                    list: true,
+                  },
                   { name: "image", label: "Imagen/gráfico", type: "image" },
                 ],
               },

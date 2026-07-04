@@ -19,7 +19,8 @@
       {
         "heading": "Nuestra solución",
         "text": "Integramos internet empresarial, transmisión de datos multisede, fibra oscura y SD-WAN respaldados por fibra óptica, enlaces satelitales, microondas o LTE — con monitoreo y atención proactiva desde nuestro NOC 24/7.",
-        "image": "/images/servicios/valor-solucion.svg"
+        "tags": ["Fibra óptica", "Satelital", "Microondas", "LTE", "SD-WAN"],
+        "image": ""
       },
       {
         "heading": "Industrias destacadas",

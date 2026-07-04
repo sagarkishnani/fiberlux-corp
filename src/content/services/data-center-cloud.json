@@ -19,7 +19,8 @@
       {
         "heading": "Nuestra solución",
         "text": "Data center, nube y planes de continuidad diseñados para garantizar disponibilidad, respaldo y recuperación ante desastres.",
-        "image": "/images/servicios/valor-solucion.svg"
+        "tags": ["Colocación", "Nube privada", "Nube pública", "Backup", "DRaaS"],
+        "image": ""
       },
       {
         "heading": "Industrias destacadas",

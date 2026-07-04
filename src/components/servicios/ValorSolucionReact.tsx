@@ -15,6 +15,7 @@ interface ValorSolucionProps {
 interface Card {
   heading?: string | null;
   text?: string | null;
+  tags?: (string | null)[] | null;
   image?: string | null;
 }
 
@@ -118,32 +119,47 @@ export default function ValorSolucionReact({
             </article>
           )}
 
-          {/* ── Right top — Nuestra solución (designed card, full-bleed image) ── */}
+          {/* ── Right top — Nuestra solución (editable: heading + text + tag chips) ── */}
           {solution && (
             <article
-              className="valor-card relative overflow-hidden rounded-[28px] border border-white/10 bg-[#D5A7CA]"
+              className="valor-card relative overflow-hidden rounded-[28px] border border-white/10 bg-[#D5A7CA] p-7 md:p-9"
               style={{ ["--d" as any]: "0.27s" }}
-              data-tina-field={tinaField(solution as any, "image")}
             >
-              {solution.image ? (
-                <img
-                  src={solution.image}
-                  alt={solution.heading || "Nuestra solución"}
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="p-7 md:p-9">
-                  {solution.heading && (
-                    <h3 className="text-[22px] md:text-[26px] font-semibold text-[#3B0E30] mb-3">
-                      {solution.heading}
-                    </h3>
-                  )}
-                  {solution.text && (
-                    <p className="text-body-sm text-[#3B0E30]/80">{solution.text}</p>
-                  )}
-                </div>
+              {solution.heading && (
+                <h3
+                  className="text-[22px] md:text-[26px] font-semibold text-[#3B0E30] mb-3"
+                  data-tina-field={tinaField(solution as any, "heading")}
+                >
+                  {solution.heading}
+                </h3>
               )}
+              {solution.text && (
+                <p
+                  className="text-body-sm md:text-body-md text-[#3B0E30]/80 max-w-[560px]"
+                  data-tina-field={tinaField(solution as any, "text")}
+                >
+                  {solution.text}
+                </p>
+              )}
+              {(() => {
+                const tags = (solution.tags || []).filter(Boolean) as string[];
+                if (tags.length === 0) return null;
+                return (
+                  <ul
+                    className="mt-5 flex flex-wrap gap-2"
+                    data-tina-field={tinaField(solution as any, "tags")}
+                  >
+                    {tags.map((tag, t) => (
+                      <li
+                        key={t}
+                        className="inline-flex items-center rounded-full border border-[#3B0E30]/25 bg-white/40 px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-[#3B0E30]"
+                      >
+                        {tag}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
             </article>
           )}
 

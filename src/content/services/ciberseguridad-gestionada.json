@@ -19,7 +19,8 @@
       {
         "heading": "Nuestra solución",
         "text": "Seguridad perimetral, de endpoints e identidad gestionadas de extremo a extremo, con detección y respuesta proactiva desde nuestro SOC 24/7.",
-        "image": "/images/servicios/valor-solucion.svg"
+        "tags": ["Perimetral", "Endpoints", "Identidad", "Aplicaciones", "SOC 24/7"],
+        "image": ""
       },
       {
         "heading": "Industrias destacadas",
