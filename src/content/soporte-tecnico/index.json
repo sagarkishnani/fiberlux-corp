@@ -42,7 +42,11 @@
       "subtitle": "Envíanos un correo y te responderemos a la brevedad.",
       "defaultOpen": false,
       "rows": [
-        { "label": "Soporte", "value": "soporte@fiberlux.pe", "optionLabel": "", "message": "" }
+        { "label": "NOC", "value": "noc@fiberlux.pe", "optionLabel": "", "message": "" },
+        { "label": "Telefonía", "value": "telefonia@fiberlux.pe", "optionLabel": "", "message": "" },
+        { "label": "Data Center", "value": "infraestructuraydatacenter@fiberlux.pe", "optionLabel": "", "message": "" },
+        { "label": "SOC", "value": "soc@fiberlux.pe", "optionLabel": "", "message": "" },
+        { "label": "WiFi", "value": "wifi@fiberlux.pe", "optionLabel": "", "message": "" }
       ]
     }
   ]
