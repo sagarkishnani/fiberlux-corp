@@ -25,7 +25,7 @@ export default function ReclamosSelectorReact() {
   const base = (import.meta as any).env?.BASE_URL || "/";
 
   return (
-    <section style={{ padding: "80px 24px", maxWidth: "960px", margin: "0 auto" }}>
+    <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", maxWidth: "960px", margin: "0 auto" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: "48px" }}>
         <span
