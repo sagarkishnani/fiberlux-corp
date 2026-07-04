@@ -3,8 +3,8 @@
   "heading": "Ingresa tus datos y un representante te contactará pronto",
   "intro": "Estamos listos para ayudarte a transformar tu conectividad. Completa el formulario y nuestro equipo se comunicará contigo en las próximas 24 horas.",
   "cards": [
-    { "icon": "phone", "label": "Teléfono", "value": "(01) 700-1234" },
-    { "icon": "email", "label": "Correo", "value": "info@fiberlux.com" },
-    { "icon": "location", "label": "Oficina", "value": "Lima, Perú" }
+    { "icon": "phone", "label": "Teléfono", "value": "(01) 748-0606" },
+    { "icon": "email", "label": "Correo", "value": "hola@fiberlux.pe" },
+    { "icon": "location", "label": "Oficina", "value": "Av. José Pardo 513 – Miraflores" }
   ]
 }
