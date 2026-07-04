@@ -54,8 +54,10 @@ export default function StickyCardsReact({
 
   if (items.length === 0) return null;
 
-  // Sticky stacking only on desktop and when motion is allowed; otherwise a plain vertical stack.
-  const stack = !isMobile && !reduceMotion;
+  // Sticky stacking on both desktop and mobile; disabled only when the user prefers reduced motion.
+  const stack = !reduceMotion;
+  // The sticky title band is shorter on mobile, so cards can pin a little higher there.
+  const stickTop = isMobile ? 150 : STICK_TOP;
 
   return (
     <section className="relative bg-[#0a0a0a] py-14 md:py-20 lg:py-32">
@@ -100,7 +102,7 @@ export default function StickyCardsReact({
                   stack
                     ? {
                         position: "sticky",
-                        top: `${STICK_TOP + index * PEEK}px`,
+                        top: `${stickTop + index * PEEK}px`,
                         marginBottom: 48,
                         zIndex: index + 1,
                       }
