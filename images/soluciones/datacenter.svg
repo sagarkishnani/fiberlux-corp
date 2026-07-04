@@ -1,0 +1,87 @@
+<svg width="644" height="504" viewBox="0 0 644 504" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="644" height="504" fill="#96237A"/>
+<g id="Home">
+<path d="M-2406 -2282C-2406 -2283.1 -2405.1 -2284 -2404 -2284H1849C1850.1 -2284 1851 -2283.1 1851 -2282V7326C1851 7327.1 1850.1 7328 1849 7328H-2404C-2405.1 7328 -2406 7327.1 -2406 7326V-2282Z" fill="#444444"/>
+<path d="M-2404 -2284V-2283H1849V-2284V-2285H-2404V-2284ZM1851 -2282H1850V7326H1851H1852V-2282H1851ZM1849 7328V7327H-2404V7328V7329H1849V7328ZM-2406 7326H-2405V-2282H-2406H-2407V7326H-2406ZM-2404 7328V7327C-2404.55 7327 -2405 7326.55 -2405 7326H-2406H-2407C-2407 7327.66 -2405.66 7329 -2404 7329V7328ZM1851 7326H1850C1850 7326.55 1849.55 7327 1849 7327V7328V7329C1850.66 7329 1852 7327.66 1852 7326H1851ZM1849 -2284V-2283C1849.55 -2283 1850 -2282.55 1850 -2282H1851H1852C1852 -2283.66 1850.66 -2285 1849 -2285V-2284ZM-2404 -2284V-2285C-2405.66 -2285 -2407 -2283.66 -2407 -2282H-2406H-2405C-2405 -2282.55 -2404.55 -2283 -2404 -2283V-2284Z" fill="white" fill-opacity="0.1"/>
+<g id="Home_2">
+<rect width="1440" height="6456" transform="translate(-557 -2035)" fill="#0A0A0A"/>
+<g id="Frame 1707483930">
+<rect width="1440" height="2469" transform="translate(-557 -1268)" fill="#0A0A0A"/>
+<g id="Frame 1707483889">
+<path d="M-557 -1249C-557 -1257.84 -549.837 -1265 -541 -1265H867C875.837 -1265 883 -1257.84 883 -1249V1117.31H-557V-1249Z" fill="#0A0A0A"/>
+<g id="Frame 1707483920">
+<g id="Frame 1707483915">
+<g id="Frame 1707483919">
+<rect x="-324.5" y="-3.18994" width="971.09" height="510" rx="15.5" stroke="#C4C4C4"/>
+<g id="Frame 1707483914">
+<path d="M0.0900879 0.310059H627.09C635.927 0.310059 643.09 7.4735 643.09 16.3101V487.31C643.09 496.147 635.927 503.31 627.09 503.31H0.0900879V0.310059Z" fill="#FFD4F4"/>
+<g id="Background">
+<rect width="643" height="503" rx="16" fill="#96237A"/>
+<g id="Container">
+<g clip-path="url(#clip0_1_23)">
+<g id="68652aa4616108274170277f_LowCost.svg" clip-path="url(#clip1_1_23)">
+<g id="68652aa4616108274170277f_LowCost.svg fill" clip-path="url(#clip2_1_23)">
+<g id="68652aa4616108274170277f_LowCost.svg_2" clip-path="url(#clip3_1_23)">
+<g id="Clip path group">
+<mask id="mask0_1_23" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="86" y="83" width="472" height="316">
+<g id="a">
+<path id="Vector" d="M557.889 83.9575H86.1406V398.457H557.889V83.9575Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_1_23)">
+<g id="Group">
+<path id="Vector_2" d="M557.889 83.9575H86.1406V398.457H557.889V83.9575Z" fill="#96237A"/>
+<g id="cloud-connected">
+<!-- signal arcs: "siempre conectada" -->
+<g stroke="#FFD4F4" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.9">
+<path d="M405 150 A54 54 0 0 1 459 204"/>
+<path d="M405 176 A28 28 0 0 1 433 204"/>
+</g>
+<circle cx="405" cy="204" r="9" fill="#FFD4F4"/>
+<!-- cloud silhouette -->
+<g fill="#E0B1D4">
+<rect x="212" y="238" width="200" height="76" rx="38"/>
+<circle cx="262" cy="240" r="42"/>
+<circle cx="318" cy="206" r="56"/>
+<circle cx="372" cy="234" r="46"/>
+</g>
+<!-- continuous sync: up / down arrows in brand color -->
+<g stroke="#96237A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none">
+<path d="M302 292 V244"/>
+<path d="M286 260 L302 242 L318 260"/>
+<path d="M344 224 V272"/>
+<path d="M328 256 L344 274 L360 256"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_1_23">
+<rect x="93" y="90.0703" width="458" height="302.288" rx="18.5576" fill="white"/>
+</clipPath>
+<clipPath id="clip1_1_23">
+<rect width="471.749" height="311.348" fill="white" transform="translate(86.1406 85.5327)"/>
+</clipPath>
+<clipPath id="clip2_1_23">
+<rect width="471.749" height="311.348" fill="white" transform="translate(86.1406 85.5327)"/>
+</clipPath>
+<clipPath id="clip3_1_23">
+<rect width="471.749" height="314.499" fill="white" transform="translate(86.1406 83.9575)"/>
+</clipPath>
+</defs>
+</svg>

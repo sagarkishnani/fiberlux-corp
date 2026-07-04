@@ -1,0 +1,52 @@
+{
+  "forms": [
+    {
+      "formType": "reclamo",
+      "label": "Formulario de Reclamo OSIPTEL",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    },
+    {
+      "formType": "queja",
+      "label": "Formulario de Queja",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    },
+    {
+      "formType": "apelacion",
+      "label": "Formulario de Apelación",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    },
+    {
+      "formType": "libro_reclamaciones",
+      "label": "Libro de Reclamaciones",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    },
+    {
+      "formType": "contacto",
+      "label": "Formulario de Contacto",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    },
+    {
+      "formType": "servicios",
+      "label": "Servicios — Déjanos tus datos",
+      "enabled": true,
+      "recipients": [
+        "placeholder@fiberlux.pe"
+      ]
+    }
+  ]
+}

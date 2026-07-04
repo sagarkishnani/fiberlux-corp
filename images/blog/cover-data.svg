@@ -1,0 +1,35 @@
+<svg width="640" height="400" viewBox="0 0 640 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data center">
+  <defs>
+    <linearGradient id="dataBg" x1="0" y1="0" x2="640" y2="400" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#650F50"/>
+      <stop offset="0.55" stop-color="#3B0E30"/>
+      <stop offset="1" stop-color="#140510"/>
+    </linearGradient>
+    <radialGradient id="dataGlow" cx="0.8" cy="0.25" r="0.7">
+      <stop offset="0" stop-color="#96237A" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#96237A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#dataBg)"/>
+  <rect width="640" height="400" fill="url(#dataGlow)"/>
+  <g transform="translate(408 96)">
+    <g fill="none" stroke="#ffffff" stroke-opacity="0.9" stroke-width="5">
+      <rect x="0" y="0" width="180" height="52" rx="10"/>
+      <rect x="0" y="72" width="180" height="52" rx="10"/>
+      <rect x="0" y="144" width="180" height="52" rx="10"/>
+    </g>
+    <g fill="#E08FCF">
+      <circle cx="26" cy="26" r="7"/>
+      <circle cx="26" cy="98" r="7"/>
+      <circle cx="26" cy="170" r="7"/>
+    </g>
+    <g stroke="#ffffff" stroke-opacity="0.5" stroke-width="4" stroke-linecap="round">
+      <line x1="120" y1="26" x2="158" y2="26"/>
+      <line x1="120" y1="98" x2="158" y2="98"/>
+      <line x1="120" y1="170" x2="158" y2="170"/>
+    </g>
+  </g>
+  <text x="48" y="120" font-family="Poppins, 'Segoe UI', sans-serif" font-size="30" font-weight="700" fill="#ffffff" fill-opacity="0.85" letter-spacing="2">FIBERLUX</text>
+  <text x="46" y="330" font-family="Poppins, 'Segoe UI', sans-serif" font-size="58" font-weight="800" fill="#ffffff">Data Center</text>
+  <text x="48" y="366" font-family="Poppins, 'Segoe UI', sans-serif" font-size="22" font-weight="500" fill="#ffffff" fill-opacity="0.7">Continuidad de negocio</text>
+</svg>
