@@ -129,11 +129,33 @@ export function FormInput({
 interface SelectProps {
   label: string;
   placeholder?: string;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string; group?: string }[];
   value: string;
   onChange: (val: string) => void;
   required?: boolean;
   error?: string;
+}
+
+/* Render <option>s, grouping into <optgroup> when a `group` is present. */
+function renderOptions(options: { value: string; label: string; group?: string }[]) {
+  if (!options.some((o) => o.group)) {
+    return options.map((opt, i) => (
+      <option key={i} value={opt.value}>{opt.label}</option>
+    ));
+  }
+  const order: string[] = [];
+  const buckets = new Map<string, typeof options>();
+  for (const opt of options) {
+    const key = opt.group || "";
+    if (!buckets.has(key)) { buckets.set(key, []); order.push(key); }
+    buckets.get(key)!.push(opt);
+  }
+  return order.map((key, gi) => {
+    const children = buckets.get(key)!.map((opt, i) => (
+      <option key={i} value={opt.value}>{opt.label}</option>
+    ));
+    return key ? <optgroup key={gi} label={key}>{children}</optgroup> : children;
+  });
 }
 
 export function FormSelect({
@@ -158,9 +180,7 @@ export function FormSelect({
         }}
       >
         <option value="" disabled>{placeholder || "Selecciona"}</option>
-        {options.map((opt, i) => (
-          <option key={i} value={opt.value}>{opt.label}</option>
-        ))}
+        {renderOptions(options)}
       </select>
       {error && <p style={errorTextStyle}>{error}</p>}
     </div>

@@ -1993,6 +1993,13 @@ export default defineConfig({
                   { name: "value", label: "Valor", type: "string" },
                   { name: "label", label: "Etiqueta", type: "string" },
                   {
+                    name: "group",
+                    label: "Grupo / Categoría",
+                    type: "string",
+                    description:
+                      "Solo para select: agrupa las opciones bajo un encabezado (optgroup). Ej: la categoría del servicio.",
+                  },
+                  {
                     name: "description",
                     label: "Descripción",
                     type: "string",

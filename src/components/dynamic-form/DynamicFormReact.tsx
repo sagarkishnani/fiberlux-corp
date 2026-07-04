@@ -26,6 +26,7 @@ import { FormSuccess } from "../shared/FormSuccess";
 interface FieldOption {
   value: string;
   label: string;
+  group?: string;
   description?: string;
 }
 
@@ -168,6 +169,45 @@ function ContactInput({
   );
 }
 
+/* Render <option>s, wrapping them in <optgroup> when options declare a `group`.
+ * Options without a group render flat; grouped ones are bucketed by first
+ * appearance so the CMS order is preserved. */
+function renderSelectOptions(options: FieldOption[]) {
+  const hasGroups = options.some((o) => o.group);
+  if (!hasGroups) {
+    return options.map((opt, i) => (
+      <option key={i} value={opt.value} className="text-greyscale-darkest">
+        {opt.label}
+      </option>
+    ));
+  }
+  const order: string[] = [];
+  const buckets = new Map<string, FieldOption[]>();
+  for (const opt of options) {
+    const key = opt.group || "";
+    if (!buckets.has(key)) {
+      buckets.set(key, []);
+      order.push(key);
+    }
+    buckets.get(key)!.push(opt);
+  }
+  return order.map((key, gi) => {
+    const groupOpts = buckets.get(key)!;
+    const children = groupOpts.map((opt, i) => (
+      <option key={i} value={opt.value} className="text-greyscale-darkest">
+        {opt.label}
+      </option>
+    ));
+    return key ? (
+      <optgroup key={gi} label={key} className="text-greyscale-darkest">
+        {children}
+      </optgroup>
+    ) : (
+      children
+    );
+  });
+}
+
 function ContactSelect({
   label, placeholder, options, value, onChange, required, error, dark,
 }: {
@@ -197,11 +237,7 @@ function ContactSelect({
         <option value="" disabled>
           {placeholder || "Selecciona una opción"}
         </option>
-        {options.map((opt, i) => (
-          <option key={i} value={opt.value} className="text-greyscale-darkest">
-            {opt.label}
-          </option>
-        ))}
+        {renderSelectOptions(options)}
       </select>
       {error && <p className={contactErrorCls}>{error}</p>}
     </div>

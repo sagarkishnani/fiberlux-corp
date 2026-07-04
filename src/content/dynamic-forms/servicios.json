@@ -55,10 +55,181 @@
       "width": "full",
       "order": 5,
       "options": [
-        { "value": "conectividad-empresarial", "label": "Conectividad empresarial" },
-        { "value": "ciberseguridad-gestionada", "label": "Ciberseguridad gestionada" },
-        { "value": "datacenter-cloud", "label": "Data Center, Cloud y Continuidad de Negocio" },
-        { "value": "servicios-gestionados", "label": "Servicios gestionados" }
+        {
+          "value": "internet-corporativo",
+          "label": "Internet Corporativo",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "internet-alta-disponibilidad",
+          "label": "Internet Corporativo de Alta Disponibilidad",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "conectividad-satelital",
+          "label": "Conectividad satelital",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "radioenlaces-empresariales",
+          "label": "Radioenlaces Empresariales",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "transmision-de-datos-l2l",
+          "label": "Transmisión de datos (L2L)",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "fibra-oscura",
+          "label": "Fibra Oscura",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "sd-wan",
+          "label": "SD-WAN",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "balanceo-de-enlaces",
+          "label": "Balanceo de enlaces",
+          "group": "Conectividad empresarial"
+        },
+        {
+          "value": "ngfw-seguridad-perimetral",
+          "label": "NGFW y Seguridad Perimetral",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "vpn-segura",
+          "label": "VPN Segura y Acceso Remoto",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "edr-xdr-mdr",
+          "label": "EDR / XDR / MDR",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "seguridad-correo-filtrado-web",
+          "label": "Seguridad de correo y filtrado web",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "mfa-control-identidad",
+          "label": "MFA y Control de Identidad",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "ztna",
+          "label": "ZTNA y Control de Acceso Seguro",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "nac",
+          "label": "NAC (Network Access Control)",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "waf",
+          "label": "WAF y Protección de Aplicaciones",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "anti-ddos",
+          "label": "Anti-DDoS",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "concientizacion-phishing",
+          "label": "Concientización en Phishing",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "soc-24-7",
+          "label": "CYBER SOC 24/7 y Monitoreo",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "correlacion-eventos",
+          "label": "Correlación de eventos (SIEM/SOAR)",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "pentesting",
+          "label": "Pentesting y Evaluación de Vulnerabilidades",
+          "group": "Ciberseguridad gestionada"
+        },
+        {
+          "value": "housing-colocacion",
+          "label": "Housing y Colocación",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "nube-privada",
+          "label": "Nube Privada",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "nube-publica",
+          "label": "Nube Pública",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "baas",
+          "label": "Backup as a Service (BaaS)",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "draas",
+          "label": "Disaster Recovery (DRaaS)",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "storage-computo",
+          "label": "Storage y Cómputo Empresarial",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "microservicios",
+          "label": "Arquitectura basada en Microservicios",
+          "group": "Data Center, Cloud y Continuidad de Negocio"
+        },
+        {
+          "value": "mesa-de-ayuda",
+          "label": "Mesa de Ayuda",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "comunicaciones-unificadas",
+          "label": "Comunicaciones Unificadas",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "colaboracion-empresarial",
+          "label": "Colaboración Empresarial",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "gestion-redes-lan",
+          "label": "Gestión de Redes LAN",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "wifi-gestionado",
+          "label": "WiFi Gestionado",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "gestion-endpoints",
+          "label": "Gestión de Endpoints",
+          "group": "Servicios gestionados"
+        },
+        {
+          "value": "videovigilancia-gestionada",
+          "label": "Videovigilancia gestionada",
+          "group": "Servicios gestionados"
+        }
       ]
     },
     {
