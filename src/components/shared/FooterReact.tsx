@@ -111,7 +111,7 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
           {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
           <div className="order-2 md:order-1 flex flex-col justify-between gap-10">
             <h2
-              className="text-[32px] leading-[36px] sm:text-[56px] sm:leading-[60px] font-semibold text-white"
+              className="text-[32px] leading-[36px] sm:text-[40px] lg:text-[56px] sm:leading-[60px] font-semibold text-white"
               data-tina-field={tinaField(footer, 'tagline')}
             >
               {footer.tagline}
