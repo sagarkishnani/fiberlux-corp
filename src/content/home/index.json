@@ -72,9 +72,13 @@
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
         "icon": "/images/soluciones/servicios-gestionados.svg",
         "bullets": [
-          "Videovigilancia y Seguridad Electrónica (CCTV)",
-          "Networking y Conectividad Inalámbrica",
-          "Equipamiento Core y Almacenamiento"
+          "Mesa de ayuda",
+          "Comunicaciones Unificadas",
+          "Gestión de Redes LAN",
+          "Wifi Gestionado",
+          "Gestión de Endpoints",
+          "Videovigilancia gestionada",
+          "Y más..."
         ],
         "url": "/servicios/continuidad-de-negocio"
       }
