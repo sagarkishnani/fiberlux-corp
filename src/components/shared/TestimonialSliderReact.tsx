@@ -33,6 +33,8 @@ export default function TestimonialSliderReact({
 
   const sectionTitle = testimonials?.sectionTitle || 'Empresas que confían en nuestra red';
   const items: Testimonial[] = testimonials?.items || [];
+  // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
+  const isVisible = testimonials?.visible === true;
 
   const carouselRef = useRef<HTMLDivElement>(null);
   const titleH2Ref = useRef<HTMLHeadingElement>(null);
@@ -170,6 +172,8 @@ export default function TestimonialSliderReact({
       </svg>
     </button>
   );
+
+  if (!isVisible) return null;
 
   return (
     <section className="bg-greyscale-darkest py-14 pb-24 md:py-20 md:pb-40">

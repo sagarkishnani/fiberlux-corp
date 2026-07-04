@@ -143,6 +143,13 @@ export default defineConfig({
             type: "object",
             fields: [
               {
+                name: "visible",
+                label: "Mostrar sección de testimonios",
+                type: "boolean",
+                description:
+                  "Desactívalo para ocultar la sección de testimonios en todo el sitio (ej. mientras no haya suficientes quotes).",
+              },
+              {
                 name: "sectionTitle",
                 label: "Título de sección",
                 type: "string",
