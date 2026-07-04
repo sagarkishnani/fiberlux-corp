@@ -3,6 +3,7 @@ import Footer from "../components/shared/Footer.astro";
 import Header from "../components/shared/Header.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
 import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
+import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
 import client from "../../tina/__generated__/client";
 
 interface Props {
@@ -67,9 +68,52 @@ const whatsappMessage = whatsappContext
       content={maintenanceMode ? "Sitio en mantenimiento" : description}
     />
     <link rel="icon" type="image/svg+xml" href="/fiberlux-favicon.png" />
+    {/* Accessibility: dyslexia-friendly font (used by the a11y panel) */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    />
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
     </title>
+    {/* Accessibility: apply saved preferences before first paint (no flash) */}
+    <script is:inline>
+      (function () {
+        try {
+          var s = JSON.parse(
+            localStorage.getItem("fiberlux-a11y-v1") || "{}"
+          );
+          var r = document.documentElement;
+          if (s.fontScale)
+            r.style.setProperty("--a11y-font-scale", String(s.fontScale));
+          if (s.letterSpacing)
+            r.style.setProperty(
+              "--a11y-letter-spacing",
+              s.letterSpacing + "em"
+            );
+          if (s.contrast) {
+            r.style.setProperty("--a11y-contrast", "1.4");
+            r.style.setProperty("--a11y-brightness", "1.05");
+          }
+          if (s.saturation) r.style.setProperty("--a11y-saturate", "0.12");
+          if (s.invert) {
+            r.style.setProperty("--a11y-invert", "1");
+            r.style.setProperty("--a11y-hue", "180deg");
+          }
+          if (s.contrast || s.saturation || s.invert)
+            r.classList.add("a11y-filter");
+          if (s.hideImages) r.classList.add("a11y-hide-images");
+          if (s.dyslexia) r.classList.add("a11y-dyslexia");
+          if (s.bigCursor) r.classList.add("a11y-big-cursor");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     {
@@ -128,10 +172,14 @@ const whatsappMessage = whatsappContext
         </main>
       ) : (
         <Fragment>
-          <Header theme={headerTheme} />
-          <slot />
-          <div class="-mt-6 relative z-40">
-            <Footer />
+          {/* Page content — the accessibility color filter is applied here so
+              the fixed overlays below stay reachable while a filter is on. */}
+          <div id="a11y-content">
+            <Header theme={headerTheme} />
+            <slot />
+            <div class="-mt-6 relative z-40">
+              <Footer />
+            </div>
           </div>
           <CookieConsent />
           <WhatsAppButton
@@ -139,6 +187,7 @@ const whatsappMessage = whatsappContext
             phone={whatsappPhone}
             message={whatsappMessage}
           />
+          <AccessibilityPanel client:idle />
         </Fragment>
       )
     }
