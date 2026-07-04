@@ -1324,6 +1324,27 @@ var config_default = defineConfig({
               }
             ]
           },
+          // ── Botón flotante de WhatsApp (global) ──
+          {
+            name: "whatsapp",
+            label: "WhatsApp (bot\xF3n flotante)",
+            type: "object",
+            fields: [
+              {
+                name: "phone",
+                label: "N\xFAmero (formato internacional, solo d\xEDgitos)",
+                type: "string",
+                description: "Ej: 51986176790"
+              },
+              {
+                name: "message",
+                label: "Mensaje por defecto",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "Mensaje prellenado en p\xE1ginas generales. En p\xE1ginas de servicio/soluci\xF3n se reemplaza autom\xE1ticamente por uno que alude a ese servicio."
+              }
+            ]
+          },
           // ── Footer ──
           {
             name: "footer",

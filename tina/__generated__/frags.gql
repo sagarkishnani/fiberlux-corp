@@ -368,6 +368,11 @@ fragment GlobalParts on Global {
       }
     }
   }
+  whatsapp {
+    __typename
+    phone
+    message
+  }
   footer {
     __typename
     tagline

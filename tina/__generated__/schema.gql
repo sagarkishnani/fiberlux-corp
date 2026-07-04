@@ -1101,6 +1101,11 @@ type GlobalNav {
   links: [GlobalNavLinks]
 }
 
+type GlobalWhatsapp {
+  phone: String
+  message: String
+}
+
 type GlobalFooterColumnsLinks {
   text: String
   url: String
@@ -1146,6 +1151,7 @@ type GlobalSeo {
 
 type Global implements Node & Document {
   nav: GlobalNav
+  whatsapp: GlobalWhatsapp
   footer: GlobalFooter
   partners: GlobalPartners
   seo: GlobalSeo
@@ -1173,6 +1179,11 @@ input GlobalNavLinksFilter {
 
 input GlobalNavFilter {
   links: GlobalNavLinksFilter
+}
+
+input GlobalWhatsappFilter {
+  phone: StringFilter
+  message: StringFilter
 }
 
 input GlobalFooterColumnsLinksFilter {
@@ -1220,6 +1231,7 @@ input GlobalSeoFilter {
 
 input GlobalFilter {
   nav: GlobalNavFilter
+  whatsapp: GlobalWhatsappFilter
   footer: GlobalFooterFilter
   partners: GlobalPartnersFilter
   seo: GlobalSeoFilter
@@ -2090,6 +2102,11 @@ input GlobalNavMutation {
   links: [GlobalNavLinksMutation]
 }
 
+input GlobalWhatsappMutation {
+  phone: String
+  message: String
+}
+
 input GlobalFooterColumnsLinksMutation {
   text: String
   url: String
@@ -2135,6 +2152,7 @@ input GlobalSeoMutation {
 
 input GlobalMutation {
   nav: GlobalNavMutation
+  whatsapp: GlobalWhatsappMutation
   footer: GlobalFooterMutation
   partners: GlobalPartnersMutation
   seo: GlobalSeoMutation

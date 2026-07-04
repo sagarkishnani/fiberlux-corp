@@ -1387,6 +1387,29 @@ export default defineConfig({
             ],
           },
 
+          // ── Botón flotante de WhatsApp (global) ──
+          {
+            name: "whatsapp",
+            label: "WhatsApp (botón flotante)",
+            type: "object",
+            fields: [
+              {
+                name: "phone",
+                label: "Número (formato internacional, solo dígitos)",
+                type: "string",
+                description: "Ej: 51986176790",
+              },
+              {
+                name: "message",
+                label: "Mensaje por defecto",
+                type: "string",
+                ui: { component: "textarea" },
+                description:
+                  "Mensaje prellenado en páginas generales. En páginas de servicio/solución se reemplaza automáticamente por uno que alude a ese servicio.",
+              },
+            ],
+          },
+
           // ── Footer ──
           {
             name: "footer",

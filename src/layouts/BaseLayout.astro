@@ -23,13 +23,6 @@ const {
   whatsappKind = "servicio",
 } = Astro.props;
 
-// ─── WhatsApp floating button message (context-aware) ───
-const whatsappMessage = whatsappContext
-  ? `¡Hola Fiberlux! Deseo información sobre ${
-      whatsappKind === "solución" ? "la solución" : "el servicio"
-    } de ${whatsappContext}.`
-  : undefined;
-
 // ─── Maintenance mode check ───
 let maintenanceMode = false;
 let maintenanceData: any = null;
@@ -42,6 +35,26 @@ try {
 } catch {
   // If collection doesn't exist yet, continue normally
 }
+
+// ─── WhatsApp floating button config (editable in Tina: global.whatsapp) ───
+let whatsappPhone: string | undefined;
+let whatsappBaseMessage: string | undefined;
+try {
+  const globalResult = await client.queries.global({ relativePath: "index.json" });
+  const wa = (globalResult.data?.global as any)?.whatsapp;
+  whatsappPhone = wa?.phone || undefined;
+  whatsappBaseMessage = wa?.message || undefined;
+} catch {
+  // Fall back to the component defaults
+}
+
+// On service/solution pages the message references that specific service;
+// elsewhere it uses the editable base message from the CMS.
+const whatsappMessage = whatsappContext
+  ? `¡Hola Fiberlux! Deseo información sobre ${
+      whatsappKind === "solución" ? "la solución" : "el servicio"
+    } de ${whatsappContext}.`
+  : whatsappBaseMessage;
 ---
 
 <!doctype html>
@@ -121,7 +134,11 @@ try {
             <Footer />
           </div>
           <CookieConsent />
-          <WhatsAppButton client:idle message={whatsappMessage} />
+          <WhatsAppButton
+            client:idle
+            phone={whatsappPhone}
+            message={whatsappMessage}
+          />
         </Fragment>
       )
     }
