@@ -396,25 +396,27 @@ export default function HeaderReact({
                           </a>
                           {hasGrand && (
                             <div
-                              className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                              className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                                 subActive
-                                  ? "max-h-[640px] opacity-100 mt-3"
-                                  : "max-h-0 opacity-0"
+                                  ? "grid-rows-[1fr] opacity-100"
+                                  : "grid-rows-[0fr] opacity-0"
                               }`}
                             >
-                              <ul className="flex flex-col gap-1 pl-4 border-l border-white/20">
-                                {grandChildren.map((gc, k) => (
-                                  <li key={k}>
-                                    <a
-                                      href={gc.url || "#"}
-                                      onClick={closeMenu}
-                                      className="block text-white/70 text-[15px] py-1 hover:text-white transition-colors"
-                                    >
-                                      {gc.text}
-                                    </a>
-                                  </li>
-                                ))}
-                              </ul>
+                              <div className="overflow-hidden">
+                                <ul className="mt-3 flex flex-col gap-1 pl-4 border-l border-white/20">
+                                  {grandChildren.map((gc, k) => (
+                                    <li key={k}>
+                                      <a
+                                        href={gc.url || "#"}
+                                        onClick={closeMenu}
+                                        className="block text-white/70 text-[15px] py-1 hover:text-white transition-colors"
+                                      >
+                                        {gc.text}
+                                      </a>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
                             </div>
                           )}
                         </div>
