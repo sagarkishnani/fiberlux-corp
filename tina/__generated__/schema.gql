@@ -173,6 +173,7 @@ type HomeTestimonialsItems {
 }
 
 type HomeTestimonials {
+  visible: Boolean
   sectionTitle: String
   items: [HomeTestimonialsItems]
 }
@@ -246,6 +247,11 @@ input HomeServicesFilter {
   items: HomeServicesItemsFilter
 }
 
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
+}
+
 input HomeTestimonialsItemsFilter {
   quote: StringFilter
   description: StringFilter
@@ -257,6 +263,7 @@ input HomeTestimonialsItemsFilter {
 }
 
 input HomeTestimonialsFilter {
+  visible: BooleanFilter
   sectionTitle: StringFilter
   items: HomeTestimonialsItemsFilter
 }
@@ -307,6 +314,7 @@ type ServiceHero {
 type ServiceValorCards {
   heading: String
   text: String
+  tags: [String]
   image: String
 }
 
@@ -371,6 +379,7 @@ input ServiceHeroFilter {
 input ServiceValorCardsFilter {
   heading: StringFilter
   text: StringFilter
+  tags: StringFilter
   image: ImageFilter
 }
 
@@ -378,11 +387,6 @@ input ServiceValorFilter {
   title: StringFilter
   subtitle: StringFilter
   cards: ServiceValorCardsFilter
-}
-
-input BooleanFilter {
-  eq: Boolean
-  exists: Boolean
 }
 
 input ServiceCatalogoItemsFilter {
@@ -1362,6 +1366,7 @@ type DynamicFormsFieldsValidation {
 type DynamicFormsFieldsOptions {
   value: String
   label: String
+  group: String
   description: String
 }
 
@@ -1436,6 +1441,7 @@ input DynamicFormsFieldsValidationFilter {
 input DynamicFormsFieldsOptionsFilter {
   value: StringFilter
   label: StringFilter
+  group: StringFilter
   description: StringFilter
 }
 
@@ -1715,6 +1721,7 @@ input HomeTestimonialsItemsMutation {
 }
 
 input HomeTestimonialsMutation {
+  visible: Boolean
   sectionTitle: String
   items: [HomeTestimonialsItemsMutation]
 }
@@ -1754,6 +1761,7 @@ input ServiceHeroMutation {
 input ServiceValorCardsMutation {
   heading: String
   text: String
+  tags: [String]
   image: String
 }
 
@@ -2181,6 +2189,7 @@ input DynamicFormsFieldsValidationMutation {
 input DynamicFormsFieldsOptionsMutation {
   value: String
   label: String
+  group: String
   description: String
 }
 

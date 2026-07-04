@@ -497,6 +497,7 @@ export type HomeTestimonialsItems = {
 
 export type HomeTestimonials = {
   __typename?: 'HomeTestimonials';
+  visible?: Maybe<Scalars['Boolean']['output']>;
   sectionTitle?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<HomeTestimonialsItems>>>;
 };
@@ -574,6 +575,11 @@ export type HomeServicesFilter = {
   items?: InputMaybe<HomeServicesItemsFilter>;
 };
 
+export type BooleanFilter = {
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type HomeTestimonialsItemsFilter = {
   quote?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
@@ -585,6 +591,7 @@ export type HomeTestimonialsItemsFilter = {
 };
 
 export type HomeTestimonialsFilter = {
+  visible?: InputMaybe<BooleanFilter>;
   sectionTitle?: InputMaybe<StringFilter>;
   items?: InputMaybe<HomeTestimonialsItemsFilter>;
 };
@@ -639,6 +646,7 @@ export type ServiceValorCards = {
   __typename?: 'ServiceValorCards';
   heading?: Maybe<Scalars['String']['output']>;
   text?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   image?: Maybe<Scalars['String']['output']>;
 };
 
@@ -710,6 +718,7 @@ export type ServiceHeroFilter = {
 export type ServiceValorCardsFilter = {
   heading?: InputMaybe<StringFilter>;
   text?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<StringFilter>;
   image?: InputMaybe<ImageFilter>;
 };
 
@@ -717,11 +726,6 @@ export type ServiceValorFilter = {
   title?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
   cards?: InputMaybe<ServiceValorCardsFilter>;
-};
-
-export type BooleanFilter = {
-  eq?: InputMaybe<Scalars['Boolean']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ServiceCatalogoItemsFilter = {
@@ -1784,6 +1788,7 @@ export type DynamicFormsFieldsOptions = {
   __typename?: 'DynamicFormsFieldsOptions';
   value?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1861,6 +1866,7 @@ export type DynamicFormsFieldsValidationFilter = {
 export type DynamicFormsFieldsOptionsFilter = {
   value?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
+  group?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
 };
 
@@ -2388,6 +2394,7 @@ export type HomeTestimonialsItemsMutation = {
 };
 
 export type HomeTestimonialsMutation = {
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
   sectionTitle?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<HomeTestimonialsItemsMutation>>>;
 };
@@ -2427,6 +2434,7 @@ export type ServiceHeroMutation = {
 export type ServiceValorCardsMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   image?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2854,6 +2862,7 @@ export type DynamicFormsFieldsValidationMutation = {
 export type DynamicFormsFieldsOptionsMutation = {
   value?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2939,9 +2948,9 @@ export type CookieConsentMutation = {
   categories?: InputMaybe<Array<InputMaybe<CookieConsentCategoriesMutation>>>;
 };
 
-export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
+export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
-export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, whyUsTitle?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -2967,7 +2976,7 @@ export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: st
 
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
-export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
+export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
 
 export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -2978,7 +2987,7 @@ export type HomeQueryVariables = Exact<{
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } };
+export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } };
 
 export type HomeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -2990,14 +2999,14 @@ export type HomeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
+export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
 
 export type ServiceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type ServiceConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3009,7 +3018,7 @@ export type ServiceConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type SubservicioQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3244,7 +3253,7 @@ export type DynamicFormsQueryVariables = Exact<{
 }>;
 
 
-export type DynamicFormsQuery = { __typename?: 'Query', dynamicForms: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } };
+export type DynamicFormsQuery = { __typename?: 'Query', dynamicForms: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } };
 
 export type DynamicFormsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3256,7 +3265,7 @@ export type DynamicFormsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
+export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
 
 export type LegalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3326,6 +3335,7 @@ export const HomePartsFragmentDoc = gql`
   }
   testimonials {
     __typename
+    visible
     sectionTitle
     items {
       __typename
@@ -3376,6 +3386,7 @@ export const ServicePartsFragmentDoc = gql`
       __typename
       heading
       text
+      tags
       image
     }
   }
@@ -3802,6 +3813,7 @@ export const DynamicFormsPartsFragmentDoc = gql`
       __typename
       value
       label
+      group
       description
     }
     accept

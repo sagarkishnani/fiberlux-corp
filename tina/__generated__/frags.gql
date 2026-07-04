@@ -27,6 +27,7 @@ fragment HomeParts on Home {
   }
   testimonials {
     __typename
+    visible
     sectionTitle
     items {
       __typename
@@ -76,6 +77,7 @@ fragment ServiceParts on Service {
       __typename
       heading
       text
+      tags
       image
     }
   }
@@ -489,6 +491,7 @@ fragment DynamicFormsParts on DynamicForms {
       __typename
       value
       label
+      group
       description
     }
     accept

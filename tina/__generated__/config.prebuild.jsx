@@ -136,6 +136,12 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               {
+                name: "visible",
+                label: "Mostrar secci\xF3n de testimonios",
+                type: "boolean",
+                description: "Desact\xEDvalo para ocultar la secci\xF3n de testimonios en todo el sitio (ej. mientras no haya suficientes quotes)."
+              },
+              {
                 name: "sectionTitle",
                 label: "T\xEDtulo de secci\xF3n",
                 type: "string"
@@ -286,6 +292,13 @@ var config_default = defineConfig({
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" }
+                  },
+                  {
+                    name: "tags",
+                    label: "Etiquetas (chips)",
+                    description: "Tecnolog\xEDas/servicios mostrados como chips. Se usan en la card 'Nuestra soluci\xF3n'.",
+                    type: "string",
+                    list: true
                   },
                   { name: "image", label: "Imagen/gr\xE1fico", type: "image" }
                 ]
@@ -786,7 +799,9 @@ var config_default = defineConfig({
                       { value: "telecomunicaciones", label: "Telecomunicaciones" },
                       { value: "turismo", label: "Turismo" },
                       { value: "entretenimiento", label: "Entretenimiento" },
-                      { value: "corporativo", label: "Corporativo / Oficinas" }
+                      { value: "corporativo", label: "Corporativo / Oficinas" },
+                      { value: "consultoria", label: "Consultor\xEDa" },
+                      { value: "servicios", label: "Servicios" }
                     ]
                   },
                   { name: "label", label: "Nombre del rubro", type: "string" }
@@ -1883,6 +1898,12 @@ var config_default = defineConfig({
                 fields: [
                   { name: "value", label: "Valor", type: "string" },
                   { name: "label", label: "Etiqueta", type: "string" },
+                  {
+                    name: "group",
+                    label: "Grupo / Categor\xEDa",
+                    type: "string",
+                    description: "Solo para select: agrupa las opciones bajo un encabezado (optgroup). Ej: la categor\xEDa del servicio."
+                  },
                   {
                     name: "description",
                     label: "Descripci\xF3n",
