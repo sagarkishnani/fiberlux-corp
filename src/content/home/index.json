@@ -25,10 +25,13 @@
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
         "icon": "/images/soluciones/conectividad.svg",
         "bullets": [
-          "Internet Dedicado (Simétrico)",
-          "Lan2Lan (Transmisión de Datos)",
-          "Fibra Oscura",
-          "Accesos Satelitales"
+          "Internet Corporativo",
+          "Internet Corporativo de alta disponibilidad",
+          "Conectividad satelital",
+          "Radioenlaces empresariales",
+          "Transmisión de datos (Lan To Lan)",
+          "SD-WAN",
+          "Y más..."
         ],
         "url": "/servicios/internet-dedicado"
       },
