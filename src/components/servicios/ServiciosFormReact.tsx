@@ -40,7 +40,7 @@ export default function ServiciosFormReact({
       {/* Ambient purple glow rising from the bottom, per the Figma */}
       <div className="absolute inset-0 z-0 servicios-form-glow" />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 py-20 lg:py-28">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 py-14 md:py-20 lg:py-28">
         {/* ════ Heading (editable from the servicios collection) ════ */}
         <div className="max-w-[720px] mx-auto text-center mb-10 lg:mb-14">
           <h2
