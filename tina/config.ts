@@ -831,6 +831,8 @@ export default defineConfig({
                       { value: "turismo", label: "Turismo" },
                       { value: "entretenimiento", label: "Entretenimiento" },
                       { value: "corporativo", label: "Corporativo / Oficinas" },
+                      { value: "consultoria", label: "Consultoría" },
+                      { value: "servicios", label: "Servicios" },
                     ],
                   },
                   { name: "label", label: "Nombre del rubro", type: "string" },

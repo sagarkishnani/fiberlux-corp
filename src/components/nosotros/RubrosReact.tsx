@@ -22,6 +22,8 @@ import {
   FaPlaneDeparture,
   FaMasksTheater,
   FaBuilding,
+  FaBriefcase,
+  FaGears,
 } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 
@@ -57,6 +59,8 @@ const ICONS: Record<string, IconType> = {
   turismo: FaPlaneDeparture,
   entretenimiento: FaMasksTheater,
   corporativo: FaBuilding,
+  consultoria: FaBriefcase,
+  servicios: FaGears,
 };
 const FALLBACK_ICON: IconType = FaBuilding;
 
