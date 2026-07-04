@@ -136,11 +136,11 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
         {/* Big number bottom */}
         <p className="m-auto">
           {prefix && (
-            <span className="text-white text-[56px] leading-[60px] font-bold">
+            <span className="text-white text-[40px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold">
               {prefix}
             </span>
           )}
-          <span className="text-white text-[56px] leading-[60px] font-bold">
+          <span className="text-white text-[40px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold">
             {displayNumber}
           </span>
           {suffix && (
@@ -175,7 +175,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
   const heading = titleOverride || stats.title;
 
   return (
-    <section className="bg-brand-purple rounded-t-3xl py-20 px-4 md:px-0">
+    <section className="bg-brand-purple rounded-t-3xl py-14 md:py-20 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1440px] mx-auto">
 
         {/* Section title */}
