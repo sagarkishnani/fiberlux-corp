@@ -37,16 +37,17 @@
       },
       {
         "number": "02",
-        "title": "Ciberseguridad",
+        "title": "Ciberseguridad Gestionada",
         "description": "Protege tu operación crítica con ciberseguridad.",
         "icon": "/images/soluciones/ciberseguridad.svg",
         "bullets": [
-          "Seguridad Perimetral y de Red",
-          "Seguridad de Endpoints y Servidores",
-          "Respaldo Crítico",
-          "Gestión de identidad",
-          "Programas de concientización",
-          "Seguridad en el desarrollo de aplicaciones"
+          "NGFW y Seguridad Perimetral",
+          "EDR / XDR / MDR",
+          "MFA y Control de Identidad",
+          "ZTNA y Control de Acceso Seguro",
+          "WAF y Protección de Aplicaciones",
+          "Cyber SOC 24/7 y Monitoreo",
+          "Y más..."
         ],
         "url": "/servicios/ciberseguridad-endpoints"
       },
