@@ -11,8 +11,9 @@ interface StickyCardsProps {
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-/* Sticky-stack tuning (desktop). */
-const STICK_TOP = 104; // where the first card pins, below the header
+/* Sticky-stack tuning. */
+const NAV_H = 64; // fixed site header height (h-16)
+const STICK_TOP = 176; // where the first card pins, below the nav + sticky title band
 const PEEK = 18; // each stacked card rests this much lower, so its top edge peeks
 
 /* Prefixes the CMS media path with BASE_URL so it resolves under a subpath deploy. */
@@ -72,8 +73,11 @@ export default function StickyCardsReact({
       `}</style>
 
       <div className="max-w-[972px] mx-auto px-6 md:px-10">
-        {/* Header */}
-        <div className="text-center mb-14 lg:mb-20">
+        {/* Header — stays pinned below the nav while the cards stack behind it */}
+        <div
+          className="text-center bg-[#0a0a0a] pt-4 pb-8 md:pt-6 md:pb-10 mb-6"
+          style={stack ? { position: "sticky", top: NAV_H, zIndex: 50 } : undefined}
+        >
           <h2
             className="font-sans text-white text-subtitle-lg leading-[1.1] tracking-[-0.02em]"
             data-tina-field={tinaField(services, "title")}
