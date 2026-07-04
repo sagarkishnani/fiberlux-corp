@@ -7,19 +7,19 @@ export default {
       mono: ['Space Mono', 'monospace'],
     },
     fontSize: {
-      /* Headings */
-      'heading-xxl': ['80px', { lineHeight: '88px', fontWeight: '700' }],
-      'heading-xl':  ['72px', { lineHeight: '80px', fontWeight: '700' }],
-      'heading-lg':  ['64px', { lineHeight: '72px', fontWeight: '700' }],
-      'heading-md':  ['56px', { lineHeight: '64px', fontWeight: '700' }],
-      'heading-sm':  ['48px', { lineHeight: '56px', fontWeight: '700' }],
-      'heading-xs':  ['40px', { lineHeight: '48px', fontWeight: '700' }],
+      /* Headings — clamp(min≈mobile, preferido, max=desktop actual); lineHeight unitless para que acompañe al clamp */
+      'heading-xxl': ['clamp(2.5rem, 6vw + 1rem, 5rem)',        { lineHeight: '1.1',  fontWeight: '700' }], // 40 → 80
+      'heading-xl':  ['clamp(2.25rem, 5.5vw + 0.75rem, 4.5rem)', { lineHeight: '1.1',  fontWeight: '700' }], // 36 → 72
+      'heading-lg':  ['clamp(2rem, 5vw + 0.5rem, 4rem)',         { lineHeight: '1.12', fontWeight: '700' }], // 32 → 64
+      'heading-md':  ['clamp(1.875rem, 4vw + 0.5rem, 3.5rem)',   { lineHeight: '1.14', fontWeight: '700' }], // 30 → 56
+      'heading-sm':  ['clamp(1.625rem, 3.5vw + 0.5rem, 3rem)',   { lineHeight: '1.16', fontWeight: '700' }], // 26 → 48
+      'heading-xs':  ['clamp(1.5rem, 2.5vw + 0.5rem, 2.5rem)',   { lineHeight: '1.2',  fontWeight: '700' }], // 24 → 40
 
       /* Subtitles */
-      'subtitle-xl': ['56px', { lineHeight: '56px', fontWeight: '500' }],
-      'subtitle-lg': ['44px', { lineHeight: '44px', fontWeight: '500' }],
-      'subtitle-md': ['32px', { lineHeight: '40px', fontWeight: '500' }],
-      'subtitle-sm': ['24px', { lineHeight: '30px', fontWeight: '500' }],
+      'subtitle-xl': ['clamp(2rem, 4vw + 0.5rem, 3.5rem)',       { lineHeight: '1.05', fontWeight: '500' }], // 32 → 56
+      'subtitle-lg': ['clamp(1.75rem, 3vw + 0.5rem, 2.75rem)',   { lineHeight: '1.1',  fontWeight: '500' }], // 28 → 44
+      'subtitle-md': ['clamp(1.5rem, 2vw + 0.5rem, 2rem)',       { lineHeight: '1.25', fontWeight: '500' }], // 24 → 32
+      'subtitle-sm': ['clamp(1.25rem, 1.5vw + 0.4rem, 1.5rem)',  { lineHeight: '1.25', fontWeight: '500' }], // 20 → 24
       'subtitle-xs': ['16px', { lineHeight: '18px', fontWeight: '500' }],
 
       /* Body */
