@@ -379,21 +379,33 @@ export default function HeaderReact({
                       const subActive = desktopSubActive === j;
 
                       return (
-                        <div
-                          key={j}
-                          className="animate-fadeIn"
-                          onMouseEnter={() =>
-                            setDesktopSubActive(hasGrand ? j : null)
-                          }
-                        >
-                          <a
-                            href={child.url || "#"}
-                            onClick={closeMenu}
-                            className="flex items-center justify-between gap-6 text-white text-lg hover:text-white/80 transition-colors group text-left"
-                          >
-                            <span>{child.text}</span>
-                            <ChevronRight className="w-5 h-5 shrink-0 opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
-                          </a>
+                        <div key={j} className="animate-fadeIn">
+                          <div className="flex items-center justify-between gap-6">
+                            <a
+                              href={child.url || "#"}
+                              onClick={closeMenu}
+                              className="text-white text-lg hover:text-white/80 transition-colors text-left"
+                            >
+                              {child.text}
+                            </a>
+                            {hasGrand && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setDesktopSubActive(subActive ? null : j)
+                                }
+                                aria-expanded={subActive}
+                                aria-label={`${subActive ? "Ocultar" : "Ver"} soluciones de ${child.text}`}
+                                className="p-1 -mr-1 text-white/60 hover:text-white transition-colors"
+                              >
+                                <ChevronRight
+                                  className={`w-5 h-5 shrink-0 transition-transform duration-300 ${
+                                    subActive ? "rotate-90" : ""
+                                  }`}
+                                />
+                              </button>
+                            )}
+                          </div>
                           {hasGrand && (
                             <div
                               className={`grid transition-[grid-template-rows,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${

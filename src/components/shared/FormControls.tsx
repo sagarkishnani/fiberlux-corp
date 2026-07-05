@@ -95,9 +95,11 @@ export function FormInput({
 }: InputProps) {
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <input
         type={type}
         placeholder={placeholder}
@@ -163,9 +165,11 @@ export function FormSelect({
 }: SelectProps) {
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -206,9 +210,11 @@ export function FormTextarea({
 }: TextareaProps) {
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <textarea
         placeholder={placeholder}
         value={value}
@@ -269,9 +275,11 @@ export function FormFileUpload({
 
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
         <label
           style={{
@@ -413,9 +421,11 @@ export function FormRadioGroup({
 }: RadioGroupProps) {
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
         {options.map((opt, i) => {
           const isSelected = value === opt.value;
@@ -496,9 +506,11 @@ export function FormCurrency({
 
   return (
     <div>
-      <label style={labelStyle}>
-        {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-      </label>
+      {label && (
+        <label style={labelStyle}>
+          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
+        </label>
+      )}
       <div style={{ position: "relative" }}>
         <span
           style={{

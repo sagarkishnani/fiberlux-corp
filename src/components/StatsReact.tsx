@@ -74,8 +74,8 @@ function useCounter(target: number, duration: number, shouldStart: boolean) {
       const elapsed = timestamp - startTime;
       const progress = Math.min(elapsed / duration, 1);
 
-      // Ease out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
+      // Ease out quad (less front-loaded than cubic → numbers keep climbing longer)
+      const eased = 1 - Math.pow(1 - progress, 2);
       setCount(eased * target);
 
       if (progress < 1) {
@@ -98,7 +98,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const [isVisible, setIsVisible] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || '0');
-  const count = useCounter(value, 2000 + index * 200, isVisible);
+  const count = useCounter(value, 3500 + index * 250, isVisible);
 
   // Intersection observer to trigger animation when visible
   useEffect(() => {

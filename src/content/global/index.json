@@ -173,17 +173,15 @@
       },
       {
         "text": "Nosotros",
-        "url": "/nosotros",
-        "children": [
-          {
-            "text": "Casos de éxito",
-            "url": "/casos-de-exito"
-          },
-          {
-            "text": "Blog",
-            "url": "/blog"
-          }
-        ]
+        "url": "/nosotros"
+      },
+      {
+        "text": "Casos de éxito",
+        "url": "/casos-de-exito"
+      },
+      {
+        "text": "Blog",
+        "url": "/blog"
       },
       {
         "text": "Soporte técnico",

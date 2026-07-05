@@ -91,7 +91,7 @@ export default function PartnersMarquee({ partners }: { partners?: PartnersData 
           mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
         }
         .partners-track {
-          animation: partners-marquee 42s linear infinite;
+          animation: partners-marquee 110s linear infinite;
         }
         /* Left → right motion; both halves identical so the reset is seamless. */
         @keyframes partners-marquee {
