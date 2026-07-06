@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 
@@ -37,6 +37,10 @@ export default function StickyCardsReact({
   const [isMobile, setIsMobile] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const lastCardRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const mqMobile = window.matchMedia("(max-width: 767px)");
     const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -52,6 +56,48 @@ export default function StickyCardsReact({
     };
   }, []);
 
+  // Release the pinned stack once the last card is reached. While stacking,
+  // --sc-recede stays 0 (normal sticky). From the moment the last card is
+  // pinned, it grows 1:1 with scroll and pulls the whole stack (title + cards)
+  // up together, so nothing lingers fixed heading into the next section.
+  useEffect(() => {
+    const stacking = !reduceMotion;
+    const sec = sectionRef.current;
+    if (!stacking) {
+      sec?.style.removeProperty("--sc-recede");
+      return;
+    }
+    const count = (data?.home?.services?.items || initialData?.home?.services?.items || [])
+      .filter(Boolean).length;
+    if (count === 0) return;
+
+    const pinnedTop = (isMobile ? 150 : STICK_TOP) + (count - 1) * PEEK;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const section = sectionRef.current;
+      const cont = cardsRef.current;
+      const last = lastCardRef.current;
+      if (!section || !cont || !last) return;
+      // Container is not sticky, so its document top is stable.
+      const contDocTop = cont.getBoundingClientRect().top + window.scrollY;
+      const releaseY = contDocTop + last.offsetTop - pinnedTop;
+      const recede = Math.max(0, window.scrollY - releaseY);
+      section.style.setProperty("--sc-recede", `${recede}px`);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [reduceMotion, isMobile, data, initialData]);
+
   if (items.length === 0) return null;
 
   // Sticky stacking on both desktop and mobile; disabled only when the user prefers reduced motion.
@@ -60,7 +106,7 @@ export default function StickyCardsReact({
   const stickTop = isMobile ? 150 : STICK_TOP;
 
   return (
-    <section className="relative bg-[#0a0a0a] py-14 md:py-20 lg:py-32">
+    <section ref={sectionRef} className="relative bg-[#0a0a0a] py-14 md:py-20 lg:py-32">
       {/* Keyframes for the subtle visual float — injected to avoid Tailwind JIT staleness. */}
       <style>{`
         @keyframes sc-float {
@@ -78,7 +124,15 @@ export default function StickyCardsReact({
         {/* Header — stays pinned below the nav while the cards stack behind it */}
         <div
           className="text-center bg-[#0a0a0a] pt-4 pb-8 md:pt-6 md:pb-10 mb-6"
-          style={stack ? { position: "sticky", top: NAV_H, zIndex: 50 } : undefined}
+          style={
+            stack
+              ? {
+                  position: "sticky",
+                  top: `calc(${NAV_H}px - var(--sc-recede, 0px))`,
+                  zIndex: 50,
+                }
+              : undefined
+          }
         >
           <h2
             className="font-sans text-white text-subtitle-lg leading-[1.1] tracking-[-0.02em]"
@@ -89,20 +143,25 @@ export default function StickyCardsReact({
         </div>
 
         {/* Cards — sticky vertical stack (desktop) / plain stack (mobile) */}
-        <div className="relative">
+        <div ref={cardsRef} className="relative">
           {items.map((item, index) => {
             if (!item) return null;
             const bullets = (item.bullets || []).filter(Boolean);
             const icon = resolveIcon(item.icon);
+            const isLast = index === items.length - 1;
 
             return (
               <div
                 key={index}
+                ref={isLast ? lastCardRef : undefined}
                 style={
                   stack
                     ? {
                         position: "sticky",
-                        top: `${stickTop + index * PEEK}px`,
+                        // Once the last card is stacked, --sc-recede grows with
+                        // scroll and pulls the whole pinned stack up together, so
+                        // nothing stays fixed heading into the next section.
+                        top: `calc(${stickTop + index * PEEK}px - var(--sc-recede, 0px))`,
                         marginBottom: 48,
                         zIndex: index + 1,
                       }

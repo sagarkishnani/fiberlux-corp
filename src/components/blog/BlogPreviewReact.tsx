@@ -206,7 +206,7 @@ export default function BlogPreviewReact({
                     key={i}
                     className="snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
                   >
-                    <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[400px] flex items-center justify-center text-white/20 text-sm">
+                    <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[280px] md:h-[400px] flex items-center justify-center text-white/20 text-sm">
                       Blog card — próximamente
                     </div>
                   </article>

@@ -179,7 +179,7 @@ var config_default = defineConfig({
           // ── Stats ──
           {
             name: "stats",
-            label: "Nuestra red en cifras",
+            label: "Por qu\xE9 Fiberlux",
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
@@ -846,7 +846,7 @@ var config_default = defineConfig({
           // ── Stats ──
           {
             name: "stats",
-            label: "Nuestra red en cifras",
+            label: "Por qu\xE9 Fiberlux",
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },

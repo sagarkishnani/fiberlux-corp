@@ -188,7 +188,7 @@ export default defineConfig({
           // ── Stats ──
           {
             name: "stats",
-            label: "Nuestra red en cifras",
+            label: "Por qué Fiberlux",
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
@@ -889,7 +889,7 @@ export default defineConfig({
           // ── Stats ──
           {
             name: "stats",
-            label: "Nuestra red en cifras",
+            label: "Por qué Fiberlux",
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },

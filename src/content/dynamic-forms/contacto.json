@@ -219,7 +219,7 @@
       "name": "empresa",
       "label": "Empresa",
       "placeholder": "Nombre de la empresa",
-      "required": false,
+      "required": true,
       "width": "half",
       "order": 4
     },
@@ -227,10 +227,14 @@
       "fieldType": "text",
       "name": "ruc",
       "label": "RUC",
-      "placeholder": "20XXXXXXXXX",
-      "required": false,
+      "placeholder": "XXXXXXXXXXX",
+      "required": true,
       "width": "half",
-      "order": 5
+      "order": 5,
+      "validation": {
+        "pattern": "^\\d{11}$",
+        "patternMessage": "El RUC debe tener 11 dígitos"
+      }
     },
     {
       "fieldType": "tel",

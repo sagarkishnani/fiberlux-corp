@@ -70,23 +70,31 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
   const agencyLogo = (footer as any).agencyLogo as string | null | undefined;
   const agencyUrl = (footer as any).agencyUrl as string | null | undefined;
 
-  /* Split the link groups into two visual columns (ceil(n/2) on the left). */
   const columns = (footer.columns ?? []).filter(Boolean) as ColumnItem[];
-  const splitAt = Math.ceil(columns.length / 2);
-  const visualColumns = [columns.slice(0, splitAt), columns.slice(splitAt)];
 
-  const renderColumn = (column: ColumnItem, key: number) => (
-    <div key={key}>
-      <h3
-        className="text-[18px] leading-[18px] font-semibold text-white mb-4"
-        data-tina-field={tinaField(column, 'title')}
-      >
-        {column.title}
-      </h3>
-      <ul className="space-y-2.5">
-        {column.links?.map((link: LinkItem | null, j: number) => {
-          if (!link) return null;
-          return (
+  const renderColumn = (column: ColumnItem, key: number) => {
+    const links = (column.links?.filter(Boolean) as LinkItem[]) ?? [];
+    // Long columns (e.g. "Legales") span the full width and lay their links
+    // out in multiple columns (2 on tablet, 3 on desktop) to keep the footer
+    // from getting too tall.
+    const wide = links.length > 8;
+
+    return (
+      <div key={key} className={wide ? 'sm:col-span-2 lg:col-span-3' : ''}>
+        <h3
+          className="text-[18px] leading-[18px] font-semibold text-white mb-4"
+          data-tina-field={tinaField(column, 'title')}
+        >
+          {column.title}
+        </h3>
+        <ul
+          className={`space-y-2.5 ${
+            wide
+              ? 'sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-8 sm:gap-y-2.5 sm:space-y-0'
+              : ''
+          }`}
+        >
+          {links.map((link: LinkItem, j: number) => (
             <li key={j}>
               <a
                 href={link.url || '#'}
@@ -96,11 +104,11 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
                 {link.text}
               </a>
             </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <footer className="bg-brand-purple rounded-t-xl">
@@ -138,13 +146,12 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
             </div>
           </div>
 
-          {/* Right: Link groups in two visual columns — first on mobile */}
-          <div className="order-1 md:order-2 col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10">
-            {visualColumns.map((group, gi) => (
-              <div key={gi} className="flex flex-col gap-10">
-                {group.map((column, ci) => renderColumn(column, ci))}
-              </div>
-            ))}
+          {/* Right: Link groups — first on mobile. Short groups fill the top
+              row (3 across on desktop); long groups span full width below with
+              their links in multiple columns. `dense` backfills short groups
+              into the gap left beside a spanning column. */}
+          <div className="order-1 md:order-2 col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense gap-x-8 gap-y-10">
+            {columns.map((column, ci) => renderColumn(column, ci))}
           </div>
         </div>
       </div>

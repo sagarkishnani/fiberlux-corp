@@ -207,6 +207,23 @@ export default function HeaderReact({
     };
   }, [menuOpen, resetNav]);
 
+  // Desktop: close the menu when clicking outside its interactive content
+  // (empty overlay area, or the page peeking below the panel). Clicks on a
+  // link/button are ignored so navigation and the submenu toggles still work.
+  // Skipped on mobile, where the full-screen menu closes via the ✕ button.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (isMobile.current) return;
+      const target = e.target as HTMLElement | null;
+      if (target && target.closest("a, button")) return;
+      setMenuOpen(false);
+      resetNav();
+    };
+    document.addEventListener("click", onDocClick);
+    return () => document.removeEventListener("click", onDocClick);
+  }, [menuOpen, resetNav]);
+
   /* ── Handlers ── */
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => {

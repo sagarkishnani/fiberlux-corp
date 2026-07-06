@@ -153,7 +153,7 @@ export default function BlogDetailReact({
         }}
       >
         {/* All hero content shares same max-w as body */}
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10 pt-28 md:pt-36">
+        <div className="max-w-[940px] mx-auto px-6 md:px-10 pt-28 md:pt-36">
           {/* Top row: Back pill + share/link icons */}
           <div className="flex items-center justify-between mb-12 md:mb-16">
             {/* Back pill */}
@@ -239,13 +239,13 @@ export default function BlogDetailReact({
           {/* Cover image — same width as content */}
           {coverImage && (
             <div
-              className="rounded-t-2xl overflow-hidden"
+              className="rounded-t-2xl overflow-hidden max-h-[280px] md:max-h-[480px]"
               data-tina-field={tinaField(post, 'coverImage')}
             >
               <img
                 src={coverImage}
                 alt={title}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto"
               />
             </div>
           )}
@@ -254,7 +254,7 @@ export default function BlogDetailReact({
 
       {/* ═══ BODY ═══ */}
       <section className="bg-white py-12 md:py-16">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10">
+        <div className="max-w-[940px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_160px] gap-10 md:gap-14">
             {/* Article content */}
             <article
@@ -292,7 +292,7 @@ export default function BlogDetailReact({
 
       {/* ═══ NEWSLETTER ═══ */}
       <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-[960px] mx-auto px-6 md:px-10">
+        <div className="max-w-[940px] mx-auto px-6 md:px-10">
           <div
             className="rounded-2xl overflow-hidden p-8 md:p-12 relative"
             style={{

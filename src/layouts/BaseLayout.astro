@@ -211,6 +211,33 @@ const whatsappMessage = whatsappContext
       }
 
       requestAnimationFrame(raf);
+
+      // Smooth-scroll in-page anchor links (e.g. "Ver soluciones" → #catalogo)
+      // through Lenis instead of the browser's instant jump. Offset leaves room
+      // for the fixed header.
+      document.addEventListener("click", (e) => {
+        const link = (e.target as HTMLElement)?.closest?.(
+          'a[href*="#"]'
+        ) as HTMLAnchorElement | null;
+        if (!link) return;
+
+        const url = new URL(link.href, window.location.href);
+        // Only handle same-page hashes.
+        if (
+          url.pathname !== window.location.pathname ||
+          url.search !== window.location.search
+        )
+          return;
+
+        const id = decodeURIComponent(url.hash.slice(1));
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -80 });
+        history.pushState(null, "", url.hash);
+      });
     </script>
   )
 }

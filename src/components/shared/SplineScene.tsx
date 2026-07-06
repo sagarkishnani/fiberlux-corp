@@ -81,7 +81,7 @@ interface SplineSceneProps {
 }
 
 const FEATHER_MASK =
-  "radial-gradient(ellipse closest-side at 50% 45%, #000 78%, transparent 100%)";
+  "radial-gradient(ellipse farthest-side at 50% 45%, #000 90%, transparent 100%)";
 
 /**
  * Escena Spline reutilizable con estrategia de rendimiento:

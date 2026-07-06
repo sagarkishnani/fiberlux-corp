@@ -24,9 +24,13 @@
       "name": "ruc",
       "label": "RUC",
       "placeholder": "RUC",
-      "required": false,
+      "required": true,
       "width": "half",
-      "order": 2
+      "order": 2,
+      "validation": {
+        "pattern": "^\\d{11}$",
+        "patternMessage": "El RUC debe tener 11 dígitos"
+      }
     },
     {
       "fieldType": "text",

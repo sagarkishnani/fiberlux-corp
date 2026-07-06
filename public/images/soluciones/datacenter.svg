@@ -32,12 +32,6 @@
 <g id="Group">
 <path id="Vector_2" d="M557.889 83.9575H86.1406V398.457H557.889V83.9575Z" fill="#96237A"/>
 <g id="cloud-connected">
-<!-- signal arcs: "siempre conectada" -->
-<g stroke="#FFD4F4" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.9">
-<path d="M405 150 A54 54 0 0 1 459 204"/>
-<path d="M405 176 A28 28 0 0 1 433 204"/>
-</g>
-<circle cx="405" cy="204" r="9" fill="#FFD4F4"/>
 <!-- cloud silhouette -->
 <g fill="#E0B1D4">
 <rect x="212" y="238" width="200" height="76" rx="38"/>
@@ -52,6 +46,12 @@
 <path d="M344 224 V272"/>
 <path d="M328 256 L344 274 L360 256"/>
 </g>
+<!-- signal arcs ("siempre conectada"): outside the cloud, top-right, drawn on top -->
+<g stroke="#FFD4F4" stroke-width="7" stroke-linecap="round" fill="none" opacity="0.9">
+<path d="M435 110 A54 54 0 0 1 489 164"/>
+<path d="M435 136 A28 28 0 0 1 463 164"/>
+</g>
+<circle cx="435" cy="164" r="9" fill="#FFD4F4"/>
 </g>
 </g>
 </g>

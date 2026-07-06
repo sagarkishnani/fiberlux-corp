@@ -420,11 +420,12 @@ const styles = `
     font-size: 28px;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(150, 35, 122, 0.45);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
   .a11y-fab:hover {
+    background: #650F50; /* purple dark */
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 12px 30px rgba(150, 35, 122, 0.6);
+    box-shadow: 0 12px 30px rgba(101, 15, 80, 0.6); /* #650F50 glow */
   }
   .a11y-fab:focus-visible {
     outline: 3px solid rgba(150, 35, 122, 0.5);
