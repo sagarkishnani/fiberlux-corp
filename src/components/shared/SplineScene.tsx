@@ -97,6 +97,7 @@ export default function SplineScene({
   style,
 }: SplineSceneProps) {
   const appRef = useRef<Application | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const [renderMode, setRenderMode] = useState<RenderMode>("static");
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -105,19 +106,41 @@ export default function SplineScene({
     setRenderMode(decideRenderMode(allowMobile));
   }, [allowMobile]);
 
-  // Pausa el render solo cuando la pestaña está oculta (ahorro real de
-  // CPU/batería). No se pausa en scroll: al volver, las animaciones siguen vivas.
+  // Pausa el loop de render (WebGL/rAF) cuando la escena NO aporta nada:
+  // fuera del viewport (p.ej. tras hacer scroll pasando el hero) o con la
+  // pestaña oculta. Esto es clave para el rendimiento: un Spley corriendo
+  // fuera de pantalla compite con el scroll y genera lag en toda la página.
   useEffect(() => {
     if (renderMode !== "spline" || !loaded) return;
     const app = appRef.current;
-    if (!app) return;
+    const el = wrapperRef.current;
+    if (!app || !el) return;
+
+    let onScreen = true;
+    let tabVisible = !document.hidden;
+    const apply = () => (onScreen && tabVisible ? app.play() : app.stop());
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        apply();
+      },
+      // Reanuda un poco antes de entrar para que no se note el "arranque".
+      { rootMargin: "200px 0px" }
+    );
+    io.observe(el);
 
     const onVisibility = () => {
-      if (document.hidden) app.stop();
-      else app.play();
+      tabVisible = !document.hidden;
+      apply();
     };
     document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
+
+    apply();
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, [renderMode, loaded]);
 
   const showSpline = renderMode === "spline" && !failed && Boolean(scene);
@@ -132,7 +155,7 @@ export default function SplineScene({
     : style ?? {};
 
   return (
-    <div className={className} style={wrapperStyle}>
+    <div ref={wrapperRef} className={className} style={wrapperStyle}>
       {/* Loader premium mientras carga la escena */}
       {showLoader && (
         <div
@@ -159,6 +182,18 @@ export default function SplineScene({
                     .setBackgroundColor?.("transparent");
                 } catch {
                   /* versiones antiguas del runtime: se ignora */
+                }
+                // Limita el device pixel ratio: en pantallas retina (DPR 2–3)
+                // el runtime renderiza 4–9× los píxeles. Cap a 1.5 baja mucho la
+                // carga de GPU con una pérdida de nitidez apenas perceptible.
+                try {
+                  const renderer =
+                    (app as unknown as { renderer?: { setPixelRatio?: (r: number) => void } })
+                      .renderer;
+                  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+                  renderer?.setPixelRatio?.(dpr);
+                } catch {
+                  /* API no disponible en esta versión: se ignora */
                 }
                 setLoaded(true);
               }}
