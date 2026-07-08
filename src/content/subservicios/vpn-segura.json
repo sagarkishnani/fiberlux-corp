@@ -1,10 +1,10 @@
 {
-  "title": "VPN Segura",
+  "title": "VPN Segura y Acceso Remoto Protegido",
   "slug": "vpn-segura",
   "solucionSlug": "ciberseguridad-gestionada",
   "solucionTitle": "Ciberseguridad Gestionada",
   "hero": {
-    "heading": "VPN Segura",
+    "heading": "VPN Segura y Acceso Remoto Protegido",
     "intro": "Red Privada Virtual de grado corporativo. Un túnel encriptado que conecta el dispositivo del usuario directamente con el corazón de la red empresarial.",
     "note": "Ideal para colaboradores que trabajan desde redes domésticas o cafeterías, bajo el peligro de exponer los servidores de la empresa a interceptaciones.",
     "ctaLabel": "Solicitar cotización",
@@ -58,7 +58,7 @@
     ]
   },
   "seo": {
-    "metaTitle": "VPN Segura | Fiberlux Corp",
+    "metaTitle": "VPN Segura y Acceso Remoto Protegido | Fiberlux Corp",
     "metaDescription": "Red Privada Virtual de grado corporativo. Un túnel encriptado que conecta el dispositivo del usuario directamente con el corazón de la red empresarial.",
     "ogImage": ""
   }

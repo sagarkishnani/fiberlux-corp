@@ -30,7 +30,7 @@
       },
       {
         "heading": "Industrias destacadas",
-        "text": "Aplicable a empresas que manejan información crítica y requieren cumplir estándares de seguridad y continuidad.",
+        "text": "Banca y seguros, gobierno, salud, retail, educación, infraestructura crítica y organizaciones con múltiples sedes o esquemas de trabajo híbrido.",
         "image": ""
       }
     ]
@@ -49,7 +49,7 @@
       },
       {
         "icon": "vpn",
-        "title": "VPN Segura",
+        "title": "VPN Segura y Accesso Remoto Protegido",
         "description": "",
         "buttonLabel": "Conocer más",
         "url": "/servicios/ciberseguridad-gestionada/vpn-segura",
@@ -121,7 +121,7 @@
       },
       {
         "icon": "generico",
-        "title": "Concientización y Phishing",
+        "title": "Concientización en Phishing",
         "description": "",
         "buttonLabel": "Conocer más",
         "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing",

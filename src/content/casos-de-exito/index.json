@@ -6,33 +6,33 @@
   "sectionTitle": "Casos de éxito",
   "items": [
     {
-      "poster": "https://img.youtube.com/vi/aqz-KE-bpKQ/maxresdefault.jpg",
-      "youtubeUrl": "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
+      "poster": "/images/casos/caso-de-exito-boticas.png",
+      "youtubeUrl": "https://www.youtube.com/watch?v=TaATVXtIusQ",
+      "videoFile": "",
+      "logo": "",
+      "quote": "La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir más sedes a nivel nacional. Este año hemos aperturado locales en provincia como Arequipa, Huancayo, Barranca y hemos contado con el servicio de Fiberlux. En el 2022 llegamos a sumar 36 sedes adicionales. Actualmente contamos con 115 sedes.",
+      "author": "Bernardo Olivar",
+      "role": "Jefe de Tecnología, Informática y Comunicaciones de Boticas Hogar y Salud",
+      "badge": "Casos de éxito con Fiberlux"
+    },
+    {
+      "poster": "https://img.youtube.com/vi/gxpyAK36Dfg/maxresdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=gxpyAK36Dfg",
       "videoFile": "",
       "logo": "",
       "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales. Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.",
-      "author": "Browsi Gálvez",
-      "role": "Gerente general de Cámara de Comercio e Industria",
+      "author": "Broswi Gálvez",
+      "role": "Gerente General de la Cámara de Comercio e Industria de Arequipa",
       "badge": "Casos de éxito con Fiberlux"
     },
     {
-      "poster": "https://img.youtube.com/vi/LXb3EKWsInQ/maxresdefault.jpg",
-      "youtubeUrl": "https://www.youtube.com/watch?v=LXb3EKWsInQ",
+      "poster": "https://img.youtube.com/vi/HcRVcEckZxs/maxresdefault.jpg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=HcRVcEckZxs",
       "videoFile": "",
       "logo": "",
-      "quote": "[Video de prueba] Desde que migramos a la red de Fiberlux redujimos los tiempos de caída casi por completo; nuestras sedes operan con conectividad estable las 24 horas.",
-      "author": "María Torres",
-      "role": "Gerente de TI de Retail Andina",
-      "badge": "Casos de éxito con Fiberlux"
-    },
-    {
-      "poster": "https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg",
-      "youtubeUrl": "https://www.youtube.com/watch?v=ScMzIvxBSi4",
-      "videoFile": "",
-      "logo": "",
-      "quote": "[Video de prueba] La solución de Fiberlux nos permitió escalar operaciones sin preocuparnos por la infraestructura de red. El soporte ha sido excelente.",
-      "author": "Carlos Ruiz",
-      "role": "Director de Operaciones de Logística del Sur",
+      "quote": "A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G donde los tiempos de respuesta mejoraron notablemente dando eficiencia y tiempo de respuesta acorde a la necesidad entre Sede Principal corporativo y Planta Huachipa.",
+      "author": "Gustavo Pazos",
+      "role": "Gerente de TI de Grupo Gloria",
       "badge": "Casos de éxito con Fiberlux"
     }
   ],

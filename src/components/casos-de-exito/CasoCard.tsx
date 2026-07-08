@@ -24,6 +24,19 @@ export function hasVideo(caso: Caso): boolean {
   return Boolean(caso.youtubeUrl?.trim() || caso.videoFile?.trim());
 }
 
+/**
+ * Not every YouTube video has a `maxresdefault.jpg` (only HD uploads do); older
+ * videos 404 it. Fall back through the lower-res thumbnails, which always exist.
+ */
+function handlePosterError(e: { currentTarget: HTMLImageElement }) {
+  const img = e.currentTarget;
+  const fallbacks = ["maxresdefault", "sddefault", "hqdefault", "mqdefault"];
+  const current = fallbacks.find((q) => img.src.includes(`/${q}.jpg`));
+  if (!current) return; // not a YT thumbnail (e.g. uploaded image) — leave as-is
+  const next = fallbacks[fallbacks.indexOf(current) + 1];
+  if (next) img.src = img.src.replace(`/${current}.jpg`, `/${next}.jpg`);
+}
+
 /* ── Quote mark icon (matches the design's magenta si:quote-fill) ── */
 function QuoteMark() {
   return (
@@ -72,6 +85,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
           alt={caso.author || "Caso de éxito"}
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
+          onError={handlePosterError}
           data-tina-field={tinaItem ? tinaField(tinaItem, "poster") : undefined}
         />
       ) : (
@@ -95,7 +109,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
   /* ── Quote card (top-right) ── */
   const quoteCard = (
     <div className="rounded-[14px] bg-white/[0.08] border border-white/[0.07] px-7 py-8 md:px-9 md:py-9 flex flex-col gap-5 justify-center flex-1">
-      {caso.logo ? (
+      {caso.logo && (
         <img
           src={caso.logo}
           alt={caso.author || "Cliente"}
@@ -103,17 +117,6 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
           draggable={false}
           data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
         />
-      ) : (
-        <div
-          className="inline-flex items-center gap-2 h-12 px-4 rounded-md bg-white/10 border border-white/10 w-fit"
-          data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
-          aria-label="Logo del cliente (placeholder)"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="text-white/50" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M6 21V7l6-4 6 4v14M10 9h.01M14 9h.01M10 13h.01M14 13h.01M10 17h.01M14 17h.01" />
-          </svg>
-          <span className="text-white/50 text-[11px] uppercase tracking-[1.5px] font-medium">Logo</span>
-        </div>
       )}
       <QuoteMark />
       <p

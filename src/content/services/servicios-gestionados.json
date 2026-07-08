@@ -2,18 +2,18 @@
   "title": "Servicios Gestionados",
   "slug": "servicios-gestionados",
   "hero": {
-    "heading": "Servicios gestionados de infraestructura tecnológica de alto nivel",
-    "intro": "Delegamos la operación de tu tecnología: mesa de ayuda, comunicaciones, redes y endpoints gestionados por especialistas.",
+    "heading": "Soporte experto para operar sin fricciones",
+    "intro": "Actuamos como una extensión de tu equipo de TI, gestionando redes, comunicaciones, endpoints y plataformas críticas para mantener la continuidad operativa.",
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?"
   },
   "valor": {
     "title": "El aliado invisible",
-    "subtitle": "La operación no se detiene: se gestiona de extremo a extremo.",
+    "subtitle": "Un equipo experto operando tu infraestructura todos los días.",
     "cards": [
       {
         "heading": "El desafío",
-        "text": "Gestionar la infraestructura de TI internamente consume recursos y distrae del negocio principal.",
+        "text": "Los equipos internos de TI suelen estar absorbidos por tareas operativas, reduciendo el tiempo disponible para proyectos estratégicos e innovación.",
         "image": "/images/servicios/valor-desafio.svg"
       },
       {
@@ -30,7 +30,7 @@
       },
       {
         "heading": "Industrias destacadas",
-        "text": "Aplicable a empresas que buscan optimizar su operación TI y enfocarse en su core de negocio.",
+        "text": "Ideal para organizaciones que buscan fortalecer su operación tecnológica sin incrementar la complejidad de su equipo interno.",
         "image": ""
       }
     ]

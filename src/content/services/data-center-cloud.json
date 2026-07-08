@@ -9,16 +9,16 @@
   },
   "valor": {
     "title": "Tus operaciones no pueden parar",
-    "subtitle": "La continuidad no se negocia: se respalda en cada capa.",
+    "subtitle": "Disponibilidad, respaldo y recuperación para las cargas de trabajo más críticas.",
     "cards": [
       {
         "heading": "El desafío",
-        "text": "Una caída de infraestructura o la pérdida de datos detiene el negocio y pone en riesgo su continuidad.",
+        "text": "Las organizaciones dependen de aplicaciones y datos críticos que deben mantenerse disponibles y protegidos frente a incidentes e interrupciones.",
         "image": "/images/servicios/valor-desafio.svg"
       },
       {
         "heading": "Nuestra solución",
-        "text": "Data center, nube y planes de continuidad diseñados para garantizar disponibilidad, respaldo y recuperación ante desastres.",
+        "text": "Llevamos tus cargas de trabajo a entornos de nube pública, nube privada o infraestructura dedicada con la disponibilidad, seguridad y continuidad que tu operación requiere.",
         "tags": [
           "Colocación",
           "Nube privada",
@@ -30,7 +30,7 @@
       },
       {
         "heading": "Industrias destacadas",
-        "text": "Aplicable a empresas que necesitan alojar cargas críticas, escalar cómputo y asegurar la continuidad de su operación.",
+        "text": "E-commerce/Retail, Salud (Historias Clínicas), Startups, Logística, Educación.",
         "image": ""
       }
     ]

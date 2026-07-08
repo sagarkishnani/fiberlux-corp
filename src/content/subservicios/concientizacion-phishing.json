@@ -1,10 +1,10 @@
 {
-  "title": "Concientización y Phishing",
+  "title": "Concientización en Phishing",
   "slug": "concientizacion-phishing",
   "solucionSlug": "ciberseguridad-gestionada",
   "solucionTitle": "Ciberseguridad Gestionada",
   "hero": {
-    "heading": "Concientización y Phishing",
+    "heading": "Concientización en Phishing",
     "intro": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
     "note": "Ideal para reducir el riesgo de incidentes originados por errores humanos y fortalecer la primera línea de defensa.",
     "ctaLabel": "Solicitar cotización",
@@ -58,7 +58,7 @@
     ]
   },
   "seo": {
-    "metaTitle": "Concientización y Phishing | Fiberlux Corp",
+    "metaTitle": "Concientización en Phishing | Fiberlux Corp",
     "metaDescription": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
     "ogImage": ""
   }
