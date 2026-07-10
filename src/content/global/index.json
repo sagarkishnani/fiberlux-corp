@@ -92,7 +92,7 @@
                 "url": "/servicios/ciberseguridad-gestionada/soc-24-7"
               },
               {
-                "text": "Correlación de eventos (SIEM/SOAR)",
+                "text": "Correlación de eventos",
                 "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos"
               },
               {
@@ -186,6 +186,10 @@
       {
         "text": "Soporte técnico",
         "url": "/soporte-tecnico"
+      },
+      {
+        "text": "Formas de pago",
+        "url": "/formas-de-pago"
       },
       {
         "text": "Contacto",

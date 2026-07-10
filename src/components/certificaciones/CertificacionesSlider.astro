@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import CertificacionesSliderReact from "./CertificacionesSliderReact.tsx";
+
+const certQuery = await client.queries.certificaciones({
+  relativePath: "index.json",
+});
+---
+
+<CertificacionesSliderReact
+  client:visible
+  query={certQuery.query}
+  variables={certQuery.variables}
+  data={certQuery.data}
+/>

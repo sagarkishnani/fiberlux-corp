@@ -357,7 +357,7 @@ export default function HeaderReact({
                         setDesktopSubActive(null);
                       }}
                       className={`
-                        inline text-[48px] leading-[64px] font-semibold text-white transition-all
+                        inline text-[42px] leading-[56px] font-semibold text-white transition-all
                         nav-link-hover
                         ${isActive ? "nav-link-active" : ""}
                       `}
@@ -468,7 +468,7 @@ export default function HeaderReact({
                         <a
                           href={link.url || "#"}
                           onClick={closeMenu}
-                          className="text-white text-[32px] leading-[44px] font-semibold hover:text-white/80 transition-colors"
+                          className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
                         >
                           {link.text}
                         </a>
@@ -485,7 +485,7 @@ export default function HeaderReact({
                         key={i}
                         href={link.url || "#"}
                         onClick={closeMenu}
-                        className="text-white text-[32px] leading-[44px] font-semibold hover:text-white/80 transition-colors"
+                        className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
                       >
                         {link.text}
                       </a>

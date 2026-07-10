@@ -100,6 +100,8 @@ export type Query = {
   serviciosConnection: ServiciosConnection;
   casosDeExito: CasosDeExito;
   casosDeExitoConnection: CasosDeExitoConnection;
+  certificaciones: Certificaciones;
+  certificacionesConnection: CertificacionesConnection;
   formasDePago: FormasDePago;
   formasDePagoConnection: FormasDePagoConnection;
   global: Global;
@@ -275,6 +277,21 @@ export type QueryCasosDeExitoConnectionArgs = {
 };
 
 
+export type QueryCertificacionesArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCertificacionesConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CertificacionesFilter>;
+};
+
+
 export type QueryFormasDePagoArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -404,6 +421,7 @@ export type DocumentFilter = {
   soporteTecnico?: InputMaybe<SoporteTecnicoFilter>;
   servicios?: InputMaybe<ServiciosFilter>;
   casosDeExito?: InputMaybe<CasosDeExitoFilter>;
+  certificaciones?: InputMaybe<CertificacionesFilter>;
   formasDePago?: InputMaybe<FormasDePagoFilter>;
   global?: InputMaybe<GlobalFilter>;
   maintenance?: InputMaybe<MaintenanceFilter>;
@@ -451,7 +469,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -1421,6 +1439,52 @@ export type CasosDeExitoConnection = Connection & {
   edges?: Maybe<Array<Maybe<CasosDeExitoConnectionEdges>>>;
 };
 
+export type CertificacionesItems = {
+  __typename?: 'CertificacionesItems';
+  year?: Maybe<Scalars['String']['output']>;
+  logo?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+};
+
+export type Certificaciones = Node & Document & {
+  __typename?: 'Certificaciones';
+  sectionTitle?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<CertificacionesItems>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CertificacionesItemsFilter = {
+  year?: InputMaybe<StringFilter>;
+  logo?: InputMaybe<ImageFilter>;
+  title?: InputMaybe<StringFilter>;
+  eyebrow?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+};
+
+export type CertificacionesFilter = {
+  sectionTitle?: InputMaybe<StringFilter>;
+  items?: InputMaybe<CertificacionesItemsFilter>;
+};
+
+export type CertificacionesConnectionEdges = {
+  __typename?: 'CertificacionesConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Certificaciones>;
+};
+
+export type CertificacionesConnection = Connection & {
+  __typename?: 'CertificacionesConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CertificacionesConnectionEdges>>>;
+};
+
 export type FormasDePagoBanksMethodsSteps = {
   __typename?: 'FormasDePagoBanksMethodsSteps';
   title?: Maybe<Scalars['String']['output']>;
@@ -2105,6 +2169,8 @@ export type Mutation = {
   createServicios: Servicios;
   updateCasosDeExito: CasosDeExito;
   createCasosDeExito: CasosDeExito;
+  updateCertificaciones: Certificaciones;
+  createCertificaciones: Certificaciones;
   updateFormasDePago: FormasDePago;
   createFormasDePago: FormasDePago;
   updateGlobal: Global;
@@ -2265,6 +2331,18 @@ export type MutationCreateCasosDeExitoArgs = {
 };
 
 
+export type MutationUpdateCertificacionesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CertificacionesMutation;
+};
+
+
+export type MutationCreateCertificacionesArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CertificacionesMutation;
+};
+
+
 export type MutationUpdateFormasDePagoArgs = {
   relativePath: Scalars['String']['input'];
   params: FormasDePagoMutation;
@@ -2370,6 +2448,7 @@ export type DocumentUpdateMutation = {
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
   casosDeExito?: InputMaybe<CasosDeExitoMutation>;
+  certificaciones?: InputMaybe<CertificacionesMutation>;
   formasDePago?: InputMaybe<FormasDePagoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
@@ -2391,6 +2470,7 @@ export type DocumentMutation = {
   soporteTecnico?: InputMaybe<SoporteTecnicoMutation>;
   servicios?: InputMaybe<ServiciosMutation>;
   casosDeExito?: InputMaybe<CasosDeExitoMutation>;
+  certificaciones?: InputMaybe<CertificacionesMutation>;
   formasDePago?: InputMaybe<FormasDePagoMutation>;
   global?: InputMaybe<GlobalMutation>;
   maintenance?: InputMaybe<MaintenanceMutation>;
@@ -2770,6 +2850,20 @@ export type CasosDeExitoMutation = {
   seo?: InputMaybe<CasosDeExitoSeoMutation>;
 };
 
+export type CertificacionesItemsMutation = {
+  year?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CertificacionesMutation = {
+  sectionTitle?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<CertificacionesItemsMutation>>>;
+};
+
 export type FormasDePagoBanksMethodsStepsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['JSON']['input']>;
@@ -3032,6 +3126,8 @@ export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: str
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
+export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null };
+
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
@@ -3218,6 +3314,25 @@ export type CasosDeExitoConnectionQueryVariables = Exact<{
 
 
 export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type CertificacionesQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CertificacionesQuery = { __typename?: 'Query', certificaciones: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null } };
+
+export type CertificacionesConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CertificacionesFilter>;
+}>;
+
+
+export type CertificacionesConnectionQuery = { __typename?: 'Query', certificacionesConnection: { __typename?: 'CertificacionesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CertificacionesConnectionEdges', cursor: string, node?: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null } | null } | null> | null } };
 
 export type FormasDePagoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3711,6 +3826,21 @@ export const CasosDeExitoPartsFragmentDoc = gql`
     metaTitle
     metaDescription
     ogImage
+  }
+}
+    `;
+export const CertificacionesPartsFragmentDoc = gql`
+    fragment CertificacionesParts on Certificaciones {
+  __typename
+  sectionTitle
+  items {
+    __typename
+    year
+    logo
+    title
+    eyebrow
+    heading
+    description
   }
 }
     `;
@@ -4462,6 +4592,63 @@ export const CasosDeExitoConnectionDocument = gql`
   }
 }
     ${CasosDeExitoPartsFragmentDoc}`;
+export const CertificacionesDocument = gql`
+    query certificaciones($relativePath: String!) {
+  certificaciones(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CertificacionesParts
+  }
+}
+    ${CertificacionesPartsFragmentDoc}`;
+export const CertificacionesConnectionDocument = gql`
+    query certificacionesConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CertificacionesFilter) {
+  certificacionesConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CertificacionesParts
+      }
+    }
+  }
+}
+    ${CertificacionesPartsFragmentDoc}`;
 export const FormasDePagoDocument = gql`
     query formasDePago($relativePath: String!) {
   formasDePago(relativePath: $relativePath) {
@@ -4975,6 +5162,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
     casosDeExitoConnection(variables?: CasosDeExitoConnectionQueryVariables, options?: C): Promise<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}> {
         return requester<{data: CasosDeExitoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CasosDeExitoConnectionQueryVariables, query: string}, CasosDeExitoConnectionQueryVariables>(CasosDeExitoConnectionDocument, variables, options);
       },
+    certificaciones(variables: CertificacionesQueryVariables, options?: C): Promise<{data: CertificacionesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CertificacionesQueryVariables, query: string}> {
+        return requester<{data: CertificacionesQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CertificacionesQueryVariables, query: string}, CertificacionesQueryVariables>(CertificacionesDocument, variables, options);
+      },
+    certificacionesConnection(variables?: CertificacionesConnectionQueryVariables, options?: C): Promise<{data: CertificacionesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CertificacionesConnectionQueryVariables, query: string}> {
+        return requester<{data: CertificacionesConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CertificacionesConnectionQueryVariables, query: string}, CertificacionesConnectionQueryVariables>(CertificacionesConnectionDocument, variables, options);
+      },
     formasDePago(variables: FormasDePagoQueryVariables, options?: C): Promise<{data: FormasDePagoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoQueryVariables, query: string}> {
         return requester<{data: FormasDePagoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FormasDePagoQueryVariables, query: string}, FormasDePagoQueryVariables>(FormasDePagoDocument, variables, options);
       },
@@ -5070,7 +5263,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/main",
+        url: "http://localhost:4001/graphql",
         queries,
       })
     )

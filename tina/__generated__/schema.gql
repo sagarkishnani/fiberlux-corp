@@ -72,6 +72,8 @@ type Query {
   serviciosConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiciosFilter): ServiciosConnection!
   casosDeExito(relativePath: String): CasosDeExito!
   casosDeExitoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CasosDeExitoFilter): CasosDeExitoConnection!
+  certificaciones(relativePath: String): Certificaciones!
+  certificacionesConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CertificacionesFilter): CertificacionesConnection!
   formasDePago(relativePath: String): FormasDePago!
   formasDePagoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FormasDePagoFilter): FormasDePagoConnection!
   global(relativePath: String): Global!
@@ -100,6 +102,7 @@ input DocumentFilter {
   soporteTecnico: SoporteTecnicoFilter
   servicios: ServiciosFilter
   casosDeExito: CasosDeExitoFilter
+  certificaciones: CertificacionesFilter
   formasDePago: FormasDePagoFilter
   global: GlobalFilter
   maintenance: MaintenanceFilter
@@ -133,7 +136,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -1032,6 +1035,48 @@ type CasosDeExitoConnection implements Connection {
   edges: [CasosDeExitoConnectionEdges]
 }
 
+type CertificacionesItems {
+  year: String
+  logo: String
+  title: String
+  eyebrow: String
+  heading: String
+  description: String
+}
+
+type Certificaciones implements Node & Document {
+  sectionTitle: String
+  items: [CertificacionesItems]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CertificacionesItemsFilter {
+  year: StringFilter
+  logo: ImageFilter
+  title: StringFilter
+  eyebrow: StringFilter
+  heading: StringFilter
+  description: StringFilter
+}
+
+input CertificacionesFilter {
+  sectionTitle: StringFilter
+  items: CertificacionesItemsFilter
+}
+
+type CertificacionesConnectionEdges {
+  cursor: String!
+  node: Certificaciones
+}
+
+type CertificacionesConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CertificacionesConnectionEdges]
+}
+
 type FormasDePagoBanksMethodsSteps {
   title: String
   description: JSON
@@ -1666,6 +1711,8 @@ type Mutation {
   createServicios(relativePath: String!, params: ServiciosMutation!): Servicios!
   updateCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
   createCasosDeExito(relativePath: String!, params: CasosDeExitoMutation!): CasosDeExito!
+  updateCertificaciones(relativePath: String!, params: CertificacionesMutation!): Certificaciones!
+  createCertificaciones(relativePath: String!, params: CertificacionesMutation!): Certificaciones!
   updateFormasDePago(relativePath: String!, params: FormasDePagoMutation!): FormasDePago!
   createFormasDePago(relativePath: String!, params: FormasDePagoMutation!): FormasDePago!
   updateGlobal(relativePath: String!, params: GlobalMutation!): Global!
@@ -1694,6 +1741,7 @@ input DocumentUpdateMutation {
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
   casosDeExito: CasosDeExitoMutation
+  certificaciones: CertificacionesMutation
   formasDePago: FormasDePagoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
@@ -1715,6 +1763,7 @@ input DocumentMutation {
   soporteTecnico: SoporteTecnicoMutation
   servicios: ServiciosMutation
   casosDeExito: CasosDeExitoMutation
+  certificaciones: CertificacionesMutation
   formasDePago: FormasDePagoMutation
   global: GlobalMutation
   maintenance: MaintenanceMutation
@@ -2092,6 +2141,20 @@ input CasosDeExitoMutation {
   sectionTitle: String
   items: [CasosDeExitoItemsMutation]
   seo: CasosDeExitoSeoMutation
+}
+
+input CertificacionesItemsMutation {
+  year: String
+  logo: String
+  title: String
+  eyebrow: String
+  heading: String
+  description: String
+}
+
+input CertificacionesMutation {
+  sectionTitle: String
+  items: [CertificacionesItemsMutation]
 }
 
 input FormasDePagoBanksMethodsStepsMutation {

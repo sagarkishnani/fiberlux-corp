@@ -332,6 +332,20 @@ fragment CasosDeExitoParts on CasosDeExito {
   }
 }
 
+fragment CertificacionesParts on Certificaciones {
+  __typename
+  sectionTitle
+  items {
+    __typename
+    year
+    logo
+    title
+    eyebrow
+    heading
+    description
+  }
+}
+
 fragment FormasDePagoParts on FormasDePago {
   __typename
   heading

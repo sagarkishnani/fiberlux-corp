@@ -1190,6 +1190,56 @@ var config_default = defineConfig({
         ]
       },
       /* ══════════════════════════════════════
+         CERTIFICACIONES ISO (bloque Home)
+         ══════════════════════════════════════ */
+      {
+        name: "certificaciones",
+        label: "Certificaciones ISO (Home)",
+        path: "src/content/certificaciones",
+        format: "json",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            name: "sectionTitle",
+            label: "T\xEDtulo de la secci\xF3n",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "items",
+            label: "Certificaciones",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.title || "Certificaci\xF3n" })
+            },
+            fields: [
+              { name: "year", label: "A\xF1o", type: "string" },
+              {
+                name: "logo",
+                label: "Logo (opcional \u2014 reemplaza el glifo ISO por defecto)",
+                type: "image"
+              },
+              { name: "title", label: "T\xEDtulo (ej. ISO 27001)", type: "string" },
+              {
+                name: "eyebrow",
+                label: "Etiqueta superior (ej. Certificaci\xF3n vigente)",
+                type: "string"
+              },
+              { name: "heading", label: "Nombre de la certificaci\xF3n", type: "string" },
+              {
+                name: "description",
+                label: "Descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              }
+            ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
          FORMAS DE PAGO (página)
          ══════════════════════════════════════ */
       {
