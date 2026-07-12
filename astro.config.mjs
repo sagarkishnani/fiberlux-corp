@@ -6,7 +6,8 @@ import tinaDirective from './astro-tina-directive/index.mjs';
 export default defineConfig({
   redirects: {
     '/servicios': '/soluciones',
-    '/servicios/[...rest]': '/soluciones/[...rest]',
+    '/servicios/[solucion]': '/soluciones/[solucion]',
+    '/servicios/[solucion]/[subservicio]': '/soluciones/[solucion]/[subservicio]',
   },
   integrations: [
     tailwind(),
