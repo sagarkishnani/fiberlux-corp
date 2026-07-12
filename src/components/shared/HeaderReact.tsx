@@ -263,7 +263,7 @@ export default function HeaderReact({
           ${headerVisible ? "translate-y-0" : "-translate-y-full"}
         `}
       >
-        <div className="max-w-[1440px] mx-auto px-6 md:px-16 h-16 flex items-center justify-between relative">
+        <div className="site-container h-16 flex items-center justify-between relative">
           {/* Left: Hamburger / Close */}
           <button
             onClick={toggleMenu}
@@ -335,7 +335,7 @@ export default function HeaderReact({
         aria-label="Menú de navegación"
       >
         <div className="h-full overflow-y-auto pt-20 pb-10 flex flex-col">
-          <div className="max-w-[1440px] mx-auto px-6 md:px-16 w-full flex-1 flex flex-col">
+          <div className="site-container flex-1 flex flex-col">
             {/* ── DESKTOP MENU — two column grid ── */}
             <div className="hidden md:grid md:grid-cols-[1fr_1fr] flex-1 gap-16">
               {/* Left: Main navigation */}
