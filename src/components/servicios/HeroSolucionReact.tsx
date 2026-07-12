@@ -67,7 +67,7 @@ export default function HeroSolucionReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Servicios
+                Soluciones
               </a>
               <span>/</span>
               <span

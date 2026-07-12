@@ -78,7 +78,7 @@ export default function HeroSubservicioReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Servicios
+                Soluciones
               </a>
               <span>/</span>
               <a
