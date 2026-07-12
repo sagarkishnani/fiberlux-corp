@@ -297,7 +297,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
           </div>
 
           {/* ── Desktop layout (year on top, heading below) ── */}
-          <div className="relative z-20 mx-auto hidden max-w-[1440px] md:block md:min-h-[852px]">
+          <div className="relative z-20 mx-auto hidden max-w-[1680px] md:block md:min-h-[852px]">
             {/* Arrows — top-left */}
             <div className="absolute left-[92px] top-12 z-20">{arrows}</div>
 

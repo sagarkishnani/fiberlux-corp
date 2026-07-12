@@ -278,13 +278,13 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
 
   return (
     <section
-      className="rounded-t-[16px] bg-[#0a0a0a] px-6 pb-[100px] pt-[72px] md:px-[88px]"
+      className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      <div className="mx-auto max-w-[1440px]">
+      <div className="site-container">
         {/* Desktop header: title left, arrows right */}
         <div className="mb-12 hidden items-start justify-between gap-6 md:flex">
           <h2

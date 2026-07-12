@@ -26,7 +26,7 @@ export default function HeroNosotrosReact({ query, variables, data: initialData 
       <div className="absolute inset-0 z-0 hero-nosotros-bg" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 w-full flex flex-col flex-1">
+      <div className="relative z-10 site-container flex flex-col flex-1">
         {/* Breadcrumb */}
         <nav className="pt-24 md:pt-28" aria-label="Breadcrumb">
           <ol className="flex items-center gap-2 text-sm">

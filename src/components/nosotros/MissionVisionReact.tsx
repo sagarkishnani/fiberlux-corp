@@ -28,7 +28,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
       className="rounded-t-2xl py-16 md:py-20"
       style={{ background: '#FFD4F4' }}
     >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+      <div className="site-container">
 
         {/* ── Desktop layout ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-40">
