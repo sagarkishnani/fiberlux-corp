@@ -60,13 +60,13 @@ export default function HeroHomeReact({
         }}
       />
 
-      {/* Vignette inferior */}
+      {/* Vignette inferior — fade largo y suave para empalmar con la sección siguiente */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-[1]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-64 md:h-80 z-[1]"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,10,10,0) 0%, #0a0a0a 100%)",
+            "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.5) 45%, rgba(10,10,10,0.85) 75%, #0a0a0a 100%)",
         }}
       />
 
