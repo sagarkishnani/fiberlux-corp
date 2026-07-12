@@ -137,7 +137,7 @@ export default function BlogPreviewReact({
 
   return (
     <section className="bg-greyscale-darkest rounded-t-3xl py-14 pb-24 md:py-20 md:pb-40">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+      <div className="site-container">
         {/* Header */}
         <div className="">
           <div className="flex items-center justify-between mb-12">
@@ -215,8 +215,8 @@ export default function BlogPreviewReact({
           </div>
         </div>
 
-        {/* Navigation arrows */}
-        <div className="max-w-[1440px] mx-auto">
+        {/* Navigation arrows — se alinean con el carrusel dentro del site-container padre */}
+        <div>
           <div className="flex gap-0 mt-6">
             <button
               onClick={() => scroll("left")}
