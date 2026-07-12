@@ -53,7 +53,7 @@ export default function PartnersMarquee({ partners }: { partners?: PartnersData 
 
   return (
     <section className="bg-greyscale-darkest py-16 md:py-20 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-6 text-center mb-10 md:mb-14">
+      <div className="site-container text-center mb-10 md:mb-14">
         {partners.eyebrow && (
           <p
             className="font-mono text-xs md:text-sm tracking-[0.2em] text-white/50 uppercase mb-4"

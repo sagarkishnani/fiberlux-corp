@@ -178,7 +178,7 @@ export default function TestimonialSliderReact({
   return (
     <section className="bg-greyscale-darkest py-14 pb-24 md:py-20 md:pb-40">
       {/* Header */}
-      <div className='max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16'>
+      <div className='site-container'>
       <div className="">
         <div className="flex items-start md:items-center justify-between mb-12">
           <h2

@@ -71,7 +71,7 @@ export default function HeroHomeReact({
       />
 
       {/* Contenido */}
-      <div className="pointer-events-none relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-28 lg:pt-40 pb-20 lg:pb-32">
+      <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-20 lg:pb-32">
         <div className="flex flex-col justify-center max-w-[640px] min-h-[calc(100svh-200px)] lg:min-h-[640px]">
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-subtitle-lg md:text-subtitle-xl"
