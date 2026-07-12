@@ -31,7 +31,7 @@ export default function HeroSolucionReact({
 
   const hero = service.hero;
   const base = import.meta.env.BASE_URL || "/";
-  const serviciosHref = `${base}servicios`.replace(/\/\/servicios$/, "/servicios");
+  const serviciosHref = `${base}soluciones`.replace(/\/\/soluciones$/, "/soluciones");
 
   return (
     <section
