@@ -14,7 +14,7 @@
       {
         "heading": "El desafío",
         "text": "Las organizaciones dependen de aplicaciones y datos críticos que deben mantenerse disponibles y protegidos frente a incidentes e interrupciones.",
-        "image": "/images/servicios/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg"
       },
       {
         "heading": "Nuestra solución",
@@ -43,7 +43,7 @@
         "title": "Housing / Colocación",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/housing-colocacion",
+        "url": "/soluciones/data-center-cloud/housing-colocacion",
         "colSpan": "2",
         "featured": true
       },
@@ -52,7 +52,7 @@
         "title": "Nube Privada",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/nube-privada",
+        "url": "/soluciones/data-center-cloud/nube-privada",
         "colSpan": "1",
         "featured": false
       },
@@ -61,7 +61,7 @@
         "title": "Nube Pública",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/nube-publica",
+        "url": "/soluciones/data-center-cloud/nube-publica",
         "colSpan": "1",
         "featured": false
       },
@@ -70,7 +70,7 @@
         "title": "Backup as a Service (BaaS)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/baas",
+        "url": "/soluciones/data-center-cloud/baas",
         "colSpan": "1",
         "featured": false
       },
@@ -79,7 +79,7 @@
         "title": "Disaster Recovery (DRaaS)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/draas",
+        "url": "/soluciones/data-center-cloud/draas",
         "colSpan": "1",
         "featured": false
       },
@@ -88,7 +88,7 @@
         "title": "Storage y Cómputo",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/storage-computo",
+        "url": "/soluciones/data-center-cloud/storage-computo",
         "colSpan": "1",
         "featured": false
       },
@@ -97,7 +97,7 @@
         "title": "Microservicios",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/data-center-cloud/microservicios",
+        "url": "/soluciones/data-center-cloud/microservicios",
         "colSpan": "1",
         "featured": false
       }

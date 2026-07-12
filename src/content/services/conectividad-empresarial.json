@@ -14,7 +14,7 @@
       {
         "heading": "El desafío",
         "text": "Un corte de internet paraliza la facturación, detiene operaciones industriales y bloquea transacciones.",
-        "image": "/images/servicios/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg"
       },
       {
         "heading": "Nuestra solución",
@@ -43,7 +43,7 @@
         "title": "Internet Corporativo",
         "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición, con ancho de banda garantizado.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/internet-corporativo",
+        "url": "/soluciones/conectividad-empresarial/internet-corporativo",
         "colSpan": "2",
         "featured": true
       },
@@ -52,7 +52,7 @@
         "title": "Internet Corporativo de Alta Disponibilidad",
         "description": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/internet-alta-disponibilidad",
+        "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad",
         "colSpan": "1",
         "featured": false
       },
@@ -61,7 +61,7 @@
         "title": "Conectividad satelital",
         "description": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/conectividad-satelital",
+        "url": "/soluciones/conectividad-empresarial/conectividad-satelital",
         "colSpan": "1",
         "featured": false
       },
@@ -70,7 +70,7 @@
         "title": "Radioenlaces Empresariales",
         "description": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/radioenlaces-empresariales",
+        "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales",
         "colSpan": "1",
         "featured": false
       },
@@ -79,7 +79,7 @@
         "title": "Transmisión de datos (Lan To Lan – L2L)",
         "description": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/transmision-de-datos-l2l",
+        "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l",
         "colSpan": "1",
         "featured": false
       },
@@ -88,7 +88,7 @@
         "title": "Fibra Oscura",
         "description": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/fibra-oscura",
+        "url": "/soluciones/conectividad-empresarial/fibra-oscura",
         "colSpan": "1",
         "featured": false
       },
@@ -97,7 +97,7 @@
         "title": "SD-WAN",
         "description": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/sd-wan",
+        "url": "/soluciones/conectividad-empresarial/sd-wan",
         "colSpan": "1",
         "featured": false
       },
@@ -106,7 +106,7 @@
         "title": "Balanceo de enlaces",
         "description": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/conectividad-empresarial/balanceo-de-enlaces",
+        "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces",
         "colSpan": "1",
         "featured": false
       }
