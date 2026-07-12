@@ -2,170 +2,170 @@
   "nav": {
     "links": [
       {
-        "text": "Servicios",
-        "url": "/servicios",
+        "text": "Soluciones",
+        "url": "/soluciones",
         "children": [
           {
             "text": "Conectividad empresarial",
-            "url": "/servicios/conectividad-empresarial",
+            "url": "/soluciones/conectividad-empresarial",
             "children": [
               {
                 "text": "Internet Corporativo",
-                "url": "/servicios/conectividad-empresarial/internet-corporativo"
+                "url": "/soluciones/conectividad-empresarial/internet-corporativo"
               },
               {
                 "text": "Internet Corporativo de Alta Disponibilidad",
-                "url": "/servicios/conectividad-empresarial/internet-alta-disponibilidad"
+                "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad"
               },
               {
                 "text": "Conectividad satelital",
-                "url": "/servicios/conectividad-empresarial/conectividad-satelital"
+                "url": "/soluciones/conectividad-empresarial/conectividad-satelital"
               },
               {
                 "text": "Radioenlaces Empresariales",
-                "url": "/servicios/conectividad-empresarial/radioenlaces-empresariales"
+                "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales"
               },
               {
                 "text": "Transmisión de datos (L2L)",
-                "url": "/servicios/conectividad-empresarial/transmision-de-datos-l2l"
+                "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l"
               },
               {
                 "text": "Fibra Oscura",
-                "url": "/servicios/conectividad-empresarial/fibra-oscura"
+                "url": "/soluciones/conectividad-empresarial/fibra-oscura"
               },
               {
                 "text": "SD-WAN",
-                "url": "/servicios/conectividad-empresarial/sd-wan"
+                "url": "/soluciones/conectividad-empresarial/sd-wan"
               },
               {
                 "text": "Balanceo de enlaces",
-                "url": "/servicios/conectividad-empresarial/balanceo-de-enlaces"
+                "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces"
               }
             ]
           },
           {
             "text": "Ciberseguridad gestionada",
-            "url": "/servicios/ciberseguridad-gestionada",
+            "url": "/soluciones/ciberseguridad-gestionada",
             "children": [
               {
                 "text": "NGFW y Seguridad Perimetral",
-                "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
+                "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
               },
               {
                 "text": "VPN Segura y Acceso Remoto Protegido",
-                "url": "/servicios/ciberseguridad-gestionada/vpn-segura"
+                "url": "/soluciones/ciberseguridad-gestionada/vpn-segura"
               },
               {
                 "text": "EDR / XDR / MDR",
-                "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr"
+                "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr"
               },
               {
                 "text": "Seguridad de correo y filtrado web",
-                "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
+                "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
               },
               {
                 "text": "MFA y Control de Identidad",
-                "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad"
+                "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad"
               },
               {
                 "text": "ZTNA y Control de Acceso Seguro",
-                "url": "/servicios/ciberseguridad-gestionada/ztna"
+                "url": "/soluciones/ciberseguridad-gestionada/ztna"
               },
               {
                 "text": "NAC (Network Access Control)",
-                "url": "/servicios/ciberseguridad-gestionada/nac"
+                "url": "/soluciones/ciberseguridad-gestionada/nac"
               },
               {
                 "text": "WAF y Protección de Aplicaciones",
-                "url": "/servicios/ciberseguridad-gestionada/waf"
+                "url": "/soluciones/ciberseguridad-gestionada/waf"
               },
               {
                 "text": "Anti-DDoS",
-                "url": "/servicios/ciberseguridad-gestionada/anti-ddos"
+                "url": "/soluciones/ciberseguridad-gestionada/anti-ddos"
               },
               {
                 "text": "Concientización en Phishing",
-                "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing"
+                "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing"
               },
               {
                 "text": "CYBER SOC 24/7 y Monitoreo",
-                "url": "/servicios/ciberseguridad-gestionada/soc-24-7"
+                "url": "/soluciones/ciberseguridad-gestionada/soc-24-7"
               },
               {
                 "text": "Correlación de eventos",
-                "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos"
+                "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos"
               },
               {
                 "text": "Pentesting y Evaluación de Vulnerabilidades",
-                "url": "/servicios/ciberseguridad-gestionada/pentesting"
+                "url": "/soluciones/ciberseguridad-gestionada/pentesting"
               }
             ]
           },
           {
             "text": "Data Center, Cloud y Continuidad de Negocio",
-            "url": "/servicios/data-center-cloud",
+            "url": "/soluciones/data-center-cloud",
             "children": [
               {
                 "text": "Housing y Colocación",
-                "url": "/servicios/data-center-cloud/housing-colocacion"
+                "url": "/soluciones/data-center-cloud/housing-colocacion"
               },
               {
                 "text": "Nube Privada",
-                "url": "/servicios/data-center-cloud/nube-privada"
+                "url": "/soluciones/data-center-cloud/nube-privada"
               },
               {
                 "text": "Nube Pública",
-                "url": "/servicios/data-center-cloud/nube-publica"
+                "url": "/soluciones/data-center-cloud/nube-publica"
               },
               {
                 "text": "Backup as a Service (BaaS)",
-                "url": "/servicios/data-center-cloud/baas"
+                "url": "/soluciones/data-center-cloud/baas"
               },
               {
                 "text": "Disaster Recovery (DRaaS)",
-                "url": "/servicios/data-center-cloud/draas"
+                "url": "/soluciones/data-center-cloud/draas"
               },
               {
                 "text": "Storage y Cómputo Empresarial",
-                "url": "/servicios/data-center-cloud/storage-computo"
+                "url": "/soluciones/data-center-cloud/storage-computo"
               },
               {
                 "text": "Arquitectura basada en Microservicios",
-                "url": "/servicios/data-center-cloud/microservicios"
+                "url": "/soluciones/data-center-cloud/microservicios"
               }
             ]
           },
           {
             "text": "Servicios gestionados",
-            "url": "/servicios/servicios-gestionados",
+            "url": "/soluciones/servicios-gestionados",
             "children": [
               {
                 "text": "Mesa de Ayuda",
-                "url": "/servicios/servicios-gestionados/mesa-de-ayuda"
+                "url": "/soluciones/servicios-gestionados/mesa-de-ayuda"
               },
               {
                 "text": "Comunicaciones Unificadas",
-                "url": "/servicios/servicios-gestionados/comunicaciones-unificadas"
+                "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas"
               },
               {
                 "text": "Colaboración Empresarial",
-                "url": "/servicios/servicios-gestionados/colaboracion-empresarial"
+                "url": "/soluciones/servicios-gestionados/colaboracion-empresarial"
               },
               {
                 "text": "Gestión de Redes LAN",
-                "url": "/servicios/servicios-gestionados/gestion-redes-lan"
+                "url": "/soluciones/servicios-gestionados/gestion-redes-lan"
               },
               {
                 "text": "WiFi Gestionado",
-                "url": "/servicios/servicios-gestionados/wifi-gestionado"
+                "url": "/soluciones/servicios-gestionados/wifi-gestionado"
               },
               {
                 "text": "Gestión de Endpoints",
-                "url": "/servicios/servicios-gestionados/gestion-endpoints"
+                "url": "/soluciones/servicios-gestionados/gestion-endpoints"
               },
               {
                 "text": "Videovigilancia gestionada",
-                "url": "/servicios/servicios-gestionados/videovigilancia-gestionada"
+                "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada"
               }
             ]
           }
@@ -206,23 +206,23 @@
     "copyright": "Copyright © {year} Fiberlux. Diseño y desarrollo por",
     "columns": [
       {
-        "title": "Servicios",
+        "title": "Soluciones",
         "links": [
           {
             "text": "Conectividad empresarial",
-            "url": "/servicios/conectividad-empresarial"
+            "url": "/soluciones/conectividad-empresarial"
           },
           {
             "text": "Ciberseguridad gestionada",
-            "url": "/servicios/ciberseguridad-gestionada"
+            "url": "/soluciones/ciberseguridad-gestionada"
           },
           {
             "text": "Data Center, Cloud y Continuidad de Negocio",
-            "url": "/servicios/data-center-cloud"
+            "url": "/soluciones/data-center-cloud"
           },
           {
             "text": "Servicios gestionados",
-            "url": "/servicios/servicios-gestionados"
+            "url": "/soluciones/servicios-gestionados"
           }
         ]
       },

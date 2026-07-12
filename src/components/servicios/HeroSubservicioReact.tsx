@@ -39,9 +39,9 @@ export default function HeroSubservicioReact({
   const base = import.meta.env.BASE_URL || "/";
   const withBase = (path: string) =>
     `${base}${path}`.replace(/([^:])\/\//g, "$1/");
-  const serviciosHref = withBase("servicios");
+  const serviciosHref = withBase("soluciones");
   const solucionHref = sub.solucionSlug
-    ? withBase(`servicios/${sub.solucionSlug}`)
+    ? withBase(`soluciones/${sub.solucionSlug}`)
     : serviciosHref;
 
   return (
@@ -78,7 +78,7 @@ export default function HeroSubservicioReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Servicios
+                Soluciones
               </a>
               <span>/</span>
               <a

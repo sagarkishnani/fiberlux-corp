@@ -14,7 +14,7 @@
       {
         "heading": "El desafío",
         "text": "Los equipos internos de TI suelen estar absorbidos por tareas operativas, reduciendo el tiempo disponible para proyectos estratégicos e innovación.",
-        "image": "/images/servicios/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg"
       },
       {
         "heading": "Nuestra solución",
@@ -43,7 +43,7 @@
         "title": "Mesa de Ayuda",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/mesa-de-ayuda",
+        "url": "/soluciones/servicios-gestionados/mesa-de-ayuda",
         "colSpan": "2",
         "featured": true
       },
@@ -52,7 +52,7 @@
         "title": "Comunicaciones Unificadas",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/comunicaciones-unificadas",
+        "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas",
         "colSpan": "1",
         "featured": false
       },
@@ -61,7 +61,7 @@
         "title": "Colaboración Empresarial",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/colaboracion-empresarial",
+        "url": "/soluciones/servicios-gestionados/colaboracion-empresarial",
         "colSpan": "1",
         "featured": false
       },
@@ -70,7 +70,7 @@
         "title": "Gestión de Redes LAN",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/gestion-redes-lan",
+        "url": "/soluciones/servicios-gestionados/gestion-redes-lan",
         "colSpan": "1",
         "featured": false
       },
@@ -79,7 +79,7 @@
         "title": "WiFi Gestionado",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/wifi-gestionado",
+        "url": "/soluciones/servicios-gestionados/wifi-gestionado",
         "colSpan": "1",
         "featured": false
       },
@@ -88,7 +88,7 @@
         "title": "Gestión de Endpoints",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/gestion-endpoints",
+        "url": "/soluciones/servicios-gestionados/gestion-endpoints",
         "colSpan": "1",
         "featured": false
       },
@@ -97,7 +97,7 @@
         "title": "Videovigilancia Gestionada",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/servicios-gestionados/videovigilancia-gestionada",
+        "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada",
         "colSpan": "1",
         "featured": false
       }

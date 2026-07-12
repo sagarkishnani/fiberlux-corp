@@ -35,7 +35,7 @@ const service = serviceQuery.data?.service;
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const globalSeo = globalQuery.data?.global?.seo;
 
-const metaTitle = service?.seo?.metaTitle || service?.title || "Servicios";
+const metaTitle = service?.seo?.metaTitle || service?.title || "Soluciones";
 const metaDescription =
   service?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
 ---

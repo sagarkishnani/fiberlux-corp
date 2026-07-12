@@ -14,7 +14,7 @@
       {
         "heading": "El desafío",
         "text": "Un incidente de seguridad expone datos sensibles, detiene la operación y compromete la confianza de tus clientes.",
-        "image": "/images/servicios/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg"
       },
       {
         "heading": "Nuestra solución",
@@ -43,7 +43,7 @@
         "title": "NGFW / Seguridad Perimetral",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/ngfw-seguridad-perimetral",
+        "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral",
         "colSpan": "2",
         "featured": true
       },
@@ -52,7 +52,7 @@
         "title": "VPN Segura y Accesso Remoto Protegido",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/vpn-segura",
+        "url": "/soluciones/ciberseguridad-gestionada/vpn-segura",
         "colSpan": "1",
         "featured": false
       },
@@ -61,7 +61,7 @@
         "title": "EDR / XDR / MDR",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/edr-xdr-mdr",
+        "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr",
         "colSpan": "1",
         "featured": false
       },
@@ -70,7 +70,7 @@
         "title": "Seguridad de Correo y Filtrado Web",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/seguridad-correo-filtrado-web",
+        "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web",
         "colSpan": "1",
         "featured": false
       },
@@ -79,7 +79,7 @@
         "title": "MFA y Control de Identidad",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/mfa-control-identidad",
+        "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad",
         "colSpan": "1",
         "featured": false
       },
@@ -88,7 +88,7 @@
         "title": "ZTNA",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/ztna",
+        "url": "/soluciones/ciberseguridad-gestionada/ztna",
         "colSpan": "1",
         "featured": false
       },
@@ -97,7 +97,7 @@
         "title": "NAC",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/nac",
+        "url": "/soluciones/ciberseguridad-gestionada/nac",
         "colSpan": "1",
         "featured": false
       },
@@ -106,7 +106,7 @@
         "title": "WAF",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/waf",
+        "url": "/soluciones/ciberseguridad-gestionada/waf",
         "colSpan": "1",
         "featured": false
       },
@@ -115,7 +115,7 @@
         "title": "Anti-DDoS",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/anti-ddos",
+        "url": "/soluciones/ciberseguridad-gestionada/anti-ddos",
         "colSpan": "1",
         "featured": false
       },
@@ -124,7 +124,7 @@
         "title": "Concientización en Phishing",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/concientizacion-phishing",
+        "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing",
         "colSpan": "1",
         "featured": false
       },
@@ -133,7 +133,7 @@
         "title": "SOC 24/7",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/soc-24-7",
+        "url": "/soluciones/ciberseguridad-gestionada/soc-24-7",
         "colSpan": "1",
         "featured": false
       },
@@ -142,7 +142,7 @@
         "title": "Correlación de Eventos (SIEM)",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/correlacion-eventos",
+        "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos",
         "colSpan": "1",
         "featured": false
       },
@@ -151,7 +151,7 @@
         "title": "Pentesting",
         "description": "",
         "buttonLabel": "Conocer más",
-        "url": "/servicios/ciberseguridad-gestionada/pentesting",
+        "url": "/soluciones/ciberseguridad-gestionada/pentesting",
         "colSpan": "1",
         "featured": false
       }

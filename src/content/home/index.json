@@ -5,8 +5,8 @@
     "splineSceneUrl": "https://prod.spline.design/iW-vRQIrk1KnbLok/scene.splinecode",
     "buttons": [
       {
-        "text": "Ver servicios",
-        "url": "/servicios",
+        "text": "Ver soluciones",
+        "url": "/soluciones",
         "variant": "primary"
       },
       {
@@ -33,7 +33,7 @@
           "SD-WAN",
           "Y más..."
         ],
-        "url": "/servicios/internet-dedicado"
+        "url": "/soluciones/internet-dedicado"
       },
       {
         "number": "02",
@@ -49,7 +49,7 @@
           "Cyber SOC 24/7 y Monitoreo",
           "Y más..."
         ],
-        "url": "/servicios/ciberseguridad-endpoints"
+        "url": "/soluciones/ciberseguridad-endpoints"
       },
       {
         "number": "03",
@@ -64,7 +64,7 @@
           "Storage y Cómputo Empresarial",
           "Arquitectura basada en Microservicios"
         ],
-        "url": "/servicios/saas"
+        "url": "/soluciones/saas"
       },
       {
         "number": "04",
@@ -80,7 +80,7 @@
           "Videovigilancia gestionada",
           "Y más..."
         ],
-        "url": "/servicios/continuidad-de-negocio"
+        "url": "/soluciones/continuidad-de-negocio"
       }
     ]
   },

@@ -31,7 +31,7 @@ export default function HeroSolucionReact({
 
   const hero = service.hero;
   const base = import.meta.env.BASE_URL || "/";
-  const serviciosHref = `${base}servicios`.replace(/\/\/servicios$/, "/servicios");
+  const serviciosHref = `${base}soluciones`.replace(/\/\/soluciones$/, "/soluciones");
 
   return (
     <section
@@ -67,7 +67,7 @@ export default function HeroSolucionReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Servicios
+                Soluciones
               </a>
               <span>/</span>
               <span
