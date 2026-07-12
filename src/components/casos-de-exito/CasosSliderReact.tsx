@@ -217,7 +217,7 @@ export default function CasosSliderReact({
 
   return (
     <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-32">
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1680px] mx-auto">
         <h2
           className="px-6 text-[32px] md:text-[48px] leading-[1.15] font-medium text-white text-center mb-10 md:mb-16"
           data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}

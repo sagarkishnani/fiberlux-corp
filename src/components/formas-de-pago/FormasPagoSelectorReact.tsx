@@ -153,7 +153,7 @@ export default function FormasPagoSelectorReact({
 
   return (
     <section style={{ background: "#0a0a0a" }} className="pb-20 md:pb-28">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+      <div className="site-container">
         {/* Selectors */}
         <div className="flex flex-col sm:flex-row gap-4 pt-2 pb-6">
           <Dropdown
