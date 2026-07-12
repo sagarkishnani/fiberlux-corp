@@ -68,7 +68,7 @@ export default function HeroSubservicioReact({
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 pt-28 pb-20 lg:pt-36 lg:pb-24">
+      <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* ════ LEFT — content ════ */}
           <div className="max-w-[560px]">

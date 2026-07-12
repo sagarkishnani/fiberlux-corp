@@ -116,7 +116,7 @@ export default function CatalogoSolucionesReact({
 
   return (
     <section id="catalogo" className="bg-greyscale-darkest py-16 md:py-24 scroll-mt-24 mb-4">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+      <div className="site-container">
         {catalogo.title && (
           <h2
             className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
