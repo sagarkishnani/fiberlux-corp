@@ -6,9 +6,59 @@ import BlogPreview from "../components/blog/BlogPreview.astro";
 import StickyCards from "../components/shared/StickyCards.astro";
 import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
+import SitePreloader from "../components/shared/SitePreloader";
+import serviciosContent from "../content/servicios/index.json";
+import soporteContent from "../content/soporte-tecnico/index.json";
+
+// URLs .splinecode de las otras páginas con 3D. Se precargan en idle para
+// calentar la caché HTTP (el sitio es MPA: cada navegación recarga).
+const prefetchScenes = [
+  serviciosContent.splineSceneUrl,
+  soporteContent.splineSceneUrl,
+].filter(Boolean);
 ---
 
 <BaseLayout title="Inicio">
+  {/* Pre-paint: si el preloader ya se mostró esta sesión, ocúltalo antes de
+      pintar para evitar el flash del overlay en recargas. */}
+  <script is:inline>
+    try {
+      if (sessionStorage.getItem("fbx:preloaderShown") === "1") {
+        var s = document.createElement("style");
+        s.textContent = "#site-preloader{display:none !important}";
+        document.head.appendChild(s);
+      }
+    } catch (e) {}
+  </script>
+  <SitePreloader client:load />
+
+  {/* Prefetch en idle de las escenas de Servicios/Soporte, tras cargar la de
+      Home, para que esas páginas abran con la caché HTTP caliente. */}
+  <script is:inline define:vars={{ prefetchScenes }}>
+    (function () {
+      if (!prefetchScenes || !prefetchScenes.length) return;
+      var done = false;
+      var run = function () {
+        if (done) return;
+        done = true;
+        var go = function () {
+          prefetchScenes.forEach(function (u) {
+            try {
+              fetch(u, { mode: "no-cors", cache: "force-cache" });
+            } catch (e) {}
+          });
+        };
+        if ("requestIdleCallback" in window)
+          requestIdleCallback(go, { timeout: 3000 });
+        else setTimeout(go, 2000);
+      };
+      // Espera a que la escena de Home termine (o falle) para no competir.
+      window.addEventListener("fbx:hero-scene-loaded", run, { once: true });
+      // Respaldo por si el evento no llega (Home sin 3D, etc.).
+      setTimeout(run, 5000);
+    })();
+  </script>
+
   <main>
     {/* -mt-16 hace que el hero se solape con el HeaderReact transparente */}
     <div class="-mt-16">

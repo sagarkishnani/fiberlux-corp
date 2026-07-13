@@ -6,6 +6,10 @@ const Spline = lazy(() => import("@splinetool/react-spline"));
 
 type RenderMode = "static" | "spline";
 
+// Tope de device pixel ratio para el render de Spline. Menos píxeles que
+// dibujar en retina = menos carga de GPU, con pérdida de nitidez mínima.
+const DPR_CAP = 1.25;
+
 /**
  * Aísla el fallo de carga de la escena (chunk lazy o runtime de Spline).
  * Si algo revienta, renderiza el fallback (null) y avisa vía onFail, para
@@ -67,8 +71,20 @@ function decideRenderMode(allowMobile: boolean): RenderMode {
 interface SplineSceneProps {
   /** URL .splinecode exportada desde Spline. */
   scene?: string | null;
+  /**
+   * Poster estático (URL de imagen). Se muestra como capa base mientras carga
+   * la escena viva y como salida única en equipos no aptos (static/failed/sin
+   * escena), en vez de dejar el hueco vacío.
+   */
+  poster?: string | null;
   /** Permitir carga en móvil (default true). Ponlo en false si el contenedor va oculto en móvil. */
   allowMobile?: boolean;
+  /**
+   * Si es true, al terminar de cargar la escena despacha el evento
+   * `fbx:hero-scene-loaded` en `window`. Lo escucha el preloader de Home para
+   * cerrarse. Úsalo solo en la instancia del hero de Home.
+   */
+  signalReady?: boolean;
   /**
    * Difuminar los bordes del área con una máscara radial. Úsalo cuando el 3D
    * vive en una caja acotada y la escena trae un fondo propio: funde el borde
@@ -91,7 +107,9 @@ const FEATHER_MASK =
  */
 export default function SplineScene({
   scene,
+  poster,
   allowMobile = true,
+  signalReady = false,
   featherEdges = false,
   className,
   style,
@@ -101,10 +119,25 @@ export default function SplineScene({
   const [renderMode, setRenderMode] = useState<RenderMode>("static");
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [posterGone, setPosterGone] = useState(false);
+
+  // Avisa al preloader de Home de que "ya no hay nada que esperar": o la escena
+  // cargó, o falló, o directamente no se va a cargar (static/sin URL).
+  const emitReady = () => {
+    if (signalReady) {
+      window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+    }
+  };
 
   useEffect(() => {
-    setRenderMode(decideRenderMode(allowMobile));
-  }, [allowMobile]);
+    const mode = decideRenderMode(allowMobile);
+    setRenderMode(mode);
+    // Sin escena viva (equipo no apto o sin URL): no hagas esperar al preloader.
+    if (signalReady && (mode === "static" || !scene)) {
+      window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowMobile, signalReady, scene]);
 
   // Pausa el loop de render (WebGL/rAF) cuando la escena NO aporta nada:
   // fuera del viewport (p.ej. tras hacer scroll pasando el hero) o con la
@@ -144,7 +177,22 @@ export default function SplineScene({
   }, [renderMode, loaded]);
 
   const showSpline = renderMode === "spline" && !failed && Boolean(scene);
-  const showLoader = showSpline && !loaded;
+  const hasPoster = Boolean(poster);
+  // Con poster, el poster ES el placeholder instantáneo: nada de spinner. El
+  // loader animado solo aparece cuando no hay poster que mostrar.
+  const showLoader = showSpline && !loaded && !hasPoster;
+  // Poster: capa base instantánea mientras el runtime inicializa, y salida única
+  // cuando no hay escena viva (static/failed/sin URL). Se mantiene durante el
+  // crossfade a la escena viva y se retira al terminar.
+  const showPoster = hasPoster && !posterGone;
+
+  // Al cargar la escena, deja el poster un instante más (dura el crossfade) y
+  // luego retíralo, para que no haya un salto al fondo entre poster y escena.
+  useEffect(() => {
+    if (!loaded || !hasPoster) return;
+    const t = window.setTimeout(() => setPosterGone(true), 650);
+    return () => window.clearTimeout(t);
+  }, [loaded, hasPoster]);
 
   const wrapperStyle: CSSProperties = featherEdges
     ? {
@@ -156,6 +204,21 @@ export default function SplineScene({
 
   return (
     <div ref={wrapperRef} className={className} style={wrapperStyle}>
+      {/* Poster estático: base bajo la escena / respaldo en equipos no aptos */}
+      {showPoster && (
+        <img
+          src={poster!}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+          draggable={false}
+          style={{
+            opacity: loaded ? 0 : 1,
+            transition: "opacity 0.6s ease",
+          }}
+        />
+      )}
+
       {/* Loader premium mientras carga la escena */}
       {showLoader && (
         <div
@@ -169,7 +232,12 @@ export default function SplineScene({
       )}
 
       {showSpline && (
-        <SplineBoundary onFail={() => setFailed(true)}>
+        <SplineBoundary
+          onFail={() => {
+            setFailed(true);
+            emitReady();
+          }}
+        >
           <Suspense fallback={null}>
             <Spline
               scene={scene!}
@@ -184,29 +252,36 @@ export default function SplineScene({
                   /* versiones antiguas del runtime: se ignora */
                 }
                 // Limita el device pixel ratio: en pantallas retina (DPR 2–3)
-                // el runtime renderiza 4–9× los píxeles. Cap a 1.5 baja mucho la
-                // carga de GPU con una pérdida de nitidez apenas perceptible.
+                // el runtime renderiza 4–9× los píxeles. Cap a DPR_CAP baja mucho
+                // la carga de GPU con una pérdida de nitidez apenas perceptible.
                 try {
                   const renderer =
                     (app as unknown as { renderer?: { setPixelRatio?: (r: number) => void } })
                       .renderer;
-                  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+                  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
                   renderer?.setPixelRatio?.(dpr);
                 } catch {
                   /* API no disponible en esta versión: se ignora */
                 }
                 setLoaded(true);
+                emitReady();
               }}
-              onError={() => setFailed(true)}
+              onError={() => {
+                setFailed(true);
+                emitReady();
+              }}
               style={{
                 width: "100%",
                 height: "100%",
                 background: "transparent",
                 opacity: loaded ? 1 : 0,
-                transform: loaded ? "scale(1)" : "scale(1.04)",
-                filter: loaded ? "blur(0px)" : "blur(12px)",
-                transition:
-                  "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease",
+                // Con poster: crossfade simple de opacidad sobre la imagen base.
+                // Sin poster: revelación con desenfoque + escala desde el vacío.
+                transform: hasPoster || loaded ? "scale(1)" : "scale(1.04)",
+                filter: hasPoster || loaded ? "blur(0px)" : "blur(12px)",
+                transition: hasPoster
+                  ? "opacity 0.6s ease"
+                  : "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease",
               }}
             />
           </Suspense>

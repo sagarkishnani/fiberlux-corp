@@ -82,6 +82,7 @@ export default function HeroServiciosReact({
             {page.splineSceneUrl && (
               <SplineScene
                 scene={page.splineSceneUrl}
+                poster={page.splinePosterUrl}
                 allowMobile={false}
                 featherEdges
                 className="absolute inset-0"

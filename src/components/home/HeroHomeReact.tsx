@@ -45,6 +45,8 @@ export default function HeroHomeReact({
           {/* Escena 3D (carga condicional + loader + revelación + pausa) */}
           <SplineScene
             scene={hero.splineSceneUrl}
+            poster={hero.splinePosterUrl}
+            signalReady
             className="absolute inset-0"
           />
         </div>

@@ -5,6 +5,7 @@ fragment HomeParts on Home {
     title
     subtitle
     splineSceneUrl
+    splinePosterUrl
     buttons {
       __typename
       text
@@ -276,6 +277,7 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   heading
   intro
   splineSceneUrl
+  splinePosterUrl
   sectionTitle
   sectionSubtitle
   channels {
@@ -302,6 +304,7 @@ fragment ServiciosParts on Servicios {
   intro
   ctaLabel
   splineSceneUrl
+  splinePosterUrl
   formTitle
   formSubtitle
 }
