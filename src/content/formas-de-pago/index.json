@@ -100,27 +100,87 @@
       "optionLabel": "Desde BCP",
       "methods": [
         {
-          "label": "Desde la aplicación",
+          "label": "Banca Móvil",
           "steps": [
             {
-              "title": "Banca Móvil – Paso 1",
-              "description": "**[Contenido por completar]** — describe aquí el primer paso para pagar desde la app de BCP.",
-              "image": ""
+              "title": "Paso 1",
+              "description": "Selecciona la opción de **Pago de Servicios**",
+              "image": "/images/formas-de-pago/bcp-movil-1.png"
             },
             {
-              "title": "Banca Móvil – Paso 2",
-              "description": "**[Contenido por completar]** — describe aquí el segundo paso para pagar desde la app de BCP.",
+              "title": "Paso 2",
+              "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar.\n\nElegir la moneda según factura.",
+              "image": "/images/formas-de-pago/bcp-movil-2.png"
+            },
+            {
+              "title": "Paso 3",
+              "description": "Seleccionar el servicio que se desea pagar en Soles o Dólares.\n\n- ME para dólares\n- MN para soles\n\nIngresar su número de DNI o RUC.",
+              "image": "/images/formas-de-pago/bcp-movil-3.png"
+            },
+            {
+              "title": "Paso 4",
+              "description": "Seleccionar las facturas a pagar. Se muestran las facturas más antiguas **PRIMERO**.",
+              "image": "/images/formas-de-pago/bcp-movil-4.png"
+            }
+          ]
+        },
+        {
+          "label": "Telecrédito",
+          "steps": [
+            {
+              "title": "Paso 1",
+              "description": "Selecciona la opción de **Pago de Servicios**",
+              "image": "/images/formas-de-pago/bcp-web-1.jpg"
+            },
+            {
+              "title": "Paso 2",
+              "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar",
+              "image": "/images/formas-de-pago/bcp-web-2.jpg"
+            },
+            {
+              "title": "Paso 3",
+              "description": "Seleccionar la empresa **FIBERLUX TECH** y el servicio que se desea pagar en Soles o Dólares y continuar.\n\n- ME para dólares\n- MN para soles",
+              "image": "/images/formas-de-pago/bcp-web-3.jpg"
+            },
+            {
+              "title": "Paso 4",
+              "description": "Ingresar su número de DNI o RUC",
+              "image": "/images/formas-de-pago/bcp-web-4.jpg"
+            },
+            {
+              "title": "Paso 5",
+              "description": "Seleccionar las facturas a pagar y finaliza la transacción",
               "image": ""
             }
           ]
         },
         {
-          "label": "Desde la web",
+          "label": "Banca por Internet",
           "steps": [
             {
-              "title": "Banca por Internet – Paso 1",
-              "description": "**[Contenido por completar]** — describe aquí el primer paso para pagar desde la web de BCP.",
-              "image": ""
+              "title": "Paso 1",
+              "description": "Selecciona la opción de **Pago de Servicios**",
+              "image": "/images/formas-de-pago/bcp-banca-1.png"
+            },
+            {
+              "title": "Paso 2",
+              "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar",
+              "image": "/images/formas-de-pago/bcp-banca-2.png"
+            },
+            {
+              "title": "Paso 3",
+              "description": "Seleccionar el servicio que se desea pagar en Soles o Dólares y continuar.\n\n- ME para dólares\n- MN para soles",
+              "image": "/images/formas-de-pago/bcp-banca-3.png"
+            },
+            {
+              "title": "Paso 4",
+              "description": "Ingresar su número de DNI o RUC",
+              "image": "/images/formas-de-pago/bcp-banca-4.png"
+            },
+            {
+              "title": "Paso 5",
+              "description": "Seleccionar las facturas a pagar y finaliza la transacción. Se muestran las facturas más antiguas **PRIMERO**.",
+              "image": "/images/formas-de-pago/bcp-banca-5.png"
             }
           ]
         }
