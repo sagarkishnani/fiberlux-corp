@@ -52,7 +52,7 @@ export default function HeroCasosReact({
         aria-hidden="true"
       />
 
-      <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-32">
+      <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
         <div className="max-w-[600px]">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-8">
