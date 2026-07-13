@@ -126,7 +126,7 @@ export default function HeroSubservicioReact({
 
             {hero?.ctaLabel && (
               <a
-                href="#contacto-servicios"
+                href="#beneficios"
                 className="inline-flex items-center justify-center px-7 py-4 rounded-full font-medium text-base transition-all duration-300 bg-[#96237A] hover:bg-[#650F50] text-white shadow-[0_8px_32px_-8px_rgba(150,35,122,0.6)] hover:shadow-[0_8px_32px_-4px_rgba(150,35,122,0.8)] hover:translate-y-[-1px]"
                 data-tina-field={tinaField(hero, "ctaLabel")}
               >
