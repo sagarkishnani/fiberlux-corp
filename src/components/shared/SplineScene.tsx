@@ -80,6 +80,12 @@ interface SplineSceneProps {
   /** Permitir carga en móvil (default true). Ponlo en false si el contenedor va oculto en móvil. */
   allowMobile?: boolean;
   /**
+   * Si es true, al terminar de cargar la escena despacha el evento
+   * `fbx:hero-scene-loaded` en `window`. Lo escucha el preloader de Home para
+   * cerrarse. Úsalo solo en la instancia del hero de Home.
+   */
+  signalReady?: boolean;
+  /**
    * Difuminar los bordes del área con una máscara radial. Úsalo cuando el 3D
    * vive en una caja acotada y la escena trae un fondo propio: funde el borde
    * rectangular con el fondo de la página. No lo uses en heroes a sangre completa.
@@ -103,6 +109,7 @@ export default function SplineScene({
   scene,
   poster,
   allowMobile = true,
+  signalReady = false,
   featherEdges = false,
   className,
   style,
@@ -113,9 +120,23 @@ export default function SplineScene({
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
+  // Avisa al preloader de Home de que "ya no hay nada que esperar": o la escena
+  // cargó, o falló, o directamente no se va a cargar (static/sin URL).
+  const emitReady = () => {
+    if (signalReady) {
+      window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+    }
+  };
+
   useEffect(() => {
-    setRenderMode(decideRenderMode(allowMobile));
-  }, [allowMobile]);
+    const mode = decideRenderMode(allowMobile);
+    setRenderMode(mode);
+    // Sin escena viva (equipo no apto o sin URL): no hagas esperar al preloader.
+    if (signalReady && (mode === "static" || !scene)) {
+      window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowMobile, signalReady, scene]);
 
   // Pausa el loop de render (WebGL/rAF) cuando la escena NO aporta nada:
   // fuera del viewport (p.ej. tras hacer scroll pasando el hero) o con la
@@ -194,7 +215,12 @@ export default function SplineScene({
       )}
 
       {showSpline && (
-        <SplineBoundary onFail={() => setFailed(true)}>
+        <SplineBoundary
+          onFail={() => {
+            setFailed(true);
+            emitReady();
+          }}
+        >
           <Suspense fallback={null}>
             <Spline
               scene={scene!}
@@ -221,8 +247,12 @@ export default function SplineScene({
                   /* API no disponible en esta versión: se ignora */
                 }
                 setLoaded(true);
+                emitReady();
               }}
-              onError={() => setFailed(true)}
+              onError={() => {
+                setFailed(true);
+                emitReady();
+              }}
               style={{
                 width: "100%",
                 height: "100%",
