@@ -85,7 +85,7 @@
     ]
   },
   "testimonials": {
-    "visible": false,
+    "visible": true,
     "sectionTitle": "Empresas que confían en nuestra red",
     "items": [
       {
