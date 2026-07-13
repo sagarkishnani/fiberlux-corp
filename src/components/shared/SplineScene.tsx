@@ -6,6 +6,10 @@ const Spline = lazy(() => import("@splinetool/react-spline"));
 
 type RenderMode = "static" | "spline";
 
+// Tope de device pixel ratio para el render de Spline. Menos píxeles que
+// dibujar en retina = menos carga de GPU, con pérdida de nitidez mínima.
+const DPR_CAP = 1.25;
+
 /**
  * Aísla el fallo de carga de la escena (chunk lazy o runtime de Spline).
  * Si algo revienta, renderiza el fallback (null) y avisa vía onFail, para
@@ -205,13 +209,13 @@ export default function SplineScene({
                   /* versiones antiguas del runtime: se ignora */
                 }
                 // Limita el device pixel ratio: en pantallas retina (DPR 2–3)
-                // el runtime renderiza 4–9× los píxeles. Cap a 1.5 baja mucho la
-                // carga de GPU con una pérdida de nitidez apenas perceptible.
+                // el runtime renderiza 4–9× los píxeles. Cap a DPR_CAP baja mucho
+                // la carga de GPU con una pérdida de nitidez apenas perceptible.
                 try {
                   const renderer =
                     (app as unknown as { renderer?: { setPixelRatio?: (r: number) => void } })
                       .renderer;
-                  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+                  const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
                   renderer?.setPixelRatio?.(dpr);
                 } catch {
                   /* API no disponible en esta versión: se ignora */
