@@ -31,7 +31,7 @@ export default function HeroSoporteReact({
       {/* Ambient glow toward the right (where the 3D element will live) */}
       <div className="absolute inset-0 z-0 soporte-hero-glow" />
 
-      <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-28">
+      <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* ════ LEFT — informational chrome ════ */}
           <div className="max-w-[560px]">
