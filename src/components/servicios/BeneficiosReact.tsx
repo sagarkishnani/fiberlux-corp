@@ -73,7 +73,7 @@ export default function BeneficiosReact({
   if (items.length === 0) return null;
 
   return (
-    <section className="bg-greyscale-darkest py-16 md:py-24">
+    <section id="beneficios" className="bg-greyscale-darkest py-16 md:py-24 scroll-mt-24">
       <div className="max-w-[1264px] mx-auto px-6 md:px-16">
         {beneficios.title && (
           <h2
