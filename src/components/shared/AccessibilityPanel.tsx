@@ -414,18 +414,18 @@ const styles = `
     width: 56px;
     height: 56px;
     border-radius: 9999px;
-    border: none;
+    border: 3px solid #fff; /* white ring keeps the FAB visible on any bg (incl. brand-purple sections) */
     background: #96237A;
     color: #fff;
     font-size: 28px;
     cursor: pointer;
-    box-shadow: 0 8px 24px rgba(150, 35, 122, 0.45);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(150, 35, 122, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
   .a11y-fab:hover {
     background: #650F50; /* purple dark */
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 12px 30px rgba(101, 15, 80, 0.6); /* #650F50 glow */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 12px 30px rgba(101, 15, 80, 0.5); /* #650F50 glow */
   }
   .a11y-fab:focus-visible {
     outline: 3px solid rgba(150, 35, 122, 0.5);
