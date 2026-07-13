@@ -59,6 +59,8 @@ function applyState(s: A11yState) {
   r.style.setProperty("--a11y-saturate", s.saturation ? "0.12" : "1");
   r.style.setProperty("--a11y-invert", s.invert ? "1" : "0");
   r.style.setProperty("--a11y-hue", s.invert ? "180deg" : "0deg");
+  // Zoom the content wrapper only when the font scale differs from 100%.
+  r.classList.toggle("a11y-scaled", s.fontScale !== 1);
   // Only apply the body filter when a color effect is active (see CSS note).
   r.classList.toggle("a11y-filter", s.contrast || s.saturation || s.invert);
   r.classList.toggle("a11y-hide-images", s.hideImages);
