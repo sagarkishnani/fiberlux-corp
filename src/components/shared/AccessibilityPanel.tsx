@@ -362,9 +362,13 @@ const styles = `
     --a11y-hue: 0deg;
   }
 
-  /* Scale rem-based typography (font slider / "Agrandar texto") */
-  html {
-    font-size: calc(100% * var(--a11y-font-scale));
+  /* Scale ALL page text (font slider / "Agrandar texto") via zoom on the
+     content wrapper, so px-based sizes grow too — not only rem/em. Gated behind
+     .a11y-scaled (added only when fontScale !== 1) so there is zero effect at
+     100% and no containing-block impact on the fixed Header inside the wrapper.
+     The FABs/panel live OUTSIDE #a11y-content, so they never scale. */
+  html.a11y-scaled #a11y-content {
+    zoom: var(--a11y-font-scale);
   }
 
   /* Letter spacing (identity default is safe to always apply) */
