@@ -113,7 +113,7 @@ export default function CanalesSoporte({
 
   return (
     <section className="bg-[#FBDCEC] py-16 lg:py-24">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+      <div className="site-container">
         {/* Section header */}
         <h2
           className="text-[34px] md:text-[48px] leading-[1.1] font-semibold text-brand-purple mb-4"

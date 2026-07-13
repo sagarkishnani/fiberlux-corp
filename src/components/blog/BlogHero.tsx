@@ -138,7 +138,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
       {/* Content — pt accounts for fixed header */}
       <div
         ref={contentRef}
-        className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16 pt-28 md:pt-36"
+        className="relative z-10 site-container pt-28 md:pt-36"
       >
         {/* Breadcrumb */}
         <nav className="text-[13px] text-white/40 mb-3">
@@ -214,7 +214,7 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
       </div>
 
       {/* Navigation arrows */}
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 md:px-16">
+      <div className="relative z-10 site-container">
         <div className="flex gap-0 mt-6">
           <button
             onClick={() => scroll('left')}

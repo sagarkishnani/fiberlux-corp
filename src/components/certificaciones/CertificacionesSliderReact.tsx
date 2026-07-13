@@ -214,7 +214,7 @@ export default function CertificacionesSliderReact({
   return (
     <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
       {/* Header: title left, arrows right */}
-      <div className="max-w-[1440px] mx-auto px-6 md:px-16 flex items-end justify-between gap-6 mb-10 md:mb-14">
+      <div className="site-container flex items-end justify-between gap-6 mb-10 md:mb-14">
         <h2
           className="text-[32px] md:text-[48px] leading-[1.1] font-semibold text-white max-w-[16ch]"
           data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}

@@ -175,8 +175,8 @@ export default function StatsReact({ query, variables, data: initialData, titleO
   const heading = titleOverride || stats.title;
 
   return (
-    <section className="bg-brand-purple rounded-t-3xl py-14 md:py-20 px-4 md:px-8 lg:px-16">
-      <div className="max-w-[1440px] mx-auto">
+    <section className="bg-brand-purple rounded-t-3xl py-14 md:py-20">
+      <div className="site-container">
 
         {/* Section title */}
         <h2

@@ -344,7 +344,7 @@ export default function BlogDetailReact({
       {/* ═══ RELATED POSTS ═══ */}
       {relatedPosts.length > 0 && (
         <section className="py-12 md:py-16 bg-white">
-          <div className="max-w-[1440px] mx-auto px-6 md:px-16">
+          <div className="site-container">
             <h2 className="text-[#0a0a0a] text-[32px] md:text-[40px] leading-[40px] md:leading-[48px] font-bold mb-10">
               Publicaciones relacionadas
             </h2>

@@ -60,18 +60,18 @@ export default function HeroHomeReact({
         }}
       />
 
-      {/* Vignette inferior */}
+      {/* Vignette inferior — fade largo y suave para empalmar con la sección siguiente */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 z-[1]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-64 md:h-80 z-[1]"
         style={{
           background:
-            "linear-gradient(180deg, rgba(10,10,10,0) 0%, #0a0a0a 100%)",
+            "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.5) 45%, rgba(10,10,10,0.85) 75%, #0a0a0a 100%)",
         }}
       />
 
       {/* Contenido */}
-      <div className="pointer-events-none relative z-10 max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 pt-28 lg:pt-40 pb-20 lg:pb-32">
+      <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-20 lg:pb-32">
         <div className="flex flex-col justify-center max-w-[640px] min-h-[calc(100svh-200px)] lg:min-h-[640px]">
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-subtitle-lg md:text-subtitle-xl"

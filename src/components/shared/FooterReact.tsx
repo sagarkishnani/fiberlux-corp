@@ -113,7 +113,7 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
   return (
     <footer className="bg-brand-purple rounded-t-xl">
       {/* ═══ Main content ═══ */}
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-16 pt-16 sm:pt-20 pb-10">
+      <div className="site-container pt-16 sm:pt-20 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
 
           {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
@@ -158,7 +158,7 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
 
       {/* ═══ Bottom bar ═══ */}
       <div className="border-t border-white/10">
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-16 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="site-container py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Fiberlux logo */}
           <div data-tina-field={tinaField(footer as any, 'logo')}>
             <a href="/">

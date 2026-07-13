@@ -43,7 +43,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
 
   return (
     <section className="bg-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto py-16 md:py-20">
+      <div className="max-w-[1680px] mx-auto py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0">
 
           {/* Left: Title + Subtitle (with padding) */}

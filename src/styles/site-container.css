@@ -1,0 +1,22 @@
+/**
+ * Contenedor global del sitio (spec 21).
+ *
+ * A diferencia de `global.css` (que nunca se bundlea), esta hoja se importa en
+ * `BaseLayout.astro`, así que sí entra al bundle y aplica también a las islas React.
+ *
+ * NOTA (desviación del spec): el spec proponía envolver en `@layer components`,
+ * pero Vite procesa esta hoja por PostCSS de forma aislada, sin el
+ * `@tailwind components` correspondiente, y Tailwind aborta con
+ * "`@layer components` is used but no matching `@tailwind components` directive".
+ * Se dejan las reglas con `@apply` directo (que no requiere `@layer`) para no
+ * re-inyectar `@tailwind` (evita duplicar todo Tailwind, la intención original).
+ */
+.site-container {
+  @apply mx-auto w-full px-6 md:px-10 lg:px-16 xl:px-24;
+  max-width: 1680px;
+}
+
+/* Bloques de lectura angostos (detalle de blog, etc.). */
+.site-container--narrow {
+  max-width: 1200px;
+}
