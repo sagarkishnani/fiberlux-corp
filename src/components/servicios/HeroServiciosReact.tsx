@@ -57,7 +57,7 @@ export default function HeroServiciosReact({
             </h1>
 
             <p
-              className="text-body-md text-greyscale-light max-w-[460px] mb-8"
+              className="text-body-lg text-greyscale-light max-w-[460px] mb-8"
               data-tina-field={tinaField(page, "intro")}
             >
               {page.intro}

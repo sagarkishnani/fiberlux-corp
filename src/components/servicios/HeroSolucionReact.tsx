@@ -89,7 +89,7 @@ export default function HeroSolucionReact({
 
             {hero?.intro && (
               <p
-                className="text-body-md text-greyscale-light max-w-[480px] mb-8"
+                className="text-body-lg text-greyscale-light max-w-[480px] mb-8"
                 data-tina-field={tinaField(hero, "intro")}
               >
                 {hero.intro}
