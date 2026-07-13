@@ -6,9 +6,22 @@ import BlogPreview from "../components/blog/BlogPreview.astro";
 import StickyCards from "../components/shared/StickyCards.astro";
 import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
+import SitePreloader from "../components/shared/SitePreloader";
 ---
 
 <BaseLayout title="Inicio">
+  {/* Pre-paint: si el preloader ya se mostró esta sesión, ocúltalo antes de
+      pintar para evitar el flash del overlay en recargas. */}
+  <script is:inline>
+    try {
+      if (sessionStorage.getItem("fbx:preloaderShown") === "1") {
+        var s = document.createElement("style");
+        s.textContent = "#site-preloader{display:none !important}";
+        document.head.appendChild(s);
+      }
+    } catch (e) {}
+  </script>
+  <SitePreloader client:load />
   <main>
     {/* -mt-16 hace que el hero se solape con el HeaderReact transparente */}
     <div class="-mt-16">
