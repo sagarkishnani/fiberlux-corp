@@ -67,6 +67,12 @@ function decideRenderMode(allowMobile: boolean): RenderMode {
 interface SplineSceneProps {
   /** URL .splinecode exportada desde Spline. */
   scene?: string | null;
+  /**
+   * Poster estático (URL de imagen). Se muestra como capa base mientras carga
+   * la escena viva y como salida única en equipos no aptos (static/failed/sin
+   * escena), en vez de dejar el hueco vacío.
+   */
+  poster?: string | null;
   /** Permitir carga en móvil (default true). Ponlo en false si el contenedor va oculto en móvil. */
   allowMobile?: boolean;
   /**
@@ -91,6 +97,7 @@ const FEATHER_MASK =
  */
 export default function SplineScene({
   scene,
+  poster,
   allowMobile = true,
   featherEdges = false,
   className,
@@ -145,6 +152,9 @@ export default function SplineScene({
 
   const showSpline = renderMode === "spline" && !failed && Boolean(scene);
   const showLoader = showSpline && !loaded;
+  // Poster: capa base mientras la escena viva aún no carga, y salida única
+  // cuando no hay escena viva (static/failed/sin URL). Se retira al cargar.
+  const showPoster = Boolean(poster) && !loaded;
 
   const wrapperStyle: CSSProperties = featherEdges
     ? {
@@ -156,6 +166,17 @@ export default function SplineScene({
 
   return (
     <div ref={wrapperRef} className={className} style={wrapperStyle}>
+      {/* Poster estático: base bajo la escena / respaldo en equipos no aptos */}
+      {showPoster && (
+        <img
+          src={poster!}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+          draggable={false}
+        />
+      )}
+
       {/* Loader premium mientras carga la escena */}
       {showLoader && (
         <div
