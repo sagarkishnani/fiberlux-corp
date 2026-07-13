@@ -60,6 +60,13 @@ export default defineConfig({
                   "Pega aquí la URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode",
               },
               {
+                type: "image",
+                name: "splinePosterUrl",
+                label: "Poster estático de la escena (respaldo)",
+                description:
+                  "Captura PNG de la escena. Se muestra en equipos débiles / red lenta / reduce-motion en vez del 3D, y como base mientras carga.",
+              },
+              {
                 type: "object",
                 name: "buttons",
                 label: "Botones (CTAs)",
@@ -1057,6 +1064,13 @@ export default defineConfig({
             description:
               "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vacío = sin 3D.",
           },
+          {
+            name: "splinePosterUrl",
+            label: "Poster estático de la escena (respaldo)",
+            type: "image",
+            description:
+              "Captura PNG de la escena. Se muestra en equipos débiles / red lenta / reduce-motion en vez del 3D, y como base mientras carga.",
+          },
 
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "Título de sección", type: "string" },
@@ -1147,6 +1161,13 @@ export default defineConfig({
             type: "string",
             description:
               "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vacío = sin 3D.",
+          },
+          {
+            name: "splinePosterUrl",
+            label: "Poster estático de la escena (respaldo)",
+            type: "image",
+            description:
+              "Captura PNG de la escena. Se muestra en equipos débiles / red lenta / reduce-motion en vez del 3D, y como base mientras carga.",
           },
 
           // ── Bloque de formulario ──

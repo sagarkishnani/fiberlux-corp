@@ -148,6 +148,7 @@ type HomeHero {
   title: String!
   subtitle: String
   splineSceneUrl: String
+  splinePosterUrl: String
   buttons: [HomeHeroButtons]
 }
 
@@ -216,6 +217,13 @@ input StringFilter {
   in: [String]
 }
 
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
 input HomeHeroButtonsFilter {
   text: StringFilter
   url: StringFilter
@@ -226,14 +234,8 @@ input HomeHeroFilter {
   title: StringFilter
   subtitle: StringFilter
   splineSceneUrl: StringFilter
+  splinePosterUrl: ImageFilter
   buttons: HomeHeroButtonsFilter
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
 }
 
 input HomeServicesItemsFilter {
@@ -888,6 +890,7 @@ type SoporteTecnico implements Node & Document {
   heading: String
   intro: String
   splineSceneUrl: String
+  splinePosterUrl: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannels]
@@ -917,6 +920,7 @@ input SoporteTecnicoFilter {
   heading: StringFilter
   intro: StringFilter
   splineSceneUrl: StringFilter
+  splinePosterUrl: ImageFilter
   sectionTitle: StringFilter
   sectionSubtitle: StringFilter
   channels: SoporteTecnicoChannelsFilter
@@ -939,6 +943,7 @@ type Servicios implements Node & Document {
   intro: String
   ctaLabel: String
   splineSceneUrl: String
+  splinePosterUrl: String
   formTitle: String
   formSubtitle: String
   id: ID!
@@ -952,6 +957,7 @@ input ServiciosFilter {
   intro: StringFilter
   ctaLabel: StringFilter
   splineSceneUrl: StringFilter
+  splinePosterUrl: ImageFilter
   formTitle: StringFilter
   formSubtitle: StringFilter
 }
@@ -1784,6 +1790,7 @@ input HomeHeroMutation {
   title: String
   subtitle: String
   splineSceneUrl: String
+  splinePosterUrl: String
   buttons: [HomeHeroButtonsMutation]
 }
 
@@ -2101,6 +2108,7 @@ input SoporteTecnicoMutation {
   heading: String
   intro: String
   splineSceneUrl: String
+  splinePosterUrl: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannelsMutation]
@@ -2112,6 +2120,7 @@ input ServiciosMutation {
   intro: String
   ctaLabel: String
   splineSceneUrl: String
+  splinePosterUrl: String
   formTitle: String
   formSubtitle: String
 }
