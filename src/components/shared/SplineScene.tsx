@@ -119,6 +119,7 @@ export default function SplineScene({
   const [renderMode, setRenderMode] = useState<RenderMode>("static");
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [posterGone, setPosterGone] = useState(false);
 
   // Avisa al preloader de Home de que "ya no hay nada que esperar": o la escena
   // cargó, o falló, o directamente no se va a cargar (static/sin URL).
@@ -176,10 +177,22 @@ export default function SplineScene({
   }, [renderMode, loaded]);
 
   const showSpline = renderMode === "spline" && !failed && Boolean(scene);
-  const showLoader = showSpline && !loaded;
-  // Poster: capa base mientras la escena viva aún no carga, y salida única
-  // cuando no hay escena viva (static/failed/sin URL). Se retira al cargar.
-  const showPoster = Boolean(poster) && !loaded;
+  const hasPoster = Boolean(poster);
+  // Con poster, el poster ES el placeholder instantáneo: nada de spinner. El
+  // loader animado solo aparece cuando no hay poster que mostrar.
+  const showLoader = showSpline && !loaded && !hasPoster;
+  // Poster: capa base instantánea mientras el runtime inicializa, y salida única
+  // cuando no hay escena viva (static/failed/sin URL). Se mantiene durante el
+  // crossfade a la escena viva y se retira al terminar.
+  const showPoster = hasPoster && !posterGone;
+
+  // Al cargar la escena, deja el poster un instante más (dura el crossfade) y
+  // luego retíralo, para que no haya un salto al fondo entre poster y escena.
+  useEffect(() => {
+    if (!loaded || !hasPoster) return;
+    const t = window.setTimeout(() => setPosterGone(true), 650);
+    return () => window.clearTimeout(t);
+  }, [loaded, hasPoster]);
 
   const wrapperStyle: CSSProperties = featherEdges
     ? {
@@ -199,6 +212,10 @@ export default function SplineScene({
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
           draggable={false}
+          style={{
+            opacity: loaded ? 0 : 1,
+            transition: "opacity 0.6s ease",
+          }}
         />
       )}
 
@@ -258,10 +275,13 @@ export default function SplineScene({
                 height: "100%",
                 background: "transparent",
                 opacity: loaded ? 1 : 0,
-                transform: loaded ? "scale(1)" : "scale(1.04)",
-                filter: loaded ? "blur(0px)" : "blur(12px)",
-                transition:
-                  "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease",
+                // Con poster: crossfade simple de opacidad sobre la imagen base.
+                // Sin poster: revelación con desenfoque + escala desde el vacío.
+                transform: hasPoster || loaded ? "scale(1)" : "scale(1.04)",
+                filter: hasPoster || loaded ? "blur(0px)" : "blur(12px)",
+                transition: hasPoster
+                  ? "opacity 0.6s ease"
+                  : "opacity 1.1s ease, transform 1.1s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease",
               }}
             />
           </Suspense>
