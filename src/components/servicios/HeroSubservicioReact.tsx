@@ -108,7 +108,7 @@ export default function HeroSubservicioReact({
 
             {hero?.intro && (
               <p
-                className="text-body-md text-greyscale-light max-w-[480px] mb-6"
+                className="text-body-lg text-greyscale-light max-w-[480px] mb-6"
                 data-tina-field={tinaField(hero, "intro")}
               >
                 {hero.intro}
