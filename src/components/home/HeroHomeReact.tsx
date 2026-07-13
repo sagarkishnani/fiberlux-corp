@@ -43,10 +43,13 @@ export default function HeroHomeReact({
           />
 
           {/* Escena 3D (carga condicional + loader + revelación + pausa) */}
+          {/* Home va a sangre completa: sin poster (una captura se maximiza y
+              recorta mal, peor en mobile). El glow ambiental de arriba cubre la
+              carga; hideLoader evita que salga un spinner encima. */}
           <SplineScene
             scene={hero.splineSceneUrl}
-            poster={hero.splinePosterUrl}
             signalReady
+            hideLoader
             className="absolute inset-0"
           />
         </div>

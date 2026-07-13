@@ -86,6 +86,12 @@ interface SplineSceneProps {
    */
   signalReady?: boolean;
   /**
+   * No mostrar el loader animado (glow + spinner). Úsalo cuando el padre ya
+   * aporta su propio fondo mientras carga (p.ej. el glow ambiental del hero de
+   * Home), para que no aparezca un segundo loader encima.
+   */
+  hideLoader?: boolean;
+  /**
    * Difuminar los bordes del área con una máscara radial. Úsalo cuando el 3D
    * vive en una caja acotada y la escena trae un fondo propio: funde el borde
    * rectangular con el fondo de la página. No lo uses en heroes a sangre completa.
@@ -110,6 +116,7 @@ export default function SplineScene({
   poster,
   allowMobile = true,
   signalReady = false,
+  hideLoader = false,
   featherEdges = false,
   className,
   style,
@@ -178,9 +185,10 @@ export default function SplineScene({
 
   const showSpline = renderMode === "spline" && !failed && Boolean(scene);
   const hasPoster = Boolean(poster);
-  // Con poster, el poster ES el placeholder instantáneo: nada de spinner. El
-  // loader animado solo aparece cuando no hay poster que mostrar.
-  const showLoader = showSpline && !loaded && !hasPoster;
+  // Con poster, el poster ES el placeholder instantáneo: nada de spinner. Con
+  // hideLoader, el padre ya aporta su fondo (glow). El loader animado solo
+  // aparece cuando no hay poster ni fondo del padre que cubra la carga.
+  const showLoader = showSpline && !loaded && !hasPoster && !hideLoader;
   // Poster: capa base instantánea mientras el runtime inicializa, y salida única
   // cuando no hay escena viva (static/failed/sin URL). Se mantiene durante el
   // crossfade a la escena viva y se retira al terminar.
