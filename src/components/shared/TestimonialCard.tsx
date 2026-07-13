@@ -11,6 +11,9 @@ interface TestimonialCardProps {
 const FRAME_PATH =
   'M6.16113 0.5H14.1113C16.0279 0.5 17.7807 1.57551 18.6191 3.30664L18.6221 3.31348L20.4346 6.91699C21.4422 8.95561 23.5426 10.2802 25.8379 10.2803H67.3076C69.6038 10.2803 71.7047 8.96689 72.7354 6.91699L72.7363 6.91406L74.5254 3.31055L74.5273 3.30664C75.3658 1.57558 77.1177 0.50006 79.0342 0.5H209.839C212.767 0.500155 215.181 2.72829 215.471 5.61523L215.477 5.70117V171.269C215.476 174.331 214.265 177.292 212.08 179.479L182.442 209.102L182.439 209.104C180.575 211.004 178.057 212.161 175.408 212.443C174.999 212.468 174.623 212.5 174.25 212.5H6.16113C3.01334 212.5 0.5 209.964 0.5 206.834V6.20117L0.506836 5.90625C0.657586 2.88813 3.11423 0.500118 6.16113 0.5Z';
 
+// Avatar de respaldo cuando un testimonio no tiene foto propia.
+const PLACEHOLDER_AVATAR = `${import.meta.env.BASE_URL}images/testimonials/avatar-placeholder.svg`;
+
 export default function TestimonialCard({
   quote,
   description,
@@ -68,19 +71,13 @@ export default function TestimonialCard({
               >
                 <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
               </svg>
-              {/* Square photo */}
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt={name}
-                  className="ml-4 mt-4 relative z-10 w-[150px] h-[150px] object-cover"
-                  draggable={false}
-                />
-              ) : (
-                <div className="ml-4 mt-4 relative z-10 w-[150px] h-[150px] bg-greyscale-dark rounded-sm flex items-center justify-center text-white/20 text-sm">
-                  Sin foto
-                </div>
-              )}
+              {/* Square photo (fallback: avatar genérico) */}
+              <img
+                src={avatar || PLACEHOLDER_AVATAR}
+                alt={name}
+                className="ml-4 mt-4 relative z-10 w-[150px] h-[150px] object-cover"
+                draggable={false}
+              />
             </div>
           </div>
 
@@ -131,16 +128,12 @@ export default function TestimonialCard({
               >
                 <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
               </svg>
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt={name}
-                  className="relative z-10 w-full h-full object-cover rounded-sm"
-                  draggable={false}
-                />
-              ) : (
-                <div className="relative z-10 w-full h-full bg-greyscale-dark rounded-sm" />
-              )}
+              <img
+                src={avatar || PLACEHOLDER_AVATAR}
+                alt={name}
+                className="relative z-10 w-full h-full object-cover rounded-sm"
+                draggable={false}
+              />
             </div>
             <div>
               <p className="text-white text-body-md font-semibold">{name}</p>
