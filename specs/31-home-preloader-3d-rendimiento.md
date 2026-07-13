@@ -74,18 +74,18 @@ window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
 
 ## Acceptance criteria
 
-- [ ] En la primera carga de Home por sesión aparece el preloader híbrido (marca + glow + contador).
-- [ ] Al recargar Home dentro de la misma sesión, el preloader **no** vuelve a aparecer.
-- [ ] El preloader **no** aparece en Servicios, Soporte ni ninguna otra página.
-- [ ] El preloader se revela cuando la escena de Home dispara `onLoad`, respetando un mínimo de ~800 ms.
-- [ ] Si la escena tarda o falla, el preloader se cierra igual al llegar a ~6 s (usuario nunca atrapado).
-- [ ] Mientras el preloader está visible, la página no hace scroll; al revelar, el scroll se libera.
-- [ ] En equipos no aptos (`prefers-reduced-motion`, móvil débil, red lenta) se muestra el poster estático en vez del hueco/glow.
-- [ ] El cap de DPR aplicado es 1.25 (verificable en el `onLoad`).
-- [ ] Tras cargar Home, en Network se observan las descargas idle de los `.splinecode` de Servicios y Soporte.
-- [ ] Al navegar a Servicios/Soporte tras haber estado en Home, su escena carga más rápido (caché HTTP caliente).
-- [ ] El campo `splinePosterUrl` es editable en `/admin` para las 3 colecciones.
-- [ ] `astro build` termina sin errores.
+- [x] En la primera carga de Home por sesión aparece el preloader híbrido (marca + glow + contador).
+- [x] Al recargar Home dentro de la misma sesión, el preloader **no** vuelve a aparecer.
+- [x] El preloader **no** aparece en Servicios, Soporte ni ninguna otra página.
+- [x] El preloader se revela cuando la escena de Home dispara `onLoad`, respetando un mínimo de ~800 ms.
+- [x] Si la escena tarda o falla, el preloader se cierra igual al llegar a ~6 s (usuario nunca atrapado).
+- [x] Mientras el preloader está visible, la página no hace scroll; al revelar, el scroll se libera.
+- [x] En Soluciones/Soporte (desktop, caja contenida) se muestra el poster estático mientras carga y como respaldo si la escena falla. En Home (a sangre completa) **no** se usa poster: cubre la carga el glow ambiental, sin spinner.
+- [x] El cap de DPR aplicado es 1.25 (verificable en el `onLoad`).
+- [x] Tras cargar Home, en Network se observan las descargas idle de los `.splinecode` de Servicios y Soporte.
+- [x] Al navegar a Servicios/Soporte tras haber estado en Home, su escena carga más rápido (caché HTTP caliente).
+- [x] El campo `splinePosterUrl` es editable en `/admin` (usado en Servicios/Soporte; sigue presente en Home pero sin efecto).
+- [~] `astro build` contra TinaCloud requiere primero hacer push del branch (schema nuevo). Verificado en dev (modo local) + smoke test en navegador de las 3 páginas.
 
 ## Decisions
 
@@ -96,6 +96,9 @@ window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
 - **No:** duración fija sin escuchar la escena. Revelaría antes de tiempo o esperaría de más.
 - **Sí:** contador **simulado** con easing. Spline no expone progreso de descarga; un contador falso bien eased se percibe honesto y se completa al `onLoad`.
 - **Sí:** poster estático editable por CMS (`splinePosterUrl`) como respaldo en equipos débiles. Es la mayor palanca real contra el lag: los equipos flojos no corren WebGL, ven una imagen fiel.
+- **Sí (ajuste post-impl.):** poster **solo en Soluciones/Soporte**, no en Home. En Home el 3D va a sangre completa; una captura con `object-cover` se maximiza y recorta mal (peor en mobile). En Home la carga la cubre el glow ambiental del hero, sin spinner (`hideLoader`). El campo CMS de Home queda presente pero sin efecto.
+- **Sí:** cuando hay poster, se elimina el spinner y el poster hace crossfade a la escena viva (0.6 s). El poster es el placeholder instantáneo; el spinner era justo el "otro loader" que sobraba.
+- **Sí:** posters servidos como **WebP** en `public/models/` (home 1.5 MB → n/a, Soluciones 549→36 KB, Soporte 602→19 KB). Deben aparecer al instante; el WebP con transparencia pesa una fracción del PNG.
 - **No:** placeholder genérico autogenerado. Menos fiel a cada escena; el cliente ya puede exportar capturas desde Spline.
 - **Sí:** DPR cap a 1.25 (antes 1.5). Menos píxeles que renderizar en retina, pérdida de nitidez apenas perceptible.
 - **No:** límite de FPS forzado. El runtime de Spline no expone una API limpia; el ahorro real ya viene de la pausa fuera de viewport (SPEC 18) + poster en equipos débiles.
