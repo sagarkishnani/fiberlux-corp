@@ -59,6 +59,8 @@ function applyState(s: A11yState) {
   r.style.setProperty("--a11y-saturate", s.saturation ? "0.12" : "1");
   r.style.setProperty("--a11y-invert", s.invert ? "1" : "0");
   r.style.setProperty("--a11y-hue", s.invert ? "180deg" : "0deg");
+  // Zoom the content wrapper only when the font scale differs from 100%.
+  r.classList.toggle("a11y-scaled", s.fontScale !== 1);
   // Only apply the body filter when a color effect is active (see CSS note).
   r.classList.toggle("a11y-filter", s.contrast || s.saturation || s.invert);
   r.classList.toggle("a11y-hide-images", s.hideImages);
@@ -362,9 +364,13 @@ const styles = `
     --a11y-hue: 0deg;
   }
 
-  /* Scale rem-based typography (font slider / "Agrandar texto") */
-  html {
-    font-size: calc(100% * var(--a11y-font-scale));
+  /* Scale ALL page text (font slider / "Agrandar texto") via zoom on the
+     content wrapper, so px-based sizes grow too — not only rem/em. Gated behind
+     .a11y-scaled (added only when fontScale !== 1) so there is zero effect at
+     100% and no containing-block impact on the fixed Header inside the wrapper.
+     The FABs/panel live OUTSIDE #a11y-content, so they never scale. */
+  html.a11y-scaled #a11y-content {
+    zoom: var(--a11y-font-scale);
   }
 
   /* Letter spacing (identity default is safe to always apply) */

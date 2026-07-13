@@ -91,8 +91,10 @@ const whatsappMessage = whatsappContext
             localStorage.getItem("fiberlux-a11y-v1") || "{}"
           );
           var r = document.documentElement;
-          if (s.fontScale)
+          if (s.fontScale) {
             r.style.setProperty("--a11y-font-scale", String(s.fontScale));
+            if (s.fontScale !== 1) r.classList.add("a11y-scaled");
+          }
           if (s.letterSpacing)
             r.style.setProperty(
               "--a11y-letter-spacing",
