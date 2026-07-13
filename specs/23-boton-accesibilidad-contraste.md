@@ -1,6 +1,6 @@
 # SPEC 23 — Botón de accesibilidad visible sobre cualquier fondo (anillo blanco)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** Ninguno. Convive con Spec 22 (que introdujo el fondo `bg-brand-purple` de la sección de cifras). No lo reabre.
 > **Fecha:** 2026-07-13
 > **Objetivo:** Añadir un anillo blanco y una sombra oscura al FAB de accesibilidad (`.a11y-fab`) para que no se camufle cuando pasa por encima de la sección "¿Por qué Fiberlux?", que usa el mismo morado de marca que el botón.
@@ -60,3 +60,10 @@ No introduce ni modifica estructuras de datos. Es un cambio puramente de estilos
 - Rediseño del panel de accesibilidad o de sus controles.
 - Cambios en el botón de WhatsApp.
 - Cambios en el fondo de la sección "¿Por qué Fiberlux?".
+
+## QA realizada
+
+- **Home (`/`)** verificada en vivo (Chrome MCP). Con el FAB posicionado **sobre la sección magenta "¿Por qué Fiberlux?"** (`#96237A`), el botón se distingue nítidamente por el anillo blanco (zoom confirmado). Reproduce el escenario del reporte original, ya resuelto.
+- **Estilos computados** del `.a11y-fab`: `border: 3px solid rgb(255,255,255)`, `background: rgb(150,35,122)`, `box-shadow: rgba(0,0,0,0.35) 0 4px 14px, rgba(150,35,122,0.35) 0 8px 24px`. HMR aplicó el cambio sin recompilar el schema de Tina.
+- **Contraste sobre fondo oscuro** (`#0A0A0A`) y sobre las cards claras de "Nuestras soluciones": el FAB sigue visible en ambos.
+- **`:hover`** conserva el anillo (la regla no toca `border`); **badge** sin cambios de posición.
