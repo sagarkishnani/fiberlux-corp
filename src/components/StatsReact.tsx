@@ -98,7 +98,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const [isVisible, setIsVisible] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || '0');
-  const count = useCounter(value, 3500 + index * 250, isVisible);
+  const count = useCounter(value, 2000 + index * 150, isVisible);
 
   // Intersection observer to trigger animation when visible
   useEffect(() => {
@@ -122,19 +122,13 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const displayNumber = formatNumber(count, decimals, hasCommas);
 
   return (
-    <div ref={ref} className="mt-4 mb-4 md:mt-16 md:mb-16 flex flex-col gap-4">
-      {/* Card */}
+    <div ref={ref} className="mt-4 mb-4 flex flex-col gap-4">
+      {/* Card — big number as the hero */}
       <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-between min-h-[200px] md:min-h-[380px]"
+        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-center md:min-h-[240px]"
         data-tina-field={tinaField(item as any, 'number')}
       >
-        {/* Label top */}
-        <p className="text-white/80 text-sm font-medium">
-          {item.label}
-        </p>
-
-        {/* Big number — bottom-left on mobile, centered on desktop */}
-        <p className="mt-auto md:m-auto">
+        <p>
           {prefix && (
             <span className="text-white text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
               {prefix}
@@ -180,7 +174,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
         {/* Section title */}
         <h2
-          className="text-subtitle-lg text-white mb-12"
+          className="text-subtitle-lg text-white mb-6"
           data-tina-field={tinaField(stats, 'title')}
         >
           {heading}

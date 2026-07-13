@@ -123,22 +123,22 @@
       {
         "number": "+5,500",
         "label": "Clientes satisfechos",
-        "description": "Empresas que confían en nuestra red en todo el Perú"
+        "description": "clientes satisfechos que confían en nuestra red en todo el Perú"
       },
       {
         "number": "+17,000 km",
         "label": "Fibra óptica",
-        "description": "Infraestructura de fibra óptica desplegada"
+        "description": "de infraestructura de fibra óptica desplegada"
       },
       {
-        "number": "92",
+        "number": "99",
         "label": "Presencia nacional",
-        "description": "Presentes en 92 ciudades en todo el Perú"
+        "description": "ciudades en cobertura en todo el Perú"
       },
       {
         "number": "100%",
         "label": "Red propia",
-        "description": "Red privada de fibra óptica de última generación"
+        "description": "red privada de fibra óptica de última generación"
       }
     ]
   },
