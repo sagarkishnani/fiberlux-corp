@@ -1,6 +1,6 @@
 # SPEC 31 — Preloader de bienvenida en Home y optimización de rendimiento de los elementos 3D
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 18
 > **Date:** 2026-07-13
 > **Objective:** Añadir un preloader de bienvenida (una vez por sesión, solo en Home) que enmascare la carga del 3D y revele el sitio al cargar la escena con topes de seguridad, más un poster estático de respaldo en equipos débiles, un cap de DPR más agresivo y prefetch en idle de las escenas de Servicios y Soporte.
