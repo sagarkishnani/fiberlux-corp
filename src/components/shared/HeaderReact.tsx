@@ -186,6 +186,10 @@ export default function HeaderReact({
 
   useEffect(() => {
     handleResize();
+    // Initialize scroll state on mount so a reload with a browser-restored
+    // scroll position (mid-page) shows the correct header background
+    // immediately, instead of staying transparent until the first scroll event.
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     return () => {
