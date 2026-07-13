@@ -83,7 +83,7 @@ export default function PartnersMarquee({ partners }: { partners?: PartnersData 
         .partner-logo { opacity: 1; filter: none; transition: filter 0.35s ease, opacity 0.35s ease; }
         @media (min-width: 768px) {
           .partner-logo { filter: brightness(0) invert(1); opacity: 0.55; }
-          .partner-logo:hover { filter: none; opacity: 1; }
+          .partner-logo:hover { filter: none; opacity: 0.65; }
         }
 
         .partners-marquee {
