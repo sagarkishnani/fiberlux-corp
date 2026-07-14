@@ -4,6 +4,7 @@ import { client } from "../../tina/__generated__/client";
 import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
 import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
 import CasosDeUsoApp from "../components/fiberlux-app/CasosDeUsoApp.astro";
+import Stats from "../components/Stats.astro";
 
 /* ── SEO / meta (falls back to global.seo) ── */
 const appQuery = await client.queries.fiberluxApp({
@@ -24,5 +25,8 @@ const metaDescription =
     <HeroFiberluxApp />
     <BeneficiosApp />
     <CasosDeUsoApp />
+    <div class="-mt-16 relative z-20">
+      <Stats title={app?.whyUsTitle ?? undefined} />
+    </div>
   </main>
 </BaseLayout>
