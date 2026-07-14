@@ -1,7 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroServicios from "../../components/servicios/HeroServicios.astro";
-import StickyCards from "../../components/shared/StickyCards.astro";
+// StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
+// por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
+// import StickyCards from "../../components/shared/StickyCards.astro";
+import SolucionesSlider from "../../components/shared/SolucionesSlider.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 ---
 
@@ -11,7 +14,8 @@ import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 >
   <main>
     <HeroServicios />
-    <StickyCards />
+    {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
+    <SolucionesSlider />
     <ServiciosForm />
   </main>
 </BaseLayout>
