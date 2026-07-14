@@ -3,7 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroHome from "../components/home/HeroHome.astro";
 import Stats from "../components/Stats.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
-import StickyCards from "../components/shared/StickyCards.astro";
+// StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
+// por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
+// import StickyCards from "../components/shared/StickyCards.astro";
+import SolucionesSlider from "../components/shared/SolucionesSlider.astro";
 import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
 import SitePreloader from "../components/shared/SitePreloader";
@@ -65,7 +68,8 @@ const prefetchScenes = [
       <HeroHome />
     </div>
     <div class="-mt-16 relative z-10">
-      <StickyCards />
+      {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
+      <SolucionesSlider />
     </div>
     <div class="-mt-6 relative z-25">
       <TestimonialSlider />

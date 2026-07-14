@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 866 604" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="0.35">
+      <stop offset="0" stop-color="#650F50" stop-opacity="0.15"/>
+      <stop offset="0.5" stop-color="#96237A"/>
+      <stop offset="1" stop-color="#d885c4"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M -30 148.7 C 155.9 168.7, 476.9 233.7, 896 -16.3" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.100"/>
+    <path d="M -30 157.1 C 155.9 172.3, 476.9 235.3, 896 -4.3" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.134"/>
+    <path d="M -30 165.5 C 155.9 175.9, 476.9 236.9, 896 7.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.167"/>
+    <path d="M -30 173.9 C 155.9 179.5, 476.9 238.5, 896 19.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.201"/>
+    <path d="M -30 182.3 C 155.9 183.1, 476.9 240.1, 896 31.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.234"/>
+    <path d="M -30 190.7 C 155.9 186.7, 476.9 241.7, 896 43.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.268"/>
+    <path d="M -30 199.1 C 155.9 190.3, 476.9 243.3, 896 55.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.302"/>
+    <path d="M -30 207.5 C 155.9 193.9, 476.9 244.9, 896 67.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.335"/>
+    <path d="M -30 215.9 C 155.9 197.5, 476.9 246.5, 896 79.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.369"/>
+    <path d="M -30 224.3 C 155.9 201.1, 476.9 248.1, 896 91.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.402"/>
+    <path d="M -30 232.7 C 155.9 204.7, 476.9 249.7, 896 103.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.436"/>
+    <path d="M -30 241.1 C 155.9 208.3, 476.9 251.3, 896 115.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.470"/>
+    <path d="M -30 249.5 C 155.9 211.9, 476.9 252.9, 896 127.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.503"/>
+    <path d="M -30 257.9 C 155.9 215.5, 476.9 254.5, 896 139.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.503"/>
+    <path d="M -30 266.3 C 155.9 219.1, 476.9 256.1, 896 151.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.470"/>
+    <path d="M -30 274.7 C 155.9 222.7, 476.9 257.7, 896 163.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.436"/>
+    <path d="M -30 283.1 C 155.9 226.3, 476.9 259.3, 896 175.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.402"/>
+    <path d="M -30 291.5 C 155.9 229.9, 476.9 260.9, 896 187.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.369"/>
+    <path d="M -30 299.9 C 155.9 233.5, 476.9 262.5, 896 199.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.335"/>
+    <path d="M -30 308.3 C 155.9 237.1, 476.9 264.1, 896 211.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.302"/>
+    <path d="M -30 316.7 C 155.9 240.7, 476.9 265.7, 896 223.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.268"/>
+    <path d="M -30 325.1 C 155.9 244.3, 476.9 267.3, 896 235.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.234"/>
+    <path d="M -30 333.5 C 155.9 247.9, 476.9 268.9, 896 247.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.201"/>
+    <path d="M -30 341.9 C 155.9 251.5, 476.9 270.5, 896 259.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.167"/>
+    <path d="M -30 350.3 C 155.9 255.1, 476.9 272.1, 896 271.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.134"/>
+    <path d="M -30 358.7 C 155.9 258.7, 476.9 273.7, 896 283.7" stroke="url(#og)" stroke-width="1" fill="none" opacity="0.100"/>
+  </g>
+</svg>

@@ -23,7 +23,7 @@
         "number": "01",
         "title": "Conectividad empresarial",
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
-        "icon": "/images/soluciones/conectividad.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Internet Corporativo",
           "Internet Corporativo de alta disponibilidad",
@@ -33,13 +33,13 @@
           "SD-WAN",
           "Y más..."
         ],
-        "url": "/soluciones/internet-dedicado"
+        "url": "/soluciones/conectividad-empresarial"
       },
       {
         "number": "02",
         "title": "Ciberseguridad Gestionada",
         "description": "Protege tu operación crítica con ciberseguridad.",
-        "icon": "/images/soluciones/ciberseguridad.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "NGFW y Seguridad Perimetral",
           "EDR / XDR / MDR",
@@ -49,13 +49,13 @@
           "Cyber SOC 24/7 y Monitoreo",
           "Y más..."
         ],
-        "url": "/soluciones/ciberseguridad-endpoints"
+        "url": "/soluciones/ciberseguridad-gestionada"
       },
       {
         "number": "03",
         "title": "Data Center, Cloud y Continuidad de Negocio",
         "description": "Infraestructura lista para crecer y recuperarse",
-        "icon": "/images/soluciones/datacenter.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Housing y colocación",
           "Nube Pública y Privada",
@@ -64,13 +64,13 @@
           "Storage y Cómputo Empresarial",
           "Arquitectura basada en Microservicios"
         ],
-        "url": "/soluciones/saas"
+        "url": "/soluciones/data-center-cloud"
       },
       {
         "number": "04",
         "title": "Servicios gestionados",
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
-        "icon": "/images/soluciones/servicios-gestionados.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Mesa de ayuda",
           "Comunicaciones Unificadas",
@@ -80,7 +80,7 @@
           "Videovigilancia gestionada",
           "Y más..."
         ],
-        "url": "/soluciones/continuidad-de-negocio"
+        "url": "/soluciones/servicios-gestionados"
       }
     ]
   },

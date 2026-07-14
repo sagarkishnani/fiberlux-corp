@@ -2,7 +2,10 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
 import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
-import StickyCards from "../../components/shared/StickyCards.astro";
+// StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
+// por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
+// import StickyCards from "../../components/shared/StickyCards.astro";
+import SolucionesSlider from "../../components/shared/SolucionesSlider.astro";
 import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
 ---
 
@@ -13,7 +16,8 @@ import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
   <main>
     <HeroSoporte />
     <CanalesSoporte />
-    <StickyCards />
+    {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
+    <SolucionesSlider />
     <TestimonialSlider />
   </main>
 </BaseLayout>
