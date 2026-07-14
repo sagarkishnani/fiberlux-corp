@@ -118,6 +118,8 @@ export type Query = {
   legalConnection: LegalConnection;
   cookieConsent: CookieConsent;
   cookieConsentConnection: CookieConsentConnection;
+  fiberluxApp: FiberluxApp;
+  fiberluxAppConnection: FiberluxAppConnection;
 };
 
 
@@ -411,6 +413,21 @@ export type QueryCookieConsentConnectionArgs = {
   filter?: InputMaybe<CookieConsentFilter>;
 };
 
+
+export type QueryFiberluxAppArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryFiberluxAppConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FiberluxAppFilter>;
+};
+
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
@@ -430,6 +447,7 @@ export type DocumentFilter = {
   dynamicForms?: InputMaybe<DynamicFormsFilter>;
   legal?: InputMaybe<LegalFilter>;
   cookieConsent?: InputMaybe<CookieConsentFilter>;
+  fiberluxApp?: InputMaybe<FiberluxAppFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -469,7 +487,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -2193,6 +2211,115 @@ export type CookieConsentConnection = Connection & {
   edges?: Maybe<Array<Maybe<CookieConsentConnectionEdges>>>;
 };
 
+export type FiberluxAppHeroDownloads = {
+  __typename?: 'FiberluxAppHeroDownloads';
+  store?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type FiberluxAppHero = {
+  __typename?: 'FiberluxAppHero';
+  heading?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  mockup?: Maybe<Scalars['String']['output']>;
+  downloads?: Maybe<Array<Maybe<FiberluxAppHeroDownloads>>>;
+};
+
+export type FiberluxAppBeneficiosItems = {
+  __typename?: 'FiberluxAppBeneficiosItems';
+  icon?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+export type FiberluxAppBeneficios = {
+  __typename?: 'FiberluxAppBeneficios';
+  title?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<FiberluxAppBeneficiosItems>>>;
+};
+
+export type FiberluxAppCasosDeUso = {
+  __typename?: 'FiberluxAppCasosDeUso';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  statement?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type FiberluxAppSeo = {
+  __typename?: 'FiberluxAppSeo';
+  metaTitle?: Maybe<Scalars['String']['output']>;
+  metaDescription?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
+export type FiberluxApp = Node & Document & {
+  __typename?: 'FiberluxApp';
+  hero?: Maybe<FiberluxAppHero>;
+  beneficios?: Maybe<FiberluxAppBeneficios>;
+  casosDeUso?: Maybe<FiberluxAppCasosDeUso>;
+  whyUsTitle?: Maybe<Scalars['String']['output']>;
+  seo?: Maybe<FiberluxAppSeo>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type FiberluxAppHeroDownloadsFilter = {
+  store?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type FiberluxAppHeroFilter = {
+  heading?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  note?: InputMaybe<StringFilter>;
+  mockup?: InputMaybe<ImageFilter>;
+  downloads?: InputMaybe<FiberluxAppHeroDownloadsFilter>;
+};
+
+export type FiberluxAppBeneficiosItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+};
+
+export type FiberluxAppBeneficiosFilter = {
+  title?: InputMaybe<StringFilter>;
+  items?: InputMaybe<FiberluxAppBeneficiosItemsFilter>;
+};
+
+export type FiberluxAppCasosDeUsoFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  statement?: InputMaybe<RichTextFilter>;
+};
+
+export type FiberluxAppSeoFilter = {
+  metaTitle?: InputMaybe<StringFilter>;
+  metaDescription?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<ImageFilter>;
+};
+
+export type FiberluxAppFilter = {
+  hero?: InputMaybe<FiberluxAppHeroFilter>;
+  beneficios?: InputMaybe<FiberluxAppBeneficiosFilter>;
+  casosDeUso?: InputMaybe<FiberluxAppCasosDeUsoFilter>;
+  whyUsTitle?: InputMaybe<StringFilter>;
+  seo?: InputMaybe<FiberluxAppSeoFilter>;
+};
+
+export type FiberluxAppConnectionEdges = {
+  __typename?: 'FiberluxAppConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<FiberluxApp>;
+};
+
+export type FiberluxAppConnection = Connection & {
+  __typename?: 'FiberluxAppConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<FiberluxAppConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -2236,6 +2363,8 @@ export type Mutation = {
   createLegal: Legal;
   updateCookieConsent: CookieConsent;
   createCookieConsent: CookieConsent;
+  updateFiberluxApp: FiberluxApp;
+  createFiberluxApp: FiberluxApp;
 };
 
 
@@ -2487,6 +2616,18 @@ export type MutationCreateCookieConsentArgs = {
   params: CookieConsentMutation;
 };
 
+
+export type MutationUpdateFiberluxAppArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FiberluxAppMutation;
+};
+
+
+export type MutationCreateFiberluxAppArgs = {
+  relativePath: Scalars['String']['input'];
+  params: FiberluxAppMutation;
+};
+
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
@@ -2506,6 +2647,7 @@ export type DocumentUpdateMutation = {
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
   legal?: InputMaybe<LegalMutation>;
   cookieConsent?: InputMaybe<CookieConsentMutation>;
+  fiberluxApp?: InputMaybe<FiberluxAppMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2528,6 +2670,7 @@ export type DocumentMutation = {
   dynamicForms?: InputMaybe<DynamicFormsMutation>;
   legal?: InputMaybe<LegalMutation>;
   cookieConsent?: InputMaybe<CookieConsentMutation>;
+  fiberluxApp?: InputMaybe<FiberluxAppMutation>;
 };
 
 export type HomeHeroButtonsMutation = {
@@ -3180,6 +3323,49 @@ export type CookieConsentMutation = {
   categories?: InputMaybe<Array<InputMaybe<CookieConsentCategoriesMutation>>>;
 };
 
+export type FiberluxAppHeroDownloadsMutation = {
+  store?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FiberluxAppHeroMutation = {
+  heading?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  mockup?: InputMaybe<Scalars['String']['input']>;
+  downloads?: InputMaybe<Array<InputMaybe<FiberluxAppHeroDownloadsMutation>>>;
+};
+
+export type FiberluxAppBeneficiosItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FiberluxAppBeneficiosMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<FiberluxAppBeneficiosItemsMutation>>>;
+};
+
+export type FiberluxAppCasosDeUsoMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  statement?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type FiberluxAppSeoMutation = {
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type FiberluxAppMutation = {
+  hero?: InputMaybe<FiberluxAppHeroMutation>;
+  beneficios?: InputMaybe<FiberluxAppBeneficiosMutation>;
+  casosDeUso?: InputMaybe<FiberluxAppCasosDeUsoMutation>;
+  whyUsTitle?: InputMaybe<Scalars['String']['input']>;
+  seo?: InputMaybe<FiberluxAppSeoMutation>;
+};
+
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
@@ -3215,6 +3401,8 @@ export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: st
 export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
+
+export type FiberluxAppPartsFragment = { __typename: 'FiberluxApp', whyUsTitle?: string | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3557,6 +3745,25 @@ export type CookieConsentConnectionQueryVariables = Exact<{
 
 
 export type CookieConsentConnectionQuery = { __typename?: 'Query', cookieConsentConnection: { __typename?: 'CookieConsentConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CookieConsentConnectionEdges', cursor: string, node?: { __typename: 'CookieConsent', id: string, title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null } | null } | null> | null } };
+
+export type FiberluxAppQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type FiberluxAppQuery = { __typename?: 'Query', fiberluxApp: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+
+export type FiberluxAppConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<FiberluxAppFilter>;
+}>;
+
+
+export type FiberluxAppConnectionQuery = { __typename?: 'Query', fiberluxAppConnection: { __typename?: 'FiberluxAppConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FiberluxAppConnectionEdges', cursor: string, node?: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -4168,6 +4375,45 @@ export const CookieConsentPartsFragmentDoc = gql`
     name
     description
     alwaysActive
+  }
+}
+    `;
+export const FiberluxAppPartsFragmentDoc = gql`
+    fragment FiberluxAppParts on FiberluxApp {
+  __typename
+  hero {
+    __typename
+    heading
+    description
+    note
+    mockup
+    downloads {
+      __typename
+      store
+      label
+      url
+    }
+  }
+  beneficios {
+    __typename
+    title
+    items {
+      __typename
+      icon
+      text
+    }
+  }
+  casosDeUso {
+    __typename
+    eyebrow
+    statement
+  }
+  whyUsTitle
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
   }
 }
     `;
@@ -5197,6 +5443,63 @@ export const CookieConsentConnectionDocument = gql`
   }
 }
     ${CookieConsentPartsFragmentDoc}`;
+export const FiberluxAppDocument = gql`
+    query fiberluxApp($relativePath: String!) {
+  fiberluxApp(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...FiberluxAppParts
+  }
+}
+    ${FiberluxAppPartsFragmentDoc}`;
+export const FiberluxAppConnectionDocument = gql`
+    query fiberluxAppConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: FiberluxAppFilter) {
+  fiberluxAppConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...FiberluxAppParts
+      }
+    }
+  }
+}
+    ${FiberluxAppPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -5307,6 +5610,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     cookieConsentConnection(variables?: CookieConsentConnectionQueryVariables, options?: C): Promise<{data: CookieConsentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentConnectionQueryVariables, query: string}> {
         return requester<{data: CookieConsentConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CookieConsentConnectionQueryVariables, query: string}, CookieConsentConnectionQueryVariables>(CookieConsentConnectionDocument, variables, options);
+      },
+    fiberluxApp(variables: FiberluxAppQueryVariables, options?: C): Promise<{data: FiberluxAppQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppQueryVariables, query: string}> {
+        return requester<{data: FiberluxAppQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppQueryVariables, query: string}, FiberluxAppQueryVariables>(FiberluxAppDocument, variables, options);
+      },
+    fiberluxAppConnection(variables?: FiberluxAppConnectionQueryVariables, options?: C): Promise<{data: FiberluxAppConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppConnectionQueryVariables, query: string}> {
+        return requester<{data: FiberluxAppConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppConnectionQueryVariables, query: string}, FiberluxAppConnectionQueryVariables>(FiberluxAppConnectionDocument, variables, options);
       }
     };
   }
@@ -5355,7 +5664,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/main",
         queries,
       })
     )

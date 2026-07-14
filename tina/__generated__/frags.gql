@@ -592,3 +592,41 @@ fragment CookieConsentParts on CookieConsent {
     alwaysActive
   }
 }
+
+fragment FiberluxAppParts on FiberluxApp {
+  __typename
+  hero {
+    __typename
+    heading
+    description
+    note
+    mockup
+    downloads {
+      __typename
+      store
+      label
+      url
+    }
+  }
+  beneficios {
+    __typename
+    title
+    items {
+      __typename
+      icon
+      text
+    }
+  }
+  casosDeUso {
+    __typename
+    eyebrow
+    statement
+  }
+  whyUsTitle
+  seo {
+    __typename
+    metaTitle
+    metaDescription
+    ogImage
+  }
+}

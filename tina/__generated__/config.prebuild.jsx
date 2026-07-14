@@ -2237,6 +2237,135 @@ var config_default = defineConfig({
             ]
           }
         ]
+      },
+      /* ══════════════════════════════════════
+         PÁGINA FIBERLUX APP  (/fiberlux-app)
+         ══════════════════════════════════════ */
+      {
+        name: "fiberluxApp",
+        label: "P\xE1gina Fiberlux App",
+        path: "src/content/fiberlux-app",
+        format: "json",
+        ui: {
+          router: () => "/fiberlux-app",
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          // ── Hero ──
+          {
+            name: "hero",
+            label: "Hero",
+            type: "object",
+            fields: [
+              { name: "heading", label: "Titular (H1)", type: "string" },
+              {
+                name: "description",
+                label: "Descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "note",
+                label: "Bajada en contenedor",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "mockup",
+                label: "Mockup app (imagen celular)",
+                type: "image"
+              },
+              {
+                name: "downloads",
+                label: "Botones de descarga",
+                type: "object",
+                list: true,
+                ui: { itemProps: (i) => ({ label: i?.label || "Descarga" }) },
+                fields: [
+                  {
+                    name: "store",
+                    label: "Tienda",
+                    type: "string",
+                    options: ["appstore", "googleplay"]
+                  },
+                  { name: "label", label: "Texto", type: "string" },
+                  { name: "url", label: "URL", type: "string" }
+                ]
+              }
+            ]
+          },
+          // ── "Beneficios" ──
+          {
+            name: "beneficios",
+            label: "Beneficios",
+            type: "object",
+            fields: [
+              { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              {
+                name: "items",
+                label: "Cards",
+                type: "object",
+                list: true,
+                ui: { itemProps: (i) => ({ label: i?.text || "Beneficio" }) },
+                fields: [
+                  {
+                    name: "icon",
+                    label: "\xCDcono",
+                    type: "string",
+                    options: [
+                      "monitoreo",
+                      "sedes",
+                      "diagnostico",
+                      "reloj",
+                      "red",
+                      "escudo",
+                      "grafico",
+                      "generico"
+                    ]
+                  },
+                  {
+                    name: "text",
+                    label: "Texto",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  }
+                ]
+              }
+            ]
+          },
+          // ── "Casos de uso" ──
+          {
+            name: "casosDeUso",
+            label: "Casos de uso",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "statement", label: "Statement", type: "rich-text" }
+            ]
+          },
+          // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
+          {
+            name: "whyUsTitle",
+            label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?'",
+            type: "string"
+          },
+          // ── SEO / meta (cae a global.seo si vacío) ──
+          {
+            name: "seo",
+            label: "SEO / Meta",
+            type: "object",
+            fields: [
+              { name: "metaTitle", label: "Meta t\xEDtulo", type: "string" },
+              {
+                name: "metaDescription",
+                label: "Meta descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "ogImage", label: "Imagen OG", type: "image" }
+            ]
+          }
+        ]
       }
     ]
   }
