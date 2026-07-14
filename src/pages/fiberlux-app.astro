@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { client } from "../../tina/__generated__/client";
+import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
+
+/* ── SEO / meta (falls back to global.seo) ── */
+const appQuery = await client.queries.fiberluxApp({
+  relativePath: "index.json",
+});
+const app = appQuery.data?.fiberluxApp;
+
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const globalSeo = globalQuery.data?.global?.seo;
+
+const metaTitle = app?.seo?.metaTitle || app?.hero?.heading || "Fiberlux App";
+const metaDescription =
+  app?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
+---
+
+<BaseLayout title={metaTitle} description={metaDescription}>
+  <main>
+    <HeroFiberluxApp />
+  </main>
+</BaseLayout>
