@@ -124,12 +124,22 @@ export default function HeroFiberluxAppReact({
           </div>
 
           {/* ════ RIGHT — app mockup ════ */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="relative flex justify-center lg:justify-end">
+            {/* Radial magenta glow behind the device */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] max-w-[120%] rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(150,35,122,0.45) 0%, rgba(150,35,122,0.18) 38%, rgba(150,35,122,0) 68%)",
+                filter: "blur(20px)",
+              }}
+            />
             {mockupSrc ? (
               <img
                 src={mockupSrc}
                 alt={hero?.heading || "Fiberlux App"}
-                className="w-auto max-h-[560px] object-contain drop-shadow-[0_24px_60px_rgba(150,35,122,0.4)]"
+                className="relative z-10 w-auto max-h-[560px] object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.6)]"
                 data-tina-field={tinaField(hero, "mockup")}
               />
             ) : (
