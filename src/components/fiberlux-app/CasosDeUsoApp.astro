@@ -1,0 +1,15 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import CasosDeUsoAppReact from "./CasosDeUsoAppReact.tsx";
+
+const appQuery = await client.queries.fiberluxApp({
+  relativePath: "index.json",
+});
+---
+
+<CasosDeUsoAppReact
+  client:visible
+  query={appQuery.query}
+  variables={appQuery.variables}
+  data={appQuery.data}
+/>

@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { client } from "../../tina/__generated__/client";
 import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
 import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
+import CasosDeUsoApp from "../components/fiberlux-app/CasosDeUsoApp.astro";
 
 /* ── SEO / meta (falls back to global.seo) ── */
 const appQuery = await client.queries.fiberluxApp({
@@ -22,5 +23,6 @@ const metaDescription =
   <main>
     <HeroFiberluxApp />
     <BeneficiosApp />
+    <CasosDeUsoApp />
   </main>
 </BaseLayout>
