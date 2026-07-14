@@ -1,6 +1,6 @@
 # SPEC 33 — Nuevo Header: top bar Empresas/Negocios + navbar inline (legales en hamburguesa)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 09 (jerarquía `nav.links` de 3 niveles, reutilizada intacta para el menú mobile y los submenús hover de desktop), SPEC 07 (columna "Legales" del footer, reusada como fuente de los legales), SPEC 16 (theme claro/oscuro del header, se conserva).
 > **Fecha:** 2026-07-14
 > **Objetivo:** Crear un Header nuevo (top bar con switcher **Empresas** (activo) / **Negocios** (externo) + link "Información a abonados y usuarios", y barra principal con **navbar horizontal inline** en desktop) donde la **hamburguesa en desktop muestra solo Soporte técnico + legales**, dejando el Header antiguo comentado pero presente.
