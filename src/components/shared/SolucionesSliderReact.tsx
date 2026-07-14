@@ -256,7 +256,7 @@ export default function SolucionesSliderReact({
           {url && (
             <a
               href={`${BASE}${url.startsWith("/") ? "" : "/"}${url}`}
-              className="mt-6 inline-flex w-fit items-center text-[16px] font-medium text-[#d885c4] transition-colors hover:text-white"
+              className="mt-6 inline-flex w-fit items-center text-[16px] font-medium text-[#d885c4] underline-offset-[5px] transition-colors hover:text-white hover:underline"
               data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
             >
               Conoce más
@@ -290,7 +290,7 @@ export default function SolucionesSliderReact({
       {items.map((item, i) => (
         <div
           key={i}
-          className="sol-slide snap-start shrink-0 w-[86%] md:w-[68%] transition-opacity duration-500 ease-out"
+          className="sol-slide snap-start shrink-0 w-[86%] md:w-[46%] transition-opacity duration-500 ease-out"
           style={{ opacity: i === activeIndex ? 1 : 0.35 }}
         >
           {renderCard(item, i)}
@@ -333,8 +333,8 @@ export default function SolucionesSliderReact({
       <style>{`
         .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        @keyframes sol-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-        .sol-fade { animation: sol-fade-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+        @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
         @media (prefers-reduced-motion: reduce) { .sol-fade { animation: none; } }
       `}</style>
     </section>
