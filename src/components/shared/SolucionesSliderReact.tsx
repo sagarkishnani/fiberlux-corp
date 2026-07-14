@@ -296,6 +296,15 @@ export default function SolucionesSliderReact({
           {renderCard(item, i)}
         </div>
       ))}
+      {/* Trailing spacer: lets the LAST card left-align (and become active) just
+          like the others. Width = one viewport minus one card+gap, so max scroll
+          lands exactly on the last card. Excluded from snapping. */}
+      {items.length > 1 && (
+        <div
+          aria-hidden="true"
+          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(54%-24px)]"
+        />
+      )}
     </div>
   );
 
