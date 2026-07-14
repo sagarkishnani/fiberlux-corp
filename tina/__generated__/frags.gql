@@ -341,9 +341,8 @@ fragment CertificacionesParts on Certificaciones {
   items {
     __typename
     year
-    logo
+    icon
     title
-    eyebrow
     heading
     description
   }

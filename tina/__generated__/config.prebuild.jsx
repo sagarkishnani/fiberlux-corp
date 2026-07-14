@@ -1236,17 +1236,22 @@ var config_default = defineConfig({
             fields: [
               { name: "year", label: "A\xF1o", type: "string" },
               {
-                name: "logo",
-                label: "Logo (opcional \u2014 reemplaza el glifo ISO por defecto)",
-                type: "image"
+                name: "icon",
+                label: "\xCDcono",
+                type: "string",
+                options: [
+                  { value: "antisoborno", label: "Antisoborno (escudo-check)" },
+                  { value: "seguridad", label: "Seguridad de la informaci\xF3n (candado)" },
+                  { value: "calidad", label: "Gesti\xF3n de calidad (medalla)" },
+                  { value: "ambiental", label: "Ambiental (hoja)" },
+                  { value: "seguridad_st", label: "Seguridad y salud (casco)" },
+                  { value: "procesos", label: "Procesos (engranaje)" },
+                  { value: "certificado", label: "Certificado (sello)" },
+                  { value: "cumplimiento", label: "Cumplimiento (balanza)" }
+                ]
               },
-              { name: "title", label: "T\xEDtulo (ej. ISO 27001)", type: "string" },
-              {
-                name: "eyebrow",
-                label: "Etiqueta superior (ej. Certificaci\xF3n vigente)",
-                type: "string"
-              },
-              { name: "heading", label: "Nombre de la certificaci\xF3n", type: "string" },
+              { name: "title", label: "C\xF3digo (ej. ISO 37001)", type: "string" },
+              { name: "heading", label: "Categor\xEDa (ej. Sistema Antisoborno)", type: "string" },
               {
                 name: "description",
                 label: "Descripci\xF3n",

@@ -1448,9 +1448,8 @@ export type CasosDeExitoConnection = Connection & {
 export type CertificacionesItems = {
   __typename?: 'CertificacionesItems';
   year?: Maybe<Scalars['String']['output']>;
-  logo?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  eyebrow?: Maybe<Scalars['String']['output']>;
   heading?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
 };
@@ -1466,9 +1465,8 @@ export type Certificaciones = Node & Document & {
 
 export type CertificacionesItemsFilter = {
   year?: InputMaybe<StringFilter>;
-  logo?: InputMaybe<ImageFilter>;
+  icon?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
-  eyebrow?: InputMaybe<StringFilter>;
   heading?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
 };
@@ -2906,9 +2904,8 @@ export type CasosDeExitoMutation = {
 
 export type CertificacionesItemsMutation = {
   year?: InputMaybe<Scalars['String']['input']>;
-  logo?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  eyebrow?: InputMaybe<Scalars['String']['input']>;
   heading?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
 };
@@ -3201,7 +3198,7 @@ export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: str
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null };
+export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, description?: string | null } | null> | null };
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -3395,7 +3392,7 @@ export type CertificacionesQueryVariables = Exact<{
 }>;
 
 
-export type CertificacionesQuery = { __typename?: 'Query', certificaciones: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null } };
+export type CertificacionesQuery = { __typename?: 'Query', certificaciones: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, description?: string | null } | null> | null } };
 
 export type CertificacionesConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3407,7 +3404,7 @@ export type CertificacionesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type CertificacionesConnectionQuery = { __typename?: 'Query', certificacionesConnection: { __typename?: 'CertificacionesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CertificacionesConnectionEdges', cursor: string, node?: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, logo?: string | null, title?: string | null, eyebrow?: string | null, heading?: string | null, description?: string | null } | null> | null } | null } | null> | null } };
+export type CertificacionesConnectionQuery = { __typename?: 'Query', certificacionesConnection: { __typename?: 'CertificacionesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CertificacionesConnectionEdges', cursor: string, node?: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, description?: string | null } | null> | null } | null } | null> | null } };
 
 export type FormasDePagoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3914,9 +3911,8 @@ export const CertificacionesPartsFragmentDoc = gql`
   items {
     __typename
     year
-    logo
+    icon
     title
-    eyebrow
     heading
     description
   }

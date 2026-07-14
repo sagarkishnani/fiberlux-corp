@@ -1043,9 +1043,8 @@ type CasosDeExitoConnection implements Connection {
 
 type CertificacionesItems {
   year: String
-  logo: String
+  icon: String
   title: String
-  eyebrow: String
   heading: String
   description: String
 }
@@ -1060,9 +1059,8 @@ type Certificaciones implements Node & Document {
 
 input CertificacionesItemsFilter {
   year: StringFilter
-  logo: ImageFilter
+  icon: StringFilter
   title: StringFilter
-  eyebrow: StringFilter
   heading: StringFilter
   description: StringFilter
 }
@@ -2196,9 +2194,8 @@ input CasosDeExitoMutation {
 
 input CertificacionesItemsMutation {
   year: String
-  logo: String
+  icon: String
   title: String
-  eyebrow: String
   heading: String
   description: String
 }
