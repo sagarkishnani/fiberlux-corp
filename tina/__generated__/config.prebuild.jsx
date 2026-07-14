@@ -1426,6 +1426,49 @@ var config_default = defineConfig({
               }
             ]
           },
+          // ── Header (top bar / navbar) ──
+          {
+            name: "header",
+            label: "Header (top bar / navbar)",
+            type: "object",
+            fields: [
+              { name: "logo", label: "Logo", type: "image" },
+              {
+                name: "topBar",
+                label: "Barra superior",
+                type: "object",
+                fields: [
+                  { name: "empresasLabel", label: "Texto 'Empresas'", type: "string" },
+                  { name: "empresasUrl", label: "URL 'Empresas'", type: "string" },
+                  { name: "negociosLabel", label: "Texto 'Negocios'", type: "string" },
+                  {
+                    name: "negociosUrl",
+                    label: "URL 'Negocios' (externa)",
+                    type: "string",
+                    description: "Se abre en pesta\xF1a nueva. Ej: https://negocios.fiberlux.pe/"
+                  },
+                  {
+                    name: "abonadosLabel",
+                    label: "Texto 'Informaci\xF3n a abonados' (solo desktop)",
+                    type: "string"
+                  },
+                  { name: "abonadosUrl", label: "URL 'Informaci\xF3n a abonados'", type: "string" }
+                ]
+              },
+              {
+                name: "desktopNav",
+                label: "Navbar desktop (orden)",
+                type: "object",
+                list: true,
+                description: "\xCDtems horizontales en desktop. Si el URL coincide con un link de 'Navegaci\xF3n' con submen\xFA, se revela al hover.",
+                ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
+                fields: [
+                  { name: "text", label: "Texto", type: "string" },
+                  { name: "url", label: "URL", type: "string" }
+                ]
+              }
+            ]
+          },
           // ── Botón flotante de WhatsApp (global) ──
           {
             name: "whatsapp",

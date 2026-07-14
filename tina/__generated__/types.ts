@@ -1601,6 +1601,29 @@ export type GlobalNav = {
   links?: Maybe<Array<Maybe<GlobalNavLinks>>>;
 };
 
+export type GlobalHeaderTopBar = {
+  __typename?: 'GlobalHeaderTopBar';
+  empresasLabel?: Maybe<Scalars['String']['output']>;
+  empresasUrl?: Maybe<Scalars['String']['output']>;
+  negociosLabel?: Maybe<Scalars['String']['output']>;
+  negociosUrl?: Maybe<Scalars['String']['output']>;
+  abonadosLabel?: Maybe<Scalars['String']['output']>;
+  abonadosUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type GlobalHeaderDesktopNav = {
+  __typename?: 'GlobalHeaderDesktopNav';
+  text?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type GlobalHeader = {
+  __typename?: 'GlobalHeader';
+  logo?: Maybe<Scalars['String']['output']>;
+  topBar?: Maybe<GlobalHeaderTopBar>;
+  desktopNav?: Maybe<Array<Maybe<GlobalHeaderDesktopNav>>>;
+};
+
 export type GlobalWhatsapp = {
   __typename?: 'GlobalWhatsapp';
   phone?: Maybe<Scalars['String']['output']>;
@@ -1660,6 +1683,7 @@ export type GlobalSeo = {
 export type Global = Node & Document & {
   __typename?: 'Global';
   nav?: Maybe<GlobalNav>;
+  header?: Maybe<GlobalHeader>;
   whatsapp?: Maybe<GlobalWhatsapp>;
   footer?: Maybe<GlobalFooter>;
   partners?: Maybe<GlobalPartners>;
@@ -1688,6 +1712,26 @@ export type GlobalNavLinksFilter = {
 
 export type GlobalNavFilter = {
   links?: InputMaybe<GlobalNavLinksFilter>;
+};
+
+export type GlobalHeaderTopBarFilter = {
+  empresasLabel?: InputMaybe<StringFilter>;
+  empresasUrl?: InputMaybe<StringFilter>;
+  negociosLabel?: InputMaybe<StringFilter>;
+  negociosUrl?: InputMaybe<StringFilter>;
+  abonadosLabel?: InputMaybe<StringFilter>;
+  abonadosUrl?: InputMaybe<StringFilter>;
+};
+
+export type GlobalHeaderDesktopNavFilter = {
+  text?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type GlobalHeaderFilter = {
+  logo?: InputMaybe<ImageFilter>;
+  topBar?: InputMaybe<GlobalHeaderTopBarFilter>;
+  desktopNav?: InputMaybe<GlobalHeaderDesktopNavFilter>;
 };
 
 export type GlobalWhatsappFilter = {
@@ -1740,6 +1784,7 @@ export type GlobalSeoFilter = {
 
 export type GlobalFilter = {
   nav?: InputMaybe<GlobalNavFilter>;
+  header?: InputMaybe<GlobalHeaderFilter>;
   whatsapp?: InputMaybe<GlobalWhatsappFilter>;
   footer?: InputMaybe<GlobalFooterFilter>;
   partners?: InputMaybe<GlobalPartnersFilter>;
@@ -2926,6 +2971,26 @@ export type GlobalNavMutation = {
   links?: InputMaybe<Array<InputMaybe<GlobalNavLinksMutation>>>;
 };
 
+export type GlobalHeaderTopBarMutation = {
+  empresasLabel?: InputMaybe<Scalars['String']['input']>;
+  empresasUrl?: InputMaybe<Scalars['String']['input']>;
+  negociosLabel?: InputMaybe<Scalars['String']['input']>;
+  negociosUrl?: InputMaybe<Scalars['String']['input']>;
+  abonadosLabel?: InputMaybe<Scalars['String']['input']>;
+  abonadosUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GlobalHeaderDesktopNavMutation = {
+  text?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GlobalHeaderMutation = {
+  logo?: InputMaybe<Scalars['String']['input']>;
+  topBar?: InputMaybe<GlobalHeaderTopBarMutation>;
+  desktopNav?: InputMaybe<Array<InputMaybe<GlobalHeaderDesktopNavMutation>>>;
+};
+
 export type GlobalWhatsappMutation = {
   phone?: InputMaybe<Scalars['String']['input']>;
   message?: InputMaybe<Scalars['String']['input']>;
@@ -2976,6 +3041,7 @@ export type GlobalSeoMutation = {
 
 export type GlobalMutation = {
   nav?: InputMaybe<GlobalNavMutation>;
+  header?: InputMaybe<GlobalHeaderMutation>;
   whatsapp?: InputMaybe<GlobalWhatsappMutation>;
   footer?: InputMaybe<GlobalFooterMutation>;
   partners?: InputMaybe<GlobalPartnersMutation>;
@@ -3139,7 +3205,7 @@ export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sect
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
+export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
@@ -3367,7 +3433,7 @@ export type GlobalQueryVariables = Exact<{
 }>;
 
 
-export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } };
+export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } };
 
 export type GlobalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3379,7 +3445,7 @@ export type GlobalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type MaintenanceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3905,6 +3971,24 @@ export const GlobalPartsFragmentDoc = gql`
           url
         }
       }
+    }
+  }
+  header {
+    __typename
+    logo
+    topBar {
+      __typename
+      empresasLabel
+      empresasUrl
+      negociosLabel
+      negociosUrl
+      abonadosLabel
+      abonadosUrl
+    }
+    desktopNav {
+      __typename
+      text
+      url
     }
   }
   whatsapp {
