@@ -226,7 +226,7 @@ export default function SolucionesSliderReact({
     const url = item?.url || "";
 
     return (
-      <div className="relative flex h-full min-h-[420px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#0A0A0A] px-8 py-9 md:px-10 md:py-10">
+      <div className="relative flex h-full min-h-[420px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#15131B] px-8 py-9 md:px-10 md:py-10">
         {/* Decorative magenta wave (from the CMS `icon`, per-card editable) */}
         {onda && (
           <img
@@ -288,7 +288,11 @@ export default function SolucionesSliderReact({
       onClickCapture={onClickCapture}
     >
       {items.map((item, i) => (
-        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[82%]">
+        <div
+          key={i}
+          className="sol-slide snap-start shrink-0 w-[86%] md:w-[68%] transition-opacity duration-500 ease-out"
+          style={{ opacity: i === activeIndex ? 1 : 0.35 }}
+        >
           {renderCard(item, i)}
         </div>
       ))}
@@ -329,8 +333,8 @@ export default function SolucionesSliderReact({
       <style>{`
         .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-        .sol-fade { animation: sol-fade-in 0.35s ease both; }
+        @keyframes sol-fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .sol-fade { animation: sol-fade-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
         @media (prefers-reduced-motion: reduce) { .sol-fade { animation: none; } }
       `}</style>
     </section>
