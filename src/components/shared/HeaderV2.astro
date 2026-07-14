@@ -1,0 +1,27 @@
+---
+/**
+ * HeaderV2 wrapper — fetches global data from TinaCMS.
+ * New header (SPEC 33): top bar (Empresas / Negocios / abonados) + inline
+ * desktop navbar with hover reveal; hamburger shows Soporte técnico + legales
+ * on desktop and the full multilevel nav + legales on mobile.
+ * Uses client:load because it needs JS for menu, hover and scroll behavior.
+ */
+import { client } from '../../../tina/__generated__/client';
+import HeaderV2React from './HeaderV2React.tsx';
+
+interface Props {
+  theme?: 'light' | 'dark';
+}
+
+const { theme = 'dark' } = Astro.props;
+
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+---
+
+<HeaderV2React
+  client:load
+  query={globalQuery.query}
+  variables={globalQuery.variables}
+  data={globalQuery.data}
+  theme={theme}
+/>

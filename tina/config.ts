@@ -1496,6 +1496,51 @@ export default defineConfig({
             ],
           },
 
+          // ── Header (top bar / navbar) ──
+          {
+            name: "header",
+            label: "Header (top bar / navbar)",
+            type: "object",
+            fields: [
+              { name: "logo", label: "Logo", type: "image" },
+              {
+                name: "topBar",
+                label: "Barra superior",
+                type: "object",
+                fields: [
+                  { name: "empresasLabel", label: "Texto 'Empresas'", type: "string" },
+                  { name: "empresasUrl", label: "URL 'Empresas'", type: "string" },
+                  { name: "negociosLabel", label: "Texto 'Negocios'", type: "string" },
+                  {
+                    name: "negociosUrl",
+                    label: "URL 'Negocios' (externa)",
+                    type: "string",
+                    description: "Se abre en pestaña nueva. Ej: https://negocios.fiberlux.pe/",
+                  },
+                  {
+                    name: "abonadosLabel",
+                    label: "Texto 'Información a abonados' (solo desktop)",
+                    type: "string",
+                  },
+                  { name: "abonadosUrl", label: "URL 'Información a abonados'", type: "string" },
+                ],
+              },
+              {
+                name: "desktopNav",
+                label: "Navbar desktop (orden)",
+                type: "object",
+                list: true,
+                description:
+                  "Ítems horizontales en desktop. Si el URL coincide con un link de 'Navegación' con submenú, se revela al hover.",
+                ui: { itemProps: (item) => ({ label: item?.text || "Ítem" }) },
+                fields: [
+                  { name: "text", label: "Texto", type: "string" },
+                  { name: "url", label: "URL", type: "string" },
+                ],
+              },
+            ],
+          },
+
           // ── Botón flotante de WhatsApp (global) ──
           {
             name: "whatsapp",

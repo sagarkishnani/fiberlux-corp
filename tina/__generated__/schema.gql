@@ -1182,6 +1182,26 @@ type GlobalNav {
   links: [GlobalNavLinks]
 }
 
+type GlobalHeaderTopBar {
+  empresasLabel: String
+  empresasUrl: String
+  negociosLabel: String
+  negociosUrl: String
+  abonadosLabel: String
+  abonadosUrl: String
+}
+
+type GlobalHeaderDesktopNav {
+  text: String
+  url: String
+}
+
+type GlobalHeader {
+  logo: String
+  topBar: GlobalHeaderTopBar
+  desktopNav: [GlobalHeaderDesktopNav]
+}
+
 type GlobalWhatsapp {
   phone: String
   message: String
@@ -1232,6 +1252,7 @@ type GlobalSeo {
 
 type Global implements Node & Document {
   nav: GlobalNav
+  header: GlobalHeader
   whatsapp: GlobalWhatsapp
   footer: GlobalFooter
   partners: GlobalPartners
@@ -1260,6 +1281,26 @@ input GlobalNavLinksFilter {
 
 input GlobalNavFilter {
   links: GlobalNavLinksFilter
+}
+
+input GlobalHeaderTopBarFilter {
+  empresasLabel: StringFilter
+  empresasUrl: StringFilter
+  negociosLabel: StringFilter
+  negociosUrl: StringFilter
+  abonadosLabel: StringFilter
+  abonadosUrl: StringFilter
+}
+
+input GlobalHeaderDesktopNavFilter {
+  text: StringFilter
+  url: StringFilter
+}
+
+input GlobalHeaderFilter {
+  logo: ImageFilter
+  topBar: GlobalHeaderTopBarFilter
+  desktopNav: GlobalHeaderDesktopNavFilter
 }
 
 input GlobalWhatsappFilter {
@@ -1312,6 +1353,7 @@ input GlobalSeoFilter {
 
 input GlobalFilter {
   nav: GlobalNavFilter
+  header: GlobalHeaderFilter
   whatsapp: GlobalWhatsappFilter
   footer: GlobalFooterFilter
   partners: GlobalPartnersFilter
@@ -2219,6 +2261,26 @@ input GlobalNavMutation {
   links: [GlobalNavLinksMutation]
 }
 
+input GlobalHeaderTopBarMutation {
+  empresasLabel: String
+  empresasUrl: String
+  negociosLabel: String
+  negociosUrl: String
+  abonadosLabel: String
+  abonadosUrl: String
+}
+
+input GlobalHeaderDesktopNavMutation {
+  text: String
+  url: String
+}
+
+input GlobalHeaderMutation {
+  logo: String
+  topBar: GlobalHeaderTopBarMutation
+  desktopNav: [GlobalHeaderDesktopNavMutation]
+}
+
 input GlobalWhatsappMutation {
   phone: String
   message: String
@@ -2269,6 +2331,7 @@ input GlobalSeoMutation {
 
 input GlobalMutation {
   nav: GlobalNavMutation
+  header: GlobalHeaderMutation
   whatsapp: GlobalWhatsappMutation
   footer: GlobalFooterMutation
   partners: GlobalPartnersMutation

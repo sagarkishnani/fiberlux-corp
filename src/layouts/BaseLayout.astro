@@ -1,6 +1,8 @@
 ---
 import Footer from "../components/shared/Footer.astro";
-import Header from "../components/shared/Header.astro";
+// Header antiguo — reemplazado por HeaderV2 (SPEC 33). Se deja comentado por si acaso.
+// import Header from "../components/shared/Header.astro";
+import HeaderV2 from "../components/shared/HeaderV2.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
 import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
 import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
@@ -178,7 +180,8 @@ const whatsappMessage = whatsappContext
           {/* Page content — the accessibility color filter is applied here so
               the fixed overlays below stay reachable while a filter is on. */}
           <div id="a11y-content">
-            <Header theme={headerTheme} />
+            {/* <Header theme={headerTheme} /> */}
+            <HeaderV2 theme={headerTheme} />
             <slot />
             <div class="-mt-6 relative z-40">
               <Footer />

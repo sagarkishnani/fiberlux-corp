@@ -398,6 +398,24 @@ fragment GlobalParts on Global {
       }
     }
   }
+  header {
+    __typename
+    logo
+    topBar {
+      __typename
+      empresasLabel
+      empresasUrl
+      negociosLabel
+      negociosUrl
+      abonadosLabel
+      abonadosUrl
+    }
+    desktopNav {
+      __typename
+      text
+      url
+    }
+  }
   whatsapp {
     __typename
     phone
