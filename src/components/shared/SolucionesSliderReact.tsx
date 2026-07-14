@@ -226,7 +226,7 @@ export default function SolucionesSliderReact({
     const url = item?.url || "";
 
     return (
-      <div className="relative flex h-full min-h-[420px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#15131B] px-8 py-9 md:px-10 md:py-10">
+      <div className="relative flex h-full min-h-[320px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#15131B] px-8 py-8 md:px-10 md:py-10">
         {/* Decorative magenta wave (from the CMS `icon`, per-card editable) */}
         {onda && (
           <img
@@ -265,7 +265,7 @@ export default function SolucionesSliderReact({
 
           {/* Big number, anchored bottom-left */}
           <span
-            className="mt-auto pt-10 text-[56px] md:text-[64px] font-semibold leading-none text-white/20"
+            className="mt-auto pt-8 md:pt-10 text-[48px] md:text-[64px] font-semibold leading-none text-white/20"
             data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}
           >
             {item?.number}
