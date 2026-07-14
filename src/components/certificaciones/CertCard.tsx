@@ -43,7 +43,7 @@ export default function CertCard({ cert, tinaItem }: CertCardProps) {
   const Icon = (cert.icon && ICONS[cert.icon]) || FALLBACK_ICON;
 
   return (
-    <div className="flex h-full min-h-[420px] flex-col rounded-[24px] border border-[#282445] bg-[#0d0d0f] px-8 py-7">
+    <div className="flex h-full min-h-[420px] flex-col rounded-[24px] border border-white/[0.05] bg-[#111013] px-8 py-7">
       {/* Top row: year (left) + verified check-circle (right, decorative) */}
       <div className="flex items-center justify-between">
         <span
