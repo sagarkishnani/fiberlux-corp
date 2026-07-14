@@ -1297,17 +1297,22 @@ export default defineConfig({
             fields: [
               { name: "year", label: "Año", type: "string" },
               {
-                name: "logo",
-                label: "Logo (opcional — reemplaza el glifo ISO por defecto)",
-                type: "image",
-              },
-              { name: "title", label: "Título (ej. ISO 27001)", type: "string" },
-              {
-                name: "eyebrow",
-                label: "Etiqueta superior (ej. Certificación vigente)",
+                name: "icon",
+                label: "Ícono",
                 type: "string",
+                options: [
+                  { value: "antisoborno", label: "Antisoborno (escudo-check)" },
+                  { value: "seguridad", label: "Seguridad de la información (candado)" },
+                  { value: "calidad", label: "Gestión de calidad (medalla)" },
+                  { value: "ambiental", label: "Ambiental (hoja)" },
+                  { value: "seguridad_st", label: "Seguridad y salud (casco)" },
+                  { value: "procesos", label: "Procesos (engranaje)" },
+                  { value: "certificado", label: "Certificado (sello)" },
+                  { value: "cumplimiento", label: "Cumplimiento (balanza)" },
+                ],
               },
-              { name: "heading", label: "Nombre de la certificación", type: "string" },
+              { name: "title", label: "Código (ej. ISO 37001)", type: "string" },
+              { name: "heading", label: "Categoría (ej. Sistema Antisoborno)", type: "string" },
               {
                 name: "description",
                 label: "Descripción",
