@@ -57,6 +57,20 @@ export default function SitePreloader() {
     const prevOverflow = html.style.overflow;
     html.style.overflow = "hidden"; // bloquea el scroll mientras carga
 
+    // Libera el scroll de forma idempotente. IMPORTANTE: este componente nunca
+    // se desmonta (solo renderiza null vía setHidden), así que el cleanup del
+    // efecto NO corre al cerrar el preloader → no podemos depender de él para
+    // restaurar el overflow. Hay que soltarlo explícitamente al terminar la
+    // carga; si no, en mobile el scroll táctil queda bloqueado de forma
+    // permanente (en desktop Lenis lo disimula haciendo scroll programático,
+    // que ignora overflow:hidden, por eso solo se nota en touch).
+    let scrollReleased = false;
+    const releaseScroll = () => {
+      if (scrollReleased) return;
+      scrollReleased = true;
+      html.style.overflow = prevOverflow;
+    };
+
     const start = Date.now();
     let finished = false;
     let raf = 0;
@@ -66,6 +80,7 @@ export default function SitePreloader() {
       if (finished) return;
       finished = true;
       cancelAnimationFrame(raf);
+      releaseScroll(); // suelta el scroll apenas termina la carga (el overlay aún cubre la pantalla durante el wipe)
       setProgress(100); // salta a 100% antes del wipe
       window.setTimeout(() => setRevealing(true), 140);
     };
@@ -94,7 +109,7 @@ export default function SitePreloader() {
       window.removeEventListener(READY_EVENT, onReady);
       window.clearTimeout(readyT);
       window.clearTimeout(maxT);
-      html.style.overflow = prevOverflow; // libera el scroll pase lo que pase
+      releaseScroll(); // red de seguridad por si el efecto se limpia antes de finish()
     };
   }, []);
 
