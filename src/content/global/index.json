@@ -1,4 +1,21 @@
 {
+  "header": {
+    "topBar": {
+      "empresasLabel": "Empresas",
+      "empresasUrl": "/",
+      "negociosLabel": "Negocios",
+      "negociosUrl": "https://negocios.fiberlux.pe/",
+      "abonadosLabel": "Información a abonados y usuarios",
+      "abonadosUrl": "/informacion-abonados"
+    },
+    "desktopNav": [
+      { "text": "Soluciones", "url": "/soluciones" },
+      { "text": "Nosotros", "url": "/nosotros" },
+      { "text": "Casos de éxito", "url": "/casos-de-exito" },
+      { "text": "Blog", "url": "/blog" },
+      { "text": "Contacto", "url": "/contacto" }
+    ]
+  },
   "nav": {
     "links": [
       {
