@@ -26,7 +26,7 @@ export default function HeroHomeReact({
           (top-[46%]→bottom) para que el hexágono quede debajo de los botones y
           el texto de arriba se lea sobre fondo oscuro, como en el diseño. En
           desktop ocupa todo (inset-0) y va al lado del texto. */}
-      <div className="absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0 origin-center scale-[0.82] translate-x-[12%] md:scale-100 md:translate-x-0">
+      <div className="absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
         {/* En desktop la escena se corre a la derecha (-40%) para que el 3D
             quede al lado del texto; en mobile eso empujaba el hexágono fuera de
             cuadro (detrás del texto), así que a sangre completa (right-0) para
