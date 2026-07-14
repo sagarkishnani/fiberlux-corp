@@ -23,7 +23,7 @@
         "number": "01",
         "title": "Conectividad empresarial",
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
-        "icon": "/images/soluciones/conectividad.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Internet Corporativo",
           "Internet Corporativo de alta disponibilidad",
@@ -39,7 +39,7 @@
         "number": "02",
         "title": "Ciberseguridad Gestionada",
         "description": "Protege tu operación crítica con ciberseguridad.",
-        "icon": "/images/soluciones/ciberseguridad.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "NGFW y Seguridad Perimetral",
           "EDR / XDR / MDR",
@@ -55,7 +55,7 @@
         "number": "03",
         "title": "Data Center, Cloud y Continuidad de Negocio",
         "description": "Infraestructura lista para crecer y recuperarse",
-        "icon": "/images/soluciones/datacenter.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Housing y colocación",
           "Nube Pública y Privada",
@@ -70,7 +70,7 @@
         "number": "04",
         "title": "Servicios gestionados",
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
-        "icon": "/images/soluciones/servicios-gestionados.svg",
+        "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
           "Mesa de ayuda",
           "Comunicaciones Unificadas",
