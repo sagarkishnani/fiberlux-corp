@@ -294,12 +294,15 @@ export default function HeaderV2React({
       : "bg-greyscale-darkest/80 backdrop-blur-md"
     : "bg-transparent";
 
-  // Top bar sits slightly lighter than the main bar (two-tone look).
+  // Top bar has a SOLID background so it stays readable over hero pages, where
+  // the main bar is transparent to overlap the hero but the top bar sits above
+  // the overlap zone. Slightly lighter than the main bar for a two-tone look.
+  // When the menu is open it goes transparent so the purple overlay shows.
   const topBarBg = menuOpen
-    ? ""
+    ? "bg-transparent"
     : controlsDark
-    ? "bg-black/[0.04]"
-    : "bg-white/[0.05]";
+    ? "bg-neutral-100 border-b border-black/5"
+    : "bg-[#171717]";
 
   /* ── Legales block (shared markup) ── */
   const LegalesList = ({
