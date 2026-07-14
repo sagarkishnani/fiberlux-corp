@@ -33,7 +33,7 @@
           "SD-WAN",
           "Y más..."
         ],
-        "url": "/soluciones/internet-dedicado"
+        "url": "/soluciones/conectividad-empresarial"
       },
       {
         "number": "02",
@@ -49,7 +49,7 @@
           "Cyber SOC 24/7 y Monitoreo",
           "Y más..."
         ],
-        "url": "/soluciones/ciberseguridad-endpoints"
+        "url": "/soluciones/ciberseguridad-gestionada"
       },
       {
         "number": "03",
@@ -64,7 +64,7 @@
           "Storage y Cómputo Empresarial",
           "Arquitectura basada en Microservicios"
         ],
-        "url": "/soluciones/saas"
+        "url": "/soluciones/data-center-cloud"
       },
       {
         "number": "04",
@@ -80,7 +80,7 @@
           "Videovigilancia gestionada",
           "Y más..."
         ],
-        "url": "/soluciones/continuidad-de-negocio"
+        "url": "/soluciones/servicios-gestionados"
       }
     ]
   },
