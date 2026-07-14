@@ -13,6 +13,7 @@
       { "text": "Nosotros", "url": "/nosotros" },
       { "text": "Casos de éxito", "url": "/casos-de-exito" },
       { "text": "Blog", "url": "/blog" },
+      { "text": "Soporte técnico", "url": "/soporte-tecnico" },
       { "text": "Contacto", "url": "/contacto" }
     ]
   },

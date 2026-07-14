@@ -72,7 +72,6 @@ const iconMap: Record<string, IconType> = {
 const DEFAULT_LOGO = "/images/logo/fiberlux.svg";
 const SCROLL_THRESHOLD = 50;
 const MOBILE_BREAKPOINT = 768;
-const SOPORTE_URL = "/soporte-tecnico";
 const LEGALES_TITLE = "legales";
 
 /* ── Icons ── */
@@ -178,10 +177,6 @@ export default function HeaderV2React({
   const legalesLinks = (legalesColumn?.links || []).filter(
     Boolean
   ) as LegalLink[];
-  // Soporte técnico link (goes above legales in the desktop hamburger).
-  const soporteLink = mainLinks.find(
-    (l) => normalizeUrl(l.url) === normalizeUrl(SOPORTE_URL)
-  );
   const socialLinks = (footer?.social || []).filter(Boolean) as SocialItem[];
 
   // Resolve a desktopNav item's hover children by matching its URL against
@@ -352,7 +347,7 @@ export default function HeaderV2React({
       >
         {/* ── TOP BAR ── */}
         <div className={`${topBarBg} transition-colors duration-300`}>
-          <div className="site-container h-9 flex items-center justify-between">
+          <div className="site-container h-[72px] flex items-center justify-between">
             {/* Left: Empresas (active) / Negocios */}
             <div className="flex items-center gap-6">
               {topBar?.empresasLabel && (
@@ -430,13 +425,16 @@ export default function HeaderV2React({
               </span>
             </button>
 
-            <a href="/" className="z-50" aria-label="Fiberlux - Inicio">
-              <img
-                src={logoSrc}
-                alt="Fiberlux"
-                className={`h-5 w-auto ${logoFilter}`}
-              />
-            </a>
+            {/* Logo — hidden while the menu is open (reads poorly next to "Cerrar"). */}
+            {!menuOpen && (
+              <a href="/" className="z-50" aria-label="Fiberlux - Inicio">
+                <img
+                  src={logoSrc}
+                  alt="Fiberlux"
+                  className={`h-5 w-auto ${logoFilter}`}
+                />
+              </a>
+            )}
           </div>
 
           {/* Right: Desktop inline navbar (hover reveal) */}
@@ -521,19 +519,10 @@ export default function HeaderV2React({
         aria-modal="true"
         aria-label="Menú de navegación"
       >
-        <div className="h-full overflow-y-auto pt-24 pb-10 flex flex-col">
+        <div className="h-full overflow-y-auto pt-[152px] pb-10 flex flex-col">
           <div className="site-container flex-1 flex flex-col">
-            {/* ── DESKTOP OVERLAY — Soporte técnico + Legales ── */}
+            {/* ── DESKTOP OVERLAY — Legales ── */}
             <div className="hidden md:flex flex-col flex-1 pt-8">
-              {soporteLink && (
-                <a
-                  href={soporteLink.url || "#"}
-                  onClick={closeMenu}
-                  className="inline-block self-start text-white text-[42px] leading-[56px] font-semibold nav-link-hover mb-10"
-                >
-                  {soporteLink.text}
-                </a>
-              )}
               <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-4">
                 Legales
               </p>
@@ -686,8 +675,8 @@ export default function HeaderV2React({
         </div>
       </div>
 
-      {/* ═══ Spacer (top bar h-9 + main bar h-16) ═══ */}
-      <div className="h-[100px]" />
+      {/* ═══ Spacer (top bar 72px + main bar h-16 64px) ═══ */}
+      <div className="h-[136px]" />
 
       <style>{`
         @keyframes fadeIn {
