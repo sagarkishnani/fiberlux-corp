@@ -347,7 +347,7 @@ export default function HeaderV2React({
       >
         {/* ── TOP BAR ── */}
         <div className={`${topBarBg} transition-colors duration-300`}>
-          <div className="site-container h-[72px] flex items-center justify-between">
+          <div className="site-container h-14 flex items-center justify-between">
             {/* Left: Empresas (active) / Negocios */}
             <div className="flex items-center gap-6">
               {topBar?.empresasLabel && (
@@ -519,7 +519,7 @@ export default function HeaderV2React({
         aria-modal="true"
         aria-label="Menú de navegación"
       >
-        <div className="h-full overflow-y-auto pt-[152px] pb-10 flex flex-col">
+        <div className="h-full overflow-y-auto pt-[136px] pb-10 flex flex-col">
           <div className="site-container flex-1 flex flex-col">
             {/* ── DESKTOP OVERLAY — Legales ── */}
             <div className="hidden md:flex flex-col flex-1 pt-8">
@@ -675,8 +675,8 @@ export default function HeaderV2React({
         </div>
       </div>
 
-      {/* ═══ Spacer (top bar 72px + main bar h-16 64px) ═══ */}
-      <div className="h-[136px]" />
+      {/* ═══ Spacer (top bar h-14 56px + main bar h-16 64px) ═══ */}
+      <div className="h-[120px]" />
 
       <style>{`
         @keyframes fadeIn {
