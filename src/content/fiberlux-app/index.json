@@ -36,29 +36,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": {
-      "type": "root",
-      "children": [
-        {
-          "type": "p",
-          "children": [
-            {
-              "type": "text",
-              "text": "Para todas las empresas que deseen "
-            },
-            {
-              "type": "text",
-              "text": "monitorear el estado de sus servicios Fiberlux en tiempo real",
-              "bold": true
-            },
-            {
-              "type": "text",
-              "text": "."
-            }
-          ]
-        }
-      ]
-    }
+    "statement": "Para todas las empresas que deseen **monitorear el estado de sus servicios Fiberlux en tiempo real**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "seo": {
