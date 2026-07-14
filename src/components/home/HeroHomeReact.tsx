@@ -22,7 +22,11 @@ export default function HeroHomeReact({
 
   return (
     <section className="relative w-full min-h-[100svh] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
-      <div className="absolute inset-0 z-0">
+      {/* Capa de la escena 3D. En mobile se confina a la banda INFERIOR
+          (top-[46%]→bottom) para que el hexágono quede debajo de los botones y
+          el texto de arriba se lea sobre fondo oscuro, como en el diseño. En
+          desktop ocupa todo (inset-0) y va al lado del texto. */}
+      <div className="absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
         {/* En desktop la escena se corre a la derecha (-40%) para que el 3D
             quede al lado del texto; en mobile eso empujaba el hexágono fuera de
             cuadro (detrás del texto), así que a sangre completa (right-0) para
@@ -80,7 +84,7 @@ export default function HeroHomeReact({
 
       {/* Contenido */}
       <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-20 lg:pb-32">
-        <div className="flex flex-col justify-center max-w-[640px] min-h-[calc(100svh-200px)] lg:min-h-[640px]">
+        <div className="flex flex-col justify-start md:justify-center max-w-[640px] min-h-[calc(100svh-200px)] lg:min-h-[640px]">
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
