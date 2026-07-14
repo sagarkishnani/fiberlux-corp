@@ -1,6 +1,6 @@
 # SPEC 34 — Rediseño del slider de Certificaciones (Home + Nosotros)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 05 (reutiliza el patrón de carrusel con flechas/drag/snap de los sliders de Nosotros)
 > **Date:** 2026-07-14
 > **Objective:** Rediseñar el slider de "Certificaciones del grupo Fiberlux" a tarjetas oscuras con ícono central editable y layout de dos columnas (título + flechas a la izquierda, tarjetas deslizando a la derecha), y montarlo también en `/nosotros` además del Home.
@@ -158,17 +158,17 @@ interface Cert {
 
 ## Acceptance criteria
 
-- [ ] `npm run dev` y `npm run build` terminan sin errores ni warnings nuevos en consola.
-- [ ] En `/admin` → **Certificaciones ISO**, cada certificación tiene **Año**, **Ícono** (desplegable de opciones predefinidas), **Código**, **Categoría** y **Descripción**; ya **no** aparecen los campos Logo ni Eyebrow.
-- [ ] Agregar, reordenar o editar una certificación en el CMS se refleja en la sección sin tocar código.
-- [ ] La tarjeta es **oscura** (fondo `#0a0a0a`/borde tenue), con **año** arriba-izquierda, **check-circle** decorativo arriba-derecha, **tile magenta** con el ícono central, **categoría** en mayúsculas, **código ISO** blanco bold, **divisor magenta** y **descripción** gris.
-- [ ] El **ícono central** se muestra según la clave elegida en el CMS; si la clave no tiene mapeo, se usa el **ícono de fallback** sin romper el render.
-- [ ] En **desktop** el layout es de **dos columnas**: título grande + pill de flechas a la **izquierda**, tarjetas deslizando/asomando a la **derecha**.
-- [ ] La flecha **next** avanza el carrusel y la **prev** retrocede; se puede **arrastrar** el carrusel (mouse/touch) con **snap** a la tarjeta más cercana.
-- [ ] En **mobile** el layout se **apila** (título arriba, carrusel debajo, flechas debajo) y el carrusel funciona.
-- [ ] La sección aparece con el **nuevo diseño en el Home** (mismo punto de montaje actual) **y en `/nosotros`** como último bloque antes del footer.
-- [ ] El **título de sección**, y por cada tarjeta el **año**, **categoría**, **código** y **descripción** son editables visualmente desde Tina (`data-tina-field`).
-- [ ] Si `items` está vacío, la sección no rompe la página (se mantiene el placeholder actual).
+- [x] `npm run dev` y `npm run build` terminan sin errores ni warnings nuevos en consola.
+- [x] En `/admin` → **Certificaciones ISO**, cada certificación tiene **Año**, **Ícono** (desplegable de opciones predefinidas), **Código**, **Categoría** y **Descripción**; ya **no** aparecen los campos Logo ni Eyebrow.
+- [x] Agregar, reordenar o editar una certificación en el CMS se refleja en la sección sin tocar código.
+- [x] La tarjeta es **oscura** (fondo `#0a0a0a`/borde tenue), con **año** arriba-izquierda, **check-circle** decorativo arriba-derecha, **tile magenta** con el ícono central, **categoría** en mayúsculas, **código ISO** blanco bold, **divisor magenta** y **descripción** gris.
+- [x] El **ícono central** se muestra según la clave elegida en el CMS; si la clave no tiene mapeo, se usa el **ícono de fallback** sin romper el render.
+- [x] En **desktop** el layout es de **dos columnas**: título grande + pill de flechas a la **izquierda**, tarjetas deslizando/asomando a la **derecha**.
+- [x] La flecha **next** avanza el carrusel y la **prev** retrocede; se puede **arrastrar** el carrusel (mouse/touch) con **snap** a la tarjeta más cercana.
+- [x] En **mobile** el layout se **apila** (título arriba, carrusel debajo, flechas debajo) y el carrusel funciona.
+- [x] La sección aparece con el **nuevo diseño en el Home** (mismo punto de montaje actual) **y en `/nosotros`** como último bloque antes del footer.
+- [x] El **título de sección**, y por cada tarjeta el **año**, **categoría**, **código** y **descripción** son editables visualmente desde Tina (`data-tina-field`).
+- [x] Si `items` está vacío, la sección no rompe la página (se mantiene el placeholder actual).
 
 ---
 
