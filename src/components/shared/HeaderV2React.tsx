@@ -71,7 +71,7 @@ const iconMap: Record<string, IconType> = {
 /* ── Constants ── */
 const DEFAULT_LOGO = "/images/logo/fiberlux.svg";
 const SCROLL_THRESHOLD = 50;
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 1024;
 const LEGALES_TITLE = "legales";
 
 /* ── Icons ── */
@@ -145,6 +145,9 @@ export default function HeaderV2React({
   const [menuOpen, setMenuOpen] = useState(false);
   // Desktop navbar: index of the item revealing its hover dropdown (or null).
   const [navHover, setNavHover] = useState<number | null>(null);
+  // Desktop navbar: index of the level-2 item (inside the open dropdown) whose
+  // sub-items flyout is revealed (or null).
+  const [navSubHover, setNavSubHover] = useState<number | null>(null);
   // Mobile: drill path of indices ([] = top level, [i] = children of link i, …).
   const [mobilePath, setMobilePath] = useState<number[]>([]);
   const [scrolled, setScrolled] = useState(false);
@@ -189,6 +192,7 @@ export default function HeaderV2React({
   /* ── Nav reset helper ── */
   const resetNav = useCallback(() => {
     setNavHover(null);
+    setNavSubHover(null);
     setMobilePath([]);
   }, []);
 
@@ -376,7 +380,7 @@ export default function HeaderV2React({
             {topBar?.abonadosLabel && (
               <a
                 href={topBar.abonadosUrl || "#"}
-                className={`hidden md:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
+                className={`hidden lg:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
                 data-tina-field={tinaField(topBar as any, "abonadosLabel")}
               >
                 {topBar.abonadosLabel}
@@ -439,7 +443,7 @@ export default function HeaderV2React({
 
           {/* Right: Desktop inline navbar (hover reveal) */}
           <nav
-            className={`hidden md:flex items-center gap-7 transition-opacity duration-200 ${
+            className={`hidden lg:flex items-center gap-7 transition-opacity duration-200 ${
               menuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}
             aria-label="Navegación principal"
@@ -453,8 +457,14 @@ export default function HeaderV2React({
                 <div
                   key={i}
                   className="relative"
-                  onMouseEnter={() => setNavHover(withChildren ? i : null)}
-                  onMouseLeave={() => setNavHover(null)}
+                  onMouseEnter={() => {
+                    setNavHover(withChildren ? i : null);
+                    setNavSubHover(null);
+                  }}
+                  onMouseLeave={() => {
+                    setNavHover(null);
+                    setNavSubHover(null);
+                  }}
                 >
                   <a
                     href={item.url || "#"}
@@ -481,16 +491,60 @@ export default function HeaderV2React({
                           : "opacity-0 invisible -translate-y-1 pointer-events-none"
                       }`}
                     >
-                      <div className="min-w-[260px] rounded-2xl bg-greyscale-darkest/95 backdrop-blur-md border border-white/10 p-2 shadow-2xl">
-                        {children.map((child, j) => (
-                          <a
-                            key={j}
-                            href={child.url || "#"}
-                            className="block rounded-xl px-4 py-2.5 text-[15px] text-white/80 hover:text-white hover:bg-white/5 transition-colors"
-                          >
-                            {child.text}
-                          </a>
-                        ))}
+                      <div className="min-w-[280px] rounded-2xl bg-greyscale-darkest/95 backdrop-blur-md border border-white/10 p-2 shadow-2xl">
+                        {children.map((child, j) => {
+                          const grand = (child.children || []).filter(
+                            Boolean
+                          ) as NavGrandChild[];
+                          const hasGrand = grand.length > 0;
+                          const subOpen = navSubHover === j;
+
+                          return (
+                            <div
+                              key={j}
+                              className="relative"
+                              onMouseEnter={() =>
+                                setNavSubHover(hasGrand ? j : null)
+                              }
+                            >
+                              <a
+                                href={child.url || "#"}
+                                className={`flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-[15px] transition-colors ${
+                                  subOpen
+                                    ? "text-white bg-white/5"
+                                    : "text-white/80 hover:text-white hover:bg-white/5"
+                                }`}
+                              >
+                                <span>{child.text}</span>
+                                {hasGrand && (
+                                  <ChevronRight className="w-4 h-4 shrink-0 opacity-60" />
+                                )}
+                              </a>
+
+                              {hasGrand && (
+                                <div
+                                  className={`absolute left-full top-0 pl-2 transition-all duration-200 ${
+                                    subOpen
+                                      ? "opacity-100 visible translate-x-0"
+                                      : "opacity-0 invisible -translate-x-1 pointer-events-none"
+                                  }`}
+                                >
+                                  <div className="min-w-[280px] max-h-[70vh] overflow-y-auto rounded-2xl bg-greyscale-darkest/95 backdrop-blur-md border border-white/10 p-2 shadow-2xl">
+                                    {grand.map((gc, k) => (
+                                      <a
+                                        key={k}
+                                        href={gc.url || "#"}
+                                        className="block rounded-xl px-4 py-2 text-[14px] text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                                      >
+                                        {gc.text}
+                                      </a>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
@@ -506,8 +560,8 @@ export default function HeaderV2React({
         className={`
           fixed top-0 left-0 right-0 z-[70]
           bg-brand-purple
-          h-screen md:h-[calc(100vh-80px)]
-          md:rounded-b-[48px]
+          h-screen lg:h-[calc(100vh-80px)]
+          lg:rounded-b-[48px]
           transition-all duration-500
           ${
             menuOpen
@@ -522,7 +576,7 @@ export default function HeaderV2React({
         <div className="h-full overflow-y-auto pt-[136px] pb-10 flex flex-col">
           <div className="site-container flex-1 flex flex-col">
             {/* ── DESKTOP OVERLAY — Legales ── */}
-            <div className="hidden md:flex flex-col flex-1 pt-8">
+            <div className="hidden lg:flex flex-col flex-1 pt-8">
               <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-4">
                 Legales
               </p>
@@ -530,7 +584,7 @@ export default function HeaderV2React({
             </div>
 
             {/* ── MOBILE OVERLAY — multilevel nav + legales ── */}
-            <div className="flex md:hidden flex-col flex-1">
+            <div className="flex lg:hidden flex-col flex-1">
               {depth === 0 ? (
                 <>
                   <nav
