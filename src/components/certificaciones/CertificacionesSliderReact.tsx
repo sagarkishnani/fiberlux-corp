@@ -12,6 +12,8 @@ interface CertSliderProps {
   data: CertificacionesQuery;
 }
 
+const GAP = 24; // px, matches gap-6
+
 export default function CertificacionesSliderReact({
   query,
   variables,
@@ -24,93 +26,98 @@ export default function CertificacionesSliderReact({
   const items = (page?.items || []).filter(Boolean) as any[];
 
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < items.length - 1;
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
 
   const prefersReducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
-  /* ── Track active (centered) slide ── */
+  /* Step = one card width + gap (all cards are equal width). */
+  const stepPx = () => {
+    const el = carouselRef.current;
+    const slide = el?.querySelector<HTMLElement>(".cert-slide");
+    return slide ? slide.offsetWidth + GAP : 0;
+  };
+
+  /* ── Enable/disable arrows from scroll position ── */
+  const updateEdges = useCallback(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setAtStart(el.scrollLeft <= 1);
+    setAtEnd(el.scrollLeft >= max - 1);
+  }, []);
+
   useEffect(() => {
     const el = carouselRef.current;
     if (!el) return;
-    const onScroll = () => {
-      const children = Array.from(el.querySelectorAll<HTMLElement>(".cert-slide"));
-      if (!children.length) return;
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((child, i) => {
-        const center = child.offsetLeft + child.offsetWidth / 2;
-        const dist = Math.abs(center - el.scrollLeft - el.offsetWidth / 2);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      });
-      setActiveIndex(closest);
+    updateEdges();
+    el.addEventListener("scroll", updateEdges, { passive: true });
+    window.addEventListener("resize", updateEdges);
+    return () => {
+      el.removeEventListener("scroll", updateEdges);
+      window.removeEventListener("resize", updateEdges);
     };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [items.length]);
+  }, [updateEdges, items.length]);
 
-  /* ── Drag to scroll (with momentum + smooth snap) ── */
+  /**
+   * Animate to an absolute scroll position. CSS `scroll-snap-type: mandatory`
+   * fights programmatic smooth scrolling in Chromium (it snaps back to the
+   * origin mid-animation), so we disable snap for the duration of the animation
+   * and restore it once we've landed on the (snap-aligned) target.
+   */
+  const snapTimer = useRef<number | null>(null);
+  const animateTo = (left: number) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
+    el.style.scrollSnapType = "none";
+    el.scrollTo({ left, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    snapTimer.current = window.setTimeout(
+      () => {
+        if (carouselRef.current) carouselRef.current.style.scrollSnapType = "";
+      },
+      prefersReducedMotion ? 0 : 500,
+    );
+  };
+
+  useEffect(() => () => {
+    if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
+  }, []);
+
+  /* Scroll to a card index (clamped to the scrollable range). */
+  const scrollToIndex = (i: number) => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = stepPx();
+    if (!step) return;
+    const max = el.scrollWidth - el.clientWidth;
+    animateTo(Math.min(Math.max(i, 0) * step, max));
+  };
+
+  /* ── Arrow navigation (one card at a time) ── */
+  const scrollByCards = (dir: "left" | "right") => {
+    const el = carouselRef.current;
+    if (!el) return;
+    const step = stepPx();
+    if (!step) return;
+    const current = el.scrollLeft / step;
+    scrollToIndex(dir === "right" ? Math.round(current) + 1 : Math.round(current) - 1);
+  };
+
+  /* ── Drag to scroll (mouse) — direction-biased snap, no momentum ── */
   const isDragging = useRef(false);
   const hasDragged = useRef(false);
   const startX = useRef(0);
   const startScrollLeft = useRef(0);
-  const lastX = useRef(0);
-  const velocity = useRef(0);
-  const momentumId = useRef<number | null>(null);
-
-  const stopMomentum = () => {
-    if (momentumId.current !== null) {
-      cancelAnimationFrame(momentumId.current);
-      momentumId.current = null;
-    }
-  };
-
-  /* Ease onto the slide nearest the viewport centre, then restore CSS snap. */
-  const snapToNearest = () => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const children = Array.from(el.querySelectorAll<HTMLElement>(".cert-slide"));
-    if (!children.length) return;
-    const targetCenter = el.scrollLeft + el.offsetWidth / 2;
-    let nearest = children[0];
-    let minDist = Infinity;
-    children.forEach((child) => {
-      const center = child.offsetLeft + child.offsetWidth / 2;
-      const dist = Math.abs(center - targetCenter);
-      if (dist < minDist) {
-        minDist = dist;
-        nearest = child;
-      }
-    });
-    const left = nearest.offsetLeft + nearest.offsetWidth / 2 - el.offsetWidth / 2;
-    el.scrollTo({ left, behavior: prefersReducedMotion ? "auto" : "smooth" });
-    window.setTimeout(
-      () => {
-        const n = carouselRef.current;
-        if (n) n.style.scrollSnapType = "";
-      },
-      prefersReducedMotion ? 0 : 450,
-    );
-  };
-
-  useEffect(() => () => stopMomentum(), []);
 
   const onMouseDown = (e: React.MouseEvent) => {
     const el = carouselRef.current;
     if (!el) return;
-    stopMomentum();
     isDragging.current = true;
     hasDragged.current = false;
     startX.current = e.pageX;
-    lastX.current = e.pageX;
-    velocity.current = 0;
     startScrollLeft.current = el.scrollLeft;
     el.style.cursor = "grabbing";
     el.style.scrollSnapType = "none";
@@ -124,8 +131,6 @@ export default function CertificacionesSliderReact({
     const dx = e.pageX - startX.current;
     if (Math.abs(dx) > 5) hasDragged.current = true;
     el.scrollLeft = startScrollLeft.current - dx;
-    velocity.current = 0.8 * velocity.current + 0.2 * (lastX.current - e.pageX);
-    lastX.current = e.pageX;
   };
 
   const onMouseUp = () => {
@@ -134,26 +139,18 @@ export default function CertificacionesSliderReact({
     const el = carouselRef.current;
     if (!el) return;
     el.style.cursor = "grab";
+    // Snap is re-enabled by animateTo() once the settle animation completes.
 
-    if (prefersReducedMotion || Math.abs(velocity.current) < 0.6) {
-      snapToNearest();
-      return;
-    }
-
-    const decay = 0.92;
-    const step = () => {
-      const node = carouselRef.current;
-      if (!node) return;
-      node.scrollLeft += velocity.current;
-      velocity.current *= decay;
-      if (Math.abs(velocity.current) < 0.6) {
-        momentumId.current = null;
-        snapToNearest();
-        return;
-      }
-      momentumId.current = requestAnimationFrame(step);
-    };
-    momentumId.current = requestAnimationFrame(step);
+    const step = stepPx();
+    if (!step) return;
+    const startIdx = Math.round(startScrollLeft.current / step);
+    const moved = el.scrollLeft - startScrollLeft.current;
+    // A deliberate drag (>15% of a card) advances one card in that direction;
+    // a smaller nudge returns to where it started (no accidental half-steps).
+    let target = startIdx;
+    if (moved > step * 0.15) target = Math.ceil((startScrollLeft.current + moved) / step);
+    else if (moved < -step * 0.15) target = Math.floor((startScrollLeft.current + moved) / step);
+    scrollToIndex(target);
   };
 
   /* Swallow the click that follows a drag. */
@@ -164,19 +161,6 @@ export default function CertificacionesSliderReact({
     }
   }, []);
 
-  /* ── Arrow scroll (one card + gap) ── */
-  const scroll = (direction: "left" | "right") => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const slide = el.querySelector<HTMLElement>(".cert-slide");
-    if (!slide) return;
-    const gap = 24;
-    el.scrollBy({
-      left: direction === "right" ? slide.offsetWidth + gap : -(slide.offsetWidth + gap),
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  };
-
   const hasItems = items.length > 0;
 
   /* ── Prev/Next pill ── */
@@ -184,11 +168,11 @@ export default function CertificacionesSliderReact({
     <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
       <button
         type="button"
-        onClick={() => scroll("left")}
-        disabled={!canGoPrev}
+        onClick={() => scrollByCards("left")}
+        disabled={atStart}
         aria-label="Anterior"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          canGoPrev ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
+          !atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
         }`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -197,11 +181,11 @@ export default function CertificacionesSliderReact({
       </button>
       <button
         type="button"
-        onClick={() => scroll("right")}
-        disabled={!canGoNext}
+        onClick={() => scrollByCards("right")}
+        disabled={atEnd}
         aria-label="Siguiente"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          canGoNext ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
+          !atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
         }`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -211,57 +195,56 @@ export default function CertificacionesSliderReact({
     </div>
   );
 
+  /* ── Carousel viewport: mobile shows ~1 card + peek, desktop exactly 2 ── */
+  const carousel = (
+    <div
+      ref={carouselRef}
+      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none cert-carousel"
+      style={{ cursor: hasItems ? "grab" : "default" }}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onClickCapture={onClickCapture}
+    >
+      {hasItems ? (
+        items.map((item, i) => (
+          <div
+            key={i}
+            className="cert-slide snap-start shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
+          >
+            <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} />
+          </div>
+        ))
+      ) : (
+        <div className="cert-slide snap-start shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]">
+          <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
+            Certificaciones — próximamente
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Header: title left, arrows right */}
-      <div className="site-container flex items-end justify-between gap-6 mb-10 md:mb-14">
-        <h2
-          className="text-[32px] md:text-[48px] leading-[1.1] font-semibold text-white max-w-[16ch]"
-          data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}
-        >
-          {sectionTitle}
-        </h2>
-        {items.length > 1 && <div className="shrink-0">{arrowsPill}</div>}
-      </div>
+      <div className="site-container md:flex md:items-center md:gap-10 lg:gap-16">
+        {/* Left column: title + arrows (desktop) */}
+        <div className="md:w-[34%] md:shrink-0">
+          <h2
+            className="text-[32px] md:text-[48px] leading-[1.1] font-semibold text-white max-w-[16ch]"
+            data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}
+          >
+            {sectionTitle}
+          </h2>
+          {items.length > 1 && <div className="hidden md:block mt-9">{arrowsPill}</div>}
+        </div>
 
-      {/* Carousel */}
-      <div
-        ref={carouselRef}
-        className="flex items-center gap-6 overflow-x-auto snap-x snap-mandatory py-8 select-none cert-carousel px-6 md:px-[max(1.5rem,calc((100vw-340px)/2))]"
-        style={{ cursor: hasItems ? "grab" : "default" }}
-        onMouseDown={onMouseDown}
-        onMouseMove={onMouseMove}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseUp}
-        onClickCapture={onClickCapture}
-      >
-        {hasItems ? (
-          items.map((item, i) => {
-            const active = i === activeIndex;
-            return (
-              <div
-                key={i}
-                className={`cert-slide snap-center shrink-0 w-[300px] md:w-[340px] transition-all duration-300 ${
-                  active ? "scale-100 opacity-100" : "scale-[0.9] opacity-60"
-                }`}
-              >
-                <div
-                  className={`h-full rounded-[26px] transition-shadow duration-300 ${
-                    active ? "shadow-[0_30px_80px_-24px_rgba(150,35,122,0.55)]" : ""
-                  }`}
-                >
-                  <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} />
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <div className="cert-slide snap-center shrink-0 w-[300px] md:w-[340px]">
-            <div className="bg-white/[0.04] border border-white/10 min-h-[440px] rounded-[26px] flex items-center justify-center text-white/20 text-sm">
-              Certificaciones — próximamente
-            </div>
-          </div>
-        )}
+        {/* Right column: carousel */}
+        <div className="md:flex-1 md:min-w-0 mt-8 md:mt-0">{carousel}</div>
+
+        {/* Mobile arrows: below the carousel, left-aligned */}
+        {items.length > 1 && <div className="md:hidden mt-8">{arrowsPill}</div>}
       </div>
 
       <style>{`

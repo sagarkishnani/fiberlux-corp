@@ -1,11 +1,22 @@
 import { tinaField } from "tinacms/dist/react";
+import type { IconType } from "react-icons";
+import {
+  FaShieldHalved,
+  FaLock,
+  FaMedal,
+  FaLeaf,
+  FaHelmetSafety,
+  FaGears,
+  FaStamp,
+  FaScaleBalanced,
+  FaCheck,
+} from "react-icons/fa6";
 
 export interface Cert {
   year?: string | null;
-  logo?: string | null;
-  title?: string | null;
-  eyebrow?: string | null;
-  heading?: string | null;
+  icon?: string | null; // clave del set predefinido (reemplaza a `logo`)
+  title?: string | null; // código ISO
+  heading?: string | null; // categoría (se muestra en mayúsculas)
   description?: string | null;
 }
 
@@ -15,111 +26,77 @@ interface CertCardProps {
   tinaItem?: any;
 }
 
-/** Card background — reused as the knockout halo behind the "ISO" glyph text. */
-const CARD_BG = "#F7D9F0";
-
-/**
- * ISO globe glyph (default logo when a card has no uploaded `logo`).
- * `currentColor` drives the line/text color; the "ISO" text carries a
- * card-colored stroke so it reads cleanly over the globe meridians.
- */
-function IsoGlobe({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 120 120"
-      className={className}
-      role="img"
-      aria-label="ISO"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g stroke="currentColor" strokeWidth={3} fill="none" opacity={0.9}>
-        <circle cx="60" cy="60" r="40" />
-        <ellipse cx="60" cy="60" rx="16" ry="40" />
-        <line x1="20" y1="60" x2="100" y2="60" />
-        <path d="M27 35 C42 44, 78 44, 93 35" />
-        <path d="M27 85 C42 76, 78 76, 93 85" />
-      </g>
-      <text
-        x="60"
-        y="72"
-        textAnchor="middle"
-        fontSize="34"
-        fontWeight="900"
-        fill="currentColor"
-        stroke={CARD_BG}
-        strokeWidth={6}
-        fontFamily="'Arial Black', Arial, sans-serif"
-        style={{ paintOrder: "stroke" }}
-      >
-        ISO
-      </text>
-    </svg>
-  );
-}
+/* ── Icon map: CMS select key → react-icons component ── */
+const ICONS: Record<string, IconType> = {
+  antisoborno: FaShieldHalved,
+  seguridad: FaLock,
+  calidad: FaMedal,
+  ambiental: FaLeaf,
+  seguridad_st: FaHelmetSafety,
+  procesos: FaGears,
+  certificado: FaStamp,
+  cumplimiento: FaScaleBalanced,
+};
+const FALLBACK_ICON: IconType = FaShieldHalved;
 
 export default function CertCard({ cert, tinaItem }: CertCardProps) {
+  const Icon = (cert.icon && ICONS[cert.icon]) || FALLBACK_ICON;
+
   return (
-    <div
-      className="flex flex-col h-full min-h-[440px] rounded-[26px] bg-[#F7D9F0] px-8 py-9 md:px-9 md:py-10"
-    >
-      {/* Year */}
-      {cert.year && (
+    <div className="flex h-full min-h-[420px] flex-col rounded-[24px] border border-white/[0.05] bg-[#111013] px-8 py-7">
+      {/* Top row: year (left) + verified check-circle (right, decorative) */}
+      <div className="flex items-center justify-between">
         <span
-          className="block text-center text-[13px] tracking-[0.35em] text-black/45"
+          className="text-[13px] tracking-[0.25em] text-[#b565a2]"
           style={{ fontFamily: "'Space Mono', ui-monospace, monospace" }}
           data-tina-field={tinaItem ? tinaField(tinaItem, "year") : undefined}
         >
           {cert.year}
         </span>
-      )}
-
-      {/* Logo (uploaded override, else default ISO glyph) */}
-      <div className="flex justify-center my-5">
-        {cert.logo ? (
-          <img
-            src={cert.logo}
-            alt={cert.title || "Certificación"}
-            className="h-16 w-auto object-contain"
-            draggable={false}
-            data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
-          />
-        ) : (
-          <IsoGlobe className="h-16 w-auto text-black" />
-        )}
+        <span
+          aria-hidden="true"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-[#96237A] text-[#b565a2]"
+        >
+          <FaCheck className="text-[11px]" />
+        </span>
       </div>
 
-      {/* Title (ISO 27001) */}
+      {/* Central icon tile */}
+      <div className="mb-8 mt-9 flex justify-center">
+        <span
+          className="flex h-[92px] w-[92px] items-center justify-center rounded-full text-[#d885c4]"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 40%, rgba(150,35,122,0.28), rgba(150,35,122,0.06))",
+            border: "1px solid rgba(150,35,122,0.35)",
+          }}
+        >
+          <Icon className="text-[34px]" />
+        </span>
+      </div>
+
+      {/* Category (eyebrow) */}
+      <h4
+        className="text-center text-[13px] font-semibold uppercase tracking-[0.12em] text-white/70"
+        data-tina-field={tinaItem ? tinaField(tinaItem, "heading") : undefined}
+      >
+        {cert.heading}
+      </h4>
+
+      {/* ISO code */}
       <h3
-        className="text-center text-[30px] md:text-[34px] font-bold text-black"
+        className="mt-2 text-center text-[26px] font-bold text-white"
         data-tina-field={tinaItem ? tinaField(tinaItem, "title") : undefined}
       >
         {cert.title}
       </h3>
 
       {/* Divider */}
-      <div className="mt-6 mb-6 h-px bg-black/10" />
-
-      {/* Eyebrow */}
-      {cert.eyebrow && (
-        <p
-          className="text-[11px] font-semibold uppercase tracking-[0.15em] text-[#96237A]"
-          data-tina-field={tinaItem ? tinaField(tinaItem, "eyebrow") : undefined}
-        >
-          {cert.eyebrow}
-        </p>
-      )}
-
-      {/* Heading */}
-      <h4
-        className="mt-2 text-[19px] md:text-[21px] font-bold leading-snug text-black"
-        data-tina-field={tinaItem ? tinaField(tinaItem, "heading") : undefined}
-      >
-        {cert.heading}
-      </h4>
+      <div className="mx-auto mt-4 mb-5 h-[2px] w-10 rounded-full bg-[#96237A]" />
 
       {/* Description */}
       <p
-        className="mt-2.5 text-[14px] leading-[1.7] text-black/60"
+        className="text-center text-[14px] leading-[1.7] text-white/45"
         data-tina-field={tinaItem ? tinaField(tinaItem, "description") : undefined}
       >
         {cert.description}
