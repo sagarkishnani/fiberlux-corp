@@ -1,6 +1,6 @@
 # SPEC 37 — Página Fiberlux App (`/fiberlux-app`)
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:**
 > - **SPEC 12** (plantilla de sub-servicio nivel-2: patrón de secciones Hero → Beneficios → Casos de uso → ¿Por qué Fiberlux? → Insights, y los componentes `Beneficios`, `CasosDeUso` que se toman como base visual).
 > - **SPEC 11** (`Stats` con título override) y home (`BlogPreview`), que se reutilizan tal cual.
