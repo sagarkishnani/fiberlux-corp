@@ -90,6 +90,8 @@ type Query {
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
   cookieConsent(relativePath: String): CookieConsent!
   cookieConsentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CookieConsentFilter): CookieConsentConnection!
+  fiberluxApp(relativePath: String): FiberluxApp!
+  fiberluxAppConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FiberluxAppFilter): FiberluxAppConnection!
 }
 
 input DocumentFilter {
@@ -111,6 +113,7 @@ input DocumentFilter {
   dynamicForms: DynamicFormsFilter
   legal: LegalFilter
   cookieConsent: CookieConsentFilter
+  fiberluxApp: FiberluxAppFilter
 }
 
 type DocumentConnectionEdges {
@@ -136,7 +139,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -1733,6 +1736,106 @@ type CookieConsentConnection implements Connection {
   edges: [CookieConsentConnectionEdges]
 }
 
+type FiberluxAppHeroDownloads {
+  store: String
+  label: String
+  url: String
+}
+
+type FiberluxAppHero {
+  heading: String
+  description: String
+  note: String
+  mockup: String
+  downloads: [FiberluxAppHeroDownloads]
+}
+
+type FiberluxAppBeneficiosItems {
+  icon: String
+  text: String
+}
+
+type FiberluxAppBeneficios {
+  title: String
+  items: [FiberluxAppBeneficiosItems]
+}
+
+type FiberluxAppCasosDeUso {
+  eyebrow: String
+  statement: JSON
+}
+
+type FiberluxAppSeo {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+type FiberluxApp implements Node & Document {
+  hero: FiberluxAppHero
+  beneficios: FiberluxAppBeneficios
+  casosDeUso: FiberluxAppCasosDeUso
+  whyUsTitle: String
+  seo: FiberluxAppSeo
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input FiberluxAppHeroDownloadsFilter {
+  store: StringFilter
+  label: StringFilter
+  url: StringFilter
+}
+
+input FiberluxAppHeroFilter {
+  heading: StringFilter
+  description: StringFilter
+  note: StringFilter
+  mockup: ImageFilter
+  downloads: FiberluxAppHeroDownloadsFilter
+}
+
+input FiberluxAppBeneficiosItemsFilter {
+  icon: StringFilter
+  text: StringFilter
+}
+
+input FiberluxAppBeneficiosFilter {
+  title: StringFilter
+  items: FiberluxAppBeneficiosItemsFilter
+}
+
+input FiberluxAppCasosDeUsoFilter {
+  eyebrow: StringFilter
+  statement: RichTextFilter
+}
+
+input FiberluxAppSeoFilter {
+  metaTitle: StringFilter
+  metaDescription: StringFilter
+  ogImage: ImageFilter
+}
+
+input FiberluxAppFilter {
+  hero: FiberluxAppHeroFilter
+  beneficios: FiberluxAppBeneficiosFilter
+  casosDeUso: FiberluxAppCasosDeUsoFilter
+  whyUsTitle: StringFilter
+  seo: FiberluxAppSeoFilter
+}
+
+type FiberluxAppConnectionEdges {
+  cursor: String!
+  node: FiberluxApp
+}
+
+type FiberluxAppConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [FiberluxAppConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -1775,6 +1878,8 @@ type Mutation {
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
   updateCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
   createCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
+  updateFiberluxApp(relativePath: String!, params: FiberluxAppMutation!): FiberluxApp!
+  createFiberluxApp(relativePath: String!, params: FiberluxAppMutation!): FiberluxApp!
 }
 
 input DocumentUpdateMutation {
@@ -1796,6 +1901,7 @@ input DocumentUpdateMutation {
   dynamicForms: DynamicFormsMutation
   legal: LegalMutation
   cookieConsent: CookieConsentMutation
+  fiberluxApp: FiberluxAppMutation
   relativePath: String
 }
 
@@ -1818,6 +1924,7 @@ input DocumentMutation {
   dynamicForms: DynamicFormsMutation
   legal: LegalMutation
   cookieConsent: CookieConsentMutation
+  fiberluxApp: FiberluxAppMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -2468,6 +2575,49 @@ input CookieConsentMutation {
   btnAccept: String
   alwaysActiveLabel: String
   categories: [CookieConsentCategoriesMutation]
+}
+
+input FiberluxAppHeroDownloadsMutation {
+  store: String
+  label: String
+  url: String
+}
+
+input FiberluxAppHeroMutation {
+  heading: String
+  description: String
+  note: String
+  mockup: String
+  downloads: [FiberluxAppHeroDownloadsMutation]
+}
+
+input FiberluxAppBeneficiosItemsMutation {
+  icon: String
+  text: String
+}
+
+input FiberluxAppBeneficiosMutation {
+  title: String
+  items: [FiberluxAppBeneficiosItemsMutation]
+}
+
+input FiberluxAppCasosDeUsoMutation {
+  eyebrow: String
+  statement: JSON
+}
+
+input FiberluxAppSeoMutation {
+  metaTitle: String
+  metaDescription: String
+  ogImage: String
+}
+
+input FiberluxAppMutation {
+  hero: FiberluxAppHeroMutation
+  beneficios: FiberluxAppBeneficiosMutation
+  casosDeUso: FiberluxAppCasosDeUsoMutation
+  whyUsTitle: String
+  seo: FiberluxAppSeoMutation
 }
 
 schema {
