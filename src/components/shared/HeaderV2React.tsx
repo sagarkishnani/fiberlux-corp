@@ -22,6 +22,8 @@ interface HeaderProps {
   variables: GlobalQueryVariables;
   data: GlobalQuery;
   theme?: "light" | "dark";
+  /** Solo la home activa el logo grande animado del hero (SPEC 39). */
+  heroLogo?: boolean;
 }
 
 interface NavGrandChild {
@@ -122,6 +124,7 @@ export default function HeaderV2React({
   variables,
   data: initialData,
   theme = "dark",
+  heroLogo = false,
 }: HeaderProps) {
   const { data } = useTina<GlobalQuery>({
     query,

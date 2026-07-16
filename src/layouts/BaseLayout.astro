@@ -27,6 +27,13 @@ const {
   whatsappKind = "servicio",
 } = Astro.props;
 
+// ─── Home detection (SPEC 39) ───
+// El logo grande animado del hero (que vuela al header con el scroll) solo aplica
+// en la home. BASE_URL-aware para que funcione si el sitio se despliega en subpath.
+const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
+const isHome =
+  normalizePath(Astro.url.pathname) === normalizePath(import.meta.env.BASE_URL);
+
 // ─── Maintenance mode check ───
 let maintenanceMode = false;
 let maintenanceData: any = null;
@@ -181,7 +188,7 @@ const whatsappMessage = whatsappContext
               the fixed overlays below stay reachable while a filter is on. */}
           <div id="a11y-content">
             {/* <Header theme={headerTheme} /> */}
-            <HeaderV2 theme={headerTheme} />
+            <HeaderV2 theme={headerTheme} heroLogo={isHome} />
             <slot />
             <div class="-mt-6 relative z-40">
               <Footer />
