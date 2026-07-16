@@ -8,7 +8,6 @@ import {
   FaFont,
   FaDroplet,
   FaClone,
-  FaArrowPointer,
   FaXmark,
   FaRotateLeft,
 } from "react-icons/fa6";
@@ -23,7 +22,6 @@ interface A11yState {
   invert: boolean;
   hideImages: boolean;
   dyslexia: boolean;
-  bigCursor: boolean;
 }
 
 const STORAGE_KEY = "fiberlux-a11y-v1";
@@ -36,7 +34,6 @@ const DEFAULTS: A11yState = {
   invert: false,
   hideImages: false,
   dyslexia: false,
-  bigCursor: false,
 };
 
 const FONT_MIN = 0.9;
@@ -65,7 +62,6 @@ function applyState(s: A11yState) {
   r.classList.toggle("a11y-filter", s.contrast || s.saturation || s.invert);
   r.classList.toggle("a11y-hide-images", s.hideImages);
   r.classList.toggle("a11y-dyslexia", s.dyslexia);
-  r.classList.toggle("a11y-big-cursor", s.bigCursor);
 }
 
 function loadState(): A11yState {
@@ -140,7 +136,6 @@ export default function AccessibilityPanel() {
     state.invert,
     state.hideImages,
     state.dyslexia,
-    state.bigCursor,
   ].filter(Boolean).length;
 
   return (
@@ -250,22 +245,11 @@ export default function AccessibilityPanel() {
               active={state.saturation}
               onClick={() => update({ saturation: !state.saturation })}
             />
-          </div>
-
-          {/* ── NAVEGACIÓN ── */}
-          <p className="a11y-section-label">Navegación</p>
-          <div className="a11y-grid">
             <ToggleCard
               icon={<FaClone />}
               label="Invertir colores"
               active={state.invert}
               onClick={() => update({ invert: !state.invert })}
-            />
-            <ToggleCard
-              icon={<FaArrowPointer />}
-              label="Cursor grande"
-              active={state.bigCursor}
-              onClick={() => update({ bigCursor: !state.bigCursor })}
             />
           </div>
 
@@ -353,7 +337,7 @@ function ToggleCard({
 const styles = `
   /* ─── Global page effects (applied to the whole document) ───
      These live here (not in global.css, which is not bundled) so they
-     actually ship: this <style> is server-rendered with the island. */
+     actually ship: this style block is server-rendered with the island. */
   :root {
     --a11y-font-scale: 1;
     --a11y-letter-spacing: normal;
@@ -399,14 +383,6 @@ const styles = `
   /* Hide decorative / content images */
   html.a11y-hide-images :is(img, picture, video, canvas) {
     visibility: hidden !important;
-  }
-
-  /* Large cursor */
-  html.a11y-big-cursor,
-  html.a11y-big-cursor * {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M9 5 L9 41 L19 31 L25 45 L31 42 L25 28 L39 28 Z' fill='%23ffffff' stroke='%23000000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E")
-        7 5,
-      auto !important;
   }
 
   .a11y-fab {
