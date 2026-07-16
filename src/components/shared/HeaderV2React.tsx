@@ -616,16 +616,6 @@ export default function HeaderV2React({
                       )
                     )}
                   </nav>
-
-                  {/* Legales bajo un divisor al final */}
-                  {legalesLinks.length > 0 && (
-                    <div className="mt-8 pt-6 border-t border-white/20">
-                      <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-3">
-                        Legales
-                      </p>
-                      <LegalesList />
-                    </div>
-                  )}
                 </>
               ) : (
                 <div className="pt-4 animate-fadeIn">
