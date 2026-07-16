@@ -30,8 +30,8 @@ export default function BlogCard({
 }: BlogCardProps) {
   return (
     <a href={`/blog/${slug}`} className="block group h-full" draggable={false}>
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full min-h-[280px] md:min-h-0 md:h-[400px] transition-all duration-300">
-        <div className="relative overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full md:min-h-0 md:h-[400px] transition-all duration-300">
+        <div className="relative overflow-hidden h-40 md:h-auto">
           {coverImage ? (
             <img
               src={coverImage}
@@ -40,12 +40,12 @@ export default function BlogCard({
               draggable={false}
             />
           ) : (
-            <div className="w-full h-full min-h-[200px] md:min-h-full bg-greyscale-dark flex items-center justify-center text-white/20 text-sm">
+            <div className="w-full h-full min-h-[160px] md:min-h-full bg-greyscale-dark flex items-center justify-center text-white/20 text-sm">
               Sin imagen
             </div>
           )}
         </div>
-        <div className="flex flex-col justify-between p-6 md:p-8">
+        <div className="flex flex-col justify-between p-5 md:p-8">
           <div>
             {tag && (
               <span className="inline-block bg-greyscale-dark/80 text-white/80 text-xs font-medium px-3 py-1 rounded-md mb-4">
