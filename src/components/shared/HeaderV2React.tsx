@@ -395,7 +395,7 @@ export default function HeaderV2React({
           <div className="flex items-center gap-4 md:gap-6">
             <button
               onClick={toggleMenu}
-              className={`flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
+              className={`lg:hidden flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={menuOpen}
             >
