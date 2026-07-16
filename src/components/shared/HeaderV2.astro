@@ -2,8 +2,9 @@
 /**
  * HeaderV2 wrapper — fetches global data from TinaCMS.
  * New header (SPEC 33): top bar (Empresas / Negocios / abonados) + inline
- * desktop navbar with hover reveal; hamburger shows Soporte técnico + legales
- * on desktop and the full multilevel nav + legales on mobile.
+ * desktop navbar with hover reveal. The hamburger is mobile-only (hidden on
+ * desktop, SPEC 38) and opens the full multilevel nav; legales live only in
+ * the footer, not in the hamburger overlay.
  * Uses client:load because it needs JS for menu, hover and scroll behavior.
  */
 import { client } from '../../../tina/__generated__/client';
