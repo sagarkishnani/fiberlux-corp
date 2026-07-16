@@ -70,6 +70,14 @@ const DEFAULT_LOGO = "/images/logo/fiberlux.svg";
 const SCROLL_THRESHOLD = 50;
 const MOBILE_BREAKPOINT = 1024;
 
+/* Logo animado del hero (SPEC 39) — solo en la home y en desktop. El logo del
+   header arranca grande y desplazado hacia abajo (sobre el texto del hero) y,
+   con el scroll, vuelve de forma continua a su tamaño/posición nativos. Valores
+   afinados visualmente contra la referencia. */
+const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
+const LOGO_MAX_SCALE = 5.5; // escala inicial relativa al h-5 del header
+const LOGO_START_OFFSET_Y = 220; // px que el logo baja hacia el hero al tope
+
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
   <svg
@@ -151,6 +159,10 @@ export default function HeaderV2React({
   const [headerVisible, setHeaderVisible] = useState(true);
   const lastScrollY = useRef(0);
   const isMobile = useRef(false);
+  // Logo animado del hero (SPEC 39).
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const logoRaf = useRef<number | null>(null);
+  const prefersReducedMotion = useRef(false);
 
   /* ── Derived data ── */
   const logoSrc = headerConfig?.logo || DEFAULT_LOGO;
@@ -200,6 +212,44 @@ export default function HeaderV2React({
     };
   };
 
+  /* ── Logo animado del hero (SPEC 39) ── */
+  // Interpola el tamaño/posición del logo del header según el scroll. Se aplica
+  // directo al DOM (ref) para no re-renderizar React en cada frame de scroll.
+  // Activo solo en home + desktop + sin reduced-motion; en el resto limpia el
+  // transform y deja el logo en su estado nativo.
+  const applyLogoTransform = useCallback(
+    (currentY: number) => {
+      const el = logoRef.current;
+      if (!el) return;
+      const active =
+        heroLogo && !isMobile.current && !prefersReducedMotion.current;
+      if (!active) {
+        el.style.transform = "";
+        el.style.transformOrigin = "";
+        return;
+      }
+      const progress = Math.min(
+        Math.max(currentY / LOGO_TRAVEL_DISTANCE, 0),
+        1
+      );
+      const inv = 1 - progress;
+      const scale = 1 + (LOGO_MAX_SCALE - 1) * inv;
+      const translateY = LOGO_START_OFFSET_Y * inv;
+      el.style.transformOrigin = "left center";
+      el.style.transform = `translateY(${translateY}px) scale(${scale})`;
+    },
+    [heroLogo]
+  );
+
+  // Programa una aplicación del transform del logo en el próximo frame.
+  const scheduleLogoTransform = useCallback(() => {
+    if (logoRaf.current != null) return;
+    logoRaf.current = requestAnimationFrame(() => {
+      logoRaf.current = null;
+      applyLogoTransform(window.scrollY);
+    });
+  }, [applyLogoTransform]);
+
   /* ── Scroll handler ── */
   const handleScroll = useCallback(() => {
     const currentY = window.scrollY;
@@ -213,7 +263,8 @@ export default function HeaderV2React({
       }
     }
     lastScrollY.current = currentY;
-  }, [menuOpen]);
+    scheduleLogoTransform();
+  }, [menuOpen, scheduleLogoTransform]);
 
   const handleResize = useCallback(() => {
     const nowMobile = window.innerWidth < MOBILE_BREAKPOINT;
@@ -222,7 +273,10 @@ export default function HeaderV2React({
       resetNav();
     }
     isMobile.current = nowMobile;
-  }, [resetNav]);
+    // Recalcula el logo: al cruzar a mobile se limpia el transform, al volver a
+    // desktop se restablece según el scroll actual.
+    applyLogoTransform(window.scrollY);
+  }, [resetNav, applyLogoTransform]);
 
   useEffect(() => {
     handleResize();
@@ -234,8 +288,28 @@ export default function HeaderV2React({
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      if (logoRaf.current != null) cancelAnimationFrame(logoRaf.current);
     };
   }, [handleScroll, handleResize]);
+
+  // Detecta prefers-reduced-motion: si está activo, el logo se queda en su
+  // estado nativo (sin animación de vuelo).
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotion.current = mq.matches;
+    const onChange = () => {
+      prefersReducedMotion.current = mq.matches;
+      applyLogoTransform(window.scrollY);
+    };
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [applyLogoTransform]);
+
+  // Reaplica el transform cuando el logo se (re)monta o cambian sus condiciones
+  // (el logo se desmonta con el menú abierto; heroLogo depende de la página).
+  useEffect(() => {
+    applyLogoTransform(window.scrollY);
+  }, [applyLogoTransform, menuOpen]);
 
   useEffect(() => {
     if (menuOpen) {
@@ -391,9 +465,16 @@ export default function HeaderV2React({
               </span>
             </button>
 
-            {/* Logo — hidden while the menu is open (reads poorly next to "Cerrar"). */}
+            {/* Logo — hidden while the menu is open (reads poorly next to "Cerrar").
+                En home desktop arranca grande sobre el hero y vuelve a este slot
+                con el scroll (SPEC 39); el transform se aplica vía logoRef. */}
             {!menuOpen && (
-              <a href="/" className="z-50" aria-label="Fiberlux - Inicio">
+              <a
+                ref={logoRef}
+                href="/"
+                className="z-50 will-change-transform"
+                aria-label="Fiberlux - Inicio"
+              >
                 <img
                   src={logoSrc}
                   alt="Fiberlux"
