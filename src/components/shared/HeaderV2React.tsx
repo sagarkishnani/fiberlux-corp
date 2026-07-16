@@ -575,15 +575,7 @@ export default function HeaderV2React({
       >
         <div className="h-full overflow-y-auto pt-[136px] pb-10 flex flex-col">
           <div className="site-container flex-1 flex flex-col">
-            {/* ── DESKTOP OVERLAY — Legales ── */}
-            <div className="hidden lg:flex flex-col flex-1 pt-8">
-              <p className="text-white/50 text-xs uppercase tracking-[0.15em] mb-4">
-                Legales
-              </p>
-              <LegalesList columns />
-            </div>
-
-            {/* ── MOBILE OVERLAY — multilevel nav + legales ── */}
+            {/* ── MOBILE OVERLAY — multilevel nav ── */}
             <div className="flex lg:hidden flex-col flex-1">
               {depth === 0 ? (
                 <>
