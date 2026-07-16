@@ -46,11 +46,6 @@ interface DesktopNavItem {
   url?: string | null;
 }
 
-interface LegalLink {
-  text?: string | null;
-  url?: string | null;
-}
-
 interface SocialItem {
   platform?: string | null;
   url?: string | null;
@@ -72,7 +67,6 @@ const iconMap: Record<string, IconType> = {
 const DEFAULT_LOGO = "/images/logo/fiberlux.svg";
 const SCROLL_THRESHOLD = 50;
 const MOBILE_BREAKPOINT = 1024;
-const LEGALES_TITLE = "legales";
 
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
@@ -173,13 +167,6 @@ export default function HeaderV2React({
   const desktopNav = (headerConfig?.desktopNav || []).filter(
     Boolean
   ) as DesktopNavItem[];
-  // Legales list — single-sourced from the footer column titled "Legales".
-  const legalesColumn = (footer?.columns || [])
-    .filter(Boolean)
-    .find((c) => (c?.title || "").trim().toLowerCase() === LEGALES_TITLE);
-  const legalesLinks = (legalesColumn?.links || []).filter(
-    Boolean
-  ) as LegalLink[];
   const socialLinks = (footer?.social || []).filter(Boolean) as SocialItem[];
 
   // Resolve a desktopNav item's hover children by matching its URL against
@@ -302,34 +289,6 @@ export default function HeaderV2React({
     : controlsDark
     ? "bg-neutral-100 border-b border-black/5"
     : "bg-[#171717]";
-
-  /* ── Legales block (shared markup) ── */
-  const LegalesList = ({
-    columns = false,
-  }: {
-    columns?: boolean;
-  }) =>
-    legalesLinks.length > 0 ? (
-      <ul
-        className={
-          columns
-            ? "grid grid-cols-2 gap-x-10 gap-y-2 max-w-3xl"
-            : "flex flex-col gap-1"
-        }
-      >
-        {legalesLinks.map((l, i) => (
-          <li key={i}>
-            <a
-              href={l.url || "#"}
-              onClick={closeMenu}
-              className="block text-white/75 hover:text-white transition-colors text-[15px] py-1"
-            >
-              {l.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    ) : null;
 
   /* ── Mobile drill data ── */
   const depth = mobilePath.length;
