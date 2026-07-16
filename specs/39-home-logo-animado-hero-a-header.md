@@ -40,7 +40,9 @@
 
 ## Modelo de datos
 
-**Esta feature no introduce ni modifica datos, colecciones ni campos del CMS.** El tamaño grande, la distancia de viaje y el desplazamiento vertical se resuelven con **constantes en `HeaderV2React.tsx`** (p.ej. `LOGO_TRAVEL_DISTANCE`, `LOGO_MAX_SCALE`, `LOGO_START_OFFSET_Y`), afinadas visualmente contra la referencia. El único dato que fluye nuevo es un **prop booleano de UI** (`heroLogo`), no contenido.
+**Esta feature no introduce ni modifica datos, colecciones ni campos del CMS.** El tamaño y el desplazamiento se resuelven con **constantes en `HeaderV2React.tsx`** (`LOGO_TRAVEL_DISTANCE`, `LOGO_HEADER_H`, `LOGO_HERO_H`, `LOGO_START_OFFSET_Y`), afinadas visualmente. El único dato que fluye nuevo es un **prop booleano de UI** (`heroLogo`), no contenido.
+
+> **Nota de nitidez (post-implementación):** en vez de escalar (`transform: scale`) un logo renderizado a `h-5`, que estira una textura pequeña y **pixela el SVG**, se anima la `height` real del `<img>` (el SVG se re-rasteriza nítido a cada tamaño) y el `transform` solo desplaza en Y. El `<img>` va en `position:absolute` dentro de un `<a>` de tamaño fijo (`h-5 w-[140px]`) para no alterar el layout del header. Estado en reposo/SSR = `height:20px` (sin flash del logo grande).
 
 ---
 

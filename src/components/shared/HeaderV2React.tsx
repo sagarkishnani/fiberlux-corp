@@ -72,11 +72,14 @@ const MOBILE_BREAKPOINT = 1024;
 
 /* Logo animado del hero (SPEC 39) — solo en la home y en desktop. El logo del
    header arranca grande y desplazado hacia abajo (sobre el texto del hero) y,
-   con el scroll, vuelve de forma continua a su tamaño/posición nativos. Valores
-   afinados visualmente contra la referencia. */
+   con el scroll, vuelve de forma continua a su tamaño/posición nativos.
+   Para no perder nitidez se anima el `height` del SVG (se re-rasteriza nítido a
+   cada tamaño) en vez de estirar con scale una textura pequeña; el transform
+   solo desplaza en Y. Valores afinados visualmente. */
 const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
-const LOGO_MAX_SCALE = 5.5; // escala inicial relativa al h-5 del header
-const LOGO_START_OFFSET_Y = 220; // px que el logo baja hacia el hero al tope
+const LOGO_HEADER_H = 20; // altura en reposo del logo (= h-5 del header)
+const LOGO_HERO_H = 80; // altura del logo grande sobre el hero
+const LOGO_START_OFFSET_Y = 230; // px que el logo baja hacia el hero al tope
 
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
@@ -160,7 +163,7 @@ export default function HeaderV2React({
   const lastScrollY = useRef(0);
   const isMobile = useRef(false);
   // Logo animado del hero (SPEC 39).
-  const logoRef = useRef<HTMLAnchorElement>(null);
+  const logoRef = useRef<HTMLImageElement>(null);
   const logoRaf = useRef<number | null>(null);
   const prefersReducedMotion = useRef(false);
 
@@ -219,13 +222,14 @@ export default function HeaderV2React({
   // transform y deja el logo en su estado nativo.
   const applyLogoTransform = useCallback(
     (currentY: number) => {
-      const el = logoRef.current;
-      if (!el) return;
+      const img = logoRef.current;
+      if (!img) return;
       const active =
         heroLogo && !isMobile.current && !prefersReducedMotion.current;
       if (!active) {
-        el.style.transform = "";
-        el.style.transformOrigin = "";
+        // Estado nativo del header (también lo que se ve en SSR / sin JS).
+        img.style.height = `${LOGO_HEADER_H}px`;
+        img.style.transform = "translateY(-50%)";
         return;
       }
       const progress = Math.min(
@@ -233,10 +237,11 @@ export default function HeaderV2React({
         1
       );
       const inv = 1 - progress;
-      const scale = 1 + (LOGO_MAX_SCALE - 1) * inv;
-      const translateY = LOGO_START_OFFSET_Y * inv;
-      el.style.transformOrigin = "left center";
-      el.style.transform = `translateY(${translateY}px) scale(${scale})`;
+      const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
+      const offset = LOGO_START_OFFSET_Y * inv;
+      // Se anima `height` (SVG nítido a cada tamaño); el transform solo baja en Y.
+      img.style.height = `${height}px`;
+      img.style.transform = `translateY(calc(-50% + ${offset}px))`;
     },
     [heroLogo]
   );
@@ -470,15 +475,19 @@ export default function HeaderV2React({
                 con el scroll (SPEC 39); el transform se aplica vía logoRef. */}
             {!menuOpen && (
               <a
-                ref={logoRef}
                 href="/"
-                className="z-50 will-change-transform"
+                className="relative z-50 inline-block h-5 w-[140px]"
                 aria-label="Fiberlux - Inicio"
               >
                 <img
+                  ref={logoRef}
                   src={logoSrc}
                   alt="Fiberlux"
-                  className={`h-5 w-auto ${logoFilter}`}
+                  className={`absolute left-0 top-1/2 w-auto max-w-none will-change-transform ${logoFilter}`}
+                  style={{
+                    height: `${LOGO_HEADER_H}px`,
+                    transform: "translateY(-50%)",
+                  }}
                 />
               </a>
             )}
