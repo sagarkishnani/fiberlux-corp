@@ -80,9 +80,10 @@ export default function PartnersMarquee({ partners }: { partners?: PartnersData 
       </div>
 
       <style>{`
-        .partner-logo { opacity: 1; filter: none; transition: filter 0.35s ease, opacity 0.35s ease; }
+        /* Logos siempre en blanco (mobile a opacidad plena; desktop atenuados con hover). */
+        .partner-logo { opacity: 1; filter: brightness(0) invert(1); transition: filter 0.35s ease, opacity 0.35s ease; }
         @media (min-width: 768px) {
-          .partner-logo { filter: brightness(0) invert(1); opacity: 0.55; }
+          .partner-logo { opacity: 0.55; }
           .partner-logo:hover { opacity: 1; }
         }
 
