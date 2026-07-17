@@ -1,7 +1,8 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
 import TestimonialCard from './TestimonialCard';
+import { useDragSlider } from '../../hooks/useDragSlider';
 
 /* ── Types ── */
 interface TestimonialSliderProps {
@@ -36,10 +37,16 @@ export default function TestimonialSliderReact({
   // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
   const isVisible = testimonials?.visible === true;
 
-  const carouselRef = useRef<HTMLDivElement>(null);
   const titleH2Ref = useRef<HTMLHeadingElement>(null);
   const [leftPad, setLeftPad] = useState(64);
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  /* Shared drag/scroll engine: left-aligned cards (match snap-start), one per arrow. */
+  const slider = useDragSlider({
+    slideSelector: '.testimonial-slide',
+    align: 'start',
+    itemCount: items.length,
+  });
+  const { activeIndex } = slider;
 
   const canGoPrev = activeIndex > 0;
   const canGoNext = activeIndex < items.length - 1;
@@ -57,100 +64,20 @@ export default function TestimonialSliderReact({
     return () => window.removeEventListener('resize', measure);
   }, []);
 
-  /* ── Track active slide ── */
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-
-    const onScroll = () => {
-      const children = Array.from(el.querySelectorAll<HTMLElement>('.testimonial-slide'));
-      if (!children.length) return;
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((child, i) => {
-        const center = child.offsetLeft + child.offsetWidth / 2;
-        const dist = Math.abs(center - el.scrollLeft - el.offsetWidth / 2);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      });
-      setActiveIndex(closest);
-    };
-
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [items.length]);
-
-  /* ── Drag to scroll ── */
-  const isDragging = useRef(false);
-  const hasDragged = useRef(false);
-  const startX = useRef(0);
-  const startScrollLeft = useRef(0);
-
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    isDragging.current = true;
-    hasDragged.current = false;
-    startX.current = e.pageX;
-    startScrollLeft.current = el.scrollLeft;
-    el.style.cursor = 'grabbing';
-    el.style.scrollSnapType = 'none';
-  }, []);
-
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    const dx = e.pageX - startX.current;
-    if (Math.abs(dx) > 5) hasDragged.current = true;
-    el.scrollLeft = startScrollLeft.current - dx;
-  }, []);
-
-  const onMouseUp = useCallback(() => {
-    isDragging.current = false;
-    const el = carouselRef.current;
-    if (el) {
-      el.style.cursor = 'grab';
-      el.style.scrollSnapType = '';
-    }
-  }, []);
-
-  const onClickCapture = useCallback((e: React.MouseEvent) => {
-    if (hasDragged.current) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, []);
-
-  /* ── Button scroll ── */
-  const scroll = (direction: 'left' | 'right') => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const slide = el.querySelector<HTMLElement>('.testimonial-slide');
-    if (!slide) return;
-    const gap = 24;
-    el.scrollBy({
-      left: direction === 'right' ? slide.offsetWidth + gap : -(slide.offsetWidth + gap),
-      behavior: 'smooth',
-    });
-  };
-
   const hasItems = items.length > 0;
 
   /* ── Arrow button component ── */
   const ArrowButton = ({
     direction,
     disabled,
+    onClick,
   }: {
     direction: 'left' | 'right';
     disabled: boolean;
+    onClick: () => void;
   }) => (
     <button
-      onClick={() => scroll(direction)}
+      onClick={onClick}
       disabled={disabled}
       className={`w-10 h-10 flex items-center justify-center transition-all ${
         direction === 'left' ? 'rounded-l-lg' : 'rounded-r-lg'
@@ -193,8 +120,8 @@ export default function TestimonialSliderReact({
 
           {/* Desktop arrows */}
           <div className="hidden md:flex">
-            <ArrowButton direction="left" disabled={!canGoPrev} />
-            <ArrowButton direction="right" disabled={!canGoNext} />
+            <ArrowButton direction="left" disabled={!canGoPrev} onClick={slider.prev} />
+            <ArrowButton direction="right" disabled={!canGoNext} onClick={slider.next} />
           </div>
         </div>
       </div>
@@ -202,17 +129,13 @@ export default function TestimonialSliderReact({
       {/* Carousel */}
       <div className="relative">
         <div
-          ref={carouselRef}
+          ref={slider.ref}
           className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none testimonial-carousel"
           style={{
             cursor: 'grab',
             paddingLeft: `${leftPad}px`,
           }}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          onClickCapture={onClickCapture}
+          {...slider.handlers}
         >
           {hasItems
             ? items.map((item, i) => (
@@ -255,8 +178,8 @@ export default function TestimonialSliderReact({
       {/* Mobile navigation arrows */}
       <div className="md:hidden px-6 mt-6">
         <div className="flex">
-          <ArrowButton direction="left" disabled={!canGoPrev} />
-          <ArrowButton direction="right" disabled={!canGoNext} />
+          <ArrowButton direction="left" disabled={!canGoPrev} onClick={slider.prev} />
+          <ArrowButton direction="right" disabled={!canGoNext} onClick={slider.next} />
         </div>
       </div>
 
