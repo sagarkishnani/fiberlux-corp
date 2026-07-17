@@ -207,8 +207,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
         el.style.scrollSnapType = "";
         return;
       }
-      // Duration scales with distance, clamped to a snappy range.
-      const duration = Math.min(600, Math.max(260, Math.abs(dist) * 0.6));
+      // Duration scales with distance: snappy for short hops, a longer glide for
+      // multi-card flings on wide sliders.
+      const duration = Math.min(750, Math.max(240, Math.abs(dist) * 0.5));
       let startTime: number | null = null;
       const frame = (now: number) => {
         const node = ref.current;
@@ -326,27 +327,30 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     if (!el) return;
     el.style.cursor = "grab";
 
-    // Slow/short release → deterministic one-card snap.
-    if (!momentum || reduced || Math.abs(velocity.current) < minVelocity) {
+    const v = velocity.current;
+
+    // Slow/short release → deterministic one-card snap (return or advance one).
+    if (!momentum || reduced || Math.abs(v) < minVelocity) {
       snapDirectional();
       return;
     }
 
-    // Fast flick → inertia, then settle on the nearest card.
-    const stepFrame = () => {
-      const node = ref.current;
-      if (!node) return;
-      node.scrollLeft += velocity.current;
-      velocity.current *= decay;
-      if (Math.abs(velocity.current) < minVelocity) {
-        momentumId.current = null;
-        snapToNearest();
-        return;
-      }
-      momentumId.current = requestAnimationFrame(stepFrame);
-    };
-    momentumId.current = requestAnimationFrame(stepFrame);
-  }, [momentum, reduced, minVelocity, decay, snapDirectional, snapToNearest]);
+    // Fling → project where free momentum WOULD land, pick that card, and glide
+    // there in ONE eased tween. A single continuous motion (no momentum-loop →
+    // snap-tween handoff) reads as much smoother, especially on wide cards.
+    const step = measureStep();
+    if (!step) {
+      snapToNearest();
+      return;
+    }
+    const projected = el.scrollLeft + v * (decay / (1 - decay));
+    let target = Math.round(indexFloat(projected));
+    // A decisive flick always advances at least one card in its direction.
+    const cur = Math.round(indexFloat(el.scrollLeft));
+    if (v > 0 && target <= cur) target = cur + 1;
+    else if (v < 0 && target >= cur) target = cur - 1;
+    goTo(target);
+  }, [momentum, reduced, minVelocity, decay, measureStep, indexFloat, goTo, snapToNearest, snapDirectional]);
 
   const onClickCapture = useCallback((e: React.MouseEvent) => {
     if (hasDragged.current) {
