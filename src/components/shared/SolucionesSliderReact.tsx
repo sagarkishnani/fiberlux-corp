@@ -141,7 +141,7 @@ export default function SolucionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel"
+      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none sol-carousel"
       style={{ cursor: "grab" }}
       {...slider.handlers}
     >

@@ -195,7 +195,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
 
         <div
           ref={slider.ref}
-          className="flex gap-2 overflow-x-auto snap-x snap-mandatory select-none rubros-carousel"
+          className="flex gap-2 overflow-x-auto snap-x snap-proximity select-none rubros-carousel"
           style={{ cursor: 'grab' }}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}

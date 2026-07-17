@@ -69,7 +69,7 @@ export default function CertificacionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none cert-carousel"
+      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none cert-carousel"
       style={{ cursor: hasItems ? "grab" : "default" }}
       {...slider.handlers}
     >

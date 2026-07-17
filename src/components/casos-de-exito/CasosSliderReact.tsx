@@ -87,7 +87,7 @@ export default function CasosSliderReact({
       <div className="relative">
         <div
           ref={slider.ref}
-          className="flex gap-14 overflow-x-auto snap-x snap-mandatory pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
+          className="flex gap-14 overflow-x-auto snap-x snap-proximity pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
           style={{ cursor: hasItems ? "grab" : "default" }}
           {...slider.handlers}
         >

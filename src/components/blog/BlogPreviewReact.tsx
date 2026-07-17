@@ -82,7 +82,7 @@ export default function BlogPreviewReact({
         <div className="relative">
           <div
             ref={slider.ref}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none blog-carousel"
+            className="flex gap-6 overflow-x-auto snap-x snap-proximity pb-4 select-none blog-carousel"
             style={{ cursor: "grab", paddingRight: 0 }}
             {...slider.handlers}
           >

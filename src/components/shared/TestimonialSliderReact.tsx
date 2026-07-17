@@ -130,7 +130,7 @@ export default function TestimonialSliderReact({
       <div className="relative">
         <div
           ref={slider.ref}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none testimonial-carousel"
+          className="flex gap-6 overflow-x-auto snap-x snap-proximity pb-4 select-none testimonial-carousel"
           style={{
             cursor: 'grab',
             paddingLeft: `${leftPad}px`,
