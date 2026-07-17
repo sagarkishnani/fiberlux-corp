@@ -637,25 +637,17 @@ export default function HeaderV2React({
                   >
                     {mainLinks.map((link, i) =>
                       hasChildren(link) ? (
-                        <div
+                        <button
                           key={i}
-                          className="flex items-center justify-between"
+                          onClick={() => drillInto(i)}
+                          className="flex items-center justify-between w-full text-left text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
+                          aria-label={`Ver opciones de ${link.text}`}
                         >
-                          <a
-                            href={link.url || "#"}
-                            onClick={closeMenu}
-                            className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
-                          >
-                            {link.text}
-                          </a>
-                          <button
-                            onClick={() => drillInto(i)}
-                            className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
-                            aria-label={`Ver opciones de ${link.text}`}
-                          >
+                          <span>{link.text}</span>
+                          <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-6 h-6" />
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ) : (
                         <a
                           key={i}
