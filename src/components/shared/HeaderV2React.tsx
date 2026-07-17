@@ -78,7 +78,7 @@ const MOBILE_BREAKPOINT = 1024;
    solo desplaza en Y. Valores afinados visualmente. */
 const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
 const LOGO_HEADER_H = 20; // altura en reposo del logo (= h-5 del header)
-const LOGO_HERO_H = 80; // altura del logo grande sobre el hero
+const LOGO_HERO_H = 64; // altura del logo grande sobre el hero
 const LOGO_START_OFFSET_Y = 230; // px que el logo baja hacia el hero al tope
 
 /* ── Icons ── */
