@@ -690,25 +690,17 @@ export default function HeaderV2React({
                     {currentChildren.map((child, j) => {
                       const childWithChildren = hasChildren(child as NavChild);
                       return childWithChildren ? (
-                        <div
+                        <button
                           key={j}
-                          className="flex items-center justify-between"
+                          onClick={() => drillInto(j)}
+                          className="flex items-center justify-between w-full text-left text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                          aria-label={`Ver opciones de ${child.text}`}
                         >
-                          <a
-                            href={child.url || "#"}
-                            onClick={closeMenu}
-                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
-                          >
-                            {child.text}
-                          </a>
-                          <button
-                            onClick={() => drillInto(j)}
-                            className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
-                            aria-label={`Ver opciones de ${child.text}`}
-                          >
+                          <span>{child.text}</span>
+                          <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-5 h-5" />
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ) : (
                         <a
                           key={j}
