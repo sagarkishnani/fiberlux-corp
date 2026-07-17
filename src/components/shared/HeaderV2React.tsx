@@ -671,19 +671,19 @@ export default function HeaderV2React({
                     Atrás
                   </button>
 
-                  <p className="text-white text-2xl font-semibold mb-2">
-                    {currentNode?.text}
-                  </p>
-
-                  {currentNode?.url && (
+                  {currentNode?.url ? (
                     <a
                       href={currentNode.url}
                       onClick={closeMenu}
-                      className="inline-flex items-center gap-1.5 text-white/80 text-base mb-4 underline underline-offset-4 hover:text-white transition-colors"
+                      className="inline-flex items-center gap-2 text-white text-2xl font-semibold mb-5 hover:text-white/80 transition-colors"
                     >
-                      Ver todo {currentNode.text}
-                      <ChevronRight className="w-4 h-4" />
+                      {currentNode.text}
+                      <ChevronRight className="w-4 h-4 text-white/60" />
                     </a>
+                  ) : (
+                    <p className="text-white text-2xl font-semibold mb-5">
+                      {currentNode?.text}
+                    </p>
                   )}
 
                   <nav className="flex flex-col gap-1">
