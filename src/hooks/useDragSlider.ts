@@ -93,52 +93,42 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     return first.offsetWidth + Math.max(0, gap);
   }, [getSlides]);
 
-  /** The content-space point a given scrollLeft aligns to (left edge or centre). */
-  const scrollAlignPoint = useCallback(
-    (scrollLeft: number): number => {
-      const el = ref.current;
-      if (!el) return 0;
-      return align === "center" ? scrollLeft + el.clientWidth / 2 : scrollLeft + paddingLeft();
-    },
-    [align, paddingLeft],
-  );
+  /**
+   * The `scrollLeft` value that aligns the FIRST slide (left edge, or centre).
+   * Computed from live rects so it's independent of the offsetParent coordinate
+   * space — `offsetLeft` is relative to the offsetParent, not the scroller, so it
+   * can't be used directly. This value is invariant to the current scroll: as you
+   * scroll, the slide's on-screen position shifts by exactly the scroll delta.
+   */
+  const measureBase = useCallback((): number => {
+    const el = ref.current;
+    const slides = getSlides();
+    if (!el || !slides.length) return 0;
+    const c = el.getBoundingClientRect();
+    const s0 = slides[0].getBoundingClientRect();
+    return align === "center"
+      ? el.scrollLeft + (s0.left + s0.width / 2) - (c.left + c.width / 2)
+      : el.scrollLeft + (s0.left - c.left) - paddingLeft();
+  }, [align, getSlides, paddingLeft]);
 
-  const slideCoord = useCallback(
-    (slide: HTMLElement): number =>
-      align === "center" ? slide.offsetLeft + slide.offsetWidth / 2 : slide.offsetLeft,
-    [align],
+  /** Fractional card index at a scroll position (equal-width, equal-gap slides). */
+  const indexFloat = useCallback(
+    (scrollLeft: number): number => {
+      const step = measureStep();
+      if (!step) return 0;
+      return (scrollLeft - measureBase()) / step;
+    },
+    [measureBase, measureStep],
   );
 
   /** Index of the slide currently nearest the alignment point. */
   const nearestIndex = useCallback(
     (scrollLeft: number): number => {
-      const el = ref.current;
       const slides = getSlides();
-      if (!el || !slides.length) return 0;
-      const p = scrollAlignPoint(scrollLeft);
-      let best = 0;
-      let min = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs(slideCoord(s) - p);
-        if (d < min) {
-          min = d;
-          best = i;
-        }
-      });
-      return best;
+      if (!slides.length) return 0;
+      return Math.min(Math.max(Math.round(indexFloat(scrollLeft)), 0), slides.length - 1);
     },
-    [getSlides, scrollAlignPoint, slideCoord],
-  );
-
-  /** Fractional card index at a scroll position (for direction-biased snap). */
-  const indexFloat = useCallback(
-    (scrollLeft: number): number => {
-      const slides = getSlides();
-      const step = measureStep();
-      if (!slides.length || !step) return 0;
-      return (scrollAlignPoint(scrollLeft) - slideCoord(slides[0])) / step;
-    },
-    [getSlides, measureStep, scrollAlignPoint, slideCoord],
+    [getSlides, indexFloat],
   );
 
   /** Absolute scrollLeft that lands card `i` at the alignment point (clamped). */
@@ -147,16 +137,12 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
       const el = ref.current;
       const slides = getSlides();
       if (!el || !slides.length) return 0;
+      const step = measureStep();
       const clamped = Math.min(Math.max(i, 0), slides.length - 1);
-      const slide = slides[clamped];
       const max = el.scrollWidth - el.clientWidth;
-      const target =
-        align === "center"
-          ? slide.offsetLeft + slide.offsetWidth / 2 - el.clientWidth / 2
-          : slide.offsetLeft - paddingLeft();
-      return Math.min(Math.max(target, 0), max);
+      return Math.min(Math.max(measureBase() + clamped * step, 0), max);
     },
-    [align, getSlides, paddingLeft],
+    [getSlides, measureBase, measureStep],
   );
 
   /* ── Track active card + edges from scroll ── */
@@ -183,27 +169,63 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   }, [updateFromScroll, itemCount]);
 
   /**
-   * Animate to an absolute scroll position. CSS `scroll-snap-type: mandatory`
-   * fights programmatic smooth scrolling in Chromium (it snaps back to the
-   * origin mid-animation), so we disable snap for the animation and restore it
-   * once we've landed on the (snap-aligned) target.
+   * Animate to an absolute scroll position with a self-driven `requestAnimationFrame`
+   * tween (easeOutCubic). We do NOT use native `scrollTo({behavior:"smooth"})`:
+   * it is unreliable here — Lenis (global smooth scroll) leaves it inert, and CSS
+   * `scroll-snap-type: mandatory` fights it in Chromium. Driving `scrollLeft`
+   * ourselves works everywhere. Snap is disabled during the tween and restored on
+   * the exact frame it lands (no fragile timeout).
    */
-  const snapTimer = useRef<number | null>(null);
+  const animId = useRef<number | null>(null);
+  const cancelAnim = useCallback(() => {
+    if (animId.current !== null) {
+      cancelAnimationFrame(animId.current);
+      animId.current = null;
+    }
+  }, []);
+
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
+
   const animateTo = useCallback(
     (left: number) => {
       const el = ref.current;
       if (!el) return;
-      if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
+      cancelAnim();
+      const max = el.scrollWidth - el.clientWidth;
+      const target = Math.min(Math.max(left, 0), max);
       el.style.scrollSnapType = "none";
-      el.scrollTo({ left, behavior: reduced ? "auto" : "smooth" });
-      snapTimer.current = window.setTimeout(
-        () => {
-          if (ref.current) ref.current.style.scrollSnapType = "";
-        },
-        reduced ? 0 : snapRestoreMs,
-      );
+
+      if (reduced) {
+        el.scrollLeft = target;
+        el.style.scrollSnapType = "";
+        return;
+      }
+
+      const from = el.scrollLeft;
+      const dist = target - from;
+      if (Math.abs(dist) < 1) {
+        el.style.scrollSnapType = "";
+        return;
+      }
+      // Duration scales with distance, clamped to a snappy range.
+      const duration = Math.min(600, Math.max(260, Math.abs(dist) * 0.6));
+      let startTime: number | null = null;
+      const frame = (now: number) => {
+        const node = ref.current;
+        if (!node) return;
+        if (startTime === null) startTime = now;
+        const p = Math.min(1, (now - startTime) / duration);
+        node.scrollLeft = from + dist * easeOutCubic(p);
+        if (p < 1) {
+          animId.current = requestAnimationFrame(frame);
+        } else {
+          animId.current = null;
+          node.style.scrollSnapType = "";
+        }
+      };
+      animId.current = requestAnimationFrame(frame);
     },
-    [reduced, snapRestoreMs],
+    [reduced, cancelAnim],
   );
 
   const goTo = useCallback(
@@ -273,6 +295,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     const el = ref.current;
     if (!el) return;
     stopMomentum();
+    cancelAnim();
     isDragging.current = true;
     hasDragged.current = false;
     startX.current = e.pageX;
@@ -281,7 +304,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     startScrollLeft.current = el.scrollLeft;
     el.style.cursor = "grabbing";
     el.style.scrollSnapType = "none";
-  }, [stopMomentum]);
+  }, [stopMomentum, cancelAnim]);
 
   const onMouseMove = useCallback((e: React.MouseEvent) => {
     if (!isDragging.current) return;
@@ -336,9 +359,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   useEffect(
     () => () => {
       stopMomentum();
-      if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
+      cancelAnim();
     },
-    [stopMomentum],
+    [stopMomentum, cancelAnim],
   );
 
   return {
