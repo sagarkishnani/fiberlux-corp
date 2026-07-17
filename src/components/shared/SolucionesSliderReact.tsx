@@ -1,6 +1,6 @@
-import { useRef, useState, useCallback, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
+import { useDragSlider } from "../../hooks/useDragSlider";
 
 /* ── Props ── */
 interface SolucionesSliderProps {
@@ -9,7 +9,6 @@ interface SolucionesSliderProps {
   data: HomeQuery;
 }
 
-const GAP = 24; // px, matches gap-6
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 /* Prefixes the CMS media path with BASE_URL so it resolves under a subpath deploy. */
@@ -34,150 +33,13 @@ export default function SolucionesSliderReact({
     NonNullable<typeof services>["items"]
   >;
 
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
-
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  /* Step = one card width + gap (all cards are equal width). */
-  const stepPx = () => {
-    const el = carouselRef.current;
-    const slide = el?.querySelector<HTMLElement>(".sol-slide");
-    return slide ? slide.offsetWidth + GAP : 0;
-  };
-
-  /* ── Track active card + edges from scroll position ── */
-  const updateFromScroll = useCallback(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setAtStart(el.scrollLeft <= 1);
-    setAtEnd(el.scrollLeft >= max - 1);
-    const step = stepPx();
-    if (step) {
-      const idx = Math.round(el.scrollLeft / step);
-      setActiveIndex((prev) => (prev !== idx ? idx : prev));
-    }
-  }, []);
-
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-    updateFromScroll();
-    el.addEventListener("scroll", updateFromScroll, { passive: true });
-    window.addEventListener("resize", updateFromScroll);
-    return () => {
-      el.removeEventListener("scroll", updateFromScroll);
-      window.removeEventListener("resize", updateFromScroll);
-    };
-  }, [updateFromScroll, items.length]);
-
-  /**
-   * Animate to an absolute scroll position. CSS `scroll-snap-type: mandatory`
-   * fights programmatic smooth scrolling in Chromium (it snaps back to the
-   * origin mid-animation), so we disable snap for the duration of the animation
-   * and restore it once we've landed on the (snap-aligned) target.
-   */
-  const snapTimer = useRef<number | null>(null);
-  const animateTo = (left: number) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
-    el.style.scrollSnapType = "none";
-    el.scrollTo({ left, behavior: prefersReducedMotion ? "auto" : "smooth" });
-    snapTimer.current = window.setTimeout(
-      () => {
-        if (carouselRef.current) carouselRef.current.style.scrollSnapType = "";
-      },
-      prefersReducedMotion ? 0 : 500,
-    );
-  };
-
-  useEffect(
-    () => () => {
-      if (snapTimer.current !== null) window.clearTimeout(snapTimer.current);
-    },
-    [],
-  );
-
-  /* Scroll to a card index (clamped to the scrollable range). */
-  const scrollToIndex = (i: number) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const step = stepPx();
-    if (!step) return;
-    const max = el.scrollWidth - el.clientWidth;
-    animateTo(Math.min(Math.max(i, 0) * step, max));
-  };
-
-  /* ── Arrow navigation (one card at a time) ── */
-  const scrollByCards = (dir: "left" | "right") => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const step = stepPx();
-    if (!step) return;
-    const current = el.scrollLeft / step;
-    scrollToIndex(dir === "right" ? Math.round(current) + 1 : Math.round(current) - 1);
-  };
-
-  /* ── Drag to scroll (mouse) — direction-biased snap, no momentum ── */
-  const isDragging = useRef(false);
-  const hasDragged = useRef(false);
-  const startX = useRef(0);
-  const startScrollLeft = useRef(0);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    isDragging.current = true;
-    hasDragged.current = false;
-    startX.current = e.pageX;
-    startScrollLeft.current = el.scrollLeft;
-    el.style.cursor = "grabbing";
-    el.style.scrollSnapType = "none";
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    const dx = e.pageX - startX.current;
-    if (Math.abs(dx) > 5) hasDragged.current = true;
-    el.scrollLeft = startScrollLeft.current - dx;
-  };
-
-  const onMouseUp = () => {
-    if (!isDragging.current) return;
-    isDragging.current = false;
-    const el = carouselRef.current;
-    if (!el) return;
-    el.style.cursor = "grab";
-    // Snap is re-enabled by animateTo() once the settle animation completes.
-
-    const step = stepPx();
-    if (!step) return;
-    const startIdx = Math.round(startScrollLeft.current / step);
-    const moved = el.scrollLeft - startScrollLeft.current;
-    // A deliberate drag (>15% of a card) advances one card in that direction;
-    // a smaller nudge returns to where it started (no accidental half-steps).
-    let target = startIdx;
-    if (moved > step * 0.15) target = Math.ceil((startScrollLeft.current + moved) / step);
-    else if (moved < -step * 0.15) target = Math.floor((startScrollLeft.current + moved) / step);
-    scrollToIndex(target);
-  };
-
-  /* Swallow the click that follows a drag. */
-  const onClickCapture = useCallback((e: React.MouseEvent) => {
-    if (hasDragged.current) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, []);
+  /* Shared drag/scroll engine: left-aligned cards, one card per arrow. */
+  const slider = useDragSlider({
+    slideSelector: ".sol-slide",
+    align: "start",
+    itemCount: items.length,
+  });
+  const { activeIndex, atStart, atEnd } = slider;
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -190,7 +52,7 @@ export default function SolucionesSliderReact({
     <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
       <button
         type="button"
-        onClick={() => scrollByCards("left")}
+        onClick={slider.prev}
         disabled={atStart}
         aria-label="Anterior"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
@@ -203,7 +65,7 @@ export default function SolucionesSliderReact({
       </button>
       <button
         type="button"
-        onClick={() => scrollByCards("right")}
+        onClick={slider.next}
         disabled={atEnd}
         aria-label="Siguiente"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
@@ -278,14 +140,10 @@ export default function SolucionesSliderReact({
   /* ── Carousel viewport: shows ~1 card + peek of the next ── */
   const carousel = (
     <div
-      ref={carouselRef}
+      ref={slider.ref}
       className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel"
       style={{ cursor: "grab" }}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
-      onMouseLeave={onMouseUp}
-      onClickCapture={onClickCapture}
+      {...slider.handlers}
     >
       {items.map((item, i) => (
         <div
