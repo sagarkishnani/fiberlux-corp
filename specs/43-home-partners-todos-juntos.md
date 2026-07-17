@@ -70,6 +70,9 @@ La agregación es **lógica de build** dentro de `HomePartners.astro` (aplanar +
 - **Sí:** logos automáticos, **solo el copy editable** (vía el form de `global.partners` en `/admin`). *(Elección del usuario.)*
 - **Nota:** por ser los logos una **agregación de build** (no un único doc CMS), `HomePartners.astro` renderiza `PartnersMarquee` directo como island, sin envoltorio `useTina`. El copy sigue editable en el CMS, pero no tiene live-preview en el editor visual — trade-off aceptable para esta franja.
 - **Sí:** deduplicar por **ruta de imagen** (`image`), preservando el orden de aparición por solución.
+- **Post-implementación (feedback del usuario):**
+  - **Velocidad constante del marquee.** Con 31 logos, la duración fija de 110s del CSS hacía el marquee ~3× más rápido que en las soluciones. Se añadió un prop **opcional** `durationSeconds` a `PartnersMarquee` (default = 110s, así las franjas per-solución quedan intactas) y `HomePartners` pasa una duración **proporcional a la cantidad de logos** (~12s por logo), para una velocidad constante y un loop que no se siente cortado.
+  - **Espaciado en el home.** El wrapper de `HomePartners` sube (`-mt-24 lg:-mt-44`) para consumir el padding inferior vacío de Testimonios (el logo grande gap de arriba) y el wrapper de `Stats` reduce su solape (`-mt-6`) para dar aire abajo. Queda ~80/56 px arriba/abajo en desktop y ~76/40 en mobile, validado visualmente.
 
 ---
 
