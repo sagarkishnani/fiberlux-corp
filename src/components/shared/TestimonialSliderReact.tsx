@@ -1,4 +1,3 @@
-import { useRef, useState, useEffect } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
 import TestimonialCard from './TestimonialCard';
@@ -37,9 +36,6 @@ export default function TestimonialSliderReact({
   // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
   const isVisible = testimonials?.visible === true;
 
-  const titleH2Ref = useRef<HTMLHeadingElement>(null);
-  const [leftPad, setLeftPad] = useState(64);
-
   /* Shared drag/scroll engine: left-aligned cards (match snap-start), one per arrow. */
   const slider = useDragSlider({
     slideSelector: '.testimonial-slide',
@@ -50,19 +46,6 @@ export default function TestimonialSliderReact({
 
   const canGoPrev = activeIndex > 0;
   const canGoNext = activeIndex < items.length - 1;
-
-  /* ── Measure exact left offset of the h2 text ── */
-  useEffect(() => {
-    const measure = () => {
-      if (titleH2Ref.current) {
-        const rect = titleH2Ref.current.getBoundingClientRect();
-        setLeftPad(rect.left);
-      }
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
 
   const hasItems = items.length > 0;
 
@@ -109,7 +92,6 @@ export default function TestimonialSliderReact({
       <div className="">
         <div className="flex items-start md:items-center justify-between mb-12">
           <h2
-            ref={titleH2Ref}
             className="text-subtitle-lg text-white md:max-w-[600px]"
             data-tina-field={
               testimonials ? tinaField(testimonials, 'sectionTitle') : undefined
@@ -131,14 +113,7 @@ export default function TestimonialSliderReact({
         <div
           ref={slider.ref}
           className="flex gap-6 overflow-x-auto snap-x snap-proximity pb-4 select-none testimonial-carousel"
-          style={{
-            cursor: 'grab',
-            paddingLeft: `${leftPad}px`,
-            // Match scroll-padding to the left padding so native scroll-snap aligns
-            // cards to the SAME position the hook targets (content edge, under the
-            // title) — otherwise snap yanks each settle back by paddingLeft.
-            scrollPaddingLeft: `${leftPad}px`,
-          }}
+          style={{ cursor: 'grab' }}
           {...slider.handlers}
         >
           {hasItems
