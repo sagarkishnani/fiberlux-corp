@@ -671,9 +671,20 @@ export default function HeaderV2React({
                     Atrás
                   </button>
 
-                  <p className="text-white text-2xl font-semibold mb-5">
+                  <p className="text-white text-2xl font-semibold mb-2">
                     {currentNode?.text}
                   </p>
+
+                  {currentNode?.url && (
+                    <a
+                      href={currentNode.url}
+                      onClick={closeMenu}
+                      className="inline-flex items-center gap-1.5 text-white/80 text-base mb-4 underline underline-offset-4 hover:text-white transition-colors"
+                    >
+                      Ver todo {currentNode.text}
+                      <ChevronRight className="w-4 h-4" />
+                    </a>
+                  )}
 
                   <nav className="flex flex-col gap-1">
                     {currentChildren.map((child, j) => {
