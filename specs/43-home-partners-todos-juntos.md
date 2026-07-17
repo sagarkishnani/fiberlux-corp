@@ -72,7 +72,7 @@ La agregación es **lógica de build** dentro de `HomePartners.astro` (aplanar +
 - **Sí:** deduplicar por **ruta de imagen** (`image`), preservando el orden de aparición por solución.
 - **Post-implementación (feedback del usuario):**
   - **Velocidad constante del marquee.** Con 31 logos, la duración fija de 110s del CSS hacía el marquee ~3× más rápido que en las soluciones. Se añadió un prop **opcional** `durationSeconds` a `PartnersMarquee` (default = 110s, así las franjas per-solución quedan intactas) y `HomePartners` pasa una duración **proporcional a la cantidad de logos** (~12s por logo), para una velocidad constante y un loop que no se siente cortado.
-  - **Espaciado en el home.** El wrapper de `HomePartners` sube (`-mt-24 lg:-mt-44`) para consumir el padding inferior vacío de Testimonios (el logo grande gap de arriba) y el wrapper de `Stats` reduce su solape (`-mt-6`) para dar aire abajo. Queda ~80/56 px arriba/abajo en desktop y ~76/40 en mobile, validado visualmente.
+  - **Espaciado en el home.** El wrapper de `HomePartners` sube (`-mt-20 lg:-mt-40`) para consumir el padding inferior vacío de Testimonios (el gran gap de arriba) y el wrapper de `Stats` reduce su solape (`-mt-2`) para dar aire abajo. Queda ~96/72 px arriba/abajo en desktop y ~92/56 en mobile, validado visualmente.
 
 ---
 
