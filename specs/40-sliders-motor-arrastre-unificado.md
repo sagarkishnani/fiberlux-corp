@@ -1,6 +1,6 @@
 # SPEC 40 — Motor de arrastre unificado para sliders (momentum + snap)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 05, SPEC 13, SPEC 34, SPEC 35
 > **Date:** 2026-07-17
 > **Objective:** Unificar el arrastre de los cinco sliders del sitio en un único hook con inercia (momentum) y encaje limpio en card, tomando lo mejor de Soluciones y Casos de éxito.
