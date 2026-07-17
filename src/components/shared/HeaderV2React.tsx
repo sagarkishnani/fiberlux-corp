@@ -79,7 +79,7 @@ const MOBILE_BREAKPOINT = 1024;
 const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
 const LOGO_HEADER_H = 20; // altura en reposo del logo (= h-5 del header)
 const LOGO_HERO_H = 64; // altura del logo grande sobre el hero
-const LOGO_START_OFFSET_Y = 230; // px que el logo baja hacia el hero al tope
+const LOGO_START_OFFSET_Y = 195; // px que el logo baja hacia el hero al tope
 
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
