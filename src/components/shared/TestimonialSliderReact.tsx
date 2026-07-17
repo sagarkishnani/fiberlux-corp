@@ -134,6 +134,10 @@ export default function TestimonialSliderReact({
           style={{
             cursor: 'grab',
             paddingLeft: `${leftPad}px`,
+            // Match scroll-padding to the left padding so native scroll-snap aligns
+            // cards to the SAME position the hook targets (content edge, under the
+            // title) — otherwise snap yanks each settle back by paddingLeft.
+            scrollPaddingLeft: `${leftPad}px`,
           }}
           {...slider.handlers}
         >
