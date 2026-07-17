@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   CasosDeExitoQuery,
@@ -6,6 +6,7 @@ import type {
 } from "../../../tina/__generated__/types";
 import CasoCard, { type Caso } from "./CasoCard";
 import VideoModal from "./VideoModal";
+import { useDragSlider } from "../../hooks/useDragSlider";
 
 interface CasosSliderProps {
   query: string;
@@ -24,162 +25,18 @@ export default function CasosSliderReact({
   const sectionTitle = page?.sectionTitle || "Casos de éxito";
   const items = (page?.items || []).filter(Boolean) as any[];
 
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [modalCaso, setModalCaso] = useState<Caso | null>(null);
+
+  /* Shared drag/scroll engine: centre-aligned cards, one card per arrow. */
+  const slider = useDragSlider({
+    slideSelector: ".caso-slide",
+    align: "center",
+    itemCount: items.length,
+  });
+  const { activeIndex } = slider;
 
   const canGoPrev = activeIndex > 0;
   const canGoNext = activeIndex < items.length - 1;
-
-  const prefersReducedMotion =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-  /* ── Track active slide ── */
-  useEffect(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const children = Array.from(el.querySelectorAll<HTMLElement>(".caso-slide"));
-      if (!children.length) return;
-      let closest = 0;
-      let minDist = Infinity;
-      children.forEach((child, i) => {
-        const center = child.offsetLeft + child.offsetWidth / 2;
-        const dist = Math.abs(center - el.scrollLeft - el.offsetWidth / 2);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      });
-      setActiveIndex(closest);
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [items.length]);
-
-  /* ── Drag to scroll (with momentum + smooth snap) ── */
-  const isDragging = useRef(false);
-  const hasDragged = useRef(false);
-  const startX = useRef(0);
-  const startScrollLeft = useRef(0);
-  const lastX = useRef(0);
-  const velocity = useRef(0);
-  const momentumId = useRef<number | null>(null);
-
-  const stopMomentum = () => {
-    if (momentumId.current !== null) {
-      cancelAnimationFrame(momentumId.current);
-      momentumId.current = null;
-    }
-  };
-
-  /* Ease onto the slide nearest the viewport centre, then restore CSS snap. */
-  const snapToNearest = () => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const children = Array.from(el.querySelectorAll<HTMLElement>(".caso-slide"));
-    if (!children.length) return;
-    const targetCenter = el.scrollLeft + el.offsetWidth / 2;
-    let nearest = children[0];
-    let minDist = Infinity;
-    children.forEach((child) => {
-      const center = child.offsetLeft + child.offsetWidth / 2;
-      const dist = Math.abs(center - targetCenter);
-      if (dist < minDist) {
-        minDist = dist;
-        nearest = child;
-      }
-    });
-    const left = nearest.offsetLeft + nearest.offsetWidth / 2 - el.offsetWidth / 2;
-    el.scrollTo({ left, behavior: prefersReducedMotion ? "auto" : "smooth" });
-    // Re-enable CSS snap only after the smooth settle, so it doesn't jump-cut the animation.
-    window.setTimeout(
-      () => {
-        const n = carouselRef.current;
-        if (n) n.style.scrollSnapType = "";
-      },
-      prefersReducedMotion ? 0 : 450,
-    );
-  };
-
-  useEffect(() => () => stopMomentum(), []);
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    const el = carouselRef.current;
-    if (!el) return;
-    stopMomentum();
-    isDragging.current = true;
-    hasDragged.current = false;
-    startX.current = e.pageX;
-    lastX.current = e.pageX;
-    velocity.current = 0;
-    startScrollLeft.current = el.scrollLeft;
-    el.style.cursor = "grabbing";
-    el.style.scrollSnapType = "none";
-  };
-
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    const dx = e.pageX - startX.current;
-    if (Math.abs(dx) > 5) hasDragged.current = true;
-    el.scrollLeft = startScrollLeft.current - dx;
-    // Low-pass filtered velocity (px/frame) → smooth release momentum.
-    velocity.current = 0.8 * velocity.current + 0.2 * (lastX.current - e.pageX);
-    lastX.current = e.pageX;
-  };
-
-  const onMouseUp = () => {
-    if (!isDragging.current) return;
-    isDragging.current = false;
-    const el = carouselRef.current;
-    if (!el) return;
-    el.style.cursor = "grab";
-
-    if (prefersReducedMotion || Math.abs(velocity.current) < 0.6) {
-      snapToNearest();
-      return;
-    }
-
-    const decay = 0.92;
-    const step = () => {
-      const node = carouselRef.current;
-      if (!node) return;
-      node.scrollLeft += velocity.current;
-      velocity.current *= decay;
-      if (Math.abs(velocity.current) < 0.6) {
-        momentumId.current = null;
-        snapToNearest();
-        return;
-      }
-      momentumId.current = requestAnimationFrame(step);
-    };
-    momentumId.current = requestAnimationFrame(step);
-  };
-
-  /* Cancel the click that follows a drag so it doesn't open the modal. */
-  const onClickCapture = useCallback((e: React.MouseEvent) => {
-    if (hasDragged.current) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, []);
-
-  /* ── Arrow scroll ── */
-  const scroll = (direction: "left" | "right") => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const slide = el.querySelector<HTMLElement>(".caso-slide");
-    if (!slide) return;
-    const gap = 56;
-    el.scrollBy({
-      left: direction === "right" ? slide.offsetWidth + gap : -(slide.offsetWidth + gap),
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  };
 
   const hasItems = items.length > 0;
 
@@ -188,7 +45,7 @@ export default function CasosSliderReact({
     <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
       <button
         type="button"
-        onClick={() => scroll("left")}
+        onClick={slider.prev}
         disabled={!canGoPrev}
         aria-label="Anterior"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
@@ -201,7 +58,7 @@ export default function CasosSliderReact({
       </button>
       <button
         type="button"
-        onClick={() => scroll("right")}
+        onClick={slider.next}
         disabled={!canGoNext}
         aria-label="Siguiente"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
@@ -229,14 +86,10 @@ export default function CasosSliderReact({
       {/* Carousel */}
       <div className="relative">
         <div
-          ref={carouselRef}
+          ref={slider.ref}
           className="flex gap-14 overflow-x-auto snap-x snap-mandatory pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
           style={{ cursor: hasItems ? "grab" : "default" }}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          onClickCapture={onClickCapture}
+          {...slider.handlers}
         >
           {hasItems ? (
             items.map((item, i) => (
