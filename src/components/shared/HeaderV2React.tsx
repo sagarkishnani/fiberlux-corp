@@ -637,25 +637,17 @@ export default function HeaderV2React({
                   >
                     {mainLinks.map((link, i) =>
                       hasChildren(link) ? (
-                        <div
+                        <button
                           key={i}
-                          className="flex items-center justify-between"
+                          onClick={() => drillInto(i)}
+                          className="flex items-center justify-between w-full text-left text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
+                          aria-label={`Ver opciones de ${link.text}`}
                         >
-                          <a
-                            href={link.url || "#"}
-                            onClick={closeMenu}
-                            className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
-                          >
-                            {link.text}
-                          </a>
-                          <button
-                            onClick={() => drillInto(i)}
-                            className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
-                            aria-label={`Ver opciones de ${link.text}`}
-                          >
+                          <span>{link.text}</span>
+                          <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-6 h-6" />
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ) : (
                         <a
                           key={i}
@@ -679,33 +671,36 @@ export default function HeaderV2React({
                     Atrás
                   </button>
 
-                  <p className="text-white text-2xl font-semibold mb-5">
-                    {currentNode?.text}
-                  </p>
+                  {currentNode?.url ? (
+                    <a
+                      href={currentNode.url}
+                      onClick={closeMenu}
+                      className="inline-flex items-center gap-2 text-white text-2xl font-semibold mb-5 hover:text-white/80 transition-colors"
+                    >
+                      {currentNode.text}
+                      <ChevronRight className="w-4 h-4 text-white/60" />
+                    </a>
+                  ) : (
+                    <p className="text-white text-2xl font-semibold mb-5">
+                      {currentNode?.text}
+                    </p>
+                  )}
 
                   <nav className="flex flex-col gap-1">
                     {currentChildren.map((child, j) => {
                       const childWithChildren = hasChildren(child as NavChild);
                       return childWithChildren ? (
-                        <div
+                        <button
                           key={j}
-                          className="flex items-center justify-between"
+                          onClick={() => drillInto(j)}
+                          className="flex items-center justify-between w-full text-left text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                          aria-label={`Ver opciones de ${child.text}`}
                         >
-                          <a
-                            href={child.url || "#"}
-                            onClick={closeMenu}
-                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
-                          >
-                            {child.text}
-                          </a>
-                          <button
-                            onClick={() => drillInto(j)}
-                            className="p-2 -mr-2 text-white/70 hover:text-white transition-colors"
-                            aria-label={`Ver opciones de ${child.text}`}
-                          >
+                          <span>{child.text}</span>
+                          <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-5 h-5" />
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ) : (
                         <a
                           key={j}
