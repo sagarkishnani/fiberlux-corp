@@ -1,0 +1,36 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import PartnersMarquee from "./PartnersMarquee.tsx";
+
+// Franja de partners del home (SPEC 43): reúne los logos de TODAS las
+// soluciones en un solo marquee, deduplicando por ruta de imagen. El copy
+// (eyebrow/title) se reusa de `global.partners`. Los logos se agregan en build
+// desde `serviceConnection`, así que si una solución cambia sus partners, el
+// home se actualiza solo en el próximo build sin tocar este componente.
+const [conn, globalQuery] = await Promise.all([
+  client.queries.serviceConnection({ last: 100 }),
+  client.queries.global({ relativePath: "index.json" }),
+]);
+
+const edges = conn.data?.serviceConnection?.edges || [];
+const allLogos = edges
+  .flatMap((e: any) => e?.node?.partners?.logos || [])
+  .filter((l: any) => l && l.image);
+
+// Dedupe por ruta de imagen, preservando el orden de aparición por solución.
+const seen = new Set<string>();
+const logos = allLogos.filter((l: any) => {
+  if (seen.has(l.image)) return false;
+  seen.add(l.image);
+  return true;
+});
+
+const gp = (globalQuery.data?.global as any)?.partners;
+const partners = {
+  eyebrow: gp?.eyebrow ?? null,
+  title: gp?.title ?? null,
+  logos,
+};
+---
+
+<PartnersMarquee client:visible partners={partners} />
