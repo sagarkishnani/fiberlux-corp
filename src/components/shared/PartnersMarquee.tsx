@@ -18,7 +18,19 @@ export interface PartnersData {
  * `tinaField()` bindings keep live visual editing working for whichever
  * collection (global or service) supplied the data.
  */
-export default function PartnersMarquee({ partners }: { partners?: PartnersData | null }) {
+export default function PartnersMarquee({
+  partners,
+  durationSeconds,
+}: {
+  partners?: PartnersData | null;
+  /**
+   * Duración del ciclo del marquee en segundos. Opcional: si se omite se usa
+   * la duración fija del CSS (110s), pensada para las franjas per-solución con
+   * pocos logos. El home pasa una duración proporcional a la cantidad de logos
+   * para mantener una velocidad constante aunque haya muchos (SPEC 43).
+   */
+  durationSeconds?: number;
+}) {
   if (!partners) return null;
 
   const logos = (partners.logos || []).filter(Boolean) as PartnerLogo[];
@@ -74,7 +86,15 @@ export default function PartnersMarquee({ partners }: { partners?: PartnersData 
 
       {/* Full-width marquee */}
       <div className="partners-marquee w-full overflow-hidden">
-        <div className="partners-track flex w-max items-center" aria-hidden="false">
+        <div
+          className="partners-track flex w-max items-center"
+          aria-hidden="false"
+          style={
+            durationSeconds
+              ? { animationDuration: `${durationSeconds}s` }
+              : undefined
+          }
+        >
           {track.map(renderLogo)}
         </div>
       </div>
