@@ -20,13 +20,30 @@ export default function HeroHomeReact({
 
   const buttons = (hero.buttons || []).filter(Boolean);
 
+  // Fondo estático del hero en mobile (SPEC 44): en <lg no se carga el 3D
+  // (problemas en mobile), se muestra esta imagen a sangre completa.
+  const base = import.meta.env.BASE_URL || "/";
+  const mobileCover = hero.splinePosterUrl
+    ? `${base}${hero.splinePosterUrl}`.replace(/([^:])\/\//g, "$1/")
+    : "";
+
   return (
     <section className="relative w-full min-h-[100svh] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
-      {/* Capa de la escena 3D. En mobile se confina a la banda INFERIOR
-          (top-[46%]→bottom) para que el hexágono quede debajo de los botones y
-          el texto de arriba se lea sobre fondo oscuro, como en el diseño. En
-          desktop ocupa todo (inset-0) y va al lado del texto. */}
-      <div className="absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
+      {/* Mobile (<lg): fondo estático a sangre completa en vez del 3D en vivo
+          (que da problemas en mobile — SPEC 44). El Spline no se carga en mobile
+          gracias a allowMobile={false} más abajo. */}
+      {mobileCover && (
+        <img
+          src={mobileCover}
+          alt=""
+          aria-hidden="true"
+          className="lg:hidden absolute z-0 inset-0 w-full h-full object-cover"
+        />
+      )}
+      {/* Capa de la escena 3D — SOLO desktop (lg+). En mobile se muestra la
+          imagen de arriba en su lugar. En desktop ocupa todo (inset-0) y va al
+          lado del texto. */}
+      <div className="hidden lg:block absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
         {/* En desktop la escena se corre a la derecha (-40%) para que el 3D
             quede al lado del texto; en mobile eso empujaba el hexágono fuera de
             cuadro (detrás del texto), así que a sangre completa (right-0) para
@@ -55,6 +72,7 @@ export default function HeroHomeReact({
               carga; hideLoader evita que salga un spinner encima. */}
           <SplineScene
             scene={hero.splineSceneUrl}
+            allowMobile={false}
             signalReady
             hideLoader
             className="absolute inset-0"
