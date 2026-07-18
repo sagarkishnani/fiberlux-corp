@@ -176,7 +176,7 @@ export default function CanalesSoporte({
           })}
         </div>
 
-        {/* ════ Mobile — stacked vertical accordion ════ */}
+        {/* ════ Mobile — stacked vertical accordion (expand animado, SPEC 45) ════ */}
         <div className="flex flex-col gap-4 lg:hidden">
           {channels.map((channel, i) => {
             const isOpen = i === openIndex;
@@ -185,39 +185,53 @@ export default function CanalesSoporte({
                 key={i}
                 className="rounded-[20px] bg-[#FCF4F9] border border-brand-purple/[0.08] overflow-hidden"
               >
-                {isOpen ? (
-                  <div className="bg-white p-6">
-                    <h3
-                      className="text-[22px] font-semibold text-greyscale-darkest mb-2"
-                      data-tina-field={tinaField(channel, "title")}
-                    >
-                      {channel?.title}
-                    </h3>
-                    {channel?.subtitle && (
-                      <p className="text-body-sm text-greyscale-dark/60 mb-5">
-                        {channel.subtitle}
-                      </p>
-                    )}
-                    {renderRows(channel)}
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(i)}
-                    aria-expanded={false}
-                    className="flex w-full items-center justify-between gap-3 px-6 py-5 text-left"
+                {/* Header siempre presente — dispara abrir/cerrar */}
+                <button
+                  type="button"
+                  onClick={() => setOpenIndex(isOpen ? -1 : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-3 px-6 py-5 text-left"
+                >
+                  <span
+                    className="text-body-md font-semibold text-greyscale-darkest"
+                    data-tina-field={tinaField(channel, "tabLabel")}
                   >
-                    <span
-                      className="text-body-md font-semibold text-greyscale-darkest"
-                      data-tina-field={tinaField(channel, "tabLabel")}
+                    {channel?.tabLabel}
+                  </span>
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-purple text-white">
+                    <FaPlus
+                      className="h-3.5 w-3.5 transition-transform duration-300 motion-reduce:transition-none"
+                      style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                    />
+                  </span>
+                </button>
+
+                {/* Cuerpo colapsable — anima la altura con grid-rows 0fr↔1fr */}
+                <div
+                  className="grid transition-[grid-template-rows] duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none"
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+                >
+                  <div className="min-h-0 overflow-hidden">
+                    <div
+                      className={`bg-white p-6 transition-opacity duration-300 motion-reduce:transition-none ${
+                        isOpen ? "opacity-100" : "opacity-0"
+                      }`}
                     >
-                      {channel?.tabLabel}
-                    </span>
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-purple text-white">
-                      <FaPlus className="h-3.5 w-3.5" />
-                    </span>
-                  </button>
-                )}
+                      <h3
+                        className="text-[22px] font-semibold text-greyscale-darkest mb-2"
+                        data-tina-field={tinaField(channel, "title")}
+                      >
+                        {channel?.title}
+                      </h3>
+                      {channel?.subtitle && (
+                        <p className="text-body-sm text-greyscale-dark/60 mb-5">
+                          {channel.subtitle}
+                        </p>
+                      )}
+                      {renderRows(channel)}
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}
