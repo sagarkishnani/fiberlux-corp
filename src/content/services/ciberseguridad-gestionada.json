@@ -5,7 +5,9 @@
     "heading": "Ciberseguridad gestionada para proteger tu operación crítica",
     "intro": "Protección integral para infraestructuras digitales modernas, combinando seguridad perimetral, protección de endpoints, control de identidades y acceso, seguridad de aplicaciones, monitoreo continuo y respuesta ante incidentes.",
     "ctaLabel": "Ver soluciones",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/categoriaciberseguridad1.webp"
   },
   "valor": {
     "title": "Ciberseguridad basada en Zero Trust",

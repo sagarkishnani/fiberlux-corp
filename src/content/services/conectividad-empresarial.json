@@ -5,7 +5,9 @@
     "heading": "Conectividad diseñada para operaciones que no pueden detenerse",
     "intro": "Asegura la disponibilidad, resiliencia y el rendimiento de tu infraestructura multisede con enlaces de alta capacidad respaldados por nuestro NOC 24/7.",
     "ctaLabel": "Ver soluciones",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/categoriaconectividad1.webp"
   },
   "valor": {
     "title": "El valor de la resiliencia",

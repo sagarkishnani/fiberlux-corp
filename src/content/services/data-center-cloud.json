@@ -5,7 +5,9 @@
     "heading": "Infraestructura de clase mundial para el corazón de tu negocio",
     "intro": "Aloja, protege y escala tus aplicaciones y datos sobre plataformas empresariales preparadas para acompañar el crecimiento y las exigencias de tu operación.",
     "ctaLabel": "Ver soluciones",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/categoriadatacentercloud1.webp"
   },
   "valor": {
     "title": "Tus operaciones no pueden parar",

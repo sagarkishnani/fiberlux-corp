@@ -5,7 +5,9 @@
     "heading": "Soporte experto para operar sin fricciones",
     "intro": "Actuamos como una extensión de tu equipo de TI, gestionando redes, comunicaciones, endpoints y plataformas críticas para mantener la continuidad operativa.",
     "ctaLabel": "Ver soluciones",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp"
   },
   "valor": {
     "title": "El aliado invisible",
