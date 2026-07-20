@@ -652,6 +652,7 @@ type AboutTimeline {
 type AboutRubrosItems {
   icon: String
   label: String
+  image: String
 }
 
 type AboutRubros {
@@ -739,6 +740,7 @@ input AboutTimelineFilter {
 input AboutRubrosItemsFilter {
   icon: StringFilter
   label: StringFilter
+  image: ImageFilter
 }
 
 input AboutRubrosFilter {
@@ -2188,6 +2190,7 @@ input AboutTimelineMutation {
 input AboutRubrosItemsMutation {
   icon: String
   label: String
+  image: String
 }
 
 input AboutRubrosMutation {

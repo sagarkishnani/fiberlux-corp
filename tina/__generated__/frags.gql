@@ -224,6 +224,7 @@ fragment AboutParts on About {
       __typename
       icon
       label
+      image
     }
   }
   stats {

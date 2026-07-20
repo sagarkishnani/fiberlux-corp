@@ -859,7 +859,12 @@ var config_default = defineConfig({
                       { value: "servicios", label: "Servicios" }
                     ]
                   },
-                  { name: "label", label: "Nombre del rubro", type: "string" }
+                  { name: "label", label: "Nombre del rubro", type: "string" },
+                  {
+                    name: "image",
+                    label: "Imagen de fondo (opcional)",
+                    type: "image"
+                  }
                 ]
               }
             ]

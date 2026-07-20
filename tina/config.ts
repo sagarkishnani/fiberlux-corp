@@ -904,6 +904,11 @@ export default defineConfig({
                     ],
                   },
                   { name: "label", label: "Nombre del rubro", type: "string" },
+                  {
+                    name: "image",
+                    label: "Imagen de fondo (opcional)",
+                    type: "image",
+                  },
                 ],
               },
             ],
