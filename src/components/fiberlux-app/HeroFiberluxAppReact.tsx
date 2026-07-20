@@ -4,6 +4,7 @@ import type {
   FiberluxAppQuery,
   FiberluxAppQueryVariables,
 } from "../../../tina/__generated__/types";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 interface HeroFiberluxAppProps {
   query: string;
@@ -39,9 +40,7 @@ export default function HeroFiberluxAppReact({
   const hero = app.hero;
   const base = import.meta.env.BASE_URL || "/";
   const downloads = (hero?.downloads || []).filter(Boolean) as Download[];
-  const mockupSrc = hero?.mockup
-    ? `${base}${hero.mockup}`.replace(/([^:])\/\//g, "$1/")
-    : "";
+  const mockupSrc = mediaUrl(hero?.mockup);
 
   return (
     <section

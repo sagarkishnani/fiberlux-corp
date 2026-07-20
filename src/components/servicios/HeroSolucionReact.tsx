@@ -4,6 +4,7 @@ import type {
   ServiceQueryVariables,
 } from "../../../tina/__generated__/types";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 interface FormIsland {
   query: string;
@@ -39,9 +40,7 @@ export default function HeroSolucionReact({
   const isImageMode =
     (hero as { heroMode?: string | null })?.heroMode === "image" &&
     !!heroImageRaw;
-  const heroImageSrc = heroImageRaw
-    ? `${base}${heroImageRaw}`.replace(/([^:])\/\//g, "$1/")
-    : "";
+  const heroImageSrc = mediaUrl(heroImageRaw);
 
   return (
     <section

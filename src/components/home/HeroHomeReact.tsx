@@ -1,6 +1,7 @@
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import SplineScene from "../shared/SplineScene";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 interface HeroHomeProps {
   query: string;
@@ -22,10 +23,7 @@ export default function HeroHomeReact({
 
   // Fondo estático del hero en mobile (SPEC 44): en <lg no se carga el 3D
   // (problemas en mobile), se muestra esta imagen a sangre completa.
-  const base = import.meta.env.BASE_URL || "/";
-  const mobileCover = hero.splinePosterUrl
-    ? `${base}${hero.splinePosterUrl}`.replace(/([^:])\/\//g, "$1/")
-    : "";
+  const mobileCover = mediaUrl(hero.splinePosterUrl);
 
   return (
     <section className="relative w-full min-h-[600px] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">

@@ -1,3 +1,5 @@
+import { mediaUrl } from "../../utils/mediaUrl";
+
 interface TestimonialCardProps {
   quote: string;
   description?: string | null;
@@ -23,6 +25,10 @@ export default function TestimonialCard({
   avatar,
   logo,
 }: TestimonialCardProps) {
+  // Normaliza a asset local: Tina Cloud reescribe estos campos a URLs
+  // https://assets.tina.io/... que rompían la foto en producción.
+  const avatarSrc = mediaUrl(avatar) || PLACEHOLDER_AVATAR;
+  const logoSrc = mediaUrl(logo);
   return (
     <div className="relative w-full h-full">
       {/* ── Desktop border SVG ── */}
@@ -73,7 +79,7 @@ export default function TestimonialCard({
               </svg>
               {/* Square photo (fallback: avatar genérico) */}
               <img
-                src={avatar || PLACEHOLDER_AVATAR}
+                src={avatarSrc}
                 alt={name}
                 className="ml-4 mt-4 relative z-10 w-[150px] h-[150px] object-cover"
                 draggable={false}
@@ -98,9 +104,9 @@ export default function TestimonialCard({
                 <p className="text-white text-body-md font-semibold">{name}</p>
                 <p className="text-white/60 text-body-sm">{role}</p>
               </div>
-              {logo && (
+              {logoSrc && (
                 <img
-                  src={logo}
+                  src={logoSrc}
                   alt={company}
                   className="h-8 object-contain"
                   draggable={false}
@@ -129,7 +135,7 @@ export default function TestimonialCard({
                 <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
               </svg>
               <img
-                src={avatar || PLACEHOLDER_AVATAR}
+                src={avatarSrc}
                 alt={name}
                 className="relative z-10 w-full h-full object-cover rounded-sm"
                 draggable={false}
@@ -138,9 +144,9 @@ export default function TestimonialCard({
             <div>
               <p className="text-white text-body-md font-semibold">{name}</p>
               <p className="text-white/60 text-body-sm">{role}</p>
-              {logo && (
+              {logoSrc && (
                 <img
-                  src={logo}
+                  src={logoSrc}
                   alt={company}
                   className="h-5 mt-1 object-contain"
                   draggable={false}
