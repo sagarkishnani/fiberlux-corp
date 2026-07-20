@@ -1,6 +1,6 @@
 # SPEC 46 — Hero de soluciones: toggle form/imagen editable + imagen de categoría
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 11 (plantilla `/soluciones/[solucion]`, hero con form "¿Conversamos?" y `ServiciosForm`).
 > **Fecha:** 2026-07-20
 > **Objetivo:** Agregar en cada solución un toggle en TinaCMS para mostrar en el hero el formulario o una imagen de categoría (fondo a sangre a la derecha en desktop, fondo arriba en mobile), sembrando las 4 imágenes existentes.
@@ -79,13 +79,13 @@ No hay colecciones nuevas. `heroMode`/`heroImage` son opcionales; si faltan, el 
 
 ## Criterios de aceptación
 
-- [ ] En `/admin`, cada solución tiene en Hero un **toggle "Mostrar en el hero" (Formulario/Imagen)** y un campo **"Imagen del hero"**.
-- [ ] Las **4 soluciones** quedan en **modo imagen** con su imagen de categoría correcta (conectividad/ciberseguridad/datacenter/servicios).
-- [ ] En **desktop**, modo imagen: la imagen se ve **a sangre a la derecha**, el texto de la izquierda es legible (degradado), y **no hay card de formulario** en el hero.
-- [ ] En **mobile**, modo imagen: la imagen aparece **de fondo arriba** detrás del texto del hero, legible, sin card de formulario.
-- [ ] En **modo form** (si se togglea en el CMS), el hero vuelve al formulario "¿Conversamos?" como hoy.
-- [ ] La sección de **formulario de abajo (`ServiciosForm`) sigue presente** en ambos modos.
-- [ ] `astro build` termina sin errores ni warnings nuevos.
+- [x] En `/admin`, cada solución tiene en Hero un **toggle "Mostrar en el hero" (Formulario/Imagen)** y un campo **"Imagen del hero"**.
+- [x] Las **4 soluciones** quedan en **modo imagen** con su imagen de categoría correcta (conectividad/ciberseguridad/datacenter/servicios).
+- [x] En **desktop**, modo imagen: la imagen se ve **a sangre a la derecha**, el texto de la izquierda es legible (degradado), y **no hay card de formulario** en el hero.
+- [x] En **mobile**, modo imagen: la imagen aparece **de fondo arriba** detrás del texto del hero, legible, sin card de formulario.
+- [x] En **modo form** (si se togglea en el CMS), el hero vuelve al formulario "¿Conversamos?" como hoy.
+- [x] La sección de **formulario de abajo (`ServiciosForm`) sigue presente** en ambos modos.
+- [x] `astro build` termina sin errores ni warnings nuevos.
 
 ---
 
