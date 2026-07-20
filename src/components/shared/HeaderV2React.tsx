@@ -249,9 +249,22 @@ export default function HeaderV2React({
       const inv = 1 - progress;
       const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
       const offset = LOGO_START_OFFSET_Y * inv;
-      // Se anima `height` (SVG nítido a cada tamaño); el transform solo baja en Y.
+      // El slot del logo está corrido a la derecha por el botón hamburguesa; en
+      // el estado grande se compensa en X para alinear el logo con el borde
+      // izquierdo del contenedor (= el h1 del hero). Al encoger vuelve a su slot.
+      const a = img.parentElement;
+      const container = a?.closest(".site-container") as HTMLElement | null;
+      let slotIndent = 0;
+      if (a && container) {
+        const cLeft =
+          container.getBoundingClientRect().left +
+          (parseFloat(getComputedStyle(container).paddingLeft) || 0);
+        slotIndent = a.getBoundingClientRect().left - cLeft;
+      }
+      // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y y
+      // corrige en X sólo mientras está grande.
       img.style.height = `${height}px`;
-      img.style.transform = `translateY(calc(-50% + ${offset}px))`;
+      img.style.transform = `translateX(${-slotIndent * inv}px) translateY(calc(-50% + ${offset}px))`;
     },
     [heroLogo]
   );
@@ -364,8 +377,11 @@ export default function HeaderV2React({
   const goBack = () => setMobilePath((prev) => prev.slice(0, -1));
 
   /* ── Header background logic ── */
+  // Con el menú abierto el fondo va morado en mobile (overlay full-screen); en
+  // desktop el menú es un drawer lateral, así que la barra queda transparente
+  // (sólo el drawer es morado) para no ensuciar con un morado full-width.
   const headerBg = menuOpen
-    ? "bg-brand-purple"
+    ? "bg-brand-purple lg:bg-transparent"
     : scrolled
     ? isLight
       ? "bg-white/80 backdrop-blur-md border-b border-black/5"
@@ -627,13 +643,13 @@ export default function HeaderV2React({
           fixed top-0 left-0 right-0 z-[70]
           bg-brand-purple
           h-screen
-          lg:left-auto lg:right-0 lg:w-[440px] lg:max-w-[92vw]
-          lg:rounded-l-[40px] lg:shadow-2xl
+          lg:right-auto lg:left-0 lg:w-[440px] lg:max-w-[92vw]
+          lg:rounded-r-[40px] lg:shadow-2xl
           transition-all duration-500
           ${
             menuOpen
               ? "translate-y-0 lg:translate-x-0 opacity-100 visible ease-[cubic-bezier(0.16,1,0.3,1)]"
-              : "-translate-y-full lg:translate-y-0 lg:translate-x-full opacity-0 invisible ease-[cubic-bezier(0.7,0,0.84,0)]"
+              : "-translate-y-full lg:translate-y-0 lg:-translate-x-full opacity-0 invisible ease-[cubic-bezier(0.7,0,0.84,0)]"
           }
         `}
         role="dialog"
