@@ -120,55 +120,34 @@ export default function BlogPreviewReact({
           </div>
         </div>
 
-        {/* Navigation arrows — se alinean con el carrusel dentro del site-container padre */}
-        <div>
-          <div className="flex gap-0 mt-6">
+        {/* Navigation arrows — mismo pill navy que los demás sliders. Se alinean
+            con el carrusel dentro del site-container padre. */}
+        <div className="mt-6">
+          <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
             <button
+              type="button"
               onClick={slider.prev}
               disabled={!canScrollLeft}
-              className={`w-11 h-11 rounded-l-xl flex items-center justify-center transition-all ${
-                canScrollLeft
-                  ? "bg-brand-purple text-white hover:bg-brand-purple-dark"
-                  : "bg-greyscale-dark/50 text-white/30 cursor-not-allowed"
-              }`}
               aria-label="Anterior"
+              className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+                canScrollLeft ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
+              }`}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
+              type="button"
               onClick={slider.next}
               disabled={!canScrollRight}
-              className={`w-11 h-11 rounded-r-xl flex items-center justify-center transition-all ${
-                canScrollRight
-                  ? "bg-brand-purple text-white hover:bg-brand-purple-dark"
-                  : "bg-greyscale-dark/50 text-white/30 cursor-not-allowed"
-              }`}
               aria-label="Siguiente"
+              className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+                canScrollRight ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
+              }`}
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
