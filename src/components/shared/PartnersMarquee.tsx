@@ -37,8 +37,11 @@ export default function PartnersMarquee({
   if (logos.length === 0) return null;
 
   // Repeat the set enough to overflow the widest screen, then duplicate the
-  // whole run so the -50% → 0 loop is seamless.
-  const run = Array.from({ length: 4 }, () => logos).flat();
+  // whole run so the -50% → 0 loop is seamless. El nº de copias se adapta a la
+  // cantidad de logos: con muchos (p.ej. el home con ~31) basta 1 copia por
+  // mitad, evitando cientos de <img> que causan jank/sobresaltos en mobile.
+  const copies = Math.max(1, Math.ceil(20 / logos.length));
+  const run = Array.from({ length: copies }, () => logos).flat();
   const track = [...run, ...run];
 
   const renderLogo = (logo: PartnerLogo, i: number) => {
@@ -108,11 +111,12 @@ export default function PartnersMarquee({
         }
 
         .partners-marquee {
-          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
-          mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
         }
         .partners-track {
           animation: partners-marquee 110s linear infinite;
+          will-change: transform;
         }
         /* Left → right motion; both halves identical so the reset is seamless. */
         @keyframes partners-marquee {
