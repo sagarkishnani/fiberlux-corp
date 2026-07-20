@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp"
+    "heroImage": "/images/soluciones/categoriaserviciosgestionados1.webp"
   },
   "valor": {
     "title": "El aliado invisible",
@@ -188,71 +188,19 @@
     "items": [
       {
         "question": "¿Qué incluye un servicio gestionado?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": "\\[object Object]\n"
       },
       {
         "question": "¿Cómo funciona la mesa de ayuda?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": "\\[object Object]\n"
       },
       {
         "question": "¿Qué SLA ofrecen?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": "\\[object Object]\n"
       },
       {
         "question": "¿Puedo gestionar solo una parte de mi infraestructura?",
-        "answer": {
-          "type": "root",
-          "children": [
-            {
-              "type": "p",
-              "children": [
-                {
-                  "type": "text",
-                  "text": ""
-                }
-              ]
-            }
-          ]
-        }
+        "answer": "\\[object Object]\n"
       }
     ]
   },
