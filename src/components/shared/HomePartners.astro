@@ -33,9 +33,9 @@ const partners = {
 };
 
 // Velocidad constante: la duración del marquee crece con la cantidad de logos
-// (~12s por logo, la misma velocidad que las franjas per-solución), así no se
-// acelera por tener muchos logos juntos.
-const durationSeconds = Math.max(logos.length * 12, 60);
+// (~9s por logo), así no se acelera por tener muchos logos juntos pero mantiene
+// un ritmo algo más ágil.
+const durationSeconds = Math.max(logos.length * 9, 45);
 ---
 
 <PartnersMarquee client:visible partners={partners} durationSeconds={durationSeconds} />
