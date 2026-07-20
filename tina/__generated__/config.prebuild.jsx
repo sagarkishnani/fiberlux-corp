@@ -1471,6 +1471,23 @@ var config_default = defineConfig({
                   { name: "text", label: "Texto", type: "string" },
                   { name: "url", label: "URL", type: "string" }
                 ]
+              },
+              {
+                name: "secondaryNav",
+                label: "Men\xFA secundario (hamburguesa)",
+                type: "object",
+                list: true,
+                description: "\xCDtems del men\xFA hamburguesa: en desktop abre un panel lateral, en mobile van al final del men\xFA (bajo un divisor). Ej: Formas de pago, Fiberlux App, Portal de trabajo.",
+                ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
+                fields: [
+                  { name: "text", label: "Texto", type: "string" },
+                  { name: "url", label: "URL", type: "string" },
+                  {
+                    name: "external",
+                    label: "Abrir en pesta\xF1a nueva (externa)",
+                    type: "boolean"
+                  }
+                ]
               }
             ]
           },

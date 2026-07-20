@@ -1543,6 +1543,24 @@ export default defineConfig({
                   { name: "url", label: "URL", type: "string" },
                 ],
               },
+              {
+                name: "secondaryNav",
+                label: "Menú secundario (hamburguesa)",
+                type: "object",
+                list: true,
+                description:
+                  "Ítems del menú hamburguesa: en desktop abre un panel lateral, en mobile van al final del menú (bajo un divisor). Ej: Formas de pago, Fiberlux App, Portal de trabajo.",
+                ui: { itemProps: (item) => ({ label: item?.text || "Ítem" }) },
+                fields: [
+                  { name: "text", label: "Texto", type: "string" },
+                  { name: "url", label: "URL", type: "string" },
+                  {
+                    name: "external",
+                    label: "Abrir en pestaña nueva (externa)",
+                    type: "boolean",
+                  },
+                ],
+              },
             ],
           },
 

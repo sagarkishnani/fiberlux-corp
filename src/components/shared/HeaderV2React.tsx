@@ -48,6 +48,12 @@ interface DesktopNavItem {
   url?: string | null;
 }
 
+interface SecondaryNavItem {
+  text?: string | null;
+  url?: string | null;
+  external?: boolean | null;
+}
+
 interface SocialItem {
   platform?: string | null;
   url?: string | null;
@@ -185,6 +191,10 @@ export default function HeaderV2React({
   const desktopNav = (headerConfig?.desktopNav || []).filter(
     Boolean
   ) as DesktopNavItem[];
+  // Menú secundario (hamburguesa): drawer en desktop, grupo al pie en mobile.
+  const secondaryNav = (headerConfig?.secondaryNav || []).filter(
+    Boolean
+  ) as SecondaryNavItem[];
   const socialLinks = (footer?.social || []).filter(Boolean) as SocialItem[];
 
   // Resolve a desktopNav item's hover children by matching its URL against
@@ -436,7 +446,7 @@ export default function HeaderV2React({
           <div className="flex items-center gap-4 md:gap-6">
             <button
               onClick={toggleMenu}
-              className={`lg:hidden flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
+              className={`flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={menuOpen}
             >
@@ -493,10 +503,14 @@ export default function HeaderV2React({
             )}
           </div>
 
-          {/* Right: Desktop inline navbar (hover reveal) */}
+          {/* Right: Desktop inline navbar (hover reveal). En desktop el menú es
+              un drawer lateral angosto, así que el navbar sigue visible al
+              abrirlo; en mobile (overlay full-screen) sí se desvanece. */}
           <nav
             className={`hidden lg:flex items-center gap-7 transition-opacity duration-200 ${
-              menuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+              menuOpen
+                ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto"
+                : "opacity-100"
             }`}
             aria-label="Navegación principal"
           >
@@ -612,13 +626,14 @@ export default function HeaderV2React({
         className={`
           fixed top-0 left-0 right-0 z-[70]
           bg-brand-purple
-          h-screen lg:h-[calc(100vh-80px)]
-          lg:rounded-b-[48px]
+          h-screen
+          lg:left-auto lg:right-0 lg:w-[440px] lg:max-w-[92vw]
+          lg:rounded-l-[40px] lg:shadow-2xl
           transition-all duration-500
           ${
             menuOpen
-              ? "translate-y-0 opacity-100 visible ease-[cubic-bezier(0.16,1,0.3,1)]"
-              : "-translate-y-full opacity-0 invisible ease-[cubic-bezier(0.7,0,0.84,0)]"
+              ? "translate-y-0 lg:translate-x-0 opacity-100 visible ease-[cubic-bezier(0.16,1,0.3,1)]"
+              : "-translate-y-full lg:translate-y-0 lg:translate-x-full opacity-0 invisible ease-[cubic-bezier(0.7,0,0.84,0)]"
           }
         `}
         role="dialog"
@@ -660,6 +675,31 @@ export default function HeaderV2React({
                       )
                     )}
                   </nav>
+
+                  {/* Menú secundario (Formas de pago, Fiberlux App, …) bajo un
+                      divisor, separado del nav principal. */}
+                  {secondaryNav.length > 0 && (
+                    <div className="mt-8 pt-6 border-t border-white/20">
+                      <nav
+                        className="flex flex-col gap-1"
+                        aria-label="Menú secundario"
+                      >
+                        {secondaryNav.map((item, i) => (
+                          <a
+                            key={i}
+                            href={item.url || "#"}
+                            onClick={closeMenu}
+                            {...(item.external
+                              ? { target: "_blank", rel: "noopener noreferrer" }
+                              : {})}
+                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                          >
+                            {item.text}
+                          </a>
+                        ))}
+                      </nav>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="pt-4 animate-fadeIn">
@@ -734,6 +774,28 @@ export default function HeaderV2React({
                   )}
                 </div>
               )}
+            </div>
+
+            {/* ── DESKTOP DRAWER — menú secundario (hamburguesa) ── */}
+            <div className="hidden lg:flex flex-col flex-1 pt-4">
+              <nav
+                className="flex flex-col gap-2"
+                aria-label="Menú secundario"
+              >
+                {secondaryNav.map((item, i) => (
+                  <a
+                    key={i}
+                    href={item.url || "#"}
+                    onClick={closeMenu}
+                    {...(item.external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className="text-white text-[34px] leading-[52px] font-semibold hover:text-white/80 transition-colors"
+                  >
+                    {item.text}
+                  </a>
+                ))}
+              </nav>
             </div>
 
             {/* ── Social links ── */}

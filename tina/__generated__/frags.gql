@@ -414,6 +414,12 @@ fragment GlobalParts on Global {
       text
       url
     }
+    secondaryNav {
+      __typename
+      text
+      url
+      external
+    }
   }
   whatsapp {
     __typename

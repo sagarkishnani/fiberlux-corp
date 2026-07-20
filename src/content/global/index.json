@@ -15,6 +15,11 @@
       { "text": "Blog", "url": "/blog" },
       { "text": "Soporte técnico", "url": "/soporte-tecnico" },
       { "text": "Contacto", "url": "/contacto" }
+    ],
+    "secondaryNav": [
+      { "text": "Formas de pago", "url": "/formas-de-pago", "external": false },
+      { "text": "Fiberlux App", "url": "/fiberlux-app", "external": false },
+      { "text": "Portal de trabajo", "url": "#", "external": true }
     ]
   },
   "nav": {
@@ -204,10 +209,6 @@
       {
         "text": "Soporte técnico",
         "url": "/soporte-tecnico"
-      },
-      {
-        "text": "Formas de pago",
-        "url": "/formas-de-pago"
       },
       {
         "text": "Contacto",

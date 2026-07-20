@@ -1197,10 +1197,17 @@ type GlobalHeaderDesktopNav {
   url: String
 }
 
+type GlobalHeaderSecondaryNav {
+  text: String
+  url: String
+  external: Boolean
+}
+
 type GlobalHeader {
   logo: String
   topBar: GlobalHeaderTopBar
   desktopNav: [GlobalHeaderDesktopNav]
+  secondaryNav: [GlobalHeaderSecondaryNav]
 }
 
 type GlobalWhatsapp {
@@ -1298,10 +1305,17 @@ input GlobalHeaderDesktopNavFilter {
   url: StringFilter
 }
 
+input GlobalHeaderSecondaryNavFilter {
+  text: StringFilter
+  url: StringFilter
+  external: BooleanFilter
+}
+
 input GlobalHeaderFilter {
   logo: ImageFilter
   topBar: GlobalHeaderTopBarFilter
   desktopNav: GlobalHeaderDesktopNavFilter
+  secondaryNav: GlobalHeaderSecondaryNavFilter
 }
 
 input GlobalWhatsappFilter {
@@ -2379,10 +2393,17 @@ input GlobalHeaderDesktopNavMutation {
   url: String
 }
 
+input GlobalHeaderSecondaryNavMutation {
+  text: String
+  url: String
+  external: Boolean
+}
+
 input GlobalHeaderMutation {
   logo: String
   topBar: GlobalHeaderTopBarMutation
   desktopNav: [GlobalHeaderDesktopNavMutation]
+  secondaryNav: [GlobalHeaderSecondaryNavMutation]
 }
 
 input GlobalWhatsappMutation {
