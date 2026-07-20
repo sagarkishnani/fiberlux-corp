@@ -78,7 +78,10 @@ const whatsappMessage = whatsappContext
       content={maintenanceMode ? "Sitio en mantenimiento" : description}
     />
     <link rel="icon" type="image/svg+xml" href="/fiberlux-favicon.png" />
-    {/* Accessibility: dyslexia-friendly font (used by the a11y panel) */}
+    {/* Fuentes: Poppins es la tipografía de marca (font-sans en Tailwind). Se
+        carga aquí porque el @import en global.css NUNCA se bundlea — sin esto el
+        sitio cae al font del sistema y se ve distinto en cada dispositivo.
+        Atkinson Hyperlegible la usa el panel de accesibilidad (dislexia). */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       rel="preconnect"
@@ -87,7 +90,7 @@ const whatsappMessage = whatsappContext
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     />
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}

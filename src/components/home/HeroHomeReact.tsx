@@ -28,7 +28,7 @@ export default function HeroHomeReact({
     : "";
 
   return (
-    <section className="relative w-full min-h-[100svh] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
+    <section className="relative w-full min-h-[600px] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
       {/* Mobile (<lg): fondo estático a sangre completa en vez del 3D en vivo
           (que da problemas en mobile — SPEC 44). El Spline no se carga en mobile
           gracias a allowMobile={false} más abajo. */}
@@ -40,6 +40,18 @@ export default function HeroHomeReact({
           className="lg:hidden absolute z-0 inset-0 w-full h-full object-cover"
         />
       )}
+      {/* Scrim mobile (<lg): oscurece el fondo estático para que el texto blanco
+          se lea bien sobre el hexágono neón. Más denso arriba (donde va el
+          contenido) y más ligero abajo. Solo mobile — en desktop el 3D + las
+          vignettes ya dan contraste. */}
+      <div
+        aria-hidden="true"
+        className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.55) 38%, rgba(10,10,10,0.4) 68%, rgba(10,10,10,0.55) 100%)",
+        }}
+      />
       {/* Capa de la escena 3D — SOLO desktop (lg+). En mobile se muestra la
           imagen de arriba en su lugar. En desktop ocupa todo (inset-0) y va al
           lado del texto. */}
@@ -101,8 +113,8 @@ export default function HeroHomeReact({
       />
 
       {/* Contenido */}
-      <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-20 lg:pb-32">
-        <div className="flex flex-col justify-start md:justify-center max-w-[640px] min-h-[calc(100svh-200px)] lg:min-h-[640px]">
+      <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32">
+        <div className="flex flex-col justify-start md:justify-center max-w-[640px] min-h-0 lg:min-h-[640px]">
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
