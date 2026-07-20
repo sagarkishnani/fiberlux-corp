@@ -42,45 +42,40 @@ export default function TestimonialSliderReact({
     align: 'start',
     itemCount: items.length,
   });
-  const { activeIndex } = slider;
-
-  const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < items.length - 1;
-
+  const { atStart, atEnd } = slider;
   const hasItems = items.length > 0;
 
-  /* ── Arrow button component ── */
-  const ArrowButton = ({
-    direction,
-    disabled,
-    onClick,
-  }: {
-    direction: 'left' | 'right';
-    disabled: boolean;
-    onClick: () => void;
-  }) => (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`w-10 h-10 flex items-center justify-center transition-all ${
-        direction === 'left' ? 'rounded-l-lg' : 'rounded-r-lg'
-      } ${
-        disabled
-          ? 'bg-greyscale-dark/40 text-white/20 cursor-default'
-          : direction === 'right'
-            ? 'bg-brand-purple text-white hover:bg-brand-purple-dark'
-            : 'bg-greyscale-dark/60 text-white/60 hover:text-white hover:bg-greyscale-dark'
-      }`}
-      aria-label={direction === 'left' ? 'Anterior' : 'Siguiente'}
-    >
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-        {direction === 'left' ? (
+  /* ── Prev/Next pill — same navy pill the other sliders use (soluciones,
+       casos, certificaciones, rubros) so testimonios matches the rest. ── */
+  const arrowsPill = (
+    <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
+      <button
+        type="button"
+        onClick={slider.prev}
+        disabled={atStart}
+        aria-label="Anterior"
+        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+          !atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
+        }`}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        ) : (
+        </svg>
+      </button>
+      <button
+        type="button"
+        onClick={slider.next}
+        disabled={atEnd}
+        aria-label="Siguiente"
+        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
+          !atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
+        }`}
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        )}
-      </svg>
-    </button>
+        </svg>
+      </button>
+    </div>
   );
 
   if (!isVisible) return null;
@@ -101,10 +96,7 @@ export default function TestimonialSliderReact({
           </h2>
 
           {/* Desktop arrows */}
-          <div className="hidden md:flex">
-            <ArrowButton direction="left" disabled={!canGoPrev} onClick={slider.prev} />
-            <ArrowButton direction="right" disabled={!canGoNext} onClick={slider.next} />
-          </div>
+          <div className="hidden md:flex">{arrowsPill}</div>
         </div>
       </div>
 
@@ -155,11 +147,8 @@ export default function TestimonialSliderReact({
       </div>
 
       {/* Mobile navigation arrows */}
-      <div className="md:hidden px-6 mt-6">
-        <div className="flex">
-          <ArrowButton direction="left" disabled={!canGoPrev} onClick={slider.prev} />
-          <ArrowButton direction="right" disabled={!canGoNext} onClick={slider.next} />
-        </div>
+      <div className="md:hidden mt-6">
+        {arrowsPill}
       </div>
 
       <style>{`
