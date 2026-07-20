@@ -49,7 +49,9 @@ export default function PartnersMarquee({
       <img
         src={logo.image || ""}
         alt={logo.alt || "Partner"}
-        loading="lazy"
+        loading="eager"
+        decoding="async"
+        draggable={false}
         className="partner-logo h-7 md:h-9 w-auto object-contain"
       />
     );
