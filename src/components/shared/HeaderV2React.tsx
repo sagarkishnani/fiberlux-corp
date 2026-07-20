@@ -686,7 +686,9 @@ export default function HeaderV2React({
                     </p>
                   )}
 
-                  <nav className="flex flex-col gap-1">
+                  {/* Ítems de la categoría: indentados + guía vertical a la
+                      izquierda para que se lea que están dentro del padre. */}
+                  <nav className="flex flex-col gap-1 pl-4 ml-1 border-l-2 border-white/15">
                     {currentChildren.map((child, j) => {
                       const childWithChildren = hasChildren(child as NavChild);
                       return childWithChildren ? (
