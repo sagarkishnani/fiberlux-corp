@@ -27,6 +27,7 @@ import {
 } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { useDragSlider } from '../../hooks/useDragSlider';
+import { mediaUrl } from '../../utils/mediaUrl';
 
 /* ── Types ── */
 interface Rubro {
@@ -124,21 +125,6 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
 
   const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
 
-  // Resuelve la ruta de la imagen a la URL estática del sitio (BASE_URL-aware).
-  // En producción, useTina puede devolver el valor ya reescrito a una URL
-  // absoluta de Tina Cloud (https://assets.tina.io/<clientId>/images/...). Esos
-  // archivos también viven en public/ (media git-backed), así que servimos desde
-  // la ruta estática — evita el 404 del CDN (que no siempre los tiene) y la
-  // doble-anteposición del base sobre una URL ya absoluta.
-  const base = import.meta.env.BASE_URL || '/';
-  const imgSrc = (raw: string) => {
-    if (!raw) return '';
-    const tina = raw.match(/assets\.tina\.io\/[^/]+\/(.+)$/);
-    if (tina) return `${base}${tina[1]}`.replace(/([^:])\/\//g, '$1/');
-    if (/^https?:\/\//i.test(raw)) return raw; // otra URL absoluta: tal cual
-    return `${base}${raw.replace(/^\//, '')}`.replace(/([^:])\/\//g, '$1/');
-  };
-
   const arrows = (
     <div className="flex w-fit overflow-hidden rounded-[12px] border-2 border-[#282445] bg-[#141223]">
       <button
@@ -175,7 +161,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
           <>
             {/* Imagen de fondo a sangre; el default (sin imagen) mantiene el look negro. */}
             <img
-              src={imgSrc(item.image as string)}
+              src={mediaUrl(item.image)}
               alt=""
               aria-hidden="true"
               draggable={false}
