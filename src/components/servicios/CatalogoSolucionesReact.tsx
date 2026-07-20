@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
+import { useDragSlider } from "../../hooks/useDragSlider";
 import type { IconType } from "react-icons";
 import {
   FaGlobe,
@@ -103,19 +103,23 @@ export default function CatalogoSolucionesReact({
   data: initialData,
 }: CatalogoProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
-  const [page, setPage] = useState(0);
 
   const catalogo = data?.service?.catalogo;
-  if (!catalogo) return null;
+  const items = (catalogo?.items || []).filter(Boolean) as Item[];
+  const pageCount = Math.max(1, Math.ceil(items.length / PER_PAGE));
 
-  const items = (catalogo.items || []).filter(Boolean) as Item[];
-  if (items.length === 0) return null;
+  // Mobile: páginas de 4 en un carrusel arrastrable (hook compartido) — antes
+  // solo se paginaba con flechas. Hooks antes de cualquier return condicional.
+  const slider = useDragSlider({
+    slideSelector: ".catalogo-page",
+    align: "start",
+    itemCount: pageCount,
+  });
 
-  const pageCount = Math.ceil(items.length / PER_PAGE);
-  const pageItems = items.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
+  if (!catalogo || items.length === 0) return null;
 
   return (
-    <section id="catalogo" className="bg-greyscale-darkest py-16 md:py-24 scroll-mt-24 mb-4">
+    <section id="catalogo" className="bg-greyscale-darkest pt-16 pb-32 md:py-24 scroll-mt-24 mb-4">
       <div className="site-container">
         {catalogo.title && (
           <h2
@@ -214,22 +218,38 @@ export default function CatalogoSolucionesReact({
           })}
         </div>
 
-        {/* ════ MOBILE — icon + title only, paginated ════ */}
+        {/* ════ MOBILE — icon + title only, draggable pages of 4 ════ */}
         <div className="md:hidden">
-          <div className="grid grid-cols-2 gap-3">
-            {pageItems.map((item, i) => {
-              const CardTag = item.url ? "a" : "div";
+          <div
+            ref={slider.ref}
+            className="catalogo-scroll flex overflow-x-auto snap-x snap-mandatory select-none"
+            style={{ cursor: pageCount > 1 ? "grab" : "default" }}
+            {...slider.handlers}
+          >
+            {Array.from({ length: pageCount }).map((_, pi) => {
+              const pageItems = items.slice(pi * PER_PAGE, pi * PER_PAGE + PER_PAGE);
               return (
-                <CardTag
-                  key={i}
-                  {...(item.url ? { href: item.url } : {})}
-                  className="flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
+                <div
+                  key={pi}
+                  className="catalogo-page snap-start shrink-0 w-full grid grid-cols-2 gap-3"
                 >
-                  <ItemIcon name={item.icon} />
-                  <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
-                    {item.title}
-                  </h3>
-                </CardTag>
+                  {pageItems.map((item, i) => {
+                    const CardTag = item.url ? "a" : "div";
+                    return (
+                      <CardTag
+                        key={i}
+                        {...(item.url ? { href: item.url } : {})}
+                        className="flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
+                        draggable={false}
+                      >
+                        <ItemIcon name={item.icon} />
+                        <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
+                          {item.title}
+                        </h3>
+                      </CardTag>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -239,20 +259,20 @@ export default function CatalogoSolucionesReact({
               <button
                 type="button"
                 aria-label="Anteriores"
-                disabled={page === 0}
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={slider.atStart}
+                onClick={slider.prev}
                 className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
               >
                 <FaChevronLeft size={14} />
               </button>
               <span className="text-caption-sm text-greyscale-light tabular-nums">
-                {page + 1} / {pageCount}
+                {slider.activeIndex + 1} / {pageCount}
               </span>
               <button
                 type="button"
                 aria-label="Siguientes"
-                disabled={page >= pageCount - 1}
-                onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+                disabled={slider.atEnd}
+                onClick={slider.next}
                 className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
               >
                 <FaChevronRight size={14} />
@@ -263,6 +283,12 @@ export default function CatalogoSolucionesReact({
       </div>
 
       <style>{`
+        .catalogo-scroll {
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .catalogo-scroll::-webkit-scrollbar { display: none; }
         .catalog-glow {
           background: radial-gradient(
             circle at 32% 24%,
