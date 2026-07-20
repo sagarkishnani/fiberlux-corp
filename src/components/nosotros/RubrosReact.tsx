@@ -32,6 +32,7 @@ import { useDragSlider } from '../../hooks/useDragSlider';
 interface Rubro {
   icon?: string | null;
   label?: string | null;
+  image?: string | null;
 }
 
 interface RubrosProps {
@@ -123,6 +124,11 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
 
   const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
 
+  // BASE_URL-aware para que la ruta de imagen funcione si el sitio va en subpath.
+  const base = import.meta.env.BASE_URL || '/';
+  const imgSrc = (path: string) =>
+    `${base}${path}`.replace(/([^:])\/\//g, '$1/');
+
   const arrows = (
     <div className="flex w-fit overflow-hidden rounded-[12px] border-2 border-[#282445] bg-[#141223]">
       <button
@@ -147,16 +153,40 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const card = (item: Rubro, i: number) => {
     const Icon = (item.icon && ICONS[item.icon]) || FALLBACK_ICON;
     const ref = refAt(i);
+    const hasImage = Boolean(item.image);
     return (
       <article
         key={i}
-        className="rubro-slide snap-start flex min-h-[295px] shrink-0 flex-col justify-between rounded-[24.62px] bg-[rgba(42,42,42,0.5)] p-8 backdrop-blur-[2px] [width:calc((100%-3*0.5rem)/4)] max-md:[width:78%]"
+        className={`rubro-slide snap-start relative overflow-hidden flex min-h-[295px] shrink-0 flex-col justify-between rounded-[24.62px] p-8 [width:calc((100%-3*0.5rem)/4)] max-md:[width:78%] ${
+          hasImage ? '' : 'bg-[rgba(42,42,42,0.5)] backdrop-blur-[2px]'
+        }`}
       >
-        <span className="flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-white">
+        {hasImage && (
+          <>
+            {/* Imagen de fondo a sangre; el default (sin imagen) mantiene el look negro. */}
+            <img
+              src={imgSrc(item.image as string)}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="absolute inset-0 z-0 h-full w-full object-cover"
+            />
+            {/* Overlay en degradado, más oscuro abajo (donde va el nombre) para legibilidad. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 z-0"
+              style={{
+                background:
+                  'linear-gradient(180deg, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0.30) 45%, rgba(10,10,10,0.82) 100%)',
+              }}
+            />
+          </>
+        )}
+        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-white">
           <Icon className="text-[28px]" />
         </span>
         <h3
-          className="text-xl font-semibold text-white"
+          className="relative z-10 text-xl font-semibold text-white"
           data-tina-field={ref ? tinaField(ref, 'label') : undefined}
         >
           {item.label}
