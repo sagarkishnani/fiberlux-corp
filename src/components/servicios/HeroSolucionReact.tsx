@@ -70,6 +70,15 @@ export default function HeroSolucionReact({
             }}
             aria-hidden="true"
           />
+          {/* Desktop: fade inferior para fundir la imagen con la sección de abajo */}
+          <div
+            className="hidden lg:block absolute inset-x-0 bottom-0 z-0 h-48"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,10,10,0) 0%, #0a0a0a 100%)",
+            }}
+            aria-hidden="true"
+          />
           {/* Mobile: imagen de fondo arriba */}
           <div
             className="lg:hidden absolute inset-0 z-0 bg-cover bg-no-repeat"
