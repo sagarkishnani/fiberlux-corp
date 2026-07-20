@@ -5,6 +5,8 @@ import HeroServicios from "../../components/servicios/HeroServicios.astro";
 // por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
 // import StickyCards from "../../components/shared/StickyCards.astro";
 import SolucionesSlider from "../../components/shared/SolucionesSlider.astro";
+import HomePartners from "../../components/shared/HomePartners.astro";
+import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 ---
 
@@ -16,6 +18,9 @@ import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
     <HeroServicios />
     {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
     <SolucionesSlider />
+    {/* Partners e ISO (certificaciones) reutilizados del home, debajo de las cards */}
+    <HomePartners />
+    <CertificacionesSlider />
     <ServiciosForm />
   </main>
 </BaseLayout>
