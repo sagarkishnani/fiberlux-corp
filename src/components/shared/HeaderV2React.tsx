@@ -86,6 +86,9 @@ const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
 const LOGO_HEADER_H = 20; // altura en reposo del logo (= h-5 del header)
 const LOGO_HERO_H = 64; // altura del logo grande sobre el hero
 const LOGO_START_OFFSET_Y = 195; // px que el logo baja hacia el hero al tope
+// El slot del logo está corrido por el hamburguesa (w-7 = 28px + gap md:gap-6 =
+// 24px). El logo grande compensa este offset en X para alinearse con el h1.
+const LOGO_SLOT_INDENT = 52;
 
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
@@ -249,22 +252,11 @@ export default function HeaderV2React({
       const inv = 1 - progress;
       const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
       const offset = LOGO_START_OFFSET_Y * inv;
-      // El slot del logo está corrido a la derecha por el botón hamburguesa; en
-      // el estado grande se compensa en X para alinear el logo con el borde
-      // izquierdo del contenedor (= el h1 del hero). Al encoger vuelve a su slot.
-      const a = img.parentElement;
-      const container = a?.closest(".site-container") as HTMLElement | null;
-      let slotIndent = 0;
-      if (a && container) {
-        const cLeft =
-          container.getBoundingClientRect().left +
-          (parseFloat(getComputedStyle(container).paddingLeft) || 0);
-        slotIndent = a.getBoundingClientRect().left - cLeft;
-      }
-      // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y y
-      // corrige en X sólo mientras está grande.
+      // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y y,
+      // sólo mientras está grande, corrige en X para alinear con el h1 (el slot
+      // del logo está corrido por el hamburguesa — LOGO_SLOT_INDENT).
       img.style.height = `${height}px`;
-      img.style.transform = `translateX(${-slotIndent * inv}px) translateY(calc(-50% + ${offset}px))`;
+      img.style.transform = `translateX(${-LOGO_SLOT_INDENT * inv}px) translateY(calc(-50% + ${offset}px))`;
     },
     [heroLogo]
   );
@@ -311,6 +303,13 @@ export default function HeaderV2React({
     // Initialize scroll state on mount so a reload mid-page shows the correct
     // header background immediately.
     handleScroll();
+    // El h1 del hero reflowa cuando carga el web font; si el logo se posicionó
+    // antes, queda desalineado/encima un instante. Reaplicar al terminar las
+    // fuentes (y en el siguiente frame) evita ese flash en la primera carga.
+    requestAnimationFrame(() => scheduleLogoTransform());
+    document.fonts?.ready
+      ?.then(() => scheduleLogoTransform())
+      .catch(() => {});
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
     return () => {
@@ -318,7 +317,7 @@ export default function HeaderV2React({
       window.removeEventListener("resize", handleResize);
       if (logoRaf.current != null) cancelAnimationFrame(logoRaf.current);
     };
-  }, [handleScroll, handleResize]);
+  }, [handleScroll, handleResize, scheduleLogoTransform]);
 
   // Detecta prefers-reduced-motion: si está activo, el logo se queda en su
   // estado nativo (sin animación de vuelo).
@@ -392,8 +391,12 @@ export default function HeaderV2React({
   // the main bar is transparent to overlap the hero but the top bar sits above
   // the overlap zone. Slightly lighter than the main bar for a two-tone look.
   // When the menu is open it goes transparent so the purple overlay shows.
+  // Al abrir: transparente en mobile (el overlay morado lo cubre). En desktop el
+  // menú es un drawer lateral, así que la topbar mantiene su fondo oscuro — si
+  // fuera transparente, en la franja superior (donde aún no hay hero detrás)
+  // asomaría el blanco del body.
   const topBarBg = menuOpen
-    ? "bg-transparent"
+    ? "bg-transparent lg:bg-[#171717]"
     : controlsDark
     ? "bg-neutral-100 border-b border-black/5"
     : "bg-[#171717]";
@@ -640,7 +643,7 @@ export default function HeaderV2React({
       {/* ═══ MENU OVERLAY (hamburger) ═══ */}
       <div
         className={`
-          fixed top-0 left-0 right-0 z-[70]
+          fixed top-0 left-0 right-0 z-[70] lg:z-[100]
           bg-brand-purple
           h-screen
           lg:right-auto lg:left-0 lg:w-[440px] lg:max-w-[92vw]
@@ -656,7 +659,7 @@ export default function HeaderV2React({
         aria-modal="true"
         aria-label="Menú de navegación"
       >
-        <div className="h-full overflow-y-auto pt-[136px] pb-10 flex flex-col">
+        <div className="h-full overflow-y-auto pt-[136px] lg:pt-10 pb-10 flex flex-col">
           <div className="site-container flex-1 flex flex-col">
             {/* ── MOBILE OVERLAY — multilevel nav ── */}
             <div className="flex lg:hidden flex-col flex-1">
@@ -792,8 +795,36 @@ export default function HeaderV2React({
               )}
             </div>
 
-            {/* ── DESKTOP DRAWER — menú secundario (hamburguesa) ── */}
-            <div className="hidden lg:flex flex-col flex-1 pt-4">
+            {/* ── DESKTOP DRAWER — menú secundario (hamburguesa) ──
+                Autocontenido: logo + cerrar + ítems, todo alineado a la
+                izquierda con el mismo contenedor. El drawer cubre el header
+                (z-100) en desktop, así que trae su propio cerrar y logo. */}
+            <div className="hidden lg:flex flex-col flex-1">
+              {/* Cerrar (alineado con los ítems) */}
+              <button
+                type="button"
+                onClick={closeMenu}
+                aria-label="Cerrar menú"
+                className="flex items-center gap-3 text-white text-sm font-medium mb-8 self-start"
+              >
+                <span className="block w-7 h-[2px] bg-white rounded-full" />
+                Cerrar
+              </button>
+
+              {/* Logo dentro del menú */}
+              <a
+                href="/"
+                onClick={closeMenu}
+                aria-label="Fiberlux - Inicio"
+                className="self-start mb-12"
+              >
+                <img
+                  src={logoSrc}
+                  alt="Fiberlux"
+                  className="h-6 w-auto brightness-0 invert"
+                />
+              </a>
+
               <nav
                 className="flex flex-col gap-2"
                 aria-label="Menú secundario"
