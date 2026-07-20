@@ -265,6 +265,21 @@ var config_default = defineConfig({
                 name: "formTitle",
                 label: "T\xEDtulo del form del hero",
                 type: "string"
+              },
+              {
+                name: "heroMode",
+                label: "Mostrar en el hero",
+                type: "string",
+                options: [
+                  { value: "form", label: "Formulario" },
+                  { value: "image", label: "Imagen" }
+                ],
+                description: "Formulario '\xBFConversamos?' (por defecto) o una imagen de categor\xEDa a sangre."
+              },
+              {
+                name: "heroImage",
+                label: "Imagen del hero (modo imagen)",
+                type: "image"
               }
             ]
           },

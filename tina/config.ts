@@ -282,6 +282,22 @@ export default defineConfig({
                 label: "Título del form del hero",
                 type: "string",
               },
+              {
+                name: "heroMode",
+                label: "Mostrar en el hero",
+                type: "string",
+                options: [
+                  { value: "form", label: "Formulario" },
+                  { value: "image", label: "Imagen" },
+                ],
+                description:
+                  "Formulario '¿Conversamos?' (por defecto) o una imagen de categoría a sangre.",
+              },
+              {
+                name: "heroImage",
+                label: "Imagen del hero (modo imagen)",
+                type: "image",
+              },
             ],
           },
 

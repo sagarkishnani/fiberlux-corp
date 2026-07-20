@@ -69,6 +69,8 @@ fragment ServiceParts on Service {
     intro
     ctaLabel
     formTitle
+    heroMode
+    heroImage
   }
   valor {
     __typename

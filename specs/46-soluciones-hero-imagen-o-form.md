@@ -1,6 +1,6 @@
 # SPEC 46 — Hero de soluciones: toggle form/imagen editable + imagen de categoría
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 11 (plantilla `/soluciones/[solucion]`, hero con form "¿Conversamos?" y `ServiciosForm`).
 > **Fecha:** 2026-07-20
 > **Objetivo:** Agregar en cada solución un toggle en TinaCMS para mostrar en el hero el formulario o una imagen de categoría (fondo a sangre a la derecha en desktop, fondo arriba en mobile), sembrando las 4 imágenes existentes.
