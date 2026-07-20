@@ -253,6 +253,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   const hasDragged = useRef(false);
   const startX = useRef(0);
   const startScrollLeft = useRef(0);
+  // scrollLeft at the moment a finger touches down — lets the touch settle below
+  // measure total swipe displacement for a direction-biased (light) snap.
+  const touchStartScroll = useRef(0);
   const lastX = useRef(0);
   const velocity = useRef(0);
   const momentumId = useRef<number | null>(null);
@@ -365,7 +368,16 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   /* ── Touch settle ──
    * Mobile drag is native touch scrolling (no mouse handlers fire), and CSS
    * `snap-proximity` doesn't force a landing — a release mid-way stays stuck.
-   * So when native scrolling stops after a touch, ease onto the nearest card.
+   * So when native scrolling stops after a touch, ease onto a card.
+   *
+   * Landing is direction-biased, mirroring the mouse `snapDirectional`: rounding
+   * to the *nearest* card meant a light swipe (native momentum stops before the
+   * halfway point on full-width cards) rounded back to where it started — the
+   * user had to drag more than half the screen to advance. Instead, if a
+   * deliberate swipe (> nudgeThreshold of a card) didn't already carry past the
+   * start card, we nudge exactly one card in the swipe direction. Strong flings
+   * whose momentum already advanced are left where they landed (no overshoot).
+   *
    * Gated to touch (`touchMode`) so desktop is unaffected; skipped while a
    * programmatic tween runs (`scrollSnapType === "none"`) and when already
    * aligned, which also keeps it loop-safe. `targetForIndex` clamps to the end,
@@ -377,8 +389,19 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     const settle = () => {
       if (!touchMode.current || isDragging.current) return;
       if (el.style.scrollSnapType === "none") return; // our tween is running
-      const idx = nearestIndex(el.scrollLeft);
-      if (Math.abs(el.scrollLeft - targetForIndex(idx)) > 4) goTo(idx);
+      const nearest = nearestIndex(el.scrollLeft);
+      let target = nearest;
+      const step = measureStep();
+      if (step) {
+        const moved = el.scrollLeft - touchStartScroll.current;
+        const startIdx = nearestIndex(touchStartScroll.current);
+        // Momentum stopped within the start card but the swipe was deliberate →
+        // commit one card in its direction (a light flick advances).
+        if (nearest === startIdx && Math.abs(moved) > step * nudgeThreshold) {
+          target = startIdx + (moved > 0 ? 1 : -1);
+        }
+      }
+      if (Math.abs(el.scrollLeft - targetForIndex(target)) > 4) goTo(target);
     };
     const onScroll = () => {
       window.clearTimeout(settleTimer);
@@ -386,6 +409,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     };
     const onTouchStart = () => {
       touchMode.current = true;
+      touchStartScroll.current = el.scrollLeft;
       stopMomentum();
       cancelAnim();
     };
@@ -396,7 +420,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
       el.removeEventListener("touchstart", onTouchStart);
       window.clearTimeout(settleTimer);
     };
-  }, [nearestIndex, targetForIndex, goTo, stopMomentum, cancelAnim, itemCount]);
+  }, [nearestIndex, targetForIndex, goTo, stopMomentum, cancelAnim, measureStep, nudgeThreshold, itemCount]);
 
   /* ── Cleanup ── */
   useEffect(
