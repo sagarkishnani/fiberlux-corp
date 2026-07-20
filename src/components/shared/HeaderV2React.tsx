@@ -380,7 +380,7 @@ export default function HeaderV2React({
   // desktop el menú es un drawer lateral, así que la barra queda transparente
   // (sólo el drawer es morado) para no ensuciar con un morado full-width.
   const headerBg = menuOpen
-    ? "bg-brand-purple lg:bg-transparent"
+    ? "bg-brand-purple lg:bg-greyscale-darkest/80 lg:backdrop-blur-md"
     : scrolled
     ? isLight
       ? "bg-white/80 backdrop-blur-md border-b border-black/5"
