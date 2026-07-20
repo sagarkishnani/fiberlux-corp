@@ -646,7 +646,7 @@ export default function HeaderV2React({
           fixed top-0 left-0 right-0 z-[70] lg:z-[100]
           bg-brand-purple
           h-screen
-          lg:right-auto lg:left-0 lg:w-[440px] lg:max-w-[92vw]
+          lg:right-auto lg:left-0 lg:w-[520px] lg:max-w-[92vw]
           lg:rounded-r-[40px] lg:shadow-2xl
           transition-all duration-500
           ${
