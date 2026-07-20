@@ -256,6 +256,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   const lastX = useRef(0);
   const velocity = useRef(0);
   const momentumId = useRef<number | null>(null);
+  // True once the slider has been touched: gates the touch-only settle below so
+  // desktop mouse/trackpad behaviour is untouched.
+  const touchMode = useRef(false);
 
   const stopMomentum = useCallback(() => {
     if (momentumId.current !== null) {
@@ -358,6 +361,42 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
       e.stopPropagation();
     }
   }, []);
+
+  /* ── Touch settle ──
+   * Mobile drag is native touch scrolling (no mouse handlers fire), and CSS
+   * `snap-proximity` doesn't force a landing — a release mid-way stays stuck.
+   * So when native scrolling stops after a touch, ease onto the nearest card.
+   * Gated to touch (`touchMode`) so desktop is unaffected; skipped while a
+   * programmatic tween runs (`scrollSnapType === "none"`) and when already
+   * aligned, which also keeps it loop-safe. `targetForIndex` clamps to the end,
+   * so the last card settles cleanly without the `snap-mandatory` end-yank. */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let settleTimer: number | undefined;
+    const settle = () => {
+      if (!touchMode.current || isDragging.current) return;
+      if (el.style.scrollSnapType === "none") return; // our tween is running
+      const idx = nearestIndex(el.scrollLeft);
+      if (Math.abs(el.scrollLeft - targetForIndex(idx)) > 4) goTo(idx);
+    };
+    const onScroll = () => {
+      window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(settle, 140);
+    };
+    const onTouchStart = () => {
+      touchMode.current = true;
+      stopMomentum();
+      cancelAnim();
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("touchstart", onTouchStart);
+      window.clearTimeout(settleTimer);
+    };
+  }, [nearestIndex, targetForIndex, goTo, stopMomentum, cancelAnim, itemCount]);
 
   /* ── Cleanup ── */
   useEffect(
