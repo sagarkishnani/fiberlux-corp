@@ -30,6 +30,7 @@
 | 16 | Otro **degradé a la derecha**, más fuerte, **efecto grano**, 3 tonalidades (no morado→negro) | Soluciones slider · desktop | Mejora diseño | **Hecho (best-effort)** | Ídem 10 (glow ambos lados, grano, multi-tono). |
 | 17 | En pantallas **grandes** el formulario se aleja mucho; acercarlo | Contacto · desktop grande | Mejora responsive | **Hecho (best-effort)** | Grid acotada a 1200 + gap menor → form más cerca en pantallas grandes. |
 | 18 | **Fade/desvanecimiento** en los bordes al deslizar (sin corte brusco) | Carruseles ISO + Soluciones | Mejora diseño | **Hecho (best-effort)** | Máscara de fade en el borde derecho de carruseles soluciones + ISO. |
+| 20 | Header **opaco/blur desde el inicio** (sin scroll) para que el menú no se pierda sobre el hero de imagen | Páginas de solución (`/soluciones/*`) | Mejora | **Hecho** | Prop `solidOnLoad` en el header, activada por ruta en BaseLayout. Home y demás siguen transparentes al tope. |
 | 19 | Subir **opacidad del glass** de los forms para que se note más | Forms de soluciones ("¿Conversamos?") | Mejora diseño | **Hecho** | Glass de forms de hero (subservicio+solución) subido a bg-white/[0.08] + border/blur. |
 
 ---
@@ -51,3 +52,4 @@
 - 2026-07-21 — Lote de fixes en rama `fixes-observaciones-batch`: A (2,7,8), D (1,3,9,14b), C (11,12,13), + 19. Build OK. **Pendiente (best-effort de diseño):** 4, 5, 6, 10, 15, 16, 18. Diferido: 14a.
 - 2026-07-21 — Cluster B + puntuales best-effort hechos (4,5,10,15,16,18) + 6,17. Build OK. **Solo queda 14a (diferido).** Lote listo para 1 deploy. Nota: los ajustes visuales de glass/degradados son best-effort; afinar en el device.
 - 2026-07-21 — obs_6: remapeo completo de íconos de rubros a Lucide (outline) por pedido del cliente. Build OK, verificado visualmente.
+- 2026-07-21 — Nueva obs_20 (pedido del cliente): header opaco/blur desde el inicio solo en rutas `/soluciones/*` (categorías + subservicios), para legibilidad del menú sobre el hero de imagen. Build OK.
