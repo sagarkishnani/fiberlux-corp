@@ -277,7 +277,12 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        .sol-carousel {
+          scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
         .sol-carousel::-webkit-scrollbar { display: none; }
         /* Active card = GLASS (obs_10/16): base semi-transparente + backdrop-blur
            para que el glow magenta de la derecha se desenfoque detrás; brillo
