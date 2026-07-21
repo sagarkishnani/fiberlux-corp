@@ -133,11 +133,11 @@ export default function SolucionesSliderReact({
             </p>
           )}
 
-          {/* Bottom row: big number (left) + "Conoce más →" (right) */}
-          <div className="mt-auto flex items-end justify-between gap-4 pt-8 md:pt-10">
+          {/* Bottom row: number (left) + "Conoce más →" (right) */}
+          <div className="mt-auto flex items-center justify-between gap-4 pt-8 md:pt-10">
             <span
-              className={`text-[40px] md:text-[56px] font-semibold leading-none ${
-                isActive ? "text-white/85" : "text-white/25"
+              className={`text-[24px] md:text-[30px] font-normal leading-none tracking-wide ${
+                isActive ? "text-white/80" : "text-white/25"
               }`}
               data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}
             >
@@ -147,7 +147,7 @@ export default function SolucionesSliderReact({
             {url && (
               <a
                 href={withBase(url)}
-                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[18px] font-medium transition-colors ${
+                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[19px] font-medium transition-colors ${
                   isActive ? "text-white hover:text-[#d885c4]" : "text-white/35"
                 }`}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
@@ -171,7 +171,7 @@ export default function SolucionesSliderReact({
       {...slider.handlers}
     >
       {items.map((item, i) => (
-        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[46%]">
+        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[66%]">
           {renderCard(item, i)}
         </div>
       ))}
@@ -181,7 +181,7 @@ export default function SolucionesSliderReact({
       {items.length > 1 && (
         <div
           aria-hidden="true"
-          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(54%-24px)]"
+          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(34%-24px)]"
         />
       )}
     </div>
@@ -207,7 +207,7 @@ export default function SolucionesSliderReact({
 
       <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
         {/* Left column: eyebrow + active-solution title + description + arrows */}
-        <div className="md:w-[38%] md:shrink-0">
+        <div className="md:w-[40%] md:shrink-0">
           {sectionTitle && (
             <p
               className="mb-5 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
