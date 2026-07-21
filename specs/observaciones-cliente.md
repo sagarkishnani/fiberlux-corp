@@ -19,18 +19,18 @@
 | 6 | **Rubros: actualizar íconos** según referencia | Rubros (Nosotros) | Diseño/contenido | Pendiente | **Aclarado (ref. Image #9):** mantener el estilo de card con imagen de fondo + tile magenta; actualizar los íconos al set de la referencia (Minería=pico, Restaurantes=cubiertos, Educación=birrete, Hotelería=cama, etc.). |
 | 7 | Bug del **carrusel al dar clic en la flecha** (video 0:07) | Rubros (Nosotros) | Bug (motor slider) | **Hecho (pend. verif. Android)** | Motor: se suprime el touch-settle tras un scroll programático (`suppressSettleUntil`) → la flecha ya no salta. Aplica a los 3. |
 | 8 | Se **bugea el carrusel al dar clic en las flechas** (video 0:04) | Catálogo de soluciones | Bug (motor slider) | **Hecho (pend. verif. Android)** | Mismo fix del motor (7). Catálogo ya era `snap-mandatory`. |
-| 9 | Subir el **degradado a negro más arriba** (legibilidad) + **raya blanca** | Subservicio hero (modo imagen) · mobile | Mejora + bug | **Parcial** | Raya blanca **hecha** (= obs_1). Falta reforzar el overlay del hero → va en cluster B. |
+| 9 | Subir el **degradado a negro más arriba** (legibilidad) + **raya blanca** | Subservicio hero (modo imagen) · mobile | Mejora + bug | **Hecho** | Raya blanca (=obs_1) + overlay reforzado arriba (degradado vertical extra en mobile). |
 | 10 | Más **glass/degradado** en las cards; en bajo brillo no se diferencia la card | Soluciones slider (cards) | Mejora diseño | Pendiente | Cluster glass. **Ref. Image #11:** card con glass más marcado, glows magenta a AMBOS lados (izq. tras el título + der. tras la card), **efecto grano**, degrade multi-tono (no morado→negro). |
-| 11 | Usar el **mismo texto que casos de éxito** (Gloria) + opción de **cambiar foto por logo** | Testimonios | Contenido + CMS | Pendiente | Relacionado a 12, 13. |
-| 12 | Opción de poner el **logo del grupo en vez de las comillas** | Casos de éxito (card) | CMS | Pendiente | Relacionado a 11, 13. |
-| 13 | Revisar **contenido de testimonios** (texto/logo Boticas + 3ro de casos de éxito) | Testimonios | Contenido | Pendiente | Relacionado a 11, 12. |
+| 11 | Usar el **mismo texto que casos de éxito** (Gloria) + opción de **cambiar foto por logo** | Testimonios | Contenido + CMS | **Hecho** | Contenido replicado de casos + card usa logo si no hay foto (sin cambio de schema). |
+| 12 | Opción de poner el **logo del grupo en vez de las comillas** | Casos de éxito (card) | CMS | **Hecho** | Card de casos: logo en vez de comilla cuando hay logo. + mediaUrl en poster/logo. |
+| 13 | Revisar **contenido de testimonios** (texto/logo Boticas + 3ro de casos de éxito) | Testimonios | Contenido | **Hecho** | Testimonios = Boticas + Cámara Arequipa + Gloria (contenido de casos). Avatares vacíos (cliente sube foto/logo). |
 | 14a | Un **vector distinto** en el "desafío" de cada categoría | Sección "El desafío" (por categoría) | Asset/contenido | Pendiente | Requiere un gráfico por categoría. |
 | 14b | La info **solo se amplía en Conectividad**, no en las otras categorías | Catálogo de soluciones (hover-reveal) | Bug/feature | **Hecho** | Era contenido: solo Conectividad tenía descripciones. Autocompletadas las 3 categorías (27 items) desde el intro del subservicio. Cliente puede refinar en Tina. |
 | 15 | Notar **más el degradé de fondo** | Form "Déjanos tus datos" (subservicio) | Mejora diseño | Pendiente | Cluster glass/degradé. |
 | 16 | Otro **degradé a la derecha**, más fuerte, **efecto grano**, 3 tonalidades (no morado→negro) | Soluciones slider · desktop | Mejora diseño | Pendiente | Cluster glass. Según Figma. |
 | 17 | En pantallas **grandes** el formulario se aleja mucho; acercarlo | Contacto · desktop grande | Mejora responsive | Pendiente | Spacing del form de contacto. |
 | 18 | **Fade/desvanecimiento** en los bordes al deslizar (sin corte brusco) | Carruseles ISO + Soluciones | Mejora diseño | Pendiente | Máscara de fade en los edges de los carruseles. |
-| 19 | Subir **opacidad del glass** de los forms para que se note más | Forms de soluciones ("¿Conversamos?") | Mejora diseño | Pendiente | Cluster glass. |
+| 19 | Subir **opacidad del glass** de los forms para que se note más | Forms de soluciones ("¿Conversamos?") | Mejora diseño | **Hecho** | Glass de forms de hero (subservicio+solución) subido a bg-white/[0.08] + border/blur. |
 
 ---
 
@@ -48,3 +48,4 @@
 
 - 2026-07-21 — Registradas 19 observaciones (20 ítems) desde `~/Downloads/observaciones_fiberlux/`. Todas en `Pendiente` salvo #4 (Diferido) y #6 (Necesita aclaración).
 - 2026-07-21 — Cliente aclara con referencias: **#6** (ref. íconos de rubros → Pendiente), **#4** (ya no diferido: degrade de profundidad + color en números → Pendiente), **#10/#16** (glass soluciones: ref. Figma con grano + multi-tono + glows ambos lados). Orden confirmado: **A (bugs slider) → D (bugs visuales) → B (glass: soluciones → ¿por qué Fiberlux? → ISO) → C (contenido)**.
+- 2026-07-21 — Lote de fixes en rama `fixes-observaciones-batch`: A (2,7,8), D (1,3,9,14b), C (11,12,13), + 19. Build OK. **Pendiente (best-effort de diseño):** 4, 5, 6, 10, 15, 16, 18. Diferido: 14a.
