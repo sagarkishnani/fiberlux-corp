@@ -132,7 +132,12 @@ export default function CertificacionesSliderReact({
       </div>
 
       <style>{`
-        .cert-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        .cert-carousel {
+          scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
         .cert-carousel::-webkit-scrollbar { display: none; }
       `}</style>
     </section>

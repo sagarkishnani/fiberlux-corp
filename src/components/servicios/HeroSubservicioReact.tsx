@@ -67,12 +67,23 @@ export default function HeroSubservicioReact({
             style={{ backgroundImage: `url(${imageUrl})` }}
             aria-hidden="true"
           />
-          {/* Overlay oscuro para que el texto (izq) y el form (der) sigan legibles */}
+          {/* Overlay oscuro para que el texto (izq) y el form (der) sigan legibles.
+              obs_9: se refuerza el negro ARRIBA (degradado vertical) además del
+              horizontal, para que en mobile —donde el texto va sobre la imagen a
+              lo ancho— se lea mejor. */}
           <div
             className="absolute inset-0 z-0"
             style={{
               background:
-                "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.9) 30%, rgba(10,10,10,0.7) 60%, rgba(10,10,10,0.6) 100%)",
+                "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.92) 32%, rgba(10,10,10,0.72) 62%, rgba(10,10,10,0.62) 100%)",
+            }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0 z-0 md:hidden"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.45) 38%, rgba(10,10,10,0.2) 68%, rgba(10,10,10,0) 100%)",
             }}
             aria-hidden="true"
           />
@@ -168,7 +179,7 @@ export default function HeroSubservicioReact({
           </div>
 
           {/* ════ RIGHT — "¿Conversamos?" form ════ */}
-          <div className="w-full rounded-3xl bg-white/[0.04] border border-white/10 backdrop-blur-sm p-6 md:p-8">
+          <div className="w-full rounded-3xl bg-white/[0.08] border border-white/15 backdrop-blur-md p-6 md:p-8">
             {hero?.formTitle && (
               <h2
                 className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-6"

@@ -177,6 +177,10 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
    * the exact frame it lands (no fragile timeout).
    */
   const animId = useRef<number | null>(null);
+  // While a programmatic scroll (arrows / settle tween) runs, the touch-settle
+  // below must NOT fire: on mobile a stale touch-settle after an arrow tap yanked
+  // the carousel to a wrong card. Suppress it for the tween duration + a cooldown.
+  const suppressSettleUntil = useRef(0);
   const cancelAnim = useCallback(() => {
     if (animId.current !== null) {
       cancelAnimationFrame(animId.current);
@@ -194,6 +198,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
       const max = el.scrollWidth - el.clientWidth;
       const target = Math.min(Math.max(left, 0), max);
       el.style.scrollSnapType = "none";
+      // Cover the whole tween (max ~750ms) + a cooldown so the touch-settle that
+      // fires ~140ms after the tween's last scroll event doesn't re-snap.
+      suppressSettleUntil.current = performance.now() + 1000;
 
       if (reduced) {
         el.scrollLeft = target;
@@ -389,6 +396,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     const settle = () => {
       if (!touchMode.current || isDragging.current) return;
       if (el.style.scrollSnapType === "none") return; // our tween is running
+      if (performance.now() < suppressSettleUntil.current) return; // just did an arrow/settle tween
       const nearest = nearestIndex(el.scrollLeft);
       let target = nearest;
       const step = measureStep();

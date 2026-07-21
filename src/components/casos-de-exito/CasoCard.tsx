@@ -1,4 +1,5 @@
 import { tinaField } from "tinacms/dist/react";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 export interface Caso {
   poster?: string | null;
@@ -81,7 +82,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
     <div className="relative rounded-[14px] overflow-hidden bg-[#0d0d14] w-full h-[280px] md:h-full min-h-[280px]">
       {caso.poster ? (
         <img
-          src={caso.poster}
+          src={mediaUrl(caso.poster)}
           alt={caso.author || "Caso de éxito"}
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
@@ -109,16 +110,18 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
   /* ── Quote card (top-right) ── */
   const quoteCard = (
     <div className="rounded-[14px] bg-white/[0.08] border border-white/[0.07] px-7 py-8 md:px-9 md:py-9 flex flex-col gap-5 justify-center flex-1">
-      {caso.logo && (
+      {/* Si hay logo del cliente, se muestra EN VEZ de las comillas (obs_12). */}
+      {caso.logo ? (
         <img
-          src={caso.logo}
+          src={mediaUrl(caso.logo)}
           alt={caso.author || "Cliente"}
           className="h-12 object-contain object-left"
           draggable={false}
           data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
         />
+      ) : (
+        <QuoteMark />
       )}
-      <QuoteMark />
       <p
         className="text-[14px] leading-[1.8] text-white/55"
         data-tina-field={tinaItem ? tinaField(tinaItem, "quote") : undefined}

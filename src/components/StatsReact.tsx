@@ -123,22 +123,22 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
 
   return (
     <div ref={ref} className="mt-4 mb-4 flex flex-col gap-4">
-      {/* Card — big number as the hero */}
+      {/* Card — big number as the hero. obs_4: glass sutil + número con gradiente. */}
       <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-center md:min-h-[240px]"
+        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-center md:min-h-[240px] bg-white/[0.06] backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
         data-tina-field={tinaField(item as any, 'number')}
       >
-        <p>
+        <p className="bg-gradient-to-b from-white to-[#f6cfe9] bg-clip-text text-transparent">
           {prefix && (
-            <span className="text-white text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
+            <span className="text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
               {prefix}
             </span>
           )}
-          <span className="text-white text-[44px] leading-[48px] sm:text-[56px] sm:leading-[60px] font-bold">
+          <span className="text-[44px] leading-[48px] sm:text-[56px] sm:leading-[60px] font-bold">
             {displayNumber}
           </span>
           {suffix && (
-            <span className="text-white/90 text-[24px] leading-[28px] sm:text-[28px] sm:leading-[32px] font-semibold ml-1.5">
+            <span className="text-[24px] leading-[28px] sm:text-[28px] sm:leading-[32px] font-semibold ml-1.5">
               {suffix}
             </span>
           )}
@@ -169,7 +169,14 @@ export default function StatsReact({ query, variables, data: initialData, titleO
   const heading = titleOverride || stats.title;
 
   return (
-    <section className="bg-brand-purple rounded-t-3xl py-14 md:py-20">
+    <section
+      className="rounded-t-3xl py-14 md:py-20"
+      style={{
+        // obs_4: degradé de profundidad (Figma) en vez del magenta plano.
+        background:
+          "linear-gradient(118deg, #490d3b 0%, #74195e 36%, #96237A 66%, #ad2e90 100%)",
+      }}
+    >
       <div className="site-container">
 
         {/* Section title */}

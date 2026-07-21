@@ -103,8 +103,8 @@ export default function SolucionesSliderReact({
       <div
         className={`relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
           isActive
-            ? "border-white/15 sol-card-active"
-            : "border-white/[0.06] bg-[#0c0b0e]"
+            ? "border-white/20 sol-card-active"
+            : "border-white/[0.10] bg-white/[0.03] backdrop-blur-sm"
         }`}
       >
         <div className="relative z-10 flex h-full flex-col">
@@ -171,7 +171,7 @@ export default function SolucionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none sol-carousel"
+      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel"
       style={{ cursor: "grab" }}
       {...slider.handlers}
     >
@@ -219,6 +219,25 @@ export default function SolucionesSliderReact({
           maskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
         }}
       />
+      {/* obs_16: glow magenta a la DERECHA (detrás de la card activa) para que el
+          glass la desenfoque y se note el fondo. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 right-[-6%] z-0 h-[130%] w-[45vw] max-w-[720px] -translate-y-1/2"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(150,35,122,0.55) 0%, rgba(150,35,122,0.22) 45%, transparent 78%)",
+        }}
+      />
+      {/* obs_16: efecto grano sutil sobre toda la sección. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.05] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
 
       <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
         {/* Left column: eyebrow + active-solution title + description + arrows */}
@@ -258,19 +277,30 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        .sol-carousel {
+          scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        /* Active card: a soft magenta glow rising from below-centre that fades to
-           the dark base before reaching the edges — so the card border is a
-           gentle dark-to-dark transition, never a harsh saturated cut. */
+        /* Active card = GLASS (obs_10/16): base semi-transparente + backdrop-blur
+           para que el glow magenta de la derecha se desenfoque detrás; brillo
+           blanco arriba (lado opuesto al degradé) tipo glass; degradé magenta
+           multi-tono (violeta → magenta → oscuro) que la hace visible aun en
+           bajo brillo. */
         .sol-card-active {
           background:
-            radial-gradient(112% 80% at 50% 126%,
-              rgba(165,42,134,0.90) 0%,
-              rgba(135,30,108,0.66) 24%,
-              rgba(70,24,58,0.36) 50%,
-              rgba(12,10,15,0) 76%),
-            #0b0a0e;
+            linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 14%, rgba(255,255,255,0) 26%),
+            radial-gradient(122% 88% at 50% 127%,
+              rgba(185,50,148,0.90) 0%,
+              rgba(146,36,120,0.70) 26%,
+              rgba(84,30,88,0.46) 52%,
+              rgba(26,15,32,0.22) 78%),
+            rgba(12,10,16,0.42);
+          backdrop-filter: blur(7px);
+          -webkit-backdrop-filter: blur(7px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }

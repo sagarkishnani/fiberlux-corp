@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { IconType } from 'react-icons';
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaPersonDigging,
-  FaUtensils,
-  FaGraduationCap,
-  FaBed,
-  FaHeartPulse,
-  FaCartShopping,
-  FaBuildingColumns,
-  FaIndustry,
-  FaTruck,
-  FaLandmark,
-  FaHelmetSafety,
-  FaTractor,
-  FaLaptopCode,
-  FaBolt,
-  FaTowerCell,
-  FaPlaneDeparture,
-  FaMasksTheater,
-  FaBuilding,
-  FaBriefcase,
-  FaGears,
-} from 'react-icons/fa6';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+// obs_6: set de íconos en estilo outline (Lucide) para coincidir con la referencia.
+import {
+  LuPickaxe,
+  LuUtensilsCrossed,
+  LuGraduationCap,
+  LuBedDouble,
+  LuHeartPulse,
+  LuShoppingCart,
+  LuLandmark,
+  LuFactory,
+  LuTruck,
+  LuBuilding2,
+  LuHardHat,
+  LuTractor,
+  LuLaptop,
+  LuZap,
+  LuRadioTower,
+  LuPlane,
+  LuDrama,
+  LuBuilding,
+  LuBriefcase,
+  LuSettings,
+} from 'react-icons/lu';
 import { useDragSlider } from '../../hooks/useDragSlider';
 import { mediaUrl } from '../../utils/mediaUrl';
 
@@ -44,28 +44,28 @@ interface RubrosProps {
 
 /* ── Icon map: CMS select key → react-icons component ── */
 const ICONS: Record<string, IconType> = {
-  mineria: FaPersonDigging,
-  restaurantes: FaUtensils,
-  educacion: FaGraduationCap,
-  hoteleria: FaBed,
-  salud: FaHeartPulse,
-  retail: FaCartShopping,
-  banca: FaBuildingColumns,
-  industria: FaIndustry,
-  logistica: FaTruck,
-  gobierno: FaLandmark,
-  construccion: FaHelmetSafety,
-  agroindustria: FaTractor,
-  tecnologia: FaLaptopCode,
-  energia: FaBolt,
-  telecomunicaciones: FaTowerCell,
-  turismo: FaPlaneDeparture,
-  entretenimiento: FaMasksTheater,
-  corporativo: FaBuilding,
-  consultoria: FaBriefcase,
-  servicios: FaGears,
+  mineria: LuPickaxe,
+  restaurantes: LuUtensilsCrossed,
+  educacion: LuGraduationCap,
+  hoteleria: LuBedDouble,
+  salud: LuHeartPulse,
+  retail: LuShoppingCart,
+  banca: LuLandmark,
+  industria: LuFactory,
+  logistica: LuTruck,
+  gobierno: LuBuilding2,
+  construccion: LuHardHat,
+  agroindustria: LuTractor,
+  tecnologia: LuLaptop,
+  energia: LuZap,
+  telecomunicaciones: LuRadioTower,
+  turismo: LuPlane,
+  entretenimiento: LuDrama,
+  corporativo: LuBuilding,
+  consultoria: LuBriefcase,
+  servicios: LuSettings,
 };
-const FALLBACK_ICON: IconType = FaBuilding;
+const FALLBACK_ICON: IconType = LuBuilding;
 
 /* ── Reduced-motion hook ── */
 function usePrefersReducedMotion(): boolean {
@@ -178,7 +178,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
             />
           </>
         )}
-        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-white">
+        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-[#3B0E30]">
           <Icon className="text-[28px]" />
         </span>
         <h3
@@ -221,7 +221,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
 
         <div
           ref={slider.ref}
-          className="flex gap-2 overflow-x-auto snap-x snap-proximity select-none rubros-carousel"
+          className="flex gap-2 overflow-x-auto snap-x snap-mandatory select-none rubros-carousel"
           style={{ cursor: 'grab' }}
           onTouchStart={() => setPaused(true)}
           onTouchEnd={() => setPaused(false)}

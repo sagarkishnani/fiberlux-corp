@@ -71,17 +71,18 @@ export default function ServiciosFormReact({
       </div>
 
       <style>{`
+        /* obs_15: degradé de fondo más notorio (alphas subidos). */
         .servicios-form-glow {
           background:
-            radial-gradient(52% 58% at 88% 4%, rgba(190, 70, 158, 0.42) 0%, rgba(150, 35, 122, 0) 55%),
-            radial-gradient(40% 52% at 1% 55%, rgba(150, 35, 122, 0.34) 0%, rgba(150, 35, 122, 0) 62%),
-            radial-gradient(48% 46% at 22% 108%, rgba(150, 35, 122, 0.22) 0%, rgba(150, 35, 122, 0) 60%);
+            radial-gradient(56% 62% at 88% 2%, rgba(198, 78, 166, 0.62) 0%, rgba(150, 35, 122, 0) 58%),
+            radial-gradient(46% 56% at 0% 52%, rgba(160, 40, 130, 0.52) 0%, rgba(150, 35, 122, 0) 64%),
+            radial-gradient(52% 50% at 20% 110%, rgba(150, 35, 122, 0.38) 0%, rgba(150, 35, 122, 0) 62%);
         }
         @media (max-width: 1023px) {
           .servicios-form-glow {
             background:
-              radial-gradient(70% 30% at 82% 2%, rgba(190, 70, 158, 0.38) 0%, rgba(150, 35, 122, 0) 55%),
-              radial-gradient(80% 26% at 10% 60%, rgba(150, 35, 122, 0.30) 0%, rgba(150, 35, 122, 0) 62%);
+              radial-gradient(75% 34% at 82% 1%, rgba(198, 78, 166, 0.55) 0%, rgba(150, 35, 122, 0) 58%),
+              radial-gradient(85% 30% at 8% 60%, rgba(160, 40, 130, 0.45) 0%, rgba(150, 35, 122, 0) 64%);
           }
         }
       `}</style>

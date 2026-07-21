@@ -348,6 +348,13 @@ const styles = `
     --a11y-hue: 0deg;
   }
 
+  /* Fondo oscuro del canvas: html/body iban transparentes → el navegador pintaba
+     su canvas BLANCO por defecto, y en Android Chrome el overscroll/rebote arriba
+     mostraba una "raya blanca" al scrollear. Con esto el rebote se ve negro. */
+  html {
+    background-color: #0a0a0a;
+  }
+
   /* Scale ALL page text (font slider / "Agrandar texto") via zoom on the
      content wrapper, so px-based sizes grow too — not only rem/em. Gated behind
      .a11y-scaled (added only when fontScale !== 1) so there is zero effect at

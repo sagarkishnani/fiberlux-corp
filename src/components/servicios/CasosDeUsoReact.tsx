@@ -59,7 +59,7 @@ export default function CasosDeUsoReact({
         {casos.eyebrow && (
           <div className="border-t border-white/10 pt-8">
             <span
-              className="font-mono text-caption-sm tracking-[0.2em] text-greyscale"
+              className="font-mono text-xs md:text-sm tracking-[0.2em] text-greyscale"
               data-tina-field={tinaField(casos, "eyebrow")}
             >
               {casos.eyebrow}
