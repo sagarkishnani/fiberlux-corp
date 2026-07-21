@@ -43,7 +43,7 @@
       {
         "icon": "firewall",
         "title": "NGFW / Seguridad Perimetral",
-        "description": "",
+        "description": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral",
         "colSpan": "2",
@@ -52,7 +52,7 @@
       {
         "icon": "vpn",
         "title": "VPN Segura y Accesso Remoto Protegido",
-        "description": "",
+        "description": "Red Privada Virtual de grado corporativo.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/vpn-segura",
         "colSpan": "1",
@@ -61,7 +61,7 @@
       {
         "icon": "edr",
         "title": "EDR / XDR / MDR",
-        "description": "",
+        "description": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr",
         "colSpan": "1",
@@ -70,7 +70,7 @@
       {
         "icon": "correo",
         "title": "Seguridad de Correo y Filtrado Web",
-        "description": "",
+        "description": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web",
         "colSpan": "1",
@@ -79,7 +79,7 @@
       {
         "icon": "mfa",
         "title": "MFA y Control de Identidad",
-        "description": "",
+        "description": "Autenticación Multifactor y Gestión de Identidad.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad",
         "colSpan": "1",
@@ -88,7 +88,7 @@
       {
         "icon": "ztna",
         "title": "ZTNA",
-        "description": "",
+        "description": "Arquitectura Zero Trust Network Access (Confianza Cero) que otorga acceso granular solo a una aplicación específica, manteniendo el resto de la red invisible.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/ztna",
         "colSpan": "1",
@@ -97,7 +97,7 @@
       {
         "icon": "generico",
         "title": "NAC",
-        "description": "",
+        "description": "Control de acceso a la red que verifica la identidad, estado y cumplimiento de seguridad de usuarios y dispositivos antes de permitir su conexión a los recursos corporativos.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/nac",
         "colSpan": "1",
@@ -106,7 +106,7 @@
       {
         "icon": "waf",
         "title": "WAF",
-        "description": "",
+        "description": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/waf",
         "colSpan": "1",
@@ -115,7 +115,7 @@
       {
         "icon": "ddos",
         "title": "Anti-DDoS",
-        "description": "",
+        "description": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/anti-ddos",
         "colSpan": "1",
@@ -124,7 +124,7 @@
       {
         "icon": "generico",
         "title": "Concientización en Phishing",
-        "description": "",
+        "description": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing",
         "colSpan": "1",
@@ -133,7 +133,7 @@
       {
         "icon": "soc",
         "title": "SOC 24/7",
-        "description": "",
+        "description": "Un equipo de ingenieros expertos que vigila, correlaciona eventos y responde a amenazas de forma ininterrumpida.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/soc-24-7",
         "colSpan": "1",
@@ -142,7 +142,7 @@
       {
         "icon": "soc",
         "title": "Correlación de Eventos (SIEM)",
-        "description": "",
+        "description": "Servicio que centraliza y correlaciona eventos de seguridad de múltiples fuentes mediante SIEM, complementado con capacidades SOAR para automatizar la respuesta ante incidentes.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos",
         "colSpan": "1",
@@ -151,7 +151,7 @@
       {
         "icon": "pentesting",
         "title": "Pentesting",
-        "description": "",
+        "description": "Ataques simulados realizados por expertos para descubrir brechas en la red, aplicaciones o procesos corporativos.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/ciberseguridad-gestionada/pentesting",
         "colSpan": "1",

@@ -43,7 +43,7 @@
       {
         "icon": "storage",
         "title": "Housing / Colocación",
-        "description": "",
+        "description": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/housing-colocacion",
         "colSpan": "2",
@@ -52,7 +52,7 @@
       {
         "icon": "cloud",
         "title": "Nube Privada",
-        "description": "",
+        "description": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/nube-privada",
         "colSpan": "1",
@@ -61,7 +61,7 @@
       {
         "icon": "cloud",
         "title": "Nube Pública",
-        "description": "",
+        "description": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/nube-publica",
         "colSpan": "1",
@@ -70,7 +70,7 @@
       {
         "icon": "backup",
         "title": "Backup as a Service (BaaS)",
-        "description": "",
+        "description": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/baas",
         "colSpan": "1",
@@ -79,7 +79,7 @@
       {
         "icon": "backup",
         "title": "Disaster Recovery (DRaaS)",
-        "description": "",
+        "description": "Recuperación ante Desastres como Servicio.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/draas",
         "colSpan": "1",
@@ -88,7 +88,7 @@
       {
         "icon": "storage",
         "title": "Storage y Cómputo",
-        "description": "",
+        "description": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/storage-computo",
         "colSpan": "1",
@@ -97,7 +97,7 @@
       {
         "icon": "generico",
         "title": "Microservicios",
-        "description": "",
+        "description": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/data-center-cloud/microservicios",
         "colSpan": "1",

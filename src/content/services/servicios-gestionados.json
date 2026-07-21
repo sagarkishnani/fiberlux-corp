@@ -43,7 +43,7 @@
       {
         "icon": "mesa-ayuda",
         "title": "Mesa de Ayuda",
-        "description": "",
+        "description": "Tercerización estratégica del soporte técnico (Nivel 1 y 2).",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/mesa-de-ayuda",
         "colSpan": "2",
@@ -52,7 +52,7 @@
       {
         "icon": "generico",
         "title": "Comunicaciones Unificadas",
-        "description": "",
+        "description": "La evolución de la Telefonía IP: unifica la central telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con Microsoft Teams, WhatsApp, CRMs y más.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas",
         "colSpan": "1",
@@ -61,7 +61,7 @@
       {
         "icon": "generico",
         "title": "Colaboración Empresarial",
-        "description": "",
+        "description": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/colaboracion-empresarial",
         "colSpan": "1",
@@ -70,7 +70,7 @@
       {
         "icon": "generico",
         "title": "Gestión de Redes LAN",
-        "description": "",
+        "description": "Diseño, configuración, actualización y administración proactiva de la infraestructura de red LAN, incluyendo switches, segmentación y políticas de conectividad.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/gestion-redes-lan",
         "colSpan": "1",
@@ -79,7 +79,7 @@
       {
         "icon": "wifi",
         "title": "WiFi Gestionado",
-        "description": "",
+        "description": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/wifi-gestionado",
         "colSpan": "1",
@@ -88,7 +88,7 @@
       {
         "icon": "generico",
         "title": "Gestión de Endpoints",
-        "description": "",
+        "description": "Administración centralizada (MDM/UEM). Plataformas cloud que controlan el inventario, despliegue de software y políticas de todos los…",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/gestion-endpoints",
         "colSpan": "1",
@@ -97,7 +97,7 @@
       {
         "icon": "videovigilancia",
         "title": "Videovigilancia Gestionada",
-        "description": "",
+        "description": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
         "buttonLabel": "Conocer más",
         "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada",
         "colSpan": "1",
