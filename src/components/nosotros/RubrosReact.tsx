@@ -4,7 +4,6 @@ import type { IconType } from 'react-icons';
 import {
   FaArrowLeft,
   FaArrowRight,
-  FaPersonDigging,
   FaUtensils,
   FaGraduationCap,
   FaBed,
@@ -26,6 +25,7 @@ import {
   FaGears,
 } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { LuPickaxe } from 'react-icons/lu';
 import { useDragSlider } from '../../hooks/useDragSlider';
 import { mediaUrl } from '../../utils/mediaUrl';
 
@@ -44,7 +44,7 @@ interface RubrosProps {
 
 /* ── Icon map: CMS select key → react-icons component ── */
 const ICONS: Record<string, IconType> = {
-  mineria: FaPersonDigging,
+  mineria: LuPickaxe,
   restaurantes: FaUtensils,
   educacion: FaGraduationCap,
   hoteleria: FaBed,
