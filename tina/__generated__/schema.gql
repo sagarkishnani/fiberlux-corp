@@ -494,6 +494,8 @@ type SubservicioHero {
   note: String
   ctaLabel: String
   formTitle: String
+  heroBackground: String
+  heroImage: String
 }
 
 type SubservicioBeneficiosItems {
@@ -551,6 +553,8 @@ input SubservicioHeroFilter {
   note: StringFilter
   ctaLabel: StringFilter
   formTitle: StringFilter
+  heroBackground: StringFilter
+  heroImage: ImageFilter
 }
 
 input SubservicioBeneficiosItemsFilter {
@@ -2100,6 +2104,8 @@ input SubservicioHeroMutation {
   note: String
   ctaLabel: String
   formTitle: String
+  heroBackground: String
+  heroImage: String
 }
 
 input SubservicioBeneficiosItemsMutation {

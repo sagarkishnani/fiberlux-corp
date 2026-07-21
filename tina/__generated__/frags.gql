@@ -141,6 +141,8 @@ fragment SubservicioParts on Subservicio {
     note
     ctaLabel
     formTitle
+    heroBackground
+    heroImage
   }
   beneficios {
     __typename

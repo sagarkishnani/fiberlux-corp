@@ -551,6 +551,21 @@ var config_default = defineConfig({
                 name: "formTitle",
                 label: "T\xEDtulo del form del hero",
                 type: "string"
+              },
+              {
+                name: "heroBackground",
+                label: "Fondo del hero",
+                type: "string",
+                options: [
+                  { value: "grafico", label: "Gr\xE1fico decorativo (actual)" },
+                  { value: "imagen", label: "Imagen propia del subservicio" }
+                ]
+                // default "grafico"; el seed pone "imagen" en los 34
+              },
+              {
+                name: "heroImage",
+                label: "Imagen del hero (modo imagen)",
+                type: "image"
               }
             ]
           },
