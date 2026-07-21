@@ -30,7 +30,7 @@
 | 16 | Otro **degradé a la derecha**, más fuerte, **efecto grano**, 3 tonalidades (no morado→negro) | Soluciones slider · desktop | Mejora diseño | **Hecho (best-effort)** | Ídem 10 (glow ambos lados, grano, multi-tono). |
 | 17 | En pantallas **grandes** el formulario se aleja mucho; acercarlo | Contacto · desktop grande | Mejora responsive | **Hecho (best-effort)** | Grid acotada a 1200 + gap menor → form más cerca en pantallas grandes. |
 | 18 | **Fade/desvanecimiento** en los bordes al deslizar (sin corte brusco) | Carruseles ISO + Soluciones | Mejora diseño | **Hecho (best-effort)** | Máscara de fade en el borde derecho de carruseles soluciones + ISO. |
-| 21 | Aumentar el tamaño de la **statement de "Casos de uso"** (similar a soluciones/partners) | Subservicio · sección Casos de uso | Mejora | **Hecho** | `text-[24px] md:text-[36px]` → `text-[30px] md:text-[48px]`. |
+| 21 | Aumentar el tamaño del **tag "[ CASOS DE USO ]"** (similar a soluciones/partners) | Subservicio · sección Casos de uso | Mejora | **Hecho** | Eyebrow `text-caption-sm` → `text-xs md:text-sm` (como partners). La statement se mantiene igual. |
 | 20 | Header **opaco/blur desde el inicio** (sin scroll) para que el menú no se pierda sobre el hero de imagen | Páginas de solución (`/soluciones/*`) | Mejora | **Hecho** | Prop `solidOnLoad` en el header, activada por ruta en BaseLayout. Home y demás siguen transparentes al tope. |
 | 19 | Subir **opacidad del glass** de los forms para que se note más | Forms de soluciones ("¿Conversamos?") | Mejora diseño | **Hecho** | Glass de forms de hero (subservicio+solución) subido a bg-white/[0.08] + border/blur. |
 
