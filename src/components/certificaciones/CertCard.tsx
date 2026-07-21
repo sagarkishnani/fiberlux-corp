@@ -43,7 +43,16 @@ export default function CertCard({ cert, tinaItem }: CertCardProps) {
   const Icon = (cert.icon && ICONS[cert.icon]) || FALLBACK_ICON;
 
   return (
-    <div className="flex h-full min-h-[320px] md:min-h-[420px] flex-col rounded-[24px] border border-white/[0.05] bg-[#111013] px-8 py-7">
+    <div
+      className="flex h-full min-h-[320px] md:min-h-[420px] flex-col rounded-[24px] border border-white/[0.12] backdrop-blur-sm px-8 py-7"
+      style={{
+        // obs_5: glass como las cards de soluciones para que se note el contenedor
+        // aun en bajo brillo (brillo blanco arriba + magenta sutil abajo).
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 14%, rgba(255,255,255,0) 24%), radial-gradient(120% 82% at 50% 126%, rgba(150,35,122,0.30) 0%, rgba(96,25,74,0.16) 40%, rgba(20,15,24,0) 72%), rgba(17,16,19,0.55)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)",
+      }}
+    >
       {/* Top row: year (left) + verified check-circle (right, decorative) */}
       <div className="flex items-center justify-between">
         <span
