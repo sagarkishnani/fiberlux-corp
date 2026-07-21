@@ -59,7 +59,7 @@ export default function CasosDeUsoReact({
         {casos.eyebrow && (
           <div className="border-t border-white/10 pt-8">
             <span
-              className="font-mono text-caption-sm tracking-[0.2em] text-greyscale"
+              className="font-mono text-xs md:text-sm tracking-[0.2em] text-greyscale"
               data-tina-field={tinaField(casos, "eyebrow")}
             >
               {casos.eyebrow}
@@ -69,7 +69,7 @@ export default function CasosDeUsoReact({
 
         {showStatement && (
           <div
-            className="mt-8 max-w-[1040px] text-[30px] md:text-[48px] leading-[1.2] font-medium text-greyscale-white"
+            className="mt-8 max-w-[960px] text-[24px] md:text-[36px] leading-[1.3] font-medium text-greyscale-white"
             data-tina-field={tinaField(casos, "statement")}
           >
             <TinaMarkdown
