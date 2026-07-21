@@ -8,7 +8,9 @@
     "intro": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
     "note": "Ideal para organizaciones que requieren visibilidad permanente de sus instalaciones sin asumir la complejidad de administrar la infraestructura internamente.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/videovigilancia-gestionada.webp"
   },
   "beneficios": {
     "title": "Beneficios",

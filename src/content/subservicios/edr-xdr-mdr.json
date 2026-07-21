@@ -8,7 +8,9 @@
     "intro": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
     "note": "Ideal para frenar el ransomware hiperavanzado que evade los antivirus tradicionales y se ejecuta directamente en las laptops de directivos y colaboradores.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/edr-xdr.webp"
   },
   "beneficios": {
     "title": "Beneficios",

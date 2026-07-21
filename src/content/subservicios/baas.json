@@ -8,7 +8,9 @@
     "intro": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
     "note": "Ideal para evitar la pérdida catastrófica de información por ransomware, donde los respaldos manuales en discos locales también terminan encriptados.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/backup-as-a-service.webp"
   },
   "beneficios": {
     "title": "Beneficios",

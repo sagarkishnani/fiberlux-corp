@@ -8,7 +8,9 @@
     "intro": "Administración centralizada (MDM/UEM). Plataformas cloud que controlan el inventario, despliegue de software y políticas de todos los portátiles y móviles de la empresa.",
     "note": "Ideal para organizaciones grandes donde aplicar un parche de seguridad equipo por equipo tomaría meses de logística insostenible.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/gestion-endpoints.webp"
   },
   "beneficios": {
     "title": "Beneficios",

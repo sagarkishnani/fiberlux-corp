@@ -8,7 +8,9 @@
     "intro": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/radioenlaces-empresariales.webp"
   },
   "beneficios": {
     "title": "Beneficios",

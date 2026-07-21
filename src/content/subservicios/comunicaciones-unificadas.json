@@ -8,7 +8,9 @@
     "intro": "La evolución de la Telefonía IP: unifica la central telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con Microsoft Teams, WhatsApp, CRMs y más.",
     "note": "Ideal para empresas donde el WhatsApp personal y múltiples herramientas aisladas generan pérdida de control de la información y fragmentan a los equipos.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/comunicaciones.webp"
   },
   "beneficios": {
     "title": "Beneficios",

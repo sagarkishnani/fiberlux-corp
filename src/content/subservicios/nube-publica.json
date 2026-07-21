@@ -8,7 +8,9 @@
     "intro": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
     "note": "Ideal para empresas que buscan acelerar proyectos, optimizar costos y aprovechar la escalabilidad de la nube pública con un socio especializado.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/nube-publica.webp"
   },
   "beneficios": {
     "title": "Beneficios",

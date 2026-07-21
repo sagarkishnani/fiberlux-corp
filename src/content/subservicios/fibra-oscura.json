@@ -8,7 +8,9 @@
     "intro": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/fibra-oscura.webp"
   },
   "beneficios": {
     "title": "Beneficios",

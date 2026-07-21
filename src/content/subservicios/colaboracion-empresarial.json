@@ -8,7 +8,9 @@
     "intro": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
     "note": "Ideal para erradicar las cadenas de correos infinitas con versiones 'final.pdf' que causan confusión, sobreescrituras y demoras.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/colaboracion-empresarial.webp"
   },
   "beneficios": {
     "title": "Beneficios",

@@ -8,7 +8,9 @@
     "intro": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
     "note": "Ideal para espacios de alta concurrencia donde la calidad de la conectividad inalámbrica es clave para la operación y la experiencia de usuario.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/wifi-gestionado.webp"
   },
   "beneficios": {
     "title": "Beneficios",

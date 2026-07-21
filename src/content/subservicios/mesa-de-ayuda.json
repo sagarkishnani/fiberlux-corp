@@ -8,7 +8,9 @@
     "intro": "Tercerización estratégica del soporte técnico (Nivel 1 y 2). Un canal único de contacto (Help Desk) operado por especialistas para asistir a tu personal.",
     "note": "Ideal para liberar al equipo de ingeniería de TI de la burocracia técnica y el reseteo de contraseñas, para que se enfoquen en la transformación digital.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp"
   },
   "beneficios": {
     "title": "Beneficios",

@@ -8,7 +8,9 @@
     "intro": "Red Privada Virtual de grado corporativo. Un túnel encriptado que conecta el dispositivo del usuario directamente con el corazón de la red empresarial.",
     "note": "Ideal para colaboradores que trabajan desde redes domésticas o cafeterías, bajo el peligro de exponer los servidores de la empresa a interceptaciones.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/vpn-segura.webp"
   },
   "beneficios": {
     "title": "Beneficios",

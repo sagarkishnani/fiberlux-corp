@@ -8,7 +8,9 @@
     "intro": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
     "note": "Ideal para empresas donde el downtime es inadmisible y restaurar desde un backup tradicional tomaría días de inactividad.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/disaster-recovery.webp"
   },
   "beneficios": {
     "title": "Beneficios",

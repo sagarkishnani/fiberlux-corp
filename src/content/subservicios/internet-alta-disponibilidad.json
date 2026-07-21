@@ -8,7 +8,9 @@
     "intro": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/inter-corpo-alta-dispo.webp"
   },
   "beneficios": {
     "title": "Beneficios",

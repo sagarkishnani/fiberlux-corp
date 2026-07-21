@@ -8,7 +8,9 @@
     "intro": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
     "note": "Ideal si tu red compartida colapsa en horas pico, asfixiando tus sistemas de gestión y subida de archivos a la nube.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/internet-corporativo.webp"
   },
   "beneficios": {
     "title": "Beneficios",

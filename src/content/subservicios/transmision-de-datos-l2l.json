@@ -8,7 +8,9 @@
     "intro": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/transmision-de-datos.webp"
   },
   "beneficios": {
     "title": "Beneficios",

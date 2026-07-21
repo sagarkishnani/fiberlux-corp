@@ -8,7 +8,9 @@
     "intro": "Arquitectura Zero Trust Network Access (Confianza Cero) que otorga acceso granular solo a una aplicación específica, manteniendo el resto de la red invisible.",
     "note": "Ideal para autenticar usuarios y dar acceso a proveedores externos, consultores o auditores a herramientas específicas, sin exponer toda la red con una VPN total.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/ztna.webp"
   },
   "beneficios": {
     "title": "Beneficios",

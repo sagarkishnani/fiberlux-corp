@@ -8,7 +8,9 @@
     "intro": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/balanceo-de-enlaces.webp"
   },
   "beneficios": {
     "title": "Beneficios",

@@ -8,7 +8,9 @@
     "intro": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
     "note": "Ideal para organizaciones que desarrollan o modernizan aplicaciones empresariales y requieren mayor flexibilidad, disponibilidad y velocidad de despliegue.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/microservicios.webp"
   },
   "beneficios": {
     "title": "Beneficios",

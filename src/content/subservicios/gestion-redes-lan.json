@@ -8,7 +8,9 @@
     "intro": "Diseño, configuración, actualización y administración proactiva de la infraestructura de red LAN, incluyendo switches, segmentación y políticas de conectividad.",
     "note": "Ideal para organizaciones que requieren una red estable, segura y preparada para soportar aplicaciones críticas y múltiples dispositivos.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/gestion-lan.webp"
   },
   "beneficios": {
     "title": "Beneficios",

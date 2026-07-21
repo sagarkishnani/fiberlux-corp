@@ -8,7 +8,9 @@
     "intro": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/sd-wan.webp"
   },
   "beneficios": {
     "title": "Beneficios",

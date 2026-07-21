@@ -8,7 +8,9 @@
     "intro": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
     "note": "",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/conectividad-satelital.webp"
   },
   "beneficios": {
     "title": "Beneficios",

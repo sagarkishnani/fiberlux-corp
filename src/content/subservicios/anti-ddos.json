@@ -8,7 +8,9 @@
     "intro": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
     "note": "Ideal para proteger portales críticos de ataques masivos que buscan inundar los servidores con tráfico basura y colapsar el sitio.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/antiddos.webp"
   },
   "beneficios": {
     "title": "Beneficios",

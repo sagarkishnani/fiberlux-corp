@@ -8,7 +8,9 @@
     "intro": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
     "note": "Ideal para reducir el riesgo de incidentes originados por errores humanos y fortalecer la primera línea de defensa.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/phishing.webp"
   },
   "beneficios": {
     "title": "Beneficios",

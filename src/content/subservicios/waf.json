@@ -8,7 +8,9 @@
     "intro": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
     "note": "Ideal para plataformas web y ecommerces expuestos a ataques cibernéticos.",
     "ctaLabel": "Conocer más",
-    "formTitle": "¿Conversamos?"
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/waf.webp"
   },
   "beneficios": {
     "title": "Beneficios",
