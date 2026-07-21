@@ -44,29 +44,60 @@ export default function HeroSubservicioReact({
     ? withBase(`soluciones/${sub.solucionSlug}`)
     : serviciosHref;
 
+  // Fondo del hero: "imagen" usa la foto propia del subservicio a sangre; cae a
+  // "grafico" (backdrop decorativo actual) si no está en modo imagen o no hay foto.
+  const heroImageSrc = (hero as any)?.heroImage as string | undefined | null;
+  const useImage =
+    (hero as any)?.heroBackground === "imagen" && !!heroImageSrc;
+  const imageUrl = heroImageSrc
+    ? withBase(heroImageSrc.replace(/^\//, ""))
+    : "";
+
   return (
     <section
       className="relative overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      {/* Magenta gradient backdrop image */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: `url(${base}images/services/hero-img.png)`,
-          backgroundPosition: "75% center",
-        }}
-        aria-hidden="true"
-      />
-      {/* Dark overlay so the left-column copy stays legible */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0.15) 62%, rgba(10,10,10,0) 100%)",
-        }}
-        aria-hidden="true"
-      />
+      {useImage ? (
+        <>
+          {/* Foto propia del subservicio, a sangre detrás de todo el hero */}
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+            aria-hidden="true"
+          />
+          {/* Overlay oscuro para que el texto (izq) y el form (der) sigan legibles */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              background:
+                "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.9) 30%, rgba(10,10,10,0.7) 60%, rgba(10,10,10,0.6) 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </>
+      ) : (
+        <>
+          {/* Magenta gradient backdrop image (modo gráfico, por defecto) */}
+          <div
+            className="absolute inset-0 z-0 bg-cover bg-no-repeat"
+            style={{
+              backgroundImage: `url(${base}images/services/hero-img.png)`,
+              backgroundPosition: "75% center",
+            }}
+            aria-hidden="true"
+          />
+          {/* Dark overlay so the left-column copy stays legible */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              background:
+                "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0.15) 62%, rgba(10,10,10,0) 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </>
+      )}
 
       <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
