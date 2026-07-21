@@ -2,9 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
 import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
-// StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
-// por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
-// import StickyCards from "../../components/shared/StickyCards.astro";
 import SolucionesSlider from "../../components/shared/SolucionesSlider.astro";
 import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
 ---
@@ -16,8 +13,11 @@ import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
   <main>
     <HeroSoporte />
     <CanalesSoporte />
-    {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
     <SolucionesSlider />
-    <TestimonialSlider />
+    {/* Fondo negro detrás del panel claro de testimonios: sus esquinas superiores
+        redondeadas dejan ver este fondo (aquí el <main> no es oscuro como en home). */}
+    <div class="-mt-2 relative z-25 bg-greyscale-darkest">
+      <TestimonialSlider />
+    </div>
   </main>
 </BaseLayout>
