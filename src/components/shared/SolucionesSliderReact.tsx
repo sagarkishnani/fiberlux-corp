@@ -189,20 +189,30 @@ export default function SolucionesSliderReact({
 
   return (
     <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Decorative background glows (planet + line), behind all content */}
+      {/* Decorative background glows (planet + line), behind all content.
+          A radial mask fades each image toward its own box edges so the SVG's
+          blurred ellipse never shows a hard rectangular cut. */}
       <img
         src={GLOW_PLANET}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -bottom-[18%] -left-[12%] z-0 w-[70vw] max-w-[900px] select-none opacity-90"
+        className="pointer-events-none absolute -bottom-[22%] -left-[14%] z-0 w-[72vw] max-w-[960px] select-none opacity-90"
+        style={{
+          WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+        }}
       />
       <img
         src={GLOW_LINE}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -top-[6%] left-[6%] z-0 w-[327px] max-w-[40vw] select-none opacity-70"
+        className="pointer-events-none absolute -top-[14%] -left-[4%] z-0 w-[420px] max-w-[46vw] select-none opacity-60"
+        style={{
+          WebkitMaskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
+        }}
       />
 
       <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
@@ -245,14 +255,17 @@ export default function SolucionesSliderReact({
       <style>{`
         .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        /* Active card: magenta glow rising from the bottom (per Figma) */
+        /* Active card: a soft magenta glow rising from below-centre that fades to
+           the dark base before reaching the edges — so the card border is a
+           gentle dark-to-dark transition, never a harsh saturated cut. */
         .sol-card-active {
           background:
-            radial-gradient(130% 92% at 50% 118%,
-              rgba(150,35,122,0.95) 0%,
-              rgba(101,15,80,0.62) 38%,
-              rgba(26,16,32,0.92) 70%,
-              #0b0a0d 100%);
+            radial-gradient(112% 80% at 50% 126%,
+              rgba(165,42,134,0.90) 0%,
+              rgba(135,30,108,0.66) 24%,
+              rgba(70,24,58,0.36) 50%,
+              rgba(12,10,15,0) 76%),
+            #0b0a0e;
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
