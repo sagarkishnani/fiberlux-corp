@@ -1,0 +1,50 @@
+# Observaciones del cliente — checklist de seguimiento
+
+> Fuente: carpeta `~/Downloads/observaciones_fiberlux/` (capturas + videos + textos de WhatsApp de Miguel).
+> Registrado: 2026-07-21. Este archivo es la **fuente de verdad** del estado de cada observación.
+
+**Estados:** `Pendiente` · `En curso` · `Hecho` (implementado en rama) · `Mergeado` · `Diferido` · `Necesita aclaración`
+
+---
+
+## Checklist
+
+| # | Observación | Página / Sección | Tipo | Estado | Notas |
+|---|---|---|---|---|---|
+| 1 | Raya/línea **blanca** arriba (bajo la topbar) al hacer scroll | Home + subservicio · **mobile** | Bug visual | **Hecho** | Causa: html/body con fondo transparente → canvas blanco del navegador en overscroll (Android). Fix: `html { background:#0a0a0a }`. |
+| 2 | El **drag se queda a la mitad** y no corre a la siguiente card | Soluciones slider · **mobile** | Bug (motor slider) | **Hecho (pend. verif. Android)** | `snap-mandatory` en soluciones. Verificado en desktop; falta prueba touch real. |
+| 3 | La sección **se lagea** al cambiar de testimonio | Testimonios · **mobile** | Bug (motor slider) | **Hecho (pend. verif. Android)** | Sin blur/re-render; era feel del snap → `snap-mandatory`. Si persiste, requiere profiling en el device. |
+| 4 | Agregar **degradado de profundidad** + **cambio de color en las letras** (números) | Stats "¿Por qué Fiberlux?" | Mejora diseño | Pendiente | **Aclarado (ref. Image #10):** NO es rediseño total; el Figma tiene un degrade que da profundidad al panel + tratamiento de color/gradiente en los números. Orden dentro de cluster B: después de soluciones, antes de ISO. |
+| 5 | Agregar detalle **glass** al fondo de las cards ISO (no se nota el contenedor en bajo brillo) | Certificaciones (ISO) · mobile | Mejora diseño | Pendiente | Cluster glass (con 10, 15, 16, 19). |
+| 6 | **Rubros: actualizar íconos** según referencia | Rubros (Nosotros) | Diseño/contenido | Pendiente | **Aclarado (ref. Image #9):** mantener el estilo de card con imagen de fondo + tile magenta; actualizar los íconos al set de la referencia (Minería=pico, Restaurantes=cubiertos, Educación=birrete, Hotelería=cama, etc.). |
+| 7 | Bug del **carrusel al dar clic en la flecha** (video 0:07) | Rubros (Nosotros) | Bug (motor slider) | **Hecho (pend. verif. Android)** | Motor: se suprime el touch-settle tras un scroll programático (`suppressSettleUntil`) → la flecha ya no salta. Aplica a los 3. |
+| 8 | Se **bugea el carrusel al dar clic en las flechas** (video 0:04) | Catálogo de soluciones | Bug (motor slider) | **Hecho (pend. verif. Android)** | Mismo fix del motor (7). Catálogo ya era `snap-mandatory`. |
+| 9 | Subir el **degradado a negro más arriba** (legibilidad) + **raya blanca** | Subservicio hero (modo imagen) · mobile | Mejora + bug | **Parcial** | Raya blanca **hecha** (= obs_1). Falta reforzar el overlay del hero → va en cluster B. |
+| 10 | Más **glass/degradado** en las cards; en bajo brillo no se diferencia la card | Soluciones slider (cards) | Mejora diseño | Pendiente | Cluster glass. **Ref. Image #11:** card con glass más marcado, glows magenta a AMBOS lados (izq. tras el título + der. tras la card), **efecto grano**, degrade multi-tono (no morado→negro). |
+| 11 | Usar el **mismo texto que casos de éxito** (Gloria) + opción de **cambiar foto por logo** | Testimonios | Contenido + CMS | Pendiente | Relacionado a 12, 13. |
+| 12 | Opción de poner el **logo del grupo en vez de las comillas** | Casos de éxito (card) | CMS | Pendiente | Relacionado a 11, 13. |
+| 13 | Revisar **contenido de testimonios** (texto/logo Boticas + 3ro de casos de éxito) | Testimonios | Contenido | Pendiente | Relacionado a 11, 12. |
+| 14a | Un **vector distinto** en el "desafío" de cada categoría | Sección "El desafío" (por categoría) | Asset/contenido | Pendiente | Requiere un gráfico por categoría. |
+| 14b | La info **solo se amplía en Conectividad**, no en las otras categorías | Catálogo de soluciones (hover-reveal) | Bug/feature | **Hecho** | Era contenido: solo Conectividad tenía descripciones. Autocompletadas las 3 categorías (27 items) desde el intro del subservicio. Cliente puede refinar en Tina. |
+| 15 | Notar **más el degradé de fondo** | Form "Déjanos tus datos" (subservicio) | Mejora diseño | Pendiente | Cluster glass/degradé. |
+| 16 | Otro **degradé a la derecha**, más fuerte, **efecto grano**, 3 tonalidades (no morado→negro) | Soluciones slider · desktop | Mejora diseño | Pendiente | Cluster glass. Según Figma. |
+| 17 | En pantallas **grandes** el formulario se aleja mucho; acercarlo | Contacto · desktop grande | Mejora responsive | Pendiente | Spacing del form de contacto. |
+| 18 | **Fade/desvanecimiento** en los bordes al deslizar (sin corte brusco) | Carruseles ISO + Soluciones | Mejora diseño | Pendiente | Máscara de fade en los edges de los carruseles. |
+| 19 | Subir **opacidad del glass** de los forms para que se note más | Forms de soluciones ("¿Conversamos?") | Mejora diseño | Pendiente | Cluster glass. |
+
+---
+
+## Agrupaciones sugeridas (para specs)
+
+- **A · Motor de sliders (flechas + drag):** 2, 7, 8 → un solo fix del `useDragSlider` (flechas que no avanzan / drag a medias).
+- **B · Glass / degradados / grano:** 5, 10, 15, 16, 19 (y en parte 9) → tratamiento visual unificado de cards y forms (más glass, degradé más fuerte, grano, visibilidad en bajo brillo).
+- **C · Testimonios ↔ Casos de éxito (contenido + logo/comillas):** 11, 12, 13 → alinear contenido y agregar opción logo.
+- **D · Bugs visuales sueltos:** 1/9 (raya blanca), 3 (lag testimonios), 14b (catálogo solo en Conectividad).
+- **E · Ajustes puntuales:** 14a (vector por categoría), 17 (spacing contacto), 18 (fade edges), 4 (diferido), 6 (aclarar).
+
+---
+
+## Bitácora
+
+- 2026-07-21 — Registradas 19 observaciones (20 ítems) desde `~/Downloads/observaciones_fiberlux/`. Todas en `Pendiente` salvo #4 (Diferido) y #6 (Necesita aclaración).
+- 2026-07-21 — Cliente aclara con referencias: **#6** (ref. íconos de rubros → Pendiente), **#4** (ya no diferido: degrade de profundidad + color en números → Pendiente), **#10/#16** (glass soluciones: ref. Figma con grano + multi-tono + glows ambos lados). Orden confirmado: **A (bugs slider) → D (bugs visuales) → B (glass: soluciones → ¿por qué Fiberlux? → ISO) → C (contenido)**.
