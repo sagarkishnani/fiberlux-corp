@@ -357,14 +357,18 @@ const styles = `
     zoom: var(--a11y-font-scale);
   }
 
-  /* Celulares muy pequeños (≤375px): achica ~10% TODO el contenido, incluidos
-     los tamaños text-[Npx] inline (que un font-size en rem no tocaría). Se
-     multiplica por el zoom de accesibilidad para no anular "Agrandar texto".
-     La variante .a11y-scaled va después para ganar por orden sobre la regla base. */
+  /* Celulares muy pequeños (≤375px): achica ~10% el contenido (main + footer),
+     incluidos los tamaños text-[Npx] inline (que un font-size en rem no tocaría).
+     Se zoomea el CONTENIDO y NO #a11y-content, porque el Header (position:fixed)
+     vive en un <astro-island> hermano dentro de #a11y-content: zoomear el wrapper
+     lo convierte en containing-block y el header se iría con el scroll.
+     Como main/footer son descendientes de #a11y-content, "Agrandar texto"
+     (zoom en #a11y-content) se compone por anidamiento (los zoom se multiplican),
+     así que aquí basta zoom:0.9. */
   @media (max-width: 375px) {
-    #a11y-content,
-    html.a11y-scaled #a11y-content {
-      zoom: calc(0.9 * var(--a11y-font-scale));
+    #a11y-content > main,
+    #a11y-content > div {
+      zoom: 0.9;
     }
   }
 
