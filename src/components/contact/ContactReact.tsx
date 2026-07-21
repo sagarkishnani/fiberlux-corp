@@ -74,7 +74,9 @@ export default function ContactReact({
       <div className="absolute inset-0 z-0 contact-hero-scrim" />
 
       <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        {/* obs_17: se acota el ancho y se reduce el gap para que en pantallas
+            grandes el formulario no quede tan lejos del texto. */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-14 items-start max-w-[1200px] mx-auto">
           {/* ════ LEFT — informational chrome ════ */}
           <div className="max-w-[560px]">
             {/* Breadcrumb */}
