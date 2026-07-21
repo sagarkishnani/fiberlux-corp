@@ -4,6 +4,7 @@ import type {
   SubservicioQueryVariables,
 } from "../../../tina/__generated__/types";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 interface FormIsland {
   query: string;
@@ -46,12 +47,12 @@ export default function HeroSubservicioReact({
 
   // Fondo del hero: "imagen" usa la foto propia del subservicio a sangre; cae a
   // "grafico" (backdrop decorativo actual) si no está en modo imagen o no hay foto.
+  // Se usa mediaUrl() (estándar del proyecto): en producción useTina() reescribe
+  // el campo a https://assets.tina.io/... y mediaUrl lo normaliza al asset local
+  // de public/ (withBase le pegaba el dominio delante → 404).
   const heroImageSrc = (hero as any)?.heroImage as string | undefined | null;
-  const useImage =
-    (hero as any)?.heroBackground === "imagen" && !!heroImageSrc;
-  const imageUrl = heroImageSrc
-    ? withBase(heroImageSrc.replace(/^\//, ""))
-    : "";
+  const imageUrl = mediaUrl(heroImageSrc);
+  const useImage = (hero as any)?.heroBackground === "imagen" && !!imageUrl;
 
   return (
     <section
