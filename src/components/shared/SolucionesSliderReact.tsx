@@ -11,15 +11,18 @@ interface SolucionesSliderProps {
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-/* Prefixes the CMS media path with BASE_URL so it resolves under a subpath deploy. */
-function resolveIcon(icon?: string | null): string | null {
-  if (!icon) return null;
-  if (/^https?:\/\//.test(icon)) return icon;
-  return `${BASE}${icon.startsWith("/") ? "" : "/"}${icon}`;
+/* Prefixes an internal path with BASE_URL so it resolves under a subpath deploy. */
+function withBase(path: string): string {
+  if (/^https?:\/\//.test(path)) return path;
+  return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
 /* A bullet that just signals "there's more" — rendered as the muted label, not a line. */
 const isMoreLabel = (b: string) => /^y\s*m[aá]s/i.test(b.trim());
+
+/* Decorative background glows (static assets, not CMS-driven). */
+const GLOW_PLANET = withBase("/images/soluciones/planet.svg");
+const GLOW_LINE = withBase("/images/soluciones/line.svg");
 
 export default function SolucionesSliderReact({
   query,
@@ -46,6 +49,7 @@ export default function SolucionesSliderReact({
 
   const active = items[Math.min(activeIndex, items.length - 1)];
   const activeTina = services?.items?.[Math.min(activeIndex, items.length - 1)];
+  const sectionTitle = (services?.title || "").trim();
 
   /* ── Prev/Next pill ── */
   const arrowsPill = (
@@ -79,59 +83,80 @@ export default function SolucionesSliderReact({
     </div>
   );
 
-  /* ── A single solution card ── */
+  /* ── A single solution card ──
+     Active card gets the magenta gradient (CSS) + white text; inactive cards are
+     flat and muted. "Conoce más →" and the number share the bottom row. */
   const renderCard = (item: (typeof items)[number], i: number) => {
     const tinaItem = services?.items?.[i];
     const bullets = (item?.bullets || []).filter(Boolean) as string[];
     const lines = bullets.filter((b) => !isMoreLabel(b));
-    const onda = resolveIcon(item?.icon);
+    const hasMore = bullets.some(isMoreLabel);
     const url = item?.url || "";
+    const isActive = i === activeIndex;
 
     return (
-      <div className="relative flex h-full min-h-[320px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#15131B] px-8 py-8 md:px-10 md:py-10">
-        {/* Decorative magenta wave (from the CMS `icon`, per-card editable) */}
-        {onda && (
-          <img
-            src={onda}
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-70"
-            draggable={false}
-          />
-        )}
-
-        {/* Content sits above the wave */}
+      <div
+        className={`relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
+          isActive
+            ? "border-white/15 sol-card-active"
+            : "border-white/[0.06] bg-[#0c0b0e]"
+        }`}
+      >
         <div className="relative z-10 flex h-full flex-col">
+          {/* Subservices as bulleted lines */}
           <ul
-            className="space-y-1.5"
+            className="space-y-3 md:space-y-3.5"
             data-tina-field={tinaItem ? tinaField(tinaItem, "bullets") : undefined}
           >
             {lines.map((line, bIdx) => (
-              <li key={bIdx} className="text-[16px] leading-[1.5] text-white/85">
-                {line}
+              <li
+                key={bIdx}
+                className={`flex gap-3 text-[16px] md:text-[19px] leading-[1.4] ${
+                  isActive ? "text-white" : "text-white/40"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`mt-[0.5em] h-[5px] w-[5px] shrink-0 rounded-full ${
+                    isActive ? "bg-white" : "bg-white/40"
+                  }`}
+                />
+                <span>{line}</span>
               </li>
             ))}
           </ul>
 
-          <p className="mt-6 text-[16px] text-white/45">Y más…</p>
-
-          {url && (
-            <a
-              href={`${BASE}${url.startsWith("/") ? "" : "/"}${url}`}
-              className="mt-6 inline-flex w-fit items-center text-[16px] font-medium text-[#d885c4] underline-offset-[5px] transition-colors hover:text-white hover:underline"
-              data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
-            >
-              Conoce más
-            </a>
+          {/* "Y más" — only when the card's content includes it */}
+          {hasMore && (
+            <p className={`mt-6 text-[16px] md:text-[18px] ${isActive ? "text-white/70" : "text-white/35"}`}>
+              Y más
+            </p>
           )}
 
-          {/* Big number, anchored bottom-left */}
-          <span
-            className="mt-auto pt-8 md:pt-10 text-[48px] md:text-[64px] font-semibold leading-none text-white/20"
-            data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}
-          >
-            {item?.number}
-          </span>
+          {/* Bottom row: big number (left) + "Conoce más →" (right) */}
+          <div className="mt-auto flex items-end justify-between gap-4 pt-8 md:pt-10">
+            <span
+              className={`text-[40px] md:text-[56px] font-semibold leading-none ${
+                isActive ? "text-white/85" : "text-white/25"
+              }`}
+              data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}
+            >
+              {item?.number}
+            </span>
+
+            {url && (
+              <a
+                href={withBase(url)}
+                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[18px] font-medium transition-colors ${
+                  isActive ? "text-white hover:text-[#d885c4]" : "text-white/35"
+                }`}
+                data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
+              >
+                Conoce más
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -146,11 +171,7 @@ export default function SolucionesSliderReact({
       {...slider.handlers}
     >
       {items.map((item, i) => (
-        <div
-          key={i}
-          className="sol-slide snap-start shrink-0 w-[86%] md:w-[46%] transition-opacity duration-500 ease-out"
-          style={{ opacity: i === activeIndex ? 1 : 0.35 }}
-        >
+        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[46%]">
           {renderCard(item, i)}
         </div>
       ))}
@@ -167,10 +188,34 @@ export default function SolucionesSliderReact({
   );
 
   return (
-    <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      <div className="site-container md:flex md:items-center md:gap-10 lg:gap-16">
-        {/* Left column: active-solution title + description + arrows (desktop) */}
+    <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+      {/* Decorative background glows (planet + line), behind all content */}
+      <img
+        src={GLOW_PLANET}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="pointer-events-none absolute -bottom-[18%] -left-[12%] z-0 w-[70vw] max-w-[900px] select-none opacity-90"
+      />
+      <img
+        src={GLOW_LINE}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="pointer-events-none absolute -top-[6%] left-[6%] z-0 w-[327px] max-w-[40vw] select-none opacity-70"
+      />
+
+      <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
+        {/* Left column: eyebrow + active-solution title + description + arrows */}
         <div className="md:w-[38%] md:shrink-0">
+          {sectionTitle && (
+            <p
+              className="mb-5 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
+              data-tina-field={services ? tinaField(services, "title") : undefined}
+            >
+              [ {sectionTitle.toUpperCase()} ]
+            </p>
+          )}
           <h2
             key={`t-${activeIndex}`}
             className="sol-fade text-[34px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
@@ -200,6 +245,15 @@ export default function SolucionesSliderReact({
       <style>{`
         .sol-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
         .sol-carousel::-webkit-scrollbar { display: none; }
+        /* Active card: magenta glow rising from the bottom (per Figma) */
+        .sol-card-active {
+          background:
+            radial-gradient(130% 92% at 50% 118%,
+              rgba(150,35,122,0.95) 0%,
+              rgba(101,15,80,0.62) 38%,
+              rgba(26,16,32,0.92) 70%,
+              #0b0a0d 100%);
+        }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
         @media (prefers-reduced-motion: reduce) { .sol-fade { animation: none; } }
@@ -207,3 +261,61 @@ export default function SolucionesSliderReact({
     </section>
   );
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+   Diseño anterior (SPEC 35) — reutilizar luego.
+   Se conserva comentado por pedido del cliente ("comentar el código para no
+   perderlo"). Renderizaba cada card con una onda magenta de fondo (desde el
+   campo `icon` del CMS), la etiqueta "Y más…" fija, "Conoce más" encima del
+   número y los bullets como líneas de texto sin viñeta.
+
+   // Prefija la ruta de media del CMS con BASE_URL.
+   function resolveIcon(icon?: string | null): string | null {
+     if (!icon) return null;
+     if (/^https?:\/\//.test(icon)) return icon;
+     return `${BASE}${icon.startsWith("/") ? "" : "/"}${icon}`;
+   }
+
+   // Card del diseño anterior:
+   const renderCardLegacy = (item, i) => {
+     const tinaItem = services?.items?.[i];
+     const bullets = (item?.bullets || []).filter(Boolean) as string[];
+     const lines = bullets.filter((b) => !isMoreLabel(b));
+     const onda = resolveIcon(item?.icon);
+     const url = item?.url || "";
+
+     return (
+       <div className="relative flex h-full min-h-[320px] md:min-h-[520px] flex-col overflow-hidden rounded-[20px] border border-white/[0.06] bg-[#15131B] px-8 py-8 md:px-10 md:py-10">
+         {onda && (
+           <img
+             src={onda}
+             alt=""
+             aria-hidden="true"
+             className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover opacity-70"
+             draggable={false}
+           />
+         )}
+         <div className="relative z-10 flex h-full flex-col">
+           <ul className="space-y-1.5" data-tina-field={tinaItem ? tinaField(tinaItem, "bullets") : undefined}>
+             {lines.map((line, bIdx) => (
+               <li key={bIdx} className="text-[16px] leading-[1.5] text-white/85">{line}</li>
+             ))}
+           </ul>
+           <p className="mt-6 text-[16px] text-white/45">Y más…</p>
+           {url && (
+             <a href={`${BASE}${url.startsWith("/") ? "" : "/"}${url}`} className="mt-6 inline-flex w-fit items-center text-[16px] font-medium text-[#d885c4] underline-offset-[5px] transition-colors hover:text-white hover:underline" data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}>
+               Conoce más
+             </a>
+           )}
+           <span className="mt-auto pt-8 md:pt-10 text-[48px] md:text-[64px] font-semibold leading-none text-white/20" data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}>
+             {item?.number}
+           </span>
+         </div>
+       </div>
+     );
+   };
+
+   // El carousel y el layout de izquierda del diseño anterior eran iguales,
+   // pero SIN el eyebrow "[ SOLUCIONES ]" y con la opacidad de peek aplicada al
+   // wrapper de cada slide (opacity: i === activeIndex ? 1 : 0.35).
+──────────────────────────────────────────────────────────────────────────── */
