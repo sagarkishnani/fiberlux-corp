@@ -27,8 +27,13 @@ export default function TestimonialCard({
 }: TestimonialCardProps) {
   // Normaliza a asset local: Tina Cloud reescribe estos campos a URLs
   // https://assets.tina.io/... que rompían la foto en producción.
-  const avatarSrc = mediaUrl(avatar) || PLACEHOLDER_AVATAR;
+  const photoSrc = mediaUrl(avatar);
   const logoSrc = mediaUrl(logo);
+  // obs_11: si no hay foto pero sí logo, se usa el logo en el frame (a veces no
+  // hay fotos de la persona). Si no hay nada, el avatar genérico.
+  const useLogoAsAvatar = !photoSrc && !!logoSrc;
+  const frameSrc = photoSrc || (useLogoAsAvatar ? logoSrc : PLACEHOLDER_AVATAR);
+  const frameFit = useLogoAsAvatar ? "object-contain bg-white p-2" : "object-cover";
   return (
     <div className="relative w-full h-full">
       {/* ── Desktop border SVG (contorno magenta, sin relleno) ── */}
@@ -77,11 +82,11 @@ export default function TestimonialCard({
               >
                 <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
               </svg>
-              {/* Square photo (fallback: avatar genérico) */}
+              {/* Foto cuadrada (o logo si no hay foto; fallback: avatar genérico) */}
               <img
-                src={avatarSrc}
+                src={frameSrc}
                 alt={name}
-                className="ml-4 mt-4 relative z-10 w-[150px] h-[150px] object-cover"
+                className={`ml-4 mt-4 relative z-10 w-[150px] h-[150px] ${frameFit}`}
                 draggable={false}
               />
             </div>
@@ -100,8 +105,9 @@ export default function TestimonialCard({
                   </p>
                 )}
               </div>
-              {/* Company logo: a la derecha del bloque de texto */}
-              {logoSrc && (
+              {/* Logo a la derecha del texto (solo si el logo NO se usa ya como
+                  foto en el frame, para no duplicarlo) */}
+              {logoSrc && !useLogoAsAvatar && (
                 <img
                   src={logoSrc}
                   alt={company}
@@ -141,16 +147,16 @@ export default function TestimonialCard({
                 <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
               </svg>
               <img
-                src={avatarSrc}
+                src={frameSrc}
                 alt={name}
-                className="relative z-10 w-full h-full object-cover rounded-sm"
+                className={`relative z-10 w-full h-full rounded-sm ${frameFit}`}
                 draggable={false}
               />
             </div>
             <div>
               <p className="text-greyscale-darkest text-body-md font-semibold">{name}</p>
               <p className="text-brand-gray-dark text-body-sm">{role}</p>
-              {logoSrc && (
+              {logoSrc && !useLogoAsAvatar && (
                 <img
                   src={logoSrc}
                   alt={company}
