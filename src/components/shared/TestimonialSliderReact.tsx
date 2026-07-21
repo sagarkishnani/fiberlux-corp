@@ -45,17 +45,17 @@ export default function TestimonialSliderReact({
   const { atStart, atEnd } = slider;
   const hasItems = items.length > 0;
 
-  /* ── Prev/Next pill — same navy pill the other sliders use (soluciones,
-       casos, certificaciones, rubros) so testimonios matches the rest. ── */
+  /* ── Prev/Next pill — light theme (matches the light testimonios panel).
+       Prev tenue (rosa claro), next magenta con flecha blanca. ── */
   const arrowsPill = (
-    <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
+    <div className="inline-flex rounded-[12px] border border-brand-purple/25 bg-[#EBCFE0] overflow-hidden shadow-[0_8px_24px_-8px_rgba(150,35,122,0.25)]">
       <button
         type="button"
         onClick={slider.prev}
         disabled={atStart}
         aria-label="Anterior"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
+          !atStart ? "text-brand-purple hover:bg-brand-purple/10" : "text-brand-purple/30 cursor-default"
         }`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -68,7 +68,7 @@ export default function TestimonialSliderReact({
         disabled={atEnd}
         aria-label="Siguiente"
         className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
+          !atEnd ? "bg-brand-purple text-white hover:bg-brand-purple-dark" : "bg-brand-purple/40 text-white/60 cursor-default"
         }`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
@@ -81,13 +81,13 @@ export default function TestimonialSliderReact({
   if (!isVisible) return null;
 
   return (
-    <section className="bg-greyscale-darkest py-14 pb-24 md:py-20 md:pb-40">
+    <section className="bg-brand-purple-lightest rounded-t-[32px] md:rounded-t-[56px] py-14 pb-24 md:py-20 md:pb-40">
       {/* Header */}
       <div className='site-container'>
       <div className="">
         <div className="flex items-start md:items-center justify-between mb-12">
           <h2
-            className="text-subtitle-lg text-white md:max-w-[600px]"
+            className="text-subtitle-lg text-brand-purple md:max-w-[600px]"
             data-tina-field={
               testimonials ? tinaField(testimonials, 'sectionTitle') : undefined
             }
@@ -135,7 +135,7 @@ export default function TestimonialSliderReact({
                   key={i}
                   className="testimonial-slide snap-start shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
                 >
-                  <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[320px] md:h-[400px] flex items-center justify-center text-white/20 text-sm">
+                  <div className="bg-white/40 border border-brand-purple/20 rounded-2xl h-[320px] md:h-[400px] flex items-center justify-center text-brand-purple/40 text-sm">
                     Testimonio — próximamente
                   </div>
                 </div>
@@ -165,3 +165,24 @@ export default function TestimonialSliderReact({
     </section>
   );
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+   Tema oscuro anterior — reutilizar luego.
+   Se conserva comentado por pedido del cliente. La sección era oscura
+   (bg-greyscale-darkest), el título blanco y las flechas usaban el pill navy
+   (#141223 / borde #282445, prev blanco/tenue, next magenta). El resto de la
+   estructura (carousel, drag, placeholder) era idéntica.
+
+   // Pill navy del tema oscuro:
+   const arrowsPillDark = (
+     <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
+       <button ... prev className={!atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"} ... />
+       <button ... next className={!atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"} ... />
+     </div>
+   );
+
+   // Sección oscura:
+   //   <section className="bg-greyscale-darkest py-14 pb-24 md:py-20 md:pb-40">
+   //     <h2 className="text-subtitle-lg text-white md:max-w-[600px]"> … </h2>
+   //     placeholder: <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl … text-white/20"> … </div>
+──────────────────────────────────────────────────────────────────────────── */
