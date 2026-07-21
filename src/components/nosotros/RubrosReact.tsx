@@ -178,7 +178,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
             />
           </>
         )}
-        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-white">
+        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-[#3B0E30]">
           <Icon className="text-[28px]" />
         </span>
         <h3
