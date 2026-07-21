@@ -31,7 +31,7 @@ export default function TestimonialCard({
   const logoSrc = mediaUrl(logo);
   return (
     <div className="relative w-full h-full">
-      {/* ── Desktop border SVG ── */}
+      {/* ── Desktop border SVG (contorno magenta, sin relleno) ── */}
       <svg
         className="hidden md:block absolute inset-0 w-full h-full"
         viewBox="0 0 1057 438"
@@ -61,7 +61,7 @@ export default function TestimonialCard({
         />
       </svg>
 
-      {/* ── Content ── */}
+      {/* ── Content (tema claro: texto oscuro sobre el panel claro) ── */}
       <div className="relative z-10 p-6 pt-8 md:p-10 md:pt-16 h-full">
         {/* Desktop layout: avatar left + content right */}
         <div className="hidden md:grid md:grid-cols-[240px_1fr] md:gap-10 h-full">
@@ -89,29 +89,30 @@ export default function TestimonialCard({
 
           {/* Text content */}
           <div className="flex flex-col justify-between h-full">
-            <div>
-              <h3 className="text-white text-subtitle-sm font-semibold leading-snug mb-4">
-                {quote}
-              </h3>
-              {description && (
-                <p className="text-white/60 text-body-md leading-relaxed">
-                  {description}
-                </p>
-              )}
-            </div>
-            <div className="flex items-center justify-between mt-8">
-              <div>
-                <p className="text-white text-body-md font-semibold">{name}</p>
-                <p className="text-white/60 text-body-sm">{role}</p>
+            <div className="flex gap-8">
+              <div className="flex-1">
+                <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
+                  {quote}
+                </h3>
+                {description && (
+                  <p className="text-brand-gray-dark text-body-md leading-relaxed">
+                    {description}
+                  </p>
+                )}
               </div>
+              {/* Company logo: a la derecha del bloque de texto */}
               {logoSrc && (
                 <img
                   src={logoSrc}
                   alt={company}
-                  className="h-8 object-contain"
+                  className="h-8 object-contain self-center shrink-0"
                   draggable={false}
                 />
               )}
+            </div>
+            <div className="mt-8">
+              <p className="text-greyscale-darkest text-body-md font-semibold">{name}</p>
+              <p className="text-brand-gray-dark text-body-sm">{role}</p>
             </div>
           </div>
         </div>
@@ -119,9 +120,14 @@ export default function TestimonialCard({
         {/* Mobile layout: stacked */}
         <div className="md:hidden flex flex-col justify-between h-full min-h-[300px]">
           <div>
-            <h3 className="text-white text-subtitle-sm font-semibold leading-snug mb-4">
+            <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
               &ldquo;{quote}&rdquo;
             </h3>
+            {description && (
+              <p className="text-brand-gray-dark text-body-sm leading-relaxed">
+                {description}
+              </p>
+            )}
           </div>
           <div className="flex items-center gap-4 mt-6">
             {/* Mobile avatar: frame behind + square photo */}
@@ -142,8 +148,8 @@ export default function TestimonialCard({
               />
             </div>
             <div>
-              <p className="text-white text-body-md font-semibold">{name}</p>
-              <p className="text-white/60 text-body-sm">{role}</p>
+              <p className="text-greyscale-darkest text-body-md font-semibold">{name}</p>
+              <p className="text-brand-gray-dark text-body-sm">{role}</p>
               {logoSrc && (
                 <img
                   src={logoSrc}
@@ -159,3 +165,22 @@ export default function TestimonialCard({
     </div>
   );
 }
+
+/* ────────────────────────────────────────────────────────────────────────────
+   Tema oscuro anterior — reutilizar luego.
+   Se conserva comentado por pedido del cliente. Los textos iban en blanco/tenue
+   sobre el fondo oscuro de la sección:
+
+   // Desktop:
+   //   <h3 className="text-white text-subtitle-sm font-semibold leading-snug mb-4">{quote}</h3>
+   //   <p  className="text-white/60 text-body-md leading-relaxed">{description}</p>
+   //   <div className="flex items-center justify-between mt-8">
+   //     <div>
+   //       <p className="text-white text-body-md font-semibold">{name}</p>
+   //       <p className="text-white/60 text-body-sm">{role}</p>
+   //     </div>
+   //     {logoSrc && <img src={logoSrc} alt={company} className="h-8 object-contain" />}
+   //   </div>
+   // Mobile: mismos textos en text-white / text-white/60.
+   // El borde notched y el frame del avatar (magenta #96237A) eran idénticos.
+──────────────────────────────────────────────────────────────────────────── */
