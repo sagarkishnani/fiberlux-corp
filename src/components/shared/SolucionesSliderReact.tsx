@@ -36,10 +36,15 @@ export default function SolucionesSliderReact({
     NonNullable<typeof services>["items"]
   >;
 
-  /* Shared drag/scroll engine: left-aligned cards, one card per arrow. */
+  /* Shared drag/scroll engine: left-aligned cards, one card per arrow.
+     momentum:false → a drag settles at most one card in the gesture direction
+     (no velocity fling). With these wide cards the fling projection overshot two
+     cards on a short drag (card 1 → card 3); this keeps dragging one card at a
+     time, matching the arrows. */
   const slider = useDragSlider({
     slideSelector: ".sol-slide",
     align: "start",
+    momentum: false,
     itemCount: items.length,
   });
   const { activeIndex, atStart, atEnd } = slider;
