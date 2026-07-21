@@ -6,6 +6,10 @@ import type {
 import CertCard, { type Cert } from "./CertCard";
 import { useDragSlider } from "../../hooks/useDragSlider";
 
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+/* Decorative background glow (static asset), same pattern as the soluciones slider. */
+const GLOW_PLANET = `${BASE}/images/soluciones/planet.svg`;
+
 interface CertSliderProps {
   query: string;
   variables: CertificacionesQueryVariables;
@@ -93,8 +97,22 @@ export default function CertificacionesSliderReact({
   );
 
   return (
-    <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      <div className="site-container md:flex md:items-center md:gap-10 lg:gap-16">
+    <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+      {/* Decorative magenta glow (planet) so the background isn't just black.
+          Masked so the SVG's blurred ellipse never shows a hard rectangular cut. */}
+      <img
+        src={GLOW_PLANET}
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="pointer-events-none absolute -top-[30%] left-1/2 -translate-x-[38%] z-0 w-[92vw] max-w-[1100px] select-none opacity-70"
+        style={{
+          WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+        }}
+      />
+
+      <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
         {/* Left column: title + arrows (desktop) */}
         <div className="md:w-[34%] md:shrink-0">
           <h2
