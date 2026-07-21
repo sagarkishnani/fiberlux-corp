@@ -357,6 +357,17 @@ const styles = `
     zoom: var(--a11y-font-scale);
   }
 
+  /* Celulares muy pequeños (≤375px): achica ~10% TODO el contenido, incluidos
+     los tamaños text-[Npx] inline (que un font-size en rem no tocaría). Se
+     multiplica por el zoom de accesibilidad para no anular "Agrandar texto".
+     La variante .a11y-scaled va después para ganar por orden sobre la regla base. */
+  @media (max-width: 375px) {
+    #a11y-content,
+    html.a11y-scaled #a11y-content {
+      zoom: calc(0.9 * var(--a11y-font-scale));
+    }
+  }
+
   /* Letter spacing (identity default is safe to always apply) */
   body {
     letter-spacing: var(--a11y-letter-spacing);
