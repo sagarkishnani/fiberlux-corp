@@ -24,6 +24,9 @@ interface HeaderProps {
   theme?: "light" | "dark";
   /** Solo la home activa el logo grande animado del hero (SPEC 39). */
   heroLogo?: boolean;
+  /** Fuerza el fondo opaco/blur desde el inicio (sin esperar scroll). Se usa en
+      páginas con hero de imagen (soluciones) para que el menú no se pierda. */
+  solidOnLoad?: boolean;
 }
 
 interface NavGrandChild {
@@ -145,6 +148,7 @@ export default function HeaderV2React({
   data: initialData,
   theme = "dark",
   heroLogo = false,
+  solidOnLoad = false,
 }: HeaderProps) {
   const { data } = useTina<GlobalQuery>({
     query,
@@ -381,7 +385,7 @@ export default function HeaderV2React({
   // (sólo el drawer es morado) para no ensuciar con un morado full-width.
   const headerBg = menuOpen
     ? "bg-brand-purple lg:bg-greyscale-darkest/80 lg:backdrop-blur-md"
-    : scrolled
+    : scrolled || solidOnLoad
     ? isLight
       ? "bg-white/80 backdrop-blur-md border-b border-black/5"
       : "bg-greyscale-darkest/80 backdrop-blur-md"

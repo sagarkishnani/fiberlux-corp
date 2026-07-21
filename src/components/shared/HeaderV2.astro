@@ -14,9 +14,11 @@ interface Props {
   theme?: 'light' | 'dark';
   /** Solo la home activa el logo grande animado del hero (SPEC 39). */
   heroLogo?: boolean;
+  /** Fondo opaco/blur desde el inicio (páginas con hero de imagen). */
+  solidOnLoad?: boolean;
 }
 
-const { theme = 'dark', heroLogo = false } = Astro.props;
+const { theme = 'dark', heroLogo = false, solidOnLoad = false } = Astro.props;
 
 const globalQuery = await client.queries.global({ relativePath: 'index.json' });
 ---
@@ -28,4 +30,5 @@ const globalQuery = await client.queries.global({ relativePath: 'index.json' });
   data={globalQuery.data}
   theme={theme}
   heroLogo={heroLogo}
+  solidOnLoad={solidOnLoad}
 />
