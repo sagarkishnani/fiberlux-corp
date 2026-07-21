@@ -72,13 +72,16 @@ const prefetchScenes = [
       {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
       <SolucionesSlider />
     </div>
+    {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos, y el
+        panel claro de Testimonios pegado a "Por qué Fiberlux" (Stats, magenta),
+        para no encajonar el rosa entre dos secciones oscuras. */}
+    <div class="relative z-20">
+      <HomePartners />
+    </div>
     <div class="-mt-6 relative z-25">
       <TestimonialSlider />
     </div>
-    <div class="-mt-20 lg:-mt-40 relative z-20">
-      <HomePartners />
-    </div>
-    <div class="-mt-2 relative z-20">
+    <div class="-mt-2 relative z-30">
       <Stats />
     </div>
     <div class="relative z-20">
