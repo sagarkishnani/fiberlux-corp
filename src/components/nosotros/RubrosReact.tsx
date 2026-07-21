@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { IconType } from 'react-icons';
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaUtensils,
-  FaGraduationCap,
-  FaBed,
-  FaHeartPulse,
-  FaCartShopping,
-  FaBuildingColumns,
-  FaIndustry,
-  FaTruck,
-  FaLandmark,
-  FaHelmetSafety,
-  FaTractor,
-  FaLaptopCode,
-  FaBolt,
-  FaTowerCell,
-  FaPlaneDeparture,
-  FaMasksTheater,
-  FaBuilding,
-  FaBriefcase,
-  FaGears,
-} from 'react-icons/fa6';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
-import { LuPickaxe } from 'react-icons/lu';
+// obs_6: set de íconos en estilo outline (Lucide) para coincidir con la referencia.
+import {
+  LuPickaxe,
+  LuUtensilsCrossed,
+  LuGraduationCap,
+  LuBedDouble,
+  LuHeartPulse,
+  LuShoppingCart,
+  LuLandmark,
+  LuFactory,
+  LuTruck,
+  LuBuilding2,
+  LuHardHat,
+  LuTractor,
+  LuLaptop,
+  LuZap,
+  LuRadioTower,
+  LuPlane,
+  LuDrama,
+  LuBuilding,
+  LuBriefcase,
+  LuSettings,
+} from 'react-icons/lu';
 import { useDragSlider } from '../../hooks/useDragSlider';
 import { mediaUrl } from '../../utils/mediaUrl';
 
@@ -45,27 +45,27 @@ interface RubrosProps {
 /* ── Icon map: CMS select key → react-icons component ── */
 const ICONS: Record<string, IconType> = {
   mineria: LuPickaxe,
-  restaurantes: FaUtensils,
-  educacion: FaGraduationCap,
-  hoteleria: FaBed,
-  salud: FaHeartPulse,
-  retail: FaCartShopping,
-  banca: FaBuildingColumns,
-  industria: FaIndustry,
-  logistica: FaTruck,
-  gobierno: FaLandmark,
-  construccion: FaHelmetSafety,
-  agroindustria: FaTractor,
-  tecnologia: FaLaptopCode,
-  energia: FaBolt,
-  telecomunicaciones: FaTowerCell,
-  turismo: FaPlaneDeparture,
-  entretenimiento: FaMasksTheater,
-  corporativo: FaBuilding,
-  consultoria: FaBriefcase,
-  servicios: FaGears,
+  restaurantes: LuUtensilsCrossed,
+  educacion: LuGraduationCap,
+  hoteleria: LuBedDouble,
+  salud: LuHeartPulse,
+  retail: LuShoppingCart,
+  banca: LuLandmark,
+  industria: LuFactory,
+  logistica: LuTruck,
+  gobierno: LuBuilding2,
+  construccion: LuHardHat,
+  agroindustria: LuTractor,
+  tecnologia: LuLaptop,
+  energia: LuZap,
+  telecomunicaciones: LuRadioTower,
+  turismo: LuPlane,
+  entretenimiento: LuDrama,
+  corporativo: LuBuilding,
+  consultoria: LuBriefcase,
+  servicios: LuSettings,
 };
-const FALLBACK_ICON: IconType = FaBuilding;
+const FALLBACK_ICON: IconType = LuBuilding;
 
 /* ── Reduced-motion hook ── */
 function usePrefersReducedMotion(): boolean {
