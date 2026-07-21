@@ -43,5 +43,28 @@
     "metaTitle": "Fiberlux App | Fiberlux Corp",
     "metaDescription": "Controla y monitorea tus servicios Fiberlux en tiempo real desde tu celular, con visibilidad 24/7 y gestión inteligente.",
     "ogImage": ""
+  },
+  "banner": {
+    "headingLead": "Obtén",
+    "headingStrong": "control total de tu red",
+    "pillText": "con la nueva aplicación de",
+    "bullets": [
+      {
+        "title": "Monitoreo en tiempo real:",
+        "text": "Revisa el estado de tu conexión y servicios al instante."
+      },
+      {
+        "title": "Pre-diagnóstico inteligente:",
+        "text": "Detecta incidencias antes de que afecten tu operación."
+      },
+      {
+        "title": "Gestión de tickets 24/7:",
+        "text": "Crea y sigue requerimientos técnicos desde tu celular."
+      }
+    ],
+    "downloadText": "Búscanos como Fiberlux App y descarga la app",
+    "androidUrl": "",
+    "iosUrl": "",
+    "mockup": "images/fiberlux-app/mockup.png"
   }
 }
