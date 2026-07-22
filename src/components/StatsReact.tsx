@@ -184,9 +184,9 @@ export default function StatsReact({ query, variables, data: initialData, titleO
     <section
       className="rounded-t-3xl py-14 md:py-20"
       style={{
-        // obs_4: degradé de profundidad (Figma) en vez del magenta plano.
+        // SPEC 54: base aubergine oscura con brillo magenta arriba-derecha (Figma).
         background:
-          "linear-gradient(118deg, #490d3b 0%, #74195e 36%, #96237A 66%, #ad2e90 100%)",
+          "radial-gradient(120% 130% at 100% 0%, #b32e94 0%, #7a1a62 34%, #4c0f3d 66%, #360c2c 100%)",
       }}
     >
       <div className="site-container">
