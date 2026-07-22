@@ -66,6 +66,16 @@ No introduce estructuras ni cambia el schema. Reutiliza `home.services` tal cual
 - **Sí:** alcance = **componente compartido** (3 páginas). Elegido por el usuario.
 - **No:** variante solo para la página de soluciones. Descartado.
 
+### Ajustes durante QA (fiel al Figma — matizan decisiones previas)
+
+- **El fill de la card NO es "glass puro sin degradado".** La referencia real (Figma) usa un **radial gradient `#3B0E30 → #96237A → #3B0E30`** (aubergine arriba/bordes → magenta abajo-centro) para que **ninguna zona quede negra**. Reemplaza la decisión inicial de "glass puro, magenta solo del fondo".
+- **Textura del Figma:** cada card lleva `public/images/soluciones/black.png` tileada, **opacity 8% + `mix-blend-overlay`** (valores exactos del inspector), que oscurece/da grano y evita que el magenta salga sobresaturado.
+- **Opacidad del fill radial de la activa** bajada a **~0.30** por pedido del cliente (magenta más sutil; el brillo fuerte lo aporta el bloom de fondo).
+- **Sin brillo blanco superior:** se quitó el `linear-gradient` blanco y el `inset` highlight de las cards (la referencia no lo tiene). Queda solo el borde blanco 1.5px.
+- **"Conoce más →"** en color **`#D5A7CA`** (Poppins medium 20px, del Figma).
+- **Dimensiones desktop:** card más **alto y angosto** (formato retrato ~460×627): ancho `md:52%`, `min-h 620px`, borde `1.5px`, radio `30px`.
+- **Bloom de fondo** agrandado/brillante (planet ×2 + line) para que suba por detrás de la card activa; la peek queda aubergine tenue (no negra).
+
 ## Riesgos identificados
 
 | Riesgo | Mitigación |
