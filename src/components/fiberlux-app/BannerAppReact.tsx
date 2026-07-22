@@ -15,6 +15,27 @@ const LOGO = asset("/images/logo/fiberlux.svg");
 const APP_ICON = asset("/fiberlux-favicon.png");
 const MOCKUP_FALLBACK = asset("/images/fiberlux-app/mockup.png");
 
+/* Contorno "sim-container" (muesca abajo-izquierda) — rutas de los SVG del
+   proyecto, renderizadas como contorno estirable (no recorta el fondo). */
+const FRAME_D =
+  "M957 199C957 208.941 948.941 217 939 217H75.3419C69.8631 217 64.6826 214.505 61.2672 210.221L3.92534 138.294C1.38396 135.106 0 131.15 0 127.073V18C0 8.05888 8.05887 0 18 0H939C948.941 0 957 8.05888 957 18V199Z";
+const FRAME_M =
+  "M613 465C613 474.941 604.941 483 595 483H57.0449C48.6546 483 41.377 477.203 39.5008 469.025L0.455827 298.843C0.15291 297.523 0 296.173 0 294.818V18C0 8.05888 8.05888 0 18 0H595C604.941 0 613 8.05888 613 18V465Z";
+
+function FrameOutline({ path, viewBox }: { path: string; viewBox: string }) {
+  return (
+    <svg
+      className="pointer-events-none absolute inset-0 h-full w-full"
+      viewBox={viewBox}
+      preserveAspectRatio="none"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d={path} stroke="rgba(255,255,255,0.38)" strokeWidth={1} vectorEffect="non-scaling-stroke" />
+    </svg>
+  );
+}
+
 /* Resalta "Fiberlux App" en el texto de descarga. */
 function renderDownloadText(text: string) {
   const parts = text.split(/(Fiberlux App)/i);
@@ -151,12 +172,10 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           {/* ════ DESKTOP ════ */}
           <div className="relative z-10 hidden md:block px-8 lg:px-10 py-9">
             <div className="flex items-center gap-6">
-              {/* Marco notched con texto + bullets */}
-              <div
-                className="relative shrink-0 basis-[62%] rounded-[20px] border border-white/25 px-8 py-8"
-                style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 6% 100%, 0 76%)" }}
-              >
-                <div className="grid grid-cols-[0.82fr_1.18fr] items-center gap-8">
+              {/* Marco notched (contorno SVG) con texto + bullets */}
+              <div className="relative shrink-0 basis-[62%] px-9 pt-8 pb-12">
+                <FrameOutline path={FRAME_D} viewBox="0 0 957 217" />
+                <div className="relative grid grid-cols-[0.82fr_1.18fr] items-center gap-8">
                   <div>{textBlock}</div>
                   <div>{bulletList}</div>
                 </div>
@@ -179,11 +198,9 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
 
           {/* ════ MOBILE ════ */}
           <div className="relative z-10 flex md:hidden flex-col px-6 pt-10 pb-0">
-            <div
-              className="rounded-[18px] border border-white/25 px-6 py-7"
-              style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 8% 100%, 0 90%)" }}
-            >
-              {textBlock}
+            <div className="relative px-6 pt-7 pb-10">
+              <FrameOutline path={FRAME_M} viewBox="0 0 613 483" />
+              <div className="relative">{textBlock}</div>
             </div>
             <div className="mt-8">{bulletList}</div>
             <div className="mt-8 flex flex-col items-start gap-2">
