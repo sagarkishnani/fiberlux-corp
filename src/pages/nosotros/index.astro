@@ -9,6 +9,7 @@ import TimelineReact from "../../components/nosotros/TimelineReact.tsx";
 import StatsReact from "../../components/StatsReact";
 import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
 import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
+import BannerApp from "../../components/fiberlux-app/BannerApp.astro";
 
 const aboutQuery = await client.queries.about({ relativePath: "index.json" });
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
@@ -56,4 +57,5 @@ const homeQuery = await client.queries.home({ relativePath: "index.json" });
     />
   </div>
   <CertificacionesSlider />
+  <BannerApp />
 </BaseLayout>
