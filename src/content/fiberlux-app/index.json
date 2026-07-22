@@ -65,6 +65,11 @@
     "downloadText": "Búscanos como Fiberlux App y descarga la app",
     "androidUrl": "",
     "iosUrl": "",
-    "mockup": "images/fiberlux-app/mockup.png"
+    "mockup": "images/fiberlux-app/mockup.png",
+    "mode": "imagen",
+    "imageMobile": "images/fiberlux-app/banner-app-img-mobile.webp",
+    "imageTablet": "images/fiberlux-app/banner-app-img-tablet.webp",
+    "imageDesktop": "images/fiberlux-app/banner-app-img-desktop.webp",
+    "bgColor": "#0a0a0a"
   }
 }
