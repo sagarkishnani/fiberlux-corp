@@ -57,6 +57,40 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
   const tinaB = (data?.fiberluxApp as any)?.banner;
   if (!b) return null;
 
+  /* ── Modo imagen (SPEC 60): solo la imagen (responsive) enlazada a /fiberlux-app,
+     sobre un color de fondo configurable. Cualquier valor ≠ "imagen" cae al nativo. */
+  if (b.mode === "imagen") {
+    const imgMobile = mediaUrl(b.imageMobile);
+    const imgTablet = mediaUrl(b.imageTablet) || imgMobile;
+    const imgDesktop = mediaUrl(b.imageDesktop) || imgTablet;
+    const bgColor: string = b.bgColor || "#0a0a0a";
+    const appHref = asset("/fiberlux-app");
+    if (!imgMobile && !imgTablet && !imgDesktop) return null;
+    return (
+      <section className="py-10 md:py-14" style={{ background: bgColor }}>
+        <div className="site-container">
+          <a
+            href={appHref}
+            aria-label="Fiberlux App"
+            className="block overflow-hidden rounded-2xl"
+            data-tina-field={tinaB ? tinaField(tinaB, "imageDesktop") : undefined}
+          >
+            <picture>
+              <source media="(min-width: 1025px)" srcSet={imgDesktop} />
+              <source media="(min-width: 601px)" srcSet={imgTablet} />
+              <img
+                src={imgMobile}
+                alt="Fiberlux App"
+                className="block w-full h-auto"
+                draggable={false}
+              />
+            </picture>
+          </a>
+        </div>
+      </section>
+    );
+  }
+
   const bullets = (b.bullets || []).filter(Boolean) as { title?: string; text?: string }[];
   const mockup = mediaUrl(b.mockup) || MOCKUP_FALLBACK;
   const androidUrl: string = b.androidUrl || "";
