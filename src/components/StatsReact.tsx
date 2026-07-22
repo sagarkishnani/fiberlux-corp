@@ -50,6 +50,19 @@ function parseStat(raw: string) {
   return { prefix, value, suffix, decimals, hasCommas };
 }
 
+/** Renders the section heading with the word "Fiberlux" in bold, rest in normal weight. */
+function renderHeading(heading: string) {
+  return heading.split(/(Fiberlux)/i).map((part, i) =>
+    /^fiberlux$/i.test(part) ? (
+      <strong key={i} className="font-bold">
+        {part}
+      </strong>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
 function formatNumber(n: number, decimals: number, hasCommas: boolean): string {
   const fixed = n.toFixed(decimals);
   if (!hasCommas) return fixed;
@@ -181,10 +194,10 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
         {/* Section title */}
         <h2
-          className="text-subtitle-lg text-white mb-6"
+          className="text-subtitle-lg font-normal text-white mb-6"
           data-tina-field={tinaField(stats, 'title')}
         >
-          {heading}
+          {renderHeading(heading || '')}
         </h2>
 
         {/* Stats grid */}
