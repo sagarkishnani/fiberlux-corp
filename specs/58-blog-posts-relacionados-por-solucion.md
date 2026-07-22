@@ -1,6 +1,6 @@
 # SPEC 58 — Blog: posts relacionados por solución (tags = soluciones)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 15 (blog), SPEC 11/12 (plantillas solución/subservicio)
 > **Fecha:** 2026-07-22
 > **Objetivo:** Que cada página de solución muestre los posts del blog cuyo tag corresponde a esa solución (o los 6 más recientes por defecto), y restringir los tags del blog a las 4 soluciones para que no haya etiquetas sueltas.
