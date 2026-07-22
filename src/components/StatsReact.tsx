@@ -192,7 +192,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
         {/* Section title */}
         <h2
-          className="text-subtitle-lg font-normal text-white mb-6"
+          className="text-subtitle-lg font-normal text-white mb-12 md:mb-14"
           data-tina-field={tinaField(stats, 'title')}
         >
           {renderHeading(heading || '')}
