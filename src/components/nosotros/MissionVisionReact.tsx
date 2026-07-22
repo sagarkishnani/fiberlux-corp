@@ -37,7 +37,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
           <div className="flex flex-col">
             {/* Title */}
             <h2
-              className="text-[40px] md:text-[48px] leading-[48px] md:leading-[56px] font-medium text-brand-purple-darkest mb-10"
+              className="text-[30px] leading-[36px] min-[380px]:text-[36px] min-[380px]:leading-[42px] md:text-[48px] md:leading-[56px] font-medium text-brand-purple-darkest mb-10"
               data-tina-field={tinaField(about as any, 'missionVisionTitle')}
             >
               {sectionTitle}
