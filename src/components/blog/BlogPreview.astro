@@ -2,22 +2,49 @@
 /**
  * BlogPreview wrapper — fetches home data + blog posts from TinaCMS
  * Uses client:visible for carousel JS interaction
+ *
+ * Si recibe `solucion` (slug de una solución), muestra los posts cuyo tag la
+ * incluye; si no hay ninguno (o no viene `solucion`), muestra los 6 más
+ * recientes. Home / fiberlux-app no pasan `solucion` → siempre 6 recientes.
  */
 import { client } from '../../../tina/__generated__/client';
 import BlogPreviewReact from './BlogPreviewReact.tsx';
 
+interface Props {
+  solucion?: string;
+}
+
+const { solucion } = Astro.props;
+
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 
-let posts: any[] = [];
+let allEdges: any[] = [];
 try {
   const postsQuery = await client.queries.postConnection({
-    first: 6,
+    first: 50,
     sort: 'date',
   });
-  posts = postsQuery.data?.postConnection?.edges || [];
+  allEdges = postsQuery.data?.postConnection?.edges || [];
 } catch {
-  posts = [];
+  allEdges = [];
 }
+
+// Orden por fecha descendente (más recientes primero), independiente del sort de Tina.
+const byDateDesc = [...allEdges].sort((a, b) => {
+  const da = new Date(a?.node?.date || 0).getTime();
+  const db = new Date(b?.node?.date || 0).getTime();
+  return db - da;
+});
+
+// Filtra por solución si viene; si el filtro queda vacío, cae a los recientes.
+let posts = byDateDesc;
+if (solucion) {
+  const filtered = byDateDesc.filter((e) =>
+    (e?.node?.tags || []).includes(solucion),
+  );
+  posts = filtered.length > 0 ? filtered : byDateDesc;
+}
+posts = posts.slice(0, 6);
 ---
 
 <BlogPreviewReact
