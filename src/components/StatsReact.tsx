@@ -138,8 +138,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
     <div ref={ref} className="flex flex-col gap-3">
       {/* SPEC 54: número protagonista suelto sobre el fondo (sin card), en lila malva con degradé. */}
       <p
-        className="bg-clip-text text-transparent"
-        style={{ backgroundImage: 'linear-gradient(180deg, #E3C9DF 0%, #B98CB0 100%)' }}
+        style={{ color: '#C9A9C4' }}
         data-tina-field={tinaField(item as any, 'number')}
       >
         {prefix && (
@@ -182,7 +181,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
   return (
     <section
-      className="rounded-t-3xl py-14 md:py-20"
+      className="rounded-t-3xl py-20 md:py-28"
       style={{
         // SPEC 54: base aubergine oscura con brillo magenta arriba-derecha (Figma).
         background:
