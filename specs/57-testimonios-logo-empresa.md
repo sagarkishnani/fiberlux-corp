@@ -1,6 +1,6 @@
 # SPEC 57 — Testimonios: logo de empresa en vez de chip/avatar
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 49 (testimonios tema claro), SPEC 24 (foto genérica), obs 11/12/13 (opción de logo)
 > **Fecha:** 2026-07-22
 > **Objetivo:** Rediseñar la tarjeta de testimonios para mostrar el logo de la empresa (sin chip magenta ni placeholder), con el logo en la columna izquierda en desktop y arriba del testimonio en mobile.
