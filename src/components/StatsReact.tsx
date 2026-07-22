@@ -135,32 +135,31 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const displayNumber = formatNumber(count, decimals, hasCommas);
 
   return (
-    <div ref={ref} className="mt-4 mb-4 flex flex-col gap-4">
-      {/* Card — big number as the hero. obs_4: glass sutil + número con gradiente. */}
-      <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-center md:min-h-[240px] bg-white/[0.06] backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+    <div ref={ref} className="flex flex-col gap-3">
+      {/* SPEC 54: número protagonista suelto sobre el fondo (sin card), en lila malva con degradé. */}
+      <p
+        className="bg-clip-text text-transparent"
+        style={{ backgroundImage: 'linear-gradient(180deg, #E3C9DF 0%, #B98CB0 100%)' }}
         data-tina-field={tinaField(item as any, 'number')}
       >
-        <p className="bg-gradient-to-b from-white to-[#f6cfe9] bg-clip-text text-transparent">
-          {prefix && (
-            <span className="text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
-              {prefix}
-            </span>
-          )}
-          <span className="text-[44px] leading-[48px] sm:text-[56px] sm:leading-[60px] font-bold">
-            {displayNumber}
+        {prefix && (
+          <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
+            {prefix}
           </span>
-          {suffix && (
-            <span className="text-[24px] leading-[28px] sm:text-[28px] sm:leading-[32px] font-semibold ml-1.5">
-              {suffix}
-            </span>
-          )}
-        </p>
-      </div>
+        )}
+        <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
+          {displayNumber}
+        </span>
+        {suffix && (
+          <span className="text-[24px] leading-[28px] sm:text-[30px] sm:leading-[34px] font-semibold ml-0.5">
+            {suffix}
+          </span>
+        )}
+      </p>
 
-      {/* Description below card */}
+      {/* Description below number */}
       <p
-        className="text-white/70 text-body-md leading-snug"
+        className="text-white/80 text-body-md leading-snug"
         data-tina-field={tinaField(item as any, 'description')}
       >
         {item.description}
@@ -201,7 +200,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
         </h2>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 items-start">
           {items.map((item, i) => (
             <StatCard key={i} item={item} index={i} />
           ))}
