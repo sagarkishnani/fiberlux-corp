@@ -208,10 +208,12 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
               {storeBadge}
               {downloadPill}
             </div>
+            {/* Teléfono pegado a la derecha, a sangre; se empuja fuera del panel por
+                la derecha para que la diagonal del png (triángulo) se recorte fuera. */}
             <img
               src={mockup}
               alt="Fiberlux App"
-              className="pointer-events-none mt-6 -mb-1 w-[95%] max-w-none self-end select-none"
+              className="pointer-events-none mt-6 -mb-[14%] -mr-[26%] w-[104%] max-w-none self-end select-none"
               draggable={false}
             />
           </div>
