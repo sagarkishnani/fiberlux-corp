@@ -222,7 +222,7 @@ export default function CatalogoSolucionesReact({
         <div className="md:hidden">
           <div
             ref={slider.ref}
-            className="catalogo-scroll flex gap-4 overflow-x-auto snap-x snap-proximity select-none"
+            className="catalogo-scroll flex gap-4 overflow-x-auto select-none"
             style={{ cursor: pageCount > 1 ? "grab" : "default" }}
             {...slider.handlers}
           >
