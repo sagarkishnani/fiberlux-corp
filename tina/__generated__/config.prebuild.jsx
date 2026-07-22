@@ -957,19 +957,15 @@ var config_default = defineConfig({
           { name: "readTime", label: "Tiempo de lectura", type: "string" },
           {
             name: "tags",
-            label: "Etiquetas",
+            label: "Etiquetas (soluciones)",
+            description: "El post aparecer\xE1 en la secci\xF3n de novedades de la(s) soluci\xF3n(es) elegida(s). Sin etiqueta, no se asocia a ninguna soluci\xF3n.",
             type: "string",
             list: true,
             options: [
-              "Redes",
-              "Big data",
-              "Centro de datos",
-              "Ciberseguridad",
-              "Cloud",
-              "Conectividad",
-              "Internet",
-              "ISPs",
-              "SaaS"
+              { value: "conectividad-empresarial", label: "Conectividad Empresarial" },
+              { value: "ciberseguridad-gestionada", label: "Ciberseguridad Gestionada" },
+              { value: "data-center-cloud", label: "Data Center, Cloud y Continuidad de Negocio" },
+              { value: "servicios-gestionados", label: "Servicios Gestionados" }
             ]
           },
           { name: "featured", label: "Destacado", type: "boolean" },
