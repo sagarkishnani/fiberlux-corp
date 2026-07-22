@@ -70,50 +70,33 @@ export default function TestimonialCard({
       <div className="relative z-10 p-6 pt-8 md:p-10 md:pt-16 h-full">
         {/* Desktop layout: avatar left + content right */}
         <div className="hidden md:grid md:grid-cols-[240px_1fr] md:gap-10 h-full">
-          {/* Avatar: purple SVG frame behind + square photo on top */}
+          {/* Logo de la empresa (sin marco magenta ni placeholder). Fallback:
+              nombre de la empresa como texto si aún no hay logo. */}
           <div className="flex items-center justify-center">
-            <div className="relative w-[200px] h-[200px] shrink-0 flex justify-center items-center">
-              {/* Purple frame behind (offset) */}
-              <svg
-                className="absolute top-3 left-3 w-full h-full"
-                viewBox="0 0 216 213"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
-              </svg>
-              {/* Foto cuadrada (o logo si no hay foto; fallback: avatar genérico) */}
+            {logoSrc ? (
               <img
-                src={frameSrc}
-                alt={name}
-                className={`ml-4 mt-4 relative z-10 w-[150px] h-[150px] ${frameFit}`}
+                src={logoSrc}
+                alt={company}
+                className="max-h-[96px] w-auto max-w-full object-contain"
                 draggable={false}
               />
-            </div>
+            ) : (
+              <span className="text-brand-purple text-subtitle-sm font-semibold text-center">
+                {company}
+              </span>
+            )}
           </div>
 
           {/* Text content */}
           <div className="flex flex-col justify-between h-full">
-            <div className="flex gap-8">
-              <div className="flex-1">
-                <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
-                  {quote}
-                </h3>
-                {description && (
-                  <p className="text-brand-gray-dark text-body-md leading-relaxed">
-                    {description}
-                  </p>
-                )}
-              </div>
-              {/* Logo a la derecha del texto (solo si el logo NO se usa ya como
-                  foto en el frame, para no duplicarlo) */}
-              {logoSrc && !useLogoAsAvatar && (
-                <img
-                  src={logoSrc}
-                  alt={company}
-                  className="h-8 object-contain self-center shrink-0"
-                  draggable={false}
-                />
+            <div>
+              <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
+                {quote}
+              </h3>
+              {description && (
+                <p className="text-brand-gray-dark text-body-md leading-relaxed">
+                  {description}
+                </p>
               )}
             </div>
             <div className="mt-8">
