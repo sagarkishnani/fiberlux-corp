@@ -192,43 +192,46 @@ export default function SolucionesSliderReact({
 
   return (
     <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Decorative background glows (planet + line), behind all content.
-          A radial mask fades each image toward its own box edges so the SVG's
-          blurred ellipse never shows a hard rectangular cut. */}
+      {/* SPEC 55: 3 vectores blur. Bloom magenta grande y brillante (fiel a la
+          referencia): el principal sube desde abajo-centro por detrás de la card
+          activa; line como streak arriba-izq; tercer bloom detrás de la peek/derecha.
+          Una máscara radial evita el corte rectangular del blur del SVG. */}
+      {/* 1) Bloom principal: abajo-centro-izquierda, sube tras la card activa. */}
       <img
         src={GLOW_PLANET}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -bottom-[22%] -left-[14%] z-0 w-[72vw] max-w-[960px] select-none opacity-90"
+        className="pointer-events-none absolute -bottom-[6%] left-[3%] z-0 w-[94vw] max-w-[1360px] select-none opacity-100"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          filter: "saturate(1.18) brightness(1.14)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
         }}
       />
+      {/* 2) Streak secundario arriba-izquierda. */}
       <img
         src={GLOW_LINE}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -top-[14%] -left-[4%] z-0 w-[420px] max-w-[46vw] select-none opacity-60"
+        className="pointer-events-none absolute -top-[12%] -left-[4%] z-0 w-[460px] max-w-[46vw] select-none opacity-70"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
         }}
       />
-      {/* SPEC 55: tercer vector — planet reusado detrás de la card activa / zona
-          derecha, para que el glass deje ver el magenta (reemplaza el glow radial
-          CSS suelto anterior). */}
+      {/* 3) Tercer bloom: detrás de la card activa/peek, zona derecha. */}
       <img
         src={GLOW_PLANET}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute top-1/2 right-[-10%] z-0 w-[52vw] max-w-[760px] -translate-y-1/2 select-none opacity-80"
+        className="pointer-events-none absolute top-[26%] right-[-14%] z-0 w-[58vw] max-w-[880px] select-none opacity-95"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 52%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 52%, transparent 100%)",
+          filter: "saturate(1.12) brightness(1.08)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
         }}
       />
       {/* obs_16: efecto grano sutil sobre toda la sección. */}
@@ -292,20 +295,23 @@ export default function SolucionesSliderReact({
         .sol-card {
           background:
             linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 16%, rgba(255,255,255,0) 30%),
-            rgba(12,10,16,0.38);
-          backdrop-filter: blur(9px);
-          -webkit-backdrop-filter: blur(9px);
+            rgba(10,8,14,0.34);
+          backdrop-filter: blur(7px);
+          -webkit-backdrop-filter: blur(7px);
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
         }
-        /* Card activa: mismo glass, solo con realce (borde + brillo interior) algo
-           más brillante. La diferenciación fuerte la da el color del texto (blanco). */
+        /* Card activa: mismo glass pero más translúcido para que el bloom magenta
+           del fondo la tiñe (más fuerte abajo). El realce (borde + brillo interior)
+           y el texto blanco la diferencian; NO hay degradado magenta horneado. */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 16%, rgba(255,255,255,0) 30%),
-            rgba(14,11,18,0.30);
+            linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 16%, rgba(255,255,255,0) 34%),
+            rgba(10,8,14,0.10);
+          backdrop-filter: blur(7px);
+          -webkit-backdrop-filter: blur(7px);
           box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.16),
-            0 20px 60px -30px rgba(150,35,122,0.55);
+            inset 0 1px 0 rgba(255,255,255,0.18),
+            0 24px 70px -28px rgba(150,35,122,0.60);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
