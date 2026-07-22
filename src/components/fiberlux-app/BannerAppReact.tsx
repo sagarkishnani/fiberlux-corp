@@ -133,7 +133,7 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           {b.pillText}
         </span>
       </div>
-      <img src={LOGO} alt="Fiberlux" className="mt-4 h-5 md:h-6 w-auto" draggable={false} />
+      <img src={LOGO} alt="Fiberlux" className="mt-4 ml-6 md:ml-10 h-5 md:h-6 w-auto" draggable={false} />
     </div>
   );
 
