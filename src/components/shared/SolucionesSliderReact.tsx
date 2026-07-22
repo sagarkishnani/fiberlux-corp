@@ -304,30 +304,25 @@ export default function SolucionesSliderReact({
            dejo de magenta abajo; el bloom de fondo suma magenta en los bordes. */
         .sol-card {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 14%, rgba(255,255,255,0) 30%),
             radial-gradient(130% 96% at 50% 100%,
               rgba(90,22,74,0.40) 0%,
               rgba(59,14,48,0.50) 46%,
               rgba(38,11,32,0.56) 82%);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
         }
         /* Card activa: fill del Figma — radial gradient #3B0E30 → #96237A → #3B0E30
            (aubergine arriba/bordes, magenta vivo abajo-centro). Glass: brillo blanco
            arriba + backdrop-blur + borde blanco; el bloom de fondo suma brillo abajo. */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 12%, rgba(255,255,255,0) 26%),
             radial-gradient(136% 94% at 50% 97%,
               rgba(150,35,122,0.30) 0%,
               rgba(107,22,84,0.27) 36%,
               rgba(59,14,48,0.34) 74%);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
-          box-shadow:
-            inset 0 1px 0 rgba(255,255,255,0.18),
-            0 24px 70px -28px rgba(150,35,122,0.60);
+          box-shadow: 0 24px 70px -28px rgba(150,35,122,0.60);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
