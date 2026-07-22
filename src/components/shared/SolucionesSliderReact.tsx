@@ -300,13 +300,18 @@ export default function SolucionesSliderReact({
           -webkit-backdrop-filter: blur(7px);
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
         }
-        /* Card activa: mismo glass pero más translúcido para que el bloom magenta
-           del fondo la tiñe (más fuerte abajo). El realce (borde + brillo interior)
-           y el texto blanco la diferencian; NO hay degradado magenta horneado. */
+        /* Card activa: GLASS MAGENTA parejo (fiel a la referencia). Tinte magenta
+           translúcido de arriba (aubergine) a abajo (magenta vivo) para que NINGUNA
+           zona quede negra; el bloom de fondo suma brillo extra abajo. Sigue siendo
+           glass: brillo blanco arriba + backdrop-blur + borde. */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 16%, rgba(255,255,255,0) 34%),
-            rgba(10,8,14,0.10);
+            linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 14%, rgba(255,255,255,0) 30%),
+            linear-gradient(178deg,
+              rgba(56,18,48,0.60) 0%,
+              rgba(86,26,73,0.60) 38%,
+              rgba(134,34,112,0.62) 72%,
+              rgba(178,48,150,0.70) 100%);
           backdrop-filter: blur(7px);
           -webkit-backdrop-filter: blur(7px);
           box-shadow:
