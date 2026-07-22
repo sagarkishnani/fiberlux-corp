@@ -65,15 +65,15 @@
   "rubros": {
     "title": "Rubros con los que trabajamos",
     "items": [
-      { "icon": "consultoria", "label": "Consultoría" },
-      { "icon": "banca", "label": "Finanzas y Bancos" },
-      { "icon": "salud", "label": "Salud" },
-      { "icon": "energia", "label": "Energía y Minería", "image": "images/rubros/rubro-mineria.jpg" },
-      { "icon": "educacion", "label": "Educación", "image": "images/rubros/rubro-educacion.jpg" },
-      { "icon": "tecnologia", "label": "Tecnología" },
+      { "icon": "consultoria", "label": "Consultoría", "image": "images/rubros/consultoriarubro.webp" },
+      { "icon": "banca", "label": "Finanzas y Bancos", "image": "images/rubros/finanzasbancosrubro.webp" },
+      { "icon": "salud", "label": "Salud", "image": "images/rubros/saludrubro.webp" },
+      { "icon": "energia", "label": "Energía y Minería" },
+      { "icon": "educacion", "label": "Educación", "image": "images/rubros/educacionrubro.webp" },
+      { "icon": "tecnologia", "label": "Tecnología", "image": "images/rubros/tecnologiarubro.webp" },
       { "icon": "industria", "label": "Industria" },
-      { "icon": "retail", "label": "Comercio" },
-      { "icon": "servicios", "label": "Servicios" }
+      { "icon": "retail", "label": "Comercio", "image": "images/rubros/comerciorubro.webp" },
+      { "icon": "servicios", "label": "Servicios", "image": "images/rubros/serviciosrubro.webp" }
     ]
   },
   "stats": {
