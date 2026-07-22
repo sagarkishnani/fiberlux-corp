@@ -23,6 +23,8 @@ const isMoreLabel = (b: string) => /^y\s*m[aá]s/i.test(b.trim());
 /* Decorative background glows (static assets, not CMS-driven). */
 const GLOW_PLANET = withBase("/images/soluciones/planet.svg");
 const GLOW_LINE = withBase("/images/soluciones/line.svg");
+/* Textura negra tileada sobre cada card (Figma: opacity 8% + blend overlay). */
+const CARD_TEXTURE = withBase("/images/soluciones/black.png");
 
 export default function SolucionesSliderReact({
   query,
@@ -105,6 +107,12 @@ export default function SolucionesSliderReact({
           isActive ? "sol-card-active border-white/30" : "border-white/[0.10]"
         }`}
       >
+        {/* Figma: textura negra tileada, opacity 8% + blend overlay (oscurece/da grano). */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1] rounded-[30px] opacity-[0.08] mix-blend-overlay"
+          style={{ backgroundImage: `url(${CARD_TEXTURE})`, backgroundRepeat: "repeat", backgroundSize: "auto" }}
+        />
         <div className="relative z-10 flex h-full flex-col">
           {/* Subservices as bulleted lines */}
           <ul
