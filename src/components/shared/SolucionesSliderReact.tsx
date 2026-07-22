@@ -23,6 +23,8 @@ const isMoreLabel = (b: string) => /^y\s*m[aá]s/i.test(b.trim());
 /* Decorative background glows (static assets, not CMS-driven). */
 const GLOW_PLANET = withBase("/images/soluciones/planet.svg");
 const GLOW_LINE = withBase("/images/soluciones/line.svg");
+/* Textura negra tileada sobre cada card (Figma: opacity 8% + blend overlay). */
+const CARD_TEXTURE = withBase("/images/soluciones/black.png");
 
 export default function SolucionesSliderReact({
   query,
@@ -101,12 +103,16 @@ export default function SolucionesSliderReact({
 
     return (
       <div
-        className={`relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
-          isActive
-            ? "border-white/20 sol-card-active"
-            : "border-white/[0.10] bg-white/[0.03] backdrop-blur-sm"
+        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[620px] flex-col overflow-hidden rounded-[30px] border-[1.5px] px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
+          isActive ? "sol-card-active border-white/30" : "border-white/[0.10]"
         }`}
       >
+        {/* Figma: textura negra tileada, opacity 8% + blend overlay (oscurece/da grano). */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1] rounded-[30px] opacity-[0.08] mix-blend-overlay"
+          style={{ backgroundImage: `url(${CARD_TEXTURE})`, backgroundRepeat: "repeat", backgroundSize: "auto" }}
+        />
         <div className="relative z-10 flex h-full flex-col">
           {/* Subservices as bulleted lines */}
           <ul
@@ -152,8 +158,8 @@ export default function SolucionesSliderReact({
             {url && (
               <a
                 href={withBase(url)}
-                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[19px] font-medium transition-colors ${
-                  isActive ? "text-white hover:text-[#d885c4]" : "text-white/35"
+                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[20px] font-medium transition-colors ${
+                  isActive ? "text-[#D5A7CA] hover:text-white" : "text-white/35"
                 }`}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
               >
@@ -176,7 +182,7 @@ export default function SolucionesSliderReact({
       {...slider.handlers}
     >
       {items.map((item, i) => (
-        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[66%]">
+        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[52%]">
           {renderCard(item, i)}
         </div>
       ))}
@@ -186,7 +192,7 @@ export default function SolucionesSliderReact({
       {items.length > 1 && (
         <div
           aria-hidden="true"
-          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(34%-24px)]"
+          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(48%-24px)]"
         />
       )}
     </div>
@@ -194,39 +200,46 @@ export default function SolucionesSliderReact({
 
   return (
     <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Decorative background glows (planet + line), behind all content.
-          A radial mask fades each image toward its own box edges so the SVG's
-          blurred ellipse never shows a hard rectangular cut. */}
+      {/* SPEC 55: 3 vectores blur. Bloom magenta grande y brillante (fiel a la
+          referencia): el principal sube desde abajo-centro por detrás de la card
+          activa; line como streak arriba-izq; tercer bloom detrás de la peek/derecha.
+          Una máscara radial evita el corte rectangular del blur del SVG. */}
+      {/* 1) Bloom principal: abajo-centro-izquierda, sube tras la card activa. */}
       <img
         src={GLOW_PLANET}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -bottom-[22%] -left-[14%] z-0 w-[72vw] max-w-[960px] select-none opacity-90"
+        className="pointer-events-none absolute -bottom-[6%] left-[3%] z-0 w-[94vw] max-w-[1360px] select-none opacity-100"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          filter: "saturate(1.18) brightness(1.14)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
         }}
       />
+      {/* 2) Streak secundario arriba-izquierda. */}
       <img
         src={GLOW_LINE}
         alt=""
         aria-hidden="true"
         draggable={false}
-        className="pointer-events-none absolute -top-[14%] -left-[4%] z-0 w-[420px] max-w-[46vw] select-none opacity-60"
+        className="pointer-events-none absolute -top-[12%] -left-[4%] z-0 w-[460px] max-w-[46vw] select-none opacity-70"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
         }}
       />
-      {/* obs_16: glow magenta a la DERECHA (detrás de la card activa) para que el
-          glass la desenfoque y se note el fondo. */}
-      <div
+      {/* 3) Tercer bloom: detrás de la card activa/peek, zona derecha. */}
+      <img
+        src={GLOW_PLANET}
+        alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[-6%] z-0 h-[130%] w-[45vw] max-w-[720px] -translate-y-1/2"
+        draggable={false}
+        className="pointer-events-none absolute top-[26%] right-[-14%] z-0 w-[58vw] max-w-[880px] select-none opacity-95"
         style={{
-          background:
-            "radial-gradient(closest-side, rgba(150,35,122,0.55) 0%, rgba(150,35,122,0.22) 45%, transparent 78%)",
+          filter: "saturate(1.12) brightness(1.08)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
         }}
       />
       {/* obs_16: efecto grano sutil sobre toda la sección. */}
@@ -284,23 +297,32 @@ export default function SolucionesSliderReact({
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
         }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        /* Active card = GLASS (obs_10/16): base semi-transparente + backdrop-blur
-           para que el glow magenta de la derecha se desenfoque detrás; brillo
-           blanco arriba (lado opuesto al degradé) tipo glass; degradé magenta
-           multi-tono (violeta → magenta → oscuro) que la hace visible aun en
-           bajo brillo. */
+        /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
+           backdrop-blur + brillo blanco sutil arriba). El magenta NO se hornea en
+           la card: proviene de los vectores de fondo que se ven a través del glass. */
+        /* Card inactiva/peek: aubergine glass tenue (NO negro) — dark #3B0E30 con un
+           dejo de magenta abajo; el bloom de fondo suma magenta en los bordes. */
+        .sol-card {
+          background:
+            radial-gradient(130% 96% at 50% 100%,
+              rgba(90,22,74,0.40) 0%,
+              rgba(59,14,48,0.50) 46%,
+              rgba(38,11,32,0.56) 82%);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+        }
+        /* Card activa: fill del Figma — radial gradient #3B0E30 → #96237A → #3B0E30
+           (aubergine arriba/bordes, magenta vivo abajo-centro). Glass: brillo blanco
+           arriba + backdrop-blur + borde blanco; el bloom de fondo suma brillo abajo. */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 14%, rgba(255,255,255,0) 26%),
-            radial-gradient(122% 88% at 50% 127%,
-              rgba(185,50,148,0.90) 0%,
-              rgba(146,36,120,0.70) 26%,
-              rgba(84,30,88,0.46) 52%,
-              rgba(26,15,32,0.22) 78%),
-            rgba(12,10,16,0.42);
-          backdrop-filter: blur(7px);
-          -webkit-backdrop-filter: blur(7px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+            radial-gradient(136% 94% at 50% 97%,
+              rgba(150,35,122,0.30) 0%,
+              rgba(107,22,84,0.27) 36%,
+              rgba(59,14,48,0.34) 74%);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          box-shadow: 0 24px 70px -28px rgba(150,35,122,0.60);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
