@@ -222,7 +222,7 @@ export default function CatalogoSolucionesReact({
         <div className="md:hidden">
           <div
             ref={slider.ref}
-            className="catalogo-scroll flex gap-4 overflow-x-auto select-none"
+            className="catalogo-scroll flex gap-6 overflow-x-auto select-none"
             style={{ cursor: pageCount > 1 ? "grab" : "default" }}
             {...slider.handlers}
           >
@@ -231,7 +231,7 @@ export default function CatalogoSolucionesReact({
               return (
                 <div
                   key={pi}
-                  className="catalogo-page snap-start shrink-0 w-[86%] grid grid-cols-2 auto-rows-fr gap-3"
+                  className="catalogo-page snap-start shrink-0 w-full grid grid-cols-2 auto-rows-fr gap-3"
                 >
                   {pageItems.map((item, i) => {
                     const CardTag = item.url ? "a" : "div";
