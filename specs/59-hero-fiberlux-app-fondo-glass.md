@@ -1,6 +1,6 @@
 # SPEC 59 — Hero fiberlux-app: fondo responsive estilo hero de solución
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 37 (página fiberlux-app), SPEC 46 (hero de solución imagen/form), SPEC 50 (subservicios hero fondo imagen), SPEC 44 (assets app)
 > **Fecha:** 2026-07-22
 > **Objetivo:** Rediseñar el hero de `/fiberlux-app` para usar 3 imágenes responsive de fondo (mobile/tablet/desktop) con el mismo tratamiento del hero de las páginas de solución (imagen a sangre + degradé de contraste), manteniendo el texto y botones de descarga editables encima.
