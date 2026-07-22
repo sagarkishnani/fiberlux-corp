@@ -58,7 +58,9 @@ const metaDescription =
       <Stats title={sub?.whyUsTitle ?? undefined} />
     </div>
     <ServiciosForm prefill={{ servicio: subservicio ?? "" }} />
-    <div class="-mt-16 relative z-20">
+    {/* obs4: en mobile el solape (-mt-16) tapaba el boton "Contactar" del form;
+        el solape se limita a desktop y en mobile las secciones se apilan. */}
+    <div class="mt-0 md:-mt-16 relative z-20">
       <BlogPreview />
     </div>
     <FaqSubservicio relativePath={relativePath} />
