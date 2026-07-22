@@ -608,6 +608,7 @@ fragment FiberluxAppParts on FiberluxApp {
   __typename
   banner {
     __typename
+    mode
     headingLead
     headingStrong
     pillText
@@ -620,6 +621,10 @@ fragment FiberluxAppParts on FiberluxApp {
     androidUrl
     iosUrl
     mockup
+    imageMobile
+    imageTablet
+    imageDesktop
+    bgColor
   }
   hero {
     __typename

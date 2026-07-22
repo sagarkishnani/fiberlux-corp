@@ -2305,6 +2305,15 @@ var config_default = defineConfig({
             label: "Banner de descarga (app)",
             type: "object",
             fields: [
+              {
+                name: "mode",
+                label: "Modo del banner",
+                type: "string",
+                options: [
+                  { value: "nativa", label: "Nativa (editable)" },
+                  { value: "imagen", label: "Imagen" }
+                ]
+              },
               { name: "headingLead", label: "Titular (parte normal)", type: "string" },
               { name: "headingStrong", label: "Titular (parte negrita)", type: "string" },
               { name: "pillText", label: "Texto de la pill", type: "string" },
@@ -2327,7 +2336,17 @@ var config_default = defineConfig({
               },
               { name: "androidUrl", label: "URL Play Store (Android)", type: "string" },
               { name: "iosUrl", label: "URL App Store (iOS)", type: "string" },
-              { name: "mockup", label: "Imagen del tel\xE9fono", type: "image" }
+              { name: "mockup", label: "Imagen del tel\xE9fono", type: "image" },
+              // ── Modo imagen (SPEC 60) ──
+              { name: "imageMobile", label: "Imagen mobile (\u2264600px)", type: "image" },
+              { name: "imageTablet", label: "Imagen tablet (\u22641024px)", type: "image" },
+              { name: "imageDesktop", label: "Imagen desktop", type: "image" },
+              {
+                name: "bgColor",
+                label: "Color de fondo (modo imagen)",
+                type: "string",
+                ui: { component: "color" }
+              }
             ]
           },
           // ── Hero ──

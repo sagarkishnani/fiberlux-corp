@@ -2244,6 +2244,7 @@ export type FiberluxAppBannerBullets = {
 
 export type FiberluxAppBanner = {
   __typename?: 'FiberluxAppBanner';
+  mode?: Maybe<Scalars['String']['output']>;
   headingLead?: Maybe<Scalars['String']['output']>;
   headingStrong?: Maybe<Scalars['String']['output']>;
   pillText?: Maybe<Scalars['String']['output']>;
@@ -2252,6 +2253,10 @@ export type FiberluxAppBanner = {
   androidUrl?: Maybe<Scalars['String']['output']>;
   iosUrl?: Maybe<Scalars['String']['output']>;
   mockup?: Maybe<Scalars['String']['output']>;
+  imageMobile?: Maybe<Scalars['String']['output']>;
+  imageTablet?: Maybe<Scalars['String']['output']>;
+  imageDesktop?: Maybe<Scalars['String']['output']>;
+  bgColor?: Maybe<Scalars['String']['output']>;
 };
 
 export type FiberluxAppHeroDownloads = {
@@ -2314,6 +2319,7 @@ export type FiberluxAppBannerBulletsFilter = {
 };
 
 export type FiberluxAppBannerFilter = {
+  mode?: InputMaybe<StringFilter>;
   headingLead?: InputMaybe<StringFilter>;
   headingStrong?: InputMaybe<StringFilter>;
   pillText?: InputMaybe<StringFilter>;
@@ -2322,6 +2328,10 @@ export type FiberluxAppBannerFilter = {
   androidUrl?: InputMaybe<StringFilter>;
   iosUrl?: InputMaybe<StringFilter>;
   mockup?: InputMaybe<ImageFilter>;
+  imageMobile?: InputMaybe<ImageFilter>;
+  imageTablet?: InputMaybe<ImageFilter>;
+  imageDesktop?: InputMaybe<ImageFilter>;
+  bgColor?: InputMaybe<StringFilter>;
 };
 
 export type FiberluxAppHeroDownloadsFilter = {
@@ -3402,6 +3412,7 @@ export type FiberluxAppBannerBulletsMutation = {
 };
 
 export type FiberluxAppBannerMutation = {
+  mode?: InputMaybe<Scalars['String']['input']>;
   headingLead?: InputMaybe<Scalars['String']['input']>;
   headingStrong?: InputMaybe<Scalars['String']['input']>;
   pillText?: InputMaybe<Scalars['String']['input']>;
@@ -3410,6 +3421,10 @@ export type FiberluxAppBannerMutation = {
   androidUrl?: InputMaybe<Scalars['String']['input']>;
   iosUrl?: InputMaybe<Scalars['String']['input']>;
   mockup?: InputMaybe<Scalars['String']['input']>;
+  imageMobile?: InputMaybe<Scalars['String']['input']>;
+  imageTablet?: InputMaybe<Scalars['String']['input']>;
+  imageDesktop?: InputMaybe<Scalars['String']['input']>;
+  bgColor?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type FiberluxAppHeroDownloadsMutation = {
@@ -3492,7 +3507,7 @@ export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null,
 
 export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
 
-export type FiberluxAppPartsFragment = { __typename: 'FiberluxApp', whyUsTitle?: string | null, banner?: { __typename: 'FiberluxAppBanner', headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type FiberluxAppPartsFragment = { __typename: 'FiberluxApp', whyUsTitle?: string | null, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3841,7 +3856,7 @@ export type FiberluxAppQueryVariables = Exact<{
 }>;
 
 
-export type FiberluxAppQuery = { __typename?: 'Query', fiberluxApp: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banner?: { __typename: 'FiberluxAppBanner', headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type FiberluxAppQuery = { __typename?: 'Query', fiberluxApp: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type FiberluxAppConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3853,7 +3868,7 @@ export type FiberluxAppConnectionQueryVariables = Exact<{
 }>;
 
 
-export type FiberluxAppConnectionQuery = { __typename?: 'Query', fiberluxAppConnection: { __typename?: 'FiberluxAppConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FiberluxAppConnectionEdges', cursor: string, node?: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banner?: { __typename: 'FiberluxAppBanner', headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type FiberluxAppConnectionQuery = { __typename?: 'Query', fiberluxAppConnection: { __typename?: 'FiberluxAppConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FiberluxAppConnectionEdges', cursor: string, node?: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, note?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -4484,6 +4499,7 @@ export const FiberluxAppPartsFragmentDoc = gql`
   __typename
   banner {
     __typename
+    mode
     headingLead
     headingStrong
     pillText
@@ -4496,6 +4512,10 @@ export const FiberluxAppPartsFragmentDoc = gql`
     androidUrl
     iosUrl
     mockup
+    imageMobile
+    imageTablet
+    imageDesktop
+    bgColor
   }
   hero {
     __typename
