@@ -387,7 +387,7 @@ export default function HeaderV2React({
     ? "bg-brand-purple lg:bg-greyscale-darkest/80 lg:backdrop-blur-md"
     : scrolled || solidOnLoad
     ? isLight
-      ? "bg-white/80 backdrop-blur-md border-b border-black/5"
+      ? "bg-white border-b border-black/5"
       : "bg-greyscale-darkest/80 backdrop-blur-md"
     : "bg-transparent";
 
