@@ -165,34 +165,35 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
   return (
     <section className="bg-greyscale-darkest py-10 md:py-14 overflow-hidden">
       <div className="site-container">
-        <div className="relative overflow-hidden rounded-[24px] border border-white/10" style={panelBg}>
+        <div className="relative overflow-hidden rounded-[16px]" style={panelBg}>
           {/* Patrón geométrico sutil */}
           <div className="pointer-events-none absolute inset-0 z-0" style={patternBg} aria-hidden="true" />
 
+          {/* Teléfono a sangre desde la derecha (desktop): más grande, la diagonal
+              del PNG se recorta fuera del panel para que entre limpio. */}
+          <img
+            src={mockup}
+            alt="Fiberlux App"
+            className="pointer-events-none absolute z-0 right-[-3%] top-[-14%] h-[132%] w-auto max-w-none select-none hidden md:block"
+            draggable={false}
+          />
+
           {/* ════ DESKTOP ════ */}
-          <div className="relative z-10 hidden md:block px-8 lg:px-10 py-9">
-            <div className="flex items-center gap-6">
+          <div className="relative z-10 hidden md:block px-8 lg:px-10 py-10">
+            <div className="w-[64%]">
               {/* Marco notched (contorno SVG) con texto + bullets */}
-              <div className="relative shrink-0 basis-[62%] px-9 pt-8 pb-12">
+              <div className="relative pl-9 pr-6 pt-8 pb-12">
                 <FrameOutline path={FRAME_D} viewBox="0 0 957 217" />
                 <div className="relative grid grid-cols-[0.82fr_1.18fr] items-center gap-8">
                   <div>{textBlock}</div>
                   <div>{bulletList}</div>
                 </div>
               </div>
-              {/* Teléfono a la derecha (a sangre) + descarga sobre él */}
-              <div className="relative flex-1 self-stretch min-h-[300px]">
-                <img
-                  src={mockup}
-                  alt="Fiberlux App"
-                  className="pointer-events-none absolute left-[10%] top-1/2 -translate-y-1/2 w-[118%] max-w-none select-none"
-                  draggable={false}
-                />
-                <div className="absolute left-[-10%] top-1/2 mt-4 -translate-y-1/2 z-30 flex flex-col items-start gap-2">
-                  {storeBadge}
-                  {downloadPill}
-                </div>
-              </div>
+            </div>
+            {/* Badge + pill de descarga, sobre el teléfono */}
+            <div className="absolute right-[23%] top-1/2 -translate-y-1/2 z-30 flex flex-col items-start gap-2">
+              {storeBadge}
+              {downloadPill}
             </div>
           </div>
 
