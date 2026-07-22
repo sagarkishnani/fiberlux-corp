@@ -96,7 +96,7 @@
         "role": "Jefe de Tecnología, Informática y Comunicaciones",
         "company": "Boticas Hogar y Salud",
         "avatar": "",
-        "logo": ""
+        "logo": "images/testimonials/logo-boticas-y-hogar-salud.png"
       },
       {
         "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales.",
@@ -105,7 +105,7 @@
         "role": "Gerente General",
         "company": "Cámara de Comercio e Industria de Arequipa",
         "avatar": "",
-        "logo": ""
+        "logo": "images/testimonials/logo-camara-de-comercio-arequipa.png"
       },
       {
         "quote": "A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G.",
@@ -114,7 +114,7 @@
         "role": "Gerente de TI",
         "company": "Grupo Gloria",
         "avatar": "",
-        "logo": ""
+        "logo": "images/testimonials/logo-grupo-gloria.svg"
       }
     ]
   },
