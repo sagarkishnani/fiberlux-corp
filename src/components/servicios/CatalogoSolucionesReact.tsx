@@ -168,7 +168,7 @@ export default function CatalogoSolucionesReact({
               <CardTag
                 key={i}
                 {...(item.url ? { href: item.url } : {})}
-                className={`catalog-card group relative flex flex-col overflow-hidden rounded-2xl border p-6 lg:p-7 transition-colors duration-300 ${span} ${
+                className={`catalog-card group relative flex h-full flex-col overflow-hidden rounded-2xl border p-6 lg:p-7 transition-colors duration-300 ${span} ${
                   featured
                     ? "border-[#96237A]/40 bg-[radial-gradient(120%_120%_at_85%_0%,#5a1a4a_0%,#2a0a24_48%,#160512_100%)] min-h-[300px] justify-start"
                     : "border-white/10 bg-white/[0.03] hover:border-[#96237A]/60 hover:bg-white/[0.06]"
@@ -231,7 +231,7 @@ export default function CatalogoSolucionesReact({
               return (
                 <div
                   key={pi}
-                  className="catalogo-page snap-start shrink-0 w-full grid grid-cols-2 gap-3"
+                  className="catalogo-page snap-start shrink-0 w-full grid grid-cols-2 auto-rows-fr gap-3"
                 >
                   {pageItems.map((item, i) => {
                     const CardTag = item.url ? "a" : "div";
@@ -239,7 +239,7 @@ export default function CatalogoSolucionesReact({
                       <CardTag
                         key={i}
                         {...(item.url ? { href: item.url } : {})}
-                        className="flex flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
+                        className="flex h-full flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
                         draggable={false}
                       >
                         <ItemIcon name={item.icon} />
