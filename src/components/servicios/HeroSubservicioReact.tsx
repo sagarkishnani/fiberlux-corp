@@ -140,23 +140,29 @@ export default function HeroSubservicioReact({
               </span>
             </nav>
 
-            {hero?.heading && (
-              <h1
-                className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
-                data-tina-field={tinaField(hero, "heading")}
-              >
-                {hero.heading}
-              </h1>
-            )}
+            {/* obs8: se reserva un alto minimo en mobile para el bloque
+                titulo+descripcion, para que la seccion no cambie de tamano
+                entre subservicios con textos de distinto largo. Es min-height
+                (no altura fija), asi los titulos largos no se recortan. */}
+            <div className="min-h-[220px] md:min-h-0">
+              {hero?.heading && (
+                <h1
+                  className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
+                  data-tina-field={tinaField(hero, "heading")}
+                >
+                  {hero.heading}
+                </h1>
+              )}
 
-            {hero?.intro && (
-              <p
-                className="text-body-lg text-greyscale-light max-w-[480px] mb-6"
-                data-tina-field={tinaField(hero, "intro")}
-              >
-                {hero.intro}
-              </p>
-            )}
+              {hero?.intro && (
+                <p
+                  className="text-body-lg text-greyscale-light max-w-[480px] mb-6"
+                  data-tina-field={tinaField(hero, "intro")}
+                >
+                  {hero.intro}
+                </p>
+              )}
+            </div>
 
             {hero?.note && (
               <div
