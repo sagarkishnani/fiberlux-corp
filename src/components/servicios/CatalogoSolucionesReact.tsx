@@ -114,10 +114,6 @@ export default function CatalogoSolucionesReact({
     slideSelector: ".catalogo-page",
     align: "start",
     itemCount: pageCount,
-    // obs5: paginas full-width → un arrastre corto debe avanzar de pagina (umbral
-    // mas bajo), y el aterrizaje lo maneja el tween del hook (ver snap-proximity
-    // abajo) para que no haya cierre brusco del snap nativo.
-    nudgeThreshold: 0.1,
   });
 
   if (!catalogo || items.length === 0) return null;
@@ -226,7 +222,7 @@ export default function CatalogoSolucionesReact({
         <div className="md:hidden">
           <div
             ref={slider.ref}
-            className="catalogo-scroll flex overflow-x-auto snap-x snap-proximity select-none"
+            className="catalogo-scroll flex overflow-x-auto snap-x snap-mandatory select-none"
             style={{ cursor: pageCount > 1 ? "grab" : "default" }}
             {...slider.handlers}
           >
