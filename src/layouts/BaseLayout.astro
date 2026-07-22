@@ -33,13 +33,16 @@ const {
 const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
 const isHome =
   normalizePath(Astro.url.pathname) === normalizePath(import.meta.env.BASE_URL);
-// Páginas de solución (categoría + subservicio) tienen hero de imagen: el header
-// arranca con fondo opaco/blur para que el menú no se pierda sobre la imagen.
+// Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de
+// imagen: el header arranca con fondo opaco/blur para que el menú no se pierda
+// sobre la imagen (zonas claras de la foto se mezclaban con el texto blanco).
 // Las páginas de tema claro (legales, reclamos, etc.) también arrancan sólidas:
 // con el header transparente, su barra dejaba ver el negro del body detrás
 // (franja negra bajo la topbar antes de hacer scroll).
 const solidHeader =
-  headerTheme === "light" || /\/soluciones\/[^/]+/.test(Astro.url.pathname);
+  headerTheme === "light" ||
+  /\/soluciones\/[^/]+/.test(Astro.url.pathname) ||
+  /\/fiberlux-app\/?$/.test(Astro.url.pathname);
 
 // ─── Maintenance mode check ───
 let maintenanceMode = false;
