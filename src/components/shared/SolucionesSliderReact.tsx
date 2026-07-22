@@ -203,45 +203,56 @@ export default function SolucionesSliderReact({
       {/* SPEC 55: 3 vectores blur. Bloom magenta grande y brillante (fiel a la
           referencia): el principal sube desde abajo-centro por detrás de la card
           activa; line como streak arriba-izq; tercer bloom detrás de la peek/derecha.
-          Una máscara radial evita el corte rectangular del blur del SVG. */}
-      {/* 1) Bloom principal: abajo-centro-izquierda, sube tras la card activa. */}
-      <img
-        src={GLOW_PLANET}
-        alt=""
+          Cada uno con máscara radial (evita el corte rectangular del blur del SVG).
+          El wrapper añade una máscara vertical que DESVANECE los blooms hacia los
+          bordes superior/inferior de la sección, para que no se corten en seco contra
+          las secciones vecinas (integración entre bloques). */}
+      <div
         aria-hidden="true"
-        draggable={false}
-        className="pointer-events-none absolute -bottom-[6%] left-[3%] z-0 w-[94vw] max-w-[1360px] select-none opacity-100"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
-          filter: "saturate(1.18) brightness(1.14)",
-          WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
         }}
-      />
-      {/* 2) Streak secundario arriba-izquierda. */}
-      <img
-        src={GLOW_LINE}
-        alt=""
-        aria-hidden="true"
-        draggable={false}
-        className="pointer-events-none absolute -top-[12%] -left-[4%] z-0 w-[460px] max-w-[46vw] select-none opacity-70"
-        style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
-        }}
-      />
-      {/* 3) Tercer bloom: detrás de la card activa/peek, zona derecha. */}
-      <img
-        src={GLOW_PLANET}
-        alt=""
-        aria-hidden="true"
-        draggable={false}
-        className="pointer-events-none absolute top-[26%] right-[-14%] z-0 w-[58vw] max-w-[880px] select-none opacity-95"
-        style={{
-          filter: "saturate(1.12) brightness(1.08)",
-          WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
-        }}
-      />
+      >
+        {/* 1) Bloom principal: abajo-centro-izquierda, sube tras la card activa. */}
+        <img
+          src={GLOW_PLANET}
+          alt=""
+          draggable={false}
+          className="absolute -bottom-[6%] left-[3%] w-[94vw] max-w-[1360px] select-none opacity-100"
+          style={{
+            filter: "saturate(1.18) brightness(1.14)",
+            WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
+            maskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
+          }}
+        />
+        {/* 2) Streak secundario arriba-izquierda. */}
+        <img
+          src={GLOW_LINE}
+          alt=""
+          draggable={false}
+          className="absolute -top-[12%] -left-[4%] w-[460px] max-w-[46vw] select-none opacity-70"
+          style={{
+            WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
+            maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
+          }}
+        />
+        {/* 3) Tercer bloom: detrás de la card activa/peek, zona derecha. */}
+        <img
+          src={GLOW_PLANET}
+          alt=""
+          draggable={false}
+          className="absolute top-[26%] right-[-14%] w-[58vw] max-w-[880px] select-none opacity-95"
+          style={{
+            filter: "saturate(1.12) brightness(1.08)",
+            WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
+            maskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
+          }}
+        />
+      </div>
       {/* obs_16: efecto grano sutil sobre toda la sección. */}
       <div
         aria-hidden="true"
