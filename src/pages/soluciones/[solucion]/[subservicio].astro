@@ -29,7 +29,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { subservicio } = Astro.params;
+const { solucion, subservicio } = Astro.params;
 const relativePath = `${subservicio}.json`;
 
 /* ── SEO / meta (per-subservicio, falls back to global.seo) ── */
@@ -61,7 +61,7 @@ const metaDescription =
     {/* obs4: en mobile el solape (-mt-16) tapaba el boton "Contactar" del form;
         el solape se limita a desktop y en mobile las secciones se apilan. */}
     <div class="mt-0 md:-mt-16 relative z-20">
-      <BlogPreview />
+      <BlogPreview solucion={solucion} />
     </div>
     <FaqSubservicio relativePath={relativePath} />
   </main>
