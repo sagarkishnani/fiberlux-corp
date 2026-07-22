@@ -174,12 +174,12 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <img
             src={mockup}
             alt="Fiberlux App"
-            className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden md:block"
+            className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden min-[1200px]:block"
             draggable={false}
           />
 
-          {/* ════ DESKTOP ════ */}
-          <div className="relative z-10 hidden md:block px-8 lg:px-10 py-10">
+          {/* ════ DESKTOP (≥1200px) ════ */}
+          <div className="relative z-10 hidden min-[1200px]:block px-8 lg:px-10 py-10">
             <div className="w-[60%]">
               {/* Marco notched (contorno SVG) con texto + bullets */}
               <div className="relative pl-9 pr-7 pt-8 pb-12">
@@ -197,8 +197,8 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
             </div>
           </div>
 
-          {/* ════ MOBILE ════ */}
-          <div className="relative z-10 flex md:hidden flex-col px-6 pt-10 pb-0">
+          {/* ════ MOBILE / TABLET (<1200px) ════ */}
+          <div className="relative z-10 flex min-[1200px]:hidden flex-col px-6 pt-10 pb-0">
             <div className="relative px-6 pt-7 pb-10">
               <FrameOutline path={FRAME_M} viewBox="0 0 613 483" />
               <div className="relative">{textBlock}</div>
@@ -209,11 +209,13 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
               {downloadPill}
             </div>
             {/* Teléfono pegado a la derecha, a sangre; se empuja fuera del panel por
-                la derecha para que la diagonal del png (triángulo) se recorte fuera. */}
+                la derecha para que la diagonal del png (triángulo) se recorte fuera.
+                En tablet (≥768px) se fija el tamaño en px para que no crezca gigante
+                con el ancho (los % se calculan sobre el contenedor). */}
             <img
               src={mockup}
               alt="Fiberlux App"
-              className="pointer-events-none mt-6 -mb-[14%] -mr-[26%] w-[104%] max-w-none self-end select-none"
+              className="pointer-events-none mt-6 self-end select-none w-[104%] -mr-[58%] -mb-[30%] max-w-none md:w-[360px] md:-mr-[196px] md:-mb-[104px]"
               draggable={false}
             />
           </div>
