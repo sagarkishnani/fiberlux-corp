@@ -73,7 +73,9 @@ export default function CertificacionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none cert-carousel"
+      className={`flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none cert-carousel${
+        atEnd ? " cert-at-end" : ""
+      }`}
       style={{ cursor: hasItems ? "grab" : "default" }}
       {...slider.handlers}
     >
@@ -149,6 +151,12 @@ export default function CertificacionesSliderReact({
           scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
           -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
+        /* obs_7: al llegar al final ya no hay card oculta a la derecha; se quita el
+           fade para que la última card (ISO) se vea nítida, sin desvanecimiento. */
+        .cert-carousel.cert-at-end {
+          -webkit-mask-image: none;
+          mask-image: none;
         }
         .cert-carousel::-webkit-scrollbar { display: none; }
       `}</style>
