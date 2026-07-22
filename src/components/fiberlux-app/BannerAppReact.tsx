@@ -174,24 +174,24 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <img
             src={mockup}
             alt="Fiberlux App"
-            className="pointer-events-none absolute z-0 right-[-3%] top-[-14%] h-[132%] w-auto max-w-none select-none hidden md:block"
+            className="pointer-events-none absolute z-0 right-[-9%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden md:block"
             draggable={false}
           />
 
           {/* ════ DESKTOP ════ */}
           <div className="relative z-10 hidden md:block px-8 lg:px-10 py-10">
-            <div className="w-[64%]">
+            <div className="w-[60%]">
               {/* Marco notched (contorno SVG) con texto + bullets */}
-              <div className="relative pl-9 pr-6 pt-8 pb-12">
+              <div className="relative pl-9 pr-7 pt-8 pb-12">
                 <FrameOutline path={FRAME_D} viewBox="0 0 957 217" />
-                <div className="relative grid grid-cols-[0.82fr_1.18fr] items-center gap-8">
+                <div className="relative grid grid-cols-[minmax(0,300px)_1fr] items-center gap-7">
                   <div>{textBlock}</div>
                   <div>{bulletList}</div>
                 </div>
               </div>
             </div>
             {/* Badge + pill de descarga, sobre el teléfono */}
-            <div className="absolute right-[23%] top-1/2 -translate-y-1/2 z-30 flex flex-col items-start gap-2">
+            <div className="absolute right-[17%] top-1/2 -translate-y-1/2 z-30 flex flex-col items-start gap-2">
               {storeBadge}
               {downloadPill}
             </div>
