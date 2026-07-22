@@ -133,7 +133,7 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           {b.pillText}
         </span>
       </div>
-      <img src={LOGO} alt="Fiberlux" className="mt-4 h-7 md:h-8 w-auto" draggable={false} />
+      <img src={LOGO} alt="Fiberlux" className="mt-4 h-5 md:h-6 w-auto" draggable={false} />
     </div>
   );
 
@@ -174,7 +174,7 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <img
             src={mockup}
             alt="Fiberlux App"
-            className="pointer-events-none absolute z-0 right-[-9%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden md:block"
+            className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden md:block"
             draggable={false}
           />
 
