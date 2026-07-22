@@ -101,10 +101,8 @@ export default function SolucionesSliderReact({
 
     return (
       <div
-        className={`relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
-          isActive
-            ? "border-white/20 sol-card-active"
-            : "border-white/[0.10] bg-white/[0.03] backdrop-blur-sm"
+        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
+          isActive ? "sol-card-active border-white/25" : "border-white/[0.10]"
         }`}
       >
         <div className="relative z-10 flex h-full flex-col">
@@ -288,23 +286,26 @@ export default function SolucionesSliderReact({
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
         }
         .sol-carousel::-webkit-scrollbar { display: none; }
-        /* Active card = GLASS (obs_10/16): base semi-transparente + backdrop-blur
-           para que el glow magenta de la derecha se desenfoque detrás; brillo
-           blanco arriba (lado opuesto al degradé) tipo glass; degradé magenta
-           multi-tono (violeta → magenta → oscuro) que la hace visible aun en
-           bajo brillo. */
+        /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
+           backdrop-blur + brillo blanco sutil arriba). El magenta NO se hornea en
+           la card: proviene de los vectores de fondo que se ven a través del glass. */
+        .sol-card {
+          background:
+            linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 16%, rgba(255,255,255,0) 30%),
+            rgba(12,10,16,0.38);
+          backdrop-filter: blur(9px);
+          -webkit-backdrop-filter: blur(9px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+        }
+        /* Card activa: mismo glass, solo con realce (borde + brillo interior) algo
+           más brillante. La diferenciación fuerte la da el color del texto (blanco). */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 14%, rgba(255,255,255,0) 26%),
-            radial-gradient(122% 88% at 50% 127%,
-              rgba(185,50,148,0.90) 0%,
-              rgba(146,36,120,0.70) 26%,
-              rgba(84,30,88,0.46) 52%,
-              rgba(26,15,32,0.22) 78%),
-            rgba(12,10,16,0.42);
-          backdrop-filter: blur(7px);
-          -webkit-backdrop-filter: blur(7px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.14);
+            linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 16%, rgba(255,255,255,0) 30%),
+            rgba(14,11,18,0.30);
+          box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.16),
+            0 20px 60px -30px rgba(150,35,122,0.55);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
