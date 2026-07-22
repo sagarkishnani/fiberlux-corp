@@ -109,6 +109,19 @@ export default function TestimonialCard({
         {/* Mobile layout: stacked */}
         <div className="md:hidden flex flex-col justify-between h-full min-h-[300px]">
           <div>
+            {/* Logo arriba del testimonio (fallback: nombre de empresa como texto) */}
+            {logoSrc ? (
+              <img
+                src={logoSrc}
+                alt={company}
+                className="max-h-[40px] w-auto max-w-[65%] object-contain mb-5"
+                draggable={false}
+              />
+            ) : (
+              <p className="text-brand-purple text-body-md font-semibold mb-5">
+                {company}
+              </p>
+            )}
             <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
               &ldquo;{quote}&rdquo;
             </h3>
@@ -118,36 +131,10 @@ export default function TestimonialCard({
               </p>
             )}
           </div>
-          <div className="flex items-center gap-4 mt-6">
-            {/* Mobile avatar: frame behind + square photo */}
-            <div className="relative w-[72px] h-[72px] shrink-0">
-              <svg
-                className="absolute top-1 left-1 w-full h-full"
-                viewBox="0 0 216 213"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d={FRAME_PATH} fill="#96237A" stroke="#96237A" />
-              </svg>
-              <img
-                src={frameSrc}
-                alt={name}
-                className={`relative z-10 w-full h-full rounded-sm ${frameFit}`}
-                draggable={false}
-              />
-            </div>
-            <div>
-              <p className="text-greyscale-darkest text-body-md font-semibold">{name}</p>
-              <p className="text-brand-gray-dark text-body-sm">{role}</p>
-              {logoSrc && !useLogoAsAvatar && (
-                <img
-                  src={logoSrc}
-                  alt={company}
-                  className="h-5 mt-1 object-contain"
-                  draggable={false}
-                />
-              )}
-            </div>
+          {/* Solo nombre + cargo (sin avatar ni chip) */}
+          <div className="mt-6">
+            <p className="text-greyscale-darkest text-body-md font-semibold">{name}</p>
+            <p className="text-brand-gray-dark text-body-sm">{role}</p>
           </div>
         </div>
       </div>
