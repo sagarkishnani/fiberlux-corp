@@ -101,8 +101,8 @@ export default function SolucionesSliderReact({
 
     return (
       <div
-        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[24px] border px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
-          isActive ? "sol-card-active border-white/25" : "border-white/[0.10]"
+        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[30px] border-[1.5px] px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
+          isActive ? "sol-card-active border-white/30" : "border-white/[0.10]"
         }`}
       >
         <div className="relative z-10 flex h-full flex-col">
@@ -150,8 +150,8 @@ export default function SolucionesSliderReact({
             {url && (
               <a
                 href={withBase(url)}
-                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[19px] font-medium transition-colors ${
-                  isActive ? "text-white hover:text-[#d885c4]" : "text-white/35"
+                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[20px] font-medium transition-colors ${
+                  isActive ? "text-[#D5A7CA] hover:text-white" : "text-white/35"
                 }`}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
               >
@@ -292,28 +292,31 @@ export default function SolucionesSliderReact({
         /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
            backdrop-blur + brillo blanco sutil arriba). El magenta NO se hornea en
            la card: proviene de los vectores de fondo que se ven a través del glass. */
+        /* Card inactiva/peek: aubergine glass tenue (NO negro) — dark #3B0E30 con un
+           dejo de magenta abajo; el bloom de fondo suma magenta en los bordes. */
         .sol-card {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 16%, rgba(255,255,255,0) 30%),
-            rgba(10,8,14,0.34);
-          backdrop-filter: blur(7px);
-          -webkit-backdrop-filter: blur(7px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+            linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 14%, rgba(255,255,255,0) 30%),
+            radial-gradient(130% 96% at 50% 100%,
+              rgba(90,22,74,0.40) 0%,
+              rgba(59,14,48,0.50) 46%,
+              rgba(38,11,32,0.56) 82%);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
         }
-        /* Card activa: GLASS MAGENTA parejo (fiel a la referencia). Tinte magenta
-           translúcido de arriba (aubergine) a abajo (magenta vivo) para que NINGUNA
-           zona quede negra; el bloom de fondo suma brillo extra abajo. Sigue siendo
-           glass: brillo blanco arriba + backdrop-blur + borde. */
+        /* Card activa: fill del Figma — radial gradient #3B0E30 → #96237A → #3B0E30
+           (aubergine arriba/bordes, magenta vivo abajo-centro). Glass: brillo blanco
+           arriba + backdrop-blur + borde blanco; el bloom de fondo suma brillo abajo. */
         .sol-card-active {
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 14%, rgba(255,255,255,0) 30%),
-            linear-gradient(178deg,
-              rgba(56,18,48,0.60) 0%,
-              rgba(86,26,73,0.60) 38%,
-              rgba(134,34,112,0.62) 72%,
-              rgba(178,48,150,0.70) 100%);
-          backdrop-filter: blur(7px);
-          -webkit-backdrop-filter: blur(7px);
+            linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 12%, rgba(255,255,255,0) 26%),
+            radial-gradient(136% 94% at 50% 97%,
+              rgba(150,35,122,0.94) 0%,
+              rgba(107,22,84,0.90) 36%,
+              rgba(59,14,48,0.92) 74%);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
           box-shadow:
             inset 0 1px 0 rgba(255,255,255,0.18),
             0 24px 70px -28px rgba(150,35,122,0.60);
