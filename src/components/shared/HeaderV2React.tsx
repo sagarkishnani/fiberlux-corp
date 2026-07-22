@@ -584,7 +584,13 @@ export default function HeaderV2React({
                           : "opacity-0 invisible -translate-y-1 pointer-events-none"
                       }`}
                     >
-                      <div className="min-w-[280px] rounded-2xl bg-greyscale-darkest/95 backdrop-blur-md border border-white/10 p-2 shadow-2xl">
+                      <div
+                        className={`min-w-[280px] rounded-2xl backdrop-blur-md border p-2 shadow-2xl ${
+                          isLight
+                            ? "bg-white/95 border-black/10"
+                            : "bg-greyscale-darkest/95 border-white/10"
+                        }`}
+                      >
                         {children.map((child, j) => {
                           const grand = (child.children || []).filter(
                             Boolean
@@ -603,9 +609,13 @@ export default function HeaderV2React({
                               <a
                                 href={child.url || "#"}
                                 className={`flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-[15px] transition-colors ${
-                                  subOpen
-                                    ? "text-white bg-white/5"
-                                    : "text-white/80 hover:text-white hover:bg-white/5"
+                                  isLight
+                                    ? subOpen
+                                      ? "text-greyscale-darkest bg-black/5"
+                                      : "text-greyscale-darkest/80 hover:text-greyscale-darkest hover:bg-black/5"
+                                    : subOpen
+                                      ? "text-white bg-white/5"
+                                      : "text-white/80 hover:text-white hover:bg-white/5"
                                 }`}
                               >
                                 <span>{child.text}</span>
@@ -622,12 +632,22 @@ export default function HeaderV2React({
                                       : "opacity-0 invisible -translate-x-1 pointer-events-none"
                                   }`}
                                 >
-                                  <div className="min-w-[280px] max-h-[70vh] overflow-y-auto rounded-2xl bg-greyscale-darkest/95 backdrop-blur-md border border-white/10 p-2 shadow-2xl">
+                                  <div
+                                    className={`min-w-[280px] max-h-[70vh] overflow-y-auto rounded-2xl backdrop-blur-md border p-2 shadow-2xl ${
+                                      isLight
+                                        ? "bg-white/95 border-black/10"
+                                        : "bg-greyscale-darkest/95 border-white/10"
+                                    }`}
+                                  >
                                     {grand.map((gc, k) => (
                                       <a
                                         key={k}
                                         href={gc.url || "#"}
-                                        className="block rounded-xl px-4 py-2 text-[14px] text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                                        className={`block rounded-xl px-4 py-2 text-[14px] transition-colors ${
+                                          isLight
+                                            ? "text-greyscale-darkest/70 hover:text-greyscale-darkest hover:bg-black/5"
+                                            : "text-white/70 hover:text-white hover:bg-white/5"
+                                        }`}
                                       >
                                         {gc.text}
                                       </a>
