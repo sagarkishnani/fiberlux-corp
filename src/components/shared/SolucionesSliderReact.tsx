@@ -320,9 +320,9 @@ export default function SolucionesSliderReact({
           background:
             linear-gradient(180deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 12%, rgba(255,255,255,0) 26%),
             radial-gradient(136% 94% at 50% 97%,
-              rgba(150,35,122,0.94) 0%,
-              rgba(107,22,84,0.90) 36%,
-              rgba(59,14,48,0.92) 74%);
+              rgba(150,35,122,0.55) 0%,
+              rgba(107,22,84,0.50) 36%,
+              rgba(59,14,48,0.58) 74%);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
           box-shadow:
