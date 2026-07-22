@@ -9,6 +9,8 @@ interface StatsProps {
   data: HomeQuery;
   /** Optional heading override; falls back to home `stats.title`. */
   titleOverride?: string;
+  /** obs2: 'light' envuelve el panel morado en un marco claro (solo home). */
+  frameTheme?: 'dark' | 'light';
 }
 
 interface StatItem {
@@ -170,7 +172,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
 /**
  * StatsReact — "Nuestra red en cifras" section
  */
-export default function StatsReact({ query, variables, data: initialData, titleOverride }: StatsProps) {
+export default function StatsReact({ query, variables, data: initialData, titleOverride, frameTheme = 'dark' }: StatsProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
   const stats = data?.home?.stats;
@@ -178,8 +180,9 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
   const items = (stats.items || []).filter(Boolean) as StatItem[];
   const heading = titleOverride || stats.title;
+  const light = frameTheme === 'light';
 
-  return (
+  const panel = (
     <section
       className="rounded-t-3xl py-20 md:py-28"
       style={{
@@ -207,4 +210,13 @@ export default function StatsReact({ query, variables, data: initialData, titleO
       </div>
     </section>
   );
+
+  // obs2: en home el panel morado se apoya sobre un marco claro (como testimonios)
+  // en vez de sobre negro. El panel no cambia; cambia solo el fondo que lo rodea.
+  // Sin padding extra: la seccion siguiente queda pegada, a ras del panel.
+  if (light) {
+    return <div className="bg-brand-purple-lightest">{panel}</div>;
+  }
+
+  return panel;
 }

@@ -4,9 +4,10 @@ import StatsReact from './StatsReact.tsx';
 
 interface Props {
   title?: string;
+  frameTheme?: 'dark' | 'light';
 }
 
-const { title } = Astro.props;
+const { title, frameTheme } = Astro.props;
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 ---
@@ -17,4 +18,5 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
   variables={homeQuery.variables}
   data={homeQuery.data}
   titleOverride={title}
+  frameTheme={frameTheme}
 />
