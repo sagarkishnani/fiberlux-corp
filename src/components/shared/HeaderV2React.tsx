@@ -13,6 +13,7 @@ import {
   FaYoutube,
   FaTiktok,
   FaGithub,
+  FaMagnifyingGlass,
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 
@@ -526,9 +527,12 @@ export default function HeaderV2React({
             )}
           </div>
 
-          {/* Right: Desktop inline navbar (hover reveal). En desktop el menú es
-              un drawer lateral angosto, así que el navbar sigue visible al
-              abrirlo; en mobile (overlay full-screen) sí se desvanece. */}
+          {/* Right: nav desktop + icono de búsqueda (SPEC 61). Se agrupan a la
+              derecha; en mobile el nav se oculta y solo queda la lupa. */}
+          <div className="flex items-center gap-5 lg:gap-7">
+          {/* Desktop inline navbar (hover reveal). En desktop el menú es un drawer
+              lateral angosto, así que el navbar sigue visible al abrirlo; en mobile
+              (overlay full-screen) sí se desvanece. */}
           <nav
             className={`hidden lg:flex items-center gap-7 transition-opacity duration-200 ${
               menuOpen
@@ -641,6 +645,20 @@ export default function HeaderV2React({
               );
             })}
           </nav>
+
+          {/* Icono de búsqueda (placeholder, sin función aún — SPEC 61).
+              Hereda color por tema vía controlText. En mobile con el menú abierto
+              se oculta para no quedar sobre el overlay. */}
+          <button
+            type="button"
+            aria-label="Buscar"
+            className={`flex items-center justify-center ${controlText} opacity-90 hover:opacity-100 transition-opacity ${
+              menuOpen ? "hidden lg:flex" : "flex"
+            }`}
+          >
+            <FaMagnifyingGlass className="w-[18px] h-[18px]" />
+          </button>
+          </div>
         </div>
       </header>
 
