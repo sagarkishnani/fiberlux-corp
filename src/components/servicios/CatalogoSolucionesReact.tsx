@@ -114,6 +114,9 @@ export default function CatalogoSolucionesReact({
     slideSelector: ".catalogo-page",
     align: "start",
     itemCount: pageCount,
+    // obs5: el snap nativo (mandatory) aterriza fiable la pagina full-width (nunca
+    // descansa cortada); se desactiva el settle JS para que no peleen (back-tug).
+    nativeSnap: true,
   });
 
   if (!catalogo || items.length === 0) return null;
@@ -222,7 +225,7 @@ export default function CatalogoSolucionesReact({
         <div className="md:hidden">
           <div
             ref={slider.ref}
-            className="catalogo-scroll flex gap-6 overflow-x-auto select-none"
+            className="catalogo-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory select-none"
             style={{ cursor: pageCount > 1 ? "grab" : "default" }}
             {...slider.handlers}
           >

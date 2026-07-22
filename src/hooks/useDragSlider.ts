@@ -30,6 +30,13 @@ export interface DragSliderOptions {
   snapRestoreMs?: number;
   /** Re-measure when this changes (pass the item count). */
   itemCount?: number;
+  /**
+   * Let native CSS scroll-snap be the SOLE lander on touch (skip the JS
+   * touch-settle). Use with `snap-mandatory` when the JS settle and native
+   * snap otherwise fight and produce a back-tug. Arrows/mouse-drag still work.
+   * Default false.
+   */
+  nativeSnap?: boolean;
 }
 
 export interface DragSlider {
@@ -61,6 +68,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
     nudgeThreshold = 0.15,
     snapRestoreMs = 500,
     itemCount = 0,
+    nativeSnap = false,
   } = options;
 
   const ref = useRef<HTMLDivElement>(null);
@@ -392,6 +400,9 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Native CSS snap owns the landing here — skip the JS settle so the two
+    // don't fight (which produced a back-tug on the catalog's full-width pages).
+    if (nativeSnap) return;
     let settleTimer: number | undefined;
     const settle = () => {
       if (!touchMode.current || isDragging.current) return;
@@ -428,7 +439,7 @@ export function useDragSlider(options: DragSliderOptions = {}): DragSlider {
       el.removeEventListener("touchstart", onTouchStart);
       window.clearTimeout(settleTimer);
     };
-  }, [nearestIndex, targetForIndex, goTo, stopMomentum, cancelAnim, measureStep, nudgeThreshold, itemCount]);
+  }, [nearestIndex, targetForIndex, goTo, stopMomentum, cancelAnim, measureStep, nudgeThreshold, itemCount, nativeSnap]);
 
   /* ── Cleanup ── */
   useEffect(
