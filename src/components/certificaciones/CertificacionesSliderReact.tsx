@@ -99,18 +99,30 @@ export default function CertificacionesSliderReact({
   return (
     <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
       {/* Decorative magenta glow (planet) so the background isn't just black.
-          Masked so the SVG's blurred ellipse never shows a hard rectangular cut. */}
-      <img
-        src={GLOW_PLANET}
-        alt=""
+          El wrapper añade una máscara vertical que DESVANECE el glow hacia los bordes
+          superior/inferior de la sección, para que no se corte en seco contra las
+          secciones vecinas (integración entre bloques). */}
+      <div
         aria-hidden="true"
-        draggable={false}
-        className="pointer-events-none absolute -top-[30%] left-1/2 -translate-x-[38%] z-0 w-[92vw] max-w-[1100px] select-none opacity-70"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
-          WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-          maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
         }}
-      />
+      >
+        <img
+          src={GLOW_PLANET}
+          alt=""
+          draggable={false}
+          className="absolute -top-[30%] left-1/2 -translate-x-[38%] w-[92vw] max-w-[1100px] select-none opacity-70"
+          style={{
+            WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+            maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
         {/* Left column: title + arrows (desktop) */}

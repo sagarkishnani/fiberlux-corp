@@ -37,8 +37,18 @@ export default function ServiciosFormReact({
       className="relative overflow-hidden"
       style={{ background: "#0a0a0a", scrollMarginTop: 96 }}
     >
-      {/* Ambient purple glow rising from the bottom, per the Figma */}
-      <div className="absolute inset-0 z-0 servicios-form-glow" />
+      {/* Ambient purple glow rising from the bottom, per the Figma.
+          Máscara vertical: DESVANECE el glow hacia los bordes sup/inf de la sección
+          para que no se corte en seco contra las secciones vecinas. */}
+      <div
+        className="absolute inset-0 z-0 servicios-form-glow"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 10%, #000 82%, transparent 100%)",
+          maskImage:
+            "linear-gradient(to bottom, transparent 0%, #000 10%, #000 82%, transparent 100%)",
+        }}
+      />
 
       <div className="relative z-10 site-container py-14 md:py-20 lg:py-28">
         {/* ════ Heading (editable from the servicios collection) ════ */}
