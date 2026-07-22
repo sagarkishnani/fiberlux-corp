@@ -10,30 +10,17 @@ interface TestimonialCardProps {
   logo?: string | null;
 }
 
-const FRAME_PATH =
-  'M6.16113 0.5H14.1113C16.0279 0.5 17.7807 1.57551 18.6191 3.30664L18.6221 3.31348L20.4346 6.91699C21.4422 8.95561 23.5426 10.2802 25.8379 10.2803H67.3076C69.6038 10.2803 71.7047 8.96689 72.7354 6.91699L72.7363 6.91406L74.5254 3.31055L74.5273 3.30664C75.3658 1.57558 77.1177 0.50006 79.0342 0.5H209.839C212.767 0.500155 215.181 2.72829 215.471 5.61523L215.477 5.70117V171.269C215.476 174.331 214.265 177.292 212.08 179.479L182.442 209.102L182.439 209.104C180.575 211.004 178.057 212.161 175.408 212.443C174.999 212.468 174.623 212.5 174.25 212.5H6.16113C3.01334 212.5 0.5 209.964 0.5 206.834V6.20117L0.506836 5.90625C0.657586 2.88813 3.11423 0.500118 6.16113 0.5Z';
-
-// Avatar de respaldo cuando un testimonio no tiene foto propia.
-const PLACEHOLDER_AVATAR = `${import.meta.env.BASE_URL}images/testimonials/avatar-placeholder.svg`;
-
 export default function TestimonialCard({
   quote,
   description,
   name,
   role,
   company,
-  avatar,
   logo,
 }: TestimonialCardProps) {
-  // Normaliza a asset local: Tina Cloud reescribe estos campos a URLs
-  // https://assets.tina.io/... que rompían la foto en producción.
-  const photoSrc = mediaUrl(avatar);
+  // Normaliza a asset local: Tina Cloud reescribe el campo a URLs
+  // https://assets.tina.io/... que rompían el logo en producción.
   const logoSrc = mediaUrl(logo);
-  // obs_11: si no hay foto pero sí logo, se usa el logo en el frame (a veces no
-  // hay fotos de la persona). Si no hay nada, el avatar genérico.
-  const useLogoAsAvatar = !photoSrc && !!logoSrc;
-  const frameSrc = photoSrc || (useLogoAsAvatar ? logoSrc : PLACEHOLDER_AVATAR);
-  const frameFit = useLogoAsAvatar ? "object-contain bg-white p-2" : "object-cover";
   return (
     <div className="relative w-full h-full">
       {/* ── Desktop border SVG (contorno magenta, sin relleno) ── */}
@@ -68,7 +55,7 @@ export default function TestimonialCard({
 
       {/* ── Content (tema claro: texto oscuro sobre el panel claro) ── */}
       <div className="relative z-10 p-6 pt-8 md:p-10 md:pt-16 h-full">
-        {/* Desktop layout: avatar left + content right */}
+        {/* Desktop layout: logo left + content right */}
         <div className="hidden md:grid md:grid-cols-[240px_1fr] md:gap-10 h-full">
           {/* Logo de la empresa (sin marco magenta ni placeholder). Fallback:
               nombre de la empresa como texto si aún no hay logo. */}
