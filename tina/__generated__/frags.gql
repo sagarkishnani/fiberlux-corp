@@ -606,6 +606,21 @@ fragment CookieConsentParts on CookieConsent {
 
 fragment FiberluxAppParts on FiberluxApp {
   __typename
+  banner {
+    __typename
+    headingLead
+    headingStrong
+    pillText
+    bullets {
+      __typename
+      title
+      text
+    }
+    downloadText
+    androidUrl
+    iosUrl
+    mockup
+  }
   hero {
     __typename
     heading

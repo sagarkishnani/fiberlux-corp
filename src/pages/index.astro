@@ -10,6 +10,7 @@ import SolucionesSlider from "../components/shared/SolucionesSlider.astro";
 import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
 import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
+import BannerApp from "../components/fiberlux-app/BannerApp.astro";
 import SitePreloader from "../components/shared/SitePreloader";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
@@ -86,6 +87,9 @@ const prefetchScenes = [
     </div>
     <div class="relative z-20">
       <CertificacionesSlider />
+    </div>
+    <div class="relative z-20">
+      <BannerApp />
     </div>
     <div class="-mt-6 relative z-30">
       <BlogPreview />

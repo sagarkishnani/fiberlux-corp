@@ -1760,6 +1760,22 @@ type CookieConsentConnection implements Connection {
   edges: [CookieConsentConnectionEdges]
 }
 
+type FiberluxAppBannerBullets {
+  title: String
+  text: String
+}
+
+type FiberluxAppBanner {
+  headingLead: String
+  headingStrong: String
+  pillText: String
+  bullets: [FiberluxAppBannerBullets]
+  downloadText: String
+  androidUrl: String
+  iosUrl: String
+  mockup: String
+}
+
 type FiberluxAppHeroDownloads {
   store: String
   label: String
@@ -1796,6 +1812,7 @@ type FiberluxAppSeo {
 }
 
 type FiberluxApp implements Node & Document {
+  banner: FiberluxAppBanner
   hero: FiberluxAppHero
   beneficios: FiberluxAppBeneficios
   casosDeUso: FiberluxAppCasosDeUso
@@ -1804,6 +1821,22 @@ type FiberluxApp implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input FiberluxAppBannerBulletsFilter {
+  title: StringFilter
+  text: StringFilter
+}
+
+input FiberluxAppBannerFilter {
+  headingLead: StringFilter
+  headingStrong: StringFilter
+  pillText: StringFilter
+  bullets: FiberluxAppBannerBulletsFilter
+  downloadText: StringFilter
+  androidUrl: StringFilter
+  iosUrl: StringFilter
+  mockup: ImageFilter
 }
 
 input FiberluxAppHeroDownloadsFilter {
@@ -1842,6 +1875,7 @@ input FiberluxAppSeoFilter {
 }
 
 input FiberluxAppFilter {
+  banner: FiberluxAppBannerFilter
   hero: FiberluxAppHeroFilter
   beneficios: FiberluxAppBeneficiosFilter
   casosDeUso: FiberluxAppCasosDeUsoFilter
@@ -2613,6 +2647,22 @@ input CookieConsentMutation {
   categories: [CookieConsentCategoriesMutation]
 }
 
+input FiberluxAppBannerBulletsMutation {
+  title: String
+  text: String
+}
+
+input FiberluxAppBannerMutation {
+  headingLead: String
+  headingStrong: String
+  pillText: String
+  bullets: [FiberluxAppBannerBulletsMutation]
+  downloadText: String
+  androidUrl: String
+  iosUrl: String
+  mockup: String
+}
+
 input FiberluxAppHeroDownloadsMutation {
   store: String
   label: String
@@ -2649,6 +2699,7 @@ input FiberluxAppSeoMutation {
 }
 
 input FiberluxAppMutation {
+  banner: FiberluxAppBannerMutation
   hero: FiberluxAppHeroMutation
   beneficios: FiberluxAppBeneficiosMutation
   casosDeUso: FiberluxAppCasosDeUsoMutation

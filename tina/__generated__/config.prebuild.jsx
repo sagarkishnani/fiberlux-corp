@@ -2303,6 +2303,37 @@ var config_default = defineConfig({
           allowedActions: { create: false, delete: false }
         },
         fields: [
+          // ── Banner de descarga (componente reutilizable, SPEC 53) ──
+          {
+            name: "banner",
+            label: "Banner de descarga (app)",
+            type: "object",
+            fields: [
+              { name: "headingLead", label: "Titular (parte normal)", type: "string" },
+              { name: "headingStrong", label: "Titular (parte negrita)", type: "string" },
+              { name: "pillText", label: "Texto de la pill", type: "string" },
+              {
+                name: "bullets",
+                label: "Bullets",
+                type: "object",
+                list: true,
+                ui: { itemProps: (i) => ({ label: i?.title || "Bullet" }) },
+                fields: [
+                  { name: "title", label: "T\xEDtulo (negrita)", type: "string" },
+                  { name: "text", label: "Texto", type: "string" }
+                ]
+              },
+              {
+                name: "downloadText",
+                label: "Texto 'B\xFAscanos como\u2026'",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              { name: "androidUrl", label: "URL Play Store (Android)", type: "string" },
+              { name: "iosUrl", label: "URL App Store (iOS)", type: "string" },
+              { name: "mockup", label: "Imagen del tel\xE9fono", type: "image" }
+            ]
+          },
           // ── Hero ──
           {
             name: "hero",

@@ -50,6 +50,19 @@ function parseStat(raw: string) {
   return { prefix, value, suffix, decimals, hasCommas };
 }
 
+/** Renders the section heading with the word "Fiberlux" in bold, rest in normal weight. */
+function renderHeading(heading: string) {
+  return heading.split(/(Fiberlux)/i).map((part, i) =>
+    /^fiberlux$/i.test(part) ? (
+      <strong key={i} className="font-bold">
+        {part}
+      </strong>
+    ) : (
+      <span key={i}>{part}</span>
+    )
+  );
+}
+
 function formatNumber(n: number, decimals: number, hasCommas: boolean): string {
   const fixed = n.toFixed(decimals);
   if (!hasCommas) return fixed;
@@ -122,32 +135,30 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const displayNumber = formatNumber(count, decimals, hasCommas);
 
   return (
-    <div ref={ref} className="mt-4 mb-4 flex flex-col gap-4">
-      {/* Card — big number as the hero. obs_4: glass sutil + número con gradiente. */}
-      <div
-        className="border border-white/20 rounded-2xl p-6 flex flex-col justify-center md:min-h-[240px] bg-white/[0.06] backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+    <div ref={ref} className="flex flex-col gap-3">
+      {/* SPEC 54: número protagonista suelto sobre el fondo (sin card), en lila malva con degradé. */}
+      <p
+        style={{ color: '#C9A9C4' }}
         data-tina-field={tinaField(item as any, 'number')}
       >
-        <p className="bg-gradient-to-b from-white to-[#f6cfe9] bg-clip-text text-transparent">
-          {prefix && (
-            <span className="text-[30px] leading-[44px] sm:text-[56px] sm:leading-[60px] font-bold mr-1.5">
-              {prefix}
-            </span>
-          )}
-          <span className="text-[44px] leading-[48px] sm:text-[56px] sm:leading-[60px] font-bold">
-            {displayNumber}
+        {prefix && (
+          <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
+            {prefix}
           </span>
-          {suffix && (
-            <span className="text-[24px] leading-[28px] sm:text-[28px] sm:leading-[32px] font-semibold ml-1.5">
-              {suffix}
-            </span>
-          )}
-        </p>
-      </div>
+        )}
+        <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
+          {displayNumber}
+        </span>
+        {suffix && (
+          <span className="text-[24px] leading-[28px] sm:text-[30px] sm:leading-[34px] font-semibold ml-0.5">
+            {suffix}
+          </span>
+        )}
+      </p>
 
-      {/* Description below card */}
+      {/* Description below number */}
       <p
-        className="text-white/70 text-body-md leading-snug"
+        className="text-white/80 text-body-md leading-snug"
         data-tina-field={tinaField(item as any, 'description')}
       >
         {item.description}
@@ -170,25 +181,25 @@ export default function StatsReact({ query, variables, data: initialData, titleO
 
   return (
     <section
-      className="rounded-t-3xl py-14 md:py-20"
+      className="rounded-t-3xl py-20 md:py-28"
       style={{
-        // obs_4: degradé de profundidad (Figma) en vez del magenta plano.
+        // SPEC 54: base aubergine oscura con brillo magenta arriba-derecha (Figma).
         background:
-          "linear-gradient(118deg, #490d3b 0%, #74195e 36%, #96237A 66%, #ad2e90 100%)",
+          "radial-gradient(120% 130% at 100% 0%, #b32e94 0%, #7a1a62 34%, #4c0f3d 66%, #360c2c 100%)",
       }}
     >
       <div className="site-container">
 
         {/* Section title */}
         <h2
-          className="text-subtitle-lg text-white mb-6"
+          className="text-subtitle-lg font-normal text-white mb-12 md:mb-14"
           data-tina-field={tinaField(stats, 'title')}
         >
-          {heading}
+          {renderHeading(heading || '')}
         </h2>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 items-start">
           {items.map((item, i) => (
             <StatCard key={i} item={item} index={i} />
           ))}
