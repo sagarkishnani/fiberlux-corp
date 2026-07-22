@@ -103,7 +103,7 @@ export default function SolucionesSliderReact({
 
     return (
       <div
-        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[560px] flex-col overflow-hidden rounded-[30px] border-[1.5px] px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
+        className={`sol-card relative flex h-full min-h-[360px] md:min-h-[620px] flex-col overflow-hidden rounded-[30px] border-[1.5px] px-8 py-9 md:px-10 md:py-10 transition-colors duration-500 ${
           isActive ? "sol-card-active border-white/30" : "border-white/[0.10]"
         }`}
       >
@@ -182,7 +182,7 @@ export default function SolucionesSliderReact({
       {...slider.handlers}
     >
       {items.map((item, i) => (
-        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[66%]">
+        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[52%]">
           {renderCard(item, i)}
         </div>
       ))}
@@ -192,7 +192,7 @@ export default function SolucionesSliderReact({
       {items.length > 1 && (
         <div
           aria-hidden="true"
-          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(34%-24px)]"
+          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(48%-24px)]"
         />
       )}
     </div>
