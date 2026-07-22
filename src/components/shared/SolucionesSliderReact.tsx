@@ -219,14 +219,18 @@ export default function SolucionesSliderReact({
           maskImage: "radial-gradient(closest-side, #000 45%, transparent 100%)",
         }}
       />
-      {/* obs_16: glow magenta a la DERECHA (detrás de la card activa) para que el
-          glass la desenfoque y se note el fondo. */}
-      <div
+      {/* SPEC 55: tercer vector — planet reusado detrás de la card activa / zona
+          derecha, para que el glass deje ver el magenta (reemplaza el glow radial
+          CSS suelto anterior). */}
+      <img
+        src={GLOW_PLANET}
+        alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[-6%] z-0 h-[130%] w-[45vw] max-w-[720px] -translate-y-1/2"
+        draggable={false}
+        className="pointer-events-none absolute top-1/2 right-[-10%] z-0 w-[52vw] max-w-[760px] -translate-y-1/2 select-none opacity-80"
         style={{
-          background:
-            "radial-gradient(closest-side, rgba(150,35,122,0.55) 0%, rgba(150,35,122,0.22) 45%, transparent 78%)",
+          WebkitMaskImage: "radial-gradient(closest-side, #000 52%, transparent 100%)",
+          maskImage: "radial-gradient(closest-side, #000 52%, transparent 100%)",
         }}
       />
       {/* obs_16: efecto grano sutil sobre toda la sección. */}
