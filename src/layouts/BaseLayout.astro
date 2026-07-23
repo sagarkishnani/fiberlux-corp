@@ -58,13 +58,19 @@ try {
 }
 
 // ─── WhatsApp floating button config (editable in Tina: global.whatsapp) ───
+// ─── Global code injection (editable in Tina: global.codeInjection) ───
 let whatsappPhone: string | undefined;
 let whatsappBaseMessage: string | undefined;
+let injectHead = "";
+let injectBodyEnd = "";
 try {
   const globalResult = await client.queries.global({ relativePath: "index.json" });
-  const wa = (globalResult.data?.global as any)?.whatsapp;
+  const g = globalResult.data?.global as any;
+  const wa = g?.whatsapp;
   whatsappPhone = wa?.phone || undefined;
   whatsappBaseMessage = wa?.message || undefined;
+  injectHead = g?.codeInjection?.head || "";
+  injectBodyEnd = g?.codeInjection?.bodyEnd || "";
 } catch {
   // Fall back to the component defaults
 }
@@ -138,6 +144,9 @@ const whatsappMessage = whatsappContext
         } catch (e) {}
       })();
     </script>
+    {/* Scripts globales editables en Tina (global.codeInjection.head).
+        No se inyectan en modo mantenimiento. */}
+    {!maintenanceMode && injectHead && <Fragment set:html={injectHead} />}
   </head>
   <body>
     {
@@ -213,6 +222,8 @@ const whatsappMessage = whatsappContext
             message={whatsappMessage}
           />
           <AccessibilityPanel client:idle />
+          {/* Scripts globales editables en Tina (global.codeInjection.bodyEnd). */}
+          {injectBodyEnd && <Fragment set:html={injectBodyEnd} />}
         </Fragment>
       )
     }
