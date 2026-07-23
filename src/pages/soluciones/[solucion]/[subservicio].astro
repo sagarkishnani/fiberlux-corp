@@ -8,6 +8,7 @@ import Stats from "../../../components/Stats.astro";
 import ServiciosForm from "../../../components/servicios/ServiciosForm.astro";
 import BlogPreview from "../../../components/blog/BlogPreview.astro";
 import FaqSubservicio from "../../../components/servicios/FaqSubservicio.astro";
+import HtmlInjection from "../../../components/shared/HtmlInjection.astro";
 
 /* ── Static paths from all sub-service documents ── */
 export async function getStaticPaths() {
@@ -52,6 +53,7 @@ const metaDescription =
 >
   <main>
     <HeroSubservicio relativePath={relativePath} />
+    <HtmlInjection location="subservicio-after-hero" />
     <Beneficios relativePath={relativePath} />
     <CasosDeUso relativePath={relativePath} />
     <div class="-mt-16 relative z-20">
@@ -64,5 +66,6 @@ const metaDescription =
       <BlogPreview tags={sub?.blogTags} />
     </div>
     <FaqSubservicio relativePath={relativePath} />
+    <HtmlInjection location="subservicio-before-footer" />
   </main>
 </BaseLayout>
