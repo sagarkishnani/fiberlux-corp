@@ -31,6 +31,7 @@ export default function CertificacionesSliderReact({
   const slider = useDragSlider({
     slideSelector: ".cert-slide",
     align: "start",
+    momentum: false,
     itemCount: items.length,
   });
   const { atStart, atEnd } = slider;

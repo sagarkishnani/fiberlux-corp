@@ -31,6 +31,7 @@ export default function CasosSliderReact({
   const slider = useDragSlider({
     slideSelector: ".caso-slide",
     align: "center",
+    momentum: false,
     itemCount: items.length,
   });
   const { activeIndex } = slider;

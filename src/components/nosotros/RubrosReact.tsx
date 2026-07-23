@@ -98,6 +98,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const slider = useDragSlider({
     slideSelector: '.rubro-slide',
     align: 'start',
+    momentum: false,
     itemCount: total,
   });
   const { atStart, atEnd, goTo, next, prev } = slider;

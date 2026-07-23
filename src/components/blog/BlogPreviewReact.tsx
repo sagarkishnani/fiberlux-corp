@@ -47,6 +47,7 @@ export default function BlogPreviewReact({
   const slider = useDragSlider({
     slideSelector: ".blog-slide",
     align: "start",
+    momentum: false,
     itemCount: count,
   });
   const canScrollLeft = !slider.atStart;

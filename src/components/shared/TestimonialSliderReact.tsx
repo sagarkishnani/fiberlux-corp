@@ -40,6 +40,7 @@ export default function TestimonialSliderReact({
   const slider = useDragSlider({
     slideSelector: '.testimonial-slide',
     align: 'start',
+    momentum: false,
     itemCount: items.length,
   });
   const { atStart, atEnd } = slider;
