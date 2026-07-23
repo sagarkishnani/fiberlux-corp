@@ -63,6 +63,7 @@ fragment ServiceParts on Service {
   __typename
   title
   slug
+  blogTags
   hero {
     __typename
     heading
@@ -134,6 +135,7 @@ fragment SubservicioParts on Subservicio {
   slug
   solucionSlug
   solucionTitle
+  blogTags
   hero {
     __typename
     heading

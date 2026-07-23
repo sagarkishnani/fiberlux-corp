@@ -1,5 +1,13 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
+var BLOG_TAG_OPTIONS = [
+  "Conectividad",
+  "Ciberseguridad",
+  "Cloud",
+  "Data Center",
+  "Comunicaciones",
+  "Continuidad de negocio"
+];
 var config_default = defineConfig({
   branch: process.env.TINA_BRANCH || "main",
   clientId: process.env.TINA_CLIENT_ID || "",
@@ -238,6 +246,15 @@ var config_default = defineConfig({
             isTitle: true
           },
           { name: "slug", label: "URL slug", type: "string", required: true },
+          // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
+          {
+            name: "blogTags",
+            label: "Tags del blog a mostrar",
+            description: "Las entradas del blog con alguno de estos tags aparecen en la secci\xF3n de novedades de esta p\xE1gina. Vac\xEDo = 6 m\xE1s recientes.",
+            type: "string",
+            list: true,
+            options: BLOG_TAG_OPTIONS
+          },
           // ── Hero (form ¿Conversamos? = DynamicForm servicios) ──
           {
             name: "hero",
@@ -517,6 +534,15 @@ var config_default = defineConfig({
             name: "solucionTitle",
             label: "Soluci\xF3n padre (nombre para breadcrumb)",
             type: "string"
+          },
+          // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
+          {
+            name: "blogTags",
+            label: "Tags del blog a mostrar",
+            description: "Las entradas del blog con alguno de estos tags aparecen en la secci\xF3n de novedades de esta p\xE1gina. Vac\xEDo = 6 m\xE1s recientes.",
+            type: "string",
+            list: true,
+            options: BLOG_TAG_OPTIONS
           },
           // ── Hero ──
           {
@@ -957,16 +983,11 @@ var config_default = defineConfig({
           { name: "readTime", label: "Tiempo de lectura", type: "string" },
           {
             name: "tags",
-            label: "Etiquetas (soluciones)",
-            description: "El post aparecer\xE1 en la secci\xF3n de novedades de la(s) soluci\xF3n(es) elegida(s). Sin etiqueta, no se asocia a ninguna soluci\xF3n.",
+            label: "Etiquetas",
+            description: "Uno o varios tags del tema. El post aparece en las p\xE1ginas de soluci\xF3n/subservicio cuyos 'Tags del blog a mostrar' incluyan alguno de estos.",
             type: "string",
             list: true,
-            options: [
-              { value: "conectividad-empresarial", label: "Conectividad Empresarial" },
-              { value: "ciberseguridad-gestionada", label: "Ciberseguridad Gestionada" },
-              { value: "data-center-cloud", label: "Data Center, Cloud y Continuidad de Negocio" },
-              { value: "servicios-gestionados", label: "Servicios Gestionados" }
-            ]
+            options: BLOG_TAG_OPTIONS
           },
           { name: "featured", label: "Destacado", type: "boolean" },
           { name: "body", label: "Contenido", type: "rich-text", isBody: true }

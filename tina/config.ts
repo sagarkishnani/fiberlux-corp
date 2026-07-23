@@ -1,5 +1,17 @@
 import { defineConfig } from "tinacms";
 
+/* SPEC 63: lista compartida de tags del blog. La usan el campo `tags` del post
+   y el campo `blogTags` de cada página de solución/subservicio. Agregar un tag
+   nuevo = agregarlo aquí (valores legibles, se muestran tal cual). */
+const BLOG_TAG_OPTIONS = [
+  "Conectividad",
+  "Ciberseguridad",
+  "Cloud",
+  "Data Center",
+  "Comunicaciones",
+  "Continuidad de negocio",
+];
+
 export default defineConfig({
   branch: process.env.TINA_BRANCH || "main",
   clientId: process.env.TINA_CLIENT_ID || "",
@@ -253,6 +265,17 @@ export default defineConfig({
             isTitle: true,
           },
           { name: "slug", label: "URL slug", type: "string", required: true },
+
+          // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
+          {
+            name: "blogTags",
+            label: "Tags del blog a mostrar",
+            description:
+              "Las entradas del blog con alguno de estos tags aparecen en la sección de novedades de esta página. Vacío = 6 más recientes.",
+            type: "string",
+            list: true,
+            options: BLOG_TAG_OPTIONS,
+          },
 
           // ── Hero (form ¿Conversamos? = DynamicForm servicios) ──
           {
@@ -548,6 +571,17 @@ export default defineConfig({
             name: "solucionTitle",
             label: "Solución padre (nombre para breadcrumb)",
             type: "string",
+          },
+
+          // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
+          {
+            name: "blogTags",
+            label: "Tags del blog a mostrar",
+            description:
+              "Las entradas del blog con alguno de estos tags aparecen en la sección de novedades de esta página. Vacío = 6 más recientes.",
+            type: "string",
+            list: true,
+            options: BLOG_TAG_OPTIONS,
           },
 
           // ── Hero ──
@@ -1004,17 +1038,12 @@ export default defineConfig({
           { name: "readTime", label: "Tiempo de lectura", type: "string" },
           {
             name: "tags",
-            label: "Etiquetas (soluciones)",
+            label: "Etiquetas",
             description:
-              "El post aparecerá en la sección de novedades de la(s) solución(es) elegida(s). Sin etiqueta, no se asocia a ninguna solución.",
+              "Uno o varios tags del tema. El post aparece en las páginas de solución/subservicio cuyos 'Tags del blog a mostrar' incluyan alguno de estos.",
             type: "string",
             list: true,
-            options: [
-              { value: "conectividad-empresarial", label: "Conectividad Empresarial" },
-              { value: "ciberseguridad-gestionada", label: "Ciberseguridad Gestionada" },
-              { value: "data-center-cloud", label: "Data Center, Cloud y Continuidad de Negocio" },
-              { value: "servicios-gestionados", label: "Servicios Gestionados" },
-            ],
+            options: BLOG_TAG_OPTIONS,
           },
           { name: "featured", label: "Destacado", type: "boolean" },
           { name: "body", label: "Contenido", type: "rich-text", isBody: true },

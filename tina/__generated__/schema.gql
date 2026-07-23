@@ -381,6 +381,7 @@ type ServiceSeo {
 type Service implements Node & Document {
   title: String!
   slug: String!
+  blogTags: [String]
   hero: ServiceHero
   valor: ServiceValor
   catalogo: ServiceCatalogo
@@ -468,6 +469,7 @@ input ServiceSeoFilter {
 input ServiceFilter {
   title: StringFilter
   slug: StringFilter
+  blogTags: StringFilter
   hero: ServiceHeroFilter
   valor: ServiceValorFilter
   catalogo: ServiceCatalogoFilter
@@ -536,6 +538,7 @@ type Subservicio implements Node & Document {
   slug: String!
   solucionSlug: String!
   solucionTitle: String
+  blogTags: [String]
   hero: SubservicioHero
   beneficios: SubservicioBeneficios
   casosDeUso: SubservicioCasosDeUso
@@ -595,6 +598,7 @@ input SubservicioFilter {
   slug: StringFilter
   solucionSlug: StringFilter
   solucionTitle: StringFilter
+  blogTags: StringFilter
   hero: SubservicioHeroFilter
   beneficios: SubservicioBeneficiosFilter
   casosDeUso: SubservicioCasosDeUsoFilter
@@ -2133,6 +2137,7 @@ input ServiceSeoMutation {
 input ServiceMutation {
   title: String
   slug: String
+  blogTags: [String]
   hero: ServiceHeroMutation
   valor: ServiceValorMutation
   catalogo: ServiceCatalogoMutation
@@ -2190,6 +2195,7 @@ input SubservicioMutation {
   slug: String
   solucionSlug: String
   solucionTitle: String
+  blogTags: [String]
   hero: SubservicioHeroMutation
   beneficios: SubservicioBeneficiosMutation
   casosDeUso: SubservicioCasosDeUsoMutation
