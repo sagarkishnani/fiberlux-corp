@@ -17,24 +17,29 @@
     "items": [
       {
         "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Prioriza el tráfico crítico",
+        "text": "ERP, VoIP y POS por encima de aplicaciones secundarias."
       },
       {
-        "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "red",
+        "title": "Gestión centralizada",
+        "text": "Múltiples sedes desde una única plataforma."
       },
       {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "nube",
+        "title": "Acceso directo a internet",
+        "text": "Optimiza el rendimiento de aplicaciones cloud y SaaS."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Costos optimizados",
+        "text": "Aprovecha de forma inteligente todos los enlaces disponibles."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Cadenas de retail, instituciones educativas, entidades financieras y empresas multisede que requieren conectar sucursales, acceder a aplicaciones en la nube y mantener un rendimiento consistente de sus servicios críticos."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

@@ -16,25 +16,25 @@
     "title": "Beneficios",
     "items": [
       {
+        "icon": "cobertura",
+        "title": "Despliegue inmediato",
+        "text": "En cualquier punto geográfico, sin depender de obras civiles."
+      },
+      {
         "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Latencia baja",
+        "text": "Usa ERPs y VoIP desde lugares remotos."
       },
       {
-        "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
-      },
-      {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "escudo",
+        "title": "Contingencia reforzada",
+        "text": "Mayor nivel de respaldo para sedes urbanas críticas."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el máximo nivel de respaldo (failover) en zonas urbanas."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

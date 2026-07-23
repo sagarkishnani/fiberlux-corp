@@ -16,25 +16,30 @@
     "title": "Beneficios",
     "items": [
       {
+        "icon": "escalabilidad",
+        "title": "Alta escalabilidad",
+        "text": "Amplía capacidad incorporando o actualizando equipos propios."
+      },
+      {
+        "icon": "red",
+        "title": "Control total de la red",
+        "text": "Sobre su arquitectura, gestión y seguridad."
+      },
+      {
         "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Baja latencia",
+        "text": "Alto desempeño para aplicaciones críticas."
       },
       {
-        "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
-      },
-      {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "ahorro",
+        "title": "Costos optimizados",
+        "text": "Para operaciones con alto volumen de tráfico."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, operadores mayoristas (Carriers), empresas con múltiples sedes y organizaciones con altos requerimientos de capacidad y crecimiento."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

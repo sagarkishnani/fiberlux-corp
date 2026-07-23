@@ -16,25 +16,25 @@
     "title": "Beneficios",
     "items": [
       {
+        "icon": "escudo",
+        "title": "Máxima privacidad",
+        "text": "Seguridad total para el intercambio de datos sensibles."
+      },
+      {
         "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Latencia ultrabaja",
+        "text": "Entre oficinas, como si estuvieran en el mismo edificio."
       },
       {
-        "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
-      },
-      {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "red",
+        "title": "Control total",
+        "text": "Sobre el tráfico interno de la organización."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Comunicación directa y de latencia ultrabaja entre un centro de distribución, oficinas corporativas y un data center propio."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

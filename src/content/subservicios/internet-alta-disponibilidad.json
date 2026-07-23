@@ -16,25 +16,25 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
-      },
-      {
         "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Máximo uptime",
+        "text": "Maximiza el tiempo de actividad de tus operaciones."
       },
       {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "escudo",
+        "title": "SLA garantizado",
+        "text": "Acuerdos de nivel de servicio rigurosos de hasta 99,95%."
+      },
+      {
+        "icon": "ahorro",
+        "title": "Estabilidad financiera",
+        "text": "Evita pérdidas económicas por desconexión."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Cadenas de retail (facturación y POS), clínicas, centros logísticos, entidades financieras y plantas industriales."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

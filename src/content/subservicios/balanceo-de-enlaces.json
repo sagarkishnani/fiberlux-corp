@@ -16,25 +16,30 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "red",
+        "title": "Balanceo inteligente",
+        "text": "Distribuye el tráfico entre múltiples enlaces para optimizar rendimiento y disponibilidad."
+      },
+      {
+        "icon": "reloj",
+        "title": "Conmutación automática",
+        "text": "Ante fallos del enlace principal, con detección y reconvergencia según la configuración."
       },
       {
         "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "title": "Continuidad 24/7",
+        "text": "Reduce drásticamente el riesgo de downtime prolongado."
       },
       {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "escudo",
+        "title": "Resiliencia simplificada",
+        "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde el downtime es inaceptable."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

@@ -16,25 +16,25 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "cobertura",
+        "title": "Instalación ágil",
+        "text": "Supera barreras geográficas o la falta de infraestructura."
       },
       {
-        "icon": "disponibilidad",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "red",
+        "title": "Sin cableado terrestre",
+        "text": "Evita cortes por vandalismo u obras públicas."
       },
       {
-        "icon": "soporte",
-        "title": "Beneficio por definir",
-        "text": "Contenido por completar."
+        "icon": "escalabilidad",
+        "title": "Ancho de banda escalable",
+        "text": "Se ajusta según la demanda del proyecto."
       }
     ]
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Contenido por completar — describe aquí los **casos de uso** ideales para este servicio."
+    "statement": "Constructoras con sedes temporales, plantas industriales periféricas y planes de contingencia rápida."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
