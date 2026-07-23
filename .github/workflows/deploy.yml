@@ -1,0 +1,67 @@
+name: Build & Deploy to FTP
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+
+      # Genera dist/config.local.php (NO versionado) con los secretos del backend
+      # PHP. Se escribe DESPUÉS del build (que crea dist/) y ANTES del deploy FTP.
+      # Escape seguro para claves con caracteres especiales (#, !, $, ', \, …).
+      - name: Generate config.local.php from secrets
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          MAIL_FALLBACK: ${{ secrets.MAIL_FALLBACK }}
+          PANEL_USER: ${{ secrets.PANEL_USER }}
+          PANEL_PASS: ${{ secrets.PANEL_PASS }}
+        run: |
+          php_escape() {
+            local s=$1
+            s=${s//\\/\\\\}   # \ -> \\
+            s=${s//\'/\\\'}   # ' -> \'
+            printf '%s' "$s"
+          }
+          {
+            echo "<?php"
+            echo "return ["
+            echo "  'SMTP_USER'      => '$(php_escape "$SMTP_USER")',"
+            echo "  'SMTP_PASS'      => '$(php_escape "$SMTP_PASS")',"
+            echo "  'FALLBACK_EMAIL' => '$(php_escape "$MAIL_FALLBACK")',"
+            echo "  'PANEL_USER'     => '$(php_escape "$PANEL_USER")',"
+            echo "  'PANEL_PASS'     => '$(php_escape "$PANEL_PASS")',"
+            echo "];"
+          } > dist/config.local.php
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          local-dir: ./dist/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # data/ y uploads/ se crean en runtime en el servidor (submissions,
+          # counter, adjuntos). Se excluyen del sync para no borrarlos nunca.
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/data/**
+            **/uploads/**
