@@ -1,6 +1,6 @@
 # SPEC 63 — Blog: tags múltiples de lista compartida + selección de tags por página
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 15 (blog), SPEC 58 (a quien reemplaza), SPEC 11/12 (plantillas solución/subservicio)
 > **Fecha:** 2026-07-22
 > **Objetivo:** Reemplazar el modelo de tags del blog (hoy fijado a las 4 soluciones) por tags múltiples de una lista compartida, y permitir en Tina que cada página de solución y subservicio designe qué tags muestra su sección de posts (filtrando por intersección, con fallback a recientes).
