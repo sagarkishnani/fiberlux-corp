@@ -1,6 +1,6 @@
 # SPEC 62 — Sliders: igualar la fluidez de arrastre a la de soluciones
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 40 (motor de arrastre unificado `useDragSlider`)
 > **Fecha:** 2026-07-22
 > **Objetivo:** Igualar la fluidez de arrastre de los sliders de blog, testimonios, certificaciones, rubros y casos de éxito a la del slider de soluciones, aplicándoles `momentum: false` en `useDragSlider`.
