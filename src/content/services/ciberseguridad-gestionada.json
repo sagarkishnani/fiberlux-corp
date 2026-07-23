@@ -289,5 +289,8 @@
     "metaTitle": "Ciberseguridad Gestionada y SOC 24/7",
     "metaDescription": "Seguridad perimetral, EDR/XDR, anti-DDoS y SOC 24/7 gestionados por Fiberlux para proteger la operación crítica de tu empresa.",
     "ogImage": ""
-  }
+  },
+  "blogTags": [
+    "Ciberseguridad"
+  ]
 }

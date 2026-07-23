@@ -215,5 +215,10 @@
     "metaTitle": "Data Center, Cloud y Continuidad de Negocio",
     "metaDescription": "Colocación, nube privada y pública, BaaS y DRaaS con los más altos estándares de disponibilidad y continuidad de negocio.",
     "ogImage": ""
-  }
+  },
+  "blogTags": [
+    "Data Center",
+    "Cloud",
+    "Continuidad de negocio"
+  ]
 }
