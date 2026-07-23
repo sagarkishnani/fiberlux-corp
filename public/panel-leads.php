@@ -1,14 +1,23 @@
 <?php
 session_start();
 
-$VALID_USER = '';
-$VALID_PASS = '';
+// Secrets (config.local.php generado en CI desde GitHub Secrets, NO versionado)
+$cfg = file_exists(__DIR__ . '/config.local.php') ? (require __DIR__ . '/config.local.php') : [];
+if (!is_array($cfg)) $cfg = [];
+
+$VALID_USER = $cfg['PANEL_USER'] ?? '';
+$VALID_PASS = $cfg['PANEL_PASS'] ?? '';
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $PER_PAGE = 15;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     header('Content-Type: application/json');
     if ($_POST['action'] === 'login') {
+        if ($VALID_USER === '' || $VALID_PASS === '') {
+            // Credenciales no configuradas (falta config.local.php): nunca autenticar.
+            echo json_encode(['success' => false, 'error' => 'Panel no configurado']);
+            exit;
+        }
         if ($_POST['user'] === $VALID_USER && $_POST['pass'] === $VALID_PASS) {
             $_SESSION['panel_auth'] = true;
             echo json_encode(['success' => true]);

@@ -6,18 +6,22 @@
  * - Sends email via Office 365 SMTP
  */
 
+// ─── Secrets (config.local.php generado en CI desde GitHub Secrets, NO versionado) ───
+$cfg = file_exists(__DIR__ . '/config.local.php') ? (require __DIR__ . '/config.local.php') : [];
+if (!is_array($cfg)) $cfg = [];
+
 // ─── SMTP Config ───
-$SMTP_HOST     = 'smtp.office365.com';
-$SMTP_PORT     = 587;
-$SMTP_USER     = '';
-$SMTP_PASS     = '';
+$SMTP_HOST     = 'smtp.office365.com';       // no sensible
+$SMTP_PORT     = 587;                         // no sensible
+$SMTP_USER     = $cfg['SMTP_USER'] ?? '';
+$SMTP_PASS     = $cfg['SMTP_PASS'] ?? '';
 $UPLOAD_DIR    = __DIR__ . '/uploads';
 $COUNTER_FILE  = __DIR__ . '/data/counter.json';
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $CONFIG_FILE   = __DIR__ . '/form-config.json';
 
 // ─── Fallback recipients (used if config file is missing) ───
-$FALLBACK_EMAIL = '';
+$FALLBACK_EMAIL = $cfg['FALLBACK_EMAIL'] ?? '';
 
 // ─── CORS & Headers ───
 header('Content-Type: application/json; charset=utf-8');

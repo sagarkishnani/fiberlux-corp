@@ -4,6 +4,8 @@ dist/
 .tina/__generated__/
 .env
 .DS_Store
+public/config.local.php
+dist/config.local.php
 .env.example
 .playwright-mcp
 .playwright-screens
