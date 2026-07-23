@@ -1767,6 +1767,67 @@ export default defineConfig({
               },
             ],
           },
+
+          // ── Scripts globales (head / body) ──
+          {
+            name: "codeInjection",
+            label: "Scripts globales (head / body)",
+            type: "object",
+            fields: [
+              {
+                name: "head",
+                label: "Código en <head>",
+                type: "string",
+                ui: { component: "textarea" },
+                description:
+                  "HTML/JS crudo inyectado al final del <head>, en TODAS las páginas. Ej: Google Analytics, Meta Pixel, verificación de dominio.",
+              },
+              {
+                name: "bodyEnd",
+                label: "Código antes de </body>",
+                type: "string",
+                ui: { component: "textarea" },
+                description:
+                  "HTML/JS crudo inyectado justo antes de </body>, en TODAS las páginas. Ej: widget de chat.",
+              },
+            ],
+          },
+
+          // ── Bloques HTML por sección ──
+          {
+            name: "htmlInjections",
+            label: "Bloques HTML por sección",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.label || "Bloque HTML" }),
+            },
+            fields: [
+              { name: "label", label: "Nombre (referencia)", type: "string" },
+              { name: "enabled", label: "Activo", type: "boolean" },
+              {
+                name: "location",
+                label: "Ubicación",
+                type: "string",
+                options: [
+                  { value: "home-after-hero", label: "Home — bajo el hero" },
+                  { value: "home-before-footer", label: "Home — antes del footer" },
+                  { value: "solucion-after-hero", label: "Solución — bajo el hero" },
+                  { value: "solucion-before-footer", label: "Solución — antes del footer" },
+                  { value: "subservicio-after-hero", label: "Subservicio — bajo el hero" },
+                  { value: "subservicio-before-footer", label: "Subservicio — antes del footer" },
+                ],
+              },
+              {
+                name: "html",
+                label: "HTML",
+                type: "string",
+                ui: { component: "textarea" },
+                description:
+                  "HTML crudo que se renderiza en el anclaje elegido. Solo aplica a home y páginas de solución/subservicio.",
+              },
+            ],
+          },
         ],
       },
 
