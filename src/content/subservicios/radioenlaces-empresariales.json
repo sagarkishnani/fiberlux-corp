@@ -34,7 +34,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Constructoras con sedes temporales, plantas industriales periféricas y planes de contingencia rápida."
+    "statement": "Constructoras con sedes temporales, plantas industriales periféricas y **planes de contingencia rápida**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

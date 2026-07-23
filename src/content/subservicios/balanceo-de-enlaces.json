@@ -39,7 +39,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde el downtime es inaceptable."
+    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde **el downtime es inaceptable**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

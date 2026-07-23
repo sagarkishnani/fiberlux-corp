@@ -34,7 +34,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Comunicación directa y de latencia ultrabaja entre un centro de distribución, oficinas corporativas y un data center propio."
+    "statement": "Comunicación directa y de **latencia ultrabaja** entre un centro de distribución, oficinas corporativas y un data center propio."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

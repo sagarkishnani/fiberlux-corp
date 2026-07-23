@@ -34,7 +34,7 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el máximo nivel de respaldo (failover) en zonas urbanas."
+    "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
