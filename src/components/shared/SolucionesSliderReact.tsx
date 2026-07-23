@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { useDragSlider } from "../../hooks/useDragSlider";
@@ -50,6 +51,26 @@ export default function SolucionesSliderReact({
     itemCount: items.length,
   });
   const { activeIndex, atStart, atEnd } = slider;
+
+  // El fade del borde izquierdo solo se muestra mientras se arrastra/desplaza;
+  // en reposo el borde de las cards queda nítido. Se activa con el scroll y se
+  // apaga ~150ms después de que el carrusel deja de moverse.
+  const [scrolling, setScrolling] = useState(false);
+  useEffect(() => {
+    const el = slider.ref.current;
+    if (!el) return;
+    let t: number | undefined;
+    const onScroll = () => {
+      setScrolling(true);
+      window.clearTimeout(t);
+      t = window.setTimeout(() => setScrolling(false), 150);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.clearTimeout(t);
+    };
+  }, [slider.ref]);
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -177,7 +198,9 @@ export default function SolucionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel"
+      className={`flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel${
+        scrolling ? " sol-carousel-dragging" : ""
+      }`}
       style={{ cursor: "grab" }}
       {...slider.handlers}
     >
@@ -302,10 +325,15 @@ export default function SolucionesSliderReact({
 
       <style>{`
         /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
-           El borde izquierdo también se difumina para que al arrastrar las cards no
-           se corten en seco contra la columna de texto. */
+           En reposo el borde izquierdo queda nítido (#000 0%). Solo al arrastrar
+           (.sol-carousel-dragging) se difumina también el borde izquierdo, para que
+           al soltar se vean los bordes de las cards. */
         .sol-carousel {
           scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
+        .sol-carousel.sol-carousel-dragging {
           -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
           mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
         }
