@@ -22,6 +22,24 @@ TINA_TOKEN=
 TINA_BRANCH=main
 ```
 
+## Deployment (GitHub Actions + FTP)
+
+`.github/workflows/deploy.yml` runs on push to `main`: `npm ci` → `npm run build` → generate `dist/config.local.php` from secrets → deploy `dist/` via FTP (`SamKirkland/FTP-Deploy-Action`). The PHP mail backend (`public/send-email.php`, `public/panel-leads.php`, `public/phpmailer/`) ships inside `dist/` because Astro copies `public/` verbatim.
+
+**Secrets (mail backend)** live only in `config.local.php`, which is **git-ignored** and generated at deploy time from GitHub Secrets — never committed. `public/config.example.php` documents its shape (copy it to `public/config.local.php` to test locally). The PHP files `require` it; `panel-leads.php` refuses login if `PANEL_USER`/`PANEL_PASS` are unset.
+
+**Required GitHub Secrets** (repo → Settings → Secrets and variables → Actions):
+
+```
+TINA_CLIENT_ID, TINA_TOKEN            # build
+FTP_HOST, FTP_USER, FTP_PASS          # deploy connection
+FTP_SERVER_DIR                        # remote path dist/ is uploaded to (e.g. /public_html/)
+SMTP_USER, SMTP_PASS, MAIL_FALLBACK   # → config.local.php (Office 365 SMTP + fallback recipient)
+PANEL_USER, PANEL_PASS                # → config.local.php (panel-leads.php login)
+```
+
+The FTP sync **excludes** `data/**` and `uploads/**` so runtime-created submissions, `counter.json` and uploaded attachments on the server are never deleted.
+
 ## Architecture
 
 **Astro 5 SSG + React 19 islands + TinaCMS 2 (git-backed CMS)**
