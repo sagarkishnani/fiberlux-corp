@@ -11,6 +11,7 @@ import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
 import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
 import BannerApp from "../components/fiberlux-app/BannerApp.astro";
+import HtmlInjection from "../components/shared/HtmlInjection.astro";
 import SitePreloader from "../components/shared/SitePreloader";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
@@ -69,6 +70,7 @@ const prefetchScenes = [
     <div class="-mt-16">
       <HeroHome />
     </div>
+    <HtmlInjection location="home-after-hero" />
     <div class="-mt-16 relative z-10">
       {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
       <SolucionesSlider />
@@ -94,5 +96,6 @@ const prefetchScenes = [
     <div class="-mt-6 relative z-30">
       <BlogPreview />
     </div>
+    <HtmlInjection location="home-before-footer" />
   </main>
 </BaseLayout>
