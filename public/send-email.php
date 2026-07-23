@@ -52,7 +52,8 @@ if (!empty($input['website'])) {
 
 // ─── Validate form type ───
 $formType = $input['formType'] ?? '';
-if (empty($formType) || !preg_match('/^[a-z0-9_]+$/', $formType)) {
+// Permite guion bajo y guion (corp usa 'libro_reclamaciones' y 'derechos-arco').
+if (empty($formType) || !preg_match('/^[a-z0-9_-]+$/', $formType)) {
     http_response_code(400);
     echo json_encode(['success' => false, 'error' => 'Tipo de formulario inválido']);
     exit;
@@ -233,7 +234,7 @@ function generateCorrelative(string $type): string {
     $dir = dirname($COUNTER_FILE);
     if (!is_dir($dir)) mkdir($dir, 0755, true);
     $counters = file_exists($COUNTER_FILE) ? json_decode(file_get_contents($COUNTER_FILE), true) ?: [] : [];
-    $prefixes = ['contacto'=>'CON','hero_contacto'=>'HER','reclamo'=>'REC','apelacion'=>'APE','queja'=>'QUE','arco'=>'ARC','libro_reclamaciones'=>'LIB'];
+    $prefixes = ['contacto'=>'CON','servicios'=>'SER','reclamo'=>'REC','apelacion'=>'APE','queja'=>'QUE','derechos-arco'=>'ARC','libro_reclamaciones'=>'LIB'];
     $prefix = $prefixes[$type] ?? 'GEN';
     $current = ($counters[$type] ?? 0) + 1;
     $counters[$type] = $current;
@@ -246,7 +247,7 @@ function sanitizeFilename(string $name): string {
 }
 
 function getSubjectPrefix(string $type): string {
-    $map = ['contacto'=>'Nuevo contacto web','hero_contacto'=>'Nuevo lead web (Hero)','reclamo'=>'Nuevo reclamo OSIPTEL','apelacion'=>'Nuevo recurso de apelación','queja'=>'Nueva queja OSIPTEL','arco'=>'Nueva solicitud Derechos ARCO','libro_reclamaciones'=>'Nuevo registro Libro de Reclamaciones'];
+    $map = ['contacto'=>'Nuevo contacto web','servicios'=>'Nuevo lead de servicios','reclamo'=>'Nuevo reclamo OSIPTEL','apelacion'=>'Nuevo recurso de apelación','queja'=>'Nueva queja OSIPTEL','derechos-arco'=>'Nueva solicitud Derechos ARCO','libro_reclamaciones'=>'Nuevo registro Libro de Reclamaciones'];
     return $map[$type] ?? 'Nuevo formulario web';
 }
 
@@ -278,12 +279,12 @@ function buildPlainText(string $type, array $data, string $correlativo): string 
 
 function getFieldRows(string $type, array $data): array {
     switch ($type) {
-        case 'contacto': return ['Nombre'=>($data['nombre']??'').' '.($data['apellido']??''),'Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['email']??'','Mensaje'=>$data['mensaje']??''];
-        case 'hero_contacto': return ['RUC'=>$data['ruc']??'','Celular'=>$data['celular']??'','Acepta publicidad'=>($data['acceptsAds']??'')==='true'?'Sí':'No'];
-        case 'reclamo': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>$data['servicioSelec']??'','N° de abonado'=>$data['numAbonado']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Provincia'=>$data['provincia']??'','Nombre rep.'=>($data['repNombre']??'').' '.($data['repApellido']??''),'Doc. rep.'=>($data['repTipoDoc']??'').' '.($data['repNumDoc']??''),'Materia reclamable'=>$data['materiaReclamo']??'','Opción de reclamo'=>$data['opcionReclamo']??'','Monto'=>$data['montoReclamo']??'','Observaciones'=>$data['observaciones']??''];
-        case 'apelacion': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','N° de abonado'=>$data['numAbonado']??'','Servicio'=>$data['servicio']??'','Dirección'=>$data['direccion']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Nombre rep.'=>($data['repNombre']??'').' '.($data['repApellido']??''),'Resolución N°'=>$data['resolucionNum']??'','Fecha resolución'=>($data['resDia']??'').'/'.($data['resMes']??'').'/'.($data['resAnio']??''),'Fecha notificación'=>($data['notifDia']??'').'/'.($data['notifMes']??'').'/'.($data['notifAnio']??''),'Mensaje'=>$data['mensaje']??''];
-        case 'queja': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>$data['servicioSelec']??'','N° de abonado'=>$data['numAbonado']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Ciudad'=>$data['ciudad']??'','Nombre rep.'=>($data['repNombre']??'').' '.($data['repApellido']??''),'Motivo de queja'=>$data['motivoQueja']??'','Mensaje'=>$data['mensaje']??''];
-        case 'arco': return ['Nombre'=>($data['nombre']??'').' '.($data['apellido']??''),'Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Correo'=>$data['correo']??'','Domicilio'=>$data['domicilio']??'','Representante'=>($data['repNombre']??'').' '.($data['repApellido']??''),'Tipo de solicitud'=>$data['tipoSolicitud']??'','Detalle'=>$data['detalle']??''];
+        case 'contacto': return ['Nombre'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Mensaje'=>$data['comentario']??''];
+        case 'servicios': return ['Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Nombre'=>trim(($data['nombre']??'').' '.($data['apellidos']??'')),'Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??''];
+        case 'reclamo': return ['Nombre / Razón Social'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>trim(($data['servicioSelec']??'').' '.($data['otroServicio']??'')),'Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Ciudad'=>$data['ciudad']??'','Nombre de contacto'=>$data['contactNombre']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Materia reclamable'=>$data['materiaReclamo']??'','Monto'=>$data['montoReclamo']??'','Observaciones'=>$data['observaciones']??''];
+        case 'apelacion': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','N° de abonado'=>$data['numAbonado']??'','Servicio'=>$data['servicio']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Provincia'=>$data['provincia']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Resolución N°'=>$data['resolucionNum']??'','Fecha resolución'=>($data['resDia']??'').'/'.($data['resMes']??'').'/'.($data['resAnio']??''),'Fecha notificación'=>($data['notifDia']??'').'/'.($data['notifMes']??'').'/'.($data['notifAnio']??''),'Mensaje'=>$data['mensaje']??''];
+        case 'queja': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>$data['servicioSelec']??'','N° de abonado'=>$data['numAbonado']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Ciudad'=>$data['ciudad']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Motivo de queja'=>$data['motivoQueja']??'','Mensaje'=>$data['mensaje']??''];
+        case 'derechos-arco': return ['Nombre'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Correo'=>$data['correo']??'','Teléfono'=>$data['telefono']??'','Domicilio'=>$data['direccion']??'','Representante'=>$data['repNombre']??'','Doc. rep.'=>$data['repDoc']??'','Tipo de solicitud'=>$data['tipoSolicitud']??'','Detalle'=>$data['detalle']??''];
         case 'libro_reclamaciones': return ['Nombre completo'=>$data['nombreCompleto']??'','Dirección'=>$data['direccionCons']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Correo'=>$data['correo']??'','Teléfono'=>$data['telefono']??'','Tipo de bien'=>$data['tipoBien']??'','Monto reclamado'=>$data['montoReclamado']??'','Descripción'=>$data['descripcionBien']??'','Tipo de solicitud'=>$data['tipoSolicitud']??'','Detalle'=>$data['detalle']??'','Pedido'=>$data['pedido']??''];
         default: return $data;
     }
