@@ -3,18 +3,19 @@
  * BlogPreview wrapper — fetches home data + blog posts from TinaCMS
  * Uses client:visible for carousel JS interaction
  *
- * Si recibe `solucion` (slug de una solución), muestra los posts cuyo tag la
- * incluye; si no hay ninguno (o no viene `solucion`), muestra los 6 más
- * recientes. Home / fiberlux-app no pasan `solucion` → siempre 6 recientes.
+ * SPEC 63: si recibe `tags` (los `blogTags` de la página), muestra los posts
+ * cuyos tags intersecten esa lista; si no hay coincidencias (o no vienen `tags`),
+ * muestra los 6 más recientes. Home / fiberlux-app no pasan `tags` → recientes.
  */
 import { client } from '../../../tina/__generated__/client';
 import BlogPreviewReact from './BlogPreviewReact.tsx';
 
 interface Props {
-  solucion?: string;
+  tags?: (string | null)[] | null;
 }
 
-const { solucion } = Astro.props;
+const { tags } = Astro.props;
+const wanted = (tags || []).filter(Boolean) as string[];
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 
@@ -36,12 +37,13 @@ const byDateDesc = [...allEdges].sort((a, b) => {
   return db - da;
 });
 
-// Filtra por solución si viene; si el filtro queda vacío, cae a los recientes.
+// Filtra por intersección de tags si vienen; si el filtro queda vacío, recientes.
 let posts = byDateDesc;
-if (solucion) {
-  const filtered = byDateDesc.filter((e) =>
-    (e?.node?.tags || []).includes(solucion),
-  );
+if (wanted.length > 0) {
+  const filtered = byDateDesc.filter((e) => {
+    const postTags = (e?.node?.tags || []).filter(Boolean) as string[];
+    return postTags.some((t) => wanted.includes(t));
+  });
   posts = filtered.length > 0 ? filtered : byDateDesc;
 }
 posts = posts.slice(0, 6);
