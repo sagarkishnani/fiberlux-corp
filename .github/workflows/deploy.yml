@@ -55,19 +55,18 @@ jobs:
             echo "];"
           } > dist/config.local.php
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # Deploy por SFTP (el servidor es SFTP/puerto 22, no FTP).
+      # Sube el contenido de dist/ al remote_path. delete_remote_files=false:
+      # NO borra archivos del servidor → data/ (submissions, counter) y uploads/
+      # (adjuntos) creados en runtime se conservan siempre.
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          # data/ y uploads/ se crean en runtime en el servidor (submissions,
-          # counter, adjuntos). Se excluyen del sync para no borrarlos nunca.
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/data/**
-            **/uploads/**
+          port: 22
+          local_path: './dist/*'
+          remote_path: ${{ secrets.FTP_SERVER_DIR }}
+          sftp_only: true
+          delete_remote_files: false

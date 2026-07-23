@@ -24,7 +24,7 @@ TINA_BRANCH=main
 
 ## Deployment (GitHub Actions + FTP)
 
-`.github/workflows/deploy.yml` runs on push to `staging` (or manual `workflow_dispatch`): `npm ci` → `npm run build` → generate `dist/config.local.php` from secrets → deploy `dist/` via FTP (`SamKirkland/FTP-Deploy-Action`). The PHP mail backend (`public/send-email.php`, `public/panel-leads.php`, `public/phpmailer/`) ships inside `dist/` because Astro copies `public/` verbatim.
+`.github/workflows/deploy.yml` runs on push to `staging` (or manual `workflow_dispatch`): `npm ci` → `npm run build` → generate `dist/config.local.php` from secrets → deploy `dist/` via **SFTP** (`wlixcc/SFTP-Deploy-Action`, port 22 — the host is SFTP, not FTP). The PHP mail backend (`public/send-email.php`, `public/panel-leads.php`, `public/phpmailer/`) ships inside `dist/` because Astro copies `public/` verbatim. `delete_remote_files: false` means the deploy never removes server files, so runtime `data/` (submissions, `counter.json`) and `uploads/` are preserved.
 
 **Staging vs production.** While the domain still serves WordPress, only `staging` deploys — to a subdirectory `fiberlux.pe/staging/`. The build sets `DEPLOY_BASE=/staging` so `astro.config.mjs` compiles with `base: '/staging'` (all paths, incl. the form endpoint, are `BASE_URL`-aware). At cutover: add a `main` trigger with its own production `server-dir`, and leave `DEPLOY_BASE` empty so production builds at root `/`.
 
