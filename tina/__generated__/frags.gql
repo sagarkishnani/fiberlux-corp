@@ -472,6 +472,18 @@ fragment GlobalParts on Global {
     defaultDescription
     ogImage
   }
+  codeInjection {
+    __typename
+    head
+    bodyEnd
+  }
+  htmlInjections {
+    __typename
+    label
+    enabled
+    location
+    html
+  }
 }
 
 fragment MaintenanceParts on Maintenance {

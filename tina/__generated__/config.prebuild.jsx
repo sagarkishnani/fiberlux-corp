@@ -1677,6 +1677,62 @@ var config_default = defineConfig({
                 type: "image"
               }
             ]
+          },
+          // ── Scripts globales (head / body) ──
+          {
+            name: "codeInjection",
+            label: "Scripts globales (head / body)",
+            type: "object",
+            fields: [
+              {
+                name: "head",
+                label: "C\xF3digo en <head>",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "HTML/JS crudo inyectado al final del <head>, en TODAS las p\xE1ginas. Ej: Google Analytics, Meta Pixel, verificaci\xF3n de dominio."
+              },
+              {
+                name: "bodyEnd",
+                label: "C\xF3digo antes de </body>",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "HTML/JS crudo inyectado justo antes de </body>, en TODAS las p\xE1ginas. Ej: widget de chat."
+              }
+            ]
+          },
+          // ── Bloques HTML por sección ──
+          {
+            name: "htmlInjections",
+            label: "Bloques HTML por secci\xF3n",
+            type: "object",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.label || "Bloque HTML" })
+            },
+            fields: [
+              { name: "label", label: "Nombre (referencia)", type: "string" },
+              { name: "enabled", label: "Activo", type: "boolean" },
+              {
+                name: "location",
+                label: "Ubicaci\xF3n",
+                type: "string",
+                options: [
+                  { value: "home-after-hero", label: "Home \u2014 bajo el hero" },
+                  { value: "home-before-footer", label: "Home \u2014 antes del footer" },
+                  { value: "solucion-after-hero", label: "Soluci\xF3n \u2014 bajo el hero" },
+                  { value: "solucion-before-footer", label: "Soluci\xF3n \u2014 antes del footer" },
+                  { value: "subservicio-after-hero", label: "Subservicio \u2014 bajo el hero" },
+                  { value: "subservicio-before-footer", label: "Subservicio \u2014 antes del footer" }
+                ]
+              },
+              {
+                name: "html",
+                label: "HTML",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "HTML crudo que se renderiza en el anclaje elegido. Solo aplica a home y p\xE1ginas de soluci\xF3n/subservicio."
+              }
+            ]
           }
         ]
       },
