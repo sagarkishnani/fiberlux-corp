@@ -1,0 +1,26 @@
+---
+// Bloques HTML por sección (SPEC 64).
+// Renderiza en `location` los bloques activos de global.htmlInjections
+// (editables en Tina). HTML crudo de confianza del administrador: se emite
+// tal cual con set:html, sin sanitizar. Si no hay coincidencias no emite nada.
+import client from "../../../tina/__generated__/client";
+
+interface Props {
+  location: string;
+}
+
+const { location } = Astro.props;
+
+let blocks: { html?: string | null }[] = [];
+try {
+  const globalResult = await client.queries.global({ relativePath: "index.json" });
+  const injections = ((globalResult.data?.global as any)?.htmlInjections ?? []) as any[];
+  blocks = injections.filter(
+    (b) => b?.enabled === true && b?.location === location && b?.html
+  );
+} catch {
+  // Sin colección/global disponible: no se inyecta nada.
+}
+---
+
+{blocks.map((b) => <Fragment set:html={b.html} />)}
