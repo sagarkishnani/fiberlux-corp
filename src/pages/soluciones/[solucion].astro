@@ -9,6 +9,7 @@ import Stats from "../../components/Stats.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 import BlogPreview from "../../components/blog/BlogPreview.astro";
 import FaqSolucion from "../../components/servicios/FaqSolucion.astro";
+import HtmlInjection from "../../components/shared/HtmlInjection.astro";
 
 /* ── Static paths from all solution documents ── */
 export async function getStaticPaths() {
@@ -48,6 +49,7 @@ const metaDescription =
 >
   <main>
     <HeroSolucion relativePath={relativePath} />
+    <HtmlInjection location="solucion-after-hero" />
     <ValorSolucion relativePath={relativePath} />
     <ServicePartners relativePath={relativePath} />
     <CatalogoSoluciones relativePath={relativePath} />
@@ -59,5 +61,6 @@ const metaDescription =
       <BlogPreview tags={service?.blogTags} />
     </div>
     <FaqSolucion relativePath={relativePath} />
+    <HtmlInjection location="solucion-before-footer" />
   </main>
 </BaseLayout>
