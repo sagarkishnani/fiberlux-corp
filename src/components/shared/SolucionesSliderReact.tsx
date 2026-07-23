@@ -245,7 +245,7 @@ export default function SolucionesSliderReact({
           src={GLOW_PLANET}
           alt=""
           draggable={false}
-          className="absolute -bottom-[6%] left-[3%] w-[94vw] max-w-[1360px] select-none opacity-100"
+          className="absolute -bottom-[6%] left-[3%] w-[94vw] max-w-[1360px] select-none opacity-[0.32]"
           style={{
             filter: "saturate(1.18) brightness(1.14)",
             WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
@@ -257,7 +257,7 @@ export default function SolucionesSliderReact({
           src={GLOW_LINE}
           alt=""
           draggable={false}
-          className="absolute -top-[12%] -left-[4%] w-[460px] max-w-[46vw] select-none opacity-70"
+          className="absolute -top-[12%] -left-[4%] w-[460px] max-w-[46vw] select-none opacity-[0.18]"
           style={{
             WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
             maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
@@ -268,7 +268,7 @@ export default function SolucionesSliderReact({
           src={GLOW_PLANET}
           alt=""
           draggable={false}
-          className="absolute top-[26%] right-[-14%] w-[58vw] max-w-[880px] select-none opacity-95"
+          className="absolute top-[26%] right-[-14%] w-[58vw] max-w-[880px] select-none opacity-[0.26]"
           style={{
             filter: "saturate(1.12) brightness(1.08)",
             WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
@@ -358,12 +358,12 @@ export default function SolucionesSliderReact({
         .sol-card-active {
           background:
             radial-gradient(136% 94% at 50% 97%,
-              rgba(150,35,122,0.30) 0%,
-              rgba(107,22,84,0.27) 36%,
-              rgba(59,14,48,0.34) 74%);
+              rgba(150,35,122,0.52) 0%,
+              rgba(107,22,84,0.40) 36%,
+              rgba(59,14,48,0.42) 74%);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
-          box-shadow: 0 24px 70px -28px rgba(150,35,122,0.60);
+          box-shadow: 0 16px 46px -30px rgba(150,35,122,0.45);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
