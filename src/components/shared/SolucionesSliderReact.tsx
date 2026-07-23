@@ -301,11 +301,13 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
+           El borde izquierdo también se difumina para que al arrastrar las cards no
+           se corten en seco contra la columna de texto. */
         .sol-carousel {
           scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
-          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
-          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
         }
         .sol-carousel::-webkit-scrollbar { display: none; }
         /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
