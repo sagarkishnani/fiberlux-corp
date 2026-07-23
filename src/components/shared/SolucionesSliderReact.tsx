@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { useDragSlider } from "../../hooks/useDragSlider";
@@ -50,6 +51,26 @@ export default function SolucionesSliderReact({
     itemCount: items.length,
   });
   const { activeIndex, atStart, atEnd } = slider;
+
+  // El fade del borde izquierdo solo se muestra mientras se arrastra/desplaza;
+  // en reposo el borde de las cards queda nítido. Se activa con el scroll y se
+  // apaga ~150ms después de que el carrusel deja de moverse.
+  const [scrolling, setScrolling] = useState(false);
+  useEffect(() => {
+    const el = slider.ref.current;
+    if (!el) return;
+    let t: number | undefined;
+    const onScroll = () => {
+      setScrolling(true);
+      window.clearTimeout(t);
+      t = window.setTimeout(() => setScrolling(false), 150);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      window.clearTimeout(t);
+    };
+  }, [slider.ref]);
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -177,7 +198,9 @@ export default function SolucionesSliderReact({
   const carousel = (
     <div
       ref={slider.ref}
-      className="flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel"
+      className={`flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel${
+        scrolling ? " sol-carousel-dragging" : ""
+      }`}
       style={{ cursor: "grab" }}
       {...slider.handlers}
     >
@@ -222,7 +245,7 @@ export default function SolucionesSliderReact({
           src={GLOW_PLANET}
           alt=""
           draggable={false}
-          className="absolute -bottom-[6%] left-[3%] w-[94vw] max-w-[1360px] select-none opacity-100"
+          className="absolute -bottom-[6%] left-[3%] w-[94vw] max-w-[1360px] select-none opacity-[0.32]"
           style={{
             filter: "saturate(1.18) brightness(1.14)",
             WebkitMaskImage: "radial-gradient(closest-side, #000 66%, transparent 100%)",
@@ -234,7 +257,7 @@ export default function SolucionesSliderReact({
           src={GLOW_LINE}
           alt=""
           draggable={false}
-          className="absolute -top-[12%] -left-[4%] w-[460px] max-w-[46vw] select-none opacity-70"
+          className="absolute -top-[12%] -left-[4%] w-[460px] max-w-[46vw] select-none opacity-[0.18]"
           style={{
             WebkitMaskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
             maskImage: "radial-gradient(closest-side, #000 48%, transparent 100%)",
@@ -245,7 +268,7 @@ export default function SolucionesSliderReact({
           src={GLOW_PLANET}
           alt=""
           draggable={false}
-          className="absolute top-[26%] right-[-14%] w-[58vw] max-w-[880px] select-none opacity-95"
+          className="absolute top-[26%] right-[-14%] w-[58vw] max-w-[880px] select-none opacity-[0.26]"
           style={{
             filter: "saturate(1.12) brightness(1.08)",
             WebkitMaskImage: "radial-gradient(closest-side, #000 60%, transparent 100%)",
@@ -301,11 +324,18 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
+           En reposo el borde izquierdo queda nítido (#000 0%). Solo al arrastrar
+           (.sol-carousel-dragging) se difumina también el borde izquierdo, para que
+           al soltar se vean los bordes de las cards. */
         .sol-carousel {
           scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
           -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
+        .sol-carousel.sol-carousel-dragging {
+          -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
         }
         .sol-carousel::-webkit-scrollbar { display: none; }
         /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
@@ -328,12 +358,12 @@ export default function SolucionesSliderReact({
         .sol-card-active {
           background:
             radial-gradient(136% 94% at 50% 97%,
-              rgba(150,35,122,0.30) 0%,
-              rgba(107,22,84,0.27) 36%,
-              rgba(59,14,48,0.34) 74%);
+              rgba(150,35,122,0.52) 0%,
+              rgba(107,22,84,0.40) 36%,
+              rgba(59,14,48,0.42) 74%);
           backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(6px);
-          box-shadow: 0 24px 70px -28px rgba(150,35,122,0.60);
+          box-shadow: 0 16px 46px -30px rgba(150,35,122,0.45);
         }
         @keyframes sol-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .sol-fade { animation: sol-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
