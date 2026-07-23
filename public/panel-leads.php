@@ -73,7 +73,7 @@ function loadSubmissions($dir) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panel Leads — Fiberlux Negocios</title>
+<title>Panel Leads — Fiberlux</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -160,7 +160,7 @@ tr:hover .view-link{opacity:1}
     <div class="login-blur"></div>
     <div class="login-card">
         <div class="logo">
-            <img src="/images/logo/fiberlux-negocios.svg" alt="Fiberlux Negocios" onerror="this.style.display='none'">
+            <img src="/images/logo/fiberlux.svg" alt="Fiberlux" onerror="this.style.display='none'">
             <p>Panel de leads</p>
         </div>
         <div class="login-field"><label>Usuario</label><input type="text" id="loginUser" placeholder="Usuario" autocomplete="off"></div>
@@ -171,7 +171,7 @@ tr:hover .view-link{opacity:1}
 </div>
 
 <div class="header">
-    <img src="/images/logo/fiberlux-negocios.svg" class="header-logo" alt="Fiberlux Negocios" onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:700\'>FIBERLUX <span style=\'color:#96237A\'>Negocios</span></span>'">
+    <img src="/images/logo/fiberlux.svg" class="header-logo" alt="Fiberlux" onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:700\'>FIBERLUX <span style=\'color:#96237A\'>Corporativo</span></span>'">
     <div class="header-right">
         <span class="badge" id="totalBadge"><?= count($submissions) ?> leads</span>
         <a href="?export=csv" class="export-btn" id="exportBtn">⬇ CSV</a>

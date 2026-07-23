@@ -1,6 +1,6 @@
 <?php
 /**
- * Fiberlux Negocios - Unified Form Handler v3
+ * Fiberlux - Unified Form Handler v3
  * - Reads recipient config from form-config.json (managed by TinaCMS)
  * - Saves submissions to data/submissions/
  * - Sends email via Office 365 SMTP
@@ -124,7 +124,7 @@ try {
     $mail->Port       = $SMTP_PORT;
     $mail->CharSet    = 'UTF-8';
 
-    $mail->setFrom($SMTP_USER, 'Fiberlux Negocios Web');
+    $mail->setFrom($SMTP_USER, 'Fiberlux Web');
     foreach ($recipients as $to) {
         $mail->addAddress(trim($to));
     }
@@ -161,11 +161,11 @@ try {
                 $confirm->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $confirm->Port       = $SMTP_PORT;
                 $confirm->CharSet    = 'UTF-8';
-                $confirm->setFrom($SMTP_USER, 'Fiberlux Negocios');
+                $confirm->setFrom($SMTP_USER, 'Fiberlux');
                 $confirm->addAddress($leadEmail, $leadName);
-                $confirm->Subject = "Recibimos tu mensaje [$correlativo] — Fiberlux Negocios";
+                $confirm->Subject = "Recibimos tu mensaje [$correlativo] — Fiberlux";
                 $confirm->isHTML(true);
-                $confirm->Body = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#fff;font-size:18px;">Fiberlux Negocios</h1></td></tr><tr><td style="padding:32px;"><p style="color:#333;font-size:15px;margin:0 0 16px;">Hola' . ($leadName ? " <strong>" . htmlspecialchars($leadName) . "</strong>" : "") . ',</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 16px;">Hemos recibido tu solicitud con el código <strong style="color:#96237A;">' . $correlativo . '</strong>. Nuestro equipo se comunicará contigo en las próximas 24 horas.</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 24px;">Si tienes alguna consulta adicional, no dudes en contactarnos al <strong>(01) 748-0606</strong> o por WhatsApp.</p><p style="color:#aaa;font-size:12px;margin:0;">Este es un mensaje automático, por favor no respondas a este correo.</p></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;text-align:center;"><p style="margin:0;color:#aaa;font-size:11px;">© ' . date('Y') . ' Fiberlux Negocios</p></td></tr></table></td></tr></table></body></html>';
+                $confirm->Body = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#fff;font-size:18px;">Fiberlux</h1></td></tr><tr><td style="padding:32px;"><p style="color:#333;font-size:15px;margin:0 0 16px;">Hola' . ($leadName ? " <strong>" . htmlspecialchars($leadName) . "</strong>" : "") . ',</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 16px;">Hemos recibido tu solicitud con el código <strong style="color:#96237A;">' . $correlativo . '</strong>. Nuestro equipo se comunicará contigo en las próximas 24 horas.</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 24px;">Si tienes alguna consulta adicional, no dudes en contactarnos al <strong>(01) 748-0606</strong> o por WhatsApp.</p><p style="color:#aaa;font-size:12px;margin:0;">Este es un mensaje automático, por favor no respondas a este correo.</p></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;text-align:center;"><p style="margin:0;color:#aaa;font-size:11px;">© ' . date('Y') . ' Fiberlux</p></td></tr></table></td></tr></table></body></html>';
                 $confirm->AltBody = "Hola $leadName, recibimos tu solicitud [$correlativo]. Nos comunicaremos contigo en las próximas 24 horas. Tel: (01) 748-0606";
                 $confirm->send();
             } catch (Exception $e) {
@@ -266,7 +266,7 @@ function buildEmailBody(string $type, array $data, string $correlativo, array $f
         $tableRows .= '<tr><td style="padding:8px 0;color:#888;width:180px;vertical-align:top;font-size:13px;">'.h($label).'</td><td style="padding:8px 0;font-weight:500;font-size:14px;">'.nl2br(h($value)).'</td></tr>';
     }
     $typeName = getSubjectPrefix($type);
-    return '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#ffffff;font-size:18px;font-weight:600;">Fiberlux Negocios</h1><p style="margin:4px 0 0;color:#7686BC;font-size:13px;">'.h($typeName).'</p></td></tr><tr><td style="padding:20px 32px 0;"><span style="display:inline-block;background:#96237A;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;">'.h($correlativo).'</span></td></tr><tr><td style="padding:24px 32px 32px;"><table width="100%" cellpadding="0" cellspacing="0" style="color:#333;">'.$tableRows.$fileRows.'</table></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;"><p style="margin:0;color:#aaa;font-size:11px;text-align:center;">Correo generado desde negocios.fiberlux.pe</p></td></tr></table></td></tr></table></body></html>';
+    return '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#ffffff;font-size:18px;font-weight:600;">Fiberlux</h1><p style="margin:4px 0 0;color:#7686BC;font-size:13px;">'.h($typeName).'</p></td></tr><tr><td style="padding:20px 32px 0;"><span style="display:inline-block;background:#96237A;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;">'.h($correlativo).'</span></td></tr><tr><td style="padding:24px 32px 32px;"><table width="100%" cellpadding="0" cellspacing="0" style="color:#333;">'.$tableRows.$fileRows.'</table></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;"><p style="margin:0;color:#aaa;font-size:11px;text-align:center;">Correo generado desde fiberlux.pe</p></td></tr></table></td></tr></table></body></html>';
 }
 
 function buildPlainText(string $type, array $data, string $correlativo): string {
