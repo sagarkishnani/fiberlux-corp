@@ -1,5 +1,3 @@
-import { solutionLabel } from '../../utils/solutions';
-
 /**
  * BlogGridCard — Vertical blog card for /blog listing
  *
@@ -77,7 +75,7 @@ export default function BlogGridCard({
                   key={i}
                   className="bg-[#f2f3f5] text-[#3f3f3f] text-[11px] font-medium px-2.5 py-1 rounded-md"
                 >
-                  {solutionLabel(tag as string)}
+                  {tag}
                 </span>
               ))}
               {extraCount > 0 && (

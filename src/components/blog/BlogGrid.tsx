@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import BlogGridCard from './BlogGridCard';
-import { solutionLabel } from '../../utils/solutions';
 
 /* ── Types ── */
 interface PostNode {
@@ -123,7 +122,7 @@ export default function BlogGrid({
                     : 'bg-white border-[#d1d5db] text-[#3f3f3f] hover:border-[#9ca3af] hover:text-[#0a0a0a]'
                 }`}
               >
-                {solutionLabel(tag)}
+                {tag}
               </button>
             ))}
           </div>
@@ -150,7 +149,7 @@ export default function BlogGrid({
         ) : (
           <div className="flex items-center justify-center py-20 text-[#717274] text-[15px]">
             No se encontraron publicaciones
-            {activeTag ? ` con la etiqueta "${solutionLabel(activeTag)}"` : ''}.
+            {activeTag ? ` con la etiqueta "${activeTag}"` : ''}.
           </div>
         )}
 

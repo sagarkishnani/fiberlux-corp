@@ -1,5 +1,3 @@
-import { solutionLabel } from '../../utils/solutions';
-
 interface BlogCardProps {
   title: string;
   coverImage?: string | null;
@@ -51,7 +49,7 @@ export default function BlogCard({
           <div>
             {tag && (
               <span className="inline-block bg-greyscale-dark/80 text-white/80 text-xs font-medium px-3 py-1 rounded-md mb-4">
-                {solutionLabel(tag)}
+                {tag}
               </span>
             )}
             <h3 className="text-white text-xl md:text-2xl font-semibold leading-snug group-hover:text-brand-purple-light transition-colors">

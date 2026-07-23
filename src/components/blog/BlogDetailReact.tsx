@@ -1,6 +1,5 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { TinaMarkdown } from 'tinacms/dist/rich-text';
-import { solutionLabel } from '../../utils/solutions';
 import type {
   PostQuery,
   PostQueryVariables,
@@ -220,7 +219,7 @@ export default function BlogDetailReact({
                 key={tag}
                 className="border border-white/30 text-white/80 text-[12px] font-medium px-3.5 py-1.5 rounded-full"
               >
-                {solutionLabel(tag)}
+                {tag}
               </span>
             ))}
             {(readTime || date) && allTags.length > 0 && (
