@@ -283,19 +283,23 @@
           },
           {
             "text": "Política de Cookies",
-            "url": "/legales/politica-cookies"
+            "url": "/legales/politica-cookies.pdf",
+            "external": true
           },
           {
             "text": "Política de Privacidad",
-            "url": "/legales/politica-privacidad"
+            "url": "/legales/politica-privacidad.pdf",
+            "external": true
           },
           {
             "text": "Política de videovigilancia",
-            "url": "/legales/politica-videovigilancia"
+            "url": "/legales/politica-videovigilancia.pdf",
+            "external": true
           },
           {
             "text": "Política de SST",
-            "url": "/legales/politica-sst"
+            "url": "/legales/politica-sst.pdf",
+            "external": true
           },
           {
             "text": "Manual de derechos ARCO",
@@ -303,11 +307,13 @@
           },
           {
             "text": "Formulario de solicitud de derechos ARCO",
-            "url": "/legales/formulario-derechos-arco"
+            "url": "/legales/formulario-derechos-arco.pdf",
+            "external": true
           },
           {
             "text": "Guía de presentación de Reclamos de OSIPTEL",
-            "url": "/legales/guia-reclamos-osiptel"
+            "url": "https://www.osiptel.gob.pe/guiareclamos/",
+            "external": true
           },
           {
             "text": "Formulario de reclamo",
@@ -332,11 +338,13 @@
         "links": [
           {
             "text": "Cancelación de servicio",
-            "url": "/solicitudes/cancelacion-servicio"
+            "url": "/legales/terminacion-y-baja-servicio.pdf",
+            "external": true
           },
           {
             "text": "Suspensión temporal del servicio",
-            "url": "/solicitudes/suspension-temporal"
+            "url": "/legales/suspension-temporal-servicio.pdf",
+            "external": true
           }
         ]
       }
