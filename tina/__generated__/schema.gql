@@ -1232,6 +1232,7 @@ type GlobalWhatsapp {
 type GlobalFooterColumnsLinks {
   text: String
   url: String
+  external: Boolean
 }
 
 type GlobalFooterColumns {
@@ -1354,6 +1355,7 @@ input GlobalWhatsappFilter {
 input GlobalFooterColumnsLinksFilter {
   text: StringFilter
   url: StringFilter
+  external: BooleanFilter
 }
 
 input GlobalFooterColumnsFilter {
@@ -2507,6 +2509,7 @@ input GlobalWhatsappMutation {
 input GlobalFooterColumnsLinksMutation {
   text: String
   url: String
+  external: Boolean
 }
 
 input GlobalFooterColumnsMutation {

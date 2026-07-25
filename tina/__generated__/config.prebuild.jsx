@@ -1592,9 +1592,16 @@ var config_default = defineConfig({
                     label: "Links",
                     type: "object",
                     list: true,
+                    ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
-                      { name: "url", label: "URL", type: "string" }
+                      { name: "url", label: "URL", type: "string" },
+                      {
+                        name: "external",
+                        label: "Abrir en pesta\xF1a nueva",
+                        type: "boolean",
+                        description: "Act\xEDvalo para links externos o documentos PDF (abre en nueva pesta\xF1a, target=_blank). D\xE9jalo apagado para p\xE1ginas internas del sitio."
+                      }
                     ]
                   }
                 ]

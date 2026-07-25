@@ -444,6 +444,7 @@ fragment GlobalParts on Global {
         __typename
         text
         url
+        external
       }
     }
     social {
