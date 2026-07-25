@@ -1,6 +1,6 @@
 # SPEC 66 — Links legales configurables (interno/externo) + documentos en el footer
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01 (legales OSIPTEL y editabilidad), SPEC 07 (footer links)
 > **Fecha:** 2026-07-24
 > **Objetivo:** Permitir en Tina marcar cada link del footer como interno (misma pestaña) o externo (nueva pestaña con `target=_blank`), y cablear los links legales/solicitudes a los PDFs de `public/legales`, las páginas existentes y la guía externa de OSIPTEL.
