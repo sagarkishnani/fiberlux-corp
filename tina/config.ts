@@ -1678,9 +1678,17 @@ export default defineConfig({
                     label: "Links",
                     type: "object",
                     list: true,
+                    ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
                       { name: "url", label: "URL", type: "string" },
+                      {
+                        name: "external",
+                        label: "Abrir en pestaña nueva",
+                        type: "boolean",
+                        description:
+                          "Actívalo para links externos o documentos PDF (abre en nueva pestaña, target=_blank). Déjalo apagado para páginas internas del sitio.",
+                      },
                     ],
                   },
                 ],
