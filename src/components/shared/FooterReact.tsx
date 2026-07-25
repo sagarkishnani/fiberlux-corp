@@ -28,6 +28,7 @@ interface SocialItem {
 interface LinkItem {
   text?: string | null;
   url?: string | null;
+  external?: boolean | null;
 }
 
 interface ColumnItem {
@@ -98,6 +99,9 @@ export default function FooterReact({ query, variables, data: initialData }: Foo
             <li key={j}>
               <a
                 href={link.url || '#'}
+                {...(link.external
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {})}
                 className="leading-[20px] text-white/70 hover:text-white transition-colors duration-200"
                 data-tina-field={tinaField(link, 'text')}
               >
