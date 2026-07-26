@@ -3,7 +3,7 @@ import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
-import SplineScene from "../shared/SplineScene";
+import HeroVideo from "../shared/HeroVideo";
 
 interface HeroSoporteProps {
   query: string;
@@ -64,21 +64,16 @@ export default function HeroSoporteReact({
             </p>
           </div>
 
-          {/* ════ RIGHT — elemento 3D (desktop) ════ */}
-          <div
-            className="hidden lg:block relative w-full"
-            style={{ minHeight: 440 }}
-          >
-            {page.splineSceneUrl && (
-              <SplineScene
-                scene={page.splineSceneUrl}
-                poster={page.splinePosterUrl}
-                allowMobile={false}
-                featherEdges
+          {/* ════ RIGHT — video del hero (loop, se funde con el fondo) ════ */}
+          {(page as any).heroVideo && (
+            <div className="relative w-full min-h-[260px] lg:min-h-[440px]">
+              <HeroVideo
+                src={(page as any).heroVideo}
+                poster={(page as any).heroVideoPoster}
                 className="absolute inset-0"
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
