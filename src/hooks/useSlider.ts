@@ -156,22 +156,28 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     const factor = effect === "parallax" ? 1 : effect === "scale" ? 0.42 : 0.75;
 
     const applyTween = (eventName?: string) => {
+      const engine = embla.internalEngine();
       const scrollProgress = embla.scrollProgress();
       const slidesInView = embla.slidesInView();
       const isScroll = eventName === "scroll";
       embla.scrollSnapList().forEach((scrollSnap, snapIndex) => {
         const diff = scrollSnap - scrollProgress;
-        if (isScroll && !slidesInView.includes(snapIndex)) return;
-        const node = tweenNodes.current[snapIndex];
-        if (!node) return;
-        if (effect === "opacity") {
-          node.style.opacity = String(clamp(1 - Math.abs(diff * factor), 0.15, 1));
-        } else if (effect === "scale") {
-          node.style.transform = `scale(${clamp(1 - Math.abs(diff * factor), 0.82, 1)})`;
-        } else if (effect === "parallax") {
-          const layer = node.firstElementChild as HTMLElement | null;
-          if (layer) layer.style.transform = `translateX(${diff * factor * 22}%)`;
-        }
+        // Cada snap puede agrupar varios slides (containScroll/slidesToScroll):
+        // aplicamos el tween a cada slide real del snap, no al índice del snap.
+        const slidesInSnap: number[] = engine.slideRegistry[snapIndex] ?? [snapIndex];
+        slidesInSnap.forEach((slideIndex) => {
+          if (isScroll && !slidesInView.includes(slideIndex)) return;
+          const node = tweenNodes.current[slideIndex];
+          if (!node) return;
+          if (effect === "opacity") {
+            node.style.opacity = String(clamp(1 - Math.abs(diff * factor), 0.15, 1));
+          } else if (effect === "scale") {
+            node.style.transform = `scale(${clamp(1 - Math.abs(diff * factor), 0.82, 1)})`;
+          } else if (effect === "parallax") {
+            const layer = node.firstElementChild as HTMLElement | null;
+            if (layer) layer.style.transform = `translateX(${diff * factor * 22}%)`;
+          }
+        });
       });
     };
 
