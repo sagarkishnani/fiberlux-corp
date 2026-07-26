@@ -1,6 +1,6 @@
 # SPEC 72 — Animaciones Lote A (Marketing): Nosotros, Soluciones, Subservicios, Listado
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 69 (base `data-reveal`), SPEC 70 (overlap hero), SPEC 71 (repeat/draw/count-up/parallax/hover)
 > **Fecha:** 2026-07-26
 > **Objetivo:** Aplicar la base de animaciones a las páginas de marketing (Nosotros, /soluciones/[solucion], subservicio y /soluciones) siguiendo las reglas ya definidas (dos columnas → izq/der con repeat; bloques completos → fade-up; Stats → count-up; SVGs de línea → draw; glows → parallax; cards → hover; heroes interiores → fade-in), sin duplicar lo ya animado.

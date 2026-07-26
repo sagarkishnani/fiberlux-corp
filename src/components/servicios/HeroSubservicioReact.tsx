@@ -156,7 +156,7 @@ export default function HeroSubservicioReact({
 
               {hero?.intro && (
                 <p
-                  className="text-body-lg text-greyscale-light max-w-[480px] mb-6"
+                  className="text-body-lg text-greyscale-light max-w-[480px] mb-8 md:mb-6"
                   data-tina-field={tinaField(hero, "intro")}
                 >
                   {hero.intro}
@@ -166,7 +166,7 @@ export default function HeroSubservicioReact({
 
             {hero?.note && (
               <div
-                className="max-w-[520px] mb-10 rounded-xl border-l-2 border-[#96237A] bg-white/[0.05] px-5 py-4"
+                className="max-w-[520px] mt-4 md:mt-0 mb-8 rounded-xl border-l-2 border-[#96237A] bg-white/[0.05] px-5 py-4"
                 data-tina-field={tinaField(hero, "note")}
               >
                 <p className="text-body-sm text-greyscale-light">{hero.note}</p>
