@@ -15,6 +15,11 @@ function init() {
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
   document.querySelectorAll<HTMLElement>("[data-hero-sticky]").forEach((el) => {
+    // Solo aplica el efecto si el contenedor está realmente fijado (sticky).
+    // En páginas donde el overlap es solo desktop (p.ej. solución, cuyo hero es
+    // más alto que el viewport en mobile) el contenedor es estático en mobile y
+    // no debe animarse.
+    if (getComputedStyle(el).position !== "sticky") return;
     // El elemento a animar es el hero (hijo del contenedor sticky); si no hay
     // hijo, se anima el propio contenedor.
     const inner = (el.firstElementChild as HTMLElement) || el;
