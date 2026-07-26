@@ -23,6 +23,14 @@ $CONFIG_FILE   = __DIR__ . '/form-config.json';
 // ─── Fallback recipients (used if config file is missing) ───
 $FALLBACK_EMAIL = $cfg['FALLBACK_EMAIL'] ?? 'sagarkishnani67@gmail.com';
 
+// ─── Base absoluta de imágenes de correo (public/mail) ───
+// Derivada del host en runtime: /mail en producción, /staging/mail en staging.
+$mailProto = $_SERVER['HTTP_X_FORWARDED_PROTO']
+    ?? ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http');
+$mailHost  = $_SERVER['HTTP_HOST'] ?? '';
+$mailDir   = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+$ASSET_BASE = "$mailProto://$mailHost$mailDir/mail";
+
 // ─── CORS & Headers ───
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
