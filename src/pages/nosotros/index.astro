@@ -13,6 +13,8 @@ import BannerApp from "../../components/fiberlux-app/BannerApp.astro";
 
 const aboutQuery = await client.queries.about({ relativePath: "index.json" });
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
 ---
 
 <BaseLayout title="Nosotros">
@@ -54,6 +56,8 @@ const homeQuery = await client.queries.home({ relativePath: "index.json" });
       query={aboutQuery.query}
       variables={aboutQuery.variables}
       data={aboutQuery.data}
+      autoplay={rubrosCfg.autoplay ?? true}
+      intervalMs={rubrosCfg.intervalMs ?? 3500}
     />
   </div>
   <BannerApp />

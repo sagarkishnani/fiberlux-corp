@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { IconType } from 'react-icons';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
@@ -26,7 +25,7 @@ import {
   LuBriefcase,
   LuSettings,
 } from 'react-icons/lu';
-import { useDragSlider } from '../../hooks/useDragSlider';
+import { useSlider } from '../../hooks/useSlider';
 import { mediaUrl } from '../../utils/mediaUrl';
 
 /* ── Types ── */
@@ -40,6 +39,8 @@ interface RubrosProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 /* ── Icon map: CMS select key → react-icons component ── */
@@ -67,20 +68,13 @@ const ICONS: Record<string, IconType> = {
 };
 const FALLBACK_ICON: IconType = LuBuilding;
 
-/* ── Reduced-motion hook ── */
-function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
-  }, []);
-  return reduced;
-}
-
-export default function RubrosReact({ query, variables, data: initialData }: RubrosProps) {
+export default function RubrosReact({
+  query,
+  variables,
+  data: initialData,
+  autoplay = true,
+  intervalMs = 3500,
+}: RubrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
   // Fallback chain: useTina data → initialData
@@ -93,36 +87,21 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   const items = tinaItems.length > 0 ? tinaItems : fallbackItems;
 
   const total = items.length;
+  const enough = total > 1;
 
-  /* Shared drag/scroll engine: left-aligned cards, one card per arrow. */
-  const slider = useDragSlider({
-    slideSelector: '.rubro-slide',
+  /* Embla slider: left-aligned cards, autoplay w/ loop (arrows wrap via loop). */
+  const slider = useSlider({
     align: 'start',
-    momentum: false,
-    itemCount: total,
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
   });
-  const { atStart, atEnd, goTo, next, prev } = slider;
-
-  // Autoplay control (component-owned; drives the shared engine via its API).
-  const [paused, setPaused] = useState(false);
-  const reducedMotion = usePrefersReducedMotion();
-
-  // Autoplay: advance every 5s and wrap at the end; paused on hover/focus, while
-  // interacting, and disabled with reduced motion.
-  useEffect(() => {
-    if (paused || reducedMotion || total <= 1) return;
-    const id = setInterval(() => {
-      if (atEnd) goTo(0);
-      else next();
-    }, 5000);
-    return () => clearInterval(id);
-  }, [paused, reducedMotion, total, atEnd, goTo, next]);
 
   if (total === 0) return null;
 
-  // Arrows wrap around (Rubros-specific), unlike the other sliders.
-  const handlePrev = () => (atStart ? goTo(total - 1) : prev());
-  const handleNext = () => (atEnd ? goTo(0) : next());
+  // Con loop, prev/next envuelven en los extremos automáticamente.
+  const handlePrev = slider.prev;
+  const handleNext = slider.next;
 
   const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
 
@@ -193,13 +172,7 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
   };
 
   return (
-    <section
-      className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocusCapture={() => setPaused(true)}
-      onBlurCapture={() => setPaused(false)}
-    >
+    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]">
       <div className="site-container">
         {/* Desktop header: title left, arrows right */}
         <div className="mb-12 hidden items-start justify-between gap-6 md:flex">
@@ -221,14 +194,13 @@ export default function RubrosReact({ query, variables, data: initialData }: Rub
         </h2>
 
         <div
-          ref={slider.ref}
-          className="flex gap-2 overflow-x-auto snap-x snap-mandatory select-none rubros-carousel"
+          ref={slider.viewportRef}
+          className="overflow-hidden select-none rubros-carousel"
           style={{ cursor: 'grab' }}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
-          {...slider.handlers}
         >
-          {items.map((item, i) => card(item, i))}
+          <div className="flex gap-2">
+            {items.map((item, i) => card(item, i))}
+          </div>
         </div>
 
         {/* Mobile arrows: below, left-aligned */}
