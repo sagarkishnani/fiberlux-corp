@@ -59,13 +59,17 @@ const metaDescription =
         <ValorSolucion relativePath={relativePath} />
       </div>
     </div>
-    <ServicePartners relativePath={relativePath} />
+    <div data-reveal="up">
+      <ServicePartners relativePath={relativePath} />
+    </div>
     <CatalogoSoluciones relativePath={relativePath} />
-    <div class="-mt-16 relative z-20">
+    <div class="-mt-16 relative z-20" data-reveal="up">
       <Stats title={service?.whyUsTitle ?? undefined} />
     </div>
-    <ServiciosForm />
-    <div class="-mt-16 relative z-25">
+    <div data-reveal="up">
+      <ServiciosForm />
+    </div>
+    <div class="-mt-16 relative z-25" data-reveal="up">
       <BlogPreview tags={service?.blogTags} />
     </div>
     <FaqSolucion relativePath={relativePath} />

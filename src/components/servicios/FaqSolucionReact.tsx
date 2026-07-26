@@ -62,7 +62,7 @@ export default function FaqSolucionReact({
           </h2>
         )}
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => {
             const isOpen = open === i;
             const showAnswer = isOpen && hasContent(item.answer);

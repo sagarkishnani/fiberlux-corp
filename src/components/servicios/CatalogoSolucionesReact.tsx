@@ -140,7 +140,7 @@ export default function CatalogoSolucionesReact({
         )}
 
         {/* ════ DESKTOP — configurable-span grid ════ */}
-        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => {
             const CardTag = item.url ? "a" : "div";
             const span = SPAN_CLASS[item.colSpan || "1"] || "lg:col-span-1";
