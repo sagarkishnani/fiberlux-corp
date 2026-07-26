@@ -14,7 +14,7 @@
  * Accesibilidad: con prefers-reduced-motion no anima (el CSS los muestra tal cual).
  * Anti-FOUC: el estado oculto lo pone el CSS gated por `.reveal-js` (solo con JS).
  */
-import { animate, inView } from "motion";
+import { animate, inView, scroll } from "motion";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const DEFAULT_DURATION = 1;
@@ -58,8 +58,34 @@ function revealOut(el: HTMLElement, dir: string, dist: number, dur: number) {
   animate(el, hiddenTarget(dir, dist) as any, { duration: dur * 0.6, ease: [0.4, 0, 1, 1] });
 }
 
+/* Scrub: fade + desplazamiento ligados al scroll. Entra (desde su lado) al
+   aparecer y se desvanece al salir; simétrico al subir. Para bloques de 2
+   columnas (ej. Misión/Visión). */
+function initScrub() {
+  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => {
+    const dir = (el.dataset.reveal || "up").toLowerCase();
+    const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
+    const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
+    let enter = 0;
+    let axis: "x" | "y" = "y";
+    switch (dir) {
+      case "left": axis = "x"; enter = -dist; break;
+      case "right": axis = "x"; enter = dist; break;
+      case "down": axis = "y"; enter = -dist; break;
+      case "fade": enter = 0; break;
+      default: axis = "y"; enter = dist; // up
+    }
+    if (enter !== 0) kf[axis] = [enter, 0, 0, 0];
+    scroll(
+      animate(el, kf as any, { times: [0, 0.28, 0.72, 1], ease: "linear" }),
+      { target: el, offset: ["start end", "end start"] }
+    );
+  });
+}
+
 function initReveal() {
   document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+    if (el.dataset.revealScrub != null) return; // lo maneja initScrub
     const dir = (el.dataset.reveal || "up").toLowerCase();
     const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
     const dur = Number(el.dataset.revealDuration || DEFAULT_DURATION);
@@ -124,6 +150,7 @@ function init() {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
   initReveal();
+  initScrub();
   initSvgDraw();
 }
 

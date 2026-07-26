@@ -209,14 +209,14 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
             src={mockup}
             alt="Fiberlux App"
             data-reveal="right"
-            data-reveal-repeat
+            data-reveal-scrub
             className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden min-[1200px]:block"
             draggable={false}
           />
 
           {/* ════ DESKTOP (≥1200px) ════ */}
           <div className="relative z-10 hidden min-[1200px]:block px-8 lg:px-10 py-10">
-            <div className="w-[60%]" data-reveal="left" data-reveal-repeat>
+            <div className="w-[60%]" data-reveal="left" data-reveal-scrub>
               {/* Marco notched (contorno SVG) con texto + bullets */}
               <div className="relative pl-9 pr-7 pt-8 pb-12">
                 <FrameOutline path={FRAME_D} viewBox="0 0 957 217" />
