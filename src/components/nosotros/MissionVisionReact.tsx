@@ -34,7 +34,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-40">
 
           {/* Left column: Title + Cards */}
-          <div className="flex flex-col">
+          <div className="flex flex-col" data-reveal="left" data-reveal-repeat>
             {/* Title */}
             <h2
               className="text-[30px] leading-[36px] min-[380px]:text-[36px] min-[380px]:leading-[42px] md:text-[48px] md:leading-[56px] font-medium text-brand-purple-darkest mb-10"
@@ -108,7 +108,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
           </div>
 
           {/* Right column: Image (desktop only) */}
-          <div className="hidden md:flex items-start">
+          <div className="hidden md:flex items-start" data-reveal="right" data-reveal-repeat>
             {image ? (
               <img
                 src={image}

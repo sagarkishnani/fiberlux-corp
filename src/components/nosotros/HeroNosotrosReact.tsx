@@ -43,23 +43,24 @@ export default function HeroNosotrosReact({ query, variables, data: initialData 
         {/* Spacer */}
         <div className="flex-1" />
 
-        {/* Title */}
-        <h1
-          className="text-[36px] md:text-[64px] leading-[110%] font-medium text-white max-w-3xl mb-4 md:mb-6"
-          data-tina-field={hero ? tinaField(hero, 'title') : undefined}
-        >
-          {title}
-        </h1>
-
-        {/* Subtitle */}
-        {subtitle && (
-          <p
-            className="text-white/60 text-sm md:text-base leading-relaxed max-w-xl mb-16 md:mb-20"
-            data-tina-field={hero ? tinaField(hero, 'subtitle') : undefined}
+        {/* Title + subtitle (fade-in de entrada) */}
+        <div data-reveal="up">
+          <h1
+            className="text-[36px] md:text-[64px] leading-[110%] font-medium text-white max-w-3xl mb-4 md:mb-6"
+            data-tina-field={hero ? tinaField(hero, 'title') : undefined}
           >
-            {subtitle}
-          </p>
-        )}
+            {title}
+          </h1>
+
+          {subtitle && (
+            <p
+              className="text-white/60 text-sm md:text-base leading-relaxed max-w-xl mb-16 md:mb-20"
+              data-tina-field={hero ? tinaField(hero, 'subtitle') : undefined}
+            >
+              {subtitle}
+            </p>
+          )}
+        </div>
       </div>
 
       <style>{`

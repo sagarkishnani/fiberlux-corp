@@ -47,7 +47,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-0">
 
           {/* Left: Title + Subtitle (with padding) */}
-          <div className="flex flex-col justify-center px-6 md:px-16 mb-10 md:mb-0">
+          <div className="flex flex-col justify-center px-6 md:px-16 mb-10 md:mb-0" data-reveal="up">
             <h2
               className="text-[40px] md:text-[48px] leading-[120%] font-medium mb-6"
               style={{ color: '#6C1958' }}
