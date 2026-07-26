@@ -53,9 +53,12 @@ const metaDescription =
 >
   <main>
     {/* Overlap sticky (SPEC 70): el hero queda fijo y Beneficios sube por
-        encima cubriéndolo; el hero se libera al terminar la sección. */}
+        encima cubriéndolo; el hero se libera al terminar la sección.
+        Solo desktop (lg+): el hero de subservicio incluye el formulario, que en
+        mobile se apila y hace el hero más alto que el viewport; ahí se apila
+        normal para no dejar el formulario inaccesible bajo el solape. */}
     <div class="relative">
-      <div class="sticky top-0 z-0" data-hero-sticky>
+      <div class="lg:sticky lg:top-0 lg:z-0" data-hero-sticky>
         <HeroSubservicio relativePath={relativePath} />
       </div>
       <div class="relative z-10">
