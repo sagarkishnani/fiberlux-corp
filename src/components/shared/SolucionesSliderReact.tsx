@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
-import { useDragSlider } from "../../hooks/useDragSlider";
+import { useSlider } from "../../hooks/useSlider";
 
 /* ── Props ── */
 interface SolucionesSliderProps {
   query: string;
   variables: { relativePath: string };
   data: HomeQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -31,6 +32,8 @@ export default function SolucionesSliderReact({
   query,
   variables,
   data: initialData,
+  autoplay = true,
+  intervalMs = 6000,
 }: SolucionesSliderProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -39,38 +42,18 @@ export default function SolucionesSliderReact({
     NonNullable<typeof services>["items"]
   >;
 
-  /* Shared drag/scroll engine: left-aligned cards, one card per arrow.
-     momentum:false → a drag settles at most one card in the gesture direction
-     (no velocity fling). With these wide cards the fling projection overshot two
-     cards on a short drag (card 1 → card 3); this keeps dragging one card at a
-     time, matching the arrows. */
-  const slider = useDragSlider({
-    slideSelector: ".sol-slide",
-    align: "start",
-    momentum: false,
-    itemCount: items.length,
-  });
-  const { activeIndex, atStart, atEnd } = slider;
+  const enough = items.length > 1;
 
-  // El fade del borde izquierdo solo se muestra mientras se arrastra/desplaza;
-  // en reposo el borde de las cards queda nítido. Se activa con el scroll y se
-  // apaga ~150ms después de que el carrusel deja de moverse.
-  const [scrolling, setScrolling] = useState(false);
-  useEffect(() => {
-    const el = slider.ref.current;
-    if (!el) return;
-    let t: number | undefined;
-    const onScroll = () => {
-      setScrolling(true);
-      window.clearTimeout(t);
-      t = window.setTimeout(() => setScrolling(false), 150);
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      el.removeEventListener("scroll", onScroll);
-      window.clearTimeout(t);
-    };
-  }, [slider.ref]);
+  /* Embla slider: left-aligned cards, one per arrow, autoplay w/ loop. */
+  const slider = useSlider({
+    align: "start",
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
+  });
+  const { activeIndex, scrolling } = slider;
+  const atStart = !slider.canPrev;
+  const atEnd = !slider.canNext;
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -194,30 +177,22 @@ export default function SolucionesSliderReact({
     );
   };
 
-  /* ── Carousel viewport: shows ~1 card + peek of the next ── */
+  /* ── Carousel viewport (Embla): shows ~1 card + peek of the next ── */
   const carousel = (
     <div
-      ref={slider.ref}
-      className={`flex items-stretch gap-6 overflow-x-auto snap-x snap-mandatory py-2 select-none sol-carousel${
+      ref={slider.viewportRef}
+      className={`overflow-hidden py-2 select-none sol-carousel${
         scrolling ? " sol-carousel-dragging" : ""
       }`}
       style={{ cursor: "grab" }}
-      {...slider.handlers}
     >
-      {items.map((item, i) => (
-        <div key={i} className="sol-slide snap-start shrink-0 w-[86%] md:w-[52%]">
-          {renderCard(item, i)}
-        </div>
-      ))}
-      {/* Trailing spacer: lets the LAST card left-align (and become active) just
-          like the others. Width = one viewport minus one card+gap, so max scroll
-          lands exactly on the last card. Excluded from snapping. */}
-      {items.length > 1 && (
-        <div
-          aria-hidden="true"
-          className="shrink-0 w-[calc(14%-24px)] md:w-[calc(48%-24px)]"
-        />
-      )}
+      <div className="flex items-stretch gap-6">
+        {items.map((item, i) => (
+          <div key={i} className="sol-slide shrink-0 w-[86%] md:w-[52%]">
+            {renderCard(item, i)}
+          </div>
+        ))}
+      </div>
     </div>
   );
 

@@ -52,6 +52,8 @@ export interface Slider {
   scrollSnaps: number[];
   canPrev: boolean;
   canNext: boolean;
+  /** True while the carousel is moving (drag or animation); false once settled. */
+  scrolling: boolean;
   next: () => void;
   prev: () => void;
   goTo: (index: number) => void;
@@ -91,6 +93,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const onSelect = useCallback(() => {
     if (!embla) return;
@@ -102,15 +105,23 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   useEffect(() => {
     if (!embla) return;
     const syncSnaps = () => setScrollSnaps(embla.scrollSnapList());
+    const onScroll = () => setScrolling(true);
+    const onSettle = () => setScrolling(false);
     syncSnaps();
     onSelect();
     embla.on("select", onSelect);
     embla.on("reInit", syncSnaps);
     embla.on("reInit", onSelect);
+    embla.on("scroll", onScroll);
+    embla.on("pointerDown", onScroll);
+    embla.on("settle", onSettle);
     return () => {
       embla.off("select", onSelect);
       embla.off("reInit", syncSnaps);
       embla.off("reInit", onSelect);
+      embla.off("scroll", onScroll);
+      embla.off("pointerDown", onScroll);
+      embla.off("settle", onSettle);
     };
   }, [embla, onSelect]);
 
@@ -118,5 +129,5 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const prev = useCallback(() => embla?.scrollPrev(), [embla]);
   const goTo = useCallback((index: number) => embla?.scrollTo(index), [embla]);
 
-  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, next, prev, goTo };
+  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, scrolling, next, prev, goTo };
 }
