@@ -251,27 +251,31 @@ export default function SolucionesSliderReact({
               [ {sectionTitle.toUpperCase()} ]
             </p>
           )}
-          <h2
-            key={`t-${activeIndex}`}
-            className="sol-fade text-[34px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
-            data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
-          >
-            {active?.title}
-          </h2>
-          {active?.description && (
-            <p
-              key={`d-${activeIndex}`}
-              className="sol-fade mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[32ch]"
-              data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+          <div data-reveal="down">
+            <h2
+              key={`t-${activeIndex}`}
+              className="sol-fade text-[34px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
+              data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
             >
-              {active.description}
-            </p>
+              {active?.title}
+            </h2>
+          </div>
+          {active?.description && (
+            <div data-reveal="up" data-reveal-delay="0.1">
+              <p
+                key={`d-${activeIndex}`}
+                className="sol-fade mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[32ch]"
+                data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+              >
+                {active.description}
+              </p>
+            </div>
           )}
           {items.length > 1 && <div className="hidden md:block mt-9">{arrowsPill}</div>}
         </div>
 
         {/* Right column: carousel */}
-        <div className="md:flex-1 md:min-w-0 mt-8 md:mt-0">{carousel}</div>
+        <div className="md:flex-1 md:min-w-0 mt-8 md:mt-0" data-reveal="up" data-reveal-delay="0.15">{carousel}</div>
 
         {/* Mobile arrows: below the carousel, left-aligned */}
         {items.length > 1 && <div className="md:hidden mt-8">{arrowsPill}</div>}
