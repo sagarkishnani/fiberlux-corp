@@ -3,6 +3,8 @@ import { client } from '../../../tina/__generated__/client';
 import TestimonialSliderReact from './TestimonialSliderReact.tsx';
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+const cfg = (globalQuery.data?.global as any)?.sliders?.testimonios ?? {};
 ---
 
 <TestimonialSliderReact
@@ -10,4 +12,6 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
   query={homeQuery.query}
   variables={homeQuery.variables}
   data={homeQuery.data}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 5000}
 />

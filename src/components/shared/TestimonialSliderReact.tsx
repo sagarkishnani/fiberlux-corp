@@ -1,13 +1,15 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
 import TestimonialCard from './TestimonialCard';
-import { useDragSlider } from '../../hooks/useDragSlider';
+import { useSlider } from '../../hooks/useSlider';
 
 /* ── Types ── */
 interface TestimonialSliderProps {
   query: string;
   variables: HomeQueryVariables;
   data: HomeQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 interface Testimonial {
@@ -24,6 +26,8 @@ export default function TestimonialSliderReact({
   query,
   variables,
   data: initialData,
+  autoplay = true,
+  intervalMs = 5000,
 }: TestimonialSliderProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -36,15 +40,18 @@ export default function TestimonialSliderReact({
   // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
   const isVisible = testimonials?.visible === true;
 
-  /* Shared drag/scroll engine: left-aligned cards (match snap-start), one per arrow. */
-  const slider = useDragSlider({
-    slideSelector: '.testimonial-slide',
-    align: 'start',
-    momentum: false,
-    itemCount: items.length,
-  });
-  const { atStart, atEnd } = slider;
   const hasItems = items.length > 0;
+  const enough = items.length > 1;
+
+  /* Embla slider: left-aligned cards, one per arrow, autoplay w/ loop. */
+  const slider = useSlider({
+    align: 'start',
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
+  });
+  const atStart = !slider.canPrev;
+  const atEnd = !slider.canNext;
 
   /* ── Prev/Next pill — light theme (matches the light testimonios panel).
        Prev tenue (rosa claro), next magenta con flecha blanca. ── */
@@ -101,49 +108,47 @@ export default function TestimonialSliderReact({
         </div>
       </div>
 
-      {/* Carousel */}
+      {/* Carousel (Embla) */}
       <div className="relative">
         <div
-          ref={slider.ref}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none testimonial-carousel"
+          ref={slider.viewportRef}
+          className="overflow-hidden pb-4 select-none testimonial-carousel"
           style={{ cursor: 'grab' }}
-          {...slider.handlers}
         >
-          {hasItems
-            ? items.map((item, i) => (
-                <div
-                  key={i}
-                  className="testimonial-slide snap-start shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
-                  data-tina-field={
-                    testimonials?.items?.[i]
-                      ? tinaField(testimonials.items[i], 'quote')
-                      : undefined
-                  }
-                >
-                  <TestimonialCard
-                    quote={item.quote || ''}
-                    description={item.description}
-                    name={item.name || ''}
-                    role={item.role || ''}
-                    company={item.company || ''}
-                    avatar={item.avatar}
-                    logo={item.logo}
-                  />
-                </div>
-              ))
-            : [1, 2].map((_, i) => (
-                <div
-                  key={i}
-                  className="testimonial-slide snap-start shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
-                >
-                  <div className="bg-white/40 border border-brand-purple/20 rounded-2xl h-[320px] md:h-[400px] flex items-center justify-center text-brand-purple/40 text-sm">
-                    Testimonio — próximamente
+          <div className="flex gap-6">
+            {hasItems
+              ? items.map((item, i) => (
+                  <div
+                    key={i}
+                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
+                    data-tina-field={
+                      testimonials?.items?.[i]
+                        ? tinaField(testimonials.items[i], 'quote')
+                        : undefined
+                    }
+                  >
+                    <TestimonialCard
+                      quote={item.quote || ''}
+                      description={item.description}
+                      name={item.name || ''}
+                      role={item.role || ''}
+                      company={item.company || ''}
+                      avatar={item.avatar}
+                      logo={item.logo}
+                    />
                   </div>
-                </div>
-              ))}
-
-          {/* Right spacer */}
-          <div className="shrink-0 w-4" />
+                ))
+              : [1, 2].map((_, i) => (
+                  <div
+                    key={i}
+                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
+                  >
+                    <div className="bg-white/40 border border-brand-purple/20 rounded-2xl h-[320px] md:h-[400px] flex items-center justify-center text-brand-purple/40 text-sm">
+                      Testimonio — próximamente
+                    </div>
+                  </div>
+                ))}
+          </div>
         </div>
       </div>
 
