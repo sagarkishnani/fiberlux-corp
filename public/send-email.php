@@ -158,7 +158,8 @@ try {
 
         // ─── Confirmation copy to lead ───
         $leadEmail = $input['email'] ?? $input['correo'] ?? '';
-        $leadName  = trim(($input['nombre'] ?? '') . ' ' . ($input['apellido'] ?? ''));
+        $leadName  = trim(($input['nombre'] ?? '') . ' ' . ($input['apellido'] ?? $input['apellidos'] ?? ''));
+        if ($leadName === '') $leadName = trim($input['nombreCompleto'] ?? '');
         if ($leadEmail && filter_var($leadEmail, FILTER_VALIDATE_EMAIL)) {
             try {
                 $confirm = new PHPMailer(true);
@@ -172,10 +173,19 @@ try {
                 $confirm->CharSet    = 'UTF-8';
                 $confirm->setFrom($SMTP_USER, 'Fiberlux');
                 $confirm->addAddress($leadEmail, $leadName);
-                $confirm->Subject = "Recibimos tu mensaje [$correlativo] — Fiberlux";
                 $confirm->isHTML(true);
-                $confirm->Body = '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#fff;font-size:18px;">Fiberlux</h1></td></tr><tr><td style="padding:32px;"><p style="color:#333;font-size:15px;margin:0 0 16px;">Hola' . ($leadName ? " <strong>" . htmlspecialchars($leadName) . "</strong>" : "") . ',</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 16px;">Hemos recibido tu solicitud con el código <strong style="color:#96237A;">' . $correlativo . '</strong>. Nuestro equipo se comunicará contigo en las próximas 24 horas.</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 24px;">Si tienes alguna consulta adicional, no dudes en contactarnos al <strong>(01) 748-0606</strong> o por WhatsApp.</p><p style="color:#aaa;font-size:12px;margin:0;">Este es un mensaje automático, por favor no respondas a este correo.</p></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;text-align:center;"><p style="margin:0;color:#aaa;font-size:11px;">© ' . date('Y') . ' Fiberlux</p></td></tr></table></td></tr></table></body></html>';
-                $confirm->AltBody = "Hola $leadName, recibimos tu solicitud [$correlativo]. Nos comunicaremos contigo en las próximas 24 horas. Tel: (01) 748-0606";
+
+                // Grupo A (plantilla rica): contacto / soluciones. Resto → Grupo B (simple + logo).
+                $richTypes = ['contacto', 'servicios'];
+                if (in_array($formType, $richTypes, true)) {
+                    $confirm->Subject = 'Gracias por contactarnos — Fiberlux';
+                    $confirm->Body    = buildConfirmRich($leadName, $ASSET_BASE);
+                    $confirm->AltBody = 'Hola' . ($leadName ? " $leadName" : '') . ', hemos recibido tus datos. Un ejecutivo de ventas se comunicará muy pronto contigo. — Fiberlux';
+                } else {
+                    $confirm->Subject = "Recibimos tu mensaje [$correlativo] — Fiberlux";
+                    $confirm->Body    = buildConfirmSimple($leadName, $correlativo, $ASSET_BASE);
+                    $confirm->AltBody = "Hola $leadName, recibimos tu solicitud [$correlativo]. Nos comunicaremos contigo en las próximas 24 horas.";
+                }
                 $confirm->send();
             } catch (Exception $e) {
                 // Confirmation email failed silently — don't break the main flow
@@ -296,5 +306,107 @@ function getFieldRows(string $type, array $data): array {
         case 'libro_reclamaciones': return ['Nombre completo'=>$data['nombreCompleto']??'','Dirección'=>$data['direccionCons']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Correo'=>$data['correo']??'','Teléfono'=>$data['telefono']??'','Tipo de bien'=>$data['tipoBien']??'','Monto reclamado'=>$data['montoReclamado']??'','Descripción'=>$data['descripcionBien']??'','Tipo de solicitud'=>$data['tipoSolicitud']??'','Detalle'=>$data['detalle']??'','Pedido'=>$data['pedido']??''];
         default: return $data;
     }
+}
+
+// ══════════════════════════════════════════════════
+//  CONFIRMATION EMAIL TEMPLATES (to the lead)
+// ══════════════════════════════════════════════════
+
+// Grupo B (reclamos/legales): confirmación simple con el logo en el header negro.
+function buildConfirmSimple(string $leadName, string $correlativo, string $assetBase): string {
+    $b    = htmlspecialchars($assetBase, ENT_QUOTES, 'UTF-8');
+    $name = $leadName !== '' ? ' <strong>' . htmlspecialchars($leadName, ENT_QUOTES, 'UTF-8') . '</strong>' : '';
+    $cor  = htmlspecialchars($correlativo, ENT_QUOTES, 'UTF-8');
+    $year = date('Y');
+    return '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><img src="' . $b . '/logoFiberlux-blanco.png" alt="Fiberlux" width="141" style="display:block;width:141px;height:auto;border:0;"></td></tr><tr><td style="padding:32px;"><p style="color:#333;font-size:15px;margin:0 0 16px;">Hola' . $name . ',</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 16px;">Hemos recibido tu solicitud con el código <strong style="color:#96237A;">' . $cor . '</strong>. Nuestro equipo se comunicará contigo en las próximas 24 horas.</p><p style="color:#555;font-size:14px;line-height:1.7;margin:0 0 24px;">Si tienes alguna consulta adicional, no dudes en contactarnos al <strong>(01) 748-0606</strong> o por WhatsApp.</p><p style="color:#aaa;font-size:12px;margin:0;">Este es un mensaje automático, por favor no respondas a este correo.</p></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;text-align:center;"><p style="margin:0;color:#aaa;font-size:11px;">© ' . $year . ' Fiberlux</p></td></tr></table></td></tr></table></body></html>';
+}
+
+// Grupo A (contacto/soluciones): plantilla rica "Gracias por contactarnos".
+function buildConfirmRich(string $leadName, string $assetBase): string {
+    $b        = htmlspecialchars($assetBase, ENT_QUOTES, 'UTF-8');
+    $greeting = 'Hola' . ($leadName !== '' ? ' ' . htmlspecialchars($leadName, ENT_QUOTES, 'UTF-8') : '');
+    return '<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Gracias por contactarnos - Fiberlux</title>
+<!--[if mso]><noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript><![endif]-->
+<style>
+  body, table, td { font-family: Poppins, Arial, Helvetica, sans-serif; }
+  body { margin:0; padding:0; background-color:#ffffff; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+  table { border-collapse:collapse; }
+  img { border:0; display:block; line-height:100%; -ms-interpolation-mode:bicubic; }
+  a { text-decoration:none; }
+  @media only screen and (max-width:620px) {
+    .email-container { width:100% !important; }
+    .fluid-img { width:100% !important; height:auto !important; }
+  }
+</style>
+</head>
+<body style="margin:0; padding:0; background-color:#ffffff;">
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all; font-size:1px; line-height:1px; color:#000000;">Gracias por registrarte en nuestro formulario. Un ejecutivo de ventas se comunicará muy pronto contigo.</div>
+  <center style="width:100%; background-color:#ffffff;">
+  <div style="max-width:600px; margin:0 auto;" class="email-container">
+  <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; margin:0 auto; background-color:#F3E4EF;">
+    <tr>
+      <td style="background-color:#000000; padding:12px 64px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td style="vertical-align:middle;"><img src="' . $b . '/logoFiberlux-blanco.png" width="141" alt="Fiberlux" style="display:block; width:141px; height:auto;"></td>
+          <td style="vertical-align:middle; text-align:right;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="right"><tr>
+              <td style="padding-left:10px;"><a href="https://www.linkedin.com/company/fiberlux-peru/" target="_blank"><img src="' . $b . '/linkedin-blanco.png" width="22" alt="LinkedIn Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:10px;"><a href="https://www.facebook.com/fiberluxsac" target="_blank"><img src="' . $b . '/facebook-blanco.png" width="22" alt="Facebook Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:10px;"><a href="https://www.youtube.com/@fiberlux_peru" target="_blank"><img src="' . $b . '/youtube-blanco.png" width="22" alt="YouTube Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:10px;"><a href="https://www.instagram.com/fiberlux_peru" target="_blank"><img src="' . $b . '/instagram-blanco.png" width="22" alt="Instagram Fiberlux" style="display:block; height:auto;"></a></td>
+            </tr></table>
+          </td>
+        </tr></table>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#F3E4EF; padding:0;"><img src="' . $b . '/header-contact-mail.png" alt="Contacto - Gracias por contactarnos" width="600" class="fluid-img" style="width:100%; max-width:600px; height:auto; display:block;"></td>
+    </tr>
+    <tr>
+      <td style="background-color:#F3E4EF; padding:36px 60px 28px 60px; text-align:center;">
+        <p style="margin:0 0 16px 0; font-family:Poppins,Arial,sans-serif; font-size:20px; font-weight:600; color:#252525;">' . $greeting . '</p>
+        <p style="margin:0 0 16px 0; font-family:Poppins,Arial,sans-serif; font-size:15px; font-weight:400; line-height:1.45; color:#4a4a4a;">Hemos recibido tus datos, un ejecutivo de ventas se comunicará muy pronto contigo para enviarte más información del servicio requerido.</p>
+        <p style="margin:0; font-family:Poppins,Arial,sans-serif; font-size:15px; font-weight:400; line-height:1.45; color:#4a4a4a;">En <strong style="font-weight:600;">Fiberlux</strong> te ayudaremos a ser parte del proceso de Transformación Digital de tu empresa.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#96237a; padding:32px 70px; text-align:center;">
+        <p style="margin:0; font-family:Poppins,Arial,sans-serif; font-size:16px; line-height:1.2; color:#ffffff;"><strong style="font-weight:600;">¿Tienes una consulta urgente?</strong><br>Escríbenos respondiendo este correo.</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#f0f0f0; padding:16px 70px 0 70px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td style="vertical-align:middle;"><img src="' . $b . '/logoFiberlux-full.png" width="110" alt="Fiberlux" style="display:block; width:110px; height:auto;"></td>
+          <td style="vertical-align:middle; text-align:right;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="right"><tr>
+              <td style="padding-left:8px;"><a href="https://www.linkedin.com/company/fiberlux-peru/" target="_blank"><img src="' . $b . '/linkedin-gris.png" width="24" alt="LinkedIn Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:8px;"><a href="https://www.facebook.com/fiberluxsac" target="_blank"><img src="' . $b . '/facebook-gris.png" width="24" alt="Facebook Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:8px;"><a href="https://www.youtube.com/@fiberlux_peru" target="_blank"><img src="' . $b . '/youtube-gris.png" width="24" alt="YouTube Fiberlux" style="display:block; height:auto;"></a></td>
+              <td style="padding-left:8px;"><a href="https://www.instagram.com/fiberlux_peru" target="_blank"><img src="' . $b . '/instagram-gris.png" width="24" alt="Instagram Fiberlux" style="display:block; height:auto;"></a></td>
+            </tr></table>
+          </td>
+        </tr></table>
+      </td>
+    </tr>
+    <tr>
+      <td style="background-color:#f0f0f0; padding:10px 70px 27px 70px;">
+        <p style="margin:0 0 8px 0; font-family:Poppins,Arial,sans-serif; font-size:12px; line-height:1.15; color:#5e5e5e; text-align:justify;">AVISO DE CONFIDENCIALIDAD: Este correo y sus anexos son para uso exclusivo del destinatario y pueden contener información confidencial o privilegiada. Su uso no autorizado está prohibido por la ley. Si usted no es el destinatario, por favor, notifíquelo al remitente y elimínelo. Queda prohibido revisarlo, retransmitirlo o usarlo por personas no autorizadas.</p>
+        <p style="margin:0; font-family:Poppins,Arial,sans-serif; font-size:12px; line-height:1.15; color:#5e5e5e; text-align:justify;">Sus datos personales indicados quedan incorporados en el Banco de Datos denominados &ldquo;Usuarios de Medios Digitales&rdquo; (RNPDP-PJP-N N&deg; 10531) y/o &ldquo;Clientes actuales y Potenciales&rdquo; (RNPDP-PJP-N N&deg; 10534) de conformidad con las disposiciones legales sobre protección de datos personales. Usted puede ejercer sus derechos de acceso, rectificación, cancelación y oposición enviando un correo a <a href="mailto:atencionalcliente@fiberlux.pe" style="color:#5e5e5e; text-decoration:underline;">atencionalcliente@fiberlux.pe</a>. Si no desea recibir más correos, por favor responda a este mensaje con el asunto "REMOVER".</p>
+      </td>
+    </tr>
+  </table>
+  <!--[if mso]></td></tr></table><![endif]-->
+  </div>
+  </center>
+</body>
+</html>';
 }
 ?>
