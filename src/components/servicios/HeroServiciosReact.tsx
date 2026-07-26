@@ -3,7 +3,7 @@ import type {
   ServiciosQuery,
   ServiciosQueryVariables,
 } from "../../../tina/__generated__/types";
-import SplineScene from "../shared/SplineScene";
+import HeroVideo from "../shared/HeroVideo";
 
 interface HeroServiciosProps {
   query: string;
@@ -31,7 +31,7 @@ export default function HeroServiciosReact({
       {/* Ambient glow toward the right (where the 3D element will live) */}
       <div className="absolute inset-0 z-0 servicios-hero-glow" />
 
-      <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-28">
+      <div className="relative site-container pt-28 pb-20 lg:pt-36 lg:pb-28">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* ════ LEFT — informational chrome ════ */}
           <div className="max-w-[560px]" data-reveal="up">
@@ -74,21 +74,15 @@ export default function HeroServiciosReact({
             )}
           </div>
 
-          {/* ════ RIGHT — elemento 3D (desktop) ════ */}
-          <div
-            className="hidden lg:block relative w-full"
-            style={{ minHeight: 440 }}
-          >
-            {page.splineSceneUrl && (
-              <SplineScene
-                scene={page.splineSceneUrl}
-                poster={page.splinePosterUrl}
-                allowMobile={false}
-                featherEdges
-                className="absolute inset-0"
+          {/* ════ RIGHT — video del hero (loop, se funde con el fondo) ════ */}
+          {(page as any).heroVideo && (
+            <div className="relative w-full max-w-[440px] mx-auto">
+              <HeroVideo
+                src={(page as any).heroVideo}
+                poster={(page as any).heroVideoPoster}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 

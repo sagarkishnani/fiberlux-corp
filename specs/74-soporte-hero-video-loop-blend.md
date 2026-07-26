@@ -1,9 +1,11 @@
-# SPEC 74 — Hero de Soporte Técnico: video en loop (reemplaza el 3D de Spline)
+# SPEC 74 — Heros con video en loop (reemplaza el 3D de Spline): Soporte y Soluciones
 
 > **Estado:** Implementado
-> **Depende de:** SPEC 06 (página soporte técnico), SPEC 18/31 (Spline hero / rendimiento)
+> **Depende de:** SPEC 06 (soporte técnico), SPEC 10 (página soluciones/servicios), SPEC 18/31 (Spline hero / rendimiento)
 > **Fecha:** 2026-07-26
-> **Objetivo:** Reemplazar el elemento 3D de Spline del hero de Soporte Técnico por el video `router-soporte-tecnico.mp4` en loop con `mix-blend-mode: screen`, editable desde Tina y visible en desktop y mobile, aligerando la carga de esa página.
+> **Objetivo:** Reemplazar el elemento 3D de Spline del hero de Soporte Técnico (video `router-soporte-tecnico.mp4`) y del hero de Soluciones (video `cubos-soluciones.mp4`) por video en loop con `mix-blend-mode: screen`, editable desde Tina y visible en desktop y mobile, aligerando esas páginas.
+
+> **Ampliación (2026-07-26):** el spec cubría solo Soporte. Se extiende al hero de **Soluciones/Servicios** (`HeroServiciosReact`, collection `servicios`) con el video `cubos-soluciones.mp4`, aplicando el mismo componente y criterios. Home queda fuera (sigue con Spline).
 
 ---
 
@@ -22,7 +24,7 @@
 
 **Out of scope (futuro):**
 
-- Home y Servicios siguen usando Spline; **no** se elimina la dependencia `@splinetool` (esos heroes no cambian).
+- Home sigue usando Spline; **no** se elimina la dependencia `@splinetool` (Home no cambia). Soluciones/Servicios SÍ pasa a video (ver ampliación).
 - Auditoría/pase general de rendimiento del sitio (lazy-load global, imágenes, Lenis, bundles) → su propio spec.
 - Nuevos assets de video para Home/Servicios.
 - Cambiar el layout/copys del hero de soporte (solo se sustituye el elemento visual de la derecha).
@@ -71,7 +73,10 @@ Cambios en el collection `soporteTecnico` (`tina/config.ts`) y su contenido JSON
    Quitar `import SplineScene` y el bloque `<SplineScene .../>`. En la columna derecha renderizar `<HeroVideo src={page.heroVideo} poster={page.heroVideoPoster} />` cuando `page.heroVideo` exista. Quitar la restricción `hidden lg:block` para que se vea también en mobile (ajustando el contenedor/alto para que quede bien en ambos). Mantener el glow del fondo. Prueba manual desktop + mobile: video en loop, se funde con las gradientes (screen), sin recuadro negro.
 
 4. **Verificación + build.**
-   Revisar hero de soporte en desktop y mobile: el video corre en loop, `mix-blend-mode: screen` funde el fondo, poster visible en reduce-motion, sin overflow ni salto de layout. Confirmar que soporte ya no descarga el chunk de Spline (network). Home y Servicios siguen con su Spline intacto. `npm run build` compila.
+   Revisar hero de soporte en desktop y mobile: el video corre en loop, `mix-blend-mode: screen` funde el fondo, poster visible en reduce-motion, sin overflow ni salto de layout. Confirmar que soporte ya no descarga el chunk de Spline (network). Home sigue con su Spline intacto. `npm run build` compila.
+
+5. **(Ampliación) Soluciones/Servicios.**
+   Mismo tratamiento en `servicios` (collection Tina + `HeroServiciosReact`): campos `heroVideo`/`heroVideoPoster` (default `/videos/cubos-soluciones.mp4`), reemplazar `<SplineScene>` por `<HeroVideo>` reutilizando el componente de shared, quitar el `z-10` que aísla el blend, video a tamaño natural limitado a `max-w-[440px]` centrado, visible desktop+mobile. Verificar blend/loop/reduce-motion y build.
 
 ---
 

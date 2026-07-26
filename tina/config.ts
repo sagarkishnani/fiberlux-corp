@@ -1218,18 +1218,18 @@ export default defineConfig({
           },
           { name: "ctaLabel", label: "Texto del botón del hero", type: "string" },
           {
-            name: "splineSceneUrl",
-            label: "URL de la escena de Spline (hero)",
-            type: "string",
-            description:
-              "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vacío = sin 3D.",
-          },
-          {
-            name: "splinePosterUrl",
-            label: "Poster estático de la escena (respaldo)",
+            name: "heroVideo",
+            label: "Video del hero (loop)",
             type: "image",
             description:
-              "Captura PNG de la escena. Se muestra en equipos débiles / red lenta / reduce-motion en vez del 3D, y como base mientras carga.",
+              "Video corto en loop (mp4) que reemplaza al 3D. Se mezcla con mix-blend-mode: screen sobre el fondo. Vacío = sin video.",
+          },
+          {
+            name: "heroVideoPoster",
+            label: "Poster del video (respaldo)",
+            type: "image",
+            description:
+              "Imagen que se muestra mientras carga el video y en reduce-motion (sin reproducción).",
           },
 
           // ── Bloque de formulario ──
