@@ -49,7 +49,7 @@ export default function HeroVideo({ src, poster, className = "" }: HeroVideoProp
         alt=""
         aria-hidden="true"
         draggable={false}
-        className={`h-full w-full object-cover ${className}`}
+        className={`block w-full h-auto ${className}`}
         style={{ mixBlendMode: "screen" }}
       />
     );
@@ -67,7 +67,7 @@ export default function HeroVideo({ src, poster, className = "" }: HeroVideoProp
       preload="metadata"
       aria-hidden="true"
       suppressHydrationWarning
-      className={`h-full w-full object-cover ${className}`}
+      className={`block w-full h-auto ${className}`}
       style={{ mixBlendMode: "screen" }}
     />
   );
