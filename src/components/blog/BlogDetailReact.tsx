@@ -206,6 +206,7 @@ export default function BlogDetailReact({
 
           {/* Title */}
           <h1
+            data-reveal="up"
             className="text-[32px] md:text-[48px] leading-[38px] md:leading-[56px] font-medium text-white mb-8"
             data-tina-field={tinaField(post, 'title')}
           >
@@ -239,6 +240,7 @@ export default function BlogDetailReact({
           {/* Cover image — same width as content */}
           {coverImage && (
             <div
+              data-reveal="scale"
               className="rounded-t-2xl overflow-hidden max-h-[280px] md:max-h-[480px]"
               data-tina-field={tinaField(post, 'coverImage')}
             >

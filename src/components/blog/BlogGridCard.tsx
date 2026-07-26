@@ -46,7 +46,7 @@ export default function BlogGridCard({
 
   return (
     <a href={`/blog/${slug}`} className="block group h-full">
-      <article className="flex flex-col h-full bg-white rounded-2xl border border-[#e5e7eb] overflow-hidden transition-all duration-300 hover:shadow-[0_4px_24px_rgba(0,0,0,0.08)]">
+      <article className="flex flex-col h-full bg-white rounded-2xl border border-[#e5e7eb] overflow-hidden transition-all duration-300 hover:shadow-[0_18px_40px_-18px_rgba(150,35,122,0.35)] hover:border-brand-purple/40 hover:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none">
         {/* Image */}
         <div className="relative overflow-hidden">
           <div className="aspect-[16/10]">

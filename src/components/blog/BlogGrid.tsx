@@ -128,9 +128,9 @@ export default function BlogGrid({
           </div>
         </div>
 
-        {/* Grid */}
+        {/* Grid (fade-up del contenedor: pagination-safe, sin ocultar cards al paginar) */}
         {paginatedPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal="up">
             {paginatedPosts.map((edge) => {
               const post = edge.node!;
               return (
