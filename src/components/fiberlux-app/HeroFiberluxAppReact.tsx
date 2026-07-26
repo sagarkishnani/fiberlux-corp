@@ -89,7 +89,7 @@ export default function HeroFiberluxAppReact({
 
       <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-16">
         {/* ════ Copy a la izquierda (una sola columna; la foto ya trae el teléfono) ════ */}
-        <div className="max-w-[560px]" data-reveal="up">
+        <div className="max-w-[560px]">
           {hero?.heading && (
             <h1
               className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"

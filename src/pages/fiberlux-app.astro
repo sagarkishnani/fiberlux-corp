@@ -23,8 +23,16 @@ const metaDescription =
 
 <BaseLayout title={metaTitle} description={metaDescription}>
   <main>
-    <HeroFiberluxApp />
-    <BeneficiosApp />
+    {/* Overlap sticky (SPEC 70): el hero queda fijo y Beneficios sube por
+        encima cubriéndolo; el hero se libera al terminar la sección. */}
+    <div class="relative">
+      <div class="sticky top-0 z-0" data-hero-sticky>
+        <HeroFiberluxApp />
+      </div>
+      <div class="relative z-10">
+        <BeneficiosApp />
+      </div>
+    </div>
     <div data-reveal="up">
       <CasosDeUsoApp />
     </div>
