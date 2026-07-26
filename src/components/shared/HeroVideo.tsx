@@ -27,6 +27,15 @@ export default function HeroVideo({ src, poster, className = "" }: HeroVideoProp
     );
   }, []);
 
+  // React no refleja `muted` como atributo en el HTML de SSR, así que lo fijamos
+  // por propiedad y forzamos el autoplay silencioso una vez montado.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.muted = true;
+    el.play().catch(() => {});
+  }, []);
+
   const videoSrc = mediaUrl(src);
   const posterSrc = mediaUrl(poster);
   if (!videoSrc) return null;
@@ -57,6 +66,7 @@ export default function HeroVideo({ src, poster, className = "" }: HeroVideoProp
       playsInline
       preload="metadata"
       aria-hidden="true"
+      suppressHydrationWarning
       className={`h-full w-full object-cover ${className}`}
       style={{ mixBlendMode: "screen" }}
     />
