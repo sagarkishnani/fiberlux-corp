@@ -36,7 +36,7 @@ export default function CasosSliderReact({
   /* Embla slider: centre-aligned cards, one per arrow, autoplay w/ loop. */
   const slider = useSlider({
     align: "center",
-    loop: enough,
+    loop: false,
     autoplay: autoplay && enough,
     intervalMs,
   });

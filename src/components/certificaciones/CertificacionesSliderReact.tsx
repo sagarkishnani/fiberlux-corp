@@ -37,7 +37,7 @@ export default function CertificacionesSliderReact({
   /* Embla slider: left-aligned cards, one card per arrow, autoplay w/ loop. */
   const slider = useSlider({
     align: "start",
-    loop: enough,
+    loop: false,
     autoplay: autoplay && enough,
     intervalMs,
   });

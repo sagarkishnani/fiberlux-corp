@@ -117,7 +117,7 @@ export default function CatalogoSolucionesReact({
   // Hooks antes de cualquier return condicional.
   const slider = useSlider({
     align: "start",
-    loop: enough,
+    loop: false,
     autoplay: autoplay && enough,
     intervalMs,
   });

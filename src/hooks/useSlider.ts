@@ -80,6 +80,8 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
           stopOnMouseEnter: true,
           stopOnInteraction: false,
           stopOnFocusIn: true,
+          // Sin loop: al llegar al último slide el autoplay se detiene (no reinicia).
+          stopOnLastSnap: true,
         }),
       ]
     : [];

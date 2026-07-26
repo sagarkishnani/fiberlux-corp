@@ -51,7 +51,7 @@ export default function BlogPreviewReact({
   /* Embla slider: left-aligned cards, one per arrow, autoplay w/ loop. */
   const slider = useSlider({
     align: "start",
-    loop: enough,
+    loop: false,
     autoplay: autoplay && enough,
     intervalMs,
   });

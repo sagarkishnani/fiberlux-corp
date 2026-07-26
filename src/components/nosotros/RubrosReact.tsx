@@ -92,7 +92,7 @@ export default function RubrosReact({
   /* Embla slider: left-aligned cards, autoplay w/ loop (arrows wrap via loop). */
   const slider = useSlider({
     align: 'start',
-    loop: enough,
+    loop: false,
     autoplay: autoplay && enough,
     intervalMs,
   });
