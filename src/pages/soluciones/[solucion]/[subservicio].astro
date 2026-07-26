@@ -52,9 +52,17 @@ const metaDescription =
   whatsappKind="servicio"
 >
   <main>
-    <HeroSubservicio relativePath={relativePath} />
-    <HtmlInjection location="subservicio-after-hero" />
-    <Beneficios relativePath={relativePath} />
+    {/* Overlap sticky (SPEC 70): el hero queda fijo y Beneficios sube por
+        encima cubriéndolo; el hero se libera al terminar la sección. */}
+    <div class="relative">
+      <div class="sticky top-0 z-0" data-hero-sticky>
+        <HeroSubservicio relativePath={relativePath} />
+      </div>
+      <div class="relative z-10">
+        <HtmlInjection location="subservicio-after-hero" />
+        <Beneficios relativePath={relativePath} />
+      </div>
+    </div>
     <CasosDeUso relativePath={relativePath} />
     <div class="-mt-16 relative z-20">
       <Stats title={sub?.whyUsTitle ?? undefined} />
