@@ -19,8 +19,14 @@ import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
     {/* <StickyCards /> — reemplazado por SolucionesSlider (SPEC 35) */}
     <SolucionesSlider />
     {/* Partners e ISO (certificaciones) reutilizados del home, debajo de las cards */}
-    <HomePartners />
-    <CertificacionesSlider />
-    <ServiciosForm />
+    <div data-reveal="up">
+      <HomePartners />
+    </div>
+    <div data-reveal="up">
+      <CertificacionesSlider />
+    </div>
+    <div data-reveal="up">
+      <ServiciosForm />
+    </div>
   </main>
 </BaseLayout>
