@@ -111,6 +111,30 @@ const whatsappMessage = whatsappContext
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
     </title>
+    {/* Reveal (SPEC 69): marca <html class="reveal-js"> ANTES del primer paint
+        para ocultar los [data-reveal] solo cuando hay JS (anti-FOUC). */}
+    <script is:inline>
+      document.documentElement.classList.add("reveal-js");
+    </script>
+    <style is:global>
+      .reveal-js [data-reveal]:not([data-reveal-stagger]) {
+        opacity: 0;
+        will-change: transform, opacity;
+      }
+      .reveal-js [data-reveal="up"]:not([data-reveal-stagger]) { transform: translateY(40px); }
+      .reveal-js [data-reveal="down"]:not([data-reveal-stagger]) { transform: translateY(-40px); }
+      .reveal-js [data-reveal="left"]:not([data-reveal-stagger]) { transform: translateX(-40px); }
+      .reveal-js [data-reveal="right"]:not([data-reveal-stagger]) { transform: translateX(40px); }
+      .reveal-js [data-reveal="scale"]:not([data-reveal-stagger]) { transform: scale(0.94); }
+      .reveal-js [data-reveal-stagger] > * { opacity: 0; }
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-js [data-reveal],
+        .reveal-js [data-reveal-stagger] > * {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      }
+    </style>
     {/* Accessibility: apply saved preferences before first paint (no flash) */}
     <script is:inline>
       (function () {
@@ -229,6 +253,9 @@ const whatsappMessage = whatsappContext
     }
   </body>
 </html>
+
+{/* Reveal (SPEC 69): animaciones de entrada por [data-reveal]. */}
+{!maintenanceMode && <script>import "../scripts/reveal.ts";</script>}
 
 {
   !maintenanceMode && (
