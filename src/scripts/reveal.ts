@@ -18,34 +18,42 @@ import { animate, inView, scroll } from "motion";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const DEFAULT_DURATION = 1;
-const DEFAULT_DISTANCE = 40;
+const DEFAULT_DISTANCE = 80;
+
+/** Offsets de entrada por dirección (para diagonales usa ambos ejes). */
+function offsetsFor(dir: string, d: number): { x: number; y: number } {
+  switch (dir) {
+    case "down": return { x: 0, y: -d };
+    case "left": return { x: -d, y: 0 };
+    case "right": return { x: d, y: 0 };
+    case "diag-ur": return { x: -d, y: d };
+    case "diag-ul": return { x: d, y: d };
+    case "diag-dr": return { x: -d, y: -d };
+    case "diag-dl": return { x: d, y: -d };
+    case "fade":
+    case "scale": return { x: 0, y: 0 };
+    default: return { x: 0, y: d }; // up
+  }
+}
 
 type Kf = { opacity: number[]; x?: number[]; y?: number[]; scale?: number[] };
 type Target = { opacity: number; x?: number; y?: number; scale?: number };
 
 function enterKeyframes(dir: string, dist: number): Kf {
   const kf: Kf = { opacity: [0, 1] };
-  switch (dir) {
-    case "down": kf.y = [-dist, 0]; break;
-    case "left": kf.x = [-dist, 0]; break;
-    case "right": kf.x = [dist, 0]; break;
-    case "scale": kf.scale = [0.94, 1]; break;
-    case "fade": break;
-    default: kf.y = [dist, 0];
-  }
+  if (dir === "scale") { kf.scale = [0.94, 1]; return kf; }
+  const o = offsetsFor(dir, dist);
+  if (o.x) kf.x = [o.x, 0];
+  if (o.y) kf.y = [o.y, 0];
   return kf;
 }
 
 function hiddenTarget(dir: string, dist: number): Target {
   const t: Target = { opacity: 0 };
-  switch (dir) {
-    case "down": t.y = -dist; break;
-    case "left": t.x = -dist; break;
-    case "right": t.x = dist; break;
-    case "scale": t.scale = 0.94; break;
-    case "fade": break;
-    default: t.y = dist;
-  }
+  if (dir === "scale") { t.scale = 0.94; return t; }
+  const o = offsetsFor(dir, dist);
+  if (o.x) t.x = o.x;
+  if (o.y) t.y = o.y;
   return t;
 }
 
@@ -67,19 +75,11 @@ function initScrub() {
     // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
     // ×1.7 en la misma dirección (no solo fade).
     const dist = Number(el.dataset.revealDistance || 100);
-    const exit = dist * 1.7;
+    const enter = offsetsFor(dir, dist);
+    const exit = offsetsFor(dir, dist * 1.7); // la salida se aleja ×1.7
     const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
-    let axis: "x" | "y" | null = "y";
-    let enterV = 0;
-    let exitV = 0;
-    switch (dir) {
-      case "left": axis = "x"; enterV = -dist; exitV = -exit; break;
-      case "right": axis = "x"; enterV = dist; exitV = exit; break;
-      case "down": axis = "y"; enterV = -dist; exitV = -exit; break;
-      case "fade": axis = null; break;
-      default: axis = "y"; enterV = dist; exitV = exit; // up
-    }
-    if (axis) kf[axis] = [enterV, 0, 0, exitV];
+    if (enter.x || exit.x) kf.x = [enter.x, 0, 0, exit.x];
+    if (enter.y || exit.y) kf.y = [enter.y, 0, 0, exit.y];
     scroll(
       // 0–25% entra (slide+fade), 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
       animate(el, kf as any, { times: [0, 0.25, 0.65, 1], ease: "linear" }),

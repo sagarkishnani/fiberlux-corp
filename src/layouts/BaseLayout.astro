@@ -121,11 +121,15 @@ const whatsappMessage = whatsappContext
         opacity: 0;
         will-change: transform, opacity;
       }
-      .reveal-js [data-reveal="up"]:not([data-reveal-stagger]) { transform: translateY(40px); }
-      .reveal-js [data-reveal="down"]:not([data-reveal-stagger]) { transform: translateY(-40px); }
-      .reveal-js [data-reveal="left"]:not([data-reveal-stagger]) { transform: translateX(-40px); }
-      .reveal-js [data-reveal="right"]:not([data-reveal-stagger]) { transform: translateX(40px); }
+      .reveal-js [data-reveal="up"]:not([data-reveal-stagger]) { transform: translateY(80px); }
+      .reveal-js [data-reveal="down"]:not([data-reveal-stagger]) { transform: translateY(-80px); }
+      .reveal-js [data-reveal="left"]:not([data-reveal-stagger]) { transform: translateX(-80px); }
+      .reveal-js [data-reveal="right"]:not([data-reveal-stagger]) { transform: translateX(80px); }
       .reveal-js [data-reveal="scale"]:not([data-reveal-stagger]) { transform: scale(0.94); }
+      .reveal-js [data-reveal="diag-ur"]:not([data-reveal-stagger]) { transform: translate(-80px, 80px); }
+      .reveal-js [data-reveal="diag-ul"]:not([data-reveal-stagger]) { transform: translate(80px, 80px); }
+      .reveal-js [data-reveal="diag-dr"]:not([data-reveal-stagger]) { transform: translate(-80px, -80px); }
+      .reveal-js [data-reveal="diag-dl"]:not([data-reveal-stagger]) { transform: translate(80px, -80px); }
       .reveal-js [data-reveal-stagger] > * { opacity: 0; }
       @media (prefers-reduced-motion: reduce) {
         .reveal-js [data-reveal],
