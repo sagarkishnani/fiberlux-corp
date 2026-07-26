@@ -5,6 +5,7 @@ import type {
 } from "../../../tina/__generated__/types";
 import CertCard, { type Cert } from "./CertCard";
 import { useSlider } from "../../hooks/useSlider";
+import SliderArrows from "../shared/SliderArrows";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 /* Decorative background glow (static asset), same pattern as the soluciones slider. */
@@ -41,46 +42,22 @@ export default function CertificacionesSliderReact({
     autoplay: autoplay && enough,
     intervalMs,
   });
-  const atStart = !slider.canPrev;
   const atEnd = !slider.canNext;
 
-  /* ── Prev/Next pill ── */
   const arrowsPill = (
-    <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
-      <button
-        type="button"
-        onClick={slider.prev}
-        disabled={atStart}
-        aria-label="Anterior"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        onClick={slider.next}
-        disabled={atEnd}
-        aria-label="Siguiente"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
+    <SliderArrows
+      canPrev={slider.canPrev}
+      canNext={slider.canNext}
+      onPrev={slider.prev}
+      onNext={slider.next}
+    />
   );
 
   /* ── Carousel viewport (Embla): mobile ~1 card + peek, desktop exactly 2 ── */
   const carousel = (
     <div
       ref={slider.viewportRef}
-      className="overflow-hidden py-2 select-none cert-carousel"
+      className={`overflow-hidden py-2 select-none cert-carousel${atEnd ? " cert-at-end" : ""}`}
       style={{ cursor: hasItems ? "grab" : "default" }}
     >
       <div className="flex items-stretch gap-6">
@@ -152,12 +129,16 @@ export default function CertificacionesSliderReact({
       </div>
 
       <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
-           Con el slider en loop siempre hay una card asomando, así que el fade se
-           mantiene constante (ya no hay estado "al final"). */
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
         .cert-carousel {
           -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
+        }
+        /* obs_7: en la última card ya no hay card oculta a la derecha; se quita el
+           fade para que la última (ISO) se vea nítida. */
+        .cert-carousel.cert-at-end {
+          -webkit-mask-image: none;
+          mask-image: none;
         }
       `}</style>
     </section>

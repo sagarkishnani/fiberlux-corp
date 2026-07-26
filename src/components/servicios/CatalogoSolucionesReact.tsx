@@ -268,7 +268,11 @@ export default function CatalogoSolucionesReact({
                 aria-label="Anteriores"
                 disabled={!slider.canPrev}
                 onClick={slider.prev}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
+                className={`inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                  slider.canPrev
+                    ? "bg-[#96237A] text-white hover:bg-[#650F50]"
+                    : "bg-[#3B0E30] text-white/30 cursor-default"
+                }`}
               >
                 <FaChevronLeft size={14} />
               </button>
@@ -280,7 +284,11 @@ export default function CatalogoSolucionesReact({
                 aria-label="Siguientes"
                 disabled={!slider.canNext}
                 onClick={slider.next}
-                className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
+                className={`inline-flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                  slider.canNext
+                    ? "bg-[#96237A] text-white hover:bg-[#650F50]"
+                    : "bg-[#3B0E30] text-white/30 cursor-default"
+                }`}
               >
                 <FaChevronRight size={14} />
               </button>

@@ -1,6 +1,7 @@
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { useSlider } from "../../hooks/useSlider";
+import SliderArrows from "./SliderArrows";
 
 /* ── Props ── */
 interface SolucionesSliderProps {
@@ -52,8 +53,6 @@ export default function SolucionesSliderReact({
     intervalMs,
   });
   const { activeIndex, scrolling } = slider;
-  const atStart = !slider.canPrev;
-  const atEnd = !slider.canNext;
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -62,36 +61,13 @@ export default function SolucionesSliderReact({
   const activeTina = services?.items?.[Math.min(activeIndex, items.length - 1)];
   const sectionTitle = (services?.title || "").trim();
 
-  /* ── Prev/Next pill ── */
   const arrowsPill = (
-    <div className="inline-flex rounded-[12px] border-2 border-[#282445] bg-[#141223] overflow-hidden shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
-      <button
-        type="button"
-        onClick={slider.prev}
-        disabled={atStart}
-        aria-label="Anterior"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atStart ? "text-white hover:bg-white/5" : "text-white/30 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        onClick={slider.next}
-        disabled={atEnd}
-        aria-label="Siguiente"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atEnd ? "bg-[#96237A] text-white hover:bg-[#650F50]" : "bg-[#96237A]/40 text-white/40 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
+    <SliderArrows
+      canPrev={slider.canPrev}
+      canNext={slider.canNext}
+      onPrev={slider.prev}
+      onNext={slider.next}
+    />
   );
 
   /* ── A single solution card ──

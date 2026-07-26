@@ -1,7 +1,7 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { IconType } from 'react-icons';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import SliderArrows from '../shared/SliderArrows';
 // obs_6: set de íconos en estilo outline (Lucide) para coincidir con la referencia.
 import {
   LuPickaxe,
@@ -99,31 +99,17 @@ export default function RubrosReact({
 
   if (total === 0) return null;
 
-  // Con loop, prev/next envuelven en los extremos automáticamente.
-  const handlePrev = slider.prev;
-  const handleNext = slider.next;
-
   const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
 
   const arrows = (
-    <div className="flex w-fit overflow-hidden rounded-[12px] border-2 border-[#282445] bg-[#141223]">
-      <button
-        type="button"
-        aria-label="Rubro anterior"
-        onClick={handlePrev}
-        className="flex h-[49px] w-[49px] items-center justify-center bg-[#141223] text-white opacity-40 transition-opacity hover:opacity-100"
-      >
-        <FaArrowLeft className="text-sm" />
-      </button>
-      <button
-        type="button"
-        aria-label="Rubro siguiente"
-        onClick={handleNext}
-        className="flex h-[49px] w-[49px] items-center justify-center bg-[#96237a] text-white transition-colors hover:bg-[#b02a92]"
-      >
-        <FaArrowRight className="text-sm" />
-      </button>
-    </div>
+    <SliderArrows
+      canPrev={slider.canPrev}
+      canNext={slider.canNext}
+      onPrev={slider.prev}
+      onNext={slider.next}
+      labelPrev="Rubro anterior"
+      labelNext="Rubro siguiente"
+    />
   );
 
   const card = (item: Rubro, i: number) => {

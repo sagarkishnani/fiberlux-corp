@@ -2,6 +2,7 @@ import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
 import TestimonialCard from './TestimonialCard';
 import { useSlider } from '../../hooks/useSlider';
+import SliderArrows from './SliderArrows';
 
 /* ── Types ── */
 interface TestimonialSliderProps {
@@ -50,40 +51,13 @@ export default function TestimonialSliderReact({
     autoplay: autoplay && enough,
     intervalMs,
   });
-  const atStart = !slider.canPrev;
-  const atEnd = !slider.canNext;
-
-  /* ── Prev/Next pill — light theme (matches the light testimonios panel).
-       Prev tenue (rosa claro), next magenta con flecha blanca. ── */
   const arrowsPill = (
-    <div className="inline-flex rounded-[12px] border border-brand-purple/25 bg-[#EBCFE0] overflow-hidden shadow-[0_8px_24px_-8px_rgba(150,35,122,0.25)]">
-      <button
-        type="button"
-        onClick={slider.prev}
-        disabled={atStart}
-        aria-label="Anterior"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atStart ? "text-brand-purple hover:bg-brand-purple/10" : "text-brand-purple/30 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        type="button"
-        onClick={slider.next}
-        disabled={atEnd}
-        aria-label="Siguiente"
-        className={`w-[49px] h-[49px] flex items-center justify-center transition-colors ${
-          !atEnd ? "bg-brand-purple text-white hover:bg-brand-purple-dark" : "bg-brand-purple/40 text-white/60 cursor-default"
-        }`}
-      >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-    </div>
+    <SliderArrows
+      canPrev={slider.canPrev}
+      canNext={slider.canNext}
+      onPrev={slider.prev}
+      onNext={slider.next}
+    />
   );
 
   if (!isVisible) return null;
