@@ -208,13 +208,15 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <img
             src={mockup}
             alt="Fiberlux App"
+            data-reveal="right"
+            data-reveal-repeat
             className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden min-[1200px]:block"
             draggable={false}
           />
 
           {/* ════ DESKTOP (≥1200px) ════ */}
           <div className="relative z-10 hidden min-[1200px]:block px-8 lg:px-10 py-10">
-            <div className="w-[60%]">
+            <div className="w-[60%]" data-reveal="left" data-reveal-repeat>
               {/* Marco notched (contorno SVG) con texto + bullets */}
               <div className="relative pl-9 pr-7 pt-8 pb-12">
                 <FrameOutline path={FRAME_D} viewBox="0 0 957 217" />
@@ -232,7 +234,7 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           </div>
 
           {/* ════ MOBILE / TABLET (<1200px) ════ */}
-          <div className="relative z-10 flex min-[1200px]:hidden flex-col px-6 pt-10 pb-0">
+          <div className="relative z-10 flex min-[1200px]:hidden flex-col px-6 pt-10 pb-0" data-reveal="up">
             <div className="relative px-6 pt-7 pb-10">
               <FrameOutline path={FRAME_M} viewBox="0 0 613 483" />
               <div className="relative">{textBlock}</div>

@@ -78,22 +78,22 @@ const prefetchScenes = [
     {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos, y el
         panel claro de Testimonios pegado a "Por qué Fiberlux" (Stats, magenta),
         para no encajonar el rosa entre dos secciones oscuras. */}
-    <div class="relative z-20">
+    <div class="relative z-20" data-reveal="up">
       <HomePartners />
     </div>
-    <div class="-mt-2 relative z-25">
+    <div class="-mt-2 relative z-25" data-reveal="up">
       <TestimonialSlider />
     </div>
-    <div class="-mt-2 relative z-30">
+    <div class="-mt-2 relative z-30" data-reveal="up">
       <Stats frameTheme="light" />
     </div>
-    <div class="relative z-20">
+    <div class="relative z-20" data-reveal="up">
       <CertificacionesSlider />
     </div>
     <div class="relative z-20">
       <BannerApp />
     </div>
-    <div class="-mt-6 relative z-30">
+    <div class="-mt-6 relative z-30" data-reveal="up">
       <BlogPreview />
     </div>
     <HtmlInjection location="home-before-footer" />

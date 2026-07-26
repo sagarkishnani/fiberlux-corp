@@ -92,6 +92,7 @@ export default function CertificacionesSliderReact({
           secciones vecinas (integración entre bloques). */}
       <div
         aria-hidden="true"
+        data-parallax="0.12"
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
           WebkitMaskImage:
