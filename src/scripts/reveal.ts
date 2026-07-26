@@ -17,7 +17,7 @@
 import { animate, inView } from "motion";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
-const DEFAULT_DURATION = 0.7;
+const DEFAULT_DURATION = 1;
 const DEFAULT_DISTANCE = 40;
 
 type Keyframes = { opacity: number[]; x?: number[]; y?: number[]; scale?: number[] };
