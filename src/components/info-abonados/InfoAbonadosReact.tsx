@@ -97,7 +97,7 @@ export default function InfoAbonadosReact({
         <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px" }}>
 
           {/* Page header */}
-          <div style={{ textAlign: "center", marginBottom: "48px" }}>
+          <div style={{ textAlign: "center", marginBottom: "48px" }} data-reveal="up">
             <h1
               style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 500, color: "#1A1A1A", marginBottom: "12px", lineHeight: '28px' }}
               data-tina-field={tinaField(page, "title")}
@@ -135,7 +135,7 @@ export default function InfoAbonadosReact({
                   </h2>
                 )}
 
-                <div className="info-docs-grid">
+                <div className="info-docs-grid" data-reveal="up" data-reveal-stagger="0.06">
                   {docs.map((doc: any, j: number) => {
                     const IconComp = iconMap[doc.icon || "document"] || DocumentIcon;
                     const hasUrl = doc.url && doc.url !== "#";
