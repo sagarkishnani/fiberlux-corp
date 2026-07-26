@@ -91,7 +91,7 @@ export default function BlogGrid({
         </h2>
 
         {/* Filters */}
-        <div className="mb-10">
+        <div className="mb-10" data-reveal="up">
           {/* "Filtros" label */}
           <div className="flex items-center gap-3 mb-4">
             <svg
