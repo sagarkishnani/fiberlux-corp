@@ -76,7 +76,7 @@ export default function HeroServiciosReact({
 
           {/* ════ RIGHT — video del hero (loop, se funde con el fondo) ════ */}
           {(page as any).heroVideo && (
-            <div className="relative w-full max-w-[260px] lg:max-w-[520px] mx-auto">
+            <div className="relative w-full max-w-[320px] lg:max-w-[520px] mx-auto">
               <HeroVideo
                 src={(page as any).heroVideo}
                 poster={(page as any).heroVideoPoster}
