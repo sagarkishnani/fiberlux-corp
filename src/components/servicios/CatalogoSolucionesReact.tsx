@@ -1,5 +1,5 @@
 import { useTina, tinaField } from "tinacms/dist/react";
-import { useDragSlider } from "../../hooks/useDragSlider";
+import { useSlider } from "../../hooks/useSlider";
 import type { IconType } from "react-icons";
 import {
   FaGlobe,
@@ -40,6 +40,8 @@ interface CatalogoProps {
   query: string;
   variables: ServiceQueryVariables;
   data: ServiceQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 interface Item {
@@ -101,22 +103,23 @@ export default function CatalogoSolucionesReact({
   query,
   variables,
   data: initialData,
+  autoplay = true,
+  intervalMs = 6000,
 }: CatalogoProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
   const catalogo = data?.service?.catalogo;
   const items = (catalogo?.items || []).filter(Boolean) as Item[];
   const pageCount = Math.max(1, Math.ceil(items.length / PER_PAGE));
+  const enough = pageCount > 1;
 
-  // Mobile: páginas de 4 en un carrusel arrastrable (hook compartido) — antes
-  // solo se paginaba con flechas. Hooks antes de cualquier return condicional.
-  const slider = useDragSlider({
-    slideSelector: ".catalogo-page",
+  // Mobile: páginas de 4 en un carrusel Embla arrastrable con autoplay.
+  // Hooks antes de cualquier return condicional.
+  const slider = useSlider({
     align: "start",
-    itemCount: pageCount,
-    // obs5: el snap nativo (mandatory) aterriza fiable la pagina full-width (nunca
-    // descansa cortada); se desactiva el settle JS para que no peleen (back-tug).
-    nativeSnap: true,
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
   });
 
   if (!catalogo || items.length === 0) return null;
@@ -224,37 +227,38 @@ export default function CatalogoSolucionesReact({
         {/* ════ MOBILE — icon + title only, draggable pages of 4 ════ */}
         <div className="md:hidden">
           <div
-            ref={slider.ref}
-            className="catalogo-scroll flex gap-6 overflow-x-auto snap-x snap-mandatory select-none"
+            ref={slider.viewportRef}
+            className="catalogo-scroll overflow-hidden select-none"
             style={{ cursor: pageCount > 1 ? "grab" : "default" }}
-            {...slider.handlers}
           >
-            {Array.from({ length: pageCount }).map((_, pi) => {
-              const pageItems = items.slice(pi * PER_PAGE, pi * PER_PAGE + PER_PAGE);
-              return (
-                <div
-                  key={pi}
-                  className="catalogo-page snap-start shrink-0 w-full grid grid-cols-2 auto-rows-fr gap-3"
-                >
-                  {pageItems.map((item, i) => {
-                    const CardTag = item.url ? "a" : "div";
-                    return (
-                      <CardTag
-                        key={i}
-                        {...(item.url ? { href: item.url } : {})}
-                        className="flex h-full flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
-                        draggable={false}
-                      >
-                        <ItemIcon name={item.icon} />
-                        <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
-                          {item.title}
-                        </h3>
-                      </CardTag>
-                    );
-                  })}
-                </div>
-              );
-            })}
+            <div className="flex gap-6">
+              {Array.from({ length: pageCount }).map((_, pi) => {
+                const pageItems = items.slice(pi * PER_PAGE, pi * PER_PAGE + PER_PAGE);
+                return (
+                  <div
+                    key={pi}
+                    className="catalogo-page shrink-0 w-full grid grid-cols-2 auto-rows-fr gap-3"
+                  >
+                    {pageItems.map((item, i) => {
+                      const CardTag = item.url ? "a" : "div";
+                      return (
+                        <CardTag
+                          key={i}
+                          {...(item.url ? { href: item.url } : {})}
+                          className="flex h-full flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
+                          draggable={false}
+                        >
+                          <ItemIcon name={item.icon} />
+                          <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
+                            {item.title}
+                          </h3>
+                        </CardTag>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {pageCount > 1 && (
@@ -262,7 +266,7 @@ export default function CatalogoSolucionesReact({
               <button
                 type="button"
                 aria-label="Anteriores"
-                disabled={slider.atStart}
+                disabled={!slider.canPrev}
                 onClick={slider.prev}
                 className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
               >
@@ -274,7 +278,7 @@ export default function CatalogoSolucionesReact({
               <button
                 type="button"
                 aria-label="Siguientes"
-                disabled={slider.atEnd}
+                disabled={!slider.canNext}
                 onClick={slider.next}
                 className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-[#96237A] text-white disabled:opacity-40 transition-opacity"
               >

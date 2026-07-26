@@ -8,6 +8,8 @@ interface Props {
 
 const { relativePath } = Astro.props;
 const serviceQuery = await client.queries.service({ relativePath });
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const cfg = (globalQuery.data?.global as any)?.sliders?.catalogoSoluciones ?? {};
 ---
 
 <CatalogoSolucionesReact
@@ -15,4 +17,6 @@ const serviceQuery = await client.queries.service({ relativePath });
   query={serviceQuery.query}
   variables={serviceQuery.variables}
   data={serviceQuery.data}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 6000}
 />
