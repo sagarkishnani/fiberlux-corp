@@ -9,17 +9,47 @@
       "abonadosUrl": "/informacion-abonados"
     },
     "desktopNav": [
-      { "text": "Soluciones", "url": "/soluciones" },
-      { "text": "Nosotros", "url": "/nosotros" },
-      { "text": "Casos de éxito", "url": "/casos-de-exito" },
-      { "text": "Blog", "url": "/blog" },
-      { "text": "Soporte técnico", "url": "/soporte-tecnico" },
-      { "text": "Contacto", "url": "/contacto" }
+      {
+        "text": "Soluciones",
+        "url": "/soluciones"
+      },
+      {
+        "text": "Nosotros",
+        "url": "/nosotros"
+      },
+      {
+        "text": "Casos de éxito",
+        "url": "/casos-de-exito"
+      },
+      {
+        "text": "Blog",
+        "url": "/blog"
+      },
+      {
+        "text": "Soporte técnico",
+        "url": "/soporte-tecnico"
+      },
+      {
+        "text": "Contacto",
+        "url": "/contacto"
+      }
     ],
     "secondaryNav": [
-      { "text": "Formas de pago", "url": "/formas-de-pago", "external": false },
-      { "text": "Fiberlux App", "url": "/fiberlux-app", "external": false },
-      { "text": "Portal de trabajo", "url": "#", "external": true }
+      {
+        "text": "Formas de pago",
+        "url": "/formas-de-pago",
+        "external": false
+      },
+      {
+        "text": "Fiberlux App",
+        "url": "/fiberlux-app",
+        "external": false
+      },
+      {
+        "text": "Portal de trabajo",
+        "url": "#",
+        "external": true
+      }
     ]
   },
   "nav": {
@@ -410,5 +440,35 @@
     "siteName": "Fiberlux",
     "defaultDescription": "Soluciones de conectividad y TI para tu empresa. Red 100% fibra óptica propia en todo el Perú.",
     "ogImage": ""
+  },
+  "sliders": {
+    "certificaciones": {
+      "autoplay": true,
+      "intervalMs": 3500
+    },
+    "soluciones": {
+      "autoplay": true,
+      "intervalMs": 6000
+    },
+    "testimonios": {
+      "autoplay": true,
+      "intervalMs": 5000
+    },
+    "casos": {
+      "autoplay": true,
+      "intervalMs": 6000
+    },
+    "catalogoSoluciones": {
+      "autoplay": true,
+      "intervalMs": 6000
+    },
+    "blogPreview": {
+      "autoplay": true,
+      "intervalMs": 6000
+    },
+    "rubros": {
+      "autoplay": true,
+      "intervalMs": 3500
+    }
   }
 }

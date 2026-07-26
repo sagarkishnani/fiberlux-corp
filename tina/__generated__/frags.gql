@@ -485,6 +485,44 @@ fragment GlobalParts on Global {
     location
     html
   }
+  sliders {
+    __typename
+    certificaciones {
+      __typename
+      autoplay
+      intervalMs
+    }
+    soluciones {
+      __typename
+      autoplay
+      intervalMs
+    }
+    testimonios {
+      __typename
+      autoplay
+      intervalMs
+    }
+    casos {
+      __typename
+      autoplay
+      intervalMs
+    }
+    catalogoSoluciones {
+      __typename
+      autoplay
+      intervalMs
+    }
+    blogPreview {
+      __typename
+      autoplay
+      intervalMs
+    }
+    rubros {
+      __typename
+      autoplay
+      intervalMs
+    }
+  }
 }
 
 fragment MaintenanceParts on Maintenance {

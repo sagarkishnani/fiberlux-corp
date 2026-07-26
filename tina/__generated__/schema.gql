@@ -1285,6 +1285,51 @@ type GlobalHtmlInjections {
   html: String
 }
 
+type GlobalSlidersCertificaciones {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersSoluciones {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersTestimonios {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersCasos {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersCatalogoSoluciones {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersBlogPreview {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSlidersRubros {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+type GlobalSliders {
+  certificaciones: GlobalSlidersCertificaciones
+  soluciones: GlobalSlidersSoluciones
+  testimonios: GlobalSlidersTestimonios
+  casos: GlobalSlidersCasos
+  catalogoSoluciones: GlobalSlidersCatalogoSoluciones
+  blogPreview: GlobalSlidersBlogPreview
+  rubros: GlobalSlidersRubros
+}
+
 type Global implements Node & Document {
   nav: GlobalNav
   header: GlobalHeader
@@ -1294,6 +1339,7 @@ type Global implements Node & Document {
   seo: GlobalSeo
   codeInjection: GlobalCodeInjection
   htmlInjections: [GlobalHtmlInjections]
+  sliders: GlobalSliders
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -1408,6 +1454,61 @@ input GlobalHtmlInjectionsFilter {
   html: StringFilter
 }
 
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input GlobalSlidersCertificacionesFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersSolucionesFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersTestimoniosFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersCasosFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersCatalogoSolucionesFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersBlogPreviewFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersRubrosFilter {
+  autoplay: BooleanFilter
+  intervalMs: NumberFilter
+}
+
+input GlobalSlidersFilter {
+  certificaciones: GlobalSlidersCertificacionesFilter
+  soluciones: GlobalSlidersSolucionesFilter
+  testimonios: GlobalSlidersTestimoniosFilter
+  casos: GlobalSlidersCasosFilter
+  catalogoSoluciones: GlobalSlidersCatalogoSolucionesFilter
+  blogPreview: GlobalSlidersBlogPreviewFilter
+  rubros: GlobalSlidersRubrosFilter
+}
+
 input GlobalFilter {
   nav: GlobalNavFilter
   header: GlobalHeaderFilter
@@ -1417,6 +1518,7 @@ input GlobalFilter {
   seo: GlobalSeoFilter
   codeInjection: GlobalCodeInjectionFilter
   htmlInjections: GlobalHtmlInjectionsFilter
+  sliders: GlobalSlidersFilter
 }
 
 type GlobalConnectionEdges {
@@ -1613,16 +1715,6 @@ type DynamicForms implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
 }
 
 input DynamicFormsFieldsValidationFilter {
@@ -2562,6 +2654,51 @@ input GlobalHtmlInjectionsMutation {
   html: String
 }
 
+input GlobalSlidersCertificacionesMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersSolucionesMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersTestimoniosMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersCasosMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersCatalogoSolucionesMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersBlogPreviewMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersRubrosMutation {
+  autoplay: Boolean
+  intervalMs: Float
+}
+
+input GlobalSlidersMutation {
+  certificaciones: GlobalSlidersCertificacionesMutation
+  soluciones: GlobalSlidersSolucionesMutation
+  testimonios: GlobalSlidersTestimoniosMutation
+  casos: GlobalSlidersCasosMutation
+  catalogoSoluciones: GlobalSlidersCatalogoSolucionesMutation
+  blogPreview: GlobalSlidersBlogPreviewMutation
+  rubros: GlobalSlidersRubrosMutation
+}
+
 input GlobalMutation {
   nav: GlobalNavMutation
   header: GlobalHeaderMutation
@@ -2571,6 +2708,7 @@ input GlobalMutation {
   seo: GlobalSeoMutation
   codeInjection: GlobalCodeInjectionMutation
   htmlInjections: [GlobalHtmlInjectionsMutation]
+  sliders: GlobalSlidersMutation
 }
 
 input MaintenanceMutation {

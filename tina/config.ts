@@ -1836,6 +1836,80 @@ export default defineConfig({
               },
             ],
           },
+
+          // ── Sliders (autoplay) — SPEC 68 ──
+          {
+            name: "sliders",
+            label: "Sliders (autoplay)",
+            type: "object",
+            description:
+              "Autoplay e intervalo por tipo de slider. El autoplay se pausa al pasar el mouse/interactuar y se desactiva si el usuario prefiere menos movimiento.",
+            fields: [
+              {
+                name: "certificaciones",
+                label: "Certificaciones",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "soluciones",
+                label: "Soluciones (home)",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "testimonios",
+                label: "Testimonios (home)",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "casos",
+                label: "Casos de éxito",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "catalogoSoluciones",
+                label: "Catálogo de soluciones",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "blogPreview",
+                label: "Blog (novedades)",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+              {
+                name: "rubros",
+                label: "Rubros (nosotros)",
+                type: "object",
+                fields: [
+                  { name: "autoplay", label: "Autoplay", type: "boolean" },
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                ],
+              },
+            ],
+          },
         ],
       },
 
