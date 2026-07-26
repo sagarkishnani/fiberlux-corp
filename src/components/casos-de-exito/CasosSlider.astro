@@ -5,6 +5,8 @@ import CasosSliderReact from "./CasosSliderReact.tsx";
 const casosQuery = await client.queries.casosDeExito({
   relativePath: "index.json",
 });
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const cfg = (globalQuery.data?.global as any)?.sliders?.casos ?? {};
 ---
 
 <CasosSliderReact
@@ -12,4 +14,6 @@ const casosQuery = await client.queries.casosDeExito({
   query={casosQuery.query}
   variables={casosQuery.variables}
   data={casosQuery.data}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 6000}
 />

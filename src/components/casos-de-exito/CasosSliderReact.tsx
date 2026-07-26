@@ -6,18 +6,22 @@ import type {
 } from "../../../tina/__generated__/types";
 import CasoCard, { type Caso } from "./CasoCard";
 import VideoModal from "./VideoModal";
-import { useDragSlider } from "../../hooks/useDragSlider";
+import { useSlider } from "../../hooks/useSlider";
 
 interface CasosSliderProps {
   query: string;
   variables: CasosDeExitoQueryVariables;
   data: CasosDeExitoQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 export default function CasosSliderReact({
   query,
   variables,
   data: initialData,
+  autoplay = true,
+  intervalMs = 6000,
 }: CasosSliderProps) {
   const { data } = useTina<CasosDeExitoQuery>({ query, variables, data: initialData });
 
@@ -27,17 +31,19 @@ export default function CasosSliderReact({
 
   const [modalCaso, setModalCaso] = useState<Caso | null>(null);
 
-  /* Shared drag/scroll engine: centre-aligned cards, one card per arrow. */
-  const slider = useDragSlider({
-    slideSelector: ".caso-slide",
+  const enough = items.length > 1;
+
+  /* Embla slider: centre-aligned cards, one per arrow, autoplay w/ loop. */
+  const slider = useSlider({
     align: "center",
-    momentum: false,
-    itemCount: items.length,
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
   });
   const { activeIndex } = slider;
 
-  const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < items.length - 1;
+  const canGoPrev = slider.canPrev;
+  const canGoNext = slider.canNext;
 
   const hasItems = items.length > 0;
 
@@ -84,36 +90,37 @@ export default function CasosSliderReact({
         </h2>
       </div>
 
-      {/* Carousel */}
+      {/* Carousel (Embla) */}
       <div className="relative">
         <div
-          ref={slider.ref}
-          className="flex gap-14 overflow-x-auto snap-x snap-proximity pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
+          ref={slider.viewportRef}
+          className="overflow-hidden pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
           style={{ cursor: hasItems ? "grab" : "default" }}
-          {...slider.handlers}
         >
-          {hasItems ? (
-            items.map((item, i) => (
-              <div
-                key={i}
-                className={`caso-slide snap-center shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
-                  i === activeIndex ? "opacity-100" : "opacity-25"
-                }`}
-              >
-                <CasoCard
-                  caso={item as Caso}
-                  tinaItem={page?.items?.[i]}
-                  onPlay={() => setModalCaso(item as Caso)}
-                />
+          <div className="flex gap-14">
+            {hasItems ? (
+              items.map((item, i) => (
+                <div
+                  key={i}
+                  className={`caso-slide shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
+                    i === activeIndex ? "opacity-100" : "opacity-25"
+                  }`}
+                >
+                  <CasoCard
+                    caso={item as Caso}
+                    tinaItem={page?.items?.[i]}
+                    onPlay={() => setModalCaso(item as Caso)}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="caso-slide shrink-0 w-full max-w-[880px]">
+                <div className="bg-white/[0.04] border border-white/10 h-[400px] flex items-center justify-center text-white/20 text-sm">
+                  Casos de éxito — próximamente
+                </div>
               </div>
-            ))
-          ) : (
-            <div className="caso-slide snap-center shrink-0 w-full max-w-[880px]">
-              <div className="bg-white/[0.04] border border-white/10 h-[400px] flex items-center justify-center text-white/20 text-sm">
-                Casos de éxito — próximamente
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
       </div>
