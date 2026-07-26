@@ -19,6 +19,14 @@ const wanted = (tags || []).filter(Boolean) as string[];
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 
+let cfg: any = {};
+try {
+  const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+  cfg = (globalQuery.data?.global as any)?.sliders?.blogPreview ?? {};
+} catch {
+  cfg = {};
+}
+
 let allEdges: any[] = [];
 try {
   const postsQuery = await client.queries.postConnection({
@@ -55,4 +63,6 @@ posts = posts.slice(0, 6);
   variables={homeQuery.variables}
   data={homeQuery.data}
   posts={posts}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 6000}
 />

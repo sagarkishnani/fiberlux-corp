@@ -4,7 +4,7 @@ import type {
   HomeQueryVariables,
 } from "../../../tina/__generated__/types";
 import BlogCard from "./BlogCard";
-import { useDragSlider } from "../../hooks/useDragSlider";
+import { useSlider } from "../../hooks/useSlider";
 
 /* ── Types ── */
 interface BlogPreviewProps {
@@ -12,6 +12,8 @@ interface BlogPreviewProps {
   variables: HomeQueryVariables;
   data: HomeQuery;
   posts?: PostEdge[];
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 interface PostEdge {
@@ -30,6 +32,8 @@ export default function BlogPreviewReact({
   variables,
   data: initialData,
   posts = [],
+  autoplay = true,
+  intervalMs = 6000,
 }: BlogPreviewProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -42,16 +46,17 @@ export default function BlogPreviewReact({
 
   const hasPosts = posts.length > 0;
   const count = hasPosts ? posts.length : 3;
+  const enough = count > 1;
 
-  /* Shared drag/scroll engine: left-aligned cards, one card per arrow. */
-  const slider = useDragSlider({
-    slideSelector: ".blog-slide",
+  /* Embla slider: left-aligned cards, one per arrow, autoplay w/ loop. */
+  const slider = useSlider({
     align: "start",
-    momentum: false,
-    itemCount: count,
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
   });
-  const canScrollLeft = !slider.atStart;
-  const canScrollRight = !slider.atEnd;
+  const canScrollLeft = slider.canPrev;
+  const canScrollRight = slider.canNext;
 
   return (
     <section className="bg-greyscale-darkest rounded-t-3xl py-14 pb-24 md:py-20 md:pb-40">
@@ -79,45 +84,45 @@ export default function BlogPreviewReact({
           </div>
         </div>
 
-        {/* Carousel */}
+        {/* Carousel (Embla) */}
         <div className="relative">
           <div
-            ref={slider.ref}
-            className="flex gap-6 overflow-x-auto snap-x snap-proximity pb-4 select-none blog-carousel"
-            style={{ cursor: "grab", paddingRight: 0 }}
-            {...slider.handlers}
+            ref={slider.viewportRef}
+            className="overflow-hidden pb-4 select-none blog-carousel"
+            style={{ cursor: "grab" }}
           >
-            {hasPosts
-              ? posts.map((edge, i) => {
-                  const post = edge?.node;
-                  if (!post) return null;
-                  return (
+            <div className="flex gap-6">
+              {hasPosts
+                ? posts.map((edge, i) => {
+                    const post = edge?.node;
+                    if (!post) return null;
+                    return (
+                      <article
+                        key={i}
+                        className="blog-slide shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                      >
+                        <BlogCard
+                          title={post.title || "Sin título"}
+                          coverImage={post.coverImage}
+                          tag={post.tags?.[0]}
+                          readTime={post.readTime}
+                          date={post.date}
+                          slug={post._sys.filename}
+                        />
+                      </article>
+                    );
+                  })
+                : [1, 2, 3].map((_, i) => (
                     <article
                       key={i}
-                      className="blog-slide snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
+                      className="blog-slide shrink-0 w-[85%] md:w-[calc(66%-12px)]"
                     >
-                      <BlogCard
-                        title={post.title || "Sin título"}
-                        coverImage={post.coverImage}
-                        tag={post.tags?.[0]}
-                        readTime={post.readTime}
-                        date={post.date}
-                        slug={post._sys.filename}
-                      />
+                      <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[280px] md:h-[400px] flex items-center justify-center text-white/20 text-sm">
+                        Blog card — próximamente
+                      </div>
                     </article>
-                  );
-                })
-              : [1, 2, 3].map((_, i) => (
-                  <article
-                    key={i}
-                    className="blog-slide snap-start shrink-0 w-[85%] md:w-[calc(66%-12px)]"
-                  >
-                    <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[280px] md:h-[400px] flex items-center justify-center text-white/20 text-sm">
-                      Blog card — próximamente
-                    </div>
-                  </article>
-                ))}
-            <div className="shrink-0 w-4" />
+                  ))}
+            </div>
           </div>
         </div>
 
