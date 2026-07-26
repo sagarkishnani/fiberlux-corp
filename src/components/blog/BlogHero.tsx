@@ -1,5 +1,7 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import BlogCard from './BlogCard';
+import { useSlider } from '../../hooks/useSlider';
+import SliderArrows from '../shared/SliderArrows';
 
 /* ── Types ── */
 interface PostNode {
@@ -17,24 +19,33 @@ interface PostEdge {
 
 interface BlogHeroProps {
   posts: PostEdge[];
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
-export default function BlogHero({ posts = [] }: BlogHeroProps) {
-  const carouselRef = useRef<HTMLDivElement>(null);
+export default function BlogHero({ posts = [], autoplay = true, intervalMs = 6000 }: BlogHeroProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [leftPad, setLeftPad] = useState(80);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  /* ── Measure left padding from content container ── */
+  const hasPosts = posts.length > 0;
+  const enough = posts.length > 1;
+
+  /* Embla slider: left-aligned cards, autoplay, arrows disable at the edges. */
+  const slider = useSlider({
+    align: 'start',
+    loop: false,
+    autoplay: autoplay && enough,
+    intervalMs,
+  });
+
+  /* ── Measure left padding from content container so the first card lines up
+       with the title/arrows (the carousel bleeds to the right edge). ── */
   useEffect(() => {
     const measure = () => {
       if (contentRef.current) {
         const rect = contentRef.current.getBoundingClientRect();
         const paddingLeft =
           parseFloat(getComputedStyle(contentRef.current).paddingLeft) || 0;
-        // Align the carousel's first card with the inner content (title + arrows),
-        // not the container's outer edge — rect.left excludes the px-16 padding.
         setLeftPad(rect.left + paddingLeft);
       }
     };
@@ -42,83 +53,6 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
   }, []);
-
-  /* ── Track scroll position to enable/disable the arrows ── */
-  const updateArrows = useCallback(() => {
-    const el = carouselRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  }, []);
-
-  useEffect(() => {
-    updateArrows();
-    const el = carouselRef.current;
-    el?.addEventListener('scroll', updateArrows, { passive: true });
-    window.addEventListener('resize', updateArrows);
-    return () => {
-      el?.removeEventListener('scroll', updateArrows);
-      window.removeEventListener('resize', updateArrows);
-    };
-  }, [updateArrows]);
-
-  /* ── Drag to scroll ── */
-  const isDragging = useRef(false);
-  const hasDragged = useRef(false);
-  const startX = useRef(0);
-  const startScrollLeft = useRef(0);
-
-  const onMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    isDragging.current = true;
-    hasDragged.current = false;
-    startX.current = e.pageX;
-    startScrollLeft.current = el.scrollLeft;
-    el.style.cursor = 'grabbing';
-    el.style.scrollSnapType = 'none';
-  }, []);
-
-  const onMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const el = carouselRef.current;
-    if (!el) return;
-    const dx = e.pageX - startX.current;
-    if (Math.abs(dx) > 5) hasDragged.current = true;
-    el.scrollLeft = startScrollLeft.current - dx;
-  }, []);
-
-  const onMouseUp = useCallback(() => {
-    isDragging.current = false;
-    const el = carouselRef.current;
-    if (el) {
-      el.style.cursor = 'grab';
-      el.style.scrollSnapType = '';
-    }
-  }, []);
-
-  const onClickCapture = useCallback((e: React.MouseEvent) => {
-    if (hasDragged.current) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, []);
-
-  /* ── Button scroll ── */
-  const scroll = (direction: 'left' | 'right') => {
-    const el = carouselRef.current;
-    if (!el) return;
-    const cardWidth = el.querySelector('article')?.offsetWidth || 600;
-    const gap = 24;
-    el.scrollBy({
-      left: direction === 'right' ? cardWidth + gap : -(cardWidth + gap),
-      behavior: 'smooth',
-    });
-  };
-
-  const hasPosts = posts.length > 0;
 
   return (
     <section
@@ -136,16 +70,10 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
       }}
     >
       {/* Content — pt accounts for fixed header */}
-      <div
-        ref={contentRef}
-        className="relative z-10 site-container pt-28 md:pt-36"
-      >
+      <div ref={contentRef} className="relative z-10 site-container pt-28 md:pt-36">
         {/* Breadcrumb */}
         <nav className="text-[13px] text-white/40 mb-3">
-          <a
-            href="/"
-            className="hover:text-white/60 transition-colors !text-white/40"
-          >
+          <a href="/" className="hover:text-white/60 transition-colors !text-white/40">
             Inicio
           </a>
           <span className="mx-2">/</span>
@@ -158,112 +86,54 @@ export default function BlogHero({ posts = [] }: BlogHeroProps) {
         </h1>
       </div>
 
-      {/* Carousel — bleeds to right edge */}
+      {/* Carousel (Embla) — bleeds to right edge */}
       <div className="relative z-10">
         <div
-          ref={carouselRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 select-none blog-hero-carousel"
-          style={{
-            cursor: 'grab',
-            paddingLeft: `${leftPad}px`,
-            paddingRight: 0,
-            // Without this, snap-mandatory pulls the first card flush to the
-            // container edge and cancels the padding — keep the snap start
-            // aligned with the padding so the first card lines up with the title/arrows.
-            scrollPaddingLeft: `${leftPad}px`,
-          }}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          onClickCapture={onClickCapture}
+          ref={slider.viewportRef}
+          className="overflow-hidden pb-4 select-none blog-hero-carousel"
+          style={{ cursor: 'grab', paddingLeft: `${leftPad}px` }}
         >
-          {hasPosts
-            ? posts.map((edge, i) => {
-                const post = edge?.node;
-                if (!post) return null;
-                return (
-                  <article
-                    key={post._sys.filename}
-                    className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
-                  >
-                    <BlogCard
-                      title={post.title || 'Sin título'}
-                      coverImage={post.coverImage}
-                      tag={post.tags?.[0]}
-                      readTime={post.readTime}
-                      date={post.date}
-                      slug={post._sys.filename}
-                    />
+          <div className="flex gap-6">
+            {hasPosts
+              ? posts.map((edge) => {
+                  const post = edge?.node;
+                  if (!post) return null;
+                  return (
+                    <article
+                      key={post._sys.filename}
+                      className="shrink-0 w-[85%] md:w-[calc(52%-12px)]"
+                    >
+                      <BlogCard
+                        title={post.title || 'Sin título'}
+                        coverImage={post.coverImage}
+                        tag={post.tags?.[0]}
+                        readTime={post.readTime}
+                        date={post.date}
+                        slug={post._sys.filename}
+                      />
+                    </article>
+                  );
+                })
+              : [1, 2, 3].map((_, i) => (
+                  <article key={i} className="shrink-0 w-[85%] md:w-[calc(52%-12px)]">
+                    <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[400px] flex items-center justify-center text-white/20 text-sm">
+                      Blog card — próximamente
+                    </div>
                   </article>
-                );
-              })
-            : [1, 2, 3].map((_, i) => (
-                <article
-                  key={i}
-                  className="snap-start shrink-0 w-[85%] md:w-[calc(52%-12px)]"
-                >
-                  <div className="bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl h-[400px] flex items-center justify-center text-white/20 text-sm">
-                    Blog card — próximamente
-                  </div>
-                </article>
-              ))}
-          {/* Right spacer */}
-          <div className="shrink-0 w-4" />
+                ))}
+          </div>
         </div>
       </div>
 
-      {/* Navigation arrows */}
+      {/* Navigation arrows — pill compartido (magenta / oscuro en extremos) */}
       <div className="relative z-10 site-container">
-        <div className="flex gap-0 mt-6">
-          <button
-            onClick={() => scroll('left')}
-            disabled={!canScrollLeft}
-            className={`w-11 h-11 rounded-l-xl flex items-center justify-center transition-all ${
-              canScrollLeft
-                ? 'bg-brand-purple text-white hover:bg-brand-purple-dark'
-                : 'bg-greyscale-dark/50 text-white/30 cursor-not-allowed'
-            }`}
-            aria-label="Anterior"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            onClick={() => scroll('right')}
-            disabled={!canScrollRight}
-            className={`w-11 h-11 rounded-r-xl flex items-center justify-center transition-all ${
-              canScrollRight
-                ? 'bg-brand-purple text-white hover:bg-brand-purple-dark'
-                : 'bg-greyscale-dark/50 text-white/30 cursor-not-allowed'
-            }`}
-            aria-label="Siguiente"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
+        <div className="mt-6">
+          <SliderArrows
+            canPrev={slider.canPrev}
+            canNext={slider.canNext}
+            onPrev={slider.prev}
+            onNext={slider.next}
+          />
         </div>
       </div>
 

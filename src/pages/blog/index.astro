@@ -38,6 +38,15 @@ allPosts.forEach((edge: any) => {
   });
 });
 const availableTags = Array.from(tagSet).sort();
+
+// Autoplay del hero: reusa la config del slider de blog (global.sliders.blogPreview).
+let heroCfg: any = {};
+try {
+  const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+  heroCfg = (globalQuery.data?.global as any)?.sliders?.blogPreview ?? {};
+} catch {
+  heroCfg = {};
+}
 ---
 
 <BaseLayout title="Blog" description="Insights, novedades y tendencias en conectividad y tecnología empresarial">
@@ -45,6 +54,8 @@ const availableTags = Array.from(tagSet).sort();
   <BlogHero
     client:load
     posts={featuredPosts}
+    autoplay={heroCfg.autoplay ?? true}
+    intervalMs={heroCfg.intervalMs ?? 6000}
   />
 
   {/* Grid with filters + pagination */}
