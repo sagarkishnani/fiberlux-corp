@@ -34,7 +34,7 @@ export default function HeroSoporteReact({
       <div className="relative z-10 site-container pt-28 pb-20 lg:pt-36 lg:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* ════ LEFT — informational chrome ════ */}
-          <div className="max-w-[560px]">
+          <div className="max-w-[560px]" data-reveal="up">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-6">
               <a href={base} className="hover:text-greyscale-white transition-colors">

@@ -12,11 +12,13 @@ import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
 >
   <main>
     <HeroSoporte />
-    <CanalesSoporte />
+    <div data-reveal="up">
+      <CanalesSoporte />
+    </div>
     <SolucionesSlider />
     {/* Fondo negro detrás del panel claro de testimonios: sus esquinas superiores
         redondeadas dejan ver este fondo (aquí el <main> no es oscuro como en home). */}
-    <div class="-mt-2 relative z-25 bg-greyscale-darkest">
+    <div class="-mt-2 relative z-25 bg-greyscale-darkest" data-reveal="up">
       <TestimonialSlider />
     </div>
   </main>
