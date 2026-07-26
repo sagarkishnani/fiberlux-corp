@@ -278,8 +278,13 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        /* El desvanecimiento de las cards que asoman lo maneja el tween opacity
-           (Embla), no una máscara CSS. */
+        /* El desvanecimiento por posición lo maneja el tween opacity (Embla).
+           Además, una máscara suave SOLO en el borde derecho evita que la card
+           que asoma se corte en seco contra el borde del viewport. */
+        .sol-carousel {
+          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 88%, transparent 100%);
+        }
         /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
            backdrop-blur + brillo blanco sutil arriba). El magenta NO se hornea en
            la card: proviene de los vectores de fondo que se ven a través del glass. */
