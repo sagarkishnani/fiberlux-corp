@@ -64,20 +64,25 @@ function revealOut(el: HTMLElement, dir: string, dist: number, dur: number) {
 function initScrub() {
   document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => {
     const dir = (el.dataset.reveal || "up").toLowerCase();
-    const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
+    // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
+    // ×1.7 en la misma dirección (no solo fade).
+    const dist = Number(el.dataset.revealDistance || 100);
+    const exit = dist * 1.7;
     const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
-    let enter = 0;
-    let axis: "x" | "y" = "y";
+    let axis: "x" | "y" | null = "y";
+    let enterV = 0;
+    let exitV = 0;
     switch (dir) {
-      case "left": axis = "x"; enter = -dist; break;
-      case "right": axis = "x"; enter = dist; break;
-      case "down": axis = "y"; enter = -dist; break;
-      case "fade": enter = 0; break;
-      default: axis = "y"; enter = dist; // up
+      case "left": axis = "x"; enterV = -dist; exitV = -exit; break;
+      case "right": axis = "x"; enterV = dist; exitV = exit; break;
+      case "down": axis = "y"; enterV = -dist; exitV = -exit; break;
+      case "fade": axis = null; break;
+      default: axis = "y"; enterV = dist; exitV = exit; // up
     }
-    if (enter !== 0) kf[axis] = [enter, 0, 0, 0];
+    if (axis) kf[axis] = [enterV, 0, 0, exitV];
     scroll(
-      animate(el, kf as any, { times: [0, 0.28, 0.72, 1], ease: "linear" }),
+      // 0–25% entra (slide+fade), 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
+      animate(el, kf as any, { times: [0, 0.25, 0.65, 1], ease: "linear" }),
       { target: el, offset: ["start end", "end start"] }
     );
   });
