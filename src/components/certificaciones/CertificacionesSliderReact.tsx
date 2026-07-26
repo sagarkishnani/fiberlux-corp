@@ -4,7 +4,7 @@ import type {
   CertificacionesQueryVariables,
 } from "../../../tina/__generated__/types";
 import CertCard, { type Cert } from "./CertCard";
-import { useDragSlider } from "../../hooks/useDragSlider";
+import { useSlider } from "../../hooks/useSlider";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 /* Decorative background glow (static asset), same pattern as the soluciones slider. */
@@ -14,12 +14,16 @@ interface CertSliderProps {
   query: string;
   variables: CertificacionesQueryVariables;
   data: CertificacionesQuery;
+  autoplay?: boolean;
+  intervalMs?: number;
 }
 
 export default function CertificacionesSliderReact({
   query,
   variables,
   data: initialData,
+  autoplay = true,
+  intervalMs = 3500,
 }: CertSliderProps) {
   const { data } = useTina<CertificacionesQuery>({ query, variables, data: initialData });
 
@@ -27,16 +31,18 @@ export default function CertificacionesSliderReact({
   const sectionTitle = page?.sectionTitle || "Certificaciones del grupo Fiberlux";
   const items = (page?.items || []).filter(Boolean) as any[];
 
-  /* Shared drag/scroll engine: left-aligned cards, one card per arrow. */
-  const slider = useDragSlider({
-    slideSelector: ".cert-slide",
-    align: "start",
-    momentum: false,
-    itemCount: items.length,
-  });
-  const { atStart, atEnd } = slider;
-
   const hasItems = items.length > 0;
+  const enough = items.length > 1;
+
+  /* Embla slider: left-aligned cards, one card per arrow, autoplay w/ loop. */
+  const slider = useSlider({
+    align: "start",
+    loop: enough,
+    autoplay: autoplay && enough,
+    intervalMs,
+  });
+  const atStart = !slider.canPrev;
+  const atEnd = !slider.canNext;
 
   /* ── Prev/Next pill ── */
   const arrowsPill = (
@@ -70,32 +76,31 @@ export default function CertificacionesSliderReact({
     </div>
   );
 
-  /* ── Carousel viewport: mobile shows ~1 card + peek, desktop exactly 2 ── */
+  /* ── Carousel viewport (Embla): mobile ~1 card + peek, desktop exactly 2 ── */
   const carousel = (
     <div
-      ref={slider.ref}
-      className={`flex items-stretch gap-6 overflow-x-auto snap-x snap-proximity py-2 select-none cert-carousel${
-        atEnd ? " cert-at-end" : ""
-      }`}
+      ref={slider.viewportRef}
+      className="overflow-hidden py-2 select-none cert-carousel"
       style={{ cursor: hasItems ? "grab" : "default" }}
-      {...slider.handlers}
     >
-      {hasItems ? (
-        items.map((item, i) => (
-          <div
-            key={i}
-            className="cert-slide snap-start shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
-          >
-            <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} />
+      <div className="flex items-stretch gap-6">
+        {hasItems ? (
+          items.map((item, i) => (
+            <div
+              key={i}
+              className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
+            >
+              <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} />
+            </div>
+          ))
+        ) : (
+          <div className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]">
+            <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
+              Certificaciones — próximamente
+            </div>
           </div>
-        ))
-      ) : (
-        <div className="cert-slide snap-start shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]">
-          <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
-            Certificaciones — próximamente
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 
@@ -147,19 +152,13 @@ export default function CertificacionesSliderReact({
       </div>
 
       <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
+        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
+           Con el slider en loop siempre hay una card asomando, así que el fade se
+           mantiene constante (ya no hay estado "al final"). */
         .cert-carousel {
-          scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
           -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
           mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
         }
-        /* obs_7: al llegar al final ya no hay card oculta a la derecha; se quita el
-           fade para que la última card (ISO) se vea nítida, sin desvanecimiento. */
-        .cert-carousel.cert-at-end {
-          -webkit-mask-image: none;
-          mask-image: none;
-        }
-        .cert-carousel::-webkit-scrollbar { display: none; }
       `}</style>
     </section>
   );

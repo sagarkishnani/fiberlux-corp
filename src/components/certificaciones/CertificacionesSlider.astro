@@ -5,6 +5,8 @@ import CertificacionesSliderReact from "./CertificacionesSliderReact.tsx";
 const certQuery = await client.queries.certificaciones({
   relativePath: "index.json",
 });
+const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const cfg = (globalQuery.data?.global as any)?.sliders?.certificaciones ?? {};
 ---
 
 <CertificacionesSliderReact
@@ -12,4 +14,6 @@ const certQuery = await client.queries.certificaciones({
   query={certQuery.query}
   variables={certQuery.variables}
   data={certQuery.data}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 3500}
 />
