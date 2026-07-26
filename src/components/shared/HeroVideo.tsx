@@ -59,7 +59,6 @@ export default function HeroVideo({ src, poster, className = "" }: HeroVideoProp
     <video
       ref={videoRef}
       src={videoSrc}
-      poster={posterSrc || undefined}
       autoPlay
       loop
       muted
