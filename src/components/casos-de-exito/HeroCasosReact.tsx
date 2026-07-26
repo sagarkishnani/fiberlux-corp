@@ -53,7 +53,7 @@ export default function HeroCasosReact({
       />
 
       <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
-        <div className="max-w-[600px]">
+        <div className="max-w-[600px]" data-reveal="up">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-8">
             <a href={base} className="hover:text-greyscale-white transition-colors">
