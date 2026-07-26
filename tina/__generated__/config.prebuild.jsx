@@ -1062,16 +1062,16 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           {
-            name: "splineSceneUrl",
-            label: "URL de la escena de Spline (hero)",
-            type: "string",
-            description: "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vac\xEDo = sin 3D."
+            name: "heroVideo",
+            label: "Video del hero (loop)",
+            type: "image",
+            description: "Video corto en loop (mp4) que reemplaza al 3D. Se mezcla con mix-blend-mode: screen sobre el fondo. Vac\xEDo = sin video."
           },
           {
-            name: "splinePosterUrl",
-            label: "Poster est\xE1tico de la escena (respaldo)",
+            name: "heroVideoPoster",
+            label: "Poster del video (respaldo)",
             type: "image",
-            description: "Captura PNG de la escena. Se muestra en equipos d\xE9biles / red lenta / reduce-motion en vez del 3D, y como base mientras carga."
+            description: "Imagen que se muestra mientras carga el video y en reduce-motion (sin reproducci\xF3n)."
           },
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "T\xEDtulo de secci\xF3n", type: "string" },
@@ -1156,16 +1156,16 @@ var config_default = defineConfig({
           },
           { name: "ctaLabel", label: "Texto del bot\xF3n del hero", type: "string" },
           {
-            name: "splineSceneUrl",
-            label: "URL de la escena de Spline (hero)",
-            type: "string",
-            description: "URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode. Vac\xEDo = sin 3D."
+            name: "heroVideo",
+            label: "Video del hero (loop)",
+            type: "image",
+            description: "Video corto en loop (mp4) que reemplaza al 3D. Se mezcla con mix-blend-mode: screen sobre el fondo. Vac\xEDo = sin video."
           },
           {
-            name: "splinePosterUrl",
-            label: "Poster est\xE1tico de la escena (respaldo)",
+            name: "heroVideoPoster",
+            label: "Poster del video (respaldo)",
             type: "image",
-            description: "Captura PNG de la escena. Se muestra en equipos d\xE9biles / red lenta / reduce-motion en vez del 3D, y como base mientras carga."
+            description: "Imagen que se muestra mientras carga el video y en reduce-motion (sin reproducci\xF3n)."
           },
           // ── Bloque de formulario ──
           { name: "formTitle", label: "T\xEDtulo del bloque de formulario", type: "string" },

@@ -283,8 +283,8 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   breadcrumb
   heading
   intro
-  splineSceneUrl
-  splinePosterUrl
+  heroVideo
+  heroVideoPoster
   sectionTitle
   sectionSubtitle
   channels {
@@ -310,8 +310,8 @@ fragment ServiciosParts on Servicios {
   heading
   intro
   ctaLabel
-  splineSceneUrl
-  splinePosterUrl
+  heroVideo
+  heroVideoPoster
   formTitle
   formSubtitle
 }

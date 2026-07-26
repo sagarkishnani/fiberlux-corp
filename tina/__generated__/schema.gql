@@ -906,8 +906,8 @@ type SoporteTecnico implements Node & Document {
   breadcrumb: String
   heading: String
   intro: String
-  splineSceneUrl: String
-  splinePosterUrl: String
+  heroVideo: String
+  heroVideoPoster: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannels]
@@ -936,8 +936,8 @@ input SoporteTecnicoFilter {
   breadcrumb: StringFilter
   heading: StringFilter
   intro: StringFilter
-  splineSceneUrl: StringFilter
-  splinePosterUrl: ImageFilter
+  heroVideo: ImageFilter
+  heroVideoPoster: ImageFilter
   sectionTitle: StringFilter
   sectionSubtitle: StringFilter
   channels: SoporteTecnicoChannelsFilter
@@ -959,8 +959,8 @@ type Servicios implements Node & Document {
   heading: String
   intro: String
   ctaLabel: String
-  splineSceneUrl: String
-  splinePosterUrl: String
+  heroVideo: String
+  heroVideoPoster: String
   formTitle: String
   formSubtitle: String
   id: ID!
@@ -973,8 +973,8 @@ input ServiciosFilter {
   heading: StringFilter
   intro: StringFilter
   ctaLabel: StringFilter
-  splineSceneUrl: StringFilter
-  splinePosterUrl: ImageFilter
+  heroVideo: ImageFilter
+  heroVideoPoster: ImageFilter
   formTitle: StringFilter
   formSubtitle: StringFilter
 }
@@ -2469,8 +2469,8 @@ input SoporteTecnicoMutation {
   breadcrumb: String
   heading: String
   intro: String
-  splineSceneUrl: String
-  splinePosterUrl: String
+  heroVideo: String
+  heroVideoPoster: String
   sectionTitle: String
   sectionSubtitle: String
   channels: [SoporteTecnicoChannelsMutation]
@@ -2481,8 +2481,8 @@ input ServiciosMutation {
   heading: String
   intro: String
   ctaLabel: String
-  splineSceneUrl: String
-  splinePosterUrl: String
+  heroVideo: String
+  heroVideoPoster: String
   formTitle: String
   formSubtitle: String
 }
