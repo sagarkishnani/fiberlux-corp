@@ -13,15 +13,15 @@ if (!is_array($cfg)) $cfg = [];
 // ─── SMTP Config ───
 $SMTP_HOST     = 'smtp.office365.com';       // no sensible
 $SMTP_PORT     = 587;                         // no sensible
-$SMTP_USER     = $cfg['SMTP_USER'] ?? '';
-$SMTP_PASS     = $cfg['SMTP_PASS'] ?? '';
+$SMTP_USER     = $cfg['SMTP_USER'] ?? 'hola@fiberlux.pe';
+$SMTP_PASS     = $cfg['SMTP_PASS'] ?? 'HoFi032026MKT!*';
 $UPLOAD_DIR    = __DIR__ . '/uploads';
 $COUNTER_FILE  = __DIR__ . '/data/counter.json';
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $CONFIG_FILE   = __DIR__ . '/form-config.json';
 
 // ─── Fallback recipients (used if config file is missing) ───
-$FALLBACK_EMAIL = $cfg['FALLBACK_EMAIL'] ?? '';
+$FALLBACK_EMAIL = $cfg['FALLBACK_EMAIL'] ?? 'sagarkishnani67@gmail.com';
 
 // ─── CORS & Headers ───
 header('Content-Type: application/json; charset=utf-8');
