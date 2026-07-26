@@ -48,9 +48,17 @@ const metaDescription =
   whatsappKind="solución"
 >
   <main>
-    <HeroSolucion relativePath={relativePath} />
-    <HtmlInjection location="solucion-after-hero" />
-    <ValorSolucion relativePath={relativePath} />
+    {/* Overlap sticky (SPEC 70): el hero queda fijo y ValorSolucion sube por
+        encima cubriéndolo; el hero se libera al terminar la sección. */}
+    <div class="relative">
+      <div class="sticky top-0 z-0" data-hero-sticky>
+        <HeroSolucion relativePath={relativePath} />
+      </div>
+      <div class="relative z-10">
+        <HtmlInjection location="solucion-after-hero" />
+        <ValorSolucion relativePath={relativePath} />
+      </div>
+    </div>
     <ServicePartners relativePath={relativePath} />
     <CatalogoSoluciones relativePath={relativePath} />
     <div class="-mt-16 relative z-20">
