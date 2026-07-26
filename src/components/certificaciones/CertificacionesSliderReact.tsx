@@ -44,6 +44,8 @@ export default function CertificacionesSliderReact({
     autoplay: autoplay && enough,
     intervalMs,
     effect,
+    // Permite que la última card se alinee a la izquierda (sin cortar la anterior).
+    containScroll: false,
   });
   const arrowsPill = (
     <SliderArrows

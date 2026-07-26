@@ -49,6 +49,12 @@ export interface UseSliderOptions {
   active?: boolean;
   /** Tween effect applied to slides while scrolling. Default "none". */
   effect?: SliderEffect;
+  /**
+   * Embla scroll containment. Default "trimSnaps". Use `false` so the LAST slide
+   * can align to the start (leaving empty space after it) instead of stopping
+   * with the previous slide cut off at the left edge.
+   */
+  containScroll?: "trimSnaps" | "keepSnaps" | false;
 }
 
 export interface Slider {
@@ -75,6 +81,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     dragFree = false,
     active = true,
     effect = "none",
+    containScroll = "trimSnaps",
   } = opts;
 
   const prefersReduced = usePrefersReducedMotion();
@@ -94,7 +101,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     : [];
 
   const [viewportRef, embla] = useEmblaCarousel(
-    { loop, align, slidesToScroll, dragFree, active, containScroll: "trimSnaps" },
+    { loop, align, slidesToScroll, dragFree, active, containScroll },
     plugins
   );
 
