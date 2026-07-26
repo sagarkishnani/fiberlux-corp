@@ -1754,7 +1754,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1763,7 +1764,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1772,7 +1774,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1781,7 +1784,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1790,7 +1794,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1799,7 +1804,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               },
               {
@@ -1808,7 +1814,8 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
-                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" }
+                  { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [{ value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" }] }
                 ]
               }
             ]

@@ -58,6 +58,7 @@ const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
       data={aboutQuery.data}
       autoplay={rubrosCfg.autoplay ?? true}
       intervalMs={rubrosCfg.intervalMs ?? 3500}
+      effect={rubrosCfg.effect ?? "none"}
     />
   </div>
   <BannerApp />

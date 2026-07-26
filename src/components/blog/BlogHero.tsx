@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import BlogCard from './BlogCard';
-import { useSlider } from '../../hooks/useSlider';
+import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from '../shared/SliderArrows';
 
 /* ── Types ── */
@@ -21,9 +21,10 @@ interface BlogHeroProps {
   posts: PostEdge[];
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
-export default function BlogHero({ posts = [], autoplay = true, intervalMs = 6000 }: BlogHeroProps) {
+export default function BlogHero({ posts = [], autoplay = true, intervalMs = 6000, effect = "none" }: BlogHeroProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [leftPad, setLeftPad] = useState(80);
 
@@ -36,6 +37,7 @@ export default function BlogHero({ posts = [], autoplay = true, intervalMs = 600
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
 
   /* ── Measure left padding from content container so the first card lines up

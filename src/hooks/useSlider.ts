@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+
+export type SliderEffect = "none" | "parallax" | "scale" | "opacity";
+
+const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
 
 /**
  * Shared slider engine for the site's card carousels — Embla Carousel (SPEC 68).
@@ -43,6 +47,8 @@ export interface UseSliderOptions {
   dragFree?: boolean;
   /** Turn the whole carousel on/off (e.g. per breakpoint). Default true. */
   active?: boolean;
+  /** Tween effect applied to slides while scrolling. Default "none". */
+  effect?: SliderEffect;
 }
 
 export interface Slider {
@@ -68,6 +74,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     slidesToScroll = 1,
     dragFree = false,
     active = true,
+    effect = "none",
   } = opts;
 
   const prefersReduced = usePrefersReducedMotion();
@@ -126,6 +133,60 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
       embla.off("settle", onSettle);
     };
   }, [embla, onSelect]);
+
+  // ── Tween de slides (parallax / scale / opacity) ──
+  // Basado en el ejemplo oficial de Embla: transforma cada slide según su
+  // distancia al snap seleccionado. Sin loop, así que no manejamos loopPoints.
+  const tweenNodes = useRef<HTMLElement[]>([]);
+  useEffect(() => {
+    if (!embla || effect === "none") return;
+
+    const setNodes = () => {
+      tweenNodes.current = embla.slideNodes() as HTMLElement[];
+    };
+    const clearStyles = () => {
+      tweenNodes.current.forEach((n) => {
+        n.style.transform = "";
+        n.style.opacity = "";
+        const layer = n.firstElementChild as HTMLElement | null;
+        if (layer) layer.style.transform = "";
+      });
+    };
+
+    const factor = effect === "parallax" ? 1 : effect === "scale" ? 0.42 : 0.75;
+
+    const applyTween = (eventName?: string) => {
+      const scrollProgress = embla.scrollProgress();
+      const slidesInView = embla.slidesInView();
+      const isScroll = eventName === "scroll";
+      embla.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+        const diff = scrollSnap - scrollProgress;
+        if (isScroll && !slidesInView.includes(snapIndex)) return;
+        const node = tweenNodes.current[snapIndex];
+        if (!node) return;
+        if (effect === "opacity") {
+          node.style.opacity = String(clamp(1 - Math.abs(diff * factor), 0.15, 1));
+        } else if (effect === "scale") {
+          node.style.transform = `scale(${clamp(1 - Math.abs(diff * factor), 0.82, 1)})`;
+        } else if (effect === "parallax") {
+          const layer = node.firstElementChild as HTMLElement | null;
+          if (layer) layer.style.transform = `translateX(${diff * factor * 22}%)`;
+        }
+      });
+    };
+
+    setNodes();
+    applyTween();
+    embla.on("scroll", () => applyTween("scroll"));
+    embla.on("slideFocus", () => applyTween());
+    embla.on("reInit", () => {
+      setNodes();
+      applyTween();
+    });
+    return () => {
+      clearStyles();
+    };
+  }, [embla, effect]);
 
   const next = useCallback(() => embla?.scrollNext(), [embla]);
   const prev = useCallback(() => embla?.scrollPrev(), [embla]);

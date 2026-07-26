@@ -4,7 +4,7 @@ import type {
   HomeQueryVariables,
 } from "../../../tina/__generated__/types";
 import BlogCard from "./BlogCard";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
 
 /* ── Types ── */
@@ -15,6 +15,7 @@ interface BlogPreviewProps {
   posts?: PostEdge[];
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 interface PostEdge {
@@ -35,6 +36,7 @@ export default function BlogPreviewReact({
   posts = [],
   autoplay = true,
   intervalMs = 6000,
+  effect = "none",
 }: BlogPreviewProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -55,6 +57,7 @@ export default function BlogPreviewReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
 
   return (

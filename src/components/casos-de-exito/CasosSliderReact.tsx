@@ -6,7 +6,7 @@ import type {
 } from "../../../tina/__generated__/types";
 import CasoCard, { type Caso } from "./CasoCard";
 import VideoModal from "./VideoModal";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
 
 interface CasosSliderProps {
@@ -15,6 +15,7 @@ interface CasosSliderProps {
   data: CasosDeExitoQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 export default function CasosSliderReact({
@@ -23,6 +24,7 @@ export default function CasosSliderReact({
   data: initialData,
   autoplay = true,
   intervalMs = 6000,
+  effect = "none",
 }: CasosSliderProps) {
   const { data } = useTina<CasosDeExitoQuery>({ query, variables, data: initialData });
 
@@ -40,6 +42,7 @@ export default function CasosSliderReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
   const { activeIndex } = slider;
 

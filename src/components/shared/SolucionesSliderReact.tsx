@@ -1,6 +1,6 @@
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "./SliderArrows";
 
 /* ── Props ── */
@@ -10,6 +10,7 @@ interface SolucionesSliderProps {
   data: HomeQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -35,6 +36,7 @@ export default function SolucionesSliderReact({
   data: initialData,
   autoplay = true,
   intervalMs = 6000,
+  effect = "none",
 }: SolucionesSliderProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -51,6 +53,7 @@ export default function SolucionesSliderReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
   const { activeIndex, scrolling } = slider;
 

@@ -1852,6 +1852,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1861,6 +1862,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1870,6 +1872,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1879,6 +1882,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1888,6 +1892,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1897,6 +1902,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
               {
@@ -1906,6 +1912,7 @@ export default defineConfig({
                 fields: [
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
+                  { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
                 ],
               },
             ],

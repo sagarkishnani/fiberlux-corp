@@ -16,4 +16,5 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.casos ?? {};
   data={casosQuery.data}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 6000}
+  effect={cfg.effect ?? "scale"}
 />

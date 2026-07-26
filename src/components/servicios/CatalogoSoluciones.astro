@@ -19,4 +19,5 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.catalogoSoluciones ?? {}
   data={serviceQuery.data}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 6000}
+  effect={cfg.effect ?? "none"}
 />

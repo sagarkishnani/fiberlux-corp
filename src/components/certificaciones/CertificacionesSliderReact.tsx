@@ -4,7 +4,7 @@ import type {
   CertificacionesQueryVariables,
 } from "../../../tina/__generated__/types";
 import CertCard, { type Cert } from "./CertCard";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -17,6 +17,7 @@ interface CertSliderProps {
   data: CertificacionesQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 export default function CertificacionesSliderReact({
@@ -25,6 +26,7 @@ export default function CertificacionesSliderReact({
   data: initialData,
   autoplay = true,
   intervalMs = 3500,
+  effect = "none",
 }: CertSliderProps) {
   const { data } = useTina<CertificacionesQuery>({ query, variables, data: initialData });
 
@@ -41,6 +43,7 @@ export default function CertificacionesSliderReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
   const atEnd = !slider.canNext;
 

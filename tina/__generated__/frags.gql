@@ -491,36 +491,43 @@ fragment GlobalParts on Global {
       __typename
       autoplay
       intervalMs
+      effect
     }
     soluciones {
       __typename
       autoplay
       intervalMs
+      effect
     }
     testimonios {
       __typename
       autoplay
       intervalMs
+      effect
     }
     casos {
       __typename
       autoplay
       intervalMs
+      effect
     }
     catalogoSoluciones {
       __typename
       autoplay
       intervalMs
+      effect
     }
     blogPreview {
       __typename
       autoplay
       intervalMs
+      effect
     }
     rubros {
       __typename
       autoplay
       intervalMs
+      effect
     }
   }
 }

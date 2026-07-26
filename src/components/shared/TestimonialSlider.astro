@@ -14,4 +14,5 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.testimonios ?? {};
   data={homeQuery.data}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 5000}
+  effect={cfg.effect ?? "opacity"}
 />

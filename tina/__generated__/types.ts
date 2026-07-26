@@ -1737,42 +1737,49 @@ export type GlobalSlidersCertificaciones = {
   __typename?: 'GlobalSlidersCertificaciones';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersSoluciones = {
   __typename?: 'GlobalSlidersSoluciones';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersTestimonios = {
   __typename?: 'GlobalSlidersTestimonios';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersCasos = {
   __typename?: 'GlobalSlidersCasos';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersCatalogoSoluciones = {
   __typename?: 'GlobalSlidersCatalogoSoluciones';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersBlogPreview = {
   __typename?: 'GlobalSlidersBlogPreview';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSlidersRubros = {
   __typename?: 'GlobalSlidersRubros';
   autoplay?: Maybe<Scalars['Boolean']['output']>;
   intervalMs?: Maybe<Scalars['Float']['output']>;
+  effect?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalSliders = {
@@ -1924,36 +1931,43 @@ export type NumberFilter = {
 export type GlobalSlidersCertificacionesFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersSolucionesFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersTestimoniosFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersCasosFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersCatalogoSolucionesFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersBlogPreviewFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersRubrosFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
+  effect?: InputMaybe<StringFilter>;
 };
 
 export type GlobalSlidersFilter = {
@@ -3416,36 +3430,43 @@ export type GlobalHtmlInjectionsMutation = {
 export type GlobalSlidersCertificacionesMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersSolucionesMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersTestimoniosMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersCasosMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersCatalogoSolucionesMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersBlogPreviewMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersRubrosMutation = {
   autoplay?: InputMaybe<Scalars['Boolean']['input']>;
   intervalMs?: InputMaybe<Scalars['Float']['input']>;
+  effect?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalSlidersMutation = {
@@ -3692,7 +3713,7 @@ export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sect
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null } | null } | null };
+export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
@@ -3922,7 +3943,7 @@ export type GlobalQueryVariables = Exact<{
 }>;
 
 
-export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null } | null } | null } };
+export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } };
 
 export type GlobalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3934,7 +3955,7 @@ export type GlobalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null } | null } | null } | null } | null> | null } };
+export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } | null } | null> | null } };
 
 export type MaintenanceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4574,36 +4595,43 @@ export const GlobalPartsFragmentDoc = gql`
       __typename
       autoplay
       intervalMs
+      effect
     }
     soluciones {
       __typename
       autoplay
       intervalMs
+      effect
     }
     testimonios {
       __typename
       autoplay
       intervalMs
+      effect
     }
     casos {
       __typename
       autoplay
       intervalMs
+      effect
     }
     catalogoSoluciones {
       __typename
       autoplay
       intervalMs
+      effect
     }
     blogPreview {
       __typename
       autoplay
       intervalMs
+      effect
     }
     rubros {
       __typename
       autoplay
       intervalMs
+      effect
     }
   }
 }
@@ -6052,7 +6080,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/main",
+        url: "http://localhost:4001/graphql",
         queries,
       })
     )

@@ -1,5 +1,5 @@
 import { useTina, tinaField } from "tinacms/dist/react";
-import { useSlider } from "../../hooks/useSlider";
+import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import type { IconType } from "react-icons";
 import {
   FaGlobe,
@@ -42,6 +42,7 @@ interface CatalogoProps {
   data: ServiceQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 interface Item {
@@ -105,6 +106,7 @@ export default function CatalogoSolucionesReact({
   data: initialData,
   autoplay = true,
   intervalMs = 6000,
+  effect = "none",
 }: CatalogoProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
@@ -120,6 +122,7 @@ export default function CatalogoSolucionesReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
 
   if (!catalogo || items.length === 0) return null;

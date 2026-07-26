@@ -1288,36 +1288,43 @@ type GlobalHtmlInjections {
 type GlobalSlidersCertificaciones {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersSoluciones {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersTestimonios {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersCasos {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersCatalogoSoluciones {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersBlogPreview {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSlidersRubros {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 type GlobalSliders {
@@ -1467,36 +1474,43 @@ input NumberFilter {
 input GlobalSlidersCertificacionesFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersSolucionesFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersTestimoniosFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersCasosFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersCatalogoSolucionesFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersBlogPreviewFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersRubrosFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
+  effect: StringFilter
 }
 
 input GlobalSlidersFilter {
@@ -2657,36 +2671,43 @@ input GlobalHtmlInjectionsMutation {
 input GlobalSlidersCertificacionesMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersSolucionesMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersTestimoniosMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersCasosMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersCatalogoSolucionesMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersBlogPreviewMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersRubrosMutation {
   autoplay: Boolean
   intervalMs: Float
+  effect: String
 }
 
 input GlobalSlidersMutation {

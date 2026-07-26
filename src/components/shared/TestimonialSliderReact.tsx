@@ -1,7 +1,7 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
 import TestimonialCard from './TestimonialCard';
-import { useSlider } from '../../hooks/useSlider';
+import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from './SliderArrows';
 
 /* ── Types ── */
@@ -11,6 +11,7 @@ interface TestimonialSliderProps {
   data: HomeQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 interface Testimonial {
@@ -29,6 +30,7 @@ export default function TestimonialSliderReact({
   data: initialData,
   autoplay = true,
   intervalMs = 5000,
+  effect = "none",
 }: TestimonialSliderProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -50,6 +52,7 @@ export default function TestimonialSliderReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
   const arrowsPill = (
     <SliderArrows

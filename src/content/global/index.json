@@ -444,31 +444,38 @@
   "sliders": {
     "certificaciones": {
       "autoplay": true,
-      "intervalMs": 3500
+      "intervalMs": 3500,
+      "effect": "none"
     },
     "soluciones": {
       "autoplay": true,
-      "intervalMs": 6000
+      "intervalMs": 6000,
+      "effect": "none"
     },
     "testimonios": {
       "autoplay": true,
-      "intervalMs": 5000
+      "intervalMs": 5000,
+      "effect": "opacity"
     },
     "casos": {
       "autoplay": true,
-      "intervalMs": 6000
+      "intervalMs": 6000,
+      "effect": "scale"
     },
     "catalogoSoluciones": {
       "autoplay": true,
-      "intervalMs": 6000
+      "intervalMs": 6000,
+      "effect": "none"
     },
     "blogPreview": {
       "autoplay": true,
-      "intervalMs": 6000
+      "intervalMs": 6000,
+      "effect": "none"
     },
     "rubros": {
       "autoplay": true,
-      "intervalMs": 3500
+      "intervalMs": 3500,
+      "effect": "none"
     }
   }
 }

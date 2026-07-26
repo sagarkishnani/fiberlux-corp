@@ -25,7 +25,7 @@ import {
   LuBriefcase,
   LuSettings,
 } from 'react-icons/lu';
-import { useSlider } from '../../hooks/useSlider';
+import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import { mediaUrl } from '../../utils/mediaUrl';
 
 /* ── Types ── */
@@ -41,6 +41,7 @@ interface RubrosProps {
   data: AboutQuery;
   autoplay?: boolean;
   intervalMs?: number;
+  effect?: SliderEffect;
 }
 
 /* ── Icon map: CMS select key → react-icons component ── */
@@ -74,6 +75,7 @@ export default function RubrosReact({
   data: initialData,
   autoplay = true,
   intervalMs = 3500,
+  effect = "none",
 }: RubrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
@@ -95,6 +97,7 @@ export default function RubrosReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
+    effect,
   });
 
   if (total === 0) return null;
