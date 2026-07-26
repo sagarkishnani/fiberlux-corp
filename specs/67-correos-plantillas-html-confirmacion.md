@@ -1,6 +1,6 @@
 # SPEC 67 — Plantillas HTML de correos (confirmación al cliente + logo)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 65 (backend de correos)
 > **Fecha:** 2026-07-25
 > **Objetivo:** Rediseñar el correo de confirmación al cliente con la plantilla rica para contacto y soluciones, agregar el logo a la confirmación de reclamos/legales y al correo interno de la empresa, y resolver las imágenes de `public/mail` por URL absoluta derivada del host.
