@@ -55,7 +55,7 @@ export default function SolucionesSliderReact({
     intervalMs,
     effect,
   });
-  const { activeIndex, scrolling } = slider;
+  const { activeIndex } = slider;
 
   const hasItems = items.length > 0;
   if (!hasItems) return null;
@@ -160,9 +160,7 @@ export default function SolucionesSliderReact({
   const carousel = (
     <div
       ref={slider.viewportRef}
-      className={`overflow-hidden py-2 select-none sol-carousel${
-        scrolling ? " sol-carousel-dragging" : ""
-      }`}
+      className="overflow-hidden py-2 select-none sol-carousel"
       style={{ cursor: "grab" }}
     >
       <div className="flex items-stretch gap-6">
@@ -278,20 +276,8 @@ export default function SolucionesSliderReact({
       </div>
 
       <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco).
-           En reposo el borde izquierdo queda nítido (#000 0%). Solo al arrastrar
-           (.sol-carousel-dragging) se difumina también el borde izquierdo, para que
-           al soltar se vean los bordes de las cards. */
-        .sol-carousel {
-          scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch;
-          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
-          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
-        }
-        .sol-carousel.sol-carousel-dragging {
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0%, #000 7%, #000 86%, transparent 100%);
-        }
-        .sol-carousel::-webkit-scrollbar { display: none; }
+        /* El desvanecimiento de las cards que asoman lo maneja el tween opacity
+           (Embla), no una máscara CSS. */
         /* SPEC 55: TODAS las cards son glass parejo (base oscura translúcida +
            backdrop-blur + brillo blanco sutil arriba). El magenta NO se hornea en
            la card: proviene de los vectores de fondo que se ven a través del glass. */

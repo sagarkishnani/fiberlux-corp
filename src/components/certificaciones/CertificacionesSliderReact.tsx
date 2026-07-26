@@ -45,8 +45,6 @@ export default function CertificacionesSliderReact({
     intervalMs,
     effect,
   });
-  const atEnd = !slider.canNext;
-
   const arrowsPill = (
     <SliderArrows
       canPrev={slider.canPrev}
@@ -60,7 +58,7 @@ export default function CertificacionesSliderReact({
   const carousel = (
     <div
       ref={slider.viewportRef}
-      className={`overflow-hidden py-2 select-none cert-carousel${atEnd ? " cert-at-end" : ""}`}
+      className="overflow-hidden py-2 select-none cert-carousel"
       style={{ cursor: hasItems ? "grab" : "default" }}
     >
       <div className="flex items-stretch gap-6">
@@ -131,19 +129,6 @@ export default function CertificacionesSliderReact({
         {items.length > 1 && <div className="md:hidden mt-8">{arrowsPill}</div>}
       </div>
 
-      <style>{`
-        /* obs_18: la card que se esconde a la derecha se desvanece (sin corte brusco). */
-        .cert-carousel {
-          -webkit-mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
-          mask-image: linear-gradient(to right, #000 0%, #000 86%, transparent 100%);
-        }
-        /* obs_7: en la última card ya no hay card oculta a la derecha; se quita el
-           fade para que la última (ISO) se vea nítida. */
-        .cert-carousel.cert-at-end {
-          -webkit-mask-image: none;
-          mask-image: none;
-        }
-      `}</style>
     </section>
   );
 }

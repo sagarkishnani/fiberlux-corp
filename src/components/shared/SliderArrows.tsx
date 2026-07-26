@@ -47,7 +47,7 @@ export default function SliderArrows({
         onClick={onNext}
         disabled={!canNext}
         aria-label={labelNext}
-        className={`${BTN} ${canNext ? ENABLED : DISABLED}`}
+        className={`${BTN} border-l border-white/15 ${canNext ? ENABLED : DISABLED}`}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
