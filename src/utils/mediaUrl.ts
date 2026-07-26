@@ -30,12 +30,13 @@ export function mediaUrl(value?: string | null): string {
     value = value.slice(idx);
   }
 
-  // Local git-media asset: capture the `images/...` path (relative, or embedded
+  // Local git-media asset: capture the `<folder>/...` path (relative, or embedded
   // in the Tina CDN URL) and serve it from our own `public/` folder. Tina glues
   // its prefix with OR without a slash depending on whether the stored value had
-  // a leading `/`, so we match `images/` at any position. The required trailing
-  // slash in `images\/` means the host `images.unsplash.com` never matches.
-  const match = value.match(/(images\/[^?#\s]+)/);
+  // a leading `/`, so we match the folder segment at any position. The required
+  // trailing slash means a host like `images.unsplash.com` never matches. Besides
+  // `images/`, we cover `videos/`, `models/` and `uploads/` (video/poster assets).
+  const match = value.match(/((?:images|videos|models|uploads)\/[^?#\s]+)/);
   if (match) {
     return `${base}${match[1]}`.replace(/([^:])\/\//g, "$1/");
   }
