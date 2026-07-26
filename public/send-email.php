@@ -151,7 +151,7 @@ try {
     $subjectPrefix = getSubjectPrefix($formType);
     $mail->Subject = "$subjectPrefix [$correlativo]" . ($replyName ? " - $replyName" : "");
     $mail->isHTML(true);
-    $mail->Body    = buildEmailBody($formType, $input, $correlativo, $uploadedFiles);
+    $mail->Body    = buildEmailBody($formType, $input, $correlativo, $uploadedFiles, $ASSET_BASE);
     $mail->AltBody = buildPlainText($formType, $input, $correlativo);
 
     $mail->send();
@@ -261,7 +261,7 @@ function getSubjectPrefix(string $type): string {
 
 function h(string $val): string { return htmlspecialchars(trim($val), ENT_QUOTES, 'UTF-8'); }
 
-function buildEmailBody(string $type, array $data, string $correlativo, array $files): string {
+function buildEmailBody(string $type, array $data, string $correlativo, array $files, string $assetBase = ''): string {
     $rows = getFieldRows($type, $data);
     $fileRows = '';
     if (!empty($files)) {
@@ -275,7 +275,7 @@ function buildEmailBody(string $type, array $data, string $correlativo, array $f
         $tableRows .= '<tr><td style="padding:8px 0;color:#888;width:180px;vertical-align:top;font-size:13px;">'.h($label).'</td><td style="padding:8px 0;font-weight:500;font-size:14px;">'.nl2br(h($value)).'</td></tr>';
     }
     $typeName = getSubjectPrefix($type);
-    return '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><h1 style="margin:0;color:#ffffff;font-size:18px;font-weight:600;">Fiberlux</h1><p style="margin:4px 0 0;color:#7686BC;font-size:13px;">'.h($typeName).'</p></td></tr><tr><td style="padding:20px 32px 0;"><span style="display:inline-block;background:#96237A;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;">'.h($correlativo).'</span></td></tr><tr><td style="padding:24px 32px 32px;"><table width="100%" cellpadding="0" cellspacing="0" style="color:#333;">'.$tableRows.$fileRows.'</table></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;"><p style="margin:0;color:#aaa;font-size:11px;text-align:center;">Correo generado desde fiberlux.pe</p></td></tr></table></td></tr></table></body></html>';
+    return '<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;"><table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;"><tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;"><tr><td style="background:#0a0a0a;padding:24px 32px;"><img src="'.h($assetBase).'/logoFiberlux-blanco.png" alt="Fiberlux" width="141" style="display:block;width:141px;height:auto;border:0;"><p style="margin:10px 0 0;color:#7686BC;font-size:13px;">'.h($typeName).'</p></td></tr><tr><td style="padding:20px 32px 0;"><span style="display:inline-block;background:#96237A;color:#fff;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;">'.h($correlativo).'</span></td></tr><tr><td style="padding:24px 32px 32px;"><table width="100%" cellpadding="0" cellspacing="0" style="color:#333;">'.$tableRows.$fileRows.'</table></td></tr><tr><td style="padding:16px 32px;background:#f9fafb;border-top:1px solid #eee;"><p style="margin:0;color:#aaa;font-size:11px;text-align:center;">Correo generado desde fiberlux.pe</p></td></tr></table></td></tr></table></body></html>';
 }
 
 function buildPlainText(string $type, array $data, string $correlativo): string {
