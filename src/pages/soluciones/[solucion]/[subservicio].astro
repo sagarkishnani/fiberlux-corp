@@ -63,14 +63,18 @@ const metaDescription =
         <Beneficios relativePath={relativePath} />
       </div>
     </div>
-    <CasosDeUso relativePath={relativePath} />
-    <div class="-mt-16 relative z-20">
+    <div data-reveal="up">
+      <CasosDeUso relativePath={relativePath} />
+    </div>
+    <div class="-mt-16 relative z-20" data-reveal="up">
       <Stats title={sub?.whyUsTitle ?? undefined} />
     </div>
-    <ServiciosForm prefill={{ servicio: subservicio ?? "" }} />
+    <div data-reveal="up">
+      <ServiciosForm prefill={{ servicio: subservicio ?? "" }} />
+    </div>
     {/* obs4: en mobile el solape (-mt-16) tapaba el boton "Contactar" del form;
         el solape se limita a desktop y en mobile las secciones se apilan. */}
-    <div class="mt-0 md:-mt-16 relative z-20">
+    <div class="mt-0 md:-mt-16 relative z-20" data-reveal="up">
       <BlogPreview tags={sub?.blogTags} />
     </div>
     <FaqSubservicio relativePath={relativePath} />

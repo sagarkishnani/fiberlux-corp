@@ -84,7 +84,7 @@ export default function BeneficiosReact({
           </h2>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => (
             <div
               key={i}
