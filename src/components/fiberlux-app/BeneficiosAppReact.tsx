@@ -9,6 +9,8 @@ import {
   FaShieldHalved,
   FaChartLine,
   FaLayerGroup,
+  FaFileInvoiceDollar,
+  FaTicket,
 } from "react-icons/fa6";
 import type {
   FiberluxAppQuery,
@@ -35,6 +37,8 @@ const ICONS: Record<string, IconType> = {
   escudo: FaShieldHalved,
   grafico: FaChartLine,
   generico: FaLayerGroup,
+  factura: FaFileInvoiceDollar,
+  ticket: FaTicket,
 };
 
 function ItemIcon({ name }: { name?: string | null }) {
@@ -78,11 +82,11 @@ export default function BeneficiosAppReact({
           </h2>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5" data-reveal="up" data-reveal-stagger="0.06">
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-5" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => (
             <div
               key={i}
-              className="beneficio-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#96237A]/60 hover:bg-white/[0.06] hover:shadow-[0_18px_40px_-20px_rgba(150,35,122,0.7)]"
+              className="beneficio-card group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 lg:p-7 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#96237A]/60 hover:bg-white/[0.06] hover:shadow-[0_18px_40px_-20px_rgba(150,35,122,0.7)] w-full md:w-[calc(50%-0.5rem)] lg:w-[calc(33.333%-0.834rem)]"
             >
               {/* Circular gradient glow — reveals on hover */}
               <span
