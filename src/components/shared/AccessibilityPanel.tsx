@@ -17,7 +17,7 @@ import {
 interface A11yState {
   fontScale: number; // 1 = 100%
   letterSpacing: number; // em
-  contrast: boolean;
+  contrastLevel: number; // 0 = desactivado, 1 = bajo, 2 = medio, 3 = alto
   saturation: boolean; // true = desaturated
   invert: boolean;
   hideImages: boolean;
@@ -26,10 +26,19 @@ interface A11yState {
 
 const STORAGE_KEY = "fiberlux-a11y-v1";
 
+/* Niveles de contraste (obs11). Bajo/Medio reducen el contraste (look más
+   "opaco", <1); Alto lo sube (accesibilidad). Ajustables sin refactor. */
+const CONTRAST_LEVELS = [
+  { label: "Desactivado", short: "Off", contrast: 1, brightness: 1 },
+  { label: "Bajo", short: "Bajo", contrast: 0.7, brightness: 1 },
+  { label: "Medio", short: "Medio", contrast: 0.85, brightness: 1 },
+  { label: "Alto", short: "Alto", contrast: 1.4, brightness: 1.03 },
+];
+
 const DEFAULTS: A11yState = {
   fontScale: 1,
   letterSpacing: 0,
-  contrast: false,
+  contrastLevel: 0,
   saturation: false,
   invert: false,
   hideImages: false,
@@ -51,15 +60,16 @@ function applyState(s: A11yState) {
     "--a11y-letter-spacing",
     s.letterSpacing ? `${s.letterSpacing}em` : "normal"
   );
-  r.style.setProperty("--a11y-contrast", s.contrast ? "1.4" : "1");
-  r.style.setProperty("--a11y-brightness", s.contrast ? "1.05" : "1");
+  const cl = CONTRAST_LEVELS[s.contrastLevel] || CONTRAST_LEVELS[0];
+  r.style.setProperty("--a11y-contrast", String(cl.contrast));
+  r.style.setProperty("--a11y-brightness", String(cl.brightness));
   r.style.setProperty("--a11y-saturate", s.saturation ? "0.12" : "1");
   r.style.setProperty("--a11y-invert", s.invert ? "1" : "0");
   r.style.setProperty("--a11y-hue", s.invert ? "180deg" : "0deg");
   // Zoom the content wrapper only when the font scale differs from 100%.
   r.classList.toggle("a11y-scaled", s.fontScale !== 1);
   // Only apply the body filter when a color effect is active (see CSS note).
-  r.classList.toggle("a11y-filter", s.contrast || s.saturation || s.invert);
+  r.classList.toggle("a11y-filter", s.contrastLevel > 0 || s.saturation || s.invert);
   r.classList.toggle("a11y-hide-images", s.hideImages);
   r.classList.toggle("a11y-dyslexia", s.dyslexia);
 }
@@ -69,7 +79,12 @@ function loadState(): A11yState {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULTS;
-    return { ...DEFAULTS, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    // Migración del modelo booleano anterior (contrast: true → nivel Alto).
+    if (parsed && parsed.contrastLevel == null && typeof parsed.contrast === "boolean") {
+      parsed.contrastLevel = parsed.contrast ? 3 : 0;
+    }
+    return { ...DEFAULTS, ...parsed };
   } catch {
     return DEFAULTS;
   }
@@ -131,7 +146,7 @@ export default function AccessibilityPanel() {
   const activeCount = [
     state.fontScale !== 1,
     state.letterSpacing > 0,
-    state.contrast,
+    state.contrastLevel > 0,
     state.saturation,
     state.invert,
     state.hideImages,
@@ -202,13 +217,28 @@ export default function AccessibilityPanel() {
         <div className="a11y-body">
           {/* ── VISUAL ── */}
           <p className="a11y-section-label">Visual</p>
+
+          {/* Contraste con 4 niveles (obs11): Desactivado / Bajo / Medio / Alto. */}
+          <div className="a11y-contrast" role="group" aria-label="Nivel de contraste">
+            <span className="a11y-contrast-label">
+              <FaCircleHalfStroke aria-hidden="true" /> Contraste
+            </span>
+            <div className="a11y-seg">
+              {CONTRAST_LEVELS.map((lvl, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className={`a11y-seg-btn ${state.contrastLevel === i ? "is-active" : ""}`}
+                  aria-pressed={state.contrastLevel === i}
+                  onClick={() => update({ contrastLevel: i })}
+                >
+                  {lvl.short}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="a11y-grid">
-            <ToggleCard
-              icon={<FaCircleHalfStroke />}
-              label="Contraste +"
-              active={state.contrast}
-              onClick={() => update({ contrast: !state.contrast })}
-            />
             <ToggleCard
               icon={<FaTextHeight />}
               label="Agrandar texto"
@@ -563,6 +593,52 @@ const styles = `
   }
   .a11y-section-label:not(:first-child) {
     margin-top: 28px;
+  }
+
+  .a11y-contrast {
+    margin-bottom: 12px;
+  }
+  .a11y-contrast-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .a11y-seg {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .a11y-seg-btn {
+    padding: 8px 4px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .a11y-seg-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+  .a11y-seg-btn.is-active {
+    background: #96237A;
+    color: #fff;
+  }
+  .a11y-seg-btn:focus-visible {
+    outline: 2px solid #96237A;
+    outline-offset: 2px;
   }
 
   .a11y-grid {

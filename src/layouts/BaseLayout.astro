@@ -156,16 +156,22 @@ const whatsappMessage = whatsappContext
               "--a11y-letter-spacing",
               s.letterSpacing + "em"
             );
-          if (s.contrast) {
-            r.style.setProperty("--a11y-contrast", "1.4");
-            r.style.setProperty("--a11y-brightness", "1.05");
+          // Contraste (obs11): niveles 0=off,1=bajo,2=medio,3=alto. Mismos
+          // valores que CONTRAST_LEVELS en AccessibilityPanel.tsx.
+          var CL = [[1, 1], [0.7, 1], [0.85, 1], [1.4, 1.03]];
+          var lvl = s.contrastLevel != null
+            ? s.contrastLevel
+            : (s.contrast ? 3 : 0);
+          if (lvl > 0 && CL[lvl]) {
+            r.style.setProperty("--a11y-contrast", String(CL[lvl][0]));
+            r.style.setProperty("--a11y-brightness", String(CL[lvl][1]));
           }
           if (s.saturation) r.style.setProperty("--a11y-saturate", "0.12");
           if (s.invert) {
             r.style.setProperty("--a11y-invert", "1");
             r.style.setProperty("--a11y-hue", "180deg");
           }
-          if (s.contrast || s.saturation || s.invert)
+          if (lvl > 0 || s.saturation || s.invert)
             r.classList.add("a11y-filter");
           if (s.hideImages) r.classList.add("a11y-hide-images");
           if (s.dyslexia) r.classList.add("a11y-dyslexia");
