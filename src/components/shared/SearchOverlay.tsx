@@ -79,7 +79,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
   const overlay = (
     <div
-      className="fixed inset-0 z-[55] flex items-start justify-center px-4 pt-24 md:pt-28"
+      className="fixed inset-0 z-[55] flex items-start justify-center px-4 pt-[144px] md:pt-[152px]"
       role="dialog"
       aria-modal="true"
       aria-label="Búsqueda del sitio"
@@ -122,7 +122,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
           </div>
         </div>
 
-        <div className="mt-4 overflow-y-auto px-3 pb-4">
+        <div className="mt-4 min-h-0 flex-1 overflow-y-auto px-3 pb-4">
           {query.trim() === "" ? (
             <ul>
               {categories.map((c, i) => (
