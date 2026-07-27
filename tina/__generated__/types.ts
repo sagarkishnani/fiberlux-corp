@@ -1627,12 +1627,14 @@ export type FormasDePagoConnection = Connection & {
 export type GlobalNavLinksChildrenChildren = {
   __typename?: 'GlobalNavLinksChildrenChildren';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalNavLinksChildren = {
   __typename?: 'GlobalNavLinksChildren';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   children?: Maybe<Array<Maybe<GlobalNavLinksChildrenChildren>>>;
 };
@@ -1640,6 +1642,7 @@ export type GlobalNavLinksChildren = {
 export type GlobalNavLinks = {
   __typename?: 'GlobalNavLinks';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   children?: Maybe<Array<Maybe<GlobalNavLinksChildren>>>;
 };
@@ -1652,22 +1655,27 @@ export type GlobalNav = {
 export type GlobalHeaderTopBar = {
   __typename?: 'GlobalHeaderTopBar';
   empresasLabel?: Maybe<Scalars['String']['output']>;
+  empresasLabel_en?: Maybe<Scalars['String']['output']>;
   empresasUrl?: Maybe<Scalars['String']['output']>;
   negociosLabel?: Maybe<Scalars['String']['output']>;
+  negociosLabel_en?: Maybe<Scalars['String']['output']>;
   negociosUrl?: Maybe<Scalars['String']['output']>;
   abonadosLabel?: Maybe<Scalars['String']['output']>;
+  abonadosLabel_en?: Maybe<Scalars['String']['output']>;
   abonadosUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalHeaderDesktopNav = {
   __typename?: 'GlobalHeaderDesktopNav';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
 };
 
 export type GlobalHeaderSecondaryNav = {
   __typename?: 'GlobalHeaderSecondaryNav';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   external?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -1689,6 +1697,7 @@ export type GlobalWhatsapp = {
 export type GlobalFooterColumnsLinks = {
   __typename?: 'GlobalFooterColumnsLinks';
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   external?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -1696,6 +1705,7 @@ export type GlobalFooterColumnsLinks = {
 export type GlobalFooterColumns = {
   __typename?: 'GlobalFooterColumns';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   links?: Maybe<Array<Maybe<GlobalFooterColumnsLinks>>>;
 };
 
@@ -1708,7 +1718,9 @@ export type GlobalFooterSocial = {
 export type GlobalFooter = {
   __typename?: 'GlobalFooter';
   tagline?: Maybe<Scalars['String']['output']>;
+  tagline_en?: Maybe<Scalars['String']['output']>;
   copyright?: Maybe<Scalars['String']['output']>;
+  copyright_en?: Maybe<Scalars['String']['output']>;
   columns?: Maybe<Array<Maybe<GlobalFooterColumns>>>;
   social?: Maybe<Array<Maybe<GlobalFooterSocial>>>;
   logo?: Maybe<Scalars['String']['output']>;
@@ -1829,17 +1841,20 @@ export type Global = Node & Document & {
 
 export type GlobalNavLinksChildrenChildrenFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
 };
 
 export type GlobalNavLinksChildrenFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   children?: InputMaybe<GlobalNavLinksChildrenChildrenFilter>;
 };
 
 export type GlobalNavLinksFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   children?: InputMaybe<GlobalNavLinksChildrenFilter>;
 };
@@ -1850,20 +1865,25 @@ export type GlobalNavFilter = {
 
 export type GlobalHeaderTopBarFilter = {
   empresasLabel?: InputMaybe<StringFilter>;
+  empresasLabel_en?: InputMaybe<StringFilter>;
   empresasUrl?: InputMaybe<StringFilter>;
   negociosLabel?: InputMaybe<StringFilter>;
+  negociosLabel_en?: InputMaybe<StringFilter>;
   negociosUrl?: InputMaybe<StringFilter>;
   abonadosLabel?: InputMaybe<StringFilter>;
+  abonadosLabel_en?: InputMaybe<StringFilter>;
   abonadosUrl?: InputMaybe<StringFilter>;
 };
 
 export type GlobalHeaderDesktopNavFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
 };
 
 export type GlobalHeaderSecondaryNavFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   external?: InputMaybe<BooleanFilter>;
 };
@@ -1882,12 +1902,14 @@ export type GlobalWhatsappFilter = {
 
 export type GlobalFooterColumnsLinksFilter = {
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   external?: InputMaybe<BooleanFilter>;
 };
 
 export type GlobalFooterColumnsFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   links?: InputMaybe<GlobalFooterColumnsLinksFilter>;
 };
 
@@ -1898,7 +1920,9 @@ export type GlobalFooterSocialFilter = {
 
 export type GlobalFooterFilter = {
   tagline?: InputMaybe<StringFilter>;
+  tagline_en?: InputMaybe<StringFilter>;
   copyright?: InputMaybe<StringFilter>;
+  copyright_en?: InputMaybe<StringFilter>;
   columns?: InputMaybe<GlobalFooterColumnsFilter>;
   social?: InputMaybe<GlobalFooterSocialFilter>;
   logo?: InputMaybe<ImageFilter>;
@@ -3332,17 +3356,20 @@ export type FormasDePagoMutation = {
 
 export type GlobalNavLinksChildrenChildrenMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalNavLinksChildrenMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   children?: InputMaybe<Array<InputMaybe<GlobalNavLinksChildrenChildrenMutation>>>;
 };
 
 export type GlobalNavLinksMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   children?: InputMaybe<Array<InputMaybe<GlobalNavLinksChildrenMutation>>>;
 };
@@ -3353,20 +3380,25 @@ export type GlobalNavMutation = {
 
 export type GlobalHeaderTopBarMutation = {
   empresasLabel?: InputMaybe<Scalars['String']['input']>;
+  empresasLabel_en?: InputMaybe<Scalars['String']['input']>;
   empresasUrl?: InputMaybe<Scalars['String']['input']>;
   negociosLabel?: InputMaybe<Scalars['String']['input']>;
+  negociosLabel_en?: InputMaybe<Scalars['String']['input']>;
   negociosUrl?: InputMaybe<Scalars['String']['input']>;
   abonadosLabel?: InputMaybe<Scalars['String']['input']>;
+  abonadosLabel_en?: InputMaybe<Scalars['String']['input']>;
   abonadosUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalHeaderDesktopNavMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type GlobalHeaderSecondaryNavMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   external?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -3385,12 +3417,14 @@ export type GlobalWhatsappMutation = {
 
 export type GlobalFooterColumnsLinksMutation = {
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   external?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type GlobalFooterColumnsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   links?: InputMaybe<Array<InputMaybe<GlobalFooterColumnsLinksMutation>>>;
 };
 
@@ -3401,7 +3435,9 @@ export type GlobalFooterSocialMutation = {
 
 export type GlobalFooterMutation = {
   tagline?: InputMaybe<Scalars['String']['input']>;
+  tagline_en?: InputMaybe<Scalars['String']['input']>;
   copyright?: InputMaybe<Scalars['String']['input']>;
+  copyright_en?: InputMaybe<Scalars['String']['input']>;
   columns?: InputMaybe<Array<InputMaybe<GlobalFooterColumnsMutation>>>;
   social?: InputMaybe<Array<InputMaybe<GlobalFooterSocialMutation>>>;
   logo?: InputMaybe<Scalars['String']['input']>;
@@ -3725,7 +3761,7 @@ export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sect
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
+export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
@@ -3955,7 +3991,7 @@ export type GlobalQueryVariables = Exact<{
 }>;
 
 
-export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } };
+export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } };
 
 export type GlobalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3967,7 +4003,7 @@ export type GlobalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, copyright?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } | null } | null> | null } };
+export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } | null } | null> | null } };
 
 export type MaintenanceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4511,14 +4547,17 @@ export const GlobalPartsFragmentDoc = gql`
     links {
       __typename
       text
+      text_en
       url
       children {
         __typename
         text
+        text_en
         url
         children {
           __typename
           text
+          text_en
           url
         }
       }
@@ -4530,20 +4569,25 @@ export const GlobalPartsFragmentDoc = gql`
     topBar {
       __typename
       empresasLabel
+      empresasLabel_en
       empresasUrl
       negociosLabel
+      negociosLabel_en
       negociosUrl
       abonadosLabel
+      abonadosLabel_en
       abonadosUrl
     }
     desktopNav {
       __typename
       text
+      text_en
       url
     }
     secondaryNav {
       __typename
       text
+      text_en
       url
       external
     }
@@ -4556,13 +4600,17 @@ export const GlobalPartsFragmentDoc = gql`
   footer {
     __typename
     tagline
+    tagline_en
     copyright
+    copyright_en
     columns {
       __typename
       title
+      title_en
       links {
         __typename
         text
+        text_en
         url
         external
       }

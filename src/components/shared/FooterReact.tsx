@@ -70,7 +70,8 @@ export default function FooterReact({ query, variables, data: initialData, local
   const currentYear = new Date().getFullYear();
   const logoSrc = (footer as any).logo || DEFAULT_LOGO;
   const copyrightTemplate =
-    (footer as any).copyright || '© {year} Fiberlux. Todos los derechos reservados';
+    tField(footer as any, 'copyright', locale) ||
+    '© {year} Fiberlux. Todos los derechos reservados';
   const copyrightText = copyrightTemplate.replace('{year}', String(currentYear));
   const agencyLogo = (footer as any).agencyLogo as string | null | undefined;
   const agencyUrl = (footer as any).agencyUrl as string | null | undefined;
@@ -90,7 +91,7 @@ export default function FooterReact({ query, variables, data: initialData, local
           className="text-[18px] leading-[18px] font-semibold text-white mb-4"
           data-tina-field={tinaField(column, 'title')}
         >
-          {column.title}
+          {tField(column as any, 'title', locale)}
         </h3>
         <ul
           className={`space-y-2.5 ${
@@ -109,7 +110,7 @@ export default function FooterReact({ query, variables, data: initialData, local
                 className="leading-[20px] text-white/70 hover:text-white transition-colors duration-200"
                 data-tina-field={tinaField(link, 'text')}
               >
-                {link.text}
+                {tField(link as any, 'text', locale)}
               </a>
             </li>
           ))}
@@ -130,7 +131,7 @@ export default function FooterReact({ query, variables, data: initialData, local
               className="text-[32px] leading-[36px] sm:text-[40px] lg:text-[56px] sm:leading-[60px] font-semibold text-white"
               data-tina-field={tinaField(footer, 'tagline')}
             >
-              {footer.tagline}
+              {tField(footer as any, 'tagline', locale)}
             </h2>
             <div className="flex flex-wrap gap-3">
               {footer.social?.map((item: SocialItem | null, i: number) => {

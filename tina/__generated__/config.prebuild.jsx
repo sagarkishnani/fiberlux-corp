@@ -1481,6 +1481,7 @@ var config_default = defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" },
                   {
                     name: "children",
@@ -1490,6 +1491,7 @@ var config_default = defineConfig({
                     ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
+                      { name: "text_en", label: "Texto (EN)", type: "string" },
                       { name: "url", label: "URL", type: "string" },
                       {
                         name: "children",
@@ -1503,6 +1505,7 @@ var config_default = defineConfig({
                         },
                         fields: [
                           { name: "text", label: "Texto", type: "string" },
+                          { name: "text_en", label: "Texto (EN)", type: "string" },
                           { name: "url", label: "URL", type: "string" }
                         ]
                       }
@@ -1525,8 +1528,10 @@ var config_default = defineConfig({
                 type: "object",
                 fields: [
                   { name: "empresasLabel", label: "Texto 'Empresas'", type: "string" },
+                  { name: "empresasLabel_en", label: "Texto 'Empresas' (EN)", type: "string" },
                   { name: "empresasUrl", label: "URL 'Empresas'", type: "string" },
                   { name: "negociosLabel", label: "Texto 'Negocios'", type: "string" },
+                  { name: "negociosLabel_en", label: "Texto 'Negocios' (EN)", type: "string" },
                   {
                     name: "negociosUrl",
                     label: "URL 'Negocios' (externa)",
@@ -1536,6 +1541,11 @@ var config_default = defineConfig({
                   {
                     name: "abonadosLabel",
                     label: "Texto 'Informaci\xF3n a abonados' (solo desktop)",
+                    type: "string"
+                  },
+                  {
+                    name: "abonadosLabel_en",
+                    label: "Texto 'Informaci\xF3n a abonados' (EN)",
                     type: "string"
                   },
                   { name: "abonadosUrl", label: "URL 'Informaci\xF3n a abonados'", type: "string" }
@@ -1550,6 +1560,7 @@ var config_default = defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" }
                 ]
               },
@@ -1562,6 +1573,7 @@ var config_default = defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "\xCDtem" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" },
                   {
                     name: "external",
@@ -1600,12 +1612,14 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "tagline", label: "Tagline", type: "string" },
+              { name: "tagline_en", label: "Tagline (EN)", type: "string" },
               {
                 name: "copyright",
                 label: "Texto de copyright",
                 type: "string",
                 description: "Usa {year} para insertar el a\xF1o actual autom\xE1ticamente. Ej: \xA9 {year} Fiberlux. Todos los derechos reservados"
               },
+              { name: "copyright_en", label: "Texto de copyright (EN)", type: "string" },
               {
                 name: "columns",
                 label: "Columnas",
@@ -1616,6 +1630,7 @@ var config_default = defineConfig({
                 },
                 fields: [
                   { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "links",
                     label: "Links",
@@ -1624,6 +1639,7 @@ var config_default = defineConfig({
                     ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
+                      { name: "text_en", label: "Texto (EN)", type: "string" },
                       { name: "url", label: "URL", type: "string" },
                       {
                         name: "external",

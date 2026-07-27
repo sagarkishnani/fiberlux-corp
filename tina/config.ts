@@ -1563,6 +1563,7 @@ export default defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" },
                   {
                     name: "children",
@@ -1572,6 +1573,7 @@ export default defineConfig({
                     ui: { itemProps: (item) => ({ label: item?.text || "Ítem" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
+                      { name: "text_en", label: "Texto (EN)", type: "string" },
                       { name: "url", label: "URL", type: "string" },
                       {
                         name: "children",
@@ -1585,6 +1587,7 @@ export default defineConfig({
                         },
                         fields: [
                           { name: "text", label: "Texto", type: "string" },
+                          { name: "text_en", label: "Texto (EN)", type: "string" },
                           { name: "url", label: "URL", type: "string" },
                         ],
                       },
@@ -1608,8 +1611,10 @@ export default defineConfig({
                 type: "object",
                 fields: [
                   { name: "empresasLabel", label: "Texto 'Empresas'", type: "string" },
+                  { name: "empresasLabel_en", label: "Texto 'Empresas' (EN)", type: "string" },
                   { name: "empresasUrl", label: "URL 'Empresas'", type: "string" },
                   { name: "negociosLabel", label: "Texto 'Negocios'", type: "string" },
+                  { name: "negociosLabel_en", label: "Texto 'Negocios' (EN)", type: "string" },
                   {
                     name: "negociosUrl",
                     label: "URL 'Negocios' (externa)",
@@ -1619,6 +1624,11 @@ export default defineConfig({
                   {
                     name: "abonadosLabel",
                     label: "Texto 'Información a abonados' (solo desktop)",
+                    type: "string",
+                  },
+                  {
+                    name: "abonadosLabel_en",
+                    label: "Texto 'Información a abonados' (EN)",
                     type: "string",
                   },
                   { name: "abonadosUrl", label: "URL 'Información a abonados'", type: "string" },
@@ -1634,6 +1644,7 @@ export default defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "Ítem" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" },
                 ],
               },
@@ -1647,6 +1658,7 @@ export default defineConfig({
                 ui: { itemProps: (item) => ({ label: item?.text || "Ítem" }) },
                 fields: [
                   { name: "text", label: "Texto", type: "string" },
+                  { name: "text_en", label: "Texto (EN)", type: "string" },
                   { name: "url", label: "URL", type: "string" },
                   {
                     name: "external",
@@ -1688,6 +1700,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "tagline", label: "Tagline", type: "string" },
+              { name: "tagline_en", label: "Tagline (EN)", type: "string" },
               {
                 name: "copyright",
                 label: "Texto de copyright",
@@ -1695,6 +1708,7 @@ export default defineConfig({
                 description:
                   "Usa {year} para insertar el año actual automáticamente. Ej: © {year} Fiberlux. Todos los derechos reservados",
               },
+              { name: "copyright_en", label: "Texto de copyright (EN)", type: "string" },
               {
                 name: "columns",
                 label: "Columnas",
@@ -1705,6 +1719,7 @@ export default defineConfig({
                 },
                 fields: [
                   { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
                   {
                     name: "links",
                     label: "Links",
@@ -1713,6 +1728,7 @@ export default defineConfig({
                     ui: { itemProps: (item) => ({ label: item?.text || "Link" }) },
                     fields: [
                       { name: "text", label: "Texto", type: "string" },
+                      { name: "text_en", label: "Texto (EN)", type: "string" },
                       { name: "url", label: "URL", type: "string" },
                       {
                         name: "external",

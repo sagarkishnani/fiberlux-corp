@@ -395,14 +395,17 @@ fragment GlobalParts on Global {
     links {
       __typename
       text
+      text_en
       url
       children {
         __typename
         text
+        text_en
         url
         children {
           __typename
           text
+          text_en
           url
         }
       }
@@ -414,20 +417,25 @@ fragment GlobalParts on Global {
     topBar {
       __typename
       empresasLabel
+      empresasLabel_en
       empresasUrl
       negociosLabel
+      negociosLabel_en
       negociosUrl
       abonadosLabel
+      abonadosLabel_en
       abonadosUrl
     }
     desktopNav {
       __typename
       text
+      text_en
       url
     }
     secondaryNav {
       __typename
       text
+      text_en
       url
       external
     }
@@ -440,13 +448,17 @@ fragment GlobalParts on Global {
   footer {
     __typename
     tagline
+    tagline_en
     copyright
+    copyright_en
     columns {
       __typename
       title
+      title_en
       links {
         __typename
         text
+        text_en
         url
         external
       }

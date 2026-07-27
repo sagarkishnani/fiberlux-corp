@@ -307,6 +307,9 @@ export default function HeaderV2React({
   ) as SecondaryNavItem[];
   const socialLinks = (footer?.social || []).filter(Boolean) as SocialItem[];
 
+  // i18n (SPEC 80): label de un nodo de nav según el locale (text_en → text).
+  const tx = (o: any): string => tField(o, "text", locale);
+
   // Resolve a desktopNav item's hover children by matching its URL against
   // nav.links (single-source of submenu content).
   const childrenForUrl = (url?: string | null): NavChild[] => {
@@ -537,7 +540,7 @@ export default function HeaderV2React({
                   className={`relative text-[13px] font-medium ${controlText} transition-colors after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-brand-purple after:content-['']`}
                   data-tina-field={tinaField(topBar as any, "empresasLabel")}
                 >
-                  {topBar.empresasLabel}
+                  {tField(topBar as any, "empresasLabel", locale)}
                 </a>
               )}
               {topBar?.negociosLabel && (
@@ -548,7 +551,7 @@ export default function HeaderV2React({
                   className={`text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
                   data-tina-field={tinaField(topBar as any, "negociosLabel")}
                 >
-                  {topBar.negociosLabel}
+                  {tField(topBar as any, "negociosLabel", locale)}
                 </a>
               )}
             </div>
@@ -561,7 +564,7 @@ export default function HeaderV2React({
                   className={`hidden lg:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
                   data-tina-field={tinaField(topBar as any, "abonadosLabel")}
                 >
-                  {topBar.abonadosLabel}
+                  {tField(topBar as any, "abonadosLabel", locale)}
                 </a>
               )}
               <LangSwitcher
@@ -676,7 +679,7 @@ export default function HeaderV2React({
                     } nav-link-hover ${open ? "nav-link-active" : ""}`}
                     data-tina-field={tinaField(item as any, "text")}
                   >
-                    {item.text}
+                    {tx(item)}
                     {withChildren && (
                       <ChevronDown
                         className={`w-3.5 h-3.5 transition-transform duration-300 ${
@@ -728,7 +731,7 @@ export default function HeaderV2React({
                                       : "text-white/80 hover:text-white hover:bg-white/5"
                                 }`}
                               >
-                                <span>{child.text}</span>
+                                <span>{tx(child)}</span>
                                 {hasGrand && (
                                   <ChevronRight className="w-4 h-4 shrink-0 opacity-60" />
                                 )}
@@ -759,7 +762,7 @@ export default function HeaderV2React({
                                             : "text-white/70 hover:text-white hover:bg-white/5"
                                         }`}
                                       >
-                                        {gc.text}
+                                        {tx(gc)}
                                       </a>
                                     ))}
                                   </div>
@@ -839,9 +842,9 @@ export default function HeaderV2React({
                           key={i}
                           onClick={() => drillInto(i)}
                           className="flex items-center justify-between w-full text-left text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
-                          aria-label={`Ver opciones de ${link.text}`}
+                          aria-label={`Ver opciones de ${tx(link)}`}
                         >
-                          <span>{link.text}</span>
+                          <span>{tx(link)}</span>
                           <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-6 h-6" />
                           </span>
@@ -853,7 +856,7 @@ export default function HeaderV2React({
                           onClick={closeMenu}
                           className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
                         >
-                          {link.text}
+                          {tx(link)}
                         </a>
                       )
                     )}
@@ -877,7 +880,7 @@ export default function HeaderV2React({
                               : {})}
                             className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
                           >
-                            {item.text}
+                            {tx(item)}
                           </a>
                         ))}
                       </nav>
@@ -900,12 +903,12 @@ export default function HeaderV2React({
                       onClick={closeMenu}
                       className="inline-flex items-center gap-2 text-white text-2xl font-semibold mb-5 hover:text-white/80 transition-colors"
                     >
-                      {currentNode.text}
+                      {tx(currentNode)}
                       <ChevronRight className="w-4 h-4 text-white/60" />
                     </a>
                   ) : (
                     <p className="text-white text-2xl font-semibold mb-5">
-                      {currentNode?.text}
+                      {tx(currentNode)}
                     </p>
                   )}
 
@@ -919,9 +922,9 @@ export default function HeaderV2React({
                           key={j}
                           onClick={() => drillInto(j)}
                           className="flex items-center justify-between w-full text-left text-white text-lg py-2.5 hover:text-white/80 transition-colors"
-                          aria-label={`Ver opciones de ${child.text}`}
+                          aria-label={`Ver opciones de ${tx(child)}`}
                         >
-                          <span>{child.text}</span>
+                          <span>{tx(child)}</span>
                           <span className="p-2 -mr-2 text-white/70">
                             <ChevronRight className="w-5 h-5" />
                           </span>
@@ -933,7 +936,7 @@ export default function HeaderV2React({
                           onClick={closeMenu}
                           className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
                         >
-                          {child.text}
+                          {tx(child)}
                         </a>
                       );
                     })}
@@ -949,7 +952,7 @@ export default function HeaderV2React({
                             onClick={closeMenu}
                             className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
                           >
-                            {link.text}
+                            {tx(link)}
                           </a>
                         ))}
                       </nav>
@@ -1003,7 +1006,7 @@ export default function HeaderV2React({
                       : {})}
                     className="text-white text-[34px] leading-[52px] font-semibold hover:text-white/80 transition-colors"
                   >
-                    {item.text}
+                    {tx(item)}
                   </a>
                 ))}
               </nav>

@@ -6,49 +6,61 @@
       "negociosLabel": "Negocios",
       "negociosUrl": "https://negocios.fiberlux.pe/",
       "abonadosLabel": "Información a abonados y usuarios",
-      "abonadosUrl": "/informacion-abonados"
+      "abonadosUrl": "/informacion-abonados",
+      "empresasLabel_en": "Companies",
+      "negociosLabel_en": "Business",
+      "abonadosLabel_en": "Subscriber & user information"
     },
     "desktopNav": [
       {
         "text": "Soluciones",
-        "url": "/soluciones"
+        "url": "/soluciones",
+        "text_en": "Solutions"
       },
       {
         "text": "Nosotros",
-        "url": "/nosotros"
+        "url": "/nosotros",
+        "text_en": "About us"
       },
       {
         "text": "Casos de éxito",
-        "url": "/casos-de-exito"
+        "url": "/casos-de-exito",
+        "text_en": "Success stories"
       },
       {
         "text": "Blog",
-        "url": "/blog"
+        "url": "/blog",
+        "text_en": "Blog"
       },
       {
         "text": "Soporte técnico",
-        "url": "/soporte-tecnico"
+        "url": "/soporte-tecnico",
+        "text_en": "Technical support"
       },
       {
         "text": "Contacto",
-        "url": "/contacto"
+        "url": "/contacto",
+        "text_en": "Contact"
       }
     ],
     "secondaryNav": [
       {
         "text": "Formas de pago",
         "url": "/formas-de-pago",
-        "external": false
+        "external": false,
+        "text_en": "Payment methods"
       },
       {
         "text": "Fiberlux App",
         "url": "/fiberlux-app",
-        "external": false
+        "external": false,
+        "text_en": "Fiberlux App"
       },
       {
         "text": "Portal de trabajo",
         "url": "#",
-        "external": true
+        "external": true,
+        "text_en": "Work portal"
       }
     ]
   },
@@ -94,7 +106,8 @@
                 "text": "Balanceo de enlaces",
                 "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces"
               }
-            ]
+            ],
+            "text_en": "Business connectivity"
           },
           {
             "text": "Ciberseguridad gestionada",
@@ -152,7 +165,8 @@
                 "text": "Pentesting y Evaluación de Vulnerabilidades",
                 "url": "/soluciones/ciberseguridad-gestionada/pentesting"
               }
-            ]
+            ],
+            "text_en": "Managed cybersecurity"
           },
           {
             "text": "Data Center, Cloud y Continuidad de Negocio",
@@ -186,7 +200,8 @@
                 "text": "Arquitectura basada en Microservicios",
                 "url": "/soluciones/data-center-cloud/microservicios"
               }
-            ]
+            ],
+            "text_en": "Data Center, Cloud & Business Continuity"
           },
           {
             "text": "Servicios gestionados",
@@ -220,29 +235,36 @@
                 "text": "Videovigilancia gestionada",
                 "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada"
               }
-            ]
+            ],
+            "text_en": "Managed services"
           }
-        ]
+        ],
+        "text_en": "Solutions"
       },
       {
         "text": "Nosotros",
-        "url": "/nosotros"
+        "url": "/nosotros",
+        "text_en": "About us"
       },
       {
         "text": "Casos de éxito",
-        "url": "/casos-de-exito"
+        "url": "/casos-de-exito",
+        "text_en": "Success stories"
       },
       {
         "text": "Blog",
-        "url": "/blog"
+        "url": "/blog",
+        "text_en": "Blog"
       },
       {
         "text": "Soporte técnico",
-        "url": "/soporte-tecnico"
+        "url": "/soporte-tecnico",
+        "text_en": "Technical support"
       },
       {
         "text": "Contacto",
-        "url": "/contacto"
+        "url": "/contacto",
+        "text_en": "Contact"
       }
     ]
   },
@@ -259,109 +281,134 @@
         "links": [
           {
             "text": "Conectividad empresarial",
-            "url": "/soluciones/conectividad-empresarial"
+            "url": "/soluciones/conectividad-empresarial",
+            "text_en": "Business connectivity"
           },
           {
             "text": "Ciberseguridad gestionada",
-            "url": "/soluciones/ciberseguridad-gestionada"
+            "url": "/soluciones/ciberseguridad-gestionada",
+            "text_en": "Managed cybersecurity"
           },
           {
             "text": "Data Center, Cloud y Continuidad de Negocio",
-            "url": "/soluciones/data-center-cloud"
+            "url": "/soluciones/data-center-cloud",
+            "text_en": "Data Center, Cloud & Business Continuity"
           },
           {
             "text": "Servicios gestionados",
-            "url": "/soluciones/servicios-gestionados"
+            "url": "/soluciones/servicios-gestionados",
+            "text_en": "Managed services"
           }
-        ]
+        ],
+        "title_en": "Solutions"
       },
       {
         "title": "Sobre nosotros",
         "links": [
           {
             "text": "Nosotros",
-            "url": "/nosotros"
+            "url": "/nosotros",
+            "text_en": "About us"
           },
           {
             "text": "Blog",
-            "url": "/blog"
+            "url": "/blog",
+            "text_en": "Blog"
           },
           {
             "text": "Soporte técnico",
-            "url": "/soporte-tecnico"
+            "url": "/soporte-tecnico",
+            "text_en": "Technical support"
           },
           {
             "text": "Contacto",
-            "url": "/contacto"
+            "url": "/contacto",
+            "text_en": "Contact"
           },
           {
             "text": "Formas de pago",
-            "url": "/formas-de-pago"
+            "url": "/formas-de-pago",
+            "text_en": "Payment methods"
           }
-        ]
+        ],
+        "title_en": "About us"
       },
       {
         "title": "Legales",
         "links": [
           {
             "text": "Libro de reclamaciones",
-            "url": "/legales/libro-reclamaciones"
+            "url": "/legales/libro-reclamaciones",
+            "text_en": "Complaints book"
           },
           {
             "text": "Tratamiento de datos personales",
-            "url": "/legales/tratamiento-datos"
+            "url": "/legales/tratamiento-datos",
+            "text_en": "Personal data processing"
           },
           {
             "text": "Política de Cookies",
             "url": "/legales/politica-cookies.pdf",
-            "external": true
+            "external": true,
+            "text_en": "Cookie policy"
           },
           {
             "text": "Política de Privacidad",
             "url": "/legales/politica-privacidad.pdf",
-            "external": true
+            "external": true,
+            "text_en": "Privacy policy"
           },
           {
             "text": "Política de videovigilancia",
             "url": "/legales/politica-videovigilancia.pdf",
-            "external": true
+            "external": true,
+            "text_en": "Video surveillance policy"
           },
           {
             "text": "Política de SST",
             "url": "/legales/politica-sst.pdf",
-            "external": true
+            "external": true,
+            "text_en": "OHS policy"
           },
           {
             "text": "Manual de derechos ARCO",
-            "url": "/legales/derechos-arco"
+            "url": "/legales/derechos-arco",
+            "text_en": "ARCO rights manual"
           },
           {
             "text": "Formulario de solicitud de derechos ARCO",
             "url": "/legales/formulario-derechos-arco.pdf",
-            "external": true
+            "external": true,
+            "text_en": "ARCO rights request form"
           },
           {
             "text": "Guía de presentación de Reclamos de OSIPTEL",
             "url": "https://www.osiptel.gob.pe/guiareclamos/",
-            "external": true
+            "external": true,
+            "text_en": "OSIPTEL claims filing guide"
           },
           {
             "text": "Formulario de reclamo",
-            "url": "/reclamos/reclamo"
+            "url": "/reclamos/reclamo",
+            "text_en": "Complaint form"
           },
           {
             "text": "Formulario de apelación",
-            "url": "/reclamos/apelacion"
+            "url": "/reclamos/apelacion",
+            "text_en": "Appeal form"
           },
           {
             "text": "Formulario de queja",
-            "url": "/reclamos/queja"
+            "url": "/reclamos/queja",
+            "text_en": "Grievance form"
           },
           {
             "text": "Preferencias de cookies",
-            "url": "#preferencias-cookies"
+            "url": "#preferencias-cookies",
+            "text_en": "Cookie preferences"
           }
-        ]
+        ],
+        "title_en": "Legal"
       },
       {
         "title": "Solicitudes",
@@ -369,14 +416,17 @@
           {
             "text": "Cancelación de servicio",
             "url": "/legales/terminacion-y-baja-servicio.pdf",
-            "external": true
+            "external": true,
+            "text_en": "Service cancellation"
           },
           {
             "text": "Suspensión temporal del servicio",
             "url": "/legales/suspension-temporal-servicio.pdf",
-            "external": true
+            "external": true,
+            "text_en": "Temporary service suspension"
           }
-        ]
+        ],
+        "title_en": "Requests"
       }
     ],
     "social": [
@@ -403,7 +453,8 @@
     ],
     "logo": "/images/logo/fiberlux.svg",
     "agencyLogo": "/images/logo/twn.svg",
-    "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio"
+    "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio",
+    "tagline_en": "Power your business connectivity"
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",

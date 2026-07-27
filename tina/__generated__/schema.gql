@@ -1196,17 +1196,20 @@ type FormasDePagoConnection implements Connection {
 
 type GlobalNavLinksChildrenChildren {
   text: String
+  text_en: String
   url: String
 }
 
 type GlobalNavLinksChildren {
   text: String
+  text_en: String
   url: String
   children: [GlobalNavLinksChildrenChildren]
 }
 
 type GlobalNavLinks {
   text: String
+  text_en: String
   url: String
   children: [GlobalNavLinksChildren]
 }
@@ -1217,20 +1220,25 @@ type GlobalNav {
 
 type GlobalHeaderTopBar {
   empresasLabel: String
+  empresasLabel_en: String
   empresasUrl: String
   negociosLabel: String
+  negociosLabel_en: String
   negociosUrl: String
   abonadosLabel: String
+  abonadosLabel_en: String
   abonadosUrl: String
 }
 
 type GlobalHeaderDesktopNav {
   text: String
+  text_en: String
   url: String
 }
 
 type GlobalHeaderSecondaryNav {
   text: String
+  text_en: String
   url: String
   external: Boolean
 }
@@ -1249,12 +1257,14 @@ type GlobalWhatsapp {
 
 type GlobalFooterColumnsLinks {
   text: String
+  text_en: String
   url: String
   external: Boolean
 }
 
 type GlobalFooterColumns {
   title: String
+  title_en: String
   links: [GlobalFooterColumnsLinks]
 }
 
@@ -1265,7 +1275,9 @@ type GlobalFooterSocial {
 
 type GlobalFooter {
   tagline: String
+  tagline_en: String
   copyright: String
+  copyright_en: String
   columns: [GlobalFooterColumns]
   social: [GlobalFooterSocial]
   logo: String
@@ -1372,17 +1384,20 @@ type Global implements Node & Document {
 
 input GlobalNavLinksChildrenChildrenFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
 }
 
 input GlobalNavLinksChildrenFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
   children: GlobalNavLinksChildrenChildrenFilter
 }
 
 input GlobalNavLinksFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
   children: GlobalNavLinksChildrenFilter
 }
@@ -1393,20 +1408,25 @@ input GlobalNavFilter {
 
 input GlobalHeaderTopBarFilter {
   empresasLabel: StringFilter
+  empresasLabel_en: StringFilter
   empresasUrl: StringFilter
   negociosLabel: StringFilter
+  negociosLabel_en: StringFilter
   negociosUrl: StringFilter
   abonadosLabel: StringFilter
+  abonadosLabel_en: StringFilter
   abonadosUrl: StringFilter
 }
 
 input GlobalHeaderDesktopNavFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
 }
 
 input GlobalHeaderSecondaryNavFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
   external: BooleanFilter
 }
@@ -1425,12 +1445,14 @@ input GlobalWhatsappFilter {
 
 input GlobalFooterColumnsLinksFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
   external: BooleanFilter
 }
 
 input GlobalFooterColumnsFilter {
   title: StringFilter
+  title_en: StringFilter
   links: GlobalFooterColumnsLinksFilter
 }
 
@@ -1441,7 +1463,9 @@ input GlobalFooterSocialFilter {
 
 input GlobalFooterFilter {
   tagline: StringFilter
+  tagline_en: StringFilter
   copyright: StringFilter
+  copyright_en: StringFilter
   columns: GlobalFooterColumnsFilter
   social: GlobalFooterSocialFilter
   logo: ImageFilter
@@ -2573,17 +2597,20 @@ input FormasDePagoMutation {
 
 input GlobalNavLinksChildrenChildrenMutation {
   text: String
+  text_en: String
   url: String
 }
 
 input GlobalNavLinksChildrenMutation {
   text: String
+  text_en: String
   url: String
   children: [GlobalNavLinksChildrenChildrenMutation]
 }
 
 input GlobalNavLinksMutation {
   text: String
+  text_en: String
   url: String
   children: [GlobalNavLinksChildrenMutation]
 }
@@ -2594,20 +2621,25 @@ input GlobalNavMutation {
 
 input GlobalHeaderTopBarMutation {
   empresasLabel: String
+  empresasLabel_en: String
   empresasUrl: String
   negociosLabel: String
+  negociosLabel_en: String
   negociosUrl: String
   abonadosLabel: String
+  abonadosLabel_en: String
   abonadosUrl: String
 }
 
 input GlobalHeaderDesktopNavMutation {
   text: String
+  text_en: String
   url: String
 }
 
 input GlobalHeaderSecondaryNavMutation {
   text: String
+  text_en: String
   url: String
   external: Boolean
 }
@@ -2626,12 +2658,14 @@ input GlobalWhatsappMutation {
 
 input GlobalFooterColumnsLinksMutation {
   text: String
+  text_en: String
   url: String
   external: Boolean
 }
 
 input GlobalFooterColumnsMutation {
   title: String
+  title_en: String
   links: [GlobalFooterColumnsLinksMutation]
 }
 
@@ -2642,7 +2676,9 @@ input GlobalFooterSocialMutation {
 
 input GlobalFooterMutation {
   tagline: String
+  tagline_en: String
   copyright: String
+  copyright_en: String
   columns: [GlobalFooterColumnsMutation]
   social: [GlobalFooterSocialMutation]
   logo: String
