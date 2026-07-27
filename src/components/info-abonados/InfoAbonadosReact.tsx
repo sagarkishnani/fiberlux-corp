@@ -147,10 +147,11 @@ export default function InfoAbonadosReact({
                     const isExternal = /^https?:\/\//i.test(rawUrl);
                     const isPdf = /\.pdf(?:$|[?#])/i.test(rawUrl);
                     const newTab = isExternal || isPdf;
+                    const cleanBase = base.replace(/\/$/, "");
                     const href = isExternal
                       ? rawUrl
                       : rawUrl.startsWith("/")
-                        ? `${base}${rawUrl}`.replace(/([^:])\/\//g, "$1/")
+                        ? cleanBase + rawUrl
                         : rawUrl;
 
                     const card = (
