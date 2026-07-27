@@ -142,8 +142,8 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const [dragging, setDragging] = useState(false);
   const [navTick, setNavTick] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
-  const dragRef = useRef<{ x: number; active: boolean } | null>(null);
-  const DRAG_THRESHOLD = 50;
+  const dragRef = useRef<{ x: number; active: boolean; fired: boolean } | null>(null);
+  const DRAG_THRESHOLD = 45;
 
   const total = milestones.length;
   const safeIndex = total > 0 ? activeIndex % total : 0;
@@ -177,18 +177,22 @@ export default function TimelineReact({ query, variables, data: initialData }: T
     if (total <= 1) return;
     // No secuestrar el gesto si arranca sobre un control (flechas): dejar su click.
     if ((e.target as HTMLElement).closest('button, a')) return;
-    dragRef.current = { x: e.clientX, active: true };
+    dragRef.current = { x: e.clientX, active: true, fired: false };
     setDragging(true);
     try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch {}
   };
-  const onPointerEnd = (e: ReactPointerEvent) => {
+  // Responde en cuanto el gesto cruza el umbral (una vez por gesto), así el
+  // deslizamiento se siente fluido en vez de "cortado" al soltar.
+  const onPointerMove = (e: ReactPointerEvent) => {
     const d = dragRef.current;
+    if (!d || !d.active || d.fired) return;
+    const dx = e.clientX - d.x;
+    if (dx <= -DRAG_THRESHOLD) { d.fired = true; next(); }
+    else if (dx >= DRAG_THRESHOLD) { d.fired = true; prev(); }
+  };
+  const onPointerEnd = () => {
     dragRef.current = null;
     setDragging(false);
-    if (!d || !d.active) return;
-    const dx = e.clientX - d.x;
-    if (dx <= -DRAG_THRESHOLD) next();
-    else if (dx >= DRAG_THRESHOLD) prev();
   };
 
   const itemAt = (i: number) => milestones[((i % total) + total) % total];
@@ -294,6 +298,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
       onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
       onPointerUp={onPointerEnd}
       onPointerCancel={onPointerEnd}
     >
