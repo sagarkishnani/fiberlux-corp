@@ -113,7 +113,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
   const [isVisible, setIsVisible] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || '0');
-  const count = useCounter(value, 2000 + index * 150, isVisible);
+  const count = useCounter(value, 1000 + index * 60, isVisible);
 
   // Intersection observer to trigger animation when visible
   useEffect(() => {
