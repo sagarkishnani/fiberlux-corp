@@ -109,6 +109,19 @@ Icons come from `react-icons` (Font Awesome 6 set, `react-icons/fa6`).
 
 Spline scenes are embedded via `@splinetool/react-spline` in `HeroHome`. Scene URL is CMS-managed. Smooth scroll uses Lenis, initialized in `BaseLayout.astro`.
 
+### Internationalization (i18n ES/EN) — SPEC 80
+
+The site is bilingual: **ES is the default (root URLs), EN lives under `/en/`**. EN falls back to ES per field when a translation is missing.
+
+- **Astro i18n** (`astro.config.mjs`): `defaultLocale: 'es'`, `locales: ['es','en']`, `prefixDefaultLocale: false`. **No `fallback`** — in static output it emits redirect stubs, not rendered pages.
+- **Real `/en` pages** are thin wrappers under `src/pages/en/**` that import the ES page and render `<Page />` (dynamic routes re-export `getStaticPaths`). So every route is emitted twice (ES at root, EN under `/en`) sharing one page implementation. **When you add a new page/route, add its `/en` wrapper too.**
+- **Locale detection**: `BaseLayout` computes `locale` (`Astro.currentLocale` → `getLocale(Astro.url)` fallback) and passes it as a prop to islands — components don't read `currentLocale` directly. `<html lang={locale}>`.
+- **Helpers** (`src/utils/i18n.ts`): `getLocale(url)`, `localizedPath(pathname, locale)` (switcher links), `tField(obj, key, locale)` (reads `key_en` with fallback to `key`). All BASE_URL-aware.
+- **CMS content translation — `_en` convention**: each translatable Tina field gets an optional sibling `<field>_en` (e.g. `title` + `title_en`). Empty `_en` ⇒ ES. Render with `tField(obj, 'field', locale)`. This is how **content specs translate each collection**: add `_en` siblings in `tina/config.ts`, fill them in the content JSON, and read via `tField`.
+- **Hardcoded UI strings** (not in the CMS) live in `src/i18n/ui.ts` → `t(key, locale)` (also ES-fallback).
+- **Language switcher**: `LangSwitcher` in `HeaderV2React` (topbar, desktop + mobile) links the current path to the other locale via `localizedPath`.
+- **Done in SPEC 80**: infra + switcher + chrome (nav/topbar/footer). **Page/section content and form labels are translated in later specs**, collection by collection, using the `_en` convention above.
+
 ### CMS admin panel
 
 Accessible at `/admin` in dev. Media uploads go to `public/` (media root ``, public folder `public`).
