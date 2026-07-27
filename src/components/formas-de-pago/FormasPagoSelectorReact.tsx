@@ -41,7 +41,7 @@ function StepRow({ step, tinaId }: { step: StepData; tinaId?: string }) {
   return (
     <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 md:gap-10 items-center py-10 border-t border-white/10">
       <div>
-        <h3 className="text-[22px] md:text-[26px] leading-[1.2] font-semibold text-greyscale-white">
+        <h3 className="text-[24px] md:text-[28px] leading-[1.2] font-semibold text-greyscale-white">
           {step.title}
         </h3>
         <div className="flex gap-3 mt-4">
@@ -51,7 +51,7 @@ function StepRow({ step, tinaId }: { step: StepData; tinaId?: string }) {
             aria-hidden="true"
           />
           <div
-            className="text-body-md text-greyscale-light leading-relaxed"
+            className="text-[17px] md:text-[18px] text-greyscale-light leading-relaxed"
             data-tina-field={tinaId}
           >
             <TinaMarkdown
@@ -103,7 +103,7 @@ function Dropdown({
         aria-label={ariaLabel}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full appearance-none rounded-lg bg-white/[0.04] border border-white/15 text-greyscale-white text-body-sm pl-4 pr-10 py-3 cursor-pointer hover:border-white/30 focus:outline-none focus:border-[#c65fac] transition-colors"
+        className="w-full appearance-none rounded-lg bg-white/[0.04] border border-white/15 text-greyscale-white text-body-md pl-4 pr-10 py-3 cursor-pointer hover:border-white/30 focus:outline-none focus:border-[#c65fac] transition-colors"
       >
         {options.map((label, i) => (
           <option key={i} value={i} className="bg-greyscale-darkest text-white">

@@ -31,7 +31,7 @@ export default function HeroFormasPagoReact({
     >
       <div className="relative z-10 site-container pt-28 pb-10 md:pt-40 lg:pt-48 lg:pb-12" data-reveal="up">
         <h1
-          className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white max-w-[820px] tracking-[-1.6px]"
+          className="text-[44px] md:text-[60px] leading-[1.15] font-medium text-greyscale-white max-w-[820px] tracking-[-1.6px]"
           data-tina-field={tinaField(page, "heading")}
         >
           {page.heading}
@@ -39,7 +39,7 @@ export default function HeroFormasPagoReact({
 
         {page.intro && (
           <p
-            className="mt-6 text-body-lg text-greyscale-light max-w-[640px]"
+            className="mt-6 text-[22px] leading-[34px] text-greyscale-light max-w-[640px]"
             data-tina-field={tinaField(page, "intro")}
           >
             {page.intro}
