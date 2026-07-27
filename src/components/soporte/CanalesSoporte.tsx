@@ -145,7 +145,7 @@ export default function CanalesSoporte({
         {/* ════ Desktop — horizontal accordion (effortel-style width animation) ════ */}
         <div
           className="hidden lg:flex overflow-hidden rounded-[24px] bg-[#FCF4F9] border border-brand-purple/[0.08]"
-          style={{ height: 478 }}
+          style={{ height: 560 }}
         >
           {channels.map((channel, i) => {
             const isOpen = i === openIndex;
