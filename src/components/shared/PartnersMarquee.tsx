@@ -52,7 +52,7 @@ export default function PartnersMarquee({
         loading="eager"
         decoding="async"
         draggable={false}
-        className="partner-logo max-h-full max-w-full w-auto h-auto object-contain"
+        className="partner-logo h-10 w-[128px] md:h-14 md:w-[168px] object-contain"
       />
     );
     return (
@@ -105,15 +105,12 @@ export default function PartnersMarquee({
       </div>
 
       <style>{`
-        /* Logos siempre en blanco (mobile a opacidad plena; desktop atenuados con hover). */
+        /* Logos siempre en blanco (mobile a opacidad plena; desktop atenuados con hover).
+           Footprint homogéneo: cada logo se ajusta (object-contain) a una caja de igual
+           alto y ancho (clases h-10 w-[128px] / md:h-14 w-[168px] en el <img>). */
         .partner-logo { opacity: 1; filter: brightness(0) invert(1); transition: filter 0.35s ease, opacity 0.35s ease; }
-        /* Footprint homogéneo: cada logo vive en una caja de igual alto y ancho máximo
-           (object-contain conserva la proporción del SVG). */
-        .partner-slot { height: 40px; }
-        .partner-logo { max-height: 40px; max-width: 120px; }
         @media (min-width: 768px) {
-          .partner-slot { height: 56px; }
-          .partner-logo { max-height: 56px; max-width: 168px; opacity: 0.55; }
+          .partner-logo { opacity: 0.55; }
           .partner-logo:hover { opacity: 1; }
         }
 
