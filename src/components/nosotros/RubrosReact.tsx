@@ -122,7 +122,7 @@ export default function RubrosReact({
     return (
       <article
         key={i}
-        className={`rubro-slide snap-start relative overflow-hidden flex min-h-[295px] shrink-0 flex-col justify-between rounded-[24.62px] p-8 [width:calc((100%-3*0.5rem)/4)] max-md:[width:78%] ${
+        className={`rubro-slide group snap-start relative overflow-hidden flex min-h-[295px] shrink-0 flex-col justify-between rounded-[24.62px] p-8 [width:calc((100%-3*0.5rem)/4)] max-md:[width:78%] ${
           hasImage ? '' : 'bg-[rgba(42,42,42,0.5)] backdrop-blur-[2px]'
         }`}
       >
@@ -134,7 +134,7 @@ export default function RubrosReact({
               alt=""
               aria-hidden="true"
               draggable={false}
-              className="absolute inset-0 z-0 h-full w-full object-cover"
+              className="absolute inset-0 z-0 h-full w-full object-cover opacity-80 transition-[transform,filter,opacity] duration-300 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:brightness-110"
             />
             {/* Overlay en degradado, más oscuro abajo (donde va el nombre) para legibilidad. */}
             <div
