@@ -5,9 +5,11 @@
  * categorías de soluciones, subservicios, posts del blog y páginas principales.
  * El overlay de búsqueda (SearchOverlay.tsx) lo baja una vez y filtra en cliente.
  *
- * Se lee el contenido directamente con import.meta.glob (no vía queries de Tina)
- * para no depender de la selección de campos de las queries generadas.
+ * Soluciones/subservicios se leen con import.meta.glob (JSON nativo de Vite);
+ * el blog (MDX) se lee con el client de Tina (no hay integración MDX de Astro).
  */
+
+import { client } from "../../tina/__generated__/client";
 
 export type SearchType = "solucion" | "subservicio" | "pagina" | "blog";
 
@@ -66,17 +68,24 @@ export async function GET() {
     });
   }
 
-  // ── Posts del blog (frontmatter MDX) ──
-  const posts = import.meta.glob("/src/content/blog/*.mdx", { eager: true });
-  for (const [key, mod] of Object.entries(posts)) {
-    const fm: any = (mod as any).frontmatter ?? {};
-    const slug = fileSlug(key);
-    entries.push({
-      title: fm.title || slug,
-      description: fm.excerpt || "",
-      url: withBase(`blog/${slug}`),
-      type: "blog",
-    });
+  // ── Posts del blog (colección post / MDX, vía Tina) ──
+  try {
+    const postsQuery = await client.queries.postConnection({ last: 200 });
+    const edges = postsQuery.data?.postConnection?.edges || [];
+    for (const edge of edges) {
+      const node: any = edge?.node;
+      if (!node) continue;
+      const slug = node._sys?.filename;
+      if (!slug) continue;
+      entries.push({
+        title: node.title || slug,
+        description: node.excerpt || "",
+        url: withBase(`blog/${slug}`),
+        type: "blog",
+      });
+    }
+  } catch {
+    /* sin blog en el índice si la query falla */
   }
 
   // ── Páginas principales (entradas fijas) ──
