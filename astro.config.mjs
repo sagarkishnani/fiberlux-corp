@@ -10,6 +10,16 @@ const base = process.env.DEPLOY_BASE || "/";
 
 export default defineConfig({
   base,
+  // i18n (SPEC 80): ES por defecto en la raíz, EN bajo /en/. El fallback rewrite
+  // emite /en/* reusando las páginas ES (sin duplicar archivos); el contenido no
+  // traducido cae a ES. El locale se deriva de la URL en cada componente.
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: { prefixDefaultLocale: false },
+    fallback: { en: 'es' },
+    fallbackType: 'rewrite',
+  },
   redirects: {
     '/servicios': '/soluciones',
     '/servicios/[solucion]': '/soluciones/[solucion]',
