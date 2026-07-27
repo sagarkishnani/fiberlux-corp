@@ -58,13 +58,13 @@ export default function CasosSliderReact({
 
   return (
     <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-32">
-      {/* obs10: sin título "Casos de éxito" (redundante con el H1 del hero). */}
-
-      {/* Carousel (Embla) — obs10: alineado a la izquierda del contenedor. */}
-      <div className="relative">
+      {/* obs10: sin título "Casos de éxito" (redundante con el H1 del hero).
+          El viewport va dentro de site-container (igual que el hero) para que la
+          primera card quede alineada al título y la descripción. */}
+      <div className="site-container">
         <div
           ref={slider.viewportRef}
-          className="overflow-hidden pt-2 pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-1680px)/2))]"
+          className="overflow-hidden pt-2 pb-3 select-none casos-carousel"
           style={{ cursor: hasItems ? "grab" : "default" }}
         >
           <div className="flex gap-14">
@@ -93,14 +93,9 @@ export default function CasosSliderReact({
           </div>
         </div>
 
+        {/* Arrows: below the video, aligned to the card's left edge */}
+        {items.length > 1 && <div className="mt-8">{arrowsPill}</div>}
       </div>
-
-      {/* Arrows: below the video, aligned to its left edge */}
-      {items.length > 1 && (
-        <div className="px-6 md:px-[max(1.5rem,calc((100vw-1680px)/2))] mt-8">
-          {arrowsPill}
-        </div>
-      )}
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />
 
