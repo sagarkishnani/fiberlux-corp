@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import SplineScene from "../shared/SplineScene";
@@ -9,6 +10,13 @@ interface HeroHomeProps {
   data: HomeQuery;
 }
 
+// Señal para el preloader del Home (SitePreloader escucha este evento para
+// ocultarse). En modo 3D lo dispara SplineScene; en video/imagen, el medio.
+function signalHeroReady() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+}
+
 export default function HeroHomeReact({
   query,
   variables,
@@ -17,79 +25,134 @@ export default function HeroHomeReact({
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
   const hero = data?.home?.hero || initialData?.home?.hero;
 
+  const bgVideoRef = useRef<HTMLVideoElement>(null);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    setReduceMotion(
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false
+    );
+  }, []);
+
+  // Fondo en modo video: fija `muted` por propiedad (React no lo refleja en SSR)
+  // y reproduce si no hay reduce-motion.
+  const mode = ((hero as any)?.heroBackground as string) || "3d";
+  useEffect(() => {
+    const el = bgVideoRef.current;
+    if (!el) return;
+    el.muted = true;
+    if (!reduceMotion) el.play().catch(() => {});
+    else el.pause();
+  }, [reduceMotion, mode]);
+
   if (!hero) return null;
 
   const buttons = (hero.buttons || []).filter(Boolean);
 
-  // Fondo estático del hero en mobile (SPEC 44): en <lg no se carga el 3D
-  // (problemas en mobile), se muestra esta imagen a sangre completa.
+  // Opacidad del medio de fondo (video/imagen). Default 60%.
+  const bgOpacity = Math.max(
+    0,
+    Math.min(100, (hero as any).heroBgOpacity ?? 60)
+  ) / 100;
+  const bgVideo = mediaUrl((hero as any).heroBgVideo);
+  const bgImage = mediaUrl((hero as any).heroBgImage);
+
+  // Imagen estática a sangre del modo 3D en mobile (SPEC 44).
   const mobileCover = mediaUrl(hero.splinePosterUrl);
 
   return (
     <section className="relative w-full min-h-[600px] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
-      {/* Mobile (<lg): fondo estático a sangre completa en vez del 3D en vivo
-          (que da problemas en mobile — SPEC 44). El Spline no se carga en mobile
-          gracias a allowMobile={false} más abajo. */}
-      {mobileCover && (
-        <img
-          src={mobileCover}
-          alt=""
+      {/* ══════════ FONDO (z-0) según el modo elegido ══════════ */}
+
+      {mode === "video" && bgVideo && (
+        <video
+          ref={bgVideoRef}
+          src={bgVideo}
+          autoPlay={!reduceMotion}
+          loop
+          muted
+          playsInline
+          preload="auto"
           aria-hidden="true"
-          className="lg:hidden absolute z-0 inset-0 w-full h-full object-cover"
+          suppressHydrationWarning
+          onCanPlay={signalHeroReady}
+          className="absolute inset-0 z-0 w-full h-full object-cover"
+          style={{ opacity: bgOpacity, pointerEvents: "none" }}
         />
       )}
-      {/* Scrim mobile (<lg): oscurece el fondo estático para que el texto blanco
-          se lea bien sobre el hexágono neón. Más denso arriba (donde va el
-          contenido) y más ligero abajo. Solo mobile — en desktop el 3D + las
-          vignettes ya dan contraste. */}
-      <div
-        aria-hidden="true"
-        className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.55) 38%, rgba(10,10,10,0.4) 68%, rgba(10,10,10,0.55) 100%)",
-        }}
-      />
-      {/* Capa de la escena 3D — SOLO desktop (lg+). En mobile se muestra la
-          imagen de arriba en su lugar. En desktop ocupa todo (inset-0) y va al
-          lado del texto. */}
-      <div className="hidden lg:block absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
-        {/* En desktop la escena se corre a la derecha (-40%) para que el 3D
-            quede al lado del texto; en mobile eso empujaba el hexágono fuera de
-            cuadro (detrás del texto), así que a sangre completa (right-0) para
-            centrarlo debajo del contenido, como en el diseño. */}
-        <div
-          className="absolute top-0 bottom-0 left-0 right-0 md:right-[-40%]"
-          style={{
-            willChange: "transform",
-            contain: "layout paint",
-            transform: "translateZ(0)",
-          }}
-        >
-          {/* Fondo ambiental (siempre detrás de la escena / loader) */}
+
+      {mode === "imagen" && bgImage && (
+        <img
+          src={bgImage}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          onLoad={signalHeroReady}
+          className="absolute inset-0 z-0 w-full h-full object-cover"
+          style={{ opacity: bgOpacity }}
+        />
+      )}
+
+      {mode === "3d" && (
+        <>
+          {/* Mobile (<lg): fondo estático a sangre en vez del 3D en vivo
+              (SPEC 44). El Spline no se carga en mobile (allowMobile={false}). */}
+          {mobileCover && (
+            <img
+              src={mobileCover}
+              alt=""
+              aria-hidden="true"
+              className="lg:hidden absolute z-0 inset-0 w-full h-full object-cover"
+            />
+          )}
+          {/* Scrim mobile (<lg): oscurece el fondo estático para que el texto
+              blanco se lea bien. Solo mobile — en desktop el 3D + vignettes ya
+              dan contraste. */}
           <div
             aria-hidden="true"
-            className="absolute inset-0"
+            className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
             style={{
               background:
-                "radial-gradient(ellipse at 70% 50%, rgba(150,35,122,0.2) 0%, transparent 70%)",
+                "linear-gradient(180deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.55) 38%, rgba(10,10,10,0.4) 68%, rgba(10,10,10,0.55) 100%)",
             }}
           />
+          {/* Capa de la escena 3D — SOLO desktop (lg+). */}
+          <div className="hidden lg:block absolute z-0 inset-x-0 bottom-0 top-[46%] md:top-0">
+            {/* En desktop la escena se corre a la derecha (-40%) para que quede
+                al lado del texto. */}
+            <div
+              className="absolute top-0 bottom-0 left-0 right-0 md:right-[-40%]"
+              style={{
+                willChange: "transform",
+                contain: "layout paint",
+                transform: "translateZ(0)",
+              }}
+            >
+              {/* Fondo ambiental (siempre detrás de la escena / loader) */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 70% 50%, rgba(150,35,122,0.2) 0%, transparent 70%)",
+                }}
+              />
 
-          {/* Escena 3D (carga condicional + loader + revelación + pausa) */}
-          {/* Home va a sangre completa: sin poster (una captura se maximiza y
-              recorta mal, peor en mobile). El glow ambiental de arriba cubre la
-              carga; hideLoader evita que salga un spinner encima. */}
-          <SplineScene
-            scene={hero.splineSceneUrl}
-            allowMobile={false}
-            signalReady
-            hideLoader
-            className="absolute inset-0"
-          />
-        </div>
-      </div>
+              {/* Escena 3D (carga condicional + loader + revelación + pausa) */}
+              <SplineScene
+                scene={hero.splineSceneUrl}
+                allowMobile={false}
+                signalReady
+                hideLoader
+                className="absolute inset-0"
+              />
+            </div>
+          </div>
+        </>
+      )}
 
+      {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}
       {/* Vignette izquierda */}
       <div
         aria-hidden="true"
@@ -110,7 +173,7 @@ export default function HeroHomeReact({
         }}
       />
 
-      {/* Contenido */}
+      {/* ══════════ Contenido (z-10) ══════════ */}
       <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32">
         <div className="flex flex-col justify-start md:justify-center max-w-[640px] min-h-0 lg:min-h-[640px]">
           <h1
