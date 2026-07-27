@@ -151,6 +151,95 @@ const hasChildren = (item?: NavLink | NavChild | null): boolean =>
 const normalizeUrl = (u?: string | null): string =>
   (u || "").trim().replace(/\/+$/, "").toLowerCase() || "/";
 
+/* ── Switcher de idioma (SPEC 80) — "ES ▾" con dropdown ES/EN ── */
+function LangSwitcher({
+  locale,
+  currentPath,
+  controlText,
+  isLight,
+}: {
+  locale: Locale;
+  currentPath: string;
+  controlText: string;
+  isLight: boolean;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const LABELS: Record<Locale, string> = {
+    es: "Español (ES)",
+    en: "English (EN)",
+  };
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={t("lang.switch.aria", locale)}
+        className={`flex items-center gap-1 text-[13px] font-medium ${controlText} opacity-90 transition-opacity hover:opacity-100`}
+      >
+        {locale.toUpperCase()}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2.5}
+          aria-hidden="true"
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {open && (
+        <ul
+          role="listbox"
+          className={`absolute right-0 top-full z-[90] mt-2 min-w-[130px] overflow-hidden rounded-lg border shadow-xl ${
+            isLight ? "border-black/10 bg-white/95" : "border-white/10 bg-greyscale-darkest/95"
+          }`}
+        >
+          {LOCALES.map((loc) => (
+            <li key={loc}>
+              <a
+                href={localizedPath(currentPath, loc)}
+                lang={loc}
+                aria-current={loc === locale ? "true" : undefined}
+                className={`block px-4 py-2.5 text-[13px] transition-colors ${
+                  isLight
+                    ? "text-greyscale-darkest/80 hover:bg-black/5 hover:text-greyscale-darkest"
+                    : "text-white/80 hover:bg-white/5 hover:text-white"
+                } ${loc === locale ? "font-semibold" : ""}`}
+              >
+                {LABELS[loc]}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function HeaderV2React({
   query,
   variables,
@@ -464,16 +553,24 @@ export default function HeaderV2React({
               )}
             </div>
 
-            {/* Right: Información a abonados (desktop only) */}
-            {topBar?.abonadosLabel && (
-              <a
-                href={topBar.abonadosUrl || "#"}
-                className={`hidden lg:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
-                data-tina-field={tinaField(topBar as any, "abonadosLabel")}
-              >
-                {topBar.abonadosLabel}
-              </a>
-            )}
+            {/* Right: Información a abonados (desktop only) + switcher de idioma */}
+            <div className="flex items-center gap-5">
+              {topBar?.abonadosLabel && (
+                <a
+                  href={topBar.abonadosUrl || "#"}
+                  className={`hidden lg:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
+                  data-tina-field={tinaField(topBar as any, "abonadosLabel")}
+                >
+                  {topBar.abonadosLabel}
+                </a>
+              )}
+              <LangSwitcher
+                locale={locale}
+                currentPath={currentPath}
+                controlText={controlText}
+                isLight={isLight}
+              />
+            </div>
           </div>
         </div>
 
