@@ -185,7 +185,10 @@ export default function HeroSubservicioReact({
           </div>
 
           {/* ════ RIGHT — "¿Conversamos?" form ════ */}
-          <div className="w-full rounded-3xl bg-white/[0.08] border border-white/15 backdrop-blur-md p-6 md:p-8">
+          {/* obs6: en mobile/tablet el form del hero se apila arriba y estorba;
+              se muestra solo en el layout de 2 columnas (lg+), donde tiene su
+              propia columna. El form mid-page sigue disponible para mobile. */}
+          <div className="hidden lg:block w-full rounded-3xl bg-white/[0.08] border border-white/15 backdrop-blur-md p-6 md:p-8">
             {hero?.formTitle && (
               <h2
                 className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-6"
