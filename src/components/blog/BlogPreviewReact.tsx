@@ -110,6 +110,7 @@ export default function BlogPreviewReact({
                           readTime={post.readTime}
                           date={post.date}
                           slug={post._sys.filename}
+                          noHoverGlow
                         />
                       </article>
                     );
