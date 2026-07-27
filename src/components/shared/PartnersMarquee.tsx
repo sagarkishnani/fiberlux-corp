@@ -52,11 +52,11 @@ export default function PartnersMarquee({
         loading="eager"
         decoding="async"
         draggable={false}
-        className="partner-logo h-7 md:h-9 w-auto object-contain"
+        className="partner-logo max-h-full max-w-full w-auto h-auto object-contain"
       />
     );
     return (
-      <span key={i} className="shrink-0 px-8 md:px-12" data-tina-field={tinaField(logo as any, "image")}>
+      <span key={i} className="partner-slot shrink-0 flex items-center justify-center px-8 md:px-12" data-tina-field={tinaField(logo as any, "image")}>
         {logo.url ? (
           <a href={logo.url} target="_blank" rel="noopener noreferrer">
             {img}
@@ -107,8 +107,13 @@ export default function PartnersMarquee({
       <style>{`
         /* Logos siempre en blanco (mobile a opacidad plena; desktop atenuados con hover). */
         .partner-logo { opacity: 1; filter: brightness(0) invert(1); transition: filter 0.35s ease, opacity 0.35s ease; }
+        /* Footprint homogéneo: cada logo vive en una caja de igual alto y ancho máximo
+           (object-contain conserva la proporción del SVG). */
+        .partner-slot { height: 40px; }
+        .partner-logo { max-height: 40px; max-width: 120px; }
         @media (min-width: 768px) {
-          .partner-logo { opacity: 0.55; }
+          .partner-slot { height: 56px; }
+          .partner-logo { max-height: 56px; max-width: 168px; opacity: 0.55; }
           .partner-logo:hover { opacity: 1; }
         }
 
@@ -124,9 +129,6 @@ export default function PartnersMarquee({
         @keyframes partners-marquee {
           from { transform: translateX(-50%); }
           to { transform: translateX(0); }
-        }
-        .partners-marquee:hover .partners-track {
-          animation-play-state: paused;
         }
         @media (prefers-reduced-motion: reduce) {
           .partners-track { animation: none; transform: translateX(0); }
