@@ -5,6 +5,8 @@ interface BlogCardProps {
   readTime?: string | null;
   date?: string | null;
   slug: string;
+  /** Desactiva el glow magenta del hover (usado en el blog preview). */
+  noHoverGlow?: boolean;
 }
 
 function formatDate(dateStr: string): string {
@@ -27,10 +29,17 @@ export default function BlogCard({
   readTime,
   date,
   slug,
+  noHoverGlow = false,
 }: BlogCardProps) {
   return (
     <a href={`/blog/${slug}`} className="block group h-full" draggable={false}>
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full md:min-h-0 md:h-[400px] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-brand-purple/50 group-hover:shadow-[0_20px_50px_-24px_rgba(150,35,122,0.6)] motion-reduce:transform-none motion-reduce:transition-none">
+      <div
+        className={`grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-greyscale-dark/30 border border-greyscale-dark/60 rounded-2xl overflow-hidden h-full md:min-h-0 md:h-[400px] transition-all duration-300 group-hover:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none ${
+          noHoverGlow
+            ? ""
+            : "group-hover:border-brand-purple/50 group-hover:shadow-[0_20px_50px_-24px_rgba(150,35,122,0.6)]"
+        }`}
+      >
         <div className="relative overflow-hidden h-40 md:h-auto">
           {coverImage ? (
             <img
