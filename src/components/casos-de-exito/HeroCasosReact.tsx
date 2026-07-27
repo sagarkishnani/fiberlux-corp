@@ -54,14 +54,14 @@ export default function HeroCasosReact({
 
       <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
         <div className="max-w-[600px]" data-reveal="up">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-8">
-            <a href={base} className="hover:text-greyscale-white transition-colors">
+          {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
+          <nav className="flex items-center gap-2 text-sm mb-8" aria-label="Breadcrumb">
+            <a href={base} className="text-white/50 hover:text-white transition-colors">
               Inicio
             </a>
-            <span>/</span>
+            <span className="text-white/30">/</span>
             <span
-              className="text-greyscale-white"
+              className="text-white font-medium"
               data-tina-field={tinaField(page, "breadcrumb")}
             >
               {page.breadcrumb}
