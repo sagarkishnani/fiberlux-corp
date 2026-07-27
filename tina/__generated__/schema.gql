@@ -150,8 +150,12 @@ type HomeHeroButtons {
 type HomeHero {
   title: String!
   subtitle: String
+  heroBackground: String
   splineSceneUrl: String
   splinePosterUrl: String
+  heroBgVideo: String
+  heroBgImage: String
+  heroBgOpacity: Float
   buttons: [HomeHeroButtons]
 }
 
@@ -227,6 +231,16 @@ input ImageFilter {
   in: [String]
 }
 
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
 input HomeHeroButtonsFilter {
   text: StringFilter
   url: StringFilter
@@ -236,8 +250,12 @@ input HomeHeroButtonsFilter {
 input HomeHeroFilter {
   title: StringFilter
   subtitle: StringFilter
+  heroBackground: StringFilter
   splineSceneUrl: StringFilter
   splinePosterUrl: ImageFilter
+  heroBgVideo: ImageFilter
+  heroBgImage: ImageFilter
+  heroBgOpacity: NumberFilter
   buttons: HomeHeroButtonsFilter
 }
 
@@ -1461,16 +1479,6 @@ input GlobalHtmlInjectionsFilter {
   html: StringFilter
 }
 
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
-}
-
 input GlobalSlidersCertificacionesFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
@@ -2144,8 +2152,12 @@ input HomeHeroButtonsMutation {
 input HomeHeroMutation {
   title: String
   subtitle: String
+  heroBackground: String
   splineSceneUrl: String
   splinePosterUrl: String
+  heroBgVideo: String
+  heroBgImage: String
+  heroBgOpacity: Float
   buttons: [HomeHeroButtonsMutation]
 }
 

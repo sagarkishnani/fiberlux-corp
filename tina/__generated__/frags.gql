@@ -4,8 +4,12 @@ fragment HomeParts on Home {
     __typename
     title
     subtitle
+    heroBackground
     splineSceneUrl
     splinePosterUrl
+    heroBgVideo
+    heroBgImage
+    heroBgOpacity
     buttons {
       __typename
       text

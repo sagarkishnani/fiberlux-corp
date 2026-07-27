@@ -58,15 +58,44 @@ var config_default = defineConfig({
               },
               {
                 type: "string",
+                name: "heroBackground",
+                label: "Fondo del hero",
+                options: [
+                  { value: "3d", label: "Escena 3D (Spline)" },
+                  { value: "video", label: "Video de fondo" },
+                  { value: "imagen", label: "Imagen de fondo" }
+                ],
+                description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
+              },
+              {
+                type: "string",
                 name: "splineSceneUrl",
-                label: "URL de la escena de Spline",
+                label: "URL de la escena de Spline (modo 3D)",
                 description: "Pega aqu\xED la URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode"
               },
               {
                 type: "image",
                 name: "splinePosterUrl",
-                label: "Poster est\xE1tico de la escena (respaldo)",
-                description: "Captura PNG de la escena. Se muestra en equipos d\xE9biles / red lenta / reduce-motion en vez del 3D, y como base mientras carga."
+                label: "Imagen est\xE1tica mobile (modo 3D)",
+                description: "Imagen a sangre que se muestra en mobile en lugar del 3D (el 3D solo carga en desktop)."
+              },
+              {
+                type: "image",
+                name: "heroBgVideo",
+                label: "Video de fondo (modo Video)",
+                description: "Video a sangre (mp4) detr\xE1s del texto. Se reproduce en loop, silenciado, en desktop y mobile."
+              },
+              {
+                type: "image",
+                name: "heroBgImage",
+                label: "Imagen de fondo (modo Imagen)",
+                description: "Imagen a sangre detr\xE1s del texto."
+              },
+              {
+                type: "number",
+                name: "heroBgOpacity",
+                label: "Opacidad del fondo (video/imagen) \u2014 0 a 100",
+                description: "Opacidad del video/imagen de fondo. Baja el valor para que se funda con el negro y el texto se lea mejor. Default 60."
               },
               {
                 type: "object",

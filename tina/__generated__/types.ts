@@ -500,8 +500,12 @@ export type HomeHero = {
   __typename?: 'HomeHero';
   title: Scalars['String']['output'];
   subtitle?: Maybe<Scalars['String']['output']>;
+  heroBackground?: Maybe<Scalars['String']['output']>;
   splineSceneUrl?: Maybe<Scalars['String']['output']>;
   splinePosterUrl?: Maybe<Scalars['String']['output']>;
+  heroBgVideo?: Maybe<Scalars['String']['output']>;
+  heroBgImage?: Maybe<Scalars['String']['output']>;
+  heroBgOpacity?: Maybe<Scalars['Float']['output']>;
   buttons?: Maybe<Array<Maybe<HomeHeroButtons>>>;
 };
 
@@ -585,6 +589,16 @@ export type ImageFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
 export type HomeHeroButtonsFilter = {
   text?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
@@ -594,8 +608,12 @@ export type HomeHeroButtonsFilter = {
 export type HomeHeroFilter = {
   title?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
+  heroBackground?: InputMaybe<StringFilter>;
   splineSceneUrl?: InputMaybe<StringFilter>;
   splinePosterUrl?: InputMaybe<ImageFilter>;
+  heroBgVideo?: InputMaybe<ImageFilter>;
+  heroBgImage?: InputMaybe<ImageFilter>;
+  heroBgOpacity?: InputMaybe<NumberFilter>;
   buttons?: InputMaybe<HomeHeroButtonsFilter>;
 };
 
@@ -1918,16 +1936,6 @@ export type GlobalHtmlInjectionsFilter = {
   html?: InputMaybe<StringFilter>;
 };
 
-export type NumberFilter = {
-  lt?: InputMaybe<Scalars['Float']['input']>;
-  lte?: InputMaybe<Scalars['Float']['input']>;
-  gte?: InputMaybe<Scalars['Float']['input']>;
-  gt?: InputMaybe<Scalars['Float']['input']>;
-  eq?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
-};
-
 export type GlobalSlidersCertificacionesFilter = {
   autoplay?: InputMaybe<BooleanFilter>;
   intervalMs?: InputMaybe<NumberFilter>;
@@ -2903,8 +2911,12 @@ export type HomeHeroButtonsMutation = {
 export type HomeHeroMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
+  heroBackground?: InputMaybe<Scalars['String']['input']>;
   splineSceneUrl?: InputMaybe<Scalars['String']['input']>;
   splinePosterUrl?: InputMaybe<Scalars['String']['input']>;
+  heroBgVideo?: InputMaybe<Scalars['String']['input']>;
+  heroBgImage?: InputMaybe<Scalars['String']['input']>;
+  heroBgOpacity?: InputMaybe<Scalars['Float']['input']>;
   buttons?: InputMaybe<Array<InputMaybe<HomeHeroButtonsMutation>>>;
 };
 
@@ -3691,7 +3703,7 @@ export type FiberluxAppMutation = {
   seo?: InputMaybe<FiberluxAppSeoMutation>;
 };
 
-export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
+export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -3734,7 +3746,7 @@ export type HomeQueryVariables = Exact<{
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } };
+export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } };
 
 export type HomeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3746,7 +3758,7 @@ export type HomeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
+export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, subtitle?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, description?: string | null, name?: string | null, role?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, buttonText?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
 
 export type ServiceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4097,8 +4109,12 @@ export const HomePartsFragmentDoc = gql`
     __typename
     title
     subtitle
+    heroBackground
     splineSceneUrl
     splinePosterUrl
+    heroBgVideo
+    heroBgImage
+    heroBgOpacity
     buttons {
       __typename
       text
