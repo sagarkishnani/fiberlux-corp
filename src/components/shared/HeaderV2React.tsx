@@ -16,6 +16,7 @@ import {
   FaMagnifyingGlass,
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
+import SearchOverlay from "./SearchOverlay";
 
 /* ── Types ── */
 interface HeaderProps {
@@ -165,6 +166,9 @@ export default function HeaderV2React({
 
   /* ── State ── */
   const [menuOpen, setMenuOpen] = useState(false);
+  // Búsqueda (SPEC 81): overlay disparado desde la lupa.
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchBtnRef = useRef<HTMLButtonElement>(null);
   // Desktop navbar: index of the item revealing its hover dropdown (or null).
   const [navHover, setNavHover] = useState<number | null>(null);
   // Desktop navbar: index of the level-2 item (inside the open dropdown) whose
@@ -666,12 +670,15 @@ export default function HeaderV2React({
             })}
           </nav>
 
-          {/* Icono de búsqueda (placeholder, sin función aún — SPEC 61).
+          {/* Icono de búsqueda (SPEC 81: abre el overlay de búsqueda).
               Hereda color por tema vía controlText. En mobile con el menú abierto
               se oculta para no quedar sobre el overlay. */}
           <button
+            ref={searchBtnRef}
             type="button"
             aria-label="Buscar"
+            aria-expanded={searchOpen}
+            onClick={() => setSearchOpen(true)}
             className={`flex items-center justify-center ${controlText} opacity-90 hover:opacity-100 transition-opacity ${
               menuOpen ? "hidden lg:flex" : "flex"
             }`}
@@ -681,6 +688,15 @@ export default function HeaderV2React({
           </div>
         </div>
       </header>
+
+      {/* ═══ SEARCH OVERLAY (SPEC 81) ═══ */}
+      <SearchOverlay
+        open={searchOpen}
+        onClose={() => {
+          setSearchOpen(false);
+          searchBtnRef.current?.focus();
+        }}
+      />
 
       {/* ═══ MENU OVERLAY (hamburger) ═══ */}
       <div
