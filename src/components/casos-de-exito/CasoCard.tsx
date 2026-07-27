@@ -110,15 +110,19 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
   /* ── Quote card (top-right) ── */
   const quoteCard = (
     <div className="rounded-[14px] bg-white/[0.08] border border-white/[0.07] px-7 py-8 md:px-9 md:py-9 flex flex-col gap-5 justify-center flex-1">
-      {/* Si hay logo del cliente, se muestra EN VEZ de las comillas (obs_12). */}
+      {/* Si hay logo del cliente, se muestra EN VEZ de las comillas (obs_12/obs9).
+          Los logos son a todo color (pensados para fondo claro), así que van sobre
+          un chip blanco para que lean bien sobre la card oscura. */}
       {caso.logo ? (
-        <img
-          src={mediaUrl(caso.logo)}
-          alt={caso.author || "Cliente"}
-          className="h-12 object-contain object-left"
-          draggable={false}
-          data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
-        />
+        <span className="inline-flex w-fit items-center rounded-lg bg-white px-4 py-3">
+          <img
+            src={mediaUrl(caso.logo)}
+            alt={caso.author || "Cliente"}
+            className="h-10 w-auto object-contain"
+            draggable={false}
+            data-tina-field={tinaItem ? tinaField(tinaItem, "logo") : undefined}
+          />
+        </span>
       ) : (
         <QuoteMark />
       )}
