@@ -89,6 +89,7 @@ export default function InfoAbonadosReact({
   if (!page) return null;
 
   const sections = (page.sections || []).filter((s: any) => s && s.visible !== false);
+  const base = import.meta.env.BASE_URL || "/";
 
   return (
     <>
@@ -138,7 +139,19 @@ export default function InfoAbonadosReact({
                 <div className="info-docs-grid" data-reveal="up" data-reveal-stagger="0.06">
                   {docs.map((doc: any, j: number) => {
                     const IconComp = iconMap[doc.icon || "document"] || DocumentIcon;
-                    const hasUrl = doc.url && doc.url !== "#";
+                    const rawUrl: string = doc.url || "";
+                    const hasUrl = rawUrl && rawUrl !== "#";
+                    // Externo (http) o PDF → nueva pestaña. Interno (ruta del
+                    // sitio) → misma pestaña y BASE_URL-aware. PDF interno abre
+                    // en nueva pestaña pero también respeta el base.
+                    const isExternal = /^https?:\/\//i.test(rawUrl);
+                    const isPdf = /\.pdf(?:$|[?#])/i.test(rawUrl);
+                    const newTab = isExternal || isPdf;
+                    const href = isExternal
+                      ? rawUrl
+                      : rawUrl.startsWith("/")
+                        ? `${base}${rawUrl}`.replace(/([^:])\/\//g, "$1/")
+                        : rawUrl;
 
                     const card = (
                       <div
@@ -187,7 +200,13 @@ export default function InfoAbonadosReact({
                     );
 
                     return hasUrl ? (
-                      <a key={j} href={doc.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                      <a
+                        key={j}
+                        href={href}
+                        target={newTab ? "_blank" : undefined}
+                        rel={newTab ? "noopener noreferrer" : undefined}
+                        style={{ textDecoration: "none" }}
+                      >
                         {card}
                       </a>
                     ) : (
