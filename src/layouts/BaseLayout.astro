@@ -284,6 +284,10 @@ const whatsappMessage = whatsappContext
         smoothWheel: true,
       });
 
+      // Expuesto para que overlays (ej. búsqueda) puedan pausar/reanudar el
+      // smooth-scroll y bloquear el fondo mientras están abiertos (SPEC 81).
+      (window as any).__lenis = lenis;
+
       function raf(time: number) {
         lenis.raf(time);
         requestAnimationFrame(raf);
