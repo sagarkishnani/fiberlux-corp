@@ -19,7 +19,7 @@ import type { IconType } from "react-icons";
 import SearchOverlay from "./SearchOverlay";
 import { LOCALES, type Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
-import { localizedPath, tField } from "../../utils/i18n";
+import { localizedPath, tField, localizeHref } from "../../utils/i18n";
 
 /* ── Types ── */
 interface HeaderProps {
@@ -309,6 +309,9 @@ export default function HeaderV2React({
 
   // i18n (SPEC 80): label de un nodo de nav según el locale (text_en → text).
   const tx = (o: any): string => tField(o, "text", locale);
+  // i18n (SPEC 80): href interno localizado (/en) según el locale; externos intactos.
+  const hx = (url: string | null | undefined, external?: boolean | null): string =>
+    localizeHref(url, locale, external);
 
   // Resolve a desktopNav item's hover children by matching its URL against
   // nav.links (single-source of submenu content).
@@ -536,7 +539,7 @@ export default function HeaderV2React({
             <div className="flex items-center gap-6">
               {topBar?.empresasLabel && (
                 <a
-                  href={topBar.empresasUrl || "/"}
+                  href={hx(topBar.empresasUrl || "/")}
                   className={`relative text-[13px] font-medium ${controlText} transition-colors after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-brand-purple after:content-['']`}
                   data-tina-field={tinaField(topBar as any, "empresasLabel")}
                 >
@@ -560,7 +563,7 @@ export default function HeaderV2React({
             <div className="flex items-center gap-5">
               {topBar?.abonadosLabel && (
                 <a
-                  href={topBar.abonadosUrl || "#"}
+                  href={hx(topBar.abonadosUrl)}
                   className={`hidden lg:block text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
                   data-tina-field={tinaField(topBar as any, "abonadosLabel")}
                 >
@@ -622,7 +625,7 @@ export default function HeaderV2React({
                 con el scroll (SPEC 39); el transform se aplica vía logoRef. */}
             {!menuOpen && (
               <a
-                href="/"
+                href={hx("/")}
                 className="relative z-50 inline-block h-5 w-[140px]"
                 aria-label="Fiberlux - Inicio"
               >
@@ -673,7 +676,7 @@ export default function HeaderV2React({
                   }}
                 >
                   <a
-                    href={item.url || "#"}
+                    href={hx(item.url, (item as any).external)}
                     className={`flex items-center gap-1.5 text-[15px] font-medium ${controlText} transition-opacity ${
                       open ? "opacity-100" : "opacity-90 hover:opacity-100"
                     } nav-link-hover ${open ? "nav-link-active" : ""}`}
@@ -720,7 +723,7 @@ export default function HeaderV2React({
                               }
                             >
                               <a
-                                href={child.url || "#"}
+                                href={hx(child.url)}
                                 className={`flex items-center justify-between gap-3 rounded-xl px-4 py-2.5 text-[15px] transition-colors ${
                                   isLight
                                     ? subOpen
@@ -755,7 +758,7 @@ export default function HeaderV2React({
                                     {grand.map((gc, k) => (
                                       <a
                                         key={k}
-                                        href={gc.url || "#"}
+                                        href={hx(gc.url)}
                                         className={`block rounded-xl px-4 py-2 text-[14px] transition-colors ${
                                           isLight
                                             ? "text-greyscale-darkest/70 hover:text-greyscale-darkest hover:bg-black/5"
@@ -852,7 +855,7 @@ export default function HeaderV2React({
                       ) : (
                         <a
                           key={i}
-                          href={link.url || "#"}
+                          href={hx(link.url)}
                           onClick={closeMenu}
                           className="text-white text-[29px] leading-[40px] font-semibold hover:text-white/80 transition-colors"
                         >
@@ -873,7 +876,7 @@ export default function HeaderV2React({
                         {secondaryNav.map((item, i) => (
                           <a
                             key={i}
-                            href={item.url || "#"}
+                            href={hx(item.url, (item as any).external)}
                             onClick={closeMenu}
                             {...(item.external
                               ? { target: "_blank", rel: "noopener noreferrer" }
@@ -899,7 +902,7 @@ export default function HeaderV2React({
 
                   {currentNode?.url ? (
                     <a
-                      href={currentNode.url}
+                      href={hx(currentNode.url)}
                       onClick={closeMenu}
                       className="inline-flex items-center gap-2 text-white text-2xl font-semibold mb-5 hover:text-white/80 transition-colors"
                     >
@@ -932,7 +935,7 @@ export default function HeaderV2React({
                       ) : (
                         <a
                           key={j}
-                          href={child.url || "#"}
+                          href={hx(child.url)}
                           onClick={closeMenu}
                           className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
                         >
@@ -948,7 +951,7 @@ export default function HeaderV2React({
                         {siblingLinks.map((link, i) => (
                           <a
                             key={i}
-                            href={link.url || "#"}
+                            href={hx(link.url)}
                             onClick={closeMenu}
                             className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
                           >
@@ -980,7 +983,7 @@ export default function HeaderV2React({
 
               {/* Logo dentro del menú */}
               <a
-                href="/"
+                href={hx("/")}
                 onClick={closeMenu}
                 aria-label="Fiberlux - Inicio"
                 className="self-start mb-12"
@@ -999,7 +1002,7 @@ export default function HeaderV2React({
                 {secondaryNav.map((item, i) => (
                   <a
                     key={i}
-                    href={item.url || "#"}
+                    href={hx(item.url, (item as any).external)}
                     onClick={closeMenu}
                     {...(item.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
@@ -1021,7 +1024,7 @@ export default function HeaderV2React({
                 return (
                   <a
                     key={i}
-                    href={item.url || "#"}
+                    href={hx(item.url, (item as any).external)}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.platform || ""}

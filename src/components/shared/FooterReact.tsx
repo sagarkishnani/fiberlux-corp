@@ -12,7 +12,7 @@ import {
 } from 'react-icons/fa6';
 import type { IconType } from 'react-icons';
 import type { Locale } from '../../i18n/config';
-import { tField } from '../../utils/i18n';
+import { tField, localizeHref } from '../../utils/i18n';
 
 /* ── Types ── */
 interface FooterProps {
@@ -103,7 +103,7 @@ export default function FooterReact({ query, variables, data: initialData, local
           {links.map((link: LinkItem, j: number) => (
             <li key={j}>
               <a
-                href={link.url || '#'}
+                href={localizeHref(link.url, locale, link.external) || '#'}
                 {...(link.external
                   ? { target: '_blank', rel: 'noopener noreferrer' }
                   : {})}
@@ -170,7 +170,7 @@ export default function FooterReact({ query, variables, data: initialData, local
         <div className="site-container py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Fiberlux logo */}
           <div data-tina-field={tinaField(footer as any, 'logo')}>
-            <a href="/">
+            <a href={localizeHref('/', locale)}>
             <img
               src={logoSrc}
               alt="Fiberlux"

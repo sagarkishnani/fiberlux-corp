@@ -45,6 +45,25 @@ export function localizedPath(pathname: string, locale: Locale): string {
   return out;
 }
 
+/**
+ * Localiza un href interno al idioma activo (SPEC 80). En EN antepone /en a las
+ * rutas internas; deja intactos los externos, anclas y mailto/tel, y los marcados
+ * como external. En ES devuelve el href tal cual.
+ */
+export function localizeHref(
+  url: string | null | undefined,
+  locale: Locale,
+  external?: boolean | null
+): string {
+  const u = url || "";
+  if (!u || locale === "es" || external) return u;
+  // Externos (con protocolo o //), anclas puras, mailto/tel: sin tocar.
+  if (/^([a-z]+:)?\/\//i.test(u) || /^(#|mailto:|tel:)/i.test(u)) return u;
+  // Solo rutas internas absolutas ("/algo").
+  if (!u.startsWith("/")) return u;
+  return localizedPath(u, "en");
+}
+
 export function tField(
   obj: Record<string, any> | null | undefined,
   key: string,
