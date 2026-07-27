@@ -17,6 +17,9 @@ import {
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 import SearchOverlay from "./SearchOverlay";
+import { LOCALES, type Locale } from "../../i18n/config";
+import { t } from "../../i18n/ui";
+import { localizedPath, tField } from "../../utils/i18n";
 
 /* ── Types ── */
 interface HeaderProps {
@@ -29,6 +32,10 @@ interface HeaderProps {
   /** Fuerza el fondo opaco/blur desde el inicio (sin esperar scroll). Se usa en
       páginas con hero de imagen (soluciones) para que el menú no se pierda. */
   solidOnLoad?: boolean;
+  /** Idioma activo (SPEC 80). */
+  locale?: Locale;
+  /** Path actual (SSR), para armar el link del switcher al otro idioma. */
+  currentPath?: string;
 }
 
 interface NavGrandChild {
@@ -151,6 +158,8 @@ export default function HeaderV2React({
   theme = "dark",
   heroLogo = false,
   solidOnLoad = false,
+  locale = "es",
+  currentPath = "/",
 }: HeaderProps) {
   const { data } = useTina<GlobalQuery>({
     query,

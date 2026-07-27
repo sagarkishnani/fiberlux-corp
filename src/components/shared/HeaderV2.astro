@@ -9,6 +9,7 @@
  */
 import { client } from '../../../tina/__generated__/client';
 import HeaderV2React from './HeaderV2React.tsx';
+import type { Locale } from '../../i18n/config';
 
 interface Props {
   theme?: 'light' | 'dark';
@@ -16,9 +17,11 @@ interface Props {
   heroLogo?: boolean;
   /** Fondo opaco/blur desde el inicio (páginas con hero de imagen). */
   solidOnLoad?: boolean;
+  /** Idioma activo (SPEC 80). */
+  locale?: Locale;
 }
 
-const { theme = 'dark', heroLogo = false, solidOnLoad = false } = Astro.props;
+const { theme = 'dark', heroLogo = false, solidOnLoad = false, locale = 'es' } = Astro.props;
 
 const globalQuery = await client.queries.global({ relativePath: 'index.json' });
 ---
@@ -31,4 +34,6 @@ const globalQuery = await client.queries.global({ relativePath: 'index.json' });
   theme={theme}
   heroLogo={heroLogo}
   solidOnLoad={solidOnLoad}
+  locale={locale}
+  currentPath={Astro.url.pathname}
 />

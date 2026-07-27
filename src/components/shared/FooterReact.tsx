@@ -11,12 +11,16 @@ import {
   FaGithub,
 } from 'react-icons/fa6';
 import type { IconType } from 'react-icons';
+import type { Locale } from '../../i18n/config';
+import { tField } from '../../utils/i18n';
 
 /* ── Types ── */
 interface FooterProps {
   query: string;
   variables: GlobalQueryVariables;
   data: GlobalQuery;
+  /** Idioma activo (SPEC 80). */
+  locale?: Locale;
 }
 
 interface SocialItem {
@@ -57,7 +61,7 @@ const DEFAULT_LOGO = '/images/logo/fiberlux.svg';
  * Uses `client:tina` in Astro → only hydrates inside Tina's editor.
  * In production, renders static HTML with zero JS.
  */
-export default function FooterReact({ query, variables, data: initialData }: FooterProps) {
+export default function FooterReact({ query, variables, data: initialData, locale = 'es' }: FooterProps) {
   const { data } = useTina<GlobalQuery>({ query, variables, data: initialData });
 
   const footer = data?.global?.footer;

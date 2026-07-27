@@ -8,6 +8,16 @@ import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
 import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
 import client from "../../tina/__generated__/client";
 import "../styles/site-container.css";
+import { getLocale } from "../utils/i18n";
+import { isLocale } from "../i18n/config";
+
+// ─── Locale (SPEC 80) ───
+// Preferimos Astro.currentLocale (lo setea el routing i18n, incl. rutas /en de
+// fallback) y caemos a derivarlo del path. Se pasa como prop a los componentes
+// para no depender de currentLocale dentro de las islas.
+const locale = isLocale(Astro.currentLocale)
+  ? Astro.currentLocale
+  : getLocale(Astro.url);
 
 interface Props {
   title?: string;
@@ -85,7 +95,7 @@ const whatsappMessage = whatsappContext
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -243,10 +253,10 @@ const whatsappMessage = whatsappContext
               the fixed overlays below stay reachable while a filter is on. */}
           <div id="a11y-content">
             {/* <Header theme={headerTheme} /> */}
-            <HeaderV2 theme={headerTheme} heroLogo={isHome} solidOnLoad={solidHeader} />
+            <HeaderV2 theme={headerTheme} heroLogo={isHome} solidOnLoad={solidHeader} locale={locale} />
             <slot />
             <div class="-mt-6 relative z-40">
-              <Footer />
+              <Footer locale={locale} />
             </div>
           </div>
           <CookieConsent />
