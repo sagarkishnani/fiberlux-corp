@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTina, tinaField } from "tinacms/dist/react";
+import { useTina } from "tinacms/dist/react";
 import type {
   CasosDeExitoQuery,
   CasosDeExitoQueryVariables,
@@ -29,16 +29,15 @@ export default function CasosSliderReact({
   const { data } = useTina<CasosDeExitoQuery>({ query, variables, data: initialData });
 
   const page = data?.casosDeExito;
-  const sectionTitle = page?.sectionTitle || "Casos de éxito";
   const items = (page?.items || []).filter(Boolean) as any[];
 
   const [modalCaso, setModalCaso] = useState<Caso | null>(null);
 
   const enough = items.length > 1;
 
-  /* Embla slider: centre-aligned cards, one per arrow, autoplay w/ loop. */
+  /* Embla slider: left-aligned cards (obs10), one per arrow, autoplay w/ loop. */
   const slider = useSlider({
-    align: "center",
+    align: "start",
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
@@ -59,20 +58,13 @@ export default function CasosSliderReact({
 
   return (
     <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-32">
-      <div className="max-w-[1680px] mx-auto">
-        <h2
-          className="px-6 text-[32px] md:text-[48px] leading-[1.15] font-medium text-white text-center mb-10 md:mb-16"
-          data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}
-        >
-          {sectionTitle}
-        </h2>
-      </div>
+      {/* obs10: sin título "Casos de éxito" (redundante con el H1 del hero). */}
 
-      {/* Carousel (Embla) */}
+      {/* Carousel (Embla) — obs10: alineado a la izquierda del contenedor. */}
       <div className="relative">
         <div
           ref={slider.viewportRef}
-          className="overflow-hidden pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))]"
+          className="overflow-hidden pt-2 pb-3 select-none casos-carousel px-6 md:px-[max(1.5rem,calc((100vw-1680px)/2))]"
           style={{ cursor: hasItems ? "grab" : "default" }}
         >
           <div className="flex gap-14">
@@ -105,7 +97,7 @@ export default function CasosSliderReact({
 
       {/* Arrows: below the video, aligned to its left edge */}
       {items.length > 1 && (
-        <div className="px-6 md:px-[max(1.5rem,calc((100vw-880px)/2))] mt-8">
+        <div className="px-6 md:px-[max(1.5rem,calc((100vw-1680px)/2))] mt-8">
           {arrowsPill}
         </div>
       )}
