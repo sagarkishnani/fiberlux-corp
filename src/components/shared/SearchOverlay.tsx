@@ -122,7 +122,10 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
           </div>
         </div>
 
-        <div className="mt-4 min-h-0 flex-1 overflow-y-auto px-3 pb-4">
+        <div
+          className="mt-4 min-h-0 flex-1 overflow-y-auto px-3 pb-4"
+          data-lenis-prevent
+        >
           {query.trim() === "" ? (
             <ul>
               {categories.map((c, i) => (
