@@ -1,10 +1,18 @@
 import { useState } from "react";
+import type { ComponentType } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus, FaWhatsapp, FaEnvelope, FaPhone } from "react-icons/fa6";
 import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
+
+/* Ícono por tipo de canal → deja claro que la fila es clickeable/accionable. */
+const CHANNEL_ICON: Record<string, ComponentType<{ className?: string }>> = {
+  whatsapp: FaWhatsapp,
+  email: FaEnvelope,
+  call: FaPhone,
+};
 
 interface CanalesSoporteProps {
   query: string;
@@ -54,6 +62,7 @@ export default function CanalesSoporte({
     const rows = (channel.rows || []).filter(Boolean);
     if (rows.length === 0) return null;
     const isExternal = channel.type === "whatsapp";
+    const ChannelIcon = channel.type ? CHANNEL_ICON[channel.type] : undefined;
     return (
       <ul>
         {rows.map((row, i) => {
@@ -68,6 +77,11 @@ export default function CanalesSoporte({
                   isLast ? "" : "border-b border-black/[0.07]"
                 }`}
               >
+                {ChannelIcon && (
+                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-purple text-white transition-transform group-hover:scale-105">
+                    <ChannelIcon className="h-4 w-4" />
+                  </span>
+                )}
                 <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-brand-purple/10 px-3 py-1 text-caption-sm font-bold text-brand-purple">
                   {row?.label}
                 </span>
