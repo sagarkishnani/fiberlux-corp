@@ -217,28 +217,21 @@ export default function AccessibilityPanel() {
         <div className="a11y-body">
           {/* ── VISUAL ── */}
           <p className="a11y-section-label">Visual</p>
-
-          {/* Contraste con 4 niveles (obs11): Desactivado / Bajo / Medio / Alto. */}
-          <div className="a11y-contrast" role="group" aria-label="Nivel de contraste">
-            <span className="a11y-contrast-label">
-              <FaCircleHalfStroke aria-hidden="true" /> Contraste
-            </span>
-            <div className="a11y-seg">
-              {CONTRAST_LEVELS.map((lvl, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className={`a11y-seg-btn ${state.contrastLevel === i ? "is-active" : ""}`}
-                  aria-pressed={state.contrastLevel === i}
-                  onClick={() => update({ contrastLevel: i })}
-                >
-                  {lvl.short}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="a11y-grid">
+            {/* Contraste con niveles (obs11): Desactivado / Bajo / Medio / Alto.
+                Click cicla el nivel; la barra de 3 segmentos muestra el actual. */}
+            <LevelCard
+              icon={<FaCircleHalfStroke />}
+              label="Contraste"
+              level={state.contrastLevel}
+              max={CONTRAST_LEVELS.length - 1}
+              onCycle={() =>
+                update({
+                  contrastLevel:
+                    (state.contrastLevel + 1) % CONTRAST_LEVELS.length,
+                })
+              }
+            />
             <ToggleCard
               icon={<FaTextHeight />}
               label="Agrandar texto"
@@ -358,6 +351,44 @@ function ToggleCard({
         {icon}
       </span>
       <span className="a11y-card-label">{label}</span>
+    </button>
+  );
+}
+
+/* Card con niveles: click cicla 0→…→max→0; barra de `max` segmentos al pie. */
+function LevelCard({
+  icon,
+  label,
+  level,
+  max,
+  onCycle,
+}: {
+  icon: ReactNode;
+  label: string;
+  level: number;
+  max: number;
+  onCycle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={`a11y-card ${level > 0 ? "is-active" : ""}`}
+      aria-pressed={level > 0}
+      aria-label={`${label} (nivel ${level} de ${max})`}
+      onClick={onCycle}
+    >
+      <span className="a11y-card-icon" aria-hidden="true">
+        {icon}
+      </span>
+      <span className="a11y-card-label">{label}</span>
+      <span className="a11y-levels" aria-hidden="true">
+        {Array.from({ length: max }).map((_, i) => (
+          <span
+            key={i}
+            className={`a11y-level-seg ${i < level ? "is-on" : ""}`}
+          />
+        ))}
+      </span>
     </button>
   );
 }
@@ -595,50 +626,24 @@ const styles = `
     margin-top: 28px;
   }
 
-  .a11y-contrast {
-    margin-bottom: 12px;
-  }
-  .a11y-contrast-label {
+  /* Barra de niveles al pie de una LevelCard (contraste). */
+  .a11y-levels {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.85);
+    gap: 5px;
+    margin-top: 4px;
   }
-  .a11y-seg {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-    padding: 4px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.03);
+  .a11y-level-seg {
+    width: 22px;
+    height: 4px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    transition: background 0.2s ease;
   }
-  .a11y-seg-btn {
-    padding: 8px 4px;
-    border: none;
-    border-radius: 8px;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.7);
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-  .a11y-seg-btn:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
-  }
-  .a11y-seg-btn.is-active {
+  .a11y-level-seg.is-on {
     background: #96237A;
-    color: #fff;
   }
-  .a11y-seg-btn:focus-visible {
-    outline: 2px solid #96237A;
-    outline-offset: 2px;
+  .a11y-card.is-active .a11y-level-seg.is-on {
+    background: #D5A7CA;
   }
 
   .a11y-grid {
