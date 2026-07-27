@@ -1,0 +1,7 @@
+---
+// i18n (SPEC 80): variante EN de /blog/[slug]. Reusa los static paths ES y renderiza la misma página; el locale sale de la URL (/en).
+import Page, { getStaticPaths as esPaths } from "../../blog/[slug].astro";
+export const getStaticPaths = esPaths;
+---
+
+<Page />
