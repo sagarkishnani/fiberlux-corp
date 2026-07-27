@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type ReactNode } from 'react';
+import { useState, useEffect, useRef, type ReactNode, type PointerEvent as ReactPointerEvent } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
@@ -139,23 +139,27 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState<Direction>('next');
   const [paused, setPaused] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [navTick, setNavTick] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
+  const dragRef = useRef<{ x: number; active: boolean } | null>(null);
+  const DRAG_THRESHOLD = 50;
 
   const total = milestones.length;
   const safeIndex = total > 0 ? activeIndex % total : 0;
   const active = milestones[safeIndex];
 
-  // Autoplay: advances every 5s; paused on hover; navTick restarts the timer
-  // whenever the user uses the arrows so it doesn't jump right after a click.
+  // Autoplay: advances every 4s; paused on hover o mientras se arrastra; navTick
+  // reinicia el timer cuando el usuario usa las flechas o el drag para que no
+  // salte justo después de la interacción.
   useEffect(() => {
-    if (paused || reducedMotion || total <= 1) return;
+    if (paused || dragging || reducedMotion || total <= 1) return;
     const id = setInterval(() => {
       setDirection('next');
       setActiveIndex((i) => (i + 1) % total);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(id);
-  }, [paused, reducedMotion, total, navTick]);
+  }, [paused, dragging, reducedMotion, total, navTick]);
 
   if (milestones.length === 0) return null;
 
@@ -166,6 +170,26 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   };
   const prev = () => goTo(safeIndex - 1, 'prev');
   const next = () => goTo(safeIndex + 1, 'next');
+
+  // Drag/swipe horizontal sobre la animación vertical existente: al soltar, si el
+  // desplazamiento supera el umbral, avanza o retrocede un hito (no migra a Embla).
+  const onPointerDown = (e: ReactPointerEvent) => {
+    if (total <= 1) return;
+    // No secuestrar el gesto si arranca sobre un control (flechas): dejar su click.
+    if ((e.target as HTMLElement).closest('button, a')) return;
+    dragRef.current = { x: e.clientX, active: true };
+    setDragging(true);
+    try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch {}
+  };
+  const onPointerEnd = (e: ReactPointerEvent) => {
+    const d = dragRef.current;
+    dragRef.current = null;
+    setDragging(false);
+    if (!d || !d.active) return;
+    const dx = e.clientX - d.x;
+    if (dx <= -DRAG_THRESHOLD) next();
+    else if (dx >= DRAG_THRESHOLD) prev();
+  };
 
   const itemAt = (i: number) => milestones[((i % total) + total) % total];
   const refAt = (i: number) => {
@@ -203,13 +227,15 @@ export default function TimelineReact({ query, variables, data: initialData }: T
   };
 
   /* ── Shared pieces (reused by the desktop and mobile layouts) ── */
+  // Flechas: el timeline hace loop, así que ambas siempre navegan → mismo look
+  // magenta "enabled" que el resto de sliders (SliderArrows, SPEC 68).
   const arrows = (
-    <div className="flex w-fit overflow-hidden rounded-[12px] border-2 border-[#282445] bg-[#141223]">
+    <div className="inline-flex overflow-hidden rounded-[12px] shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
       <button
         type="button"
         aria-label="Hito anterior"
         onClick={prev}
-        className="flex h-[49px] w-[49px] items-center justify-center bg-[#141223] text-white opacity-40 transition-opacity hover:opacity-100"
+        className="flex h-[49px] w-[49px] items-center justify-center bg-[#96237A] text-white transition-colors hover:bg-[#650F50]"
       >
         <FaArrowLeft className="text-sm" />
       </button>
@@ -217,7 +243,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
         type="button"
         aria-label="Hito siguiente"
         onClick={next}
-        className="flex h-[49px] w-[49px] items-center justify-center bg-[#96237a] text-white transition-colors hover:bg-[#b02a92]"
+        className="flex h-[49px] w-[49px] items-center justify-center border-l border-white/15 bg-[#96237A] text-white transition-colors hover:bg-[#650F50]"
       >
         <FaArrowRight className="text-sm" />
       </button>
@@ -261,11 +287,15 @@ export default function TimelineReact({ query, variables, data: initialData }: T
 
   return (
     <section
-      className="relative overflow-hidden rounded-t-3xl bg-[#080618] pb-20"
+      className={`relative overflow-hidden rounded-t-3xl bg-[#080618] pb-20 ${total > 1 ? 'cursor-grab select-none active:cursor-grabbing' : ''}`}
+      style={{ touchAction: 'pan-y' }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
     >
 
           {/* Background — CSS approximation of the Figma magenta light beams */}
