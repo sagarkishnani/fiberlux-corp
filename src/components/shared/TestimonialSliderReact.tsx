@@ -1,5 +1,7 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 import TestimonialCard from './TestimonialCard';
 import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from './SliderArrows';
@@ -9,6 +11,7 @@ interface TestimonialSliderProps {
   query: string;
   variables: HomeQueryVariables;
   data: HomeQuery;
+  locale?: Locale;
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
@@ -28,6 +31,7 @@ export default function TestimonialSliderReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   autoplay = true,
   intervalMs = 5000,
   effect = "none",
@@ -38,7 +42,7 @@ export default function TestimonialSliderReact({
     (data?.home as any)?.testimonials ||
     (initialData?.home as any)?.testimonials;
 
-  const sectionTitle = testimonials?.sectionTitle || 'Empresas que confían en nuestra red';
+  const sectionTitle = tField(testimonials as any, "sectionTitle", locale) || 'Empresas que confían en nuestra red';
   const items: Testimonial[] = testimonials?.items || [];
   // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
   const isVisible = testimonials?.visible === true;
@@ -105,10 +109,10 @@ export default function TestimonialSliderReact({
                     }
                   >
                     <TestimonialCard
-                      quote={item.quote || ''}
-                      description={item.description}
+                      quote={tField(item as any, "quote", locale) || ''}
+                      description={locale === "en" && (item as any).description_en ? (item as any).description_en : item.description}
                       name={item.name || ''}
-                      role={item.role || ''}
+                      role={tField(item as any, "role", locale) || ''}
                       company={item.company || ''}
                       avatar={item.avatar}
                       logo={item.logo}

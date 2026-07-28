@@ -49,6 +49,7 @@ var config_default = defineConfig({
                 required: true,
                 description: "Mant\xE9n \u2264 60 caracteres para evitar saltos largos en mobile."
               },
+              { type: "string", name: "title_en", label: "T\xEDtulo principal (EN)" },
               {
                 type: "string",
                 name: "subtitle",
@@ -56,6 +57,7 @@ var config_default = defineConfig({
                 ui: { component: "textarea" },
                 description: "Frase de apoyo bajo el t\xEDtulo. \u2264 140 caracteres."
               },
+              { type: "string", name: "subtitle_en", label: "Subt\xEDtulo (EN)", ui: { component: "textarea" } },
               {
                 type: "string",
                 name: "heroBackground",
@@ -114,6 +116,7 @@ var config_default = defineConfig({
                     label: "Texto del bot\xF3n",
                     required: true
                   },
+                  { type: "string", name: "text_en", label: "Texto del bot\xF3n (EN)" },
                   {
                     type: "string",
                     name: "url",
@@ -189,6 +192,7 @@ var config_default = defineConfig({
                 label: "T\xEDtulo de secci\xF3n",
                 type: "string"
               },
+              { name: "sectionTitle_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Testimonios",
@@ -204,14 +208,17 @@ var config_default = defineConfig({
                     type: "string",
                     ui: { component: "textarea" }
                   },
+                  { name: "quote_en", label: "Cita principal (EN)", type: "string", ui: { component: "textarea" } },
                   {
                     name: "description",
                     label: "Descripci\xF3n extendida",
                     type: "string",
                     ui: { component: "textarea" }
                   },
+                  { name: "description_en", label: "Descripci\xF3n extendida (EN)", type: "string", ui: { component: "textarea" } },
                   { name: "name", label: "Nombre", type: "string" },
                   { name: "role", label: "Cargo", type: "string" },
+                  { name: "role_en", label: "Cargo (EN)", type: "string" },
                   { name: "company", label: "Empresa", type: "string" },
                   { name: "avatar", label: "Foto", type: "image" },
                   { name: "logo", label: "Logo empresa", type: "image" }
@@ -226,6 +233,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "items",
                 label: "Estad\xEDsticas",
@@ -235,7 +243,9 @@ var config_default = defineConfig({
                 fields: [
                   { name: "number", label: "N\xFAmero", type: "string" },
                   { name: "label", label: "Etiqueta superior", type: "string" },
-                  { name: "description", label: "Descripci\xF3n", type: "string" }
+                  { name: "label_en", label: "Etiqueta superior (EN)", type: "string" },
+                  { name: "description", label: "Descripci\xF3n", type: "string" },
+                  { name: "description_en", label: "Descripci\xF3n (EN)", type: "string" }
                 ]
               }
             ]
@@ -246,7 +256,9 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               { name: "buttonText", label: "Texto del bot\xF3n", type: "string" },
+              { name: "buttonText_en", label: "Texto del bot\xF3n (EN)", type: "string" },
               { name: "buttonUrl", label: "URL del bot\xF3n", type: "string" }
             ]
           }

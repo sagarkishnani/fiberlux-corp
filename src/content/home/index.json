@@ -10,14 +10,18 @@
       {
         "text": "Ver soluciones",
         "url": "/soluciones",
-        "variant": "primary"
+        "variant": "primary",
+        "text_en": "View solutions"
       },
       {
         "text": "Conoce más",
         "url": "/nosotros",
-        "variant": "secondary"
+        "variant": "secondary",
+        "text_en": "Learn more"
       }
-    ]
+    ],
+    "title_en": "Connectivity and IT solutions for your business",
+    "subtitle_en": "We power your business with high-quality services over a 100% private fiber-optic network."
   },
   "services": {
     "title": "Nuestras soluciones",
@@ -98,7 +102,10 @@
         "role": "Jefe de Tecnología, Informática y Comunicaciones",
         "company": "Boticas Hogar y Salud",
         "avatar": "",
-        "logo": "images/testimonials/logo-boticas-y-hogar-salud.png"
+        "logo": "images/testimonials/logo-boticas-y-hogar-salud.png",
+        "role_en": "Head of Technology, IT and Communications",
+        "quote_en": "Fiberlux's coverage allows us at Boticas Hogar y Salud to open more locations nationwide.",
+        "description_en": "This year we opened stores in provinces, all with Fiberlux service, reaching 115 branches."
       },
       {
         "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales.",
@@ -107,7 +114,10 @@
         "role": "Gerente General",
         "company": "Cámara de Comercio e Industria de Arequipa",
         "avatar": "",
-        "logo": "images/testimonials/logo-camara-de-comercio-arequipa.png"
+        "logo": "images/testimonials/logo-camara-de-comercio-arequipa.png",
+        "role_en": "General Manager",
+        "quote_en": "The pandemic changed the way we work and virtual meetings became essential.",
+        "description_en": "Fiberlux has been a pillar in that transition and in strengthening our bond with Arequipa's business community."
       },
       {
         "quote": "A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G.",
@@ -116,9 +126,13 @@
         "role": "Gerente de TI",
         "company": "Grupo Gloria",
         "avatar": "",
-        "logo": "images/testimonials/logo-grupo-gloria.svg"
+        "logo": "images/testimonials/logo-grupo-gloria.svg",
+        "role_en": "IT Manager",
+        "quote_en": "Following natural events, Fiberlux offered us a 10G dark fiber connection.",
+        "description_en": "Response times improved notably, delivering efficiency between our headquarters and the Huachipa plant."
       }
-    ]
+    ],
+    "sectionTitle_en": "Companies that trust our network"
   },
   "stats": {
     "title": "¿Por qué Fiberlux?",
@@ -126,28 +140,39 @@
       {
         "number": "+5,500",
         "label": "Clientes satisfechos",
-        "description": "clientes satisfechos que confían en nuestra red en todo el Perú"
+        "description": "clientes satisfechos que confían en nuestra red en todo el Perú",
+        "label_en": "Satisfied clients",
+        "description_en": "satisfied clients who trust our network across Peru"
       },
       {
         "number": "+17,000 km",
         "label": "Fibra óptica",
-        "description": "de infraestructura de fibra óptica desplegada"
+        "description": "de infraestructura de fibra óptica desplegada",
+        "label_en": "Fiber optics",
+        "description_en": "of deployed fiber-optic infrastructure"
       },
       {
         "number": "99",
         "label": "Presencia nacional",
-        "description": "ciudades en cobertura en todo el Perú"
+        "description": "ciudades en cobertura en todo el Perú",
+        "label_en": "National presence",
+        "description_en": "cities covered across Peru"
       },
       {
         "number": "100%",
         "label": "Red propia",
-        "description": "red privada de fibra óptica de última generación"
+        "description": "red privada de fibra óptica de última generación",
+        "label_en": "Own network",
+        "description_en": "state-of-the-art private fiber-optic network"
       }
-    ]
+    ],
+    "title_en": "Why Fiberlux?"
   },
   "blogPreview": {
     "title": "Insights & Novedades",
     "buttonText": "Ver todos",
-    "buttonUrl": "/blog"
+    "buttonUrl": "/blog",
+    "title_en": "Insights & News",
+    "buttonText_en": "View all"
   }
 }

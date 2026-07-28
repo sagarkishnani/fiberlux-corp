@@ -9,6 +9,8 @@
  */
 import { client } from '../../../tina/__generated__/client';
 import BlogPreviewReact from './BlogPreviewReact.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 
 interface Props {
   tags?: (string | null)[] | null;
@@ -55,6 +57,7 @@ if (wanted.length > 0) {
   posts = filtered.length > 0 ? filtered : byDateDesc;
 }
 posts = posts.slice(0, 6);
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <BlogPreviewReact
@@ -62,6 +65,7 @@ posts = posts.slice(0, 6);
   query={homeQuery.query}
   variables={homeQuery.variables}
   data={homeQuery.data}
+  locale={locale}
   posts={posts}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 6000}

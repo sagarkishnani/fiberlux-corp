@@ -3,6 +3,8 @@ import type {
   HomeQuery,
   HomeQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import BlogCard from "./BlogCard";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
@@ -12,6 +14,7 @@ interface BlogPreviewProps {
   query: string;
   variables: HomeQueryVariables;
   data: HomeQuery;
+  locale?: Locale;
   posts?: PostEdge[];
   autoplay?: boolean;
   intervalMs?: number;
@@ -33,6 +36,7 @@ export default function BlogPreviewReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   posts = [],
   autoplay = true,
   intervalMs = 6000,
@@ -43,8 +47,8 @@ export default function BlogPreviewReact({
   const blogPreview =
     (data?.home as any)?.blogPreview || (initialData?.home as any)?.blogPreview;
 
-  const title = blogPreview?.title || "Insights & Novedades";
-  const buttonText = blogPreview?.buttonText || "Ver todos";
+  const title = tField(blogPreview as any, "title", locale) || "Insights & Novedades";
+  const buttonText = tField(blogPreview as any, "buttonText", locale) || "Ver todos";
   const buttonUrl = blogPreview?.buttonUrl || "/blog";
 
   const hasPosts = posts.length > 0;

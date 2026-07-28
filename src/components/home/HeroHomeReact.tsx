@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import SplineScene from "../shared/SplineScene";
 import { mediaUrl } from "../../utils/mediaUrl";
 
@@ -8,6 +10,7 @@ interface HeroHomeProps {
   query: string;
   variables: { relativePath: string };
   data: HomeQuery;
+  locale?: Locale;
 }
 
 // Señal para el preloader del Home (SitePreloader escucha este evento para
@@ -21,6 +24,7 @@ export default function HeroHomeReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: HeroHomeProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
   const hero = data?.home?.hero || initialData?.home?.hero;
@@ -180,7 +184,7 @@ export default function HeroHomeReact({
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
           >
-            {hero.title}
+            {tField(hero as any, "title", locale)}
           </h1>
 
           {hero.subtitle && (
@@ -188,7 +192,7 @@ export default function HeroHomeReact({
               className="mt-6 text-white text-body-lg leading-relaxed max-w-[480px]"
               data-tina-field={tinaField(hero, "subtitle")}
             >
-              {hero.subtitle}
+              {tField(hero as any, "subtitle", locale)}
             </p>
           )}
 
@@ -209,7 +213,7 @@ export default function HeroHomeReact({
                     data-tina-field={tinaField(btn as any, "text")}
                     className={`${baseClasses} ${variantClasses}`}
                   >
-                    {btn.text}
+                    {tField(btn as any, "text", locale)}
                   </a>
                 );
               })}

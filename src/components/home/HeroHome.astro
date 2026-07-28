@@ -1,10 +1,13 @@
 ---
 import HeroHomeReact from './HeroHomeReact';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 import { client } from '../../../tina/__generated__/client';
 
 const { data, query, variables } = await client.queries.home({
   relativePath: 'index.json',
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <HeroHomeReact
@@ -12,4 +15,5 @@ const { data, query, variables } = await client.queries.home({
   query={query}
   variables={variables}
   data={data}
+  locale={locale}
 />

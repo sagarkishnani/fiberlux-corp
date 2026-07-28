@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { HomeQuery, HomeQueryVariables } from '../../tina/__generated__/types';
+import { tField } from '../utils/i18n';
+import type { Locale } from '../i18n/config';
 
 /* ── Types ── */
 interface StatsProps {
   query: string;
   variables: HomeQueryVariables;
   data: HomeQuery;
+  locale?: Locale;
   /** Optional heading override; falls back to home `stats.title`. */
   titleOverride?: string;
   /** obs2: 'light' envuelve el panel morado en un marco claro (solo home). */
@@ -108,7 +111,7 @@ function useCounter(target: number, duration: number, shouldStart: boolean) {
 }
 
 /* ── Individual Stat Card ── */
-function StatCard({ item, index }: { item: StatItem; index: number }) {
+function StatCard({ item, index, locale }: { item: StatItem; index: number; locale: Locale }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -163,7 +166,7 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
         className="text-white/80 text-body-md leading-snug"
         data-tina-field={tinaField(item as any, 'description')}
       >
-        {item.description}
+        {tField(item as any, "description", locale)}
       </p>
     </div>
   );
@@ -172,14 +175,14 @@ function StatCard({ item, index }: { item: StatItem; index: number }) {
 /**
  * StatsReact — "Nuestra red en cifras" section
  */
-export default function StatsReact({ query, variables, data: initialData, titleOverride, frameTheme = 'dark' }: StatsProps) {
+export default function StatsReact({ query, variables, data: initialData, titleOverride, frameTheme = "dark", locale = "es" }: StatsProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
   const stats = data?.home?.stats;
   if (!stats) return null;
 
   const items = (stats.items || []).filter(Boolean) as StatItem[];
-  const heading = titleOverride || stats.title;
+  const heading = titleOverride || tField(stats as any, "title", locale);
   const light = frameTheme === 'light';
 
   const panel = (
@@ -204,7 +207,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
         {/* Stats grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 items-start">
           {items.map((item, i) => (
-            <StatCard key={i} item={item} index={i} />
+            <StatCard key={i} item={item} index={i} locale={locale} />
           ))}
         </div>
       </div>

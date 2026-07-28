@@ -1,10 +1,13 @@
 ---
 import { client } from '../../../tina/__generated__/client';
 import TestimonialSliderReact from './TestimonialSliderReact.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
 const globalQuery = await client.queries.global({ relativePath: 'index.json' });
 const cfg = (globalQuery.data?.global as any)?.sliders?.testimonios ?? {};
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <TestimonialSliderReact
@@ -12,6 +15,7 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.testimonios ?? {};
   query={homeQuery.query}
   variables={homeQuery.variables}
   data={homeQuery.data}
+  locale={locale}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 5000}
   effect={cfg.effect ?? "opacity"}

@@ -1,6 +1,8 @@
 ---
 import { client } from '../../tina/__generated__/client';
 import StatsReact from './StatsReact.tsx';
+import { getLocale } from '../utils/i18n';
+import { isLocale } from '../i18n/config';
 
 interface Props {
   title?: string;
@@ -10,6 +12,7 @@ interface Props {
 const { title, frameTheme } = Astro.props;
 
 const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <StatsReact
@@ -17,6 +20,7 @@ const homeQuery = await client.queries.home({ relativePath: 'index.json' });
   query={homeQuery.query}
   variables={homeQuery.variables}
   data={homeQuery.data}
+  locale={locale}
   titleOverride={title}
   frameTheme={frameTheme}
 />

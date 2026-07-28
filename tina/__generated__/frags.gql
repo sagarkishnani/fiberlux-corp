@@ -3,7 +3,9 @@ fragment HomeParts on Home {
   hero {
     __typename
     title
+    title_en
     subtitle
+    subtitle_en
     heroBackground
     splineSceneUrl
     splinePosterUrl
@@ -13,6 +15,7 @@ fragment HomeParts on Home {
     buttons {
       __typename
       text
+      text_en
       url
       variant
     }
@@ -34,12 +37,16 @@ fragment HomeParts on Home {
     __typename
     visible
     sectionTitle
+    sectionTitle_en
     items {
       __typename
       quote
+      quote_en
       description
+      description_en
       name
       role
+      role_en
       company
       avatar
       logo
@@ -48,17 +55,22 @@ fragment HomeParts on Home {
   stats {
     __typename
     title
+    title_en
     items {
       __typename
       number
       label
+      label_en
       description
+      description_en
     }
   }
   blogPreview {
     __typename
     title
+    title_en
     buttonText
+    buttonText_en
     buttonUrl
   }
 }

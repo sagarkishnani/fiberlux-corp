@@ -57,6 +57,7 @@ export default defineConfig({
                 description:
                   "Mantén ≤ 60 caracteres para evitar saltos largos en mobile.",
               },
+              { type: "string", name: "title_en", label: "Título principal (EN)" },
               {
                 type: "string",
                 name: "subtitle",
@@ -64,6 +65,7 @@ export default defineConfig({
                 ui: { component: "textarea" },
                 description: "Frase de apoyo bajo el título. ≤ 140 caracteres.",
               },
+              { type: "string", name: "subtitle_en", label: "Subtítulo (EN)", ui: { component: "textarea" } },
               {
                 type: "string",
                 name: "heroBackground",
@@ -127,6 +129,7 @@ export default defineConfig({
                     label: "Texto del botón",
                     required: true,
                   },
+                  { type: "string", name: "text_en", label: "Texto del botón (EN)" },
                   {
                     type: "string",
                     name: "url",
@@ -205,6 +208,7 @@ export default defineConfig({
                 label: "Título de sección",
                 type: "string",
               },
+              { name: "sectionTitle_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Testimonios",
@@ -220,14 +224,17 @@ export default defineConfig({
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  { name: "quote_en", label: "Cita principal (EN)", type: "string", ui: { component: "textarea" } },
                   {
                     name: "description",
                     label: "Descripción extendida",
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  { name: "description_en", label: "Descripción extendida (EN)", type: "string", ui: { component: "textarea" } },
                   { name: "name", label: "Nombre", type: "string" },
                   { name: "role", label: "Cargo", type: "string" },
+                  { name: "role_en", label: "Cargo (EN)", type: "string" },
                   { name: "company", label: "Empresa", type: "string" },
                   { name: "avatar", label: "Foto", type: "image" },
                   { name: "logo", label: "Logo empresa", type: "image" },
@@ -243,6 +250,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "items",
                 label: "Estadísticas",
@@ -252,7 +260,9 @@ export default defineConfig({
                 fields: [
                   { name: "number", label: "Número", type: "string" },
                   { name: "label", label: "Etiqueta superior", type: "string" },
+                  { name: "label_en", label: "Etiqueta superior (EN)", type: "string" },
                   { name: "description", label: "Descripción", type: "string" },
+                  { name: "description_en", label: "Descripción (EN)", type: "string" },
                 ],
               },
             ],
@@ -263,7 +273,9 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               { name: "buttonText", label: "Texto del botón", type: "string" },
+              { name: "buttonText_en", label: "Texto del botón (EN)", type: "string" },
               { name: "buttonUrl", label: "URL del botón", type: "string" },
             ],
           },

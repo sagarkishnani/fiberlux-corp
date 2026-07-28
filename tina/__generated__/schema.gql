@@ -143,13 +143,16 @@ union DocumentNode = Home | Service | Subservicio | About | Post | Contact | Sop
 
 type HomeHeroButtons {
   text: String!
+  text_en: String
   url: String
   variant: String
 }
 
 type HomeHero {
   title: String!
+  title_en: String
   subtitle: String
+  subtitle_en: String
   heroBackground: String
   splineSceneUrl: String
   splinePosterUrl: String
@@ -175,9 +178,12 @@ type HomeServices {
 
 type HomeTestimonialsItems {
   quote: String
+  quote_en: String
   description: String
+  description_en: String
   name: String
   role: String
+  role_en: String
   company: String
   avatar: String
   logo: String
@@ -186,23 +192,29 @@ type HomeTestimonialsItems {
 type HomeTestimonials {
   visible: Boolean
   sectionTitle: String
+  sectionTitle_en: String
   items: [HomeTestimonialsItems]
 }
 
 type HomeStatsItems {
   number: String
   label: String
+  label_en: String
   description: String
+  description_en: String
 }
 
 type HomeStats {
   title: String
+  title_en: String
   items: [HomeStatsItems]
 }
 
 type HomeBlogPreview {
   title: String
+  title_en: String
   buttonText: String
+  buttonText_en: String
   buttonUrl: String
 }
 
@@ -243,13 +255,16 @@ input NumberFilter {
 
 input HomeHeroButtonsFilter {
   text: StringFilter
+  text_en: StringFilter
   url: StringFilter
   variant: StringFilter
 }
 
 input HomeHeroFilter {
   title: StringFilter
+  title_en: StringFilter
   subtitle: StringFilter
+  subtitle_en: StringFilter
   heroBackground: StringFilter
   splineSceneUrl: StringFilter
   splinePosterUrl: ImageFilter
@@ -280,9 +295,12 @@ input BooleanFilter {
 
 input HomeTestimonialsItemsFilter {
   quote: StringFilter
+  quote_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
   name: StringFilter
   role: StringFilter
+  role_en: StringFilter
   company: StringFilter
   avatar: ImageFilter
   logo: ImageFilter
@@ -291,23 +309,29 @@ input HomeTestimonialsItemsFilter {
 input HomeTestimonialsFilter {
   visible: BooleanFilter
   sectionTitle: StringFilter
+  sectionTitle_en: StringFilter
   items: HomeTestimonialsItemsFilter
 }
 
 input HomeStatsItemsFilter {
   number: StringFilter
   label: StringFilter
+  label_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
 }
 
 input HomeStatsFilter {
   title: StringFilter
+  title_en: StringFilter
   items: HomeStatsItemsFilter
 }
 
 input HomeBlogPreviewFilter {
   title: StringFilter
+  title_en: StringFilter
   buttonText: StringFilter
+  buttonText_en: StringFilter
   buttonUrl: StringFilter
 }
 
@@ -2271,13 +2295,16 @@ input DocumentMutation {
 
 input HomeHeroButtonsMutation {
   text: String
+  text_en: String
   url: String
   variant: String
 }
 
 input HomeHeroMutation {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   heroBackground: String
   splineSceneUrl: String
   splinePosterUrl: String
@@ -2303,9 +2330,12 @@ input HomeServicesMutation {
 
 input HomeTestimonialsItemsMutation {
   quote: String
+  quote_en: String
   description: String
+  description_en: String
   name: String
   role: String
+  role_en: String
   company: String
   avatar: String
   logo: String
@@ -2314,23 +2344,29 @@ input HomeTestimonialsItemsMutation {
 input HomeTestimonialsMutation {
   visible: Boolean
   sectionTitle: String
+  sectionTitle_en: String
   items: [HomeTestimonialsItemsMutation]
 }
 
 input HomeStatsItemsMutation {
   number: String
   label: String
+  label_en: String
   description: String
+  description_en: String
 }
 
 input HomeStatsMutation {
   title: String
+  title_en: String
   items: [HomeStatsItemsMutation]
 }
 
 input HomeBlogPreviewMutation {
   title: String
+  title_en: String
   buttonText: String
+  buttonText_en: String
   buttonUrl: String
 }
 
