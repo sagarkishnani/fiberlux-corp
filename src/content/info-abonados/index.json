@@ -6,29 +6,94 @@
       "title": "Normas",
       "visible": true,
       "documents": [
-        { "title": "TUO de las condiciones de uso de los servicios públicos de telecomunicaciones", "url": "/documents/RES-000132-2025-CD-OSIPTEL-CONDICIONES-DE-USO.pdf", "icon": "document", "visible": true },
-        { "title": "Reglamento de calidad de los servicios públicos de telecomunicaciones", "url": "", "icon": "document", "visible": true },
-        { "title": "TUO para atención de gestiones y reclamos de usuarios", "url": "", "icon": "document", "visible": true }
-      ]
+        {
+          "title": "TUO de las condiciones de uso de los servicios públicos de telecomunicaciones",
+          "url": "/documents/RES-000132-2025-CD-OSIPTEL-CONDICIONES-DE-USO.pdf",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Consolidated text of the conditions of use of public telecommunications services"
+        },
+        {
+          "title": "Reglamento de calidad de los servicios públicos de telecomunicaciones",
+          "url": "",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Quality regulation for public telecommunications services"
+        },
+        {
+          "title": "TUO para atención de gestiones y reclamos de usuarios",
+          "url": "",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Consolidated text for handling user requests and complaints"
+        }
+      ],
+      "title_en": "Regulations"
     },
     {
       "title": "Reclamos",
       "visible": true,
       "documents": [
-        { "title": "Conoce la Guía para la presentación de Reclamos de OSIPTEL", "url": "", "icon": "document", "visible": true },
-        { "title": "Presenta tu reclamo", "url": "/reclamos/reclamo", "icon": "document", "visible": true },
-        { "title": "Presenta tu apelación", "url": "/reclamos/apelacion", "icon": "document", "visible": true },
-        { "title": "Presenta tu queja", "url": "/reclamos/queja", "icon": "document", "visible": true }
-      ]
+        {
+          "title": "Conoce la Guía para la presentación de Reclamos de OSIPTEL",
+          "url": "",
+          "icon": "document",
+          "visible": true,
+          "title_en": "See OSIPTEL's complaints filing guide"
+        },
+        {
+          "title": "Presenta tu reclamo",
+          "url": "/reclamos/reclamo",
+          "icon": "document",
+          "visible": true,
+          "title_en": "File your complaint"
+        },
+        {
+          "title": "Presenta tu apelación",
+          "url": "/reclamos/apelacion",
+          "icon": "document",
+          "visible": true,
+          "title_en": "File your appeal"
+        },
+        {
+          "title": "Presenta tu queja",
+          "url": "/reclamos/queja",
+          "icon": "document",
+          "visible": true,
+          "title_en": "File your grievance"
+        }
+      ],
+      "title_en": "Complaints"
     },
     {
       "title": "Contratos",
       "visible": true,
       "documents": [
-        { "title": "Tratamiento de datos personales", "url": "/legales/tratamiento-datos", "icon": "document", "visible": true },
-        { "title": "Solicitar la cancelación del servicio", "url": "/legales/terminacion-y-baja-servicio.pdf", "icon": "document", "visible": true },
-        { "title": "Solicitar la suspensión temporal del servicio", "url": "/legales/suspension-temporal-servicio.pdf", "icon": "document", "visible": true }
-      ]
+        {
+          "title": "Tratamiento de datos personales",
+          "url": "/legales/tratamiento-datos",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Personal data processing"
+        },
+        {
+          "title": "Solicitar la cancelación del servicio",
+          "url": "/legales/terminacion-y-baja-servicio.pdf",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Request service cancellation"
+        },
+        {
+          "title": "Solicitar la suspensión temporal del servicio",
+          "url": "/legales/suspension-temporal-servicio.pdf",
+          "icon": "document",
+          "visible": true,
+          "title_en": "Request temporary service suspension"
+        }
+      ],
+      "title_en": "Contracts"
     }
-  ]
+  ],
+  "title_en": "Subscriber & user information",
+  "description_en": "Regulations, complaints and contracts available to our subscribers and users."
 }

@@ -1,9 +1,12 @@
 import { useTina, tinaField } from "tinacms/dist/react";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface InfoAbonadosProps {
   query: string;
   variables: { relativePath: string };
   data: any;
+  locale?: Locale;
 }
 
 /* ── Icon components ── */
@@ -83,6 +86,7 @@ export default function InfoAbonadosReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: InfoAbonadosProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const page = data?.infoAbonados || initialData?.infoAbonados;
@@ -103,14 +107,14 @@ export default function InfoAbonadosReact({
               style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 500, color: "#1A1A1A", marginBottom: "12px", lineHeight: '28px' }}
               data-tina-field={tinaField(page, "title")}
             >
-              {page.title}
+              {tField(page, "title", locale)}
             </h1>
             {page.description && (
               <p
                 style={{ fontSize: "14px", color: "#5B5B5B", maxWidth: "500px", margin: "24px auto", lineHeight: 1.7 }}
                 data-tina-field={tinaField(page, "description")}
               >
-                {page.description}
+                {tField(page, "description", locale)}
               </p>
             )}
           </div>
@@ -132,7 +136,7 @@ export default function InfoAbonadosReact({
                     }}
                     data-tina-field={tinaField(section, "title")}
                   >
-                    {section.title}
+                    {tField(section, "title", locale)}
                   </h2>
                 )}
 
@@ -195,7 +199,7 @@ export default function InfoAbonadosReact({
                           <IconComp />
                         </div>
                         <p style={{ fontSize: "14px", fontWeight: 600, color: "#1A1A1A", marginTop: "16px", lineHeight: 1.4 }}>
-                          {doc.title}
+                          {tField(doc, "title", locale)}
                         </p>
                       </div>
                     );

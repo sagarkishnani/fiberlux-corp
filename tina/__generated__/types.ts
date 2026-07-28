@@ -2075,6 +2075,7 @@ export type MaintenanceConnection = Connection & {
 export type InfoAbonadosSectionsDocuments = {
   __typename?: 'InfoAbonadosSectionsDocuments';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
   visible?: Maybe<Scalars['Boolean']['output']>;
@@ -2083,6 +2084,7 @@ export type InfoAbonadosSectionsDocuments = {
 export type InfoAbonadosSections = {
   __typename?: 'InfoAbonadosSections';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   visible?: Maybe<Scalars['Boolean']['output']>;
   documents?: Maybe<Array<Maybe<InfoAbonadosSectionsDocuments>>>;
 };
@@ -2090,7 +2092,9 @@ export type InfoAbonadosSections = {
 export type InfoAbonados = Node & Document & {
   __typename?: 'InfoAbonados';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
   sections?: Maybe<Array<Maybe<InfoAbonadosSections>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -2099,6 +2103,7 @@ export type InfoAbonados = Node & Document & {
 
 export type InfoAbonadosSectionsDocumentsFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   icon?: InputMaybe<StringFilter>;
   visible?: InputMaybe<BooleanFilter>;
@@ -2106,13 +2111,16 @@ export type InfoAbonadosSectionsDocumentsFilter = {
 
 export type InfoAbonadosSectionsFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   visible?: InputMaybe<BooleanFilter>;
   documents?: InputMaybe<InfoAbonadosSectionsDocumentsFilter>;
 };
 
 export type InfoAbonadosFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
   sections?: InputMaybe<InfoAbonadosSectionsFilter>;
 };
 
@@ -3550,6 +3558,7 @@ export type MaintenanceMutation = {
 
 export type InfoAbonadosSectionsDocumentsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['String']['input']>;
   visible?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3557,13 +3566,16 @@ export type InfoAbonadosSectionsDocumentsMutation = {
 
 export type InfoAbonadosSectionsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   documents?: InputMaybe<Array<InputMaybe<InfoAbonadosSectionsDocumentsMutation>>>;
 };
 
 export type InfoAbonadosMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
   sections?: InputMaybe<Array<InputMaybe<InfoAbonadosSectionsMutation>>>;
 };
 
@@ -3765,7 +3777,7 @@ export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'G
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
-export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: string | null, description?: string | null, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null };
+export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, title_en?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, title_en?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null };
 
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
@@ -4029,7 +4041,7 @@ export type InfoAbonadosQueryVariables = Exact<{
 }>;
 
 
-export type InfoAbonadosQuery = { __typename?: 'Query', infoAbonados: { __typename: 'InfoAbonados', id: string, title?: string | null, description?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } };
+export type InfoAbonadosQuery = { __typename?: 'Query', infoAbonados: { __typename: 'InfoAbonados', id: string, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, title_en?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, title_en?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } };
 
 export type InfoAbonadosConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4041,7 +4053,7 @@ export type InfoAbonadosConnectionQueryVariables = Exact<{
 }>;
 
 
-export type InfoAbonadosConnectionQuery = { __typename?: 'Query', infoAbonadosConnection: { __typename?: 'InfoAbonadosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoAbonadosConnectionEdges', cursor: string, node?: { __typename: 'InfoAbonados', id: string, title?: string | null, description?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } | null } | null> | null } };
+export type InfoAbonadosConnectionQuery = { __typename?: 'Query', infoAbonadosConnection: { __typename?: 'InfoAbonadosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoAbonadosConnectionEdges', cursor: string, node?: { __typename: 'InfoAbonados', id: string, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sections?: Array<{ __typename: 'InfoAbonadosSections', title?: string | null, title_en?: string | null, visible?: boolean | null, documents?: Array<{ __typename: 'InfoAbonadosSectionsDocuments', title?: string | null, title_en?: string | null, url?: string | null, icon?: string | null, visible?: boolean | null } | null> | null } | null> | null } | null } | null> | null } };
 
 export type FormConfigQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4715,14 +4727,18 @@ export const InfoAbonadosPartsFragmentDoc = gql`
     fragment InfoAbonadosParts on InfoAbonados {
   __typename
   title
+  title_en
   description
+  description_en
   sections {
     __typename
     title
+    title_en
     visible
     documents {
       __typename
       title
+      title_en
       url
       icon
       visible

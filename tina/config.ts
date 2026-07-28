@@ -2030,9 +2030,16 @@ export default defineConfig({
         },
         fields: [
           { name: "title", label: "Título de la página", type: "string" },
+          { name: "title_en", label: "Título de la página (EN)", type: "string" },
           {
             name: "description",
             label: "Descripción",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "description_en",
+            label: "Descripción (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -2044,6 +2051,7 @@ export default defineConfig({
             ui: { itemProps: (item) => ({ label: item?.title || "Sección" }) },
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               { name: "visible", label: "Visible", type: "boolean" },
               {
                 name: "documents",
@@ -2055,6 +2063,7 @@ export default defineConfig({
                 },
                 fields: [
                   { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
                   { name: "url", label: "URL del documento", type: "string" },
                   {
                     name: "icon",

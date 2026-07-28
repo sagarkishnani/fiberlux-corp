@@ -1612,6 +1612,7 @@ type MaintenanceConnection implements Connection {
 
 type InfoAbonadosSectionsDocuments {
   title: String
+  title_en: String
   url: String
   icon: String
   visible: Boolean
@@ -1619,13 +1620,16 @@ type InfoAbonadosSectionsDocuments {
 
 type InfoAbonadosSections {
   title: String
+  title_en: String
   visible: Boolean
   documents: [InfoAbonadosSectionsDocuments]
 }
 
 type InfoAbonados implements Node & Document {
   title: String
+  title_en: String
   description: String
+  description_en: String
   sections: [InfoAbonadosSections]
   id: ID!
   _sys: SystemInfo!
@@ -1634,6 +1638,7 @@ type InfoAbonados implements Node & Document {
 
 input InfoAbonadosSectionsDocumentsFilter {
   title: StringFilter
+  title_en: StringFilter
   url: StringFilter
   icon: StringFilter
   visible: BooleanFilter
@@ -1641,13 +1646,16 @@ input InfoAbonadosSectionsDocumentsFilter {
 
 input InfoAbonadosSectionsFilter {
   title: StringFilter
+  title_en: StringFilter
   visible: BooleanFilter
   documents: InfoAbonadosSectionsDocumentsFilter
 }
 
 input InfoAbonadosFilter {
   title: StringFilter
+  title_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
   sections: InfoAbonadosSectionsFilter
 }
 
@@ -2791,6 +2799,7 @@ input MaintenanceMutation {
 
 input InfoAbonadosSectionsDocumentsMutation {
   title: String
+  title_en: String
   url: String
   icon: String
   visible: Boolean
@@ -2798,13 +2807,16 @@ input InfoAbonadosSectionsDocumentsMutation {
 
 input InfoAbonadosSectionsMutation {
   title: String
+  title_en: String
   visible: Boolean
   documents: [InfoAbonadosSectionsDocumentsMutation]
 }
 
 input InfoAbonadosMutation {
   title: String
+  title_en: String
   description: String
+  description_en: String
   sections: [InfoAbonadosSectionsMutation]
 }
 

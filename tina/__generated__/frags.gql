@@ -561,14 +561,18 @@ fragment MaintenanceParts on Maintenance {
 fragment InfoAbonadosParts on InfoAbonados {
   __typename
   title
+  title_en
   description
+  description_en
   sections {
     __typename
     title
+    title_en
     visible
     documents {
       __typename
       title
+      title_en
       url
       icon
       visible

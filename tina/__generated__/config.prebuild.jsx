@@ -1927,9 +1927,16 @@ var config_default = defineConfig({
         },
         fields: [
           { name: "title", label: "T\xEDtulo de la p\xE1gina", type: "string" },
+          { name: "title_en", label: "T\xEDtulo de la p\xE1gina (EN)", type: "string" },
           {
             name: "description",
             label: "Descripci\xF3n",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "description_en",
+            label: "Descripci\xF3n (EN)",
             type: "string",
             ui: { component: "textarea" }
           },
@@ -1941,6 +1948,7 @@ var config_default = defineConfig({
             ui: { itemProps: (item) => ({ label: item?.title || "Secci\xF3n" }) },
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               { name: "visible", label: "Visible", type: "boolean" },
               {
                 name: "documents",
@@ -1952,6 +1960,7 @@ var config_default = defineConfig({
                 },
                 fields: [
                   { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   { name: "url", label: "URL del documento", type: "string" },
                   {
                     name: "icon",
