@@ -395,8 +395,11 @@ type ServiceValor {
 type ServiceCatalogoItems {
   icon: String
   title: String
+  title_en: String
   description: String
+  description_en: String
   buttonLabel: String
+  buttonLabel_en: String
   url: String
   colSpan: String
   featured: Boolean
@@ -404,6 +407,7 @@ type ServiceCatalogoItems {
 
 type ServiceCatalogo {
   title: String
+  title_en: String
   items: [ServiceCatalogoItems]
 }
 
@@ -415,7 +419,9 @@ type ServicePartnersLogos {
 
 type ServicePartners {
   eyebrow: String
+  eyebrow_en: String
   title: String
+  title_en: String
   logos: [ServicePartnersLogos]
 }
 
@@ -490,8 +496,11 @@ input ServiceValorFilter {
 input ServiceCatalogoItemsFilter {
   icon: StringFilter
   title: StringFilter
+  title_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
   buttonLabel: StringFilter
+  buttonLabel_en: StringFilter
   url: StringFilter
   colSpan: StringFilter
   featured: BooleanFilter
@@ -499,6 +508,7 @@ input ServiceCatalogoItemsFilter {
 
 input ServiceCatalogoFilter {
   title: StringFilter
+  title_en: StringFilter
   items: ServiceCatalogoItemsFilter
 }
 
@@ -510,7 +520,9 @@ input ServicePartnersLogosFilter {
 
 input ServicePartnersFilter {
   eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
+  title_en: StringFilter
   logos: ServicePartnersLogosFilter
 }
 
@@ -1128,7 +1140,9 @@ type Servicios implements Node & Document {
   heroVideo: String
   heroVideoPoster: String
   formTitle: String
+  formTitle_en: String
   formSubtitle: String
+  formSubtitle_en: String
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -1142,7 +1156,9 @@ input ServiciosFilter {
   heroVideo: ImageFilter
   heroVideoPoster: ImageFilter
   formTitle: StringFilter
+  formTitle_en: StringFilter
   formSubtitle: StringFilter
+  formSubtitle_en: StringFilter
 }
 
 type ServiciosConnectionEdges {
@@ -1469,7 +1485,9 @@ type GlobalPartnersLogos {
 
 type GlobalPartners {
   eyebrow: String
+  eyebrow_en: String
   title: String
+  title_en: String
   logos: [GlobalPartnersLogos]
 }
 
@@ -1657,7 +1675,9 @@ input GlobalPartnersLogosFilter {
 
 input GlobalPartnersFilter {
   eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
+  title_en: StringFilter
   logos: GlobalPartnersLogosFilter
 }
 
@@ -1887,13 +1907,17 @@ type DynamicFormsFieldsValidation {
   maxLength: Float
   pattern: String
   patternMessage: String
+  patternMessage_en: String
 }
 
 type DynamicFormsFieldsOptions {
   value: String
   label: String
+  label_en: String
   group: String
+  group_en: String
   description: String
+  description_en: String
 }
 
 type DynamicFormsFieldsConditionalField {
@@ -1905,23 +1929,29 @@ type DynamicFormsFields {
   fieldType: String!
   name: String
   label: String
+  label_en: String
   placeholder: String
+  placeholder_en: String
   required: Boolean
   width: String
   order: Float
   orderMobile: Float
   sectionNumber: Float
   noteContent: String
+  noteContent_en: String
   rows: Float
   validation: DynamicFormsFieldsValidation
   errorMessage: String
+  errorMessage_en: String
   helpText: String
+  helpText_en: String
   defaultValue: String
   options: [DynamicFormsFieldsOptions]
   accept: String
   maxFileSize: Float
   multiple: Boolean
   linkText: String
+  linkText_en: String
   linkUrl: String
   conditionalField: DynamicFormsFieldsConditionalField
 }
@@ -1929,14 +1959,21 @@ type DynamicFormsFields {
 type DynamicForms implements Node & Document {
   formId: String!
   formTitle: String
+  formTitle_en: String
   badge: String
   description: String
+  description_en: String
   styleVariant: String
   submitButtonText: String
+  submitButtonText_en: String
   successTitle: String
+  successTitle_en: String
   successMessage: String
+  successMessage_en: String
   errorMessage: String
+  errorMessage_en: String
   validationMessage: String
+  validationMessage_en: String
   showCorrelativo: Boolean
   privacyText: String
   privacyUrl: String
@@ -1952,13 +1989,17 @@ input DynamicFormsFieldsValidationFilter {
   maxLength: NumberFilter
   pattern: StringFilter
   patternMessage: StringFilter
+  patternMessage_en: StringFilter
 }
 
 input DynamicFormsFieldsOptionsFilter {
   value: StringFilter
   label: StringFilter
+  label_en: StringFilter
   group: StringFilter
+  group_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
 }
 
 input DynamicFormsFieldsConditionalFieldFilter {
@@ -1970,23 +2011,29 @@ input DynamicFormsFieldsFilter {
   fieldType: StringFilter
   name: StringFilter
   label: StringFilter
+  label_en: StringFilter
   placeholder: StringFilter
+  placeholder_en: StringFilter
   required: BooleanFilter
   width: StringFilter
   order: NumberFilter
   orderMobile: NumberFilter
   sectionNumber: NumberFilter
   noteContent: StringFilter
+  noteContent_en: StringFilter
   rows: NumberFilter
   validation: DynamicFormsFieldsValidationFilter
   errorMessage: StringFilter
+  errorMessage_en: StringFilter
   helpText: StringFilter
+  helpText_en: StringFilter
   defaultValue: StringFilter
   options: DynamicFormsFieldsOptionsFilter
   accept: StringFilter
   maxFileSize: NumberFilter
   multiple: BooleanFilter
   linkText: StringFilter
+  linkText_en: StringFilter
   linkUrl: StringFilter
   conditionalField: DynamicFormsFieldsConditionalFieldFilter
 }
@@ -1994,14 +2041,21 @@ input DynamicFormsFieldsFilter {
 input DynamicFormsFilter {
   formId: StringFilter
   formTitle: StringFilter
+  formTitle_en: StringFilter
   badge: StringFilter
   description: StringFilter
+  description_en: StringFilter
   styleVariant: StringFilter
   submitButtonText: StringFilter
+  submitButtonText_en: StringFilter
   successTitle: StringFilter
+  successTitle_en: StringFilter
   successMessage: StringFilter
+  successMessage_en: StringFilter
   errorMessage: StringFilter
+  errorMessage_en: StringFilter
   validationMessage: StringFilter
+  validationMessage_en: StringFilter
   showCorrelativo: BooleanFilter
   privacyText: StringFilter
   privacyUrl: StringFilter
@@ -2493,8 +2547,11 @@ input ServiceValorMutation {
 input ServiceCatalogoItemsMutation {
   icon: String
   title: String
+  title_en: String
   description: String
+  description_en: String
   buttonLabel: String
+  buttonLabel_en: String
   url: String
   colSpan: String
   featured: Boolean
@@ -2502,6 +2559,7 @@ input ServiceCatalogoItemsMutation {
 
 input ServiceCatalogoMutation {
   title: String
+  title_en: String
   items: [ServiceCatalogoItemsMutation]
 }
 
@@ -2513,7 +2571,9 @@ input ServicePartnersLogosMutation {
 
 input ServicePartnersMutation {
   eyebrow: String
+  eyebrow_en: String
   title: String
+  title_en: String
   logos: [ServicePartnersLogosMutation]
 }
 
@@ -2798,7 +2858,9 @@ input ServiciosMutation {
   heroVideo: String
   heroVideoPoster: String
   formTitle: String
+  formTitle_en: String
   formSubtitle: String
+  formSubtitle_en: String
 }
 
 input CasosDeExitoItemsMutation {
@@ -2986,7 +3048,9 @@ input GlobalPartnersLogosMutation {
 
 input GlobalPartnersMutation {
   eyebrow: String
+  eyebrow_en: String
   title: String
+  title_en: String
   logos: [GlobalPartnersLogosMutation]
 }
 
@@ -3120,13 +3184,17 @@ input DynamicFormsFieldsValidationMutation {
   maxLength: Float
   pattern: String
   patternMessage: String
+  patternMessage_en: String
 }
 
 input DynamicFormsFieldsOptionsMutation {
   value: String
   label: String
+  label_en: String
   group: String
+  group_en: String
   description: String
+  description_en: String
 }
 
 input DynamicFormsFieldsConditionalFieldMutation {
@@ -3138,23 +3206,29 @@ input DynamicFormsFieldsMutation {
   fieldType: String
   name: String
   label: String
+  label_en: String
   placeholder: String
+  placeholder_en: String
   required: Boolean
   width: String
   order: Float
   orderMobile: Float
   sectionNumber: Float
   noteContent: String
+  noteContent_en: String
   rows: Float
   validation: DynamicFormsFieldsValidationMutation
   errorMessage: String
+  errorMessage_en: String
   helpText: String
+  helpText_en: String
   defaultValue: String
   options: [DynamicFormsFieldsOptionsMutation]
   accept: String
   maxFileSize: Float
   multiple: Boolean
   linkText: String
+  linkText_en: String
   linkUrl: String
   conditionalField: DynamicFormsFieldsConditionalFieldMutation
 }
@@ -3162,14 +3236,21 @@ input DynamicFormsFieldsMutation {
 input DynamicFormsMutation {
   formId: String
   formTitle: String
+  formTitle_en: String
   badge: String
   description: String
+  description_en: String
   styleVariant: String
   submitButtonText: String
+  submitButtonText_en: String
   successTitle: String
+  successTitle_en: String
   successMessage: String
+  successMessage_en: String
   errorMessage: String
+  errorMessage_en: String
   validationMessage: String
+  validationMessage_en: String
   showCorrelativo: Boolean
   privacyText: String
   privacyUrl: String

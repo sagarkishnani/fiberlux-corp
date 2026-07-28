@@ -404,6 +404,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Items",
@@ -444,13 +445,21 @@ var config_default = defineConfig({
                     ]
                   },
                   { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "description",
                     label: "Descripci\xF3n (se revela en hover)",
                     type: "string",
                     ui: { component: "textarea" }
                   },
+                  {
+                    name: "description_en",
+                    label: "Descripci\xF3n (EN)",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
                   { name: "buttonLabel", label: "Texto del bot\xF3n", type: "string" },
+                  { name: "buttonLabel_en", label: "Texto del bot\xF3n (EN)", type: "string" },
                   {
                     name: "url",
                     label: "URL (placeholder \u2192 nivel-2)",
@@ -482,7 +491,9 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "logos",
                 label: "Logos",
@@ -1307,9 +1318,16 @@ var config_default = defineConfig({
           },
           // ── Bloque de formulario ──
           { name: "formTitle", label: "T\xEDtulo del bloque de formulario", type: "string" },
+          { name: "formTitle_en", label: "T\xEDtulo del bloque de formulario (EN)", type: "string" },
           {
             name: "formSubtitle",
             label: "Subt\xEDtulo del bloque de formulario",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "formSubtitle_en",
+            label: "Subt\xEDtulo del bloque de formulario (EN)",
             type: "string",
             ui: { component: "textarea" }
           }
@@ -1828,7 +1846,9 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "logos",
                 label: "Logos",
@@ -2200,6 +2220,7 @@ var config_default = defineConfig({
             label: "T\xEDtulo del formulario",
             type: "string"
           },
+          { name: "formTitle_en", label: "T\xEDtulo del formulario (EN)", type: "string" },
           {
             name: "badge",
             label: "Badge (opcional)",
@@ -2209,6 +2230,12 @@ var config_default = defineConfig({
           {
             name: "description",
             label: "Descripci\xF3n",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "description_en",
+            label: "Descripci\xF3n (EN)",
             type: "string",
             ui: { component: "textarea" }
           },
@@ -2229,15 +2256,23 @@ var config_default = defineConfig({
             label: "Texto bot\xF3n enviar",
             type: "string"
           },
+          { name: "submitButtonText_en", label: "Texto bot\xF3n enviar (EN)", type: "string" },
           {
             name: "successTitle",
             label: "T\xEDtulo de \xE9xito",
             type: "string",
             description: "T\xEDtulo que se muestra despu\xE9s de enviar exitosamente."
           },
+          { name: "successTitle_en", label: "T\xEDtulo de \xE9xito (EN)", type: "string" },
           {
             name: "successMessage",
             label: "Mensaje de \xE9xito",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "successMessage_en",
+            label: "Mensaje de \xE9xito (EN)",
             type: "string",
             ui: { component: "textarea" }
           },
@@ -2247,12 +2282,14 @@ var config_default = defineConfig({
             type: "string",
             description: "Se muestra cuando falla el env\xEDo al servidor."
           },
+          { name: "errorMessage_en", label: "Mensaje de error (EN)", type: "string" },
           {
             name: "validationMessage",
             label: "Mensaje de validaci\xF3n",
             type: "string",
             description: "Se muestra cuando el usuario intenta enviar con campos inv\xE1lidos. Ej: 'Por favor completa los campos marcados en rojo'."
           },
+          { name: "validationMessage_en", label: "Mensaje de validaci\xF3n (EN)", type: "string" },
           {
             name: "showCorrelativo",
             label: "Mostrar N\xB0 correlativo",
@@ -2354,11 +2391,13 @@ var config_default = defineConfig({
                 type: "string",
                 description: "Para section_header es el t\xEDtulo de la secci\xF3n."
               },
+              { name: "label_en", label: "Etiqueta visible (EN)", type: "string" },
               {
                 name: "placeholder",
                 label: "Placeholder",
                 type: "string"
               },
+              { name: "placeholder_en", label: "Placeholder (EN)", type: "string" },
               {
                 name: "required",
                 label: "Obligatorio",
@@ -2402,6 +2441,12 @@ var config_default = defineConfig({
                 description: "Solo para note. El texto del p\xE1rrafo."
               },
               {
+                name: "noteContent_en",
+                label: "Contenido de nota (EN)",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
                 name: "rows",
                 label: "Filas",
                 type: "number",
@@ -2434,7 +2479,8 @@ var config_default = defineConfig({
                     label: "Mensaje del patr\xF3n",
                     type: "string",
                     description: "Mensaje cuando el valor no cumple el patr\xF3n. Ej: 'El RUC debe tener 11 d\xEDgitos'."
-                  }
+                  },
+                  { name: "patternMessage_en", label: "Mensaje del patr\xF3n (EN)", type: "string" }
                 ]
               },
               {
@@ -2443,12 +2489,14 @@ var config_default = defineConfig({
                 type: "string",
                 description: "Si se deja vac\xEDo, se genera un mensaje autom\xE1tico seg\xFAn la validaci\xF3n que falle."
               },
+              { name: "errorMessage_en", label: "Mensaje de error personalizado (EN)", type: "string" },
               {
                 name: "helpText",
                 label: "Texto de ayuda",
                 type: "string",
                 description: "Texto peque\xF1o debajo del campo. Para upload aparece como instrucci\xF3n de archivos."
               },
+              { name: "helpText_en", label: "Texto de ayuda (EN)", type: "string" },
               {
                 name: "defaultValue",
                 label: "Valor por defecto",
@@ -2467,18 +2515,21 @@ var config_default = defineConfig({
                 fields: [
                   { name: "value", label: "Valor", type: "string" },
                   { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
                   {
                     name: "group",
                     label: "Grupo / Categor\xEDa",
                     type: "string",
                     description: "Solo para select: agrupa las opciones bajo un encabezado (optgroup). Ej: la categor\xEDa del servicio."
                   },
+                  { name: "group_en", label: "Grupo / Categor\xEDa (EN)", type: "string" },
                   {
                     name: "description",
                     label: "Descripci\xF3n",
                     type: "string",
                     description: "Solo para radioGroup (aparece debajo del t\xEDtulo en la tarjeta)."
-                  }
+                  },
+                  { name: "description_en", label: "Descripci\xF3n (EN)", type: "string" }
                 ]
               },
               /* ── Upload config ── */
@@ -2506,6 +2557,7 @@ var config_default = defineConfig({
                 type: "string",
                 description: "Solo para checkbox. Parte del label que se convierte en enlace. Ej: 'Pol\xEDtica de Privacidad'."
               },
+              { name: "linkText_en", label: "Texto del enlace (EN)", type: "string" },
               {
                 name: "linkUrl",
                 label: "URL del enlace",

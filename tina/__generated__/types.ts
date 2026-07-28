@@ -759,8 +759,11 @@ export type ServiceCatalogoItems = {
   __typename?: 'ServiceCatalogoItems';
   icon?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
   buttonLabel?: Maybe<Scalars['String']['output']>;
+  buttonLabel_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
   colSpan?: Maybe<Scalars['String']['output']>;
   featured?: Maybe<Scalars['Boolean']['output']>;
@@ -769,6 +772,7 @@ export type ServiceCatalogoItems = {
 export type ServiceCatalogo = {
   __typename?: 'ServiceCatalogo';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<ServiceCatalogoItems>>>;
 };
 
@@ -782,7 +786,9 @@ export type ServicePartnersLogos = {
 export type ServicePartners = {
   __typename?: 'ServicePartners';
   eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   logos?: Maybe<Array<Maybe<ServicePartnersLogos>>>;
 };
 
@@ -861,8 +867,11 @@ export type ServiceValorFilter = {
 export type ServiceCatalogoItemsFilter = {
   icon?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
   buttonLabel?: InputMaybe<StringFilter>;
+  buttonLabel_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   colSpan?: InputMaybe<StringFilter>;
   featured?: InputMaybe<BooleanFilter>;
@@ -870,6 +879,7 @@ export type ServiceCatalogoItemsFilter = {
 
 export type ServiceCatalogoFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<ServiceCatalogoItemsFilter>;
 };
 
@@ -881,7 +891,9 @@ export type ServicePartnersLogosFilter = {
 
 export type ServicePartnersFilter = {
   eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   logos?: InputMaybe<ServicePartnersLogosFilter>;
 };
 
@@ -1540,7 +1552,9 @@ export type Servicios = Node & Document & {
   heroVideo?: Maybe<Scalars['String']['output']>;
   heroVideoPoster?: Maybe<Scalars['String']['output']>;
   formTitle?: Maybe<Scalars['String']['output']>;
+  formTitle_en?: Maybe<Scalars['String']['output']>;
   formSubtitle?: Maybe<Scalars['String']['output']>;
+  formSubtitle_en?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -1554,7 +1568,9 @@ export type ServiciosFilter = {
   heroVideo?: InputMaybe<ImageFilter>;
   heroVideoPoster?: InputMaybe<ImageFilter>;
   formTitle?: InputMaybe<StringFilter>;
+  formTitle_en?: InputMaybe<StringFilter>;
   formSubtitle?: InputMaybe<StringFilter>;
+  formSubtitle_en?: InputMaybe<StringFilter>;
 };
 
 export type ServiciosConnectionEdges = {
@@ -1914,7 +1930,9 @@ export type GlobalPartnersLogos = {
 export type GlobalPartners = {
   __typename?: 'GlobalPartners';
   eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   logos?: Maybe<Array<Maybe<GlobalPartnersLogos>>>;
 };
 
@@ -2114,7 +2132,9 @@ export type GlobalPartnersLogosFilter = {
 
 export type GlobalPartnersFilter = {
   eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   logos?: InputMaybe<GlobalPartnersLogosFilter>;
 };
 
@@ -2359,14 +2379,18 @@ export type DynamicFormsFieldsValidation = {
   maxLength?: Maybe<Scalars['Float']['output']>;
   pattern?: Maybe<Scalars['String']['output']>;
   patternMessage?: Maybe<Scalars['String']['output']>;
+  patternMessage_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type DynamicFormsFieldsOptions = {
   __typename?: 'DynamicFormsFieldsOptions';
   value?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
   group?: Maybe<Scalars['String']['output']>;
+  group_en?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type DynamicFormsFieldsConditionalField = {
@@ -2380,23 +2404,29 @@ export type DynamicFormsFields = {
   fieldType: Scalars['String']['output'];
   name?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
   placeholder?: Maybe<Scalars['String']['output']>;
+  placeholder_en?: Maybe<Scalars['String']['output']>;
   required?: Maybe<Scalars['Boolean']['output']>;
   width?: Maybe<Scalars['String']['output']>;
   order?: Maybe<Scalars['Float']['output']>;
   orderMobile?: Maybe<Scalars['Float']['output']>;
   sectionNumber?: Maybe<Scalars['Float']['output']>;
   noteContent?: Maybe<Scalars['String']['output']>;
+  noteContent_en?: Maybe<Scalars['String']['output']>;
   rows?: Maybe<Scalars['Float']['output']>;
   validation?: Maybe<DynamicFormsFieldsValidation>;
   errorMessage?: Maybe<Scalars['String']['output']>;
+  errorMessage_en?: Maybe<Scalars['String']['output']>;
   helpText?: Maybe<Scalars['String']['output']>;
+  helpText_en?: Maybe<Scalars['String']['output']>;
   defaultValue?: Maybe<Scalars['String']['output']>;
   options?: Maybe<Array<Maybe<DynamicFormsFieldsOptions>>>;
   accept?: Maybe<Scalars['String']['output']>;
   maxFileSize?: Maybe<Scalars['Float']['output']>;
   multiple?: Maybe<Scalars['Boolean']['output']>;
   linkText?: Maybe<Scalars['String']['output']>;
+  linkText_en?: Maybe<Scalars['String']['output']>;
   linkUrl?: Maybe<Scalars['String']['output']>;
   conditionalField?: Maybe<DynamicFormsFieldsConditionalField>;
 };
@@ -2405,14 +2435,21 @@ export type DynamicForms = Node & Document & {
   __typename?: 'DynamicForms';
   formId: Scalars['String']['output'];
   formTitle?: Maybe<Scalars['String']['output']>;
+  formTitle_en?: Maybe<Scalars['String']['output']>;
   badge?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
   styleVariant?: Maybe<Scalars['String']['output']>;
   submitButtonText?: Maybe<Scalars['String']['output']>;
+  submitButtonText_en?: Maybe<Scalars['String']['output']>;
   successTitle?: Maybe<Scalars['String']['output']>;
+  successTitle_en?: Maybe<Scalars['String']['output']>;
   successMessage?: Maybe<Scalars['String']['output']>;
+  successMessage_en?: Maybe<Scalars['String']['output']>;
   errorMessage?: Maybe<Scalars['String']['output']>;
+  errorMessage_en?: Maybe<Scalars['String']['output']>;
   validationMessage?: Maybe<Scalars['String']['output']>;
+  validationMessage_en?: Maybe<Scalars['String']['output']>;
   showCorrelativo?: Maybe<Scalars['Boolean']['output']>;
   privacyText?: Maybe<Scalars['String']['output']>;
   privacyUrl?: Maybe<Scalars['String']['output']>;
@@ -2428,13 +2465,17 @@ export type DynamicFormsFieldsValidationFilter = {
   maxLength?: InputMaybe<NumberFilter>;
   pattern?: InputMaybe<StringFilter>;
   patternMessage?: InputMaybe<StringFilter>;
+  patternMessage_en?: InputMaybe<StringFilter>;
 };
 
 export type DynamicFormsFieldsOptionsFilter = {
   value?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
   group?: InputMaybe<StringFilter>;
+  group_en?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
 };
 
 export type DynamicFormsFieldsConditionalFieldFilter = {
@@ -2446,23 +2487,29 @@ export type DynamicFormsFieldsFilter = {
   fieldType?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
   placeholder?: InputMaybe<StringFilter>;
+  placeholder_en?: InputMaybe<StringFilter>;
   required?: InputMaybe<BooleanFilter>;
   width?: InputMaybe<StringFilter>;
   order?: InputMaybe<NumberFilter>;
   orderMobile?: InputMaybe<NumberFilter>;
   sectionNumber?: InputMaybe<NumberFilter>;
   noteContent?: InputMaybe<StringFilter>;
+  noteContent_en?: InputMaybe<StringFilter>;
   rows?: InputMaybe<NumberFilter>;
   validation?: InputMaybe<DynamicFormsFieldsValidationFilter>;
   errorMessage?: InputMaybe<StringFilter>;
+  errorMessage_en?: InputMaybe<StringFilter>;
   helpText?: InputMaybe<StringFilter>;
+  helpText_en?: InputMaybe<StringFilter>;
   defaultValue?: InputMaybe<StringFilter>;
   options?: InputMaybe<DynamicFormsFieldsOptionsFilter>;
   accept?: InputMaybe<StringFilter>;
   maxFileSize?: InputMaybe<NumberFilter>;
   multiple?: InputMaybe<BooleanFilter>;
   linkText?: InputMaybe<StringFilter>;
+  linkText_en?: InputMaybe<StringFilter>;
   linkUrl?: InputMaybe<StringFilter>;
   conditionalField?: InputMaybe<DynamicFormsFieldsConditionalFieldFilter>;
 };
@@ -2470,14 +2517,21 @@ export type DynamicFormsFieldsFilter = {
 export type DynamicFormsFilter = {
   formId?: InputMaybe<StringFilter>;
   formTitle?: InputMaybe<StringFilter>;
+  formTitle_en?: InputMaybe<StringFilter>;
   badge?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
   styleVariant?: InputMaybe<StringFilter>;
   submitButtonText?: InputMaybe<StringFilter>;
+  submitButtonText_en?: InputMaybe<StringFilter>;
   successTitle?: InputMaybe<StringFilter>;
+  successTitle_en?: InputMaybe<StringFilter>;
   successMessage?: InputMaybe<StringFilter>;
+  successMessage_en?: InputMaybe<StringFilter>;
   errorMessage?: InputMaybe<StringFilter>;
+  errorMessage_en?: InputMaybe<StringFilter>;
   validationMessage?: InputMaybe<StringFilter>;
+  validationMessage_en?: InputMaybe<StringFilter>;
   showCorrelativo?: InputMaybe<BooleanFilter>;
   privacyText?: InputMaybe<StringFilter>;
   privacyUrl?: InputMaybe<StringFilter>;
@@ -3252,8 +3306,11 @@ export type ServiceValorMutation = {
 export type ServiceCatalogoItemsMutation = {
   icon?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
   buttonLabel?: InputMaybe<Scalars['String']['input']>;
+  buttonLabel_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
   colSpan?: InputMaybe<Scalars['String']['input']>;
   featured?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3261,6 +3318,7 @@ export type ServiceCatalogoItemsMutation = {
 
 export type ServiceCatalogoMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<ServiceCatalogoItemsMutation>>>;
 };
 
@@ -3272,7 +3330,9 @@ export type ServicePartnersLogosMutation = {
 
 export type ServicePartnersMutation = {
   eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   logos?: InputMaybe<Array<InputMaybe<ServicePartnersLogosMutation>>>;
 };
 
@@ -3557,7 +3617,9 @@ export type ServiciosMutation = {
   heroVideo?: InputMaybe<Scalars['String']['input']>;
   heroVideoPoster?: InputMaybe<Scalars['String']['input']>;
   formTitle?: InputMaybe<Scalars['String']['input']>;
+  formTitle_en?: InputMaybe<Scalars['String']['input']>;
   formSubtitle?: InputMaybe<Scalars['String']['input']>;
+  formSubtitle_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CasosDeExitoItemsMutation = {
@@ -3745,7 +3807,9 @@ export type GlobalPartnersLogosMutation = {
 
 export type GlobalPartnersMutation = {
   eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   logos?: InputMaybe<Array<InputMaybe<GlobalPartnersLogosMutation>>>;
 };
 
@@ -3879,13 +3943,17 @@ export type DynamicFormsFieldsValidationMutation = {
   maxLength?: InputMaybe<Scalars['Float']['input']>;
   pattern?: InputMaybe<Scalars['String']['input']>;
   patternMessage?: InputMaybe<Scalars['String']['input']>;
+  patternMessage_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DynamicFormsFieldsOptionsMutation = {
   value?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
   group?: InputMaybe<Scalars['String']['input']>;
+  group_en?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DynamicFormsFieldsConditionalFieldMutation = {
@@ -3897,23 +3965,29 @@ export type DynamicFormsFieldsMutation = {
   fieldType?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
   placeholder?: InputMaybe<Scalars['String']['input']>;
+  placeholder_en?: InputMaybe<Scalars['String']['input']>;
   required?: InputMaybe<Scalars['Boolean']['input']>;
   width?: InputMaybe<Scalars['String']['input']>;
   order?: InputMaybe<Scalars['Float']['input']>;
   orderMobile?: InputMaybe<Scalars['Float']['input']>;
   sectionNumber?: InputMaybe<Scalars['Float']['input']>;
   noteContent?: InputMaybe<Scalars['String']['input']>;
+  noteContent_en?: InputMaybe<Scalars['String']['input']>;
   rows?: InputMaybe<Scalars['Float']['input']>;
   validation?: InputMaybe<DynamicFormsFieldsValidationMutation>;
   errorMessage?: InputMaybe<Scalars['String']['input']>;
+  errorMessage_en?: InputMaybe<Scalars['String']['input']>;
   helpText?: InputMaybe<Scalars['String']['input']>;
+  helpText_en?: InputMaybe<Scalars['String']['input']>;
   defaultValue?: InputMaybe<Scalars['String']['input']>;
   options?: InputMaybe<Array<InputMaybe<DynamicFormsFieldsOptionsMutation>>>;
   accept?: InputMaybe<Scalars['String']['input']>;
   maxFileSize?: InputMaybe<Scalars['Float']['input']>;
   multiple?: InputMaybe<Scalars['Boolean']['input']>;
   linkText?: InputMaybe<Scalars['String']['input']>;
+  linkText_en?: InputMaybe<Scalars['String']['input']>;
   linkUrl?: InputMaybe<Scalars['String']['input']>;
   conditionalField?: InputMaybe<DynamicFormsFieldsConditionalFieldMutation>;
 };
@@ -3921,14 +3995,21 @@ export type DynamicFormsFieldsMutation = {
 export type DynamicFormsMutation = {
   formId?: InputMaybe<Scalars['String']['input']>;
   formTitle?: InputMaybe<Scalars['String']['input']>;
+  formTitle_en?: InputMaybe<Scalars['String']['input']>;
   badge?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
   styleVariant?: InputMaybe<Scalars['String']['input']>;
   submitButtonText?: InputMaybe<Scalars['String']['input']>;
+  submitButtonText_en?: InputMaybe<Scalars['String']['input']>;
   successTitle?: InputMaybe<Scalars['String']['input']>;
+  successTitle_en?: InputMaybe<Scalars['String']['input']>;
   successMessage?: InputMaybe<Scalars['String']['input']>;
+  successMessage_en?: InputMaybe<Scalars['String']['input']>;
   errorMessage?: InputMaybe<Scalars['String']['input']>;
+  errorMessage_en?: InputMaybe<Scalars['String']['input']>;
   validationMessage?: InputMaybe<Scalars['String']['input']>;
+  validationMessage_en?: InputMaybe<Scalars['String']['input']>;
   showCorrelativo?: InputMaybe<Scalars['Boolean']['input']>;
   privacyText?: InputMaybe<Scalars['String']['input']>;
   privacyUrl?: InputMaybe<Scalars['String']['input']>;
@@ -4047,7 +4128,7 @@ export type FiberluxAppMutation = {
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, bullets?: Array<string | null> | null, bullets_en?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
-export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, buttonLabel?: string | null, buttonLabel_en?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, title_en?: string | null, slug: string, solucionSlug: string, solucionTitle?: string | null, solucionTitle_en?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, note?: string | null, note_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4059,7 +4140,7 @@ export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string 
 
 export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
 
-export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formSubtitle?: string | null };
+export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null };
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4067,7 +4148,7 @@ export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sect
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, bankSelectLabel?: string | null, bankSelectLabel_en?: string | null, methodSelectLabel?: string | null, methodSelectLabel_en?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, optionLabel_en?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, label_en?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, title_en?: string | null, description?: any | null, description_en?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
+export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
 
 export type MaintenancePartsFragment = { __typename: 'Maintenance', enabled?: boolean | null, title?: string | null, message?: string | null, showContact?: boolean | null, contactText?: string | null, contactUrl?: string | null };
 
@@ -4075,7 +4156,7 @@ export type InfoAbonadosPartsFragment = { __typename: 'InfoAbonados', title?: st
 
 export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<{ __typename: 'FormConfigForms', formType?: string | null, label?: string | null, enabled?: boolean | null, recipients?: Array<string | null> | null } | null> | null };
 
-export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
+export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, formTitle_en?: string | null, badge?: string | null, description?: string | null, description_en?: string | null, styleVariant?: string | null, submitButtonText?: string | null, submitButtonText_en?: string | null, successTitle?: string | null, successTitle_en?: string | null, successMessage?: string | null, successMessage_en?: string | null, errorMessage?: string | null, errorMessage_en?: string | null, validationMessage?: string | null, validationMessage_en?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, label_en?: string | null, placeholder?: string | null, placeholder_en?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, noteContent_en?: string | null, rows?: number | null, errorMessage?: string | null, errorMessage_en?: string | null, helpText?: string | null, helpText_en?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkText_en?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null, patternMessage_en?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, label_en?: string | null, group?: string | null, group_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
 
 export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4107,7 +4188,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, buttonLabel?: string | null, buttonLabel_en?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type ServiceConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4119,7 +4200,7 @@ export type ServiceConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, buttonLabel?: string | null, buttonLabel_en?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type SubservicioQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4221,7 +4302,7 @@ export type ServiciosQueryVariables = Exact<{
 }>;
 
 
-export type ServiciosQuery = { __typename?: 'Query', servicios: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type ServiciosQuery = { __typename?: 'Query', servicios: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type ServiciosConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4233,7 +4314,7 @@ export type ServiciosConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiciosConnectionQuery = { __typename?: 'Query', serviciosConnection: { __typename?: 'ServiciosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiciosConnectionEdges', cursor: string, node?: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type ServiciosConnectionQuery = { __typename?: 'Query', serviciosConnection: { __typename?: 'ServiciosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiciosConnectionEdges', cursor: string, node?: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type CasosDeExitoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4297,7 +4378,7 @@ export type GlobalQueryVariables = Exact<{
 }>;
 
 
-export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } };
+export type GlobalQuery = { __typename?: 'Query', global: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } };
 
 export type GlobalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4309,7 +4390,7 @@ export type GlobalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } | null } | null> | null } };
+export type GlobalConnectionQuery = { __typename?: 'Query', globalConnection: { __typename?: 'GlobalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'GlobalConnectionEdges', cursor: string, node?: { __typename: 'Global', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null } | null } | null> | null } };
 
 export type MaintenanceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4373,7 +4454,7 @@ export type DynamicFormsQueryVariables = Exact<{
 }>;
 
 
-export type DynamicFormsQuery = { __typename?: 'Query', dynamicForms: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } };
+export type DynamicFormsQuery = { __typename?: 'Query', dynamicForms: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, formTitle_en?: string | null, badge?: string | null, description?: string | null, description_en?: string | null, styleVariant?: string | null, submitButtonText?: string | null, submitButtonText_en?: string | null, successTitle?: string | null, successTitle_en?: string | null, successMessage?: string | null, successMessage_en?: string | null, errorMessage?: string | null, errorMessage_en?: string | null, validationMessage?: string | null, validationMessage_en?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, label_en?: string | null, placeholder?: string | null, placeholder_en?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, noteContent_en?: string | null, rows?: number | null, errorMessage?: string | null, errorMessage_en?: string | null, helpText?: string | null, helpText_en?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkText_en?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null, patternMessage_en?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, label_en?: string | null, group?: string | null, group_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } };
 
 export type DynamicFormsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4385,7 +4466,7 @@ export type DynamicFormsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
+export type DynamicFormsConnectionQuery = { __typename?: 'Query', dynamicFormsConnection: { __typename?: 'DynamicFormsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DynamicFormsConnectionEdges', cursor: string, node?: { __typename: 'DynamicForms', id: string, formId: string, formTitle?: string | null, formTitle_en?: string | null, badge?: string | null, description?: string | null, description_en?: string | null, styleVariant?: string | null, submitButtonText?: string | null, submitButtonText_en?: string | null, successTitle?: string | null, successTitle_en?: string | null, successMessage?: string | null, successMessage_en?: string | null, errorMessage?: string | null, errorMessage_en?: string | null, validationMessage?: string | null, validationMessage_en?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, label_en?: string | null, placeholder?: string | null, placeholder_en?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, noteContent_en?: string | null, rows?: number | null, errorMessage?: string | null, errorMessage_en?: string | null, helpText?: string | null, helpText_en?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkText_en?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null, patternMessage_en?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, label_en?: string | null, group?: string | null, group_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null } | null } | null> | null } };
 
 export type LegalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4565,12 +4646,16 @@ export const ServicePartsFragmentDoc = gql`
   catalogo {
     __typename
     title
+    title_en
     items {
       __typename
       icon
       title
+      title_en
       description
+      description_en
       buttonLabel
+      buttonLabel_en
       url
       colSpan
       featured
@@ -4579,7 +4664,9 @@ export const ServicePartsFragmentDoc = gql`
   partners {
     __typename
     eyebrow
+    eyebrow_en
     title
+    title_en
     logos {
       __typename
       image
@@ -4845,7 +4932,9 @@ export const ServiciosPartsFragmentDoc = gql`
   heroVideo
   heroVideoPoster
   formTitle
+  formTitle_en
   formSubtitle
+  formSubtitle_en
 }
     `;
 export const CasosDeExitoPartsFragmentDoc = gql`
@@ -5021,7 +5110,9 @@ export const GlobalPartsFragmentDoc = gql`
   partners {
     __typename
     eyebrow
+    eyebrow_en
     title
+    title_en
     logos {
       __typename
       image
@@ -5145,14 +5236,21 @@ export const DynamicFormsPartsFragmentDoc = gql`
   __typename
   formId
   formTitle
+  formTitle_en
   badge
   description
+  description_en
   styleVariant
   submitButtonText
+  submitButtonText_en
   successTitle
+  successTitle_en
   successMessage
+  successMessage_en
   errorMessage
+  errorMessage_en
   validationMessage
+  validationMessage_en
   showCorrelativo
   privacyText
   privacyUrl
@@ -5162,13 +5260,16 @@ export const DynamicFormsPartsFragmentDoc = gql`
     fieldType
     name
     label
+    label_en
     placeholder
+    placeholder_en
     required
     width
     order
     orderMobile
     sectionNumber
     noteContent
+    noteContent_en
     rows
     validation {
       __typename
@@ -5176,21 +5277,28 @@ export const DynamicFormsPartsFragmentDoc = gql`
       maxLength
       pattern
       patternMessage
+      patternMessage_en
     }
     errorMessage
+    errorMessage_en
     helpText
+    helpText_en
     defaultValue
     options {
       __typename
       value
       label
+      label_en
       group
+      group_en
       description
+      description_en
     }
     accept
     maxFileSize
     multiple
     linkText
+    linkText_en
     linkUrl
     conditionalField {
       __typename

@@ -117,12 +117,16 @@ fragment ServiceParts on Service {
   catalogo {
     __typename
     title
+    title_en
     items {
       __typename
       icon
       title
+      title_en
       description
+      description_en
       buttonLabel
+      buttonLabel_en
       url
       colSpan
       featured
@@ -131,7 +135,9 @@ fragment ServiceParts on Service {
   partners {
     __typename
     eyebrow
+    eyebrow_en
     title
+    title_en
     logos {
       __typename
       image
@@ -391,7 +397,9 @@ fragment ServiciosParts on Servicios {
   heroVideo
   heroVideoPoster
   formTitle
+  formTitle_en
   formSubtitle
+  formSubtitle_en
 }
 
 fragment CasosDeExitoParts on CasosDeExito {
@@ -563,7 +571,9 @@ fragment GlobalParts on Global {
   partners {
     __typename
     eyebrow
+    eyebrow_en
     title
+    title_en
     logos {
       __typename
       image
@@ -683,14 +693,21 @@ fragment DynamicFormsParts on DynamicForms {
   __typename
   formId
   formTitle
+  formTitle_en
   badge
   description
+  description_en
   styleVariant
   submitButtonText
+  submitButtonText_en
   successTitle
+  successTitle_en
   successMessage
+  successMessage_en
   errorMessage
+  errorMessage_en
   validationMessage
+  validationMessage_en
   showCorrelativo
   privacyText
   privacyUrl
@@ -700,13 +717,16 @@ fragment DynamicFormsParts on DynamicForms {
     fieldType
     name
     label
+    label_en
     placeholder
+    placeholder_en
     required
     width
     order
     orderMobile
     sectionNumber
     noteContent
+    noteContent_en
     rows
     validation {
       __typename
@@ -714,21 +734,28 @@ fragment DynamicFormsParts on DynamicForms {
       maxLength
       pattern
       patternMessage
+      patternMessage_en
     }
     errorMessage
+    errorMessage_en
     helpText
+    helpText_en
     defaultValue
     options {
       __typename
       value
       label
+      label_en
       group
+      group_en
       description
+      description_en
     }
     accept
     maxFileSize
     multiple
     linkText
+    linkText_en
     linkUrl
     conditionalField {
       __typename
