@@ -6,5 +6,7 @@
   "heroVideo": "/videos/cubos-soluciones.mp4",
   "heroVideoPoster": "/models/hero-servicios.webp",
   "formTitle": "Déjanos tus datos y te contactaremos",
-  "formSubtitle": "Nuestro equipo comercial se pondrá en contacto contigo para diseñar la solución ideal para tu empresa."
+  "formTitle_en": "Leave us your details and we'll contact you",
+  "formSubtitle": "Nuestro equipo comercial se pondrá en contacto contigo para diseñar la solución ideal para tu empresa.",
+  "formSubtitle_en": "Our sales team will get in touch with you to design the ideal solution for your business."
 }
