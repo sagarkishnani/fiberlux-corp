@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/phishing.webp",
     "heading_en": "Phishing Awareness",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Training and simulation programs that help employees identify fraudulent emails, phishing and other social engineering techniques.",
+    "note_en": "Ideal to reduce the risk of human-error incidents and strengthen your first line of defense."
   },
   "beneficios": {
     "title": "Beneficios",

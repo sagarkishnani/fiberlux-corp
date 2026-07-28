@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/videovigilancia-gestionada.webp",
     "heading_en": "Managed Video Surveillance",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A comprehensive video surveillance monitoring and management service using IP cameras, management platforms, centralized remote access and AI for pattern recognition.",
+    "note_en": "Ideal for organizations that need permanent visibility of their facilities without taking on the complexity of managing the infrastructure in-house."
   },
   "beneficios": {
     "title": "Beneficios",

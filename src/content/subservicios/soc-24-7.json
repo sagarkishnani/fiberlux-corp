@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/cybersoc1.webp",
     "heading_en": "SOC 24/7",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A team of expert engineers that monitors, correlates events and responds to threats around the clock.",
+    "note_en": "Ideal for organizations without the budget for a three-shift internal team but facing constant threats at all hours."
   },
   "beneficios": {
     "title": "Beneficios",

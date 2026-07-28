@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/gestion-lan.webp",
     "heading_en": "LAN Network Management",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Design, configuration, upgrade and proactive management of your LAN infrastructure, including switches, segmentation and connectivity policies.",
+    "note_en": "Ideal for organizations that need a stable, secure network ready to support critical applications and multiple devices."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/wifi-gestionado.webp",
     "heading_en": "Managed WiFi",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Design, implementation and management of enterprise wireless networks, optimizing coverage, capacity and the connection experience for users and devices.",
+    "note_en": "Ideal for high-traffic spaces where the quality of wireless connectivity is key to operations and user experience."
   },
   "beneficios": {
     "title": "Beneficios",

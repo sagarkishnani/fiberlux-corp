@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/nube-privada2.webp",
     "heading_en": "Private Cloud",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "An exclusive cloud environment with virtual servers, storage and networks physically dedicated to your company, hosted in our Data Centers.",
+    "note_en": "Ideal for highly regulated sectors that demand the agility of the cloud but whose laws forbid hosting confidential data in shared environments."
   },
   "beneficios": {
     "title": "Beneficios",

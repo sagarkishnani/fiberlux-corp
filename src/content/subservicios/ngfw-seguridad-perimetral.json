@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/ngfw.webp",
     "heading_en": "NGFW / Seguridad Perimetral",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Next-Generation Firewall. A layer-7 security barrier that deeply inspects web traffic, applications and users.",
+    "note_en": "Ideal against obsolete firewalls that are blind to modern malware hidden in legitimate applications or encrypted traffic."
   },
   "beneficios": {
     "title": "Beneficios",

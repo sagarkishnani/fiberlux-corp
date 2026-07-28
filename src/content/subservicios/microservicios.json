@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/microservicios.webp",
     "heading_en": "Microservicios",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Design and implementation of modern platforms based on Docker containers and Kubernetes orchestration, to deploy scalable and resilient applications.",
+    "note_en": "Ideal for organizations building or modernizing enterprise applications that need greater flexibility, availability and deployment speed."
   },
   "beneficios": {
     "title": "Beneficios",

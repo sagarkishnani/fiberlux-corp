@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/nac.webp",
     "heading_en": "NAC",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Network access control that verifies the identity, posture and security compliance of users and devices before allowing them to connect to corporate resources.",
+    "note_en": "Ideal for organizations that need to control who and what connects to the network, with multiple users, corporate devices, guests or third-party equipment."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/nube-publica.webp",
     "heading_en": "Public Cloud",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystem, as official partners.",
+    "note_en": "Ideal for companies looking to accelerate projects, optimize costs and leverage the scalability of the public cloud with a specialized partner."
   },
   "beneficios": {
     "title": "Beneficios",

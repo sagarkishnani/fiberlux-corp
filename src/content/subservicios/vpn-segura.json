@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/vpn-segura.webp",
     "heading_en": "Secure VPN & Protected Remote Access",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A corporate-grade Virtual Private Network. An encrypted tunnel that connects the user's device directly to the heart of the enterprise network.",
+    "note_en": "Ideal for employees working from home networks or cafés, at risk of exposing company servers to interception."
   },
   "beneficios": {
     "title": "Beneficios",

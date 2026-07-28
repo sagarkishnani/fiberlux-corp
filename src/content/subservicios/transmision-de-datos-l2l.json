@@ -13,7 +13,8 @@
     "heroImage": "images/soluciones/imagenes/transmision-de-datos.webp",
     "heading_en": "Data Transmission (Lan To Lan – L2L)",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Private interconnection between your sites with secure, low-latency data transport."
   },
   "beneficios": {
     "title": "Beneficios",

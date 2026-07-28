@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/storage-empresarial.webp",
     "heading_en": "Storage & Compute",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Elastic cloud storage repositories (block, file or object) optimized for high performance or long-term archiving.",
+    "note_en": "Ideal for companies whose exponential growth of heavy video, voice or image files saturates local storage."
   },
   "beneficios": {
     "title": "Beneficios",

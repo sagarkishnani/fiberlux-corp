@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp",
     "heading_en": "Help Desk",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Strategic outsourcing of technical support (Level 1 and 2). A single point of contact (Help Desk) operated by specialists to assist your staff.",
+    "note_en": "Ideal to free your IT engineering team from technical bureaucracy and password resets so they focus on digital transformation."
   },
   "beneficios": {
     "title": "Beneficios",

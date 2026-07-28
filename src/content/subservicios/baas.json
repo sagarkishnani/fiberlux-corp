@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/backup-as-a-service.webp",
     "heading_en": "Backup as a Service (BaaS)",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Automated cloud-hosted backup service, protected with encryption and strict retention policies.",
+    "note_en": "Ideal to avoid catastrophic data loss from ransomware, where manual backups on local disks also end up encrypted."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/mfa.webp",
     "heading_en": "MFA & Identity Control",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Multi-Factor Authentication and Identity Management. A system that requires a dynamic second verification (token, app or biometrics) to log in.",
+    "note_en": "Ideal to protect financial systems and databases against credential theft and weak passwords on the black market."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/gestion-endpoints.webp",
     "heading_en": "Endpoint Management",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Centralized management (MDM/UEM). Cloud platforms that control inventory, software deployment and policies for all of the company's laptops and mobile devices.",
+    "note_en": "Ideal for large organizations where applying a security patch device by device would take unsustainable months of logistics."
   },
   "beneficios": {
     "title": "Beneficios",

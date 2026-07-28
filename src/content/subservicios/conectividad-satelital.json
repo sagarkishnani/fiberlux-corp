@@ -13,7 +13,8 @@
     "heroImage": "images/soluciones/imagenes/conectividad-satelital.webp",
     "heading_en": "Satellite Connectivity",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Coverage in remote areas without fiber infrastructure, with high-availability satellite links."
   },
   "beneficios": {
     "title": "Beneficios",

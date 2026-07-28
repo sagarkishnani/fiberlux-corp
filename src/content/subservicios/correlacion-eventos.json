@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/correlacion-evento.webp",
     "heading_en": "Event Correlation (SIEM)",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A service that centralizes and correlates security events from multiple sources through SIEM, complemented with SOAR capabilities to automate incident response.",
+    "note_en": "Ideal to improve visibility of your tech environment, accelerate threat detection and optimize security operations."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/housing.webp",
     "heading_en": "Housing / Colocation",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Rental of specialized space (full racks or fractions) in our Data Center. The client keeps ownership of the hardware; we guarantee the physical ecosystem.",
+    "note_en": "Ideal for organizations straining their budget (CAPEX) fitting out and cooling their own improvised, vulnerable server rooms."
   },
   "beneficios": {
     "title": "Beneficios",

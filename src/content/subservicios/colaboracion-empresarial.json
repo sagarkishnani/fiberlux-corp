@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/colaboracion-empresarial.webp",
     "heading_en": "Enterprise Collaboration",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Synchronized virtual workspaces on Microsoft 365 and Google Workspace: document co-creation, shared files and integration with Teams, SharePoint and OneDrive.",
+    "note_en": "Ideal to eliminate endless email chains with 'final.pdf' versions that cause confusion, overwrites and delays."
   },
   "beneficios": {
     "title": "Beneficios",

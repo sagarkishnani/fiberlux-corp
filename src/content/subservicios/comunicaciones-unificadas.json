@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/comunicaciones.webp",
     "heading_en": "Unified Communications",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "The evolution of IP Telephony: it unifies your phone system in a Unified Communications platform (UCaaS) with Microsoft Teams, WhatsApp, CRMs and more.",
+    "note_en": "Ideal for companies where personal WhatsApp and multiple isolated tools cause loss of control over information and fragment teams."
   },
   "beneficios": {
     "title": "Beneficios",

@@ -13,7 +13,8 @@
     "heroImage": "images/soluciones/imagenes/balanceo-de-enlaces.webp",
     "heading_en": "Link Load Balancing",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Intelligent traffic distribution across multiple links to maximize availability and performance."
   },
   "beneficios": {
     "title": "Beneficios",

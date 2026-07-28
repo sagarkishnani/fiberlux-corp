@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/antiddos.webp",
     "heading_en": "Anti-DDoS",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Intelligent volumetric mitigation system that detects anomalous spikes, diverts malicious traffic and scrubs it in the cloud.",
+    "note_en": "Ideal to protect critical portals from massive attacks that flood servers with junk traffic to bring the site down."
   },
   "beneficios": {
     "title": "Beneficios",

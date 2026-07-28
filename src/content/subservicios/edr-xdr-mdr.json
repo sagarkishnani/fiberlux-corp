@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/edr-xdr.webp",
     "heading_en": "EDR / XDR / MDR",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Protection, detection and response solutions for corporate devices, combining enterprise antivirus, EDR, XDR and MDR to protect laptops, servers and workstations from advanced threats.",
+    "note_en": "Ideal to stop hyper-advanced ransomware that evades traditional antivirus and runs directly on executives' and employees' laptops."
   },
   "beneficios": {
     "title": "Beneficios",

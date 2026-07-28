@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/ztna.webp",
     "heading_en": "ZTNA",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Zero Trust Network Access architecture that grants granular access only to a specific application, keeping the rest of the network invisible.",
+    "note_en": "Ideal to authenticate users and give external providers, consultants or auditors access to specific tools, without exposing the whole network with a full VPN."
   },
   "beneficios": {
     "title": "Beneficios",

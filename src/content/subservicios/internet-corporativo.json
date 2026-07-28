@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/internet-corporativo.webp",
     "heading_en": "Corporate Internet",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A 100% symmetrical fiber-optic link, exclusive and unshared with other users, with guaranteed bandwidth.",
+    "note_en": "Ideal if your shared network collapses at peak hours, choking your management systems and cloud file uploads."
   },
   "beneficios": {
     "title": "Beneficios",

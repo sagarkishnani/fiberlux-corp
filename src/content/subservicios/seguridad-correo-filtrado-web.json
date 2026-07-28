@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/seguridad-de-correo.webp",
     "heading_en": "Email Security & Web Filtering",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "A preventive cloud shield that intercepts malicious emails, infected attachments and restricts access to fraudulent websites.",
+    "note_en": "Ideal to mitigate the risk of the weakest link (human error), preventing an employee from compromising the infrastructure with a single click."
   },
   "beneficios": {
     "title": "Beneficios",

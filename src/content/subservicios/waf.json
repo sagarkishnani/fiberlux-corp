@@ -13,7 +13,9 @@
     "heroImage": "images/soluciones/imagenes/waf.webp",
     "heading_en": "WAF",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Web Application Firewall: a specialized barrier that audits HTTP/HTTPS traffic between the internet and your web application in real time.",
+    "note_en": "Ideal for web platforms and e-commerce sites exposed to cyberattacks."
   },
   "beneficios": {
     "title": "Beneficios",

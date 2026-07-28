@@ -13,7 +13,8 @@
     "heroImage": "images/soluciones/imagenes/sd-wan.webp",
     "heading_en": "SD-WAN",
     "ctaLabel_en": "Learn more",
-    "formTitle_en": "Let's talk?"
+    "formTitle_en": "Let's talk?",
+    "intro_en": "Software-defined network that optimizes and prioritizes traffic across multiple links and sites."
   },
   "beneficios": {
     "title": "Beneficios",
