@@ -18,6 +18,40 @@ import {
   FormDateTriplet,
 } from "../shared/FormControls";
 import { FormSuccess } from "../shared/FormSuccess";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
+
+/* Textos por defecto de la UI del form (los que no vienen del CMS). */
+const FORM_UI = {
+  es: {
+    sending: "Enviando...",
+    submit: "Enviar",
+    selectPlaceholder: "Selecciona una opción",
+    required: "Este campo es obligatorio",
+    invalidEmail: "Ingresa un correo válido",
+    invalidFormat: "Formato inválido",
+    minChars: (n: number) => `Mínimo ${n} caracteres`,
+    successTitle: "¡Formulario enviado!",
+    successSubtitle: "Tu solicitud ha sido registrada correctamente.",
+    contactSuccess: "¡Gracias! Tu mensaje ha sido enviado.",
+    genericError: "Ocurrió un error al enviar.",
+    connError: "No se pudo conectar con el servidor.",
+  },
+  en: {
+    sending: "Sending...",
+    submit: "Send",
+    selectPlaceholder: "Select an option",
+    required: "This field is required",
+    invalidEmail: "Enter a valid email",
+    invalidFormat: "Invalid format",
+    minChars: (n: number) => `Minimum ${n} characters`,
+    successTitle: "Form submitted!",
+    successSubtitle: "Your request has been registered successfully.",
+    contactSuccess: "Thank you! Your message has been sent.",
+    genericError: "An error occurred while sending.",
+    connError: "Could not connect to the server.",
+  },
+} as const;
 
 /* ══════════════════════════════════════════════════
    TYPES
@@ -26,8 +60,11 @@ import { FormSuccess } from "../shared/FormSuccess";
 interface FieldOption {
   value: string;
   label: string;
+  label_en?: string;
   group?: string;
+  group_en?: string;
   description?: string;
+  description_en?: string;
 }
 
 interface FieldValidation {
@@ -35,6 +72,7 @@ interface FieldValidation {
   maxLength?: number;
   pattern?: string;
   patternMessage?: string;
+  patternMessage_en?: string;
 }
 
 interface ConditionalField {
@@ -46,16 +84,21 @@ interface FormField {
   fieldType: string;
   name?: string;
   label?: string;
+  label_en?: string;
   placeholder?: string;
+  placeholder_en?: string;
   required?: boolean;
   width?: "full" | "half" | "third";
   order?: number;
   orderMobile?: number;
   sectionNumber?: number;
   noteContent?: string;
+  noteContent_en?: string;
   validation?: FieldValidation;
   errorMessage?: string;
+  errorMessage_en?: string;
   helpText?: string;
+  helpText_en?: string;
   defaultValue?: string;
   options?: FieldOption[];
   accept?: string;
@@ -64,20 +107,28 @@ interface FormField {
   rows?: number;
   conditionalField?: ConditionalField;
   linkText?: string;
+  linkText_en?: string;
   linkUrl?: string;
 }
 
 interface FormConfig {
   formId: string;
   formTitle?: string;
+  formTitle_en?: string;
   badge?: string;
   description?: string;
+  description_en?: string;
   styleVariant?: "default" | "contact" | "contact-dark";
   submitButtonText?: string;
+  submitButtonText_en?: string;
   successTitle?: string;
+  successTitle_en?: string;
   successMessage?: string;
+  successMessage_en?: string;
   errorMessage?: string;
+  errorMessage_en?: string;
   validationMessage?: string;
+  validationMessage_en?: string;
   showCorrelativo?: boolean;
   privacyText?: string;
   privacyUrl?: string;
@@ -385,12 +436,26 @@ interface DynamicFormProps {
    *  (e.g. the "servicio" select on a sub-service page). Only applies to matching
    *  fields; when omitted the form starts with its normal defaults. */
   prefill?: Record<string, string>;
+  /** Idioma activo. En 'en' usa los campos `_en` con fallback al ES. */
+  locale?: Locale;
 }
 
-export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false, prefill }: DynamicFormProps) {
+export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false, prefill, locale = "es" }: DynamicFormProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const formConfig: FormConfig = data?.dynamicForms || initialData?.dynamicForms;
   if (!formConfig) return null;
+
+  const ui = FORM_UI[locale];
+  /* Localiza el `key` de un objeto (label/placeholder/etc.) según el idioma. */
+  const L = (obj: any, key: string): string => tField(obj, key, locale);
+  /* Opciones con label/description/group localizados (el payload sigue usando las originales). */
+  const locOptions = (opts?: FieldOption[]): FieldOption[] =>
+    (opts || []).map((o) => ({
+      ...o,
+      label: L(o, "label") || o.label,
+      description: L(o, "description") || o.description,
+      group: L(o, "group") || o.group,
+    }));
 
   const fields: FormField[] = (formConfig.fields || []).filter(Boolean);
   const variant = formConfig.styleVariant || "default";
@@ -483,7 +548,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         else isEmpty = val === undefined || val === null || val === "" || (typeof val === "string" && !val.trim());
 
         if (isEmpty) {
-          errs[field.name] = field.errorMessage || "Este campo es obligatorio";
+          errs[field.name] = L(field, "errorMessage") || ui.required;
           continue;
         }
       }
@@ -491,7 +556,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       /* Email */
       if (field.fieldType === "email" && val && typeof val === "string" && val.trim()) {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim())) {
-          errs[field.name] = field.errorMessage || "Ingresa un correo válido";
+          errs[field.name] = L(field, "errorMessage") || ui.invalidEmail;
         }
       }
 
@@ -500,7 +565,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         try {
           if (!new RegExp(field.validation.pattern).test(val)) {
             errs[field.name] =
-              field.validation.patternMessage || field.errorMessage || "Formato inválido";
+              tField(field.validation, "patternMessage", locale) || L(field, "errorMessage") || ui.invalidFormat;
           }
         } catch {
           /* invalid regex — skip */
@@ -516,7 +581,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       ) {
         if (!errs[field.name]) {
           errs[field.name] =
-            field.errorMessage || `Mínimo ${field.validation.minLength} caracteres`;
+            L(field, "errorMessage") || ui.minChars(field.validation.minLength);
         }
       }
     }
@@ -533,7 +598,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
-      setSendError(formConfig.validationMessage || "");
+      setSendError(L(formConfig, "validationMessage") || "");
       return;
     }
 
@@ -583,12 +648,12 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         setSubmitted(true);
       } else {
         setSendError(
-          result.error || formConfig.errorMessage || "Ocurrió un error al enviar."
+          result.error || L(formConfig, "errorMessage") || ui.genericError
         );
       }
     } catch {
       setSendError(
-        formConfig.errorMessage || "No se pudo conectar con el servidor."
+        L(formConfig, "errorMessage") || ui.connError
       );
     } finally {
       setSending(false);
@@ -610,7 +675,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
               </svg>
             </div>
             <p className={`text-subtitle-sm font-semibold ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
-              {formConfig.successMessage || "¡Gracias! Tu mensaje ha sido enviado."}
+              {L(formConfig, "successMessage") || ui.contactSuccess}
             </p>
           </div>
         </div>
@@ -619,8 +684,8 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
 
     return (
       <FormSuccess
-        title={formConfig.successTitle || "¡Formulario enviado!"}
-        subtitle={formConfig.successMessage || "Tu solicitud ha sido registrada correctamente."}
+        title={L(formConfig, "successTitle") || ui.successTitle}
+        subtitle={L(formConfig, "successMessage") || ui.successSubtitle}
         correlativo={formConfig.showCorrelativo ? correlativo : undefined}
       />
     );
@@ -652,10 +717,10 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         <div data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
           {isContact ? (
             <h3 className={`text-body-md font-bold mt-4 mb-2 ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
-              {field.label}
+              {L(field, "label")}
             </h3>
           ) : (
-            <FormSectionHeader number={field.sectionNumber || 1} title={field.label || ""} />
+            <FormSectionHeader number={field.sectionNumber || 1} title={L(field, "label")} />
           )}
         </div>
       );
@@ -674,10 +739,10 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         <div data-tina-field={tinaField(formConfig, "fields", fieldIndex, "noteContent")}>
           {isContact ? (
             <p className="text-caption-sm text-greyscale-medium leading-relaxed">
-              {field.noteContent}
+              {L(field, "noteContent")}
             </p>
           ) : (
-            <FormNote text={field.noteContent || ""} />
+            <FormNote text={L(field, "noteContent")} />
           )}
         </div>
       );
@@ -688,9 +753,11 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
 
     /* --- Input types --- */
     const name = field.name!;
-    const label = field.label || "";
-    const placeholder = field.placeholder || "";
+    const label = L(field, "label");
+    const placeholder = L(field, "placeholder");
     const required = !!field.required;
+    const fieldOptions = locOptions(field.options);
+    const selectPlaceholder = placeholder || ui.selectPlaceholder;
 
     if (isContact) {
       /* ════ CONTACT VARIANT ════ */
@@ -730,8 +797,8 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         return (
           <ContactSelect
             label={label}
-            placeholder={placeholder}
-            options={field.options || []}
+            placeholder={selectPlaceholder}
+            options={fieldOptions}
             value={val || ""}
             onChange={(v) => updateField(name, v)}
             required={required}
@@ -768,7 +835,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
             <span data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
               <CheckboxLabel
                 label={label}
-                linkText={field.linkText}
+                linkText={L(field, "linkText")}
                 linkUrl={field.linkUrl}
                 variant={isDark ? "contact-dark" : "contact"}
               />
@@ -809,8 +876,8 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return (
         <FormSelect
           label={label}
-          placeholder={placeholder}
-          options={field.options || []}
+          placeholder={selectPlaceholder}
+          options={fieldOptions}
           value={val || ""}
           onChange={(v) => updateField(name, v)}
           required={required}
@@ -840,7 +907,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
           <span data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
             <CheckboxLabel
               label={label}
-              linkText={field.linkText}
+              linkText={L(field, "linkText")}
               linkUrl={field.linkUrl}
               variant="default"
             />
@@ -853,7 +920,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return (
         <FormCheckboxGroup
           label={label}
-          options={field.options || []}
+          options={fieldOptions}
           value={val || []}
           onChange={(v) => updateField(name, v)}
           required={required}
@@ -866,7 +933,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return (
         <FormInlineRadio
           label={label}
-          options={field.options || []}
+          options={fieldOptions}
           value={val || ""}
           onChange={(v) => updateField(name, v)}
           required={required}
@@ -879,7 +946,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return (
         <FormRadioGroup
           label={label}
-          options={(field.options || []).map((o) => ({
+          options={fieldOptions.map((o) => ({
             value: o.value,
             title: o.label,
             description: o.description,
@@ -902,7 +969,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
           multiple={field.multiple !== false}
           required={required}
           error={err}
-          helpText={field.helpText}
+          helpText={L(field, "helpText")}
         />
       );
     }
@@ -968,8 +1035,8 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         <div data-tina-field={tinaField(formConfig, "formTitle")}>
           <FormPageHeader
             badge={formConfig.badge}
-            title={formConfig.formTitle || ""}
-            description={formConfig.description}
+            title={L(formConfig, "formTitle")}
+            description={L(formConfig, "description")}
           />
         </div>
       )}
@@ -977,20 +1044,20 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       {/* Contact variant: title (and subtitle for dark) inside the form area */}
       {!hideHeader && isContact && (formConfig.formTitle || (isDark && formConfig.description)) && (
         <div className="mb-8">
-          {formConfig.formTitle && (
+          {L(formConfig, "formTitle") && (
             <h2
               className={`text-subtitle-md font-bold! ${isDark ? "text-greyscale-white mb-2" : "text-greyscale-darkest"}`}
               data-tina-field={tinaField(formConfig, "formTitle")}
             >
-              {formConfig.formTitle}
+              {L(formConfig, "formTitle")}
             </h2>
           )}
-          {isDark && formConfig.description && (
+          {isDark && L(formConfig, "description") && (
             <p
               className="text-body-sm text-greyscale-light"
               data-tina-field={tinaField(formConfig, "description")}
             >
-              {formConfig.description}
+              {L(formConfig, "description")}
             </p>
           )}
         </div>
@@ -1021,7 +1088,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
               }}
             >
               {renderField(field, idx)}
-              {field.helpText && !["upload", "note"].includes(field.fieldType) && (
+              {L(field, "helpText") && !["upload", "note"].includes(field.fieldType) && (
                 <p
                   style={
                     isContact
@@ -1030,7 +1097,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
                   }
                   className={isContact ? "text-caption-sm text-greyscale-medium mt-1" : undefined}
                 >
-                  {field.helpText}
+                  {L(field, "helpText")}
                 </p>
               )}
             </div>
@@ -1047,14 +1114,14 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       <div style={{ marginTop: "24px" }}>
         {isContact ? (
           <ContactSubmitButton
-            text={sending ? "Enviando..." : (formConfig.submitButtonText || "Enviar")}
+            text={sending ? ui.sending : (L(formConfig, "submitButtonText") || ui.submit)}
             onClick={handleSubmit}
             disabled={sending}
             dark={isDark}
           />
         ) : (
           <FormSubmitButton
-            text={sending ? "Enviando..." : (formConfig.submitButtonText || "Enviar")}
+            text={sending ? ui.sending : (L(formConfig, "submitButtonText") || ui.submit)}
             onClick={handleSubmit}
             disabled={sending}
           />

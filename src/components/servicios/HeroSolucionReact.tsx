@@ -195,6 +195,7 @@ export default function HeroSolucionReact({
                 variables={form.variables}
                 data={form.data}
                 hideHeader
+                locale={locale}
               />
             </div>
           )}

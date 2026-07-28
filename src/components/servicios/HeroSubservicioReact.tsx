@@ -207,6 +207,7 @@ export default function HeroSubservicioReact({
               data={form.data}
               prefill={prefill}
               hideHeader
+              locale={locale}
             />
           </div>
         </div>

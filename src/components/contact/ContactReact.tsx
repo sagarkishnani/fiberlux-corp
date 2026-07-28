@@ -124,6 +124,7 @@ export default function ContactReact({
               query={form.query}
               variables={form.variables}
               data={form.data}
+              locale={locale}
             />
           </div>
 

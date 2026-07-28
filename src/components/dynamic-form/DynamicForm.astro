@@ -1,6 +1,8 @@
 ---
 import client from "../../../tina/__generated__/client";
 import DynamicFormReact from "./DynamicFormReact";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   formSlug: string;
@@ -12,6 +14,7 @@ const { formSlug, prefill } = Astro.props;
 const result = await client.queries.dynamicForms({
   relativePath: `${formSlug}.json`,
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <DynamicFormReact
@@ -19,5 +22,6 @@ const result = await client.queries.dynamicForms({
   variables={result.variables}
   data={result.data}
   prefill={prefill}
+  locale={locale}
   client:load
 />

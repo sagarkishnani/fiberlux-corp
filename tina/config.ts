@@ -2330,6 +2330,7 @@ export default defineConfig({
             label: "Título del formulario",
             type: "string",
           },
+          { name: "formTitle_en", label: "Título del formulario (EN)", type: "string" },
           {
             name: "badge",
             label: "Badge (opcional)",
@@ -2340,6 +2341,12 @@ export default defineConfig({
           {
             name: "description",
             label: "Descripción",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "description_en",
+            label: "Descripción (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -2361,6 +2368,7 @@ export default defineConfig({
             label: "Texto botón enviar",
             type: "string",
           },
+          { name: "submitButtonText_en", label: "Texto botón enviar (EN)", type: "string" },
           {
             name: "successTitle",
             label: "Título de éxito",
@@ -2368,9 +2376,16 @@ export default defineConfig({
             description:
               "Título que se muestra después de enviar exitosamente.",
           },
+          { name: "successTitle_en", label: "Título de éxito (EN)", type: "string" },
           {
             name: "successMessage",
             label: "Mensaje de éxito",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "successMessage_en",
+            label: "Mensaje de éxito (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -2380,6 +2395,7 @@ export default defineConfig({
             type: "string",
             description: "Se muestra cuando falla el envío al servidor.",
           },
+          { name: "errorMessage_en", label: "Mensaje de error (EN)", type: "string" },
           {
             name: "validationMessage",
             label: "Mensaje de validación",
@@ -2387,6 +2403,7 @@ export default defineConfig({
             description:
               "Se muestra cuando el usuario intenta enviar con campos inválidos. Ej: 'Por favor completa los campos marcados en rojo'.",
           },
+          { name: "validationMessage_en", label: "Mensaje de validación (EN)", type: "string" },
           {
             name: "showCorrelativo",
             label: "Mostrar N° correlativo",
@@ -2492,11 +2509,13 @@ export default defineConfig({
                 type: "string",
                 description: "Para section_header es el título de la sección.",
               },
+              { name: "label_en", label: "Etiqueta visible (EN)", type: "string" },
               {
                 name: "placeholder",
                 label: "Placeholder",
                 type: "string",
               },
+              { name: "placeholder_en", label: "Placeholder (EN)", type: "string" },
               {
                 name: "required",
                 label: "Obligatorio",
@@ -2544,6 +2563,12 @@ export default defineConfig({
                 description: "Solo para note. El texto del párrafo.",
               },
               {
+                name: "noteContent_en",
+                label: "Contenido de nota (EN)",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
                 name: "rows",
                 label: "Filas",
                 type: "number",
@@ -2580,6 +2605,7 @@ export default defineConfig({
                     description:
                       "Mensaje cuando el valor no cumple el patrón. Ej: 'El RUC debe tener 11 dígitos'.",
                   },
+                  { name: "patternMessage_en", label: "Mensaje del patrón (EN)", type: "string" },
                 ],
               },
               {
@@ -2589,6 +2615,7 @@ export default defineConfig({
                 description:
                   "Si se deja vacío, se genera un mensaje automático según la validación que falle.",
               },
+              { name: "errorMessage_en", label: "Mensaje de error personalizado (EN)", type: "string" },
               {
                 name: "helpText",
                 label: "Texto de ayuda",
@@ -2596,6 +2623,7 @@ export default defineConfig({
                 description:
                   "Texto pequeño debajo del campo. Para upload aparece como instrucción de archivos.",
               },
+              { name: "helpText_en", label: "Texto de ayuda (EN)", type: "string" },
               {
                 name: "defaultValue",
                 label: "Valor por defecto",
@@ -2615,6 +2643,7 @@ export default defineConfig({
                 fields: [
                   { name: "value", label: "Valor", type: "string" },
                   { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
                   {
                     name: "group",
                     label: "Grupo / Categoría",
@@ -2622,6 +2651,7 @@ export default defineConfig({
                     description:
                       "Solo para select: agrupa las opciones bajo un encabezado (optgroup). Ej: la categoría del servicio.",
                   },
+                  { name: "group_en", label: "Grupo / Categoría (EN)", type: "string" },
                   {
                     name: "description",
                     label: "Descripción",
@@ -2629,6 +2659,7 @@ export default defineConfig({
                     description:
                       "Solo para radioGroup (aparece debajo del título en la tarjeta).",
                   },
+                  { name: "description_en", label: "Descripción (EN)", type: "string" },
                 ],
               },
 
@@ -2658,6 +2689,7 @@ export default defineConfig({
                 description:
                   "Solo para checkbox. Parte del label que se convierte en enlace. Ej: 'Política de Privacidad'.",
               },
+              { name: "linkText_en", label: "Texto del enlace (EN)", type: "string" },
               {
                 name: "linkUrl",
                 label: "URL del enlace",

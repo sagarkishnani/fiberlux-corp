@@ -80,6 +80,7 @@ export default function ServiciosFormReact({
             variables={form.variables}
             data={form.data}
             prefill={prefill}
+            locale={locale}
           />
         </div>
       </div>

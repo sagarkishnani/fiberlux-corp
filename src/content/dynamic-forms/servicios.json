@@ -4,17 +4,24 @@
   "description": "",
   "styleVariant": "contact-dark",
   "submitButtonText": "Contactar",
+  "submitButtonText_en": "Contact",
   "successTitle": "¡Datos enviados!",
+  "successTitle_en": "Details sent!",
   "successMessage": "Gracias. Nuestro equipo comercial te contactará pronto.",
+  "successMessage_en": "Thank you. Our sales team will contact you soon.",
   "errorMessage": "Ocurrió un error al enviar. Inténtalo de nuevo.",
+  "errorMessage_en": "An error occurred while sending. Please try again.",
   "validationMessage": "Por favor completa los campos obligatorios.",
+  "validationMessage_en": "Please complete the required fields.",
   "showCorrelativo": false,
   "fields": [
     {
       "fieldType": "text",
       "name": "empresa",
       "label": "Empresa",
+      "label_en": "Company",
       "placeholder": "Empresa",
+      "placeholder_en": "Company",
       "required": true,
       "width": "half",
       "order": 1
@@ -23,20 +30,25 @@
       "fieldType": "text",
       "name": "ruc",
       "label": "RUC",
+      "label_en": "Tax ID (RUC)",
       "placeholder": "RUC",
+      "placeholder_en": "Tax ID (RUC)",
       "required": true,
       "width": "half",
       "order": 2,
       "validation": {
         "pattern": "^\\d{11}$",
-        "patternMessage": "El RUC debe tener 11 dígitos"
+        "patternMessage": "El RUC debe tener 11 dígitos",
+        "patternMessage_en": "Tax ID (RUC) must be 11 digits"
       }
     },
     {
       "fieldType": "text",
       "name": "nombre",
       "label": "Nombre",
+      "label_en": "First name",
       "placeholder": "Nombre",
+      "placeholder_en": "First name",
       "required": true,
       "width": "half",
       "order": 3
@@ -45,7 +57,9 @@
       "fieldType": "text",
       "name": "apellidos",
       "label": "Apellidos",
+      "label_en": "Last name",
       "placeholder": "Apellidos",
+      "placeholder_en": "Last name",
       "required": true,
       "width": "half",
       "order": 4
@@ -54,7 +68,9 @@
       "fieldType": "select",
       "name": "servicio",
       "label": "Servicio de interés",
+      "label_en": "Service of interest",
       "placeholder": "Servicio de interés",
+      "placeholder_en": "Service of interest",
       "required": true,
       "width": "full",
       "order": 5,
@@ -62,177 +78,247 @@
         {
           "value": "internet-corporativo",
           "label": "Internet Corporativo",
-          "group": "Conectividad empresarial"
+          "label_en": "Corporate Internet",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "internet-alta-disponibilidad",
           "label": "Internet Corporativo de Alta Disponibilidad",
-          "group": "Conectividad empresarial"
+          "label_en": "High-Availability Corporate Internet",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "conectividad-satelital",
           "label": "Conectividad satelital",
-          "group": "Conectividad empresarial"
+          "label_en": "Satellite Connectivity",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "radioenlaces-empresariales",
           "label": "Radioenlaces Empresariales",
-          "group": "Conectividad empresarial"
+          "label_en": "Enterprise Radio Links",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "transmision-de-datos-l2l",
           "label": "Transmisión de datos (L2L)",
-          "group": "Conectividad empresarial"
+          "label_en": "Data Transmission (L2L)",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "fibra-oscura",
           "label": "Fibra Oscura",
-          "group": "Conectividad empresarial"
+          "label_en": "Dark Fiber",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "sd-wan",
           "label": "SD-WAN",
-          "group": "Conectividad empresarial"
+          "label_en": "SD-WAN",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "balanceo-de-enlaces",
           "label": "Balanceo de enlaces",
-          "group": "Conectividad empresarial"
+          "label_en": "Link Balancing",
+          "group": "Conectividad empresarial",
+          "group_en": "Business Connectivity"
         },
         {
           "value": "ngfw-seguridad-perimetral",
           "label": "NGFW y Seguridad Perimetral",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "NGFW & Perimeter Security",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "vpn-segura",
           "label": "VPN Segura y Acceso Remoto Protegido",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Secure VPN & Protected Remote Access",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "edr-xdr-mdr",
           "label": "EDR / XDR / MDR",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "EDR / XDR / MDR",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "seguridad-correo-filtrado-web",
           "label": "Seguridad de correo y filtrado web",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Email Security & Web Filtering",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "mfa-control-identidad",
           "label": "MFA y Control de Identidad",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "MFA & Identity Control",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "ztna",
           "label": "ZTNA y Control de Acceso Seguro",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "ZTNA & Secure Access Control",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "nac",
           "label": "NAC (Network Access Control)",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "NAC (Network Access Control)",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "waf",
           "label": "WAF y Protección de Aplicaciones",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "WAF & Application Protection",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "anti-ddos",
           "label": "Anti-DDoS",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Anti-DDoS",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "concientizacion-phishing",
           "label": "Concientización en Phishing",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Phishing Awareness",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "soc-24-7",
           "label": "CYBER SOC 24/7 y Monitoreo",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "CYBER SOC 24/7 & Monitoring",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "correlacion-eventos",
           "label": "Correlación de eventos",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Event Correlation",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "pentesting",
           "label": "Pentesting y Evaluación de Vulnerabilidades",
-          "group": "Ciberseguridad gestionada"
+          "label_en": "Pentesting & Vulnerability Assessment",
+          "group": "Ciberseguridad gestionada",
+          "group_en": "Managed Cybersecurity"
         },
         {
           "value": "housing-colocacion",
           "label": "Housing y Colocación",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Housing & Colocation",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "nube-privada",
           "label": "Nube Privada",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Private Cloud",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "nube-publica",
           "label": "Nube Pública",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Public Cloud",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "baas",
           "label": "Backup as a Service (BaaS)",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Backup as a Service (BaaS)",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "draas",
           "label": "Disaster Recovery (DRaaS)",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Disaster Recovery (DRaaS)",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "storage-computo",
           "label": "Storage y Cómputo Empresarial",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Enterprise Storage & Compute",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "microservicios",
           "label": "Arquitectura basada en Microservicios",
-          "group": "Data Center, Cloud y Continuidad de Negocio"
+          "label_en": "Microservices-based Architecture",
+          "group": "Data Center, Cloud y Continuidad de Negocio",
+          "group_en": "Data Center, Cloud & Business Continuity"
         },
         {
           "value": "mesa-de-ayuda",
           "label": "Mesa de Ayuda",
-          "group": "Servicios gestionados"
+          "label_en": "Help Desk",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "comunicaciones-unificadas",
           "label": "Comunicaciones Unificadas",
-          "group": "Servicios gestionados"
+          "label_en": "Unified Communications",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "colaboracion-empresarial",
           "label": "Colaboración Empresarial",
-          "group": "Servicios gestionados"
+          "label_en": "Enterprise Collaboration",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "gestion-redes-lan",
           "label": "Gestión de Redes LAN",
-          "group": "Servicios gestionados"
+          "label_en": "LAN Network Management",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "wifi-gestionado",
           "label": "WiFi Gestionado",
-          "group": "Servicios gestionados"
+          "label_en": "Managed WiFi",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "gestion-endpoints",
           "label": "Gestión de Endpoints",
-          "group": "Servicios gestionados"
+          "label_en": "Endpoint Management",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         },
         {
           "value": "videovigilancia-gestionada",
           "label": "Videovigilancia gestionada",
-          "group": "Servicios gestionados"
+          "label_en": "Managed Video Surveillance",
+          "group": "Servicios gestionados",
+          "group_en": "Managed Services"
         }
       ]
     },
@@ -240,7 +326,9 @@
       "fieldType": "tel",
       "name": "telefono",
       "label": "Teléfono / Celular",
+      "label_en": "Phone / Mobile",
       "placeholder": "Teléfono / Celular",
+      "placeholder_en": "Phone / Mobile",
       "required": true,
       "width": "half",
       "order": 6
@@ -249,7 +337,9 @@
       "fieldType": "email",
       "name": "correo",
       "label": "Correo",
+      "label_en": "Email",
       "placeholder": "Correo",
+      "placeholder_en": "Email",
       "required": true,
       "width": "half",
       "order": 7
@@ -258,10 +348,12 @@
       "fieldType": "checkbox",
       "name": "consentimiento",
       "label": "¿Nos brinda su consentimiento para el tratamiento de datos personales?",
+      "label_en": "Do you give us your consent for the processing of personal data?",
       "required": true,
       "width": "full",
       "order": 8,
       "linkText": "tratamiento de datos personales",
+      "linkText_en": "processing of personal data",
       "linkUrl": "/legales/tratamiento-datos"
     }
   ]
