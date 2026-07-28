@@ -922,20 +922,28 @@ type SoporteTecnicoChannelsRows {
 type SoporteTecnicoChannels {
   type: String
   tabLabel: String
+  tabLabel_en: String
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   defaultOpen: Boolean
   rows: [SoporteTecnicoChannelsRows]
 }
 
 type SoporteTecnico implements Node & Document {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   heroVideo: String
   heroVideoPoster: String
   sectionTitle: String
+  sectionTitle_en: String
   sectionSubtitle: String
+  sectionSubtitle_en: String
   channels: [SoporteTecnicoChannels]
   id: ID!
   _sys: SystemInfo!
@@ -952,20 +960,28 @@ input SoporteTecnicoChannelsRowsFilter {
 input SoporteTecnicoChannelsFilter {
   type: StringFilter
   tabLabel: StringFilter
+  tabLabel_en: StringFilter
   title: StringFilter
+  title_en: StringFilter
   subtitle: StringFilter
+  subtitle_en: StringFilter
   defaultOpen: BooleanFilter
   rows: SoporteTecnicoChannelsRowsFilter
 }
 
 input SoporteTecnicoFilter {
   breadcrumb: StringFilter
+  breadcrumb_en: StringFilter
   heading: StringFilter
+  heading_en: StringFilter
   intro: StringFilter
+  intro_en: StringFilter
   heroVideo: ImageFilter
   heroVideoPoster: ImageFilter
   sectionTitle: StringFilter
+  sectionTitle_en: StringFilter
   sectionSubtitle: StringFilter
+  sectionSubtitle_en: StringFilter
   channels: SoporteTecnicoChannelsFilter
 }
 
@@ -2515,20 +2531,28 @@ input SoporteTecnicoChannelsRowsMutation {
 input SoporteTecnicoChannelsMutation {
   type: String
   tabLabel: String
+  tabLabel_en: String
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   defaultOpen: Boolean
   rows: [SoporteTecnicoChannelsRowsMutation]
 }
 
 input SoporteTecnicoMutation {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   heroVideo: String
   heroVideoPoster: String
   sectionTitle: String
+  sectionTitle_en: String
   sectionSubtitle: String
+  sectionSubtitle_en: String
   channels: [SoporteTecnicoChannelsMutation]
 }
 

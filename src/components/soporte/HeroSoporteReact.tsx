@@ -4,17 +4,22 @@ import type {
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
 import HeroVideo from "../shared/HeroVideo";
+import { tField } from "../../utils/i18n";
+import { t } from "../../i18n/ui";
+import type { Locale } from "../../i18n/config";
 
 interface HeroSoporteProps {
   query: string;
   variables: SoporteTecnicoQueryVariables;
   data: SoporteTecnicoQuery;
+  locale?: Locale;
 }
 
 export default function HeroSoporteReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: HeroSoporteProps) {
   const { data } = useTina<SoporteTecnicoQuery>({ query, variables, data: initialData });
 
@@ -38,14 +43,14 @@ export default function HeroSoporteReact({
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-6">
               <a href={base} className="hover:text-greyscale-white transition-colors">
-                Inicio
+                {t("breadcrumb.home", locale)}
               </a>
               <span>/</span>
               <span
                 className="text-greyscale-white"
                 data-tina-field={tinaField(page, "breadcrumb")}
               >
-                {page.breadcrumb}
+                {tField(page, "breadcrumb", locale)}
               </span>
             </nav>
 
@@ -53,14 +58,14 @@ export default function HeroSoporteReact({
               className="text-[32px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white mb-6"
               data-tina-field={tinaField(page, "heading")}
             >
-              {page.heading}
+              {tField(page, "heading", locale)}
             </h1>
 
             <p
               className="text-body-md text-greyscale-light max-w-[460px]"
               data-tina-field={tinaField(page, "intro")}
             >
-              {page.intro}
+              {tField(page, "intro", locale)}
             </p>
           </div>
 

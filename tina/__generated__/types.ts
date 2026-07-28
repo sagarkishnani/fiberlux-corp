@@ -1330,8 +1330,11 @@ export type SoporteTecnicoChannels = {
   __typename?: 'SoporteTecnicoChannels';
   type?: Maybe<Scalars['String']['output']>;
   tabLabel?: Maybe<Scalars['String']['output']>;
+  tabLabel_en?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
+  subtitle_en?: Maybe<Scalars['String']['output']>;
   defaultOpen?: Maybe<Scalars['Boolean']['output']>;
   rows?: Maybe<Array<Maybe<SoporteTecnicoChannelsRows>>>;
 };
@@ -1339,12 +1342,17 @@ export type SoporteTecnicoChannels = {
 export type SoporteTecnico = Node & Document & {
   __typename?: 'SoporteTecnico';
   breadcrumb?: Maybe<Scalars['String']['output']>;
+  breadcrumb_en?: Maybe<Scalars['String']['output']>;
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
+  intro_en?: Maybe<Scalars['String']['output']>;
   heroVideo?: Maybe<Scalars['String']['output']>;
   heroVideoPoster?: Maybe<Scalars['String']['output']>;
   sectionTitle?: Maybe<Scalars['String']['output']>;
+  sectionTitle_en?: Maybe<Scalars['String']['output']>;
   sectionSubtitle?: Maybe<Scalars['String']['output']>;
+  sectionSubtitle_en?: Maybe<Scalars['String']['output']>;
   channels?: Maybe<Array<Maybe<SoporteTecnicoChannels>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -1361,20 +1369,28 @@ export type SoporteTecnicoChannelsRowsFilter = {
 export type SoporteTecnicoChannelsFilter = {
   type?: InputMaybe<StringFilter>;
   tabLabel?: InputMaybe<StringFilter>;
+  tabLabel_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
+  subtitle_en?: InputMaybe<StringFilter>;
   defaultOpen?: InputMaybe<BooleanFilter>;
   rows?: InputMaybe<SoporteTecnicoChannelsRowsFilter>;
 };
 
 export type SoporteTecnicoFilter = {
   breadcrumb?: InputMaybe<StringFilter>;
+  breadcrumb_en?: InputMaybe<StringFilter>;
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
+  intro_en?: InputMaybe<StringFilter>;
   heroVideo?: InputMaybe<ImageFilter>;
   heroVideoPoster?: InputMaybe<ImageFilter>;
   sectionTitle?: InputMaybe<StringFilter>;
+  sectionTitle_en?: InputMaybe<StringFilter>;
   sectionSubtitle?: InputMaybe<StringFilter>;
+  sectionSubtitle_en?: InputMaybe<StringFilter>;
   channels?: InputMaybe<SoporteTecnicoChannelsFilter>;
 };
 
@@ -3274,20 +3290,28 @@ export type SoporteTecnicoChannelsRowsMutation = {
 export type SoporteTecnicoChannelsMutation = {
   type?: InputMaybe<Scalars['String']['input']>;
   tabLabel?: InputMaybe<Scalars['String']['input']>;
+  tabLabel_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
+  subtitle_en?: InputMaybe<Scalars['String']['input']>;
   defaultOpen?: InputMaybe<Scalars['Boolean']['input']>;
   rows?: InputMaybe<Array<InputMaybe<SoporteTecnicoChannelsRowsMutation>>>;
 };
 
 export type SoporteTecnicoMutation = {
   breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  breadcrumb_en?: InputMaybe<Scalars['String']['input']>;
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
+  intro_en?: InputMaybe<Scalars['String']['input']>;
   heroVideo?: InputMaybe<Scalars['String']['input']>;
   heroVideoPoster?: InputMaybe<Scalars['String']['input']>;
   sectionTitle?: InputMaybe<Scalars['String']['input']>;
+  sectionTitle_en?: InputMaybe<Scalars['String']['input']>;
   sectionSubtitle?: InputMaybe<Scalars['String']['input']>;
+  sectionSubtitle_en?: InputMaybe<Scalars['String']['input']>;
   channels?: InputMaybe<Array<InputMaybe<SoporteTecnicoChannelsMutation>>>;
 };
 
@@ -3775,7 +3799,7 @@ export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: s
 
 export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null };
 
-export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
+export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
 
 export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formSubtitle?: string | null };
 
@@ -3920,7 +3944,7 @@ export type SoporteTecnicoQueryVariables = Exact<{
 }>;
 
 
-export type SoporteTecnicoQuery = { __typename?: 'Query', soporteTecnico: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } };
+export type SoporteTecnicoQuery = { __typename?: 'Query', soporteTecnico: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } };
 
 export type SoporteTecnicoConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3932,7 +3956,7 @@ export type SoporteTecnicoConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SoporteTecnicoConnectionQuery = { __typename?: 'Query', soporteTecnicoConnection: { __typename?: 'SoporteTecnicoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SoporteTecnicoConnectionEdges', cursor: string, node?: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } | null } | null> | null } };
+export type SoporteTecnicoConnectionQuery = { __typename?: 'Query', soporteTecnicoConnection: { __typename?: 'SoporteTecnicoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SoporteTecnicoConnectionEdges', cursor: string, node?: { __typename: 'SoporteTecnico', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null } | null } | null> | null } };
 
 export type ServiciosQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4460,18 +4484,26 @@ export const SoporteTecnicoPartsFragmentDoc = gql`
     fragment SoporteTecnicoParts on SoporteTecnico {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   heroVideo
   heroVideoPoster
   sectionTitle
+  sectionTitle_en
   sectionSubtitle
+  sectionSubtitle_en
   channels {
     __typename
     type
     tabLabel
+    tabLabel_en
     title
+    title_en
     subtitle
+    subtitle_en
     defaultOpen
     rows {
       __typename

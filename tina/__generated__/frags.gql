@@ -289,18 +289,26 @@ fragment ContactParts on Contact {
 fragment SoporteTecnicoParts on SoporteTecnico {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   heroVideo
   heroVideoPoster
   sectionTitle
+  sectionTitle_en
   sectionSubtitle
+  sectionSubtitle_en
   channels {
     __typename
     type
     tabLabel
+    tabLabel_en
     title
+    title_en
     subtitle
+    subtitle_en
     defaultOpen
     rows {
       __typename

@@ -6,6 +6,8 @@ import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 /* Ícono por tipo de canal → deja claro que la fila es clickeable/accionable. */
 const CHANNEL_ICON: Record<string, ComponentType<{ className?: string }>> = {
@@ -18,6 +20,7 @@ interface CanalesSoporteProps {
   query: string;
   variables: SoporteTecnicoQueryVariables;
   data: SoporteTecnicoQuery;
+  locale?: Locale;
 }
 
 /* Build the actionable href for a row from the channel type + value. */
@@ -40,6 +43,7 @@ export default function CanalesSoporte({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: CanalesSoporteProps) {
   const { data } = useTina<SoporteTecnicoQuery>({ query, variables, data: initialData });
   const page = data?.soporteTecnico;
@@ -111,14 +115,14 @@ export default function CanalesSoporte({
         className="text-[24px] lg:text-[28px] font-semibold text-greyscale-darkest mb-2 whitespace-nowrap"
         data-tina-field={tinaField(channel, "title")}
       >
-        {channel?.title}
+        {tField(channel as any, "title", locale)}
       </h3>
       {channel?.subtitle && (
         <p
           className="text-body-sm text-greyscale-dark/60 mb-6 max-w-[640px]"
           data-tina-field={tinaField(channel, "subtitle")}
         >
-          {channel.subtitle}
+          {tField(channel as any, "subtitle", locale)}
         </p>
       )}
       {renderRows(channel)}
@@ -133,13 +137,13 @@ export default function CanalesSoporte({
           className="text-[34px] md:text-[48px] leading-[1.1] font-semibold text-brand-purple mb-4"
           data-tina-field={tinaField(page, "sectionTitle")}
         >
-          {page.sectionTitle}
+          {tField(page as any, "sectionTitle", locale)}
         </h2>
         <p
           className="text-body-lg text-brand-purple/80 max-w-[600px] mb-12"
           data-tina-field={tinaField(page, "sectionSubtitle")}
         >
-          {page.sectionSubtitle}
+          {tField(page as any, "sectionSubtitle", locale)}
         </p>
 
         {/* ════ Desktop — horizontal accordion (effortel-style width animation) ════ */}
@@ -175,7 +179,7 @@ export default function CanalesSoporte({
                       style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
                       data-tina-field={tinaField(channel, "tabLabel")}
                     >
-                      {channel?.tabLabel}
+                      {tField(channel as any, "tabLabel", locale)}
                     </span>
                     <span
                       className="absolute flex items-center justify-center rounded-full bg-brand-purple text-white"
@@ -210,7 +214,7 @@ export default function CanalesSoporte({
                     className="text-body-md font-semibold text-greyscale-darkest"
                     data-tina-field={tinaField(channel, "tabLabel")}
                   >
-                    {channel?.tabLabel}
+                    {tField(channel as any, "tabLabel", locale)}
                   </span>
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-purple text-white">
                     <FaPlus
@@ -235,11 +239,11 @@ export default function CanalesSoporte({
                         className="text-[22px] font-semibold text-greyscale-darkest mb-2"
                         data-tina-field={tinaField(channel, "title")}
                       >
-                        {channel?.title}
+                        {tField(channel as any, "title", locale)}
                       </h3>
                       {channel?.subtitle && (
                         <p className="text-body-sm text-greyscale-dark/60 mb-5">
-                          {channel.subtitle}
+                          {tField(channel as any, "subtitle", locale)}
                         </p>
                       )}
                       {renderRows(channel)}

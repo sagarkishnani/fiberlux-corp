@@ -1,10 +1,13 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import CanalesSoporteReact from "./CanalesSoporte.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const soporteQuery = await client.queries.soporteTecnico({
   relativePath: "index.json",
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <CanalesSoporteReact
@@ -12,4 +15,5 @@ const soporteQuery = await client.queries.soporteTecnico({
   query={soporteQuery.query}
   variables={soporteQuery.variables}
   data={soporteQuery.data}
+  locale={locale}
 />

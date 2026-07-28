@@ -1153,10 +1153,18 @@ export default defineConfig({
         fields: [
           // ── Hero ──
           { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "breadcrumb_en", label: "Migaja de pan (EN)", type: "string" },
           { name: "heading", label: "Título principal (H1)", type: "string", ui: { component: "textarea" } },
+          { name: "heading_en", label: "Título principal (H1) (EN)", type: "string", ui: { component: "textarea" } },
           {
             name: "intro",
             label: "Párrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "intro_en",
+            label: "Párrafo introductorio (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -1177,9 +1185,16 @@ export default defineConfig({
 
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "Título de sección", type: "string" },
+          { name: "sectionTitle_en", label: "Título de sección (EN)", type: "string" },
           {
             name: "sectionSubtitle",
             label: "Subtítulo de sección",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "sectionSubtitle_en",
+            label: "Subtítulo de sección (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -1203,10 +1218,18 @@ export default defineConfig({
                 ],
               },
               { name: "tabLabel", label: "Etiqueta de pestaña", type: "string" },
+              { name: "tabLabel_en", label: "Etiqueta de pestaña (EN)", type: "string" },
               { name: "title", label: "Título del panel", type: "string" },
+              { name: "title_en", label: "Título del panel (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subtítulo del panel",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
+                name: "subtitle_en",
+                label: "Subtítulo del panel (EN)",
                 type: "string",
                 ui: { component: "textarea" },
               },
