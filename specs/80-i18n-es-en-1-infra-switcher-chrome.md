@@ -1,6 +1,6 @@
 # SPEC 80 — i18n ES/EN: infraestructura, switcher y traducción de todo el sitio
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 33 (HeaderV2 / topbar), SPEC 07 (footer)
 > **Fecha:** 2026-07-27
 > **Objetivo:** Montar el bilingüe ES/EN (ES por defecto) con rutas `/en/`, switcher de idioma en el header, traducción del chrome y **de todo el contenido del sitio** (pantallas, 4 categorías de soluciones, 35 subservicios, blog, legales) vía campos `_en` con fallback a ES.
