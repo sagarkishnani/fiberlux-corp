@@ -43,7 +43,7 @@ export default function HeroFormasPagoReact({
 
         {tField(page as any, "intro", locale) && (
           <p
-            className="mt-6 text-[22px] leading-[34px] text-greyscale-light max-w-[640px]"
+            className="mt-6 text-[24px] md:text-[26px] leading-[38px] text-greyscale-light max-w-[640px]"
             data-tina-field={tinaField(page, "intro")}
           >
             {tField(page as any, "intro", locale)}

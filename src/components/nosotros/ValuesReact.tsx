@@ -137,7 +137,7 @@ function ValueCard({ item, locale }: { item: ValueItem; locale: Locale }) {
       }}
     >
       <span
-        className="text-sm font-medium text-center"
+        className="text-base md:text-lg font-medium text-center"
         style={{ color: '#7F1866' }}
       >
         {tField(item as any, "name", locale)}

@@ -116,7 +116,7 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
 
   const overlay = (
     <div
-      className="fixed inset-0 z-[55] flex items-start justify-center px-4 pt-[144px] md:pt-[152px]"
+      className="fixed inset-0 z-[85] flex items-start justify-center px-4 pt-[144px] md:pt-[152px]"
       role="dialog"
       aria-modal="true"
       aria-label="Búsqueda del sitio"
