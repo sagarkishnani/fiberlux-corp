@@ -493,7 +493,9 @@
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
     "title": "Trabajamos con los líderes de la industria",
+    "title_en": "We work with industry leaders",
     "logos": [
       {
         "image": "/images/partners/huawei.svg",

@@ -1,6 +1,8 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import PartnersMarquee from "./PartnersMarquee.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 // Franja de partners del home (SPEC 43): reúne los logos de TODAS las
 // soluciones en un solo marquee, deduplicando por ruta de imagen. El copy
@@ -28,9 +30,12 @@ const logos = allLogos.filter((l: any) => {
 const gp = (globalQuery.data?.global as any)?.partners;
 const partners = {
   eyebrow: gp?.eyebrow ?? null,
+  eyebrow_en: gp?.eyebrow_en ?? null,
   title: gp?.title ?? null,
+  title_en: gp?.title_en ?? null,
   logos,
 };
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
 // Velocidad constante: la duración del marquee crece con la cantidad de logos
 // (~9s por logo), así no se acelera por tener muchos logos juntos pero mantiene
@@ -38,4 +43,4 @@ const partners = {
 const durationSeconds = Math.max(logos.length * 9, 45);
 ---
 
-<PartnersMarquee client:visible partners={partners} durationSeconds={durationSeconds} />
+<PartnersMarquee client:visible partners={partners} durationSeconds={durationSeconds} locale={locale} />
