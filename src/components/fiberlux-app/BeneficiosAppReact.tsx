@@ -16,11 +16,14 @@ import type {
   FiberluxAppQuery,
   FiberluxAppQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface BeneficiosAppProps {
   query: string;
   variables: FiberluxAppQueryVariables;
   data: FiberluxAppQuery;
+  locale?: Locale;
 }
 
 interface Item {
@@ -54,6 +57,7 @@ export default function BeneficiosAppReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: BeneficiosAppProps) {
   const { data } = useTina<FiberluxAppQuery>({
     query,
@@ -78,7 +82,7 @@ export default function BeneficiosAppReact({
             className="text-[28px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(beneficios, "title")}
           >
-            {beneficios.title}
+            {tField(beneficios as any, "title", locale)}
           </h2>
         )}
 
@@ -100,7 +104,7 @@ export default function BeneficiosAppReact({
                   className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-medium leading-snug text-greyscale-white"
                   data-tina-field={tinaField(item as any, "text")}
                 >
-                  {item.text}
+                  {tField(item as any, "text", locale)}
                 </p>
               )}
             </div>

@@ -2022,7 +2022,9 @@ type FiberluxAppHeroDownloads {
 type FiberluxAppHero {
   heading: String
   description: String
+  description_en: String
   note: String
+  note_en: String
   mockup: String
   downloads: [FiberluxAppHeroDownloads]
 }
@@ -2030,16 +2032,20 @@ type FiberluxAppHero {
 type FiberluxAppBeneficiosItems {
   icon: String
   text: String
+  text_en: String
 }
 
 type FiberluxAppBeneficios {
   title: String
+  title_en: String
   items: [FiberluxAppBeneficiosItems]
 }
 
 type FiberluxAppCasosDeUso {
   eyebrow: String
+  eyebrow_en: String
   statement: JSON
+  statement_en: JSON
 }
 
 type FiberluxAppSeo {
@@ -2054,6 +2060,7 @@ type FiberluxApp implements Node & Document {
   beneficios: FiberluxAppBeneficios
   casosDeUso: FiberluxAppCasosDeUso
   whyUsTitle: String
+  whyUsTitle_en: String
   seo: FiberluxAppSeo
   id: ID!
   _sys: SystemInfo!
@@ -2090,7 +2097,9 @@ input FiberluxAppHeroDownloadsFilter {
 input FiberluxAppHeroFilter {
   heading: StringFilter
   description: StringFilter
+  description_en: StringFilter
   note: StringFilter
+  note_en: StringFilter
   mockup: ImageFilter
   downloads: FiberluxAppHeroDownloadsFilter
 }
@@ -2098,16 +2107,20 @@ input FiberluxAppHeroFilter {
 input FiberluxAppBeneficiosItemsFilter {
   icon: StringFilter
   text: StringFilter
+  text_en: StringFilter
 }
 
 input FiberluxAppBeneficiosFilter {
   title: StringFilter
+  title_en: StringFilter
   items: FiberluxAppBeneficiosItemsFilter
 }
 
 input FiberluxAppCasosDeUsoFilter {
   eyebrow: StringFilter
+  eyebrow_en: StringFilter
   statement: RichTextFilter
+  statement_en: RichTextFilter
 }
 
 input FiberluxAppSeoFilter {
@@ -2122,6 +2135,7 @@ input FiberluxAppFilter {
   beneficios: FiberluxAppBeneficiosFilter
   casosDeUso: FiberluxAppCasosDeUsoFilter
   whyUsTitle: StringFilter
+  whyUsTitle_en: StringFilter
   seo: FiberluxAppSeoFilter
 }
 
@@ -3035,7 +3049,9 @@ input FiberluxAppHeroDownloadsMutation {
 input FiberluxAppHeroMutation {
   heading: String
   description: String
+  description_en: String
   note: String
+  note_en: String
   mockup: String
   downloads: [FiberluxAppHeroDownloadsMutation]
 }
@@ -3043,16 +3059,20 @@ input FiberluxAppHeroMutation {
 input FiberluxAppBeneficiosItemsMutation {
   icon: String
   text: String
+  text_en: String
 }
 
 input FiberluxAppBeneficiosMutation {
   title: String
+  title_en: String
   items: [FiberluxAppBeneficiosItemsMutation]
 }
 
 input FiberluxAppCasosDeUsoMutation {
   eyebrow: String
+  eyebrow_en: String
   statement: JSON
+  statement_en: JSON
 }
 
 input FiberluxAppSeoMutation {
@@ -3067,6 +3087,7 @@ input FiberluxAppMutation {
   beneficios: FiberluxAppBeneficiosMutation
   casosDeUso: FiberluxAppCasosDeUsoMutation
   whyUsTitle: String
+  whyUsTitle_en: String
   seo: FiberluxAppSeoMutation
 }
 

@@ -2635,12 +2635,14 @@ var config_default = defineConfig({
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "description_en", label: "Descripci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "note",
                 label: "Bajada en contenedor",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "note_en", label: "Bajada en contenedor (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "mockup",
                 label: "Mockup app (imagen celular)",
@@ -2672,6 +2674,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Cards",
@@ -2699,6 +2702,12 @@ var config_default = defineConfig({
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" }
+                  },
+                  {
+                    name: "text_en",
+                    label: "Texto (EN)",
+                    type: "string",
+                    ui: { component: "textarea" }
                   }
                 ]
               }
@@ -2711,13 +2720,20 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
-              { name: "statement", label: "Statement", type: "rich-text" }
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
+              { name: "statement", label: "Statement", type: "rich-text" },
+              { name: "statement_en", label: "Statement (EN)", type: "rich-text" }
             ]
           },
           // ── "¿Por qué Fiberlux?" (reusa cifras del home; solo override de título) ──
           {
             name: "whyUsTitle",
             label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?'",
+            type: "string"
+          },
+          {
+            name: "whyUsTitle_en",
+            label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?' (EN)",
             type: "string"
           },
           // ── SEO / meta (cae a global.seo si vacío) ──

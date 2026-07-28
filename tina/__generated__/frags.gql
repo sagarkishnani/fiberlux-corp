@@ -736,7 +736,9 @@ fragment FiberluxAppParts on FiberluxApp {
     __typename
     heading
     description
+    description_en
     note
+    note_en
     mockup
     downloads {
       __typename
@@ -748,18 +750,23 @@ fragment FiberluxAppParts on FiberluxApp {
   beneficios {
     __typename
     title
+    title_en
     items {
       __typename
       icon
       text
+      text_en
     }
   }
   casosDeUso {
     __typename
     eyebrow
+    eyebrow_en
     statement
+    statement_en
   }
   whyUsTitle
+  whyUsTitle_en
   seo {
     __typename
     metaTitle

@@ -6,6 +6,10 @@ import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
 import CasosDeUsoApp from "../components/fiberlux-app/CasosDeUsoApp.astro";
 import Stats from "../components/Stats.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
+import { getLocale, tField } from "../utils/i18n";
+import { isLocale } from "../i18n/config";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
 /* ── SEO / meta (falls back to global.seo) ── */
 const appQuery = await client.queries.fiberluxApp({
@@ -37,7 +41,7 @@ const metaDescription =
       <CasosDeUsoApp />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
-      <Stats title={app?.whyUsTitle ?? undefined} />
+      <Stats title={tField(app as any, "whyUsTitle", locale) || undefined} />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
       <BlogPreview />

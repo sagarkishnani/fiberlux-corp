@@ -2775,12 +2775,14 @@ export default defineConfig({
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "description_en", label: "Descripción (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "note",
                 label: "Bajada en contenedor",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "note_en", label: "Bajada en contenedor (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "mockup",
                 label: "Mockup app (imagen celular)",
@@ -2813,6 +2815,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Cards",
@@ -2841,6 +2844,12 @@ export default defineConfig({
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  {
+                    name: "text_en",
+                    label: "Texto (EN)",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
                 ],
               },
             ],
@@ -2853,7 +2862,9 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "statement", label: "Statement", type: "rich-text" },
+              { name: "statement_en", label: "Statement (EN)", type: "rich-text" },
             ],
           },
 
@@ -2861,6 +2872,11 @@ export default defineConfig({
           {
             name: "whyUsTitle",
             label: "Título '¿Por qué Fiberlux?'",
+            type: "string",
+          },
+          {
+            name: "whyUsTitle_en",
+            label: "Título '¿Por qué Fiberlux?' (EN)",
             type: "string",
           },
 

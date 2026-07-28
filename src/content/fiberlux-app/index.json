@@ -15,36 +15,46 @@
         "label": "Disponible en Google Play",
         "url": "https://play.google.com/store/apps/details?id=com.fiberlux.app&hl=es_PE"
       }
-    ]
+    ],
+    "description_en": "Get full control of your network from your phone.",
+    "note_en": "Boost your operations with 24/7 visibility and smart management of your Fiberlux services in a single tap."
   },
   "beneficios": {
     "title": "Beneficios",
     "items": [
       {
         "icon": "monitoreo",
-        "text": "Monitorea el estado de todos tus servicios en tiempo real."
+        "text": "Monitorea el estado de todos tus servicios en tiempo real.",
+        "text_en": "Monitor the status of all your services in real time."
       },
       {
         "icon": "sedes",
-        "text": "Visualiza rápidamente cuántas sedes están operativas."
+        "text": "Visualiza rápidamente cuántas sedes están operativas.",
+        "text_en": "Quickly see how many locations are operational."
       },
       {
         "icon": "diagnostico",
-        "text": "Accede a diagnósticos avanzados."
+        "text": "Accede a diagnósticos avanzados.",
+        "text_en": "Access advanced diagnostics."
       },
       {
         "icon": "factura",
-        "text": "Descarga tus facturas individual o masivamente, y revisa tu estado de cuenta actualizado."
+        "text": "Descarga tus facturas individual o masivamente, y revisa tu estado de cuenta actualizado.",
+        "text_en": "Download your invoices individually or in bulk, and check your up-to-date account statement."
       },
       {
         "icon": "ticket",
-        "text": "Crea tickets al instante y gestiona incidencias o requerimientos desde tu teléfono."
+        "text": "Crea tickets al instante y gestiona incidencias o requerimientos desde tu teléfono.",
+        "text_en": "Create tickets instantly and manage incidents or requests from your phone."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Para todas las empresas que deseen **monitorear el estado de sus servicios Fiberlux en tiempo real**."
+    "statement": "Para todas las empresas que deseen **monitorear el estado de sus servicios Fiberlux en tiempo real**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "For all companies that want to **monitor the status of their Fiberlux services in real time**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "seo": {
@@ -79,5 +89,6 @@
     "imageTablet": "images/fiberlux-app/banner-app-img-tablet.webp",
     "imageDesktop": "images/fiberlux-app/banner-app-img-desktop.webp",
     "bgColor": "#0a0a0a"
-  }
+  },
+  "whyUsTitle_en": "Why Fiberlux?"
 }
