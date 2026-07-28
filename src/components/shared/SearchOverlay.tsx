@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaMagnifyingGlass, FaXmark, FaArrowRight } from "react-icons/fa6";
 import { searchEntries, type SearchEntry } from "../../utils/search";
+import { localizeHref } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 /* Índice cacheado en memoria: se baja una sola vez por sesión. */
@@ -37,6 +38,7 @@ function localize(e: SearchEntry, locale: Locale): SearchEntry {
     title: e.title_en || e.title,
     description: e.description_en || e.description,
     category: e.category_en || e.category,
+    url: localizeHref(e.url, "en"),
   };
 }
 

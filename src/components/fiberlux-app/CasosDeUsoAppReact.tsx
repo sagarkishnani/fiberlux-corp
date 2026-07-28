@@ -5,7 +5,7 @@ import type {
   FiberluxAppQuery,
   FiberluxAppQueryVariables,
 } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, richField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 interface CasosDeUsoAppProps {
@@ -54,11 +54,8 @@ export default function CasosDeUsoAppReact({
   const casos = data?.fiberluxApp?.casosDeUso;
   if (!casos) return null;
 
-  // Rich-text: usa la versión EN si existe y el locale es 'en'; si no, ES.
-  const statement =
-    locale === "en" && (casos as any).statement_en
-      ? (casos as any).statement_en
-      : casos.statement;
+  // Rich-text: usa la versión EN solo si tiene contenido; si no, cae al ES.
+  const statement = richField(casos as any, "statement", locale);
   const showStatement = hasContent(statement);
   if (!casos.eyebrow && !showStatement) return null;
 

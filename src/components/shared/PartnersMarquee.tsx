@@ -1,4 +1,6 @@
 import { tinaField } from "tinacms/dist/react";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 export interface PartnerLogo {
   image?: string | null;
@@ -8,7 +10,9 @@ export interface PartnerLogo {
 
 export interface PartnersData {
   eyebrow?: string | null;
+  eyebrow_en?: string | null;
   title?: string | null;
+  title_en?: string | null;
   logos?: (PartnerLogo | null)[] | null;
 }
 
@@ -21,6 +25,7 @@ export interface PartnersData {
 export default function PartnersMarquee({
   partners,
   durationSeconds,
+  locale = "es",
 }: {
   partners?: PartnersData | null;
   /**
@@ -30,8 +35,12 @@ export default function PartnersMarquee({
    * para mantener una velocidad constante aunque haya muchos (SPEC 43).
    */
   durationSeconds?: number;
+  locale?: Locale;
 }) {
   if (!partners) return null;
+
+  const eyebrow = tField(partners as any, "eyebrow", locale);
+  const title = tField(partners as any, "title", locale);
 
   const logos = (partners.logos || []).filter(Boolean) as PartnerLogo[];
   if (logos.length === 0) return null;
@@ -71,20 +80,20 @@ export default function PartnersMarquee({
   return (
     <section className="bg-greyscale-darkest py-16 md:py-20 overflow-hidden">
       <div className="site-container text-center mb-10 md:mb-14">
-        {partners.eyebrow && (
+        {eyebrow && (
           <p
             className="font-mono text-xs md:text-sm tracking-[0.2em] text-white/50 uppercase mb-4"
             data-tina-field={tinaField(partners as any, "eyebrow")}
           >
-            {partners.eyebrow}
+            {eyebrow}
           </p>
         )}
-        {partners.title && (
+        {title && (
           <h2
             className="text-subtitle-md md:text-subtitle-lg text-white"
             data-tina-field={tinaField(partners as any, "title")}
           >
-            {partners.title}
+            {title}
           </h2>
         )}
       </div>

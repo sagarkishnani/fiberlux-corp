@@ -4,7 +4,7 @@ import type {
   PostQuery,
   PostQueryVariables,
 } from '../../../tina/__generated__/types';
-import { tField } from '../../utils/i18n';
+import { tField, richField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
 import BlogGridCard from './BlogGridCard';
 
@@ -278,7 +278,7 @@ export default function BlogDetailReact({
               "
               data-tina-field={tinaField(post, 'body')}
             >
-              {(() => { const b = locale === "en" && (post as any).body_en ? (post as any).body_en : body; return b ? <TinaMarkdown content={b} /> : null; })()}
+              {(() => { const b = richField(post as any, "body", locale) ?? body; return b ? <TinaMarkdown content={b} /> : null; })()}
             </article>
 
             {/* Sidebar — share (desktop only) */}

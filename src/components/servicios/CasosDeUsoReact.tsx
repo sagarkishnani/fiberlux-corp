@@ -5,7 +5,7 @@ import type {
   SubservicioQuery,
   SubservicioQueryVariables,
 } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, richField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 interface CasosDeUsoProps {
@@ -54,10 +54,7 @@ export default function CasosDeUsoReact({
   const casos = data?.subservicio?.casosDeUso;
   if (!casos) return null;
 
-  const statement =
-    locale === "en" && (casos as any).statement_en
-      ? (casos as any).statement_en
-      : casos.statement;
+  const statement = richField(casos as any, "statement", locale);
   const showStatement = hasContent(statement);
   if (!casos.eyebrow && !showStatement) return null;
 

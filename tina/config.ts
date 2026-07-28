@@ -433,6 +433,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Items",
@@ -473,13 +474,21 @@ export default defineConfig({
                     ],
                   },
                   { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
                   {
                     name: "description",
                     label: "Descripción (se revela en hover)",
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  {
+                    name: "description_en",
+                    label: "Descripción (EN)",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
                   { name: "buttonLabel", label: "Texto del botón", type: "string" },
+                  { name: "buttonLabel_en", label: "Texto del botón (EN)", type: "string" },
                   {
                     name: "url",
                     label: "URL (placeholder → nivel-2)",
@@ -512,7 +521,9 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "logos",
                 label: "Logos",
@@ -1375,9 +1386,16 @@ export default defineConfig({
 
           // ── Bloque de formulario ──
           { name: "formTitle", label: "Título del bloque de formulario", type: "string" },
+          { name: "formTitle_en", label: "Título del bloque de formulario (EN)", type: "string" },
           {
             name: "formSubtitle",
             label: "Subtítulo del bloque de formulario",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "formSubtitle_en",
+            label: "Subtítulo del bloque de formulario (EN)",
             type: "string",
             ui: { component: "textarea" },
           },
@@ -1921,7 +1939,9 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "logos",
                 label: "Logos",

@@ -1,8 +1,11 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import PartnersReact from "./PartnersReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <PartnersReact
@@ -10,4 +13,5 @@ const globalQuery = await client.queries.global({ relativePath: "index.json" });
   query={globalQuery.query}
   variables={globalQuery.variables}
   data={globalQuery.data}
+  locale={locale}
 />

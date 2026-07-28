@@ -1,6 +1,8 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import CatalogoSolucionesReact from "./CatalogoSolucionesReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   relativePath: string;
@@ -10,6 +12,7 @@ const { relativePath } = Astro.props;
 const serviceQuery = await client.queries.service({ relativePath });
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const cfg = (globalQuery.data?.global as any)?.sliders?.catalogoSoluciones ?? {};
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <CatalogoSolucionesReact
@@ -20,4 +23,5 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.catalogoSoluciones ?? {}
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 6000}
   effect={cfg.effect ?? "none"}
+  locale={locale}
 />

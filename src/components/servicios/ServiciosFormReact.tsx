@@ -4,6 +4,8 @@ import type {
   ServiciosQueryVariables,
 } from "../../../tina/__generated__/types";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface FormIsland {
   query: string;
@@ -17,6 +19,7 @@ interface ServiciosFormProps {
   data: ServiciosQuery;
   form: FormIsland;
   prefill?: Record<string, string>;
+  locale?: Locale;
 }
 
 export default function ServiciosFormReact({
@@ -25,6 +28,7 @@ export default function ServiciosFormReact({
   data: initialData,
   form,
   prefill,
+  locale = "es",
 }: ServiciosFormProps) {
   const { data } = useTina<ServiciosQuery>({ query, variables, data: initialData });
 
@@ -57,14 +61,14 @@ export default function ServiciosFormReact({
             className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-greyscale-white mb-4"
             data-tina-field={tinaField(page, "formTitle")}
           >
-            {page.formTitle}
+            {tField(page as any, "formTitle", locale)}
           </h2>
-          {page.formSubtitle && (
+          {tField(page as any, "formSubtitle", locale) && (
             <p
               className="text-body-md text-greyscale-light"
               data-tina-field={tinaField(page, "formSubtitle")}
             >
-              {page.formSubtitle}
+              {tField(page as any, "formSubtitle", locale)}
             </p>
           )}
         </div>

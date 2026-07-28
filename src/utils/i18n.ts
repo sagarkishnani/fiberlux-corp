@@ -76,3 +76,26 @@ export function tField(
   }
   return obj[key] ?? "";
 }
+
+/**
+ * true si un nodo rich-text (AST de Tina) tiene texto no vacío.
+ * Tina devuelve un `_en` rich-text vacío (objeto truthy pero sin texto) aunque
+ * el campo no exista en el contenido, así que no basta con comprobar truthiness.
+ */
+export function richHasContent(node: any): boolean {
+  const walk = (n: any): string => {
+    if (!n) return "";
+    if (typeof n.text === "string") return n.text;
+    if (Array.isArray(n?.children)) return n.children.map(walk).join("");
+    if (Array.isArray(n)) return n.map(walk).join("");
+    return "";
+  };
+  return walk(node?.children ?? node).trim().length > 0;
+}
+
+/** Elige el rich-text `key_en` en EN solo si tiene contenido; si no, cae al ES. */
+export function richField(obj: any, key: string, locale: Locale): any {
+  if (!obj) return null;
+  if (locale === "en" && richHasContent(obj[`${key}_en`])) return obj[`${key}_en`];
+  return obj[key];
+}

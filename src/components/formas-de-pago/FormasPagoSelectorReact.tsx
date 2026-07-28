@@ -7,7 +7,7 @@ import type {
   FormasDePagoQuery,
   FormasDePagoQueryVariables,
 } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, richField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 interface FormasPagoSelectorProps {
@@ -43,9 +43,8 @@ interface StepData {
 
 /** One numbered step: title + checkmark description on the left, screenshot on the right. */
 function StepRow({ step, tinaId, locale }: { step: StepData; tinaId?: string; locale: Locale }) {
-  // Rich-text: usa la versión EN si existe y el locale es 'en'; si no, ES.
-  const description =
-    locale === "en" && step.description_en ? step.description_en : step.description;
+  // Rich-text: usa la versión EN solo si tiene contenido; si no, cae al ES.
+  const description = richField(step as any, "description", locale);
   return (
     <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 md:gap-10 items-center py-10 border-t border-white/10">
       <div>

@@ -4,7 +4,7 @@ import type {
   LegalQuery,
   LegalQueryVariables,
 } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, richField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 interface LegalPageProps {
@@ -25,8 +25,8 @@ export default function LegalPageReact({
 
   const eyebrow = tField(legal, "eyebrow", locale);
   const title = tField(legal, "title", locale);
-  // Body legal: usa la traducción oficial EN si existe; si no, la versión ES.
-  const body = locale === "en" && legal?.body_en ? legal.body_en : legal?.body;
+  // Body legal: usa la traducción oficial EN solo si tiene contenido; si no, ES.
+  const body = richField(legal as any, "body", locale);
 
   return (
     <section className="bg-white">

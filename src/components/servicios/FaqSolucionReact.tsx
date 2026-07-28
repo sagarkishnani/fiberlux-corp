@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { FaPlus, FaMinus } from "react-icons/fa6";
-import { tField } from "../../utils/i18n";
+import { tField, richField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
 interface FaqProps {
@@ -71,8 +71,7 @@ export default function FaqSolucionReact({
         <div className="flex flex-col gap-3" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => {
             const isOpen = open === i;
-            const answer =
-              locale === "en" && item.answer_en ? item.answer_en : item.answer;
+            const answer = richField(item as any, "answer", locale);
             const showAnswer = isOpen && hasContent(answer);
             return (
               <div

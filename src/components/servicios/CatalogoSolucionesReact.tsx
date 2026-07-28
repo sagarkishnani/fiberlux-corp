@@ -35,6 +35,8 @@ import type {
   ServiceQuery,
   ServiceQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface CatalogoProps {
   query: string;
@@ -43,6 +45,7 @@ interface CatalogoProps {
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
+  locale?: Locale;
 }
 
 interface Item {
@@ -107,6 +110,7 @@ export default function CatalogoSolucionesReact({
   autoplay = true,
   intervalMs = 6000,
   effect = "none",
+  locale = "es",
 }: CatalogoProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
@@ -130,12 +134,12 @@ export default function CatalogoSolucionesReact({
   return (
     <section id="catalogo" className="bg-greyscale-darkest pt-16 pb-32 md:py-24 scroll-mt-24 mb-4">
       <div className="site-container">
-        {catalogo.title && (
+        {tField(catalogo as any, "title", locale) && (
           <h2
             className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(catalogo, "title")}
           >
-            {catalogo.title}
+            {tField(catalogo as any, "title", locale)}
           </h2>
         )}
 
@@ -146,18 +150,21 @@ export default function CatalogoSolucionesReact({
             const span = SPAN_CLASS[item.colSpan || "1"] || "lg:col-span-1";
             const featured = !!item.featured;
             const number = String(i + 1).padStart(2, "0");
+            const iTitle = tField(item as any, "title", locale);
+            const iDesc = tField(item as any, "description", locale);
+            const iBtn = tField(item as any, "buttonLabel", locale);
 
             const content = (
               <>
-                {item.description && (
+                {iDesc && (
                   <p
                     className={`text-body-sm ${featured ? "text-white/75 max-w-[440px]" : "text-greyscale-light"}`}
                     data-tina-field={tinaField(item as any, "description")}
                   >
-                    {item.description}
+                    {iDesc}
                   </p>
                 )}
-                {item.buttonLabel && item.description && (
+                {iBtn && iDesc && (
                   <span
                     className={`mt-4 inline-flex items-center gap-2 text-sm font-medium rounded-full px-4 py-2 transition-colors ${
                       featured
@@ -166,7 +173,7 @@ export default function CatalogoSolucionesReact({
                     }`}
                     data-tina-field={tinaField(item as any, "buttonLabel")}
                   >
-                    {item.buttonLabel}
+                    {iBtn}
                     <FaArrowRight size={12} />
                   </span>
                 )}
@@ -204,7 +211,7 @@ export default function CatalogoSolucionesReact({
                       className="text-[22px] lg:text-[28px] font-semibold text-greyscale-white mb-3"
                       data-tina-field={tinaField(item as any, "title")}
                     >
-                      {item.title}
+                      {iTitle}
                     </h3>
                     {content}
                   </div>
@@ -214,7 +221,7 @@ export default function CatalogoSolucionesReact({
                       className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
                       data-tina-field={tinaField(item as any, "title")}
                     >
-                      {item.title}
+                      {iTitle}
                     </h3>
                     {/* Reveal on hover / focus — smooth height + fade */}
                     <div className="catalog-reveal relative z-10 grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
@@ -253,7 +260,7 @@ export default function CatalogoSolucionesReact({
                         >
                           <ItemIcon name={item.icon} />
                           <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
-                            {item.title}
+                            {tField(item as any, "title", locale)}
                           </h3>
                         </CardTag>
                       );
