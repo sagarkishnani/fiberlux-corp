@@ -22,17 +22,23 @@
       {
         "icon": "cobertura",
         "title": "Despliegue inmediato",
-        "text": "En cualquier punto geográfico, sin depender de obras civiles."
+        "title_en": "Immediate deployment",
+        "text": "En cualquier punto geográfico, sin depender de obras civiles.",
+        "text_en": "At any geographic location, without relying on civil works."
       },
       {
         "icon": "velocidad",
         "title": "Latencia baja",
-        "text": "Usa ERPs y VoIP desde lugares remotos."
+        "title_en": "Low latency",
+        "text": "Usa ERPs y VoIP desde lugares remotos.",
+        "text_en": "Use ERPs and VoIP from remote locations."
       },
       {
         "icon": "escudo",
         "title": "Contingencia reforzada",
-        "text": "Mayor nivel de respaldo para sedes urbanas críticas."
+        "title_en": "Reinforced contingency",
+        "text": "Mayor nivel de respaldo para sedes urbanas críticas.",
+        "text_en": "A higher level of backup for critical urban sites."
       }
     ],
     "title_en": "Benefits"
@@ -40,7 +46,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Mining camps, agribusinesses and remote sites; or as the **highest level of backup (failover)** in urban areas."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -49,18 +56,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

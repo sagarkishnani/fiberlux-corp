@@ -22,22 +22,30 @@
       {
         "icon": "red",
         "title": "Balanceo inteligente",
-        "text": "Distribuye el tráfico entre múltiples enlaces para optimizar rendimiento y disponibilidad."
+        "title_en": "Intelligent balancing",
+        "text": "Distribuye el tráfico entre múltiples enlaces para optimizar rendimiento y disponibilidad.",
+        "text_en": "Distributes traffic across multiple links to optimize performance and availability."
       },
       {
         "icon": "reloj",
         "title": "Conmutación automática",
-        "text": "Ante fallos del enlace principal, con detección y reconvergencia según la configuración."
+        "title_en": "Automatic failover",
+        "text": "Ante fallos del enlace principal, con detección y reconvergencia según la configuración.",
+        "text_en": "When the primary link fails, with detection and reconvergence based on your configuration."
       },
       {
         "icon": "disponibilidad",
         "title": "Continuidad 24/7",
-        "text": "Reduce drásticamente el riesgo de downtime prolongado."
+        "title_en": "24/7 continuity",
+        "text": "Reduce drásticamente el riesgo de downtime prolongado.",
+        "text_en": "Dramatically reduces the risk of prolonged downtime."
       },
       {
         "icon": "escudo",
         "title": "Resiliencia simplificada",
-        "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas."
+        "title_en": "Simplified resilience",
+        "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas.",
+        "text_en": "Automates path selection across physically diverse technologies."
       }
     ],
     "title_en": "Benefits"
@@ -45,7 +53,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde **el downtime es inaceptable**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Hospitals, emergency dispatch centers, control rooms, financial institutions, industrial operations and 24/7 organizations where **downtime is unacceptable**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -54,18 +63,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

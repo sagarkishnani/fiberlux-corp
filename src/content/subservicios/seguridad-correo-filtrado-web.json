@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Menos phishing e ingeniería social",
-        "text": "Reducción drástica de infecciones por tácticas de phishing."
+        "title_en": "Less phishing and social engineering",
+        "text": "Reducción drástica de infecciones por tácticas de phishing.",
+        "text_en": "A drastic reduction in infections from phishing tactics."
       },
       {
         "icon": "generico",
         "title": "Bandejas limpias",
-        "text": "Correos corporativos libres de spam extorsivo."
+        "title_en": "Clean inboxes",
+        "text": "Correos corporativos libres de spam extorsivo.",
+        "text_en": "Corporate mailboxes free of extortion spam."
       },
       {
         "icon": "red",
         "title": "Cumplimiento de políticas de uso",
-        "text": "Bloqueo de dominios de alto riesgo."
+        "title_en": "Acceptable-use policy compliance",
+        "text": "Bloqueo de dominios de alto riesgo.",
+        "text_en": "Blocking of high-risk domains."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Corporaciones con alto volumen de **personal administrativo y atención al cliente**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Corporations with a high volume of **administrative and customer-service staff**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timeline?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

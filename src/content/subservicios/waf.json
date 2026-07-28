@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Bloqueo de exploits",
-        "text": "Detiene vulnerabilidades web antes de que toquen el servidor."
+        "title_en": "Exploit blocking",
+        "text": "Detiene vulnerabilidades web antes de que toquen el servidor.",
+        "text_en": "Stops web vulnerabilities before they ever reach the server."
       },
       {
         "icon": "generico",
         "title": "Cumplimiento PCI-DSS",
-        "text": "Ayuda a cumplir normativas financieras de pago."
+        "title_en": "PCI-DSS compliance",
+        "text": "Ayuda a cumplir normativas financieras de pago.",
+        "text_en": "Helps meet financial payment regulations."
       },
       {
         "icon": "red",
         "title": "Protección OWASP Top 10",
-        "text": "Mitiga las vulnerabilidades del estándar OWASP, reduciendo el riesgo de explotación."
+        "title_en": "OWASP Top 10 protection",
+        "text": "Mitiga las vulnerabilidades del estándar OWASP, reduciendo el riesgo de explotación.",
+        "text_en": "Mitigates OWASP standard vulnerabilities, reducing the risk of exploitation."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Tiendas de **e-commerce**, pasarelas de pago y portales de trámites ciudadanos.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "**E-commerce** stores, payment gateways and citizen service portals."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my company?",
         "answer": ""
       }
     ],

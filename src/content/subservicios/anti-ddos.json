@@ -23,17 +23,23 @@
       {
         "icon": "disponibilidad",
         "title": "Disponibilidad web 24/7",
-        "text": "Mantén el sitio en línea incluso bajo ataques de saturación global."
+        "title_en": "24/7 web availability",
+        "text": "Mantén el sitio en línea incluso bajo ataques de saturación global.",
+        "text_en": "Keep your site online even under global saturation attacks."
       },
       {
         "icon": "velocidad",
         "title": "Filtrado invisible",
-        "text": "El cliente real sigue operando sin percibir lentitud."
+        "title_en": "Invisible filtering",
+        "text": "El cliente real sigue operando sin percibir lentitud.",
+        "text_en": "Legitimate users keep working without noticing any slowdown."
       },
       {
         "icon": "ahorro",
         "title": "Protege tu facturación online",
-        "text": "Asegura las ventas en fechas comerciales vitales."
+        "title_en": "Protect your online revenue",
+        "text": "Asegura las ventas en fechas comerciales vitales.",
+        "text_en": "Safeguard your sales during peak commercial dates."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Retail masivo (**Cyber Days**), medios de comunicación, bancos y universidades.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "High-volume retail (**Cyber Days**), media outlets, banks and universities."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

@@ -23,17 +23,23 @@
       {
         "icon": "disponibilidad",
         "title": "Monitoreo centralizado",
-        "text": "Supervisa cámaras y dispositivos desde un solo lugar."
+        "title_en": "Centralized monitoring",
+        "text": "Supervisa cámaras y dispositivos desde un solo lugar.",
+        "text_en": "Oversee cameras and devices from a single place."
       },
       {
         "icon": "escudo",
         "title": "Mayor control y visibilidad",
-        "text": "Protege activos, instalaciones y operaciones."
+        "title_en": "Greater control and visibility",
+        "text": "Protege activos, instalaciones y operaciones.",
+        "text_en": "Protect assets, facilities and operations."
       },
       {
         "icon": "red",
         "title": "Acceso remoto seguro",
-        "text": "Visualización en tiempo real y acceso a grabaciones desde cualquier lugar."
+        "title_en": "Secure remote access",
+        "text": "Visualización en tiempo real y acceso a grabaciones desde cualquier lugar.",
+        "text_en": "Real-time viewing and access to recordings from anywhere."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Oficinas corporativas, centros logísticos, plantas industriales, instituciones educativas, salud, retail y organizaciones con **múltiples sedes**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Corporate offices, logistics centers, industrial plants, educational institutions, healthcare, retail and organizations with **multiple sites**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my company?",
         "answer": ""
       }
     ],

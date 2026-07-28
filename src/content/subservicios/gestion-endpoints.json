@@ -23,17 +23,23 @@
       {
         "icon": "velocidad",
         "title": "Actualizaciones masivas",
-        "text": "Despliegues de software invisibles para toda la flota de equipos."
+        "title_en": "Mass updates",
+        "text": "Despliegues de software invisibles para toda la flota de equipos.",
+        "text_en": "Seamless software deployments across the entire device fleet."
       },
       {
         "icon": "escudo",
         "title": "Borrado remoto ante robo",
-        "text": "Bloquea o borra una laptop corporativa al instante."
+        "title_en": "Remote wipe on theft",
+        "text": "Bloquea o borra una laptop corporativa al instante.",
+        "text_en": "Lock or wipe a corporate laptop instantly."
       },
       {
         "icon": "red",
         "title": "Ambiente estandarizado",
-        "text": "Alta estandarización del entorno de trabajo en toda la compañía."
+        "title_en": "Standardized environment",
+        "text": "Alta estandarización del entorno de trabajo en toda la compañía.",
+        "text_en": "High standardization of the work environment across the entire company."
       }
     ],
     "title_en": "Benefits"
@@ -41,6 +47,7 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Corporativos protegiendo **laptops gerenciales** y flotas de transporte controlando tabletas de ruta.",
+    "statement_en": "Corporations protecting **executive laptops** and transport fleets managing on-route tablets.",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and in what timeframes?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

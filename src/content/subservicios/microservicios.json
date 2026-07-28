@@ -23,22 +23,30 @@
       {
         "icon": "escalabilidad",
         "title": "Escalabilidad dinámica",
-        "text": "Aplicaciones y servicios que crecen según la demanda."
+        "title_en": "Dynamic scalability",
+        "text": "Aplicaciones y servicios que crecen según la demanda.",
+        "text_en": "Applications and services that grow with demand."
       },
       {
         "icon": "disponibilidad",
         "title": "Mayor resiliencia",
-        "text": "Funciones distribuidas en componentes independientes."
+        "title_en": "Greater resilience",
+        "text": "Funciones distribuidas en componentes independientes.",
+        "text_en": "Functions distributed across independent components."
       },
       {
         "icon": "velocidad",
         "title": "Despliegues más rápidos",
-        "text": "Entregas consistentes mediante contenedores Docker."
+        "title_en": "Faster deployments",
+        "text": "Entregas consistentes mediante contenedores Docker.",
+        "text_en": "Consistent releases through Docker containers."
       },
       {
         "icon": "soporte",
         "title": "Gestión con Kubernetes",
-        "text": "Orquestación centralizada y automatizada de cargas de trabajo."
+        "title_en": "Kubernetes management",
+        "text": "Orquestación centralizada y automatizada de cargas de trabajo.",
+        "text_en": "Centralized, automated orchestration of workloads."
       }
     ],
     "title_en": "Benefits"
@@ -46,7 +54,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Plataformas digitales, aplicaciones empresariales modernas, entornos DevOps, e-commerce y **fintechs**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Digital platforms, modern enterprise applications, DevOps environments, e-commerce and **fintechs**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -55,18 +64,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

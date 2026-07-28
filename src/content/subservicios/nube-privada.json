@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Privacidad y soberanía de datos",
-        "text": "Control total sobre dónde y cómo residen tus datos."
+        "title_en": "Data privacy and sovereignty",
+        "text": "Control total sobre dónde y cómo residen tus datos.",
+        "text_en": "Full control over where and how your data resides."
       },
       {
         "icon": "velocidad",
         "title": "Rendimiento predecible",
-        "text": "Recursos dedicados que no compartes con terceros."
+        "title_en": "Predictable performance",
+        "text": "Recursos dedicados que no compartes con terceros.",
+        "text_en": "Dedicated resources you don't share with third parties."
       },
       {
         "icon": "escalabilidad",
         "title": "Aprovisionamiento ágil",
-        "text": "Servidores virtuales según la demanda, con control absoluto de la topología."
+        "title_en": "Agile provisioning",
+        "text": "Servidores virtuales según la demanda, con control absoluto de la topología.",
+        "text_en": "Virtual servers on demand, with absolute control over the topology."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Instituciones de salud (**historias clínicas**), aseguradoras y entidades del sistema financiero.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Healthcare institutions (**medical records**), insurers and financial-sector entities."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timeline?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

@@ -22,17 +22,23 @@
       {
         "icon": "disponibilidad",
         "title": "Máximo uptime",
-        "text": "Maximiza el tiempo de actividad de tus operaciones."
+        "title_en": "Maximum uptime",
+        "text": "Maximiza el tiempo de actividad de tus operaciones.",
+        "text_en": "Maximize the uptime of your operations."
       },
       {
         "icon": "escudo",
         "title": "SLA garantizado",
-        "text": "Acuerdos de nivel de servicio rigurosos de hasta 99,95%."
+        "title_en": "Guaranteed SLA",
+        "text": "Acuerdos de nivel de servicio rigurosos de hasta 99,95%.",
+        "text_en": "Rigorous service level agreements of up to 99.95%."
       },
       {
         "icon": "ahorro",
         "title": "Estabilidad financiera",
-        "text": "Evita pérdidas económicas por desconexión."
+        "title_en": "Financial stability",
+        "text": "Evita pérdidas económicas por desconexión.",
+        "text_en": "Avoid financial losses caused by downtime."
       }
     ],
     "title_en": "Benefits"
@@ -40,7 +46,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cadenas de retail (**facturación y POS**), clínicas, centros logísticos, entidades financieras y plantas industriales.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Retail chains (**billing and POS**), clinics, logistics centers, financial institutions and industrial plants."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -49,18 +56,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

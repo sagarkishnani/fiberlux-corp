@@ -23,17 +23,23 @@
       {
         "icon": "red",
         "title": "Documentación centralizada",
-        "text": "Toda la información del proyecto en un solo lugar."
+        "title_en": "Centralized documentation",
+        "text": "Toda la información del proyecto en un solo lugar.",
+        "text_en": "All your project information in a single place."
       },
       {
         "icon": "disponibilidad",
         "title": "Control de versiones automático",
-        "text": "Evita la pérdida de trabajo intelectual."
+        "title_en": "Automatic version control",
+        "text": "Evita la pérdida de trabajo intelectual.",
+        "text_en": "Prevents the loss of intellectual work."
       },
       {
         "icon": "soporte",
         "title": "Flujos de aprobación ágiles",
-        "text": "Coordina departamentos operativos sin fricción."
+        "title_en": "Agile approval workflows",
+        "text": "Coordina departamentos operativos sin fricción.",
+        "text_en": "Coordinate operational departments without friction."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Agencias creativas, estudios de arquitectura y despachos de **planeamiento estratégico e ingeniería**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Creative agencies, architecture studios and **strategic planning and engineering** firms."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

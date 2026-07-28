@@ -23,22 +23,30 @@
       {
         "icon": "velocidad",
         "title": "Aprovisionamiento en minutos",
-        "text": "Despliega servidores virtuales casi al instante."
+        "title_en": "Provisioning in minutes",
+        "text": "Despliega servidores virtuales casi al instante.",
+        "text_en": "Deploy virtual servers almost instantly."
       },
       {
         "icon": "ahorro",
         "title": "Pago por uso (OPEX)",
-        "text": "Modelo flexible que optimiza tu inversión."
+        "title_en": "Pay-as-you-go (OPEX)",
+        "text": "Modelo flexible que optimiza tu inversión.",
+        "text_en": "A flexible model that optimizes your investment."
       },
       {
         "icon": "escalabilidad",
         "title": "Escala y redimensiona",
-        "text": "Ajusta recursos según las cargas de trabajo."
+        "title_en": "Scale and resize",
+        "text": "Ajusta recursos según las cargas de trabajo.",
+        "text_en": "Adjust resources to match your workloads."
       },
       {
         "icon": "disponibilidad",
         "title": "Replicación entre sitios",
-        "text": "Fortalece la disponibilidad y protección de la información crítica."
+        "title_en": "Cross-site replication",
+        "text": "Fortalece la disponibilidad y protección de la información crítica.",
+        "text_en": "Strengthens the availability and protection of critical information."
       }
     ],
     "title_en": "Benefits"
@@ -46,7 +54,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Startups en hipercrecimiento, plataformas de e-commerce, entornos de desarrollo, sistemas ERP y **organizaciones multisede** con picos de demanda.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Hypergrowth startups, e-commerce platforms, development environments, ERP systems and **multi-site organizations** with demand spikes."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -55,18 +64,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timeline?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

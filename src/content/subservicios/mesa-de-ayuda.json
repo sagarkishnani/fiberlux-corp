@@ -23,17 +23,23 @@
       {
         "icon": "soporte",
         "title": "Resolución remota y ágil",
-        "text": "Atiende incidencias diarias y eleva la satisfacción del colaborador."
+        "title_en": "Fast remote resolution",
+        "text": "Atiende incidencias diarias y eleva la satisfacción del colaborador.",
+        "text_en": "Handle daily incidents and boost employee satisfaction."
       },
       {
         "icon": "red",
         "title": "Trazabilidad analítica",
-        "text": "Encuentra la causa raíz de los fallos ofimáticos repetitivos."
+        "title_en": "Analytical traceability",
+        "text": "Encuentra la causa raíz de los fallos ofimáticos repetitivos.",
+        "text_en": "Pinpoint the root cause of recurring office-software issues."
       },
       {
         "icon": "ahorro",
         "title": "Menor costo operativo",
-        "text": "Sin necesidad de un departamento de soporte interno masivo."
+        "title_en": "Lower operating cost",
+        "text": "Sin necesidad de un departamento de soporte interno masivo.",
+        "text_en": "No need for a large in-house support department."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cadenas de retail y tiendas comerciales con personal de atención que requiere **asistencia constante a nivel nacional**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Retail chains and commercial stores with frontline staff that require **constant nationwide assistance**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

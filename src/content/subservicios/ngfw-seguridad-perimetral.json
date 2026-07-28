@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Bloqueo proactivo de intrusiones",
-        "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red."
+        "title_en": "Proactive intrusion blocking",
+        "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red.",
+        "text_en": "Stops intrusions and hacking attempts before they reach your network."
       },
       {
         "icon": "red",
         "title": "Visibilidad granular",
-        "text": "Identifica y bloquea aplicaciones específicas con control detallado del tráfico."
+        "title_en": "Granular visibility",
+        "text": "Identifica y bloquea aplicaciones específicas con control detallado del tráfico.",
+        "text_en": "Identify and block specific applications with detailed traffic control."
       },
       {
         "icon": "velocidad",
         "title": "Protección sin sacrificar velocidad",
-        "text": "Protege el perímetro principal de la empresa sin afectar el ancho de banda."
+        "title_en": "Protection without sacrificing speed",
+        "text": "Protege el perímetro principal de la empresa sin afectar el ancho de banda.",
+        "text_en": "Protects the company's main perimeter without impacting bandwidth."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Para cualquier empresa mediana o grande que necesite **proteger el perímetro de su red** y controlar a qué sitios web pueden acceder sus colaboradores.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "For any medium or large business that needs to **protect its network perimeter** and control which websites its employees can access."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

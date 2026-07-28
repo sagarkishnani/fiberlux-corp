@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Colaboradores más alertas",
-        "text": "Mayor capacidad para identificar correos y enlaces sospechosos."
+        "title_en": "More alert employees",
+        "text": "Mayor capacidad para identificar correos y enlaces sospechosos.",
+        "text_en": "Greater ability to spot suspicious emails and links."
       },
       {
         "icon": "generico",
         "title": "Menos robo de credenciales",
-        "text": "Reduce el riesgo de fuga de información sensible."
+        "title_en": "Fewer credential thefts",
+        "text": "Reduce el riesgo de fuga de información sensible.",
+        "text_en": "Reduces the risk of sensitive information leaks."
       },
       {
         "icon": "soporte",
         "title": "Cultura de seguridad",
-        "text": "Fortalece la conciencia con campañas y simulaciones continuas."
+        "title_en": "Security culture",
+        "text": "Fortalece la conciencia con campañas y simulaciones continuas.",
+        "text_en": "Strengthens awareness with ongoing campaigns and simulations."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Empresas con trabajo híbrido o remoto, entidades financieras, instituciones educativas y organizaciones que manejan **información confidencial**.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Companies with hybrid or remote work, financial institutions, educational institutions and organizations that handle **confidential information**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

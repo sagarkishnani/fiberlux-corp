@@ -23,17 +23,23 @@
       {
         "icon": "escudo",
         "title": "Control corporativo de la información",
-        "text": "Gobierna el flujo de la información compartida."
+        "title_en": "Corporate control of information",
+        "text": "Gobierna el flujo de la información compartida.",
+        "text_en": "Govern the flow of shared information."
       },
       {
         "icon": "velocidad",
         "title": "Productividad ágil",
-        "text": "Sepa al instante si un colega está disponible, ocupado o en reunión."
+        "title_en": "Agile productivity",
+        "text": "Sepa al instante si un colega está disponible, ocupado o en reunión.",
+        "text_en": "Know instantly whether a colleague is available, busy or in a meeting."
       },
       {
         "icon": "red",
         "title": "Todo en una plataforma",
-        "text": "Portabilidad de números, equipos, licenciamiento e integración con Teams y WhatsApp."
+        "title_en": "Everything on one platform",
+        "text": "Portabilidad de números, equipos, licenciamiento e integración con Teams y WhatsApp.",
+        "text_en": "Number portability, devices, licensing and integration with Teams and WhatsApp."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Corporaciones con modelos de **trabajo híbrido** y Contact Centers con enfoque omnicanal.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Corporations with **hybrid work** models and Contact Centers with an omnichannel approach."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it implemented and within what time frames?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my business?",
         "answer": ""
       }
     ],

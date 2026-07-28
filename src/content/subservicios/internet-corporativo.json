@@ -23,17 +23,23 @@
       {
         "icon": "velocidad",
         "title": "Velocidad constante garantizada",
-        "text": "Ancho de banda dedicado en cualquier horario, sin caídas por saturación de red compartida."
+        "title_en": "Guaranteed constant speed",
+        "text": "Ancho de banda dedicado en cualquier horario, sin caídas por saturación de red compartida.",
+        "text_en": "Dedicated bandwidth at any time, with no drops from shared-network congestion."
       },
       {
         "icon": "simetria",
         "title": "Carga y descarga simétrica",
-        "text": "Ideal para videollamadas fluidas y subida de bases de datos, con el mismo ancho en ambas direcciones."
+        "title_en": "Symmetrical upload and download",
+        "text": "Ideal para videollamadas fluidas y subida de bases de datos, con el mismo ancho en ambas direcciones.",
+        "text_en": "Ideal for smooth video calls and database uploads, with the same bandwidth in both directions."
       },
       {
         "icon": "soporte",
         "title": "Soporte de alta prioridad",
-        "text": "Resolución inmediata ante incidencias con SLA dedicado y atención preferente 24/7."
+        "title_en": "High-priority support",
+        "text": "Resolución inmediata ante incidencias con SLA dedicado y atención preferente 24/7.",
+        "text_en": "Immediate incident resolution with a dedicated SLA and priority 24/7 attention."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde **cada minuto de desconexión** signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Any business (from growing offices to large industries) where **every minute of downtime** means lost money, disruptions in customer service or delays in uploading critical information."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,26 +57,32 @@
     "items": [
       {
         "question": "¿Qué planes de internet hogar ofrece Fiberlux?",
+        "question_en": "What home internet plans does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Qué significa \"velocidad simétrica\"?",
+        "question_en": "What does \"symmetrical speed\" mean?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico si Fiberlux tiene cobertura en mi zona?",
+        "question_en": "How do I check whether Fiberlux has coverage in my area?",
         "answer": ""
       },
       {
         "question": "¿Cuánto demora la instalación y cuál es su costo?",
+        "question_en": "How long does installation take and what is the cost?",
         "answer": ""
       },
       {
         "question": "¿Qué equipos instalan en mi casa?",
+        "question_en": "What equipment do you install at my home?",
         "answer": ""
       },
       {
         "question": "¿Cuánto tiempo dura el contrato?",
+        "question_en": "How long does the contract last?",
         "answer": ""
       }
     ],

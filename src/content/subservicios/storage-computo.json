@@ -23,17 +23,23 @@
       {
         "icon": "escalabilidad",
         "title": "Almacenamiento sin límites",
-        "text": "Crece sin invertir en cabinas de discos físicos."
+        "title_en": "Storage without limits",
+        "text": "Crece sin invertir en cabinas de discos físicos.",
+        "text_en": "Scale up without investing in physical disk arrays."
       },
       {
         "icon": "ahorro",
         "title": "Optimización de costos",
-        "text": "Separa datos en uso de datos históricos con cold storage de bajo costo."
+        "title_en": "Cost optimization",
+        "text": "Separa datos en uso de datos históricos con cold storage de bajo costo.",
+        "text_en": "Separate active data from historical data with low-cost cold storage."
       },
       {
         "icon": "escudo",
         "title": "Acceso seguro y clasificado",
-        "text": "Control sobre la información no estructurada de la empresa."
+        "title_en": "Secure, classified access",
+        "text": "Control sobre la información no estructurada de la empresa.",
+        "text_en": "Control over the company's unstructured information."
       }
     ],
     "title_en": "Benefits"
@@ -41,7 +47,8 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Empresas que requieren **optimizar recursos**, centralizar aplicaciones críticas o almacenar grandes volúmenes de información de forma segura y escalable.",
-    "eyebrow_en": "[ USE CASES ]"
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Companies that need to **optimize resources**, centralize critical applications or store large volumes of information securely and at scale."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -50,18 +57,22 @@
     "items": [
       {
         "question": "¿Qué incluye este servicio?",
+        "question_en": "What does this service include?",
         "answer": ""
       },
       {
         "question": "¿Cómo se implementa y en qué plazos?",
+        "question_en": "How is it deployed and on what timelines?",
         "answer": ""
       },
       {
         "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "question_en": "What level of support and SLA does Fiberlux offer?",
         "answer": ""
       },
       {
         "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "question_en": "How do I check coverage for my company?",
         "answer": ""
       }
     ],
