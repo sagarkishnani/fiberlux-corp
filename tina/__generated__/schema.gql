@@ -2018,9 +2018,12 @@ type LegalSeo {
 
 type Legal implements Node & Document {
   eyebrow: String
+  eyebrow_en: String
   title: String!
+  title_en: String
   updatedAt: String
   body: JSON
+  body_en: JSON
   embeddedFormSlug: String
   seo: LegalSeo
   id: ID!
@@ -2036,9 +2039,12 @@ input LegalSeoFilter {
 
 input LegalFilter {
   eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
+  title_en: StringFilter
   updatedAt: DatetimeFilter
   body: RichTextFilter
+  body_en: RichTextFilter
   embeddedFormSlug: StringFilter
   seo: LegalSeoFilter
 }
@@ -3164,9 +3170,12 @@ input LegalSeoMutation {
 
 input LegalMutation {
   eyebrow: String
+  eyebrow_en: String
   title: String
+  title_en: String
   updatedAt: String
   body: JSON
+  body_en: JSON
   embeddedFormSlug: String
   seo: LegalSeoMutation
 }

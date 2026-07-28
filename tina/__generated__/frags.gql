@@ -736,9 +736,12 @@ fragment DynamicFormsParts on DynamicForms {
 fragment LegalParts on Legal {
   __typename
   eyebrow
+  eyebrow_en
   title
+  title_en
   updatedAt
   body
+  body_en
   embeddedFormSlug
   seo {
     __typename

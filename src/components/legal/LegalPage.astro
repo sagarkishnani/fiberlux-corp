@@ -6,6 +6,8 @@
 import { client } from "../../../tina/__generated__/client";
 import LegalPageReact from "./LegalPageReact.tsx";
 import DynamicForm from "../dynamic-form/DynamicForm.astro";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   slug: string;
@@ -15,6 +17,7 @@ const { slug } = Astro.props;
 
 const result = await client.queries.legal({ relativePath: `${slug}.json` });
 const embeddedFormSlug = result.data?.legal?.embeddedFormSlug;
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <section style={{ backgroundColor: "#ffffff" }}>
@@ -23,6 +26,7 @@ const embeddedFormSlug = result.data?.legal?.embeddedFormSlug;
     query={result.query}
     variables={result.variables}
     data={result.data}
+    locale={locale}
   />
 
   {

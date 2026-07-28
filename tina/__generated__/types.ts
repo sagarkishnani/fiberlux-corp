@@ -2498,9 +2498,12 @@ export type LegalSeo = {
 export type Legal = Node & Document & {
   __typename?: 'Legal';
   eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
+  title_en?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
+  body_en?: Maybe<Scalars['JSON']['output']>;
   embeddedFormSlug?: Maybe<Scalars['String']['output']>;
   seo?: Maybe<LegalSeo>;
   id: Scalars['ID']['output'];
@@ -2516,9 +2519,12 @@ export type LegalSeoFilter = {
 
 export type LegalFilter = {
   eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
   body?: InputMaybe<RichTextFilter>;
+  body_en?: InputMaybe<RichTextFilter>;
   embeddedFormSlug?: InputMaybe<StringFilter>;
   seo?: InputMaybe<LegalSeoFilter>;
 };
@@ -3923,9 +3929,12 @@ export type LegalSeoMutation = {
 
 export type LegalMutation = {
   eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
+  body_en?: InputMaybe<Scalars['JSON']['input']>;
   embeddedFormSlug?: InputMaybe<Scalars['String']['input']>;
   seo?: InputMaybe<LegalSeoMutation>;
 };
@@ -4053,7 +4062,7 @@ export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<
 
 export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, badge?: string | null, description?: string | null, styleVariant?: string | null, submitButtonText?: string | null, successTitle?: string | null, successMessage?: string | null, errorMessage?: string | null, validationMessage?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, placeholder?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, rows?: number | null, errorMessage?: string | null, helpText?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, group?: string | null, description?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
 
-export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
 
@@ -4368,7 +4377,7 @@ export type LegalQueryVariables = Exact<{
 }>;
 
 
-export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type LegalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4380,7 +4389,7 @@ export type LegalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, title: string, updatedAt?: string | null, body?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type CookieConsentQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5175,9 +5184,12 @@ export const LegalPartsFragmentDoc = gql`
     fragment LegalParts on Legal {
   __typename
   eyebrow
+  eyebrow_en
   title
+  title_en
   updatedAt
   body
+  body_en
   embeddedFormSlug
   seo {
     __typename

@@ -2545,6 +2545,7 @@ var config_default = defineConfig({
         },
         fields: [
           { name: "eyebrow", label: "Eyebrow", type: "string" },
+          { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
           {
             name: "title",
             label: "T\xEDtulo (H1)",
@@ -2552,8 +2553,15 @@ var config_default = defineConfig({
             isTitle: true,
             required: true
           },
+          { name: "title_en", label: "T\xEDtulo (H1) (EN)", type: "string" },
           { name: "updatedAt", label: "\xDAltima actualizaci\xF3n", type: "datetime" },
           { name: "body", label: "Contenido", type: "rich-text" },
+          {
+            name: "body_en",
+            label: "Contenido (EN) \u2014 traducci\xF3n oficial",
+            type: "rich-text",
+            description: "Versi\xF3n oficial en ingl\xE9s del documento legal. Si est\xE1 vac\xEDa, se muestra la versi\xF3n en espa\xF1ol."
+          },
           {
             name: "embeddedFormSlug",
             label: "Formulario embebido (slug dynamicForms)",
