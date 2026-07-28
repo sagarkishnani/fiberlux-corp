@@ -867,13 +867,17 @@ type PostConnection implements Connection {
 type ContactCards {
   icon: String
   label: String
+  label_en: String
   value: String
 }
 
 type Contact implements Node & Document {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   cards: [ContactCards]
   id: ID!
   _sys: SystemInfo!
@@ -883,13 +887,17 @@ type Contact implements Node & Document {
 input ContactCardsFilter {
   icon: StringFilter
   label: StringFilter
+  label_en: StringFilter
   value: StringFilter
 }
 
 input ContactFilter {
   breadcrumb: StringFilter
+  breadcrumb_en: StringFilter
   heading: StringFilter
+  heading_en: StringFilter
   intro: StringFilter
+  intro_en: StringFilter
   cards: ContactCardsFilter
 }
 
@@ -2483,13 +2491,17 @@ input PostMutation {
 input ContactCardsMutation {
   icon: String
   label: String
+  label_en: String
   value: String
 }
 
 input ContactMutation {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   cards: [ContactCardsMutation]
 }
 

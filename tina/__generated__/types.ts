@@ -1270,14 +1270,18 @@ export type ContactCards = {
   __typename?: 'ContactCards';
   icon?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
 };
 
 export type Contact = Node & Document & {
   __typename?: 'Contact';
   breadcrumb?: Maybe<Scalars['String']['output']>;
+  breadcrumb_en?: Maybe<Scalars['String']['output']>;
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
+  intro_en?: Maybe<Scalars['String']['output']>;
   cards?: Maybe<Array<Maybe<ContactCards>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -1287,13 +1291,17 @@ export type Contact = Node & Document & {
 export type ContactCardsFilter = {
   icon?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
   value?: InputMaybe<StringFilter>;
 };
 
 export type ContactFilter = {
   breadcrumb?: InputMaybe<StringFilter>;
+  breadcrumb_en?: InputMaybe<StringFilter>;
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
+  intro_en?: InputMaybe<StringFilter>;
   cards?: InputMaybe<ContactCardsFilter>;
 };
 
@@ -3242,13 +3250,17 @@ export type PostMutation = {
 export type ContactCardsMutation = {
   icon?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ContactMutation = {
   breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  breadcrumb_en?: InputMaybe<Scalars['String']['input']>;
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
+  intro_en?: InputMaybe<Scalars['String']['input']>;
   cards?: InputMaybe<Array<InputMaybe<ContactCardsMutation>>>;
 };
 
@@ -3761,7 +3773,7 @@ export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: str
 
 export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
-export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, heading?: string | null, intro?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null };
+export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null };
 
 export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionSubtitle?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, title?: string | null, subtitle?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
 
@@ -3889,7 +3901,7 @@ export type ContactQueryVariables = Exact<{
 }>;
 
 
-export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null } };
+export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null } };
 
 export type ContactConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3901,7 +3913,7 @@ export type ContactConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, value?: string | null } | null> | null } | null } | null> | null } };
+export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null } | null } | null> | null } };
 
 export type SoporteTecnicoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4430,12 +4442,16 @@ export const ContactPartsFragmentDoc = gql`
     fragment ContactParts on Contact {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   cards {
     __typename
     icon
     label
+    label_en
     value
   }
 }

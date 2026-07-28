@@ -3,8 +3,26 @@
   "heading": "Ingresa tus datos y un representante te contactará pronto",
   "intro": "Estamos listos para ayudarte a transformar tu conectividad. Completa el formulario y nuestro equipo se comunicará contigo en las próximas 24 horas.",
   "cards": [
-    { "icon": "phone", "label": "Teléfono", "value": "(01) 748-0606" },
-    { "icon": "email", "label": "Correo", "value": "hola@fiberlux.pe" },
-    { "icon": "location", "label": "Oficina", "value": "Av. José Pardo 513 – Miraflores" }
-  ]
+    {
+      "icon": "phone",
+      "label": "Teléfono",
+      "value": "(01) 748-0606",
+      "label_en": "Phone"
+    },
+    {
+      "icon": "email",
+      "label": "Correo",
+      "value": "hola@fiberlux.pe",
+      "label_en": "Email"
+    },
+    {
+      "icon": "location",
+      "label": "Oficina",
+      "value": "Av. José Pardo 513 – Miraflores",
+      "label_en": "Office"
+    }
+  ],
+  "breadcrumb_en": "Contact",
+  "heading_en": "Enter your details and a representative will contact you soon",
+  "intro_en": "We're ready to help you transform your connectivity. Fill out the form and our team will get in touch within 24 hours."
 }

@@ -1,9 +1,12 @@
 ---
 import { client } from '../../../tina/__generated__/client';
 import ContactReact from './ContactReact.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 
 const contactQuery = await client.queries.contact({ relativePath: 'index.json' });
 const formQuery = await client.queries.dynamicForms({ relativePath: 'contacto.json' });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <ContactReact
@@ -11,6 +14,7 @@ const formQuery = await client.queries.dynamicForms({ relativePath: 'contacto.js
   query={contactQuery.query}
   variables={contactQuery.variables}
   data={contactQuery.data}
+  locale={locale}
   form={{
     query: formQuery.query,
     variables: formQuery.variables,

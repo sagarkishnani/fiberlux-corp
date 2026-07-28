@@ -16,6 +16,7 @@ export const UI: Record<Locale, Record<string, string>> = {
     "lang.switch.aria": "Cambiar idioma",
     "menu.open.aria": "Abrir menú",
     "menu.close.aria": "Cerrar menú",
+    "breadcrumb.home": "Inicio",
   },
   en: {
     "nav.audience.empresas": "Companies",
@@ -25,6 +26,7 @@ export const UI: Record<Locale, Record<string, string>> = {
     "lang.switch.aria": "Change language",
     "menu.open.aria": "Open menu",
     "menu.close.aria": "Close menu",
+    "breadcrumb.home": "Home",
   },
 };
 

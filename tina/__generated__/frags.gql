@@ -272,12 +272,16 @@ fragment PostParts on Post {
 fragment ContactParts on Contact {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   cards {
     __typename
     icon
     label
+    label_en
     value
   }
 }

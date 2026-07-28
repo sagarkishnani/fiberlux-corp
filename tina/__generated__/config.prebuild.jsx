@@ -1036,10 +1036,18 @@ var config_default = defineConfig({
         },
         fields: [
           { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "breadcrumb_en", label: "Migaja de pan (EN)", type: "string" },
           { name: "heading", label: "T\xEDtulo principal (H1)", type: "string", ui: { component: "textarea" } },
+          { name: "heading_en", label: "T\xEDtulo principal (H1) (EN)", type: "string", ui: { component: "textarea" } },
           {
             name: "intro",
             label: "P\xE1rrafo introductorio",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "intro_en",
+            label: "P\xE1rrafo introductorio (EN)",
             type: "string",
             ui: { component: "textarea" }
           },
@@ -1063,6 +1071,7 @@ var config_default = defineConfig({
                 ]
               },
               { name: "label", label: "Etiqueta", type: "string" },
+              { name: "label_en", label: "Etiqueta (EN)", type: "string" },
               { name: "value", label: "Valor", type: "string" }
             ]
           }

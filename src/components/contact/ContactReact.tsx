@@ -3,6 +3,9 @@ import { FaPhone, FaEnvelope, FaLocationDot } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 import type { ContactQuery, ContactQueryVariables } from "../../../tina/__generated__/types";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
+import { tField } from "../../utils/i18n";
+import { t } from "../../i18n/ui";
+import type { Locale } from "../../i18n/config";
 
 /* Map the CMS icon identifier → a concrete react-icons component */
 const ICONS: Record<string, IconType> = {
@@ -22,6 +25,7 @@ interface ContactProps {
   variables: ContactQueryVariables;
   data: ContactQuery;
   form: FormIsland;
+  locale?: Locale;
 }
 
 export default function ContactReact({
@@ -29,6 +33,7 @@ export default function ContactReact({
   variables,
   data: initialData,
   form,
+  locale = "es",
 }: ContactProps) {
   const { data } = useTina<ContactQuery>({ query, variables, data: initialData });
 
@@ -54,7 +59,7 @@ export default function ContactReact({
           </div>
           <div className="flex flex-col">
             <span className="text-caption-sm uppercase tracking-wider text-greyscale">
-              {card?.label}
+              {tField(card as any, "label", locale)}
             </span>
             <span className="text-body-md text-greyscale-white">
               {card?.value}
@@ -82,14 +87,14 @@ export default function ContactReact({
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-6">
               <a href={base} className="hover:text-greyscale-white transition-colors">
-                Inicio
+                {t("breadcrumb.home", locale)}
               </a>
               <span>/</span>
               <span
                 className="text-greyscale-white"
                 data-tina-field={tinaField(contact, "breadcrumb")}
               >
-                {contact.breadcrumb}
+                {tField(contact, "breadcrumb", locale)}
               </span>
             </nav>
 
@@ -98,7 +103,7 @@ export default function ContactReact({
               className="hidden lg:block text-[32px] md:text-[40px] leading-[1.2] md:leading-[48px] font-semibold text-greyscale-white mb-6"
               data-tina-field={tinaField(contact, "heading")}
             >
-              {contact.heading}
+              {tField(contact, "heading", locale)}
             </h1>
 
             {/* Intro — hidden on mobile per the Figma */}
@@ -106,7 +111,7 @@ export default function ContactReact({
               className="hidden lg:block text-body-md text-greyscale-light max-w-[440px] mb-10"
               data-tina-field={tinaField(contact, "intro")}
             >
-              {contact.intro}
+              {tField(contact, "intro", locale)}
             </p>
 
             {/* Contact cards — desktop only (mobile renders them below the form) */}
