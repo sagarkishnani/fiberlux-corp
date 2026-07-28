@@ -31,11 +31,19 @@ i18n en todo el sitio es grande (routing, schema de Tina, cada componente, SEO).
   - Legales: `eyebrow`/`title` EN; campo `body_en` para el documento completo.
 - **Componentes compartidos** (cifras "¿Por qué Fiberlux?", testimonios, blog preview) traducidos → afectan todas las páginas donde aparecen.
 
+**Ya traducido (además del chrome + contenido de pantallas):**
+
+- **Partners marquee + Catálogo de cards** de las 4 categorías de solución (eyebrow/título/items/botón "Conocer más").
+- **Detalle profundo de subservicios**: título/texto de cada card de beneficios, statement de "Casos de uso" (rich-text vía `richField`), y preguntas de FAQ — en los 35 archivos.
+- **Formularios de contacto y de servicios** (`DynamicFormReact`): labels, placeholders, opciones (con optgroups), mensajes de validación/éxito/error y botón — contenido de `servicios.json` + `contacto.json` traducido; defaults de UI vía `FORM_UI[locale]`.
+- **Buscador**: índice `/search-index.json` localizado (title/description/category `_en`) y URLs de resultado con prefijo `/en`.
+- **Fix rich-text `_en` vacío** (`richField`/`richHasContent`): un `_en` truthy-pero-vacío ya no oculta el contenido ES (arregla el statement de "Casos de uso" en blanco).
+
 **Out of scope (fallback a ES / acción del cliente):**
 
-- **Cuerpos largos rich-text** que el cliente debe traducir/aprobar oficialmente: `body_en` de **legales**, `body_en` de **artículos del blog**, y descripciones rich-text de pasos de Formas de pago y respuestas de FAQ. Todos tienen su campo `_en` listo; vacío ⇒ ES.
-- **Detalle profundo de subservicios** (textos de cada card de beneficios, preguntas de FAQ por subservicio): campos `_en` disponibles, borrador parcial; el cliente completa/afina.
-- **Labels/mensajes de los formularios** (`DynamicFormReact`, validación, éxito/error).
+- **Cuerpos largos rich-text** que el cliente debe traducir/aprobar oficialmente: `body_en` de **legales**, `body_en` de **artículos del blog**, y descripciones rich-text de pasos de Formas de pago. Todos tienen su campo `_en` listo; vacío ⇒ ES.
+- **Respuestas (answer) de FAQ de subservicios**: las respuestas ES de origen están vacías, así que no hay texto que traducir (las preguntas sí están en EN).
+- **Formularios OSIPTEL de reclamos** (reclamo/queja/apelación/libro-reclamaciones/derechos-arco): labels/mensajes con fallback a ES.
 - **Meta SEO por idioma** (hreflang, og:locale) más allá de `<html lang>`.
 - **Redirección automática** por idioma del navegador / cookie de preferencia (el switcher son enlaces explícitos).
 
