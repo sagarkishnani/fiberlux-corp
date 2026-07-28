@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface FaqProps {
   query: string;
@@ -9,11 +11,14 @@ interface FaqProps {
   /** Data from either the `service` (nivel-1) or `subservicio` (nivel-2) query;
    *  both expose a `faq` object with the same shape. */
   data: any;
+  locale?: Locale;
 }
 
 interface FaqItem {
   question?: string | null;
+  question_en?: string | null;
   answer?: any;
+  answer_en?: any;
 }
 
 /** True when the rich-text node has any non-empty text. */
@@ -37,6 +42,7 @@ export default function FaqSolucionReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: FaqProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const [open, setOpen] = useState<number | null>(null);
@@ -58,14 +64,16 @@ export default function FaqSolucionReact({
             className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-[#3B0E30] text-center mb-10 md:mb-14"
             data-tina-field={tinaField(faq, "title")}
           >
-            {faq.title}
+            {tField(faq as any, "title", locale)}
           </h2>
         )}
 
         <div className="flex flex-col gap-3" data-reveal="up" data-reveal-stagger="0.06">
           {items.map((item, i) => {
             const isOpen = open === i;
-            const showAnswer = isOpen && hasContent(item.answer);
+            const answer =
+              locale === "en" && item.answer_en ? item.answer_en : item.answer;
+            const showAnswer = isOpen && hasContent(answer);
             return (
               <div
                 key={i}
@@ -84,7 +92,7 @@ export default function FaqSolucionReact({
                       className="text-body-md font-medium text-[#3B0E30]"
                       data-tina-field={tinaField(item as any, "question")}
                     >
-                      {item.question}
+                      {tField(item as any, "question", locale)}
                     </span>
                     <span
                       className="shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#96237A] text-white"
@@ -108,7 +116,7 @@ export default function FaqSolucionReact({
                       className="px-5 md:px-7 pb-5 md:pb-6 text-body-sm text-[#3B0E30]/80 faq-richtext"
                       data-tina-field={tinaField(item as any, "answer")}
                     >
-                      {showAnswer && <TinaMarkdown content={item.answer} />}
+                      {showAnswer && <TinaMarkdown content={answer} />}
                     </div>
                   </div>
                 </div>

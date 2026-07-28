@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriadatacentercloud1.webp"
+    "heroImage": "images/soluciones/categoriadatacentercloud1.webp",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?",
+    "heading_en": "World-class infrastructure at the heart of your business",
+    "intro_en": "Host, protect and scale your applications and data on enterprise platforms built to support your operation's growth and demands."
   },
   "valor": {
     "title": "Tus operaciones no pueden parar",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "Las organizaciones dependen de aplicaciones y datos críticos que deben mantenerse disponibles y protegidos frente a incidentes e interrupciones.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "Organizations rely on critical applications and data that must stay available and protected against failures."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "Backup",
           "DRaaS"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "We move your workloads to public cloud, private cloud or dedicated infrastructure with the availability your operation demands."
       },
       {
         "heading": "Industrias destacadas",
         "text": "E-commerce/Retail, Salud (Historias Clínicas), Startups, Logística, Educación.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "E-commerce/Retail, Healthcare (Medical Records), Startups, Logistics, Education."
       }
-    ]
+    ],
+    "title_en": "Your operations can't stop",
+    "subtitle_en": "Availability, backup and recovery for the most critical workloads."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -156,7 +168,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What's the difference between private and public cloud?"
       },
       {
         "question": "¿Qué es DRaaS y por qué lo necesito?",
@@ -173,7 +186,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What is DRaaS and why do I need it?"
       },
       {
         "question": "¿Dónde están ubicados los data centers?",
@@ -190,7 +204,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "Where are the data centers located?"
       },
       {
         "question": "¿Cómo garantizan la disponibilidad de mi infraestructura?",
@@ -207,9 +222,11 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "How do you guarantee my infrastructure's availability?"
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Data Center, Cloud y Continuidad de Negocio",
@@ -220,5 +237,7 @@
     "Data Center",
     "Cloud",
     "Continuidad de negocio"
-  ]
+  ],
+  "whyUsTitle_en": "Why Fiberlux?",
+  "title_en": "Data Center, Cloud & Business Continuity"
 }

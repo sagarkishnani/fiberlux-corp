@@ -3,6 +3,8 @@ import type {
   ServiceQuery,
   ServiceQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
 import { mediaUrl } from "../../utils/mediaUrl";
 
@@ -16,6 +18,7 @@ interface HeroSolucionProps {
   query: string;
   variables: ServiceQueryVariables;
   data: ServiceQuery;
+  locale?: Locale;
   form: FormIsland;
 }
 
@@ -23,6 +26,7 @@ export default function HeroSolucionReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   form,
 }: HeroSolucionProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
@@ -139,7 +143,7 @@ export default function HeroSolucionReact({
                 className="text-greyscale-white"
                 data-tina-field={tinaField(service, "title")}
               >
-                {service.title}
+                {tField(service as any, "title", locale)}
               </span>
             </nav>
 
@@ -148,7 +152,7 @@ export default function HeroSolucionReact({
                 className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
                 data-tina-field={tinaField(hero, "heading")}
               >
-                {hero.heading}
+                {tField(hero as any, "heading", locale)}
               </h1>
             )}
 
@@ -157,7 +161,7 @@ export default function HeroSolucionReact({
                 className="text-body-lg text-greyscale-light max-w-[480px] mb-8"
                 data-tina-field={tinaField(hero, "intro")}
               >
-                {hero.intro}
+                {tField(hero as any, "intro", locale)}
               </p>
             )}
 
@@ -167,7 +171,7 @@ export default function HeroSolucionReact({
                 className="inline-flex items-center justify-center px-7 py-4 rounded-full font-medium text-base transition-all duration-300 bg-[#96237A] hover:bg-[#650F50] text-white shadow-[0_8px_32px_-8px_rgba(150,35,122,0.6)] hover:shadow-[0_8px_32px_-4px_rgba(150,35,122,0.8)] hover:translate-y-[-1px]"
                 data-tina-field={tinaField(hero, "ctaLabel")}
               >
-                {hero.ctaLabel}
+                {tField(hero as any, "ctaLabel", locale)}
               </a>
             )}
           </div>
@@ -183,7 +187,7 @@ export default function HeroSolucionReact({
                   className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-6"
                   data-tina-field={tinaField(hero, "formTitle")}
                 >
-                  {hero.formTitle}
+                  {tField(hero as any, "formTitle", locale)}
                 </h2>
               )}
               <DynamicFormReact

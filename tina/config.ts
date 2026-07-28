@@ -308,6 +308,7 @@ export default defineConfig({
             required: true,
             isTitle: true,
           },
+          { name: "title_en", label: "Nombre de la solución (EN)", type: "string" },
           { name: "slug", label: "URL slug", type: "string", required: true },
 
           // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
@@ -333,22 +334,26 @@ export default defineConfig({
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "heading_en", label: "Título (H1) (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "intro",
                 label: "Párrafo intro",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "intro_en", label: "Párrafo intro (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "ctaLabel",
                 label: "Texto botón (ancla al catálogo)",
                 type: "string",
               },
+              { name: "ctaLabel_en", label: "Texto botón (EN)", type: "string" },
               {
                 name: "formTitle",
                 label: "Título del form del hero",
                 type: "string",
               },
+              { name: "formTitle_en", label: "Título del form del hero (EN)", type: "string" },
               {
                 name: "heroMode",
                 label: "Mostrar en el hero",
@@ -375,12 +380,14 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subtítulo de sección",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "subtitle_en", label: "Subtítulo de sección (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "cards",
                 label: "Cards",
@@ -393,12 +400,14 @@ export default defineConfig({
                 },
                 fields: [
                   { name: "heading", label: "Título", type: "string" },
+                  { name: "heading_en", label: "Título (EN)", type: "string" },
                   {
                     name: "text",
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
                   {
                     name: "tags",
                     label: "Etiquetas (chips)",
@@ -521,6 +530,7 @@ export default defineConfig({
             label: "Título '¿Por qué Fiberlux?'",
             type: "string",
           },
+          { name: "whyUsTitle_en", label: "Título '¿Por qué Fiberlux?' (EN)", type: "string" },
 
           // ── "Preguntas frecuentes" (acordeón, respuesta rich-text) ──
           {
@@ -536,6 +546,7 @@ export default defineConfig({
                   "Desactívalo para ocultar el bloque de preguntas frecuentes en esta página.",
               },
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Preguntas",
@@ -546,7 +557,9 @@ export default defineConfig({
                 },
                 fields: [
                   { name: "question", label: "Pregunta", type: "string" },
+                  { name: "question_en", label: "Pregunta (EN)", type: "string" },
                   { name: "answer", label: "Respuesta", type: "rich-text" },
+                  { name: "answer_en", label: "Respuesta (EN)", type: "rich-text" },
                 ],
               },
             ],
@@ -765,6 +778,7 @@ export default defineConfig({
                   "Desactívalo para ocultar el bloque de preguntas frecuentes en esta página.",
               },
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Preguntas",
@@ -775,7 +789,9 @@ export default defineConfig({
                 },
                 fields: [
                   { name: "question", label: "Pregunta", type: "string" },
+                  { name: "question_en", label: "Pregunta (EN)", type: "string" },
                   { name: "answer", label: "Respuesta", type: "rich-text" },
+                  { name: "answer_en", label: "Respuesta (EN)", type: "rich-text" },
                 ],
               },
             ],

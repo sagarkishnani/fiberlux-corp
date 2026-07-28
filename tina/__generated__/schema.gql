@@ -356,23 +356,31 @@ type HomeConnection implements Connection {
 
 type ServiceHero {
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   ctaLabel: String
+  ctaLabel_en: String
   formTitle: String
+  formTitle_en: String
   heroMode: String
   heroImage: String
 }
 
 type ServiceValorCards {
   heading: String
+  heading_en: String
   text: String
+  text_en: String
   tags: [String]
   image: String
 }
 
 type ServiceValor {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   cards: [ServiceValorCards]
 }
 
@@ -405,12 +413,15 @@ type ServicePartners {
 
 type ServiceFaqItems {
   question: String
+  question_en: String
   answer: JSON
+  answer_en: JSON
 }
 
 type ServiceFaq {
   visible: Boolean
   title: String
+  title_en: String
   items: [ServiceFaqItems]
 }
 
@@ -422,6 +433,7 @@ type ServiceSeo {
 
 type Service implements Node & Document {
   title: String!
+  title_en: String
   slug: String!
   blogTags: [String]
   hero: ServiceHero
@@ -429,6 +441,7 @@ type Service implements Node & Document {
   catalogo: ServiceCatalogo
   partners: ServicePartners
   whyUsTitle: String
+  whyUsTitle_en: String
   faq: ServiceFaq
   seo: ServiceSeo
   id: ID!
@@ -438,23 +451,31 @@ type Service implements Node & Document {
 
 input ServiceHeroFilter {
   heading: StringFilter
+  heading_en: StringFilter
   intro: StringFilter
+  intro_en: StringFilter
   ctaLabel: StringFilter
+  ctaLabel_en: StringFilter
   formTitle: StringFilter
+  formTitle_en: StringFilter
   heroMode: StringFilter
   heroImage: ImageFilter
 }
 
 input ServiceValorCardsFilter {
   heading: StringFilter
+  heading_en: StringFilter
   text: StringFilter
+  text_en: StringFilter
   tags: StringFilter
   image: ImageFilter
 }
 
 input ServiceValorFilter {
   title: StringFilter
+  title_en: StringFilter
   subtitle: StringFilter
+  subtitle_en: StringFilter
   cards: ServiceValorCardsFilter
 }
 
@@ -493,12 +514,15 @@ input RichTextFilter {
 
 input ServiceFaqItemsFilter {
   question: StringFilter
+  question_en: StringFilter
   answer: RichTextFilter
+  answer_en: RichTextFilter
 }
 
 input ServiceFaqFilter {
   visible: BooleanFilter
   title: StringFilter
+  title_en: StringFilter
   items: ServiceFaqItemsFilter
 }
 
@@ -510,6 +534,7 @@ input ServiceSeoFilter {
 
 input ServiceFilter {
   title: StringFilter
+  title_en: StringFilter
   slug: StringFilter
   blogTags: StringFilter
   hero: ServiceHeroFilter
@@ -517,6 +542,7 @@ input ServiceFilter {
   catalogo: ServiceCatalogoFilter
   partners: ServicePartnersFilter
   whyUsTitle: StringFilter
+  whyUsTitle_en: StringFilter
   faq: ServiceFaqFilter
   seo: ServiceSeoFilter
 }
@@ -560,12 +586,15 @@ type SubservicioCasosDeUso {
 
 type SubservicioFaqItems {
   question: String
+  question_en: String
   answer: JSON
+  answer_en: JSON
 }
 
 type SubservicioFaq {
   visible: Boolean
   title: String
+  title_en: String
   items: [SubservicioFaqItems]
 }
 
@@ -620,12 +649,15 @@ input SubservicioCasosDeUsoFilter {
 
 input SubservicioFaqItemsFilter {
   question: StringFilter
+  question_en: StringFilter
   answer: RichTextFilter
+  answer_en: RichTextFilter
 }
 
 input SubservicioFaqFilter {
   visible: BooleanFilter
   title: StringFilter
+  title_en: StringFilter
   items: SubservicioFaqItemsFilter
 }
 
@@ -2380,23 +2412,31 @@ input HomeMutation {
 
 input ServiceHeroMutation {
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   ctaLabel: String
+  ctaLabel_en: String
   formTitle: String
+  formTitle_en: String
   heroMode: String
   heroImage: String
 }
 
 input ServiceValorCardsMutation {
   heading: String
+  heading_en: String
   text: String
+  text_en: String
   tags: [String]
   image: String
 }
 
 input ServiceValorMutation {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   cards: [ServiceValorCardsMutation]
 }
 
@@ -2429,12 +2469,15 @@ input ServicePartnersMutation {
 
 input ServiceFaqItemsMutation {
   question: String
+  question_en: String
   answer: JSON
+  answer_en: JSON
 }
 
 input ServiceFaqMutation {
   visible: Boolean
   title: String
+  title_en: String
   items: [ServiceFaqItemsMutation]
 }
 
@@ -2446,6 +2489,7 @@ input ServiceSeoMutation {
 
 input ServiceMutation {
   title: String
+  title_en: String
   slug: String
   blogTags: [String]
   hero: ServiceHeroMutation
@@ -2453,6 +2497,7 @@ input ServiceMutation {
   catalogo: ServiceCatalogoMutation
   partners: ServicePartnersMutation
   whyUsTitle: String
+  whyUsTitle_en: String
   faq: ServiceFaqMutation
   seo: ServiceSeoMutation
 }
@@ -2485,12 +2530,15 @@ input SubservicioCasosDeUsoMutation {
 
 input SubservicioFaqItemsMutation {
   question: String
+  question_en: String
   answer: JSON
+  answer_en: JSON
 }
 
 input SubservicioFaqMutation {
   visible: Boolean
   title: String
+  title_en: String
   items: [SubservicioFaqItemsMutation]
 }
 

@@ -717,9 +717,13 @@ export type HomeConnection = Connection & {
 export type ServiceHero = {
   __typename?: 'ServiceHero';
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
+  intro_en?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
+  ctaLabel_en?: Maybe<Scalars['String']['output']>;
   formTitle?: Maybe<Scalars['String']['output']>;
+  formTitle_en?: Maybe<Scalars['String']['output']>;
   heroMode?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
 };
@@ -727,7 +731,9 @@ export type ServiceHero = {
 export type ServiceValorCards = {
   __typename?: 'ServiceValorCards';
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
   tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   image?: Maybe<Scalars['String']['output']>;
 };
@@ -735,7 +741,9 @@ export type ServiceValorCards = {
 export type ServiceValor = {
   __typename?: 'ServiceValor';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
+  subtitle_en?: Maybe<Scalars['String']['output']>;
   cards?: Maybe<Array<Maybe<ServiceValorCards>>>;
 };
 
@@ -773,13 +781,16 @@ export type ServicePartners = {
 export type ServiceFaqItems = {
   __typename?: 'ServiceFaqItems';
   question?: Maybe<Scalars['String']['output']>;
+  question_en?: Maybe<Scalars['String']['output']>;
   answer?: Maybe<Scalars['JSON']['output']>;
+  answer_en?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type ServiceFaq = {
   __typename?: 'ServiceFaq';
   visible?: Maybe<Scalars['Boolean']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<ServiceFaqItems>>>;
 };
 
@@ -793,6 +804,7 @@ export type ServiceSeo = {
 export type Service = Node & Document & {
   __typename?: 'Service';
   title: Scalars['String']['output'];
+  title_en?: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
   blogTags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   hero?: Maybe<ServiceHero>;
@@ -800,6 +812,7 @@ export type Service = Node & Document & {
   catalogo?: Maybe<ServiceCatalogo>;
   partners?: Maybe<ServicePartners>;
   whyUsTitle?: Maybe<Scalars['String']['output']>;
+  whyUsTitle_en?: Maybe<Scalars['String']['output']>;
   faq?: Maybe<ServiceFaq>;
   seo?: Maybe<ServiceSeo>;
   id: Scalars['ID']['output'];
@@ -809,23 +822,31 @@ export type Service = Node & Document & {
 
 export type ServiceHeroFilter = {
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
+  intro_en?: InputMaybe<StringFilter>;
   ctaLabel?: InputMaybe<StringFilter>;
+  ctaLabel_en?: InputMaybe<StringFilter>;
   formTitle?: InputMaybe<StringFilter>;
+  formTitle_en?: InputMaybe<StringFilter>;
   heroMode?: InputMaybe<StringFilter>;
   heroImage?: InputMaybe<ImageFilter>;
 };
 
 export type ServiceValorCardsFilter = {
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
   tags?: InputMaybe<StringFilter>;
   image?: InputMaybe<ImageFilter>;
 };
 
 export type ServiceValorFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
+  subtitle_en?: InputMaybe<StringFilter>;
   cards?: InputMaybe<ServiceValorCardsFilter>;
 };
 
@@ -864,12 +885,15 @@ export type RichTextFilter = {
 
 export type ServiceFaqItemsFilter = {
   question?: InputMaybe<StringFilter>;
+  question_en?: InputMaybe<StringFilter>;
   answer?: InputMaybe<RichTextFilter>;
+  answer_en?: InputMaybe<RichTextFilter>;
 };
 
 export type ServiceFaqFilter = {
   visible?: InputMaybe<BooleanFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<ServiceFaqItemsFilter>;
 };
 
@@ -881,6 +905,7 @@ export type ServiceSeoFilter = {
 
 export type ServiceFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
   blogTags?: InputMaybe<StringFilter>;
   hero?: InputMaybe<ServiceHeroFilter>;
@@ -888,6 +913,7 @@ export type ServiceFilter = {
   catalogo?: InputMaybe<ServiceCatalogoFilter>;
   partners?: InputMaybe<ServicePartnersFilter>;
   whyUsTitle?: InputMaybe<StringFilter>;
+  whyUsTitle_en?: InputMaybe<StringFilter>;
   faq?: InputMaybe<ServiceFaqFilter>;
   seo?: InputMaybe<ServiceSeoFilter>;
 };
@@ -938,13 +964,16 @@ export type SubservicioCasosDeUso = {
 export type SubservicioFaqItems = {
   __typename?: 'SubservicioFaqItems';
   question?: Maybe<Scalars['String']['output']>;
+  question_en?: Maybe<Scalars['String']['output']>;
   answer?: Maybe<Scalars['JSON']['output']>;
+  answer_en?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SubservicioFaq = {
   __typename?: 'SubservicioFaq';
   visible?: Maybe<Scalars['Boolean']['output']>;
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<SubservicioFaqItems>>>;
 };
 
@@ -1001,12 +1030,15 @@ export type SubservicioCasosDeUsoFilter = {
 
 export type SubservicioFaqItemsFilter = {
   question?: InputMaybe<StringFilter>;
+  question_en?: InputMaybe<StringFilter>;
   answer?: InputMaybe<RichTextFilter>;
+  answer_en?: InputMaybe<RichTextFilter>;
 };
 
 export type SubservicioFaqFilter = {
   visible?: InputMaybe<BooleanFilter>;
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<SubservicioFaqItemsFilter>;
 };
 
@@ -3139,23 +3171,31 @@ export type HomeMutation = {
 
 export type ServiceHeroMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
+  intro_en?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel_en?: InputMaybe<Scalars['String']['input']>;
   formTitle?: InputMaybe<Scalars['String']['input']>;
+  formTitle_en?: InputMaybe<Scalars['String']['input']>;
   heroMode?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ServiceValorCardsMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
   tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   image?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ServiceValorMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
+  subtitle_en?: InputMaybe<Scalars['String']['input']>;
   cards?: InputMaybe<Array<InputMaybe<ServiceValorCardsMutation>>>;
 };
 
@@ -3188,12 +3228,15 @@ export type ServicePartnersMutation = {
 
 export type ServiceFaqItemsMutation = {
   question?: InputMaybe<Scalars['String']['input']>;
+  question_en?: InputMaybe<Scalars['String']['input']>;
   answer?: InputMaybe<Scalars['JSON']['input']>;
+  answer_en?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type ServiceFaqMutation = {
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<ServiceFaqItemsMutation>>>;
 };
 
@@ -3205,6 +3248,7 @@ export type ServiceSeoMutation = {
 
 export type ServiceMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
   blogTags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   hero?: InputMaybe<ServiceHeroMutation>;
@@ -3212,6 +3256,7 @@ export type ServiceMutation = {
   catalogo?: InputMaybe<ServiceCatalogoMutation>;
   partners?: InputMaybe<ServicePartnersMutation>;
   whyUsTitle?: InputMaybe<Scalars['String']['input']>;
+  whyUsTitle_en?: InputMaybe<Scalars['String']['input']>;
   faq?: InputMaybe<ServiceFaqMutation>;
   seo?: InputMaybe<ServiceSeoMutation>;
 };
@@ -3244,12 +3289,15 @@ export type SubservicioCasosDeUsoMutation = {
 
 export type SubservicioFaqItemsMutation = {
   question?: InputMaybe<Scalars['String']['input']>;
+  question_en?: InputMaybe<Scalars['String']['input']>;
   answer?: InputMaybe<Scalars['JSON']['input']>;
+  answer_en?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type SubservicioFaqMutation = {
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<SubservicioFaqItemsMutation>>>;
 };
 
@@ -3930,9 +3978,9 @@ export type FiberluxAppMutation = {
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null } | null, services?: { __typename: 'HomeServices', title?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, description?: string | null, icon?: string | null, bullets?: Array<string | null> | null, url?: string | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
-export type ServicePartsFragment = { __typename: 'Service', title: string, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null, name_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
@@ -3990,7 +4038,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type ServiceConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4002,14 +4050,14 @@ export type ServiceConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, intro?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, subtitle?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, text?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, description?: string | null, buttonLabel?: string | null, url?: string | null, colSpan?: string | null, featured?: boolean | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type SubservicioQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type SubservicioQuery = { __typename?: 'Query', subservicio: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type SubservicioQuery = { __typename?: 'Query', subservicio: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type SubservicioConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4021,7 +4069,7 @@ export type SubservicioConnectionQueryVariables = Exact<{
 }>;
 
 
-export type SubservicioConnectionQuery = { __typename?: 'Query', subservicioConnection: { __typename?: 'SubservicioConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SubservicioConnectionEdges', cursor: string, node?: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, answer?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type SubservicioConnectionQuery = { __typename?: 'Query', subservicioConnection: { __typename?: 'SubservicioConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SubservicioConnectionEdges', cursor: string, node?: { __typename: 'Subservicio', id: string, title: string, slug: string, solucionSlug: string, solucionTitle?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'SubservicioHero', heading?: string | null, intro?: string | null, note?: string | null, ctaLabel?: string | null, formTitle?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', icon?: string | null, title?: string | null, text?: string | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, statement?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type AboutQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4409,25 +4457,34 @@ export const ServicePartsFragmentDoc = gql`
     fragment ServiceParts on Service {
   __typename
   title
+  title_en
   slug
   blogTags
   hero {
     __typename
     heading
+    heading_en
     intro
+    intro_en
     ctaLabel
+    ctaLabel_en
     formTitle
+    formTitle_en
     heroMode
     heroImage
   }
   valor {
     __typename
     title
+    title_en
     subtitle
+    subtitle_en
     cards {
       __typename
       heading
+      heading_en
       text
+      text_en
       tags
       image
     }
@@ -4458,14 +4515,18 @@ export const ServicePartsFragmentDoc = gql`
     }
   }
   whyUsTitle
+  whyUsTitle_en
   faq {
     __typename
     visible
     title
+    title_en
     items {
       __typename
       question
+      question_en
       answer
+      answer_en
     }
   }
   seo {
@@ -4514,10 +4575,13 @@ export const SubservicioPartsFragmentDoc = gql`
     __typename
     visible
     title
+    title_en
     items {
       __typename
       question
+      question_en
       answer
+      answer_en
     }
   }
   seo {

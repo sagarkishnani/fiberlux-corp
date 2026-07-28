@@ -1,6 +1,8 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import ValorSolucionReact from "./ValorSolucionReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   relativePath: string;
@@ -8,6 +10,7 @@ interface Props {
 
 const { relativePath } = Astro.props;
 const serviceQuery = await client.queries.service({ relativePath });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <ValorSolucionReact
@@ -15,4 +18,5 @@ const serviceQuery = await client.queries.service({ relativePath });
   query={serviceQuery.query}
   variables={serviceQuery.variables}
   data={serviceQuery.data}
+  locale={locale}
 />

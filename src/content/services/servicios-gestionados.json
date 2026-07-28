@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "/images/soluciones/categoriaserviciosgestionados1.webp"
+    "heroImage": "/images/soluciones/categoriaserviciosgestionados1.webp",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?",
+    "heading_en": "Expert support to operate without friction",
+    "intro_en": "We act as an extension of your IT team, managing networks, communications, endpoints and critical platforms to keep your operation running."
   },
   "valor": {
     "title": "El aliado invisible",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "Los equipos internos de TI suelen estar absorbidos por tareas operativas, reduciendo el tiempo disponible para proyectos estratégicos e innovación.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "Internal IT teams are often absorbed by operational tasks, reducing the time available for strategic initiatives."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "Endpoints",
           "NOC 24/7"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "We run and manage your technology end to end with dedicated specialists and proactive monitoring."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Ideal para organizaciones que buscan fortalecer su operación tecnológica sin incrementar la complejidad de su equipo interno.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "Ideal for organizations looking to strengthen their tech operation without adding complexity."
       }
-    ]
+    ],
+    "title_en": "The invisible ally",
+    "subtitle_en": "An expert team operating your infrastructure every day."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -188,21 +200,26 @@
     "items": [
       {
         "question": "¿Qué incluye un servicio gestionado?",
-        "answer": "\\[object Object]\n"
+        "answer": "\\[object Object]\n",
+        "question_en": "What does a managed service include?"
       },
       {
         "question": "¿Cómo funciona la mesa de ayuda?",
-        "answer": "\\[object Object]\n"
+        "answer": "\\[object Object]\n",
+        "question_en": "How does the help desk work?"
       },
       {
         "question": "¿Qué SLA ofrecen?",
-        "answer": "\\[object Object]\n"
+        "answer": "\\[object Object]\n",
+        "question_en": "What SLAs do you offer?"
       },
       {
         "question": "¿Puedo gestionar solo una parte de mi infraestructura?",
-        "answer": "\\[object Object]\n"
+        "answer": "\\[object Object]\n",
+        "question_en": "Can I manage just part of my infrastructure?"
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Servicios Gestionados de TI",
@@ -211,5 +228,7 @@
   },
   "blogTags": [
     "Comunicaciones"
-  ]
+  ],
+  "whyUsTitle_en": "Why Fiberlux?",
+  "title_en": "Managed Services"
 }

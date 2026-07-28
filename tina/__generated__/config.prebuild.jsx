@@ -286,6 +286,7 @@ var config_default = defineConfig({
             required: true,
             isTitle: true
           },
+          { name: "title_en", label: "Nombre de la soluci\xF3n (EN)", type: "string" },
           { name: "slug", label: "URL slug", type: "string", required: true },
           // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
           {
@@ -308,22 +309,26 @@ var config_default = defineConfig({
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "heading_en", label: "T\xEDtulo (H1) (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "intro",
                 label: "P\xE1rrafo intro",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "intro_en", label: "P\xE1rrafo intro (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "ctaLabel",
                 label: "Texto bot\xF3n (ancla al cat\xE1logo)",
                 type: "string"
               },
+              { name: "ctaLabel_en", label: "Texto bot\xF3n (EN)", type: "string" },
               {
                 name: "formTitle",
                 label: "T\xEDtulo del form del hero",
                 type: "string"
               },
+              { name: "formTitle_en", label: "T\xEDtulo del form del hero (EN)", type: "string" },
               {
                 name: "heroMode",
                 label: "Mostrar en el hero",
@@ -348,12 +353,14 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subt\xEDtulo de secci\xF3n",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "subtitle_en", label: "Subt\xEDtulo de secci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "cards",
                 label: "Cards",
@@ -366,12 +373,14 @@ var config_default = defineConfig({
                 },
                 fields: [
                   { name: "heading", label: "T\xEDtulo", type: "string" },
+                  { name: "heading_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "text",
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" }
                   },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
                   {
                     name: "tags",
                     label: "Etiquetas (chips)",
@@ -490,6 +499,7 @@ var config_default = defineConfig({
             label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?'",
             type: "string"
           },
+          { name: "whyUsTitle_en", label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?' (EN)", type: "string" },
           // ── "Preguntas frecuentes" (acordeón, respuesta rich-text) ──
           {
             name: "faq",
@@ -503,6 +513,7 @@ var config_default = defineConfig({
                 description: "Desact\xEDvalo para ocultar el bloque de preguntas frecuentes en esta p\xE1gina."
               },
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Preguntas",
@@ -513,7 +524,9 @@ var config_default = defineConfig({
                 },
                 fields: [
                   { name: "question", label: "Pregunta", type: "string" },
-                  { name: "answer", label: "Respuesta", type: "rich-text" }
+                  { name: "question_en", label: "Pregunta (EN)", type: "string" },
+                  { name: "answer", label: "Respuesta", type: "rich-text" },
+                  { name: "answer_en", label: "Respuesta (EN)", type: "rich-text" }
                 ]
               }
             ]
@@ -716,6 +729,7 @@ var config_default = defineConfig({
                 description: "Desact\xEDvalo para ocultar el bloque de preguntas frecuentes en esta p\xE1gina."
               },
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Preguntas",
@@ -726,7 +740,9 @@ var config_default = defineConfig({
                 },
                 fields: [
                   { name: "question", label: "Pregunta", type: "string" },
-                  { name: "answer", label: "Respuesta", type: "rich-text" }
+                  { name: "question_en", label: "Pregunta (EN)", type: "string" },
+                  { name: "answer", label: "Respuesta", type: "rich-text" },
+                  { name: "answer_en", label: "Respuesta (EN)", type: "rich-text" }
                 ]
               }
             ]

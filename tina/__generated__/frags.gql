@@ -78,25 +78,34 @@ fragment HomeParts on Home {
 fragment ServiceParts on Service {
   __typename
   title
+  title_en
   slug
   blogTags
   hero {
     __typename
     heading
+    heading_en
     intro
+    intro_en
     ctaLabel
+    ctaLabel_en
     formTitle
+    formTitle_en
     heroMode
     heroImage
   }
   valor {
     __typename
     title
+    title_en
     subtitle
+    subtitle_en
     cards {
       __typename
       heading
+      heading_en
       text
+      text_en
       tags
       image
     }
@@ -127,14 +136,18 @@ fragment ServiceParts on Service {
     }
   }
   whyUsTitle
+  whyUsTitle_en
   faq {
     __typename
     visible
     title
+    title_en
     items {
       __typename
       question
+      question_en
       answer
+      answer_en
     }
   }
   seo {
@@ -182,10 +195,13 @@ fragment SubservicioParts on Subservicio {
     __typename
     visible
     title
+    title_en
     items {
       __typename
       question
+      question_en
       answer
+      answer_en
     }
   }
   seo {

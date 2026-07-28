@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaciberseguridad1.webp"
+    "heroImage": "images/soluciones/categoriaciberseguridad1.webp",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?",
+    "heading_en": "Managed cybersecurity to protect your critical operation",
+    "intro_en": "Comprehensive protection for modern digital infrastructures, combining perimeter security, endpoint protection, identity and access control, application security, continuous monitoring and incident response."
   },
   "valor": {
     "title": "Ciberseguridad basada en Zero Trust",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "Un incidente de seguridad expone datos sensibles, detiene la operación y compromete la confianza de tus clientes.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "A security incident exposes sensitive data, halts operations and undermines your clients' trust."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "Aplicaciones",
           "SOC 24/7"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "Perimeter, endpoint and identity security managed end to end, with proactive detection and response."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Banca y seguros, gobierno, salud, retail, educación, infraestructura crítica y organizaciones con múltiples sedes o esquemas de trabajo híbrido.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "Banking and insurance, government, healthcare, retail, education, critical infrastructure and multi-site organizations."
       }
-    ]
+    ],
+    "title_en": "Zero Trust-based cybersecurity",
+    "subtitle_en": "Modern security assumes no trust: it validates every access."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -230,7 +242,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What is a SOC and how does it protect my company?"
       },
       {
         "question": "¿Qué diferencia hay entre EDR, XDR y MDR?",
@@ -247,7 +260,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What's the difference between EDR, XDR and MDR?"
       },
       {
         "question": "¿Cómo ayuda la ciberseguridad gestionada a cumplir normativas?",
@@ -264,7 +278,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "How does managed cybersecurity help with compliance?"
       },
       {
         "question": "¿Qué incluye el monitoreo 24/7?",
@@ -281,9 +296,11 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What does 24/7 monitoring include?"
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Ciberseguridad Gestionada y SOC 24/7",
@@ -292,5 +309,7 @@
   },
   "blogTags": [
     "Ciberseguridad"
-  ]
+  ],
+  "whyUsTitle_en": "Why Fiberlux?",
+  "title_en": "Managed Cybersecurity"
 }

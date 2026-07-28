@@ -5,11 +5,14 @@ import type {
   ServiceQuery,
   ServiceQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface ValorSolucionProps {
   query: string;
   variables: ServiceQueryVariables;
   data: ServiceQuery;
+  locale?: Locale;
 }
 
 interface Card {
@@ -23,6 +26,7 @@ export default function ValorSolucionReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: ValorSolucionProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
@@ -67,7 +71,7 @@ export default function ValorSolucionReact({
             style={{ ["--d" as any]: "0s" }}
             data-tina-field={tinaField(valor, "title")}
           >
-            {valor.title}
+            {tField(valor as any, "title", locale)}
           </h2>
         )}
         {valor.subtitle && (
@@ -76,7 +80,7 @@ export default function ValorSolucionReact({
             style={{ ["--d" as any]: "0.08s" }}
             data-tina-field={tinaField(valor, "subtitle")}
           >
-            {valor.subtitle}
+            {tField(valor as any, "subtitle", locale)}
           </p>
         )}
 
@@ -93,7 +97,7 @@ export default function ValorSolucionReact({
                   className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-3"
                   data-tina-field={tinaField(challenge as any, "heading")}
                 >
-                  {challenge.heading}
+                  {tField(challenge as any, "heading", locale)}
                 </h3>
               )}
               {challenge.text && (
@@ -101,7 +105,7 @@ export default function ValorSolucionReact({
                   className="text-body-sm md:text-body-md text-white/70 max-w-[420px]"
                   data-tina-field={tinaField(challenge as any, "text")}
                 >
-                  {challenge.text}
+                  {tField(challenge as any, "text", locale)}
                 </p>
               )}
               {challenge.image && (
@@ -130,7 +134,7 @@ export default function ValorSolucionReact({
                   className="text-[22px] md:text-[26px] font-semibold text-[#3B0E30] mb-3"
                   data-tina-field={tinaField(solution as any, "heading")}
                 >
-                  {solution.heading}
+                  {tField(solution as any, "heading", locale)}
                 </h3>
               )}
               {solution.text && (
@@ -138,7 +142,7 @@ export default function ValorSolucionReact({
                   className="text-body-sm md:text-body-md text-[#3B0E30]/80 max-w-[560px]"
                   data-tina-field={tinaField(solution as any, "text")}
                 >
-                  {solution.text}
+                  {tField(solution as any, "text", locale)}
                 </p>
               )}
               {(() => {
@@ -192,7 +196,7 @@ export default function ValorSolucionReact({
                     className="text-[22px] md:text-[26px] font-semibold text-white mb-3"
                     data-tina-field={tinaField(industries as any, "heading")}
                   >
-                    {industries.heading}
+                    {tField(industries as any, "heading", locale)}
                   </h3>
                 )}
                 {industries.text && (
@@ -200,7 +204,7 @@ export default function ValorSolucionReact({
                     className="text-body-sm text-white/85"
                     data-tina-field={tinaField(industries as any, "text")}
                   >
-                    {industries.text}
+                    {tField(industries as any, "text", locale)}
                   </p>
                 )}
               </div>

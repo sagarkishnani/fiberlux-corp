@@ -1,6 +1,8 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import HeroSolucionReact from "./HeroSolucionReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   relativePath: string;
@@ -9,6 +11,7 @@ interface Props {
 const { relativePath } = Astro.props;
 
 const serviceQuery = await client.queries.service({ relativePath });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 const formQuery = await client.queries.dynamicForms({
   relativePath: "servicios.json",
 });
@@ -19,6 +22,7 @@ const formQuery = await client.queries.dynamicForms({
   query={serviceQuery.query}
   variables={serviceQuery.variables}
   data={serviceQuery.data}
+  locale={locale}
   form={{
     query: formQuery.query,
     variables: formQuery.variables,

@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaconectividad1.webp"
+    "heroImage": "images/soluciones/categoriaconectividad1.webp",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?",
+    "heading_en": "Connectivity designed for operations that can't stop",
+    "intro_en": "Ensure the availability, resilience and performance of your multi-site infrastructure with high-capacity links backed by our 24/7 NOC."
   },
   "valor": {
     "title": "El valor de la resiliencia",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "Un corte de internet paraliza la facturación, detiene operaciones industriales y bloquea transacciones.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "An internet outage halts billing, stops industrial operations and blocks transactions."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "LTE",
           "SD-WAN"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "We integrate enterprise internet, multi-site data transmission, dark fiber and SD-WAN backed by our own fiber and 24/7 NOC."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Aplicable a empresas de todos los tamaños que requieren conectividad confiable para soportar operaciones críticas, múltiples sedes o servicios digitales.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "Applicable to companies of all sizes that need reliable connectivity to support critical operations."
       }
-    ]
+    ],
+    "title_en": "The value of resilience",
+    "subtitle_en": "Modern resilience isn't improvised: it's engineered into every link."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -185,7 +197,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What connectivity plans does Fiberlux offer for businesses?"
       },
       {
         "question": "¿Qué significa \"velocidad simétrica\"?",
@@ -202,7 +215,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What does \"symmetrical speed\" mean?"
       },
       {
         "question": "¿Cómo verifico si Fiberlux tiene cobertura en mi zona?",
@@ -219,7 +233,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "How do I check if Fiberlux has coverage in my area?"
       },
       {
         "question": "¿Cuánto demora la instalación y cuál es su costo?",
@@ -236,7 +251,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "How long does installation take and what does it cost?"
       },
       {
         "question": "¿Qué equipos instalan en mi sede?",
@@ -253,7 +269,8 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "What equipment do you install at my site?"
       },
       {
         "question": "¿Cuánto tiempo dura el contrato?",
@@ -270,9 +287,11 @@
               ]
             }
           ]
-        }
+        },
+        "question_en": "How long is the contract?"
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Conectividad Empresarial para tu empresa",
@@ -281,5 +300,7 @@
   },
   "blogTags": [
     "Conectividad"
-  ]
+  ],
+  "whyUsTitle_en": "Why Fiberlux?",
+  "title_en": "Business Connectivity"
 }
