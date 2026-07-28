@@ -437,13 +437,16 @@ fragment CasosDeExitoParts on CasosDeExito {
 fragment CertificacionesParts on Certificaciones {
   __typename
   sectionTitle
+  sectionTitle_en
   items {
     __typename
     year
     icon
     title
     heading
+    heading_en
     description
+    description_en
   }
 }
 

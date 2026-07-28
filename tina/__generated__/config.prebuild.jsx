@@ -1445,6 +1445,12 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           {
+            name: "sectionTitle_en",
+            label: "T\xEDtulo de la secci\xF3n (EN)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
             name: "items",
             label: "Certificaciones",
             type: "object",
@@ -1471,9 +1477,16 @@ var config_default = defineConfig({
               },
               { name: "title", label: "C\xF3digo (ej. ISO 37001)", type: "string" },
               { name: "heading", label: "Categor\xEDa (ej. Sistema Antisoborno)", type: "string" },
+              { name: "heading_en", label: "Categor\xEDa (EN)", type: "string" },
               {
                 name: "description",
                 label: "Descripci\xF3n",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "description_en",
+                label: "Descripci\xF3n (EN)",
                 type: "string",
                 ui: { component: "textarea" }
               }

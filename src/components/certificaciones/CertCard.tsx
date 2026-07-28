@@ -1,5 +1,7 @@
 import { tinaField } from "tinacms/dist/react";
 import type { IconType } from "react-icons";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import {
   FaShieldHalved,
   FaLock,
@@ -17,13 +19,16 @@ export interface Cert {
   icon?: string | null; // clave del set predefinido (reemplaza a `logo`)
   title?: string | null; // código ISO
   heading?: string | null; // categoría (se muestra en mayúsculas)
+  heading_en?: string | null;
   description?: string | null;
+  description_en?: string | null;
 }
 
 interface CertCardProps {
   cert: Cert;
   /** Tina object for `data-tina-field` (the item in the list). */
   tinaItem?: any;
+  locale?: Locale;
 }
 
 /* ── Icon map: CMS select key → react-icons component ── */
@@ -39,7 +44,7 @@ const ICONS: Record<string, IconType> = {
 };
 const FALLBACK_ICON: IconType = FaShieldHalved;
 
-export default function CertCard({ cert, tinaItem }: CertCardProps) {
+export default function CertCard({ cert, tinaItem, locale = "es" }: CertCardProps) {
   const Icon = (cert.icon && ICONS[cert.icon]) || FALLBACK_ICON;
 
   return (
@@ -89,7 +94,7 @@ export default function CertCard({ cert, tinaItem }: CertCardProps) {
         className="text-center text-[13px] font-semibold uppercase tracking-[0.12em] text-white/70"
         data-tina-field={tinaItem ? tinaField(tinaItem, "heading") : undefined}
       >
-        {cert.heading}
+        {tField(cert as any, "heading", locale)}
       </h4>
 
       {/* ISO code */}
@@ -108,7 +113,7 @@ export default function CertCard({ cert, tinaItem }: CertCardProps) {
         className="text-center text-[14px] leading-[1.7] text-white/45"
         data-tina-field={tinaItem ? tinaField(tinaItem, "description") : undefined}
       >
-        {cert.description}
+        {tField(cert as any, "description", locale)}
       </p>
     </div>
   );

@@ -1,12 +1,15 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import CertificacionesSliderReact from "./CertificacionesSliderReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const certQuery = await client.queries.certificaciones({
   relativePath: "index.json",
 });
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const cfg = (globalQuery.data?.global as any)?.sliders?.certificaciones ?? {};
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <CertificacionesSliderReact
@@ -17,4 +20,5 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.certificaciones ?? {};
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 3500}
   effect={cfg.effect ?? "opacity"}
+  locale={locale}
 />

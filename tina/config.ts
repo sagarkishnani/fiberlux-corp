@@ -1519,6 +1519,12 @@ export default defineConfig({
             ui: { component: "textarea" },
           },
           {
+            name: "sectionTitle_en",
+            label: "Título de la sección (EN)",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
             name: "items",
             label: "Certificaciones",
             type: "object",
@@ -1545,9 +1551,16 @@ export default defineConfig({
               },
               { name: "title", label: "Código (ej. ISO 37001)", type: "string" },
               { name: "heading", label: "Categoría (ej. Sistema Antisoborno)", type: "string" },
+              { name: "heading_en", label: "Categoría (EN)", type: "string" },
               {
                 name: "description",
                 label: "Descripción",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
+                name: "description_en",
+                label: "Descripción (EN)",
                 type: "string",
                 ui: { component: "textarea" },
               },

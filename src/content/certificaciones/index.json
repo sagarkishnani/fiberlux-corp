@@ -1,26 +1,33 @@
 {
   "sectionTitle": "Certificaciones del grupo Fiberlux",
+  "sectionTitle_en": "Fiberlux group certifications",
   "items": [
     {
       "year": "2024",
       "icon": "antisoborno",
       "title": "ISO 37001",
       "heading": "Sistema Antisoborno",
-      "description": "Marco de gestión para prevenir, detectar y responder ante el soborno en todas las operaciones del grupo."
+      "heading_en": "Anti-Bribery System",
+      "description": "Marco de gestión para prevenir, detectar y responder ante el soborno en todas las operaciones del grupo.",
+      "description_en": "Management framework to prevent, detect and respond to bribery across all of the group's operations."
     },
     {
       "year": "2025",
       "icon": "seguridad",
       "title": "ISO 27001",
       "heading": "Seguridad de la Información",
-      "description": "Sistema de gestión que protege la confidencialidad, integridad y disponibilidad de la información del grupo."
+      "heading_en": "Information Security",
+      "description": "Sistema de gestión que protege la confidencialidad, integridad y disponibilidad de la información del grupo.",
+      "description_en": "Management system that protects the confidentiality, integrity and availability of the group's information."
     },
     {
       "year": "2025",
       "icon": "calidad",
       "title": "ISO 9001",
       "heading": "Gestión de Calidad",
-      "description": "Estándar internacional que asegura la mejora continua y la satisfacción del cliente en cada proceso."
+      "heading_en": "Quality Management",
+      "description": "Estándar internacional que asegura la mejora continua y la satisfacción del cliente en cada proceso.",
+      "description_en": "International standard that ensures continuous improvement and customer satisfaction in every process."
     }
   ]
 }

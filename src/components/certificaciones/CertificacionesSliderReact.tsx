@@ -6,6 +6,8 @@ import type {
 import CertCard, { type Cert } from "./CertCard";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 /* Decorative background glow (static asset), same pattern as the soluciones slider. */
@@ -18,6 +20,7 @@ interface CertSliderProps {
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
+  locale?: Locale;
 }
 
 export default function CertificacionesSliderReact({
@@ -27,11 +30,14 @@ export default function CertificacionesSliderReact({
   autoplay = true,
   intervalMs = 3500,
   effect = "none",
+  locale = "es",
 }: CertSliderProps) {
   const { data } = useTina<CertificacionesQuery>({ query, variables, data: initialData });
 
   const page = data?.certificaciones;
-  const sectionTitle = page?.sectionTitle || "Certificaciones del grupo Fiberlux";
+  const sectionTitle =
+    tField(page as any, "sectionTitle", locale) ||
+    (locale === "en" ? "Fiberlux group certifications" : "Certificaciones del grupo Fiberlux");
   const items = (page?.items || []).filter(Boolean) as any[];
 
   const hasItems = items.length > 0;
@@ -70,13 +76,13 @@ export default function CertificacionesSliderReact({
               key={i}
               className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
             >
-              <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} />
+              <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} locale={locale} />
             </div>
           ))
         ) : (
           <div className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]">
             <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
-              Certificaciones — próximamente
+              {locale === "en" ? "Certifications — coming soon" : "Certificaciones — próximamente"}
             </div>
           </div>
         )}
