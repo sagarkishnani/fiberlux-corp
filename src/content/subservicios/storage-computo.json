@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp"
+    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp",
+    "heading_en": "Storage & Compute",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Acceso seguro y clasificado",
         "text": "Control sobre la información no estructurada de la empresa."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Empresas que requieren **optimizar recursos**, centralizar aplicaciones críticas o almacenar grandes volúmenes de información de forma segura y escalable."
+    "statement": "Empresas que requieren **optimizar recursos**, centralizar aplicaciones críticas o almacenar grandes volúmenes de información de forma segura y escalable.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Storage y Cómputo | Fiberlux Corp",
     "metaDescription": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Storage & Compute",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

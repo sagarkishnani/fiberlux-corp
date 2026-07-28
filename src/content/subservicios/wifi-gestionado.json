@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/wifi-gestionado.webp"
+    "heroImage": "images/soluciones/imagenes/wifi-gestionado.webp",
+    "heading_en": "Managed WiFi",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Proyectos llave en mano",
         "text": "Diseño, arrendamiento de equipos, instalación, gestión y soporte."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Campus universitarios, hoteles, centros comerciales, hospitales y **oficinas corporativas de gran escala**."
+    "statement": "Campus universitarios, hoteles, centros comerciales, hospitales y **oficinas corporativas de gran escala**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "WiFi Gestionado | Fiberlux Corp",
     "metaDescription": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Managed WiFi",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

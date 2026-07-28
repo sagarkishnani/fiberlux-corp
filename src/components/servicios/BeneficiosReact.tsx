@@ -18,11 +18,14 @@ import type {
   SubservicioQuery,
   SubservicioQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface BeneficiosProps {
   query: string;
   variables: SubservicioQueryVariables;
   data: SubservicioQuery;
+  locale?: Locale;
 }
 
 interface Item {
@@ -59,6 +62,7 @@ export default function BeneficiosReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: BeneficiosProps) {
   const { data } = useTina<SubservicioQuery>({
     query,
@@ -80,7 +84,7 @@ export default function BeneficiosReact({
             className="text-[28px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(beneficios, "title")}
           >
-            {beneficios.title}
+            {tField(beneficios as any, "title", locale)}
           </h2>
         )}
 
@@ -102,7 +106,7 @@ export default function BeneficiosReact({
                   className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
                   data-tina-field={tinaField(item as any, "title")}
                 >
-                  {item.title}
+                  {tField(item as any, "title", locale)}
                 </h3>
               )}
               {item.text && (
@@ -110,7 +114,7 @@ export default function BeneficiosReact({
                   className="relative z-10 mt-3 text-body-sm text-greyscale-light"
                   data-tina-field={tinaField(item as any, "text")}
                 >
-                  {item.text}
+                  {tField(item as any, "text", locale)}
                 </p>
               )}
             </div>

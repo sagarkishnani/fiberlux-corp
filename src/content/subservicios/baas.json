@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/backup-as-a-service.webp"
+    "heroImage": "images/soluciones/imagenes/backup-as-a-service.webp",
+    "heading_en": "Backup as a Service (BaaS)",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Cumplimiento normativo",
         "text": "Retención legal de la información corporativa."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Estudios contables, despachos legales, repositorios de facturación electrónica y organizaciones que requieren **proteger información crítica** y cumplir exigencias regulatorias."
+    "statement": "Estudios contables, despachos legales, repositorios de facturación electrónica y organizaciones que requieren **proteger información crítica** y cumplir exigencias regulatorias.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Backup as a Service (BaaS) | Fiberlux Corp",
     "metaDescription": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Backup as a Service (BaaS)",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

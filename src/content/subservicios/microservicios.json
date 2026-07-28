@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/microservicios.webp"
+    "heroImage": "images/soluciones/imagenes/microservicios.webp",
+    "heading_en": "Microservicios",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Gestión con Kubernetes",
         "text": "Orquestación centralizada y automatizada de cargas de trabajo."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Plataformas digitales, aplicaciones empresariales modernas, entornos DevOps, e-commerce y **fintechs**."
+    "statement": "Plataformas digitales, aplicaciones empresariales modernas, entornos DevOps, e-commerce y **fintechs**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Microservicios | Fiberlux Corp",
     "metaDescription": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Microservicios",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

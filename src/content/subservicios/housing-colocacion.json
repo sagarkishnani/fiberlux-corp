@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/housing.webp"
+    "heroImage": "images/soluciones/imagenes/housing.webp",
+    "heading_en": "Housing / Colocation",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Conectividad superior",
         "text": "Ubicado en el corazón de los principales ecosistemas digitales."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Organizaciones con infraestructura on-premise que requieren mayor **disponibilidad, seguridad física y conectividad** para sus servidores críticos."
+    "statement": "Organizaciones con infraestructura on-premise que requieren mayor **disponibilidad, seguridad física y conectividad** para sus servidores críticos.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Housing / Colocación | Fiberlux Corp",
     "metaDescription": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center. El cliente mantiene la propiedad del hardware; nosotros garantizamos el ecosistema físico.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Housing / Colocation",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/vpn-segura.webp"
+    "heroImage": "images/soluciones/imagenes/vpn-segura.webp",
+    "heading_en": "Secure VPN & Protected Remote Access",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Control centralizado",
         "text": "Define quién y cuándo se conecta de forma remota."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Vital para empresas con modelos de **trabajo remoto o híbrido**, donde los usuarios se conectan desde redes domésticas vulnerables."
+    "statement": "Vital para empresas con modelos de **trabajo remoto o híbrido**, donde los usuarios se conectan desde redes domésticas vulnerables.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "VPN Segura y Acceso Remoto Protegido | Fiberlux Corp",
     "metaDescription": "Red Privada Virtual de grado corporativo. Un túnel encriptado que conecta el dispositivo del usuario directamente con el corazón de la red empresarial.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Secure VPN & Protected Remote Access",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

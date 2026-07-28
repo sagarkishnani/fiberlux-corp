@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/inter-corpo-alta-dispo.webp"
+    "heroImage": "images/soluciones/imagenes/inter-corpo-alta-dispo.webp",
+    "heading_en": "High-Availability Corporate Internet",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Estabilidad financiera",
         "text": "Evita pérdidas económicas por desconexión."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Cadenas de retail (**facturación y POS**), clínicas, centros logísticos, entidades financieras y plantas industriales."
+    "statement": "Cadenas de retail (**facturación y POS**), clínicas, centros logísticos, entidades financieras y plantas industriales.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Internet Corporativo de Alta Disponibilidad | Fiberlux Corp",
     "metaDescription": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
     "ogImage": ""
-  }
+  },
+  "title_en": "High-Availability Corporate Internet",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

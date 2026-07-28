@@ -3,6 +3,8 @@ import type {
   SubservicioQuery,
   SubservicioQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
 import { mediaUrl } from "../../utils/mediaUrl";
 
@@ -16,6 +18,7 @@ interface HeroSubservicioProps {
   query: string;
   variables: SubservicioQueryVariables;
   data: SubservicioQuery;
+  locale?: Locale;
   form: FormIsland;
   prefill?: Record<string, string>;
 }
@@ -24,6 +27,7 @@ export default function HeroSubservicioReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   form,
   prefill,
 }: HeroSubservicioProps) {
@@ -136,7 +140,7 @@ export default function HeroSubservicioReact({
                 className="text-greyscale-white"
                 data-tina-field={tinaField(sub, "title")}
               >
-                {sub.title}
+                {tField(sub as any, "title", locale)}
               </span>
             </nav>
 
@@ -150,7 +154,7 @@ export default function HeroSubservicioReact({
                   className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
                   data-tina-field={tinaField(hero, "heading")}
                 >
-                  {hero.heading}
+                  {tField(hero as any, "heading", locale)}
                 </h1>
               )}
 
@@ -159,7 +163,7 @@ export default function HeroSubservicioReact({
                   className="text-body-lg text-greyscale-light max-w-[480px] mb-8 md:mb-6"
                   data-tina-field={tinaField(hero, "intro")}
                 >
-                  {hero.intro}
+                  {tField(hero as any, "intro", locale)}
                 </p>
               )}
             </div>
@@ -169,7 +173,7 @@ export default function HeroSubservicioReact({
                 className="max-w-[520px] mt-4 md:mt-0 mb-8 rounded-xl border-l-2 border-[#96237A] bg-white/[0.05] px-5 py-4"
                 data-tina-field={tinaField(hero, "note")}
               >
-                <p className="text-body-sm text-greyscale-light">{hero.note}</p>
+                <p className="text-body-sm text-greyscale-light">{tField(hero as any, "note", locale)}</p>
               </div>
             )}
 
@@ -179,7 +183,7 @@ export default function HeroSubservicioReact({
                 className="inline-flex items-center justify-center px-7 py-4 rounded-full font-medium text-base transition-all duration-300 bg-[#96237A] hover:bg-[#650F50] text-white shadow-[0_8px_32px_-8px_rgba(150,35,122,0.6)] hover:shadow-[0_8px_32px_-4px_rgba(150,35,122,0.8)] hover:translate-y-[-1px]"
                 data-tina-field={tinaField(hero, "ctaLabel")}
               >
-                {hero.ctaLabel}
+                {tField(hero as any, "ctaLabel", locale)}
               </a>
             )}
           </div>
@@ -194,7 +198,7 @@ export default function HeroSubservicioReact({
                 className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-6"
                 data-tina-field={tinaField(hero, "formTitle")}
               >
-                {hero.formTitle}
+                {tField(hero as any, "formTitle", locale)}
               </h2>
             )}
             <DynamicFormReact

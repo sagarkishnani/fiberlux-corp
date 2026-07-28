@@ -161,6 +161,7 @@ fragment ServiceParts on Service {
 fragment SubservicioParts on Subservicio {
   __typename
   title
+  title_en
   slug
   solucionSlug
   solucionTitle
@@ -168,29 +169,40 @@ fragment SubservicioParts on Subservicio {
   hero {
     __typename
     heading
+    heading_en
     intro
+    intro_en
     note
+    note_en
     ctaLabel
+    ctaLabel_en
     formTitle
+    formTitle_en
     heroBackground
     heroImage
   }
   beneficios {
     __typename
     title
+    title_en
     items {
       __typename
       icon
       title
+      title_en
       text
+      text_en
     }
   }
   casosDeUso {
     __typename
     eyebrow
+    eyebrow_en
     statement
+    statement_en
   }
   whyUsTitle
+  whyUsTitle_en
   faq {
     __typename
     visible

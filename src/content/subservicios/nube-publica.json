@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/nube-publica.webp"
+    "heroImage": "images/soluciones/imagenes/nube-publica.webp",
+    "heading_en": "Public Cloud",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Replicación entre sitios",
         "text": "Fortalece la disponibilidad y protección de la información crítica."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Startups en hipercrecimiento, plataformas de e-commerce, entornos de desarrollo, sistemas ERP y **organizaciones multisede** con picos de demanda."
+    "statement": "Startups en hipercrecimiento, plataformas de e-commerce, entornos de desarrollo, sistemas ERP y **organizaciones multisede** con picos de demanda.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Nube Pública | Fiberlux Corp",
     "metaDescription": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Public Cloud",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

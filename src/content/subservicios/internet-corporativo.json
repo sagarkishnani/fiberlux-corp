@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/internet-corporativo.webp"
+    "heroImage": "images/soluciones/imagenes/internet-corporativo.webp",
+    "heading_en": "Corporate Internet",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Soporte de alta prioridad",
         "text": "Resolución inmediata ante incidencias con SLA dedicado y atención preferente 24/7."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde **cada minuto de desconexión** signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica."
+    "statement": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde **cada minuto de desconexión** signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -65,11 +70,14 @@
         "question": "¿Cuánto tiempo dura el contrato?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Internet Corporativo | Fiberlux Corp",
     "metaDescription": "Fibra óptica 100% simétrica, dedicada y sin compartición, con ancho de banda garantizado y soporte 24/7.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Corporate Internet",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

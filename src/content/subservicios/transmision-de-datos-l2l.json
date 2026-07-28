@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/transmision-de-datos.webp"
+    "heroImage": "images/soluciones/imagenes/transmision-de-datos.webp",
+    "heading_en": "Data Transmission (Lan To Lan – L2L)",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Control total",
         "text": "Sobre el tráfico interno de la organización."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Comunicación directa y de **latencia ultrabaja** entre un centro de distribución, oficinas corporativas y un data center propio."
+    "statement": "Comunicación directa y de **latencia ultrabaja** entre un centro de distribución, oficinas corporativas y un data center propio.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Transmisión de datos (Lan To Lan – L2L) | Fiberlux Corp",
     "metaDescription": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Data Transmission (Lan To Lan – L2L)",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

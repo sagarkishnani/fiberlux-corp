@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/cybersoc1.webp"
+    "heroImage": "images/soluciones/imagenes/cybersoc1.webp",
+    "heading_en": "SOC 24/7",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Detección y respuesta sin brechas",
         "text": "Cierra la distancia entre detectar un incidente y neutralizarlo."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Toda empresa bajo **normativas estrictas de cumplimiento** o cuya operación dependa de su continuidad digital."
+    "statement": "Toda empresa bajo **normativas estrictas de cumplimiento** o cuya operación dependa de su continuidad digital.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "SOC 24/7 | Fiberlux Corp",
     "metaDescription": "Un equipo de ingenieros expertos que vigila, correlaciona eventos y responde a amenazas de forma ininterrumpida.",
     "ogImage": ""
-  }
+  },
+  "title_en": "SOC 24/7",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

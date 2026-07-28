@@ -5,11 +5,14 @@ import type {
   SubservicioQuery,
   SubservicioQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface CasosDeUsoProps {
   query: string;
   variables: SubservicioQueryVariables;
   data: SubservicioQuery;
+  locale?: Locale;
 }
 
 /** True when the rich-text node has any non-empty text. */
@@ -40,6 +43,7 @@ export default function CasosDeUsoReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: CasosDeUsoProps) {
   const { data } = useTina<SubservicioQuery>({
     query,
@@ -50,7 +54,11 @@ export default function CasosDeUsoReact({
   const casos = data?.subservicio?.casosDeUso;
   if (!casos) return null;
 
-  const showStatement = hasContent(casos.statement);
+  const statement =
+    locale === "en" && (casos as any).statement_en
+      ? (casos as any).statement_en
+      : casos.statement;
+  const showStatement = hasContent(statement);
   if (!casos.eyebrow && !showStatement) return null;
 
   return (
@@ -62,7 +70,7 @@ export default function CasosDeUsoReact({
               className="font-mono text-xs md:text-sm tracking-[0.2em] text-greyscale"
               data-tina-field={tinaField(casos, "eyebrow")}
             >
-              {casos.eyebrow}
+              {tField(casos as any, "eyebrow", locale)}
             </span>
           </div>
         )}
@@ -73,7 +81,7 @@ export default function CasosDeUsoReact({
             data-tina-field={tinaField(casos, "statement")}
           >
             <TinaMarkdown
-              content={casos.statement}
+              content={statement}
               components={statementComponents}
             />
           </div>

@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/antiddos.webp"
+    "heroImage": "images/soluciones/imagenes/antiddos.webp",
+    "heading_en": "Anti-DDoS",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Protege tu facturación online",
         "text": "Asegura las ventas en fechas comerciales vitales."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Retail masivo (**Cyber Days**), medios de comunicación, bancos y universidades."
+    "statement": "Retail masivo (**Cyber Days**), medios de comunicación, bancos y universidades.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Anti-DDoS | Fiberlux Corp",
     "metaDescription": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Anti-DDoS",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

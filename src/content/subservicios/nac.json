@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/nac.webp"
+    "heroImage": "images/soluciones/imagenes/nac.webp",
+    "heading_en": "NAC",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Segmentación automática",
         "text": "Segmenta según perfiles, roles o niveles de confianza."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Campus educativos, hospitales, plantas industriales y organizaciones con **políticas de acceso diferenciadas** para colaboradores, visitantes y proveedores."
+    "statement": "Campus educativos, hospitales, plantas industriales y organizaciones con **políticas de acceso diferenciadas** para colaboradores, visitantes y proveedores.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "NAC | Fiberlux Corp",
     "metaDescription": "Control de acceso a la red que verifica la identidad, estado y cumplimiento de seguridad de usuarios y dispositivos antes de permitir su conexión a los recursos corporativos.",
     "ogImage": ""
-  }
+  },
+  "title_en": "NAC",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

@@ -611,6 +611,7 @@ export default defineConfig({
             required: true,
             isTitle: true,
           },
+          { name: "title_en", label: "Nombre del sub-servicio (EN)", type: "string" },
           { name: "slug", label: "URL slug", type: "string", required: true },
           {
             name: "solucionSlug",
@@ -653,28 +654,33 @@ export default defineConfig({
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "heading_en", label: "Título (H1) (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "intro",
                 label: "Párrafo intro",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "intro_en", label: "Párrafo intro (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "note",
                 label: "Caja de nota",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "note_en", label: "Caja de nota (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "ctaLabel",
                 label: "Texto botón (ancla al form inferior)",
                 type: "string",
               },
+              { name: "ctaLabel_en", label: "Texto botón (EN)", type: "string" },
               {
                 name: "formTitle",
                 label: "Título del form del hero",
                 type: "string",
               },
+              { name: "formTitle_en", label: "Título del form del hero (EN)", type: "string" },
               {
                 name: "heroBackground",
                 label: "Fondo del hero",
@@ -700,6 +706,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título de sección", type: "string" },
+              { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
                 name: "items",
                 label: "Cards",
@@ -729,12 +736,14 @@ export default defineConfig({
                     ],
                   },
                   { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
                   {
                     name: "text",
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
                 ],
               },
             ],
@@ -747,12 +756,18 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               {
                 name: "statement",
                 label: "Statement",
                 type: "rich-text",
                 description:
                   "Usa negrita (bold) para resaltar palabras en magenta.",
+              },
+              {
+                name: "statement_en",
+                label: "Statement (EN)",
+                type: "rich-text",
               },
             ],
           },
@@ -763,6 +778,7 @@ export default defineConfig({
             label: "Título '¿Por qué Fiberlux?'",
             type: "string",
           },
+          { name: "whyUsTitle_en", label: "Título '¿Por qué Fiberlux?' (EN)", type: "string" },
 
           // ── "Preguntas frecuentes" (propio del sub-servicio) ──
           {

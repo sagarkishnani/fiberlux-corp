@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/mfa.webp"
+    "heroImage": "images/soluciones/imagenes/mfa.webp",
+    "heading_en": "MFA & Identity Control",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Máxima seguridad, mínima fricción",
         "text": "Protección fuerte sin entorpecer al colaborador legítimo."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Accesos administrativos de TI, **portales bancarios** y entrada al ERP central."
+    "statement": "Accesos administrativos de TI, **portales bancarios** y entrada al ERP central.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "MFA y Control de Identidad | Fiberlux Corp",
     "metaDescription": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
     "ogImage": ""
-  }
+  },
+  "title_en": "MFA & Identity Control",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

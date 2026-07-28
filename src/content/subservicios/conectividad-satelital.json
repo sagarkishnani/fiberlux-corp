@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/conectividad-satelital.webp"
+    "heroImage": "images/soluciones/imagenes/conectividad-satelital.webp",
+    "heading_en": "Satellite Connectivity",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Contingencia reforzada",
         "text": "Mayor nivel de respaldo para sedes urbanas críticas."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas."
+    "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Conectividad satelital | Fiberlux Corp",
     "metaDescription": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Satellite Connectivity",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

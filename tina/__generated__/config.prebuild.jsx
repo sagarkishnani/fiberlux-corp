@@ -571,6 +571,7 @@ var config_default = defineConfig({
             required: true,
             isTitle: true
           },
+          { name: "title_en", label: "Nombre del sub-servicio (EN)", type: "string" },
           { name: "slug", label: "URL slug", type: "string", required: true },
           {
             name: "solucionSlug",
@@ -610,28 +611,33 @@ var config_default = defineConfig({
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "heading_en", label: "T\xEDtulo (H1) (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "intro",
                 label: "P\xE1rrafo intro",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "intro_en", label: "P\xE1rrafo intro (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "note",
                 label: "Caja de nota",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "note_en", label: "Caja de nota (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "ctaLabel",
                 label: "Texto bot\xF3n (ancla al form inferior)",
                 type: "string"
               },
+              { name: "ctaLabel_en", label: "Texto bot\xF3n (EN)", type: "string" },
               {
                 name: "formTitle",
                 label: "T\xEDtulo del form del hero",
                 type: "string"
               },
+              { name: "formTitle_en", label: "T\xEDtulo del form del hero (EN)", type: "string" },
               {
                 name: "heroBackground",
                 label: "Fondo del hero",
@@ -656,6 +662,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Cards",
@@ -685,12 +692,14 @@ var config_default = defineConfig({
                     ]
                   },
                   { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "text",
                     label: "Texto",
                     type: "string",
                     ui: { component: "textarea" }
-                  }
+                  },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
                 ]
               }
             ]
@@ -702,11 +711,17 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "eyebrow", label: "Eyebrow", type: "string" },
+              { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               {
                 name: "statement",
                 label: "Statement",
                 type: "rich-text",
                 description: "Usa negrita (bold) para resaltar palabras en magenta."
+              },
+              {
+                name: "statement_en",
+                label: "Statement (EN)",
+                type: "rich-text"
               }
             ]
           },
@@ -716,6 +731,7 @@ var config_default = defineConfig({
             label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?'",
             type: "string"
           },
+          { name: "whyUsTitle_en", label: "T\xEDtulo '\xBFPor qu\xE9 Fiberlux?' (EN)", type: "string" },
           // ── "Preguntas frecuentes" (propio del sub-servicio) ──
           {
             name: "faq",

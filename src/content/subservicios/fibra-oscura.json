@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/fibra-oscura.webp"
+    "heroImage": "images/soluciones/imagenes/fibra-oscura.webp",
+    "heading_en": "Dark Fiber",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Costos optimizados",
         "text": "Para operaciones con alto volumen de tráfico."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, operadores mayoristas (Carriers), empresas con múltiples sedes y organizaciones con **altos requerimientos de capacidad y crecimiento**."
+    "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, operadores mayoristas (Carriers), empresas con múltiples sedes y organizaciones con **altos requerimientos de capacidad y crecimiento**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Fibra Oscura | Fiberlux Corp",
     "metaDescription": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Dark Fiber",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

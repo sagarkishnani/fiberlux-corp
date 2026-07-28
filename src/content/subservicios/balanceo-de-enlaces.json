@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/balanceo-de-enlaces.webp"
+    "heroImage": "images/soluciones/imagenes/balanceo-de-enlaces.webp",
+    "heading_en": "Link Load Balancing",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Resiliencia simplificada",
         "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde **el downtime es inaceptable**."
+    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde **el downtime es inaceptable**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Balanceo de enlaces | Fiberlux Corp",
     "metaDescription": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Link Load Balancing",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

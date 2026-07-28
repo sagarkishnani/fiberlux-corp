@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/seguridad-de-correo.webp"
+    "heroImage": "images/soluciones/imagenes/seguridad-de-correo.webp",
+    "heading_en": "Email Security & Web Filtering",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Cumplimiento de políticas de uso",
         "text": "Bloqueo de dominios de alto riesgo."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Corporaciones con alto volumen de **personal administrativo y atención al cliente**."
+    "statement": "Corporaciones con alto volumen de **personal administrativo y atención al cliente**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Seguridad de Correo y Filtrado Web | Fiberlux Corp",
     "metaDescription": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Email Security & Web Filtering",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

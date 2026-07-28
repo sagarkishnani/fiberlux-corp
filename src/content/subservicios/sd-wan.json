@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/sd-wan.webp"
+    "heroImage": "images/soluciones/imagenes/sd-wan.webp",
+    "heading_en": "SD-WAN",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Costos optimizados",
         "text": "Aprovecha de forma inteligente todos los enlaces disponibles."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Cadenas de retail, instituciones educativas, entidades financieras y empresas multisede que requieren conectar sucursales, acceder a aplicaciones en la nube y mantener un **rendimiento consistente de sus servicios críticos**."
+    "statement": "Cadenas de retail, instituciones educativas, entidades financieras y empresas multisede que requieren conectar sucursales, acceder a aplicaciones en la nube y mantener un **rendimiento consistente de sus servicios críticos**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "SD-WAN | Fiberlux Corp",
     "metaDescription": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
     "ogImage": ""
-  }
+  },
+  "title_en": "SD-WAN",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

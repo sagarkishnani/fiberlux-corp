@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/edr-xdr.webp"
+    "heroImage": "images/soluciones/imagenes/edr-xdr.webp",
+    "heading_en": "EDR / XDR / MDR",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -35,11 +38,13 @@
         "title": "Trazabilidad forense",
         "text": "Entiende el origen exacto del ataque para prevenir futuros incidentes."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Clínicas protegiendo historiales médicos, despachos legales, instituciones financieras y organizaciones con **equipos distribuidos o trabajo híbrido**."
+    "statement": "Clínicas protegiendo historiales médicos, despachos legales, instituciones financieras y organizaciones con **equipos distribuidos o trabajo híbrido**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -62,11 +67,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "EDR / XDR / MDR | Fiberlux Corp",
     "metaDescription": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
     "ogImage": ""
-  }
+  },
+  "title_en": "EDR / XDR / MDR",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

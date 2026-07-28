@@ -10,7 +10,10 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp"
+    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp",
+    "heading_en": "Help Desk",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -30,11 +33,13 @@
         "title": "Menor costo operativo",
         "text": "Sin necesidad de un departamento de soporte interno masivo."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Cadenas de retail y tiendas comerciales con personal de atención que requiere **asistencia constante a nivel nacional**."
+    "statement": "Cadenas de retail y tiendas comerciales con personal de atención que requiere **asistencia constante a nivel nacional**.",
+    "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -57,11 +62,14 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Mesa de Ayuda | Fiberlux Corp",
     "metaDescription": "Tercerización estratégica del soporte técnico (Nivel 1 y 2). Un canal único de contacto (Help Desk) operado por especialistas para asistir a tu personal.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Help Desk",
+  "whyUsTitle_en": "Why Fiberlux?"
 }
