@@ -1,5 +1,7 @@
 import { useState, useMemo } from 'react';
 import BlogGridCard from './BlogGridCard';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 
 /* ── Types ── */
 interface PostNode {
@@ -16,6 +18,7 @@ interface PostEdge {
 }
 
 interface BlogGridProps {
+  locale?: Locale;
   posts: PostEdge[];
   availableTags: string[];
   postsPerPage?: number;
@@ -25,6 +28,7 @@ const POSTS_PER_PAGE = 9;
 
 export default function BlogGrid({
   posts,
+  locale = "es",
   availableTags,
   postsPerPage = POSTS_PER_PAGE,
 }: BlogGridProps) {
@@ -136,7 +140,7 @@ export default function BlogGrid({
               return (
                 <BlogGridCard
                   key={post._sys.filename}
-                  title={post.title || 'Sin título'}
+                  title={tField(post as any, 'title', locale) || 'Sin título'}
                   coverImage={post.coverImage}
                   tags={post.tags}
                   readTime={post.readTime}

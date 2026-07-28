@@ -314,7 +314,10 @@ fragment AboutParts on About {
 fragment PostParts on Post {
   __typename
   title
+  title_en
   excerpt
+  excerpt_en
+  body_en
   coverImage
   date
   readTime

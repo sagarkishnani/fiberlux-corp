@@ -1,5 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import BlogCard from './BlogCard';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from '../shared/SliderArrows';
 
@@ -18,13 +20,14 @@ interface PostEdge {
 }
 
 interface BlogHeroProps {
+  locale?: Locale;
   posts: PostEdge[];
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
 }
 
-export default function BlogHero({ posts = [], autoplay = true, intervalMs = 6000, effect = "none" }: BlogHeroProps) {
+export default function BlogHero({ posts = [], autoplay = true, intervalMs = 6000, effect = "none", locale = "es" }: BlogHeroProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [leftPad, setLeftPad] = useState(80);
 
@@ -106,7 +109,7 @@ export default function BlogHero({ posts = [], autoplay = true, intervalMs = 600
                       className="shrink-0 w-[85%] md:w-[calc(52%-12px)]"
                     >
                       <BlogCard
-                        title={post.title || 'Sin título'}
+                        title={tField(post as any, 'title', locale) || 'Sin título'}
                         coverImage={post.coverImage}
                         tag={post.tags?.[0]}
                         readTime={post.readTime}

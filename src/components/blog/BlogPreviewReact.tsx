@@ -108,7 +108,7 @@ export default function BlogPreviewReact({
                         className="blog-slide shrink-0 w-[85%] md:w-[calc(66%-12px)]"
                       >
                         <BlogCard
-                          title={post.title || "Sin título"}
+                          title={tField(post as any, "title", locale) || "Sin título"}
                           coverImage={post.coverImage}
                           tag={post.tags?.[0]}
                           readTime={post.readTime}

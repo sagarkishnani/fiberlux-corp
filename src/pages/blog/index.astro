@@ -9,6 +9,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { client } from '../../../tina/__generated__/client';
 import BlogHero from '../../components/blog/BlogHero.tsx';
 import BlogGrid from '../../components/blog/BlogGrid.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 
 /* ── Fetch ALL blog posts ── */
 let allPosts: any[] = [];
@@ -47,6 +49,7 @@ try {
 } catch {
   heroCfg = {};
 }
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <BaseLayout title="Blog" description="Insights, novedades y tendencias en conectividad y tecnología empresarial">
@@ -54,6 +57,7 @@ try {
   <BlogHero
     client:load
     posts={featuredPosts}
+    locale={locale}
     autoplay={heroCfg.autoplay ?? true}
     intervalMs={heroCfg.intervalMs ?? 6000}
     effect={heroCfg.effect ?? "none"}
@@ -64,5 +68,6 @@ try {
     client:load
     posts={allPosts}
     availableTags={availableTags}
+    locale={locale}
   />
 </BaseLayout>

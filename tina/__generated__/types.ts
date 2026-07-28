@@ -1330,7 +1330,10 @@ export type AboutConnection = Connection & {
 export type Post = Node & Document & {
   __typename?: 'Post';
   title: Scalars['String']['output'];
+  title_en?: Maybe<Scalars['String']['output']>;
   excerpt?: Maybe<Scalars['String']['output']>;
+  excerpt_en?: Maybe<Scalars['String']['output']>;
+  body_en?: Maybe<Scalars['JSON']['output']>;
   coverImage?: Maybe<Scalars['String']['output']>;
   date?: Maybe<Scalars['String']['output']>;
   readTime?: Maybe<Scalars['String']['output']>;
@@ -1352,7 +1355,10 @@ export type DatetimeFilter = {
 
 export type PostFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   excerpt?: InputMaybe<StringFilter>;
+  excerpt_en?: InputMaybe<StringFilter>;
+  body_en?: InputMaybe<RichTextFilter>;
   coverImage?: InputMaybe<ImageFilter>;
   date?: InputMaybe<DatetimeFilter>;
   readTime?: InputMaybe<StringFilter>;
@@ -3458,7 +3464,10 @@ export type AboutMutation = {
 
 export type PostMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   excerpt?: InputMaybe<Scalars['String']['input']>;
+  excerpt_en?: InputMaybe<Scalars['String']['input']>;
+  body_en?: InputMaybe<Scalars['JSON']['input']>;
   coverImage?: InputMaybe<Scalars['String']['input']>;
   date?: InputMaybe<Scalars['String']['input']>;
   readTime?: InputMaybe<Scalars['String']['input']>;
@@ -4020,7 +4029,7 @@ export type SubservicioPartsFragment = { __typename: 'Subservicio', title: strin
 
 export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null, name_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
-export type PostPartsFragment = { __typename: 'Post', title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
+export type PostPartsFragment = { __typename: 'Post', title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
 export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null };
 
@@ -4131,7 +4140,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename: 'Post', id: string, title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PostQuery = { __typename?: 'Query', post: { __typename: 'Post', id: string, title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type PostConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4143,7 +4152,7 @@ export type PostConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PostConnectionQuery = { __typename?: 'Query', postConnection: { __typename?: 'PostConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostConnectionEdges', cursor: string, node?: { __typename: 'Post', id: string, title: string, excerpt?: string | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PostConnectionQuery = { __typename?: 'Query', postConnection: { __typename?: 'PostConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostConnectionEdges', cursor: string, node?: { __typename: 'Post', id: string, title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type ContactQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4732,7 +4741,10 @@ export const PostPartsFragmentDoc = gql`
     fragment PostParts on Post {
   __typename
   title
+  title_en
   excerpt
+  excerpt_en
+  body_en
   coverImage
   date
   readTime

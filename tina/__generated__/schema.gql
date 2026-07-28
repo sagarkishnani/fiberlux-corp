@@ -930,7 +930,10 @@ type AboutConnection implements Connection {
 
 type Post implements Node & Document {
   title: String!
+  title_en: String
   excerpt: String
+  excerpt_en: String
+  body_en: JSON
   coverImage: String
   date: String
   readTime: String
@@ -952,7 +955,10 @@ input DatetimeFilter {
 
 input PostFilter {
   title: StringFilter
+  title_en: StringFilter
   excerpt: StringFilter
+  excerpt_en: StringFilter
+  body_en: RichTextFilter
   coverImage: ImageFilter
   date: DatetimeFilter
   readTime: StringFilter
@@ -2699,7 +2705,10 @@ input AboutMutation {
 
 input PostMutation {
   title: String
+  title_en: String
   excerpt: String
+  excerpt_en: String
+  body_en: JSON
   coverImage: String
   date: String
   readTime: String

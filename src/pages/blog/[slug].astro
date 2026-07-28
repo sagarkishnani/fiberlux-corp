@@ -2,6 +2,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { client } from '../../../tina/__generated__/client';
 import BlogDetailReact from '../../components/blog/BlogDetailReact.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
 
 /* ── Static paths from all blog posts ── */
 export async function getStaticPaths() {
@@ -60,6 +62,7 @@ try {
 const pageTitle = currentPost?.title || 'Blog';
 const pageDescription =
   currentPost?.excerpt || 'Lee nuestro artículo sobre tecnología y conectividad empresarial';
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription}>
@@ -68,6 +71,7 @@ const pageDescription =
     query={postQuery.query}
     variables={postQuery.variables}
     data={postQuery.data}
+    locale={locale}
     relatedPosts={relatedPosts}
   />
 </BaseLayout>

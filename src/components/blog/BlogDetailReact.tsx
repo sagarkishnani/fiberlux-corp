@@ -4,6 +4,8 @@ import type {
   PostQuery,
   PostQueryVariables,
 } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 import BlogGridCard from './BlogGridCard';
 
 /* ── Types ── */
@@ -21,6 +23,7 @@ interface BlogDetailProps {
   variables: PostQueryVariables;
   data: PostQuery;
   relatedPosts?: RelatedPost[];
+  locale?: Locale;
 }
 
 function formatDate(dateStr: string): string {
@@ -121,6 +124,7 @@ export default function BlogDetailReact({
   variables,
   data: initialData,
   relatedPosts = [],
+  locale = "es",
 }: BlogDetailProps) {
   const { data } = useTina<PostQuery>({ query, variables, data: initialData });
 
@@ -210,7 +214,7 @@ export default function BlogDetailReact({
             className="text-[32px] md:text-[48px] leading-[38px] md:leading-[56px] font-medium text-white mb-8"
             data-tina-field={tinaField(post, 'title')}
           >
-            {title}
+            {tField(post as any, 'title', locale) || title}
           </h1>
 
           {/* Tags + meta row */}
@@ -274,7 +278,7 @@ export default function BlogDetailReact({
               "
               data-tina-field={tinaField(post, 'body')}
             >
-              {body && <TinaMarkdown content={body} />}
+              {(() => { const b = locale === "en" && (post as any).body_en ? (post as any).body_en : body; return b ? <TinaMarkdown content={b} /> : null; })()}
             </article>
 
             {/* Sidebar — share (desktop only) */}

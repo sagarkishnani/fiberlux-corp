@@ -1070,12 +1070,15 @@ var config_default = defineConfig({
             required: true,
             isTitle: true
           },
+          { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
           {
             name: "excerpt",
             label: "Extracto",
             type: "string",
             ui: { component: "textarea" }
           },
+          { name: "excerpt_en", label: "Extracto (EN)", type: "string", ui: { component: "textarea" } },
+          { name: "body_en", label: "Contenido (EN)", type: "rich-text" },
           { name: "coverImage", label: "Imagen de portada", type: "image" },
           { name: "date", label: "Fecha", type: "datetime" },
           { name: "readTime", label: "Tiempo de lectura", type: "string" },
