@@ -1,15 +1,15 @@
-# SPEC 80 — i18n ES/EN (1): infraestructura, switcher de idioma y chrome
+# SPEC 80 — i18n ES/EN: infraestructura, switcher y traducción de todo el sitio
 
 > **Estado:** Aprobado
 > **Depende de:** SPEC 33 (HeaderV2 / topbar), SPEC 07 (footer)
 > **Fecha:** 2026-07-27
-> **Objetivo:** Montar la infraestructura de bilingüe ES/EN (ES por defecto) con rutas `/en/`, un switcher de idioma en el header y la traducción del "chrome" (header/topbar/footer), dejando el resto del contenido en ES hasta specs posteriores.
+> **Objetivo:** Montar el bilingüe ES/EN (ES por defecto) con rutas `/en/`, switcher de idioma en el header, traducción del chrome y **de todo el contenido del sitio** (pantallas, 4 categorías de soluciones, 35 subservicios, blog, legales) vía campos `_en` con fallback a ES.
 
 ---
 
 ## Por qué existe este spec
 
-i18n en todo el sitio es demasiado para un spec (toca routing, schema de Tina, cada componente, SEO). Se divide: **este spec** deja la base funcionando (rutas EN, helpers, fallback a ES, switcher, chrome traducido); los specs siguientes traducen el contenido página por página llenando campos `_en` en Tina y textos de UI.
+i18n en todo el sitio es grande (routing, schema de Tina, cada componente, SEO). Originalmente se planteó dividir en infra + specs de contenido; **por decisión del cliente todo el trabajo de i18n vive en este mismo spec**. Se implementó en lotes (chrome → pantallas principales → soluciones → subservicios → blog → legales), pero todo aquí. El contenido traducido es un **borrador EN** que el cliente refina en TinaCMS; lo que quede vacío en `_en` cae a ES.
 
 ---
 
@@ -22,15 +22,22 @@ i18n en todo el sitio es demasiado para un spec (toca routing, schema de Tina, c
 - **Plumbing de locale:** `BaseLayout` deriva el locale de la URL, pone `<html lang={locale}>` y lo pasa a `HeaderV2` y `Footer`.
 - **Switcher de idioma** en `HeaderV2React` (topbar desktop y topbar mobile, "ES ▾" con dropdown ES/EN, según el diseño), que enlaza la ruta actual a su equivalente en el otro idioma.
 - **Traducción del chrome:** nav + topbar + footer. Labels CMS (`global.nav`, `global.footer`) ganan campos `_en` en el schema y se leen con `tField`; textos hardcodeados del topbar (Empresas/Negocios, "Información a abonados y usuarios") vía diccionario `t()`.
-- **Convención `_en`** documentada para los specs de contenido siguientes.
+- **Convención `_en`** documentada en `CLAUDE.md`.
+- **Rutas `/en` reales** vía wrappers estáticos por página (`src/pages/en/**`) — el `fallback` de Astro en estático genera redirects, no páginas renderizadas, así que se usan wrappers (ver Decisiones).
+- **Traducción de contenido (todo el sitio):** campos `_en` en el schema + contenido EN de borrador + `tField`/locale en los componentes de:
+  - Pantallas: home, nosotros, casos de éxito, formas de pago, soporte, info-abonados, fiberlux-app, contacto.
+  - Soluciones: 4 categorías (hero, valor, FAQ, why) + 35 subservicios (title, hero heading/intro/note, beneficios/casos-de-uso/FAQ, why, campos comunes).
+  - Blog: `title`/`excerpt` EN en listados; campo `body_en` para el artículo completo.
+  - Legales: `eyebrow`/`title` EN; campo `body_en` para el documento completo.
+- **Componentes compartidos** (cifras "¿Por qué Fiberlux?", testimonios, blog preview) traducidos → afectan todas las páginas donde aparecen.
 
-**Out of scope (specs siguientes):**
+**Out of scope (fallback a ES / acción del cliente):**
 
-- Traducir el contenido de las páginas (home, nosotros, soluciones, casos, blog, formas de pago, soporte, legales, info-abonados, fiberlux-app): llenar `_en` en sus colecciones y traducir sus componentes.
-- Traducir labels/mensajes de los formularios (`DynamicFormReact`, validación, éxito/error).
-- Meta SEO por idioma (hreflang, og:locale) más allá de `<html lang>`.
-- Redirección automática por idioma del navegador / persistencia con cookie (el switcher son enlaces explícitos).
-- Traducción de contenido de blog (posts MDX) — estrategia propia.
+- **Cuerpos largos rich-text** que el cliente debe traducir/aprobar oficialmente: `body_en` de **legales**, `body_en` de **artículos del blog**, y descripciones rich-text de pasos de Formas de pago y respuestas de FAQ. Todos tienen su campo `_en` listo; vacío ⇒ ES.
+- **Detalle profundo de subservicios** (textos de cada card de beneficios, preguntas de FAQ por subservicio): campos `_en` disponibles, borrador parcial; el cliente completa/afina.
+- **Labels/mensajes de los formularios** (`DynamicFormReact`, validación, éxito/error).
+- **Meta SEO por idioma** (hreflang, og:locale) más allá de `<html lang>`.
+- **Redirección automática** por idioma del navegador / cookie de preferencia (el switcher son enlaces explícitos).
 
 ---
 

@@ -120,7 +120,8 @@ The site is bilingual: **ES is the default (root URLs), EN lives under `/en/`**.
 - **CMS content translation — `_en` convention**: each translatable Tina field gets an optional sibling `<field>_en` (e.g. `title` + `title_en`). Empty `_en` ⇒ ES. Render with `tField(obj, 'field', locale)`. This is how **content specs translate each collection**: add `_en` siblings in `tina/config.ts`, fill them in the content JSON, and read via `tField`.
 - **Hardcoded UI strings** (not in the CMS) live in `src/i18n/ui.ts` → `t(key, locale)` (also ES-fallback).
 - **Language switcher**: `LangSwitcher` in `HeaderV2React` (topbar, desktop + mobile) links the current path to the other locale via `localizedPath`.
-- **Done in SPEC 80**: infra + switcher + chrome (nav/topbar/footer). **Page/section content and form labels are translated in later specs**, collection by collection, using the `_en` convention above.
+- **Done in SPEC 80**: full site i18n — infra + switcher + chrome + **all page/section content** (home, nosotros, casos, formas de pago, soporte, info-abonados, fiberlux-app, contacto, the 4 solución categories, the 35 subservicios, blog card metadata, legal titles). EN content is a **draft** the client refines in Tina; empty `_en` falls back to ES. **Still ES-fallback (client fills `_en`)**: long rich-text bodies (`legal.body_en`, `post.body_en`, formas-de-pago step descriptions, FAQ answers), deep subservicio detail (beneficios/faq text), and **form labels/messages** (`DynamicFormReact`). SEO per-locale (hreflang) is also not done.
+- **Adding a new translatable field**: add `<field>_en` in `tina/config.ts`, render with `tField(obj, 'field', locale)`, and make sure the component/page resolves `locale` — page wrappers use `isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url)` (nested `.astro` wrappers must NOT rely on `getLocale(Astro.url)` alone) and pass `locale` down to islands.
 
 ### CMS admin panel
 
