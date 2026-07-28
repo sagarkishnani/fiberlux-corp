@@ -51,12 +51,16 @@
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
+    "title_en": "Solutions catalog",
     "items": [
       {
         "icon": "internet",
         "title": "Internet Corporativo",
+        "title_en": "Corporate Internet",
         "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición, con ancho de banda garantizado.",
+        "description_en": "100% symmetrical, dedicated and uncontended fiber optic link, with guaranteed bandwidth.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/internet-corporativo",
         "colSpan": "2",
         "featured": true
@@ -64,8 +68,11 @@
       {
         "icon": "disponibilidad",
         "title": "Internet Corporativo de Alta Disponibilidad",
+        "title_en": "High-Availability Corporate Internet",
         "description": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
+        "description_en": "Redundant connectivity with automatic backup links to ensure total continuity of your operation.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad",
         "colSpan": "1",
         "featured": false
@@ -73,8 +80,11 @@
       {
         "icon": "satelital",
         "title": "Conectividad satelital",
+        "title_en": "Satellite Connectivity",
         "description": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
+        "description_en": "Coverage in remote areas without fiber infrastructure, using high-availability satellite links.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/conectividad-satelital",
         "colSpan": "1",
         "featured": false
@@ -82,8 +92,11 @@
       {
         "icon": "radioenlace",
         "title": "Radioenlaces Empresariales",
+        "title_en": "Enterprise Radio Links",
         "description": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
+        "description_en": "High-capacity point-to-point wireless links to connect sites where fiber doesn't reach.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales",
         "colSpan": "1",
         "featured": false
@@ -91,8 +104,11 @@
       {
         "icon": "transmision",
         "title": "Transmisión de datos (Lan To Lan – L2L)",
+        "title_en": "Data Transmission (LAN-to-LAN – L2L)",
         "description": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
+        "description_en": "Private interconnection between your sites with secure, low-latency data transport.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l",
         "colSpan": "1",
         "featured": false
@@ -100,8 +116,11 @@
       {
         "icon": "fibra-oscura",
         "title": "Fibra Oscura",
+        "title_en": "Dark Fiber",
         "description": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
+        "description_en": "Dedicated, unlit fiber optic so you can manage your own capacity and infrastructure.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/fibra-oscura",
         "colSpan": "1",
         "featured": false
@@ -109,8 +128,11 @@
       {
         "icon": "sd-wan",
         "title": "SD-WAN",
+        "title_en": "SD-WAN",
         "description": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
+        "description_en": "Software-defined network that optimizes and prioritizes traffic across multiple links and sites.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/sd-wan",
         "colSpan": "1",
         "featured": false
@@ -118,8 +140,11 @@
       {
         "icon": "balanceo",
         "title": "Balanceo de enlaces",
+        "title_en": "Link Balancing",
         "description": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
+        "description_en": "Intelligent traffic distribution across multiple links to maximize availability and performance.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces",
         "colSpan": "1",
         "featured": false
@@ -128,7 +153,9 @@
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
     "title": "Trabajamos con los líderes de la industria",
+    "title_en": "We work with industry leaders",
     "logos": [
       {
         "image": "/images/partners/huawei.svg",

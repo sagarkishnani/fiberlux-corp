@@ -51,12 +51,16 @@
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
+    "title_en": "Solutions catalog",
     "items": [
       {
         "icon": "storage",
         "title": "Housing / Colocación",
+        "title_en": "Housing & Colocation",
         "description": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center.",
+        "description_en": "Rental of specialized space (full racks or fractions) in our Data Center.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/housing-colocacion",
         "colSpan": "2",
         "featured": true
@@ -64,8 +68,11 @@
       {
         "icon": "cloud",
         "title": "Nube Privada",
+        "title_en": "Private Cloud",
         "description": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
+        "description_en": "An exclusive cloud environment with virtual servers, storage and networks physically dedicated to your company, hosted in our Data Centers.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/nube-privada",
         "colSpan": "1",
         "featured": false
@@ -73,8 +80,11 @@
       {
         "icon": "cloud",
         "title": "Nube Pública",
+        "title_en": "Public Cloud",
         "description": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
+        "description_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystem, as official distributors.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/nube-publica",
         "colSpan": "1",
         "featured": false
@@ -82,8 +92,11 @@
       {
         "icon": "backup",
         "title": "Backup as a Service (BaaS)",
+        "title_en": "Backup as a Service (BaaS)",
         "description": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
+        "description_en": "Automated cloud-hosted backup service, protected with encryption and strict retention policies.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/baas",
         "colSpan": "1",
         "featured": false
@@ -91,8 +104,11 @@
       {
         "icon": "backup",
         "title": "Disaster Recovery (DRaaS)",
+        "title_en": "Disaster Recovery (DRaaS)",
         "description": "Recuperación ante Desastres como Servicio.",
+        "description_en": "Disaster Recovery as a Service.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/draas",
         "colSpan": "1",
         "featured": false
@@ -100,8 +116,11 @@
       {
         "icon": "storage",
         "title": "Storage y Cómputo",
+        "title_en": "Storage & Compute",
         "description": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
+        "description_en": "Elastic cloud storage repositories (block, file or object) optimized for high performance or long-term archiving.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/storage-computo",
         "colSpan": "1",
         "featured": false
@@ -109,8 +128,11 @@
       {
         "icon": "generico",
         "title": "Microservicios",
+        "title_en": "Microservices",
         "description": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
+        "description_en": "Design and implementation of modern platforms based on Docker containers and Kubernetes orchestration, to deploy scalable, resilient applications.",
         "buttonLabel": "Conocer más",
+        "buttonLabel_en": "Learn more",
         "url": "/soluciones/data-center-cloud/microservicios",
         "colSpan": "1",
         "featured": false
@@ -119,7 +141,9 @@
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
     "title": "Trabajamos con los líderes de la industria",
+    "title_en": "We work with industry leaders",
     "logos": [
       {
         "image": "/images/partners/huawei.svg",

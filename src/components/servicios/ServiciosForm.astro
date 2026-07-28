@@ -1,6 +1,8 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import ServiciosFormReact from "./ServiciosFormReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 interface Props {
   prefill?: Record<string, string>;
@@ -14,6 +16,7 @@ const serviciosQuery = await client.queries.servicios({
 const formQuery = await client.queries.dynamicForms({
   relativePath: "servicios.json",
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <ServiciosFormReact
@@ -27,4 +30,5 @@ const formQuery = await client.queries.dynamicForms({
     data: formQuery.data,
   }}
   prefill={prefill}
+  locale={locale}
 />
