@@ -114,10 +114,6 @@ export default function ValuesReact({ query, variables, data: initialData, local
         .values-marquee-down {
           animation: marqueeDown 20s linear infinite;
         }
-        .values-marquee-up:hover,
-        .values-marquee-down:hover {
-          animation-play-state: paused;
-        }
         .marquee-container {
           -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
           mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);

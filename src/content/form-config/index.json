@@ -34,13 +34,13 @@
       "formType": "contacto",
       "label": "Formulario de Contacto",
       "enabled": true,
-      "recipients": ["sagarkishnani67@gmail.com"]
+      "recipients": ["hola@fiberlux.pe", "malvarez@fiberlux.pe", "eushinahua@fiberlux.pe", "jrafael@fiberlux.pe"]
     },
     {
       "formType": "servicios",
       "label": "Servicios — Déjanos tus datos",
       "enabled": true,
-      "recipients": ["sagarkishnani67@gmail.com"]
+      "recipients": ["hola@fiberlux.pe", "malvarez@fiberlux.pe", "eushinahua@fiberlux.pe", "jrafael@fiberlux.pe"]
     }
   ]
 }
