@@ -165,14 +165,18 @@ type HomeHero {
 type HomeServicesItems {
   number: String
   title: String
+  title_en: String
   description: String
+  description_en: String
   icon: String
   bullets: [String]
+  bullets_en: [String]
   url: String
 }
 
 type HomeServices {
   title: String
+  title_en: String
   items: [HomeServicesItems]
 }
 
@@ -277,14 +281,18 @@ input HomeHeroFilter {
 input HomeServicesItemsFilter {
   number: StringFilter
   title: StringFilter
+  title_en: StringFilter
   description: StringFilter
+  description_en: StringFilter
   icon: ImageFilter
   bullets: StringFilter
+  bullets_en: StringFilter
   url: StringFilter
 }
 
 input HomeServicesFilter {
   title: StringFilter
+  title_en: StringFilter
   items: HomeServicesItemsFilter
 }
 
@@ -620,6 +628,7 @@ type Subservicio implements Node & Document {
   slug: String!
   solucionSlug: String!
   solucionTitle: String
+  solucionTitle_en: String
   blogTags: [String]
   hero: SubservicioHero
   beneficios: SubservicioBeneficios
@@ -695,6 +704,7 @@ input SubservicioFilter {
   slug: StringFilter
   solucionSlug: StringFilter
   solucionTitle: StringFilter
+  solucionTitle_en: StringFilter
   blogTags: StringFilter
   hero: SubservicioHeroFilter
   beneficios: SubservicioBeneficiosFilter
@@ -2385,14 +2395,18 @@ input HomeHeroMutation {
 input HomeServicesItemsMutation {
   number: String
   title: String
+  title_en: String
   description: String
+  description_en: String
   icon: String
   bullets: [String]
+  bullets_en: [String]
   url: String
 }
 
 input HomeServicesMutation {
   title: String
+  title_en: String
   items: [HomeServicesItemsMutation]
 }
 
@@ -2600,6 +2614,7 @@ input SubservicioMutation {
   slug: String
   solucionSlug: String
   solucionTitle: String
+  solucionTitle_en: String
   blogTags: [String]
   hero: SubservicioHeroMutation
   beneficios: SubservicioBeneficiosMutation

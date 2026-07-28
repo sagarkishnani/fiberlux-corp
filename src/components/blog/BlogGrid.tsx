@@ -91,7 +91,7 @@ export default function BlogGrid({
           className="text-[#0a0a0a] font-semibold mb-6"
           style={{ fontSize: '48px', lineHeight: '56px' }}
         >
-          Últimas publicaciones
+          {locale === "en" ? "Latest posts" : "Últimas publicaciones"}
         </h2>
 
         {/* Filters */}
@@ -111,7 +111,7 @@ export default function BlogGrid({
                 d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
               />
             </svg>
-            <span className="text-[#717274] text-[13px]">Filtros</span>
+            <span className="text-[#717274] text-[13px]">{locale === "en" ? "Filters" : "Filtros"}</span>
           </div>
 
           {/* Tag pills */}

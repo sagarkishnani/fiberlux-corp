@@ -15,10 +15,13 @@ export type SearchType = "solucion" | "subservicio" | "pagina" | "blog";
 
 export interface SearchEntry {
   title: string;
+  title_en?: string;
   description?: string;
+  description_en?: string;
   url: string;
   type: SearchType;
   category?: string;
+  category_en?: string;
 }
 
 /* URLs BASE_URL-aware (el sitio puede desplegarse bajo /staging). */
@@ -45,7 +48,9 @@ export async function GET() {
     const slug = doc.slug || fileSlug(key);
     entries.push({
       title: doc.title || slug,
+      title_en: doc.title_en || "",
       description: doc.hero?.intro || doc.hero?.heading || "",
+      description_en: doc.hero?.intro_en || "",
       url: withBase(`soluciones/${slug}`),
       type: "solucion",
     });
@@ -61,10 +66,13 @@ export async function GET() {
     if (!doc.solucionSlug) continue;
     entries.push({
       title: doc.title || slug,
+      title_en: doc.title_en || "",
       description: doc.hero?.intro || doc.hero?.note || "",
+      description_en: doc.hero?.intro_en || "",
       url: withBase(`soluciones/${doc.solucionSlug}/${slug}`),
       type: "subservicio",
       category: doc.solucionTitle || "",
+      category_en: doc.solucionTitle_en || "",
     });
   }
 
@@ -79,7 +87,9 @@ export async function GET() {
       if (!slug) continue;
       entries.push({
         title: node.title || slug,
+        title_en: node.title_en || "",
         description: node.excerpt || "",
+        description_en: node.excerpt_en || "",
         url: withBase(`blog/${slug}`),
         type: "blog",
       });
@@ -90,15 +100,15 @@ export async function GET() {
 
   // ── Páginas principales (entradas fijas) ──
   const pages: Array<Omit<SearchEntry, "type">> = [
-    { title: "Nosotros", description: "Conoce a Fiberlux, nuestra historia y valores.", url: withBase("nosotros") },
-    { title: "Casos de éxito", description: "Cómo ayudamos a nuestros clientes en conectividad, seguridad y comunicación.", url: withBase("casos-de-exito") },
-    { title: "Contacto", description: "Contáctate con nosotros.", url: withBase("contacto") },
-    { title: "Formas de pago", description: "Medios y pasos para pagar tu servicio Fiberlux.", url: withBase("formas-de-pago") },
-    { title: "Soporte técnico", description: "Contáctate con nuestros ingenieros especializados.", url: withBase("soporte-tecnico") },
-    { title: "Información a abonados y usuarios", description: "Información para abonados y usuarios (OSIPTEL).", url: withBase("informacion-abonados") },
-    { title: "Fiberlux App", description: "Controla y monitorea tus servicios Fiberlux desde tu celular.", url: withBase("fiberlux-app") },
-    { title: "Blog", description: "Artículos y novedades de Fiberlux.", url: withBase("blog") },
-    { title: "Soluciones", description: "Todas las soluciones de Fiberlux para tu empresa.", url: withBase("soluciones") },
+    { title: "Nosotros", title_en: "About us", description: "Conoce a Fiberlux, nuestra historia y valores.", description_en: "Get to know Fiberlux, our history and values.", url: withBase("nosotros") },
+    { title: "Casos de éxito", title_en: "Success stories", description: "Cómo ayudamos a nuestros clientes en conectividad, seguridad y comunicación.", description_en: "How we help our clients with connectivity, security and communication.", url: withBase("casos-de-exito") },
+    { title: "Contacto", title_en: "Contact", description: "Contáctate con nosotros.", description_en: "Get in touch with us.", url: withBase("contacto") },
+    { title: "Formas de pago", title_en: "Payment methods", description: "Medios y pasos para pagar tu servicio Fiberlux.", description_en: "Methods and steps to pay for your Fiberlux service.", url: withBase("formas-de-pago") },
+    { title: "Soporte técnico", title_en: "Technical support", description: "Contáctate con nuestros ingenieros especializados.", description_en: "Get in touch with our specialized engineers.", url: withBase("soporte-tecnico") },
+    { title: "Información a abonados y usuarios", title_en: "Subscriber & user information", description: "Información para abonados y usuarios (OSIPTEL).", description_en: "Information for subscribers and users (OSIPTEL).", url: withBase("informacion-abonados") },
+    { title: "Fiberlux App", title_en: "Fiberlux App", description: "Controla y monitorea tus servicios Fiberlux desde tu celular.", description_en: "Control and monitor your Fiberlux services from your phone.", url: withBase("fiberlux-app") },
+    { title: "Blog", title_en: "Blog", description: "Artículos y novedades de Fiberlux.", description_en: "Fiberlux articles and news.", url: withBase("blog") },
+    { title: "Soluciones", title_en: "Solutions", description: "Todas las soluciones de Fiberlux para tu empresa.", description_en: "All of Fiberlux's solutions for your business.", url: withBase("soluciones") },
   ];
   for (const p of pages) entries.push({ ...p, type: "pagina" });
 

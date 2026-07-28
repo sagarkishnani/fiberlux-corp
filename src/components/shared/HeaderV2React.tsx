@@ -788,7 +788,7 @@ export default function HeaderV2React({
           <button
             ref={searchBtnRef}
             type="button"
-            aria-label="Buscar"
+            aria-label={t("search.aria", locale)}
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen(true)}
             className={`flex items-center justify-center ${controlText} opacity-90 hover:opacity-100 transition-opacity ${
@@ -804,6 +804,7 @@ export default function HeaderV2React({
       {/* ═══ SEARCH OVERLAY (SPEC 81) ═══ */}
       <SearchOverlay
         open={searchOpen}
+        locale={locale}
         onClose={() => {
           setSearchOpen(false);
           searchBtnRef.current?.focus();

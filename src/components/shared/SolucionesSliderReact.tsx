@@ -1,5 +1,7 @@
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "./SliderArrows";
 
@@ -8,6 +10,7 @@ interface SolucionesSliderProps {
   query: string;
   variables: { relativePath: string };
   data: HomeQuery;
+  locale?: Locale;
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
@@ -34,6 +37,7 @@ export default function SolucionesSliderReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   autoplay = true,
   intervalMs = 6000,
   effect = "none",
@@ -64,7 +68,7 @@ export default function SolucionesSliderReact({
 
   const active = items[Math.min(activeIndex, items.length - 1)];
   const activeTina = services?.items?.[Math.min(activeIndex, items.length - 1)];
-  const sectionTitle = (services?.title || "").trim();
+  const sectionTitle = (tField(services as any, "title", locale) || "").trim();
 
   const arrowsPill = (
     <SliderArrows
@@ -80,7 +84,7 @@ export default function SolucionesSliderReact({
      flat and muted. "Conoce más →" and the number share the bottom row. */
   const renderCard = (item: (typeof items)[number], i: number) => {
     const tinaItem = services?.items?.[i];
-    const bullets = (item?.bullets || []).filter(Boolean) as string[];
+    const bullets = ((locale === "en" && (item as any)?.bullets_en?.length ? (item as any).bullets_en : item?.bullets) || []).filter(Boolean) as string[];
     const lines = bullets.filter((b) => !isMoreLabel(b));
     const hasMore = bullets.some(isMoreLabel);
     const url = item?.url || "";
@@ -125,7 +129,7 @@ export default function SolucionesSliderReact({
           {/* "Y más" — only when the card's content includes it */}
           {hasMore && (
             <p className={`mt-6 text-[16px] md:text-[18px] ${isActive ? "text-white/70" : "text-white/35"}`}>
-              Y más
+              {locale === "en" ? "And more" : "Y más"}
             </p>
           )}
 
@@ -148,7 +152,7 @@ export default function SolucionesSliderReact({
                 }`}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
               >
-                Conoce más
+                {locale === "en" ? "Learn more" : "Conoce más"}
                 <span aria-hidden="true">→</span>
               </a>
             )}
@@ -257,7 +261,7 @@ export default function SolucionesSliderReact({
               className="sol-fade text-[34px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
               data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
             >
-              {active?.title}
+              {tField(active as any, "title", locale)}
             </h2>
           </div>
           {active?.description && (
@@ -267,7 +271,7 @@ export default function SolucionesSliderReact({
                 className="sol-fade mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[32ch]"
                 data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
               >
-                {active.description}
+                {tField(active as any, "description", locale)}
               </p>
             </div>
           )}
@@ -341,7 +345,7 @@ export default function SolucionesSliderReact({
    // Card del diseño anterior:
    const renderCardLegacy = (item, i) => {
      const tinaItem = services?.items?.[i];
-     const bullets = (item?.bullets || []).filter(Boolean) as string[];
+     const bullets = ((locale === "en" && (item as any)?.bullets_en?.length ? (item as any).bullets_en : item?.bullets) || []).filter(Boolean) as string[];
      const lines = bullets.filter((b) => !isMoreLabel(b));
      const onda = resolveIcon(item?.icon);
      const url = item?.url || "";
@@ -363,10 +367,10 @@ export default function SolucionesSliderReact({
                <li key={bIdx} className="text-[16px] leading-[1.5] text-white/85">{line}</li>
              ))}
            </ul>
-           <p className="mt-6 text-[16px] text-white/45">Y más…</p>
+           <p className="mt-6 text-[16px] text-white/45">{locale === "en" ? "And more…" : "Y más…"}</p>
            {url && (
              <a href={`${BASE}${url.startsWith("/") ? "" : "/"}${url}`} className="mt-6 inline-flex w-fit items-center text-[16px] font-medium text-[#d885c4] underline-offset-[5px] transition-colors hover:text-white hover:underline" data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}>
-               Conoce más
+               {locale === "en" ? "Learn more" : "Conoce más"}
              </a>
            )}
            <span className="mt-auto pt-8 md:pt-10 text-[48px] md:text-[64px] font-semibold leading-none text-white/20" data-tina-field={tinaItem ? tinaField(tinaItem, "number") : undefined}>

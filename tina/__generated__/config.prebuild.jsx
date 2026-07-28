@@ -142,6 +142,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
                 name: "items",
                 label: "Servicios",
@@ -153,12 +154,14 @@ var config_default = defineConfig({
                 fields: [
                   { name: "number", label: "N\xFAmero", type: "string" },
                   { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "description",
                     label: "Descripci\xF3n",
                     type: "string",
                     ui: { component: "textarea" }
                   },
+                  { name: "description_en", label: "Descripci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
                   {
                     name: "icon",
                     label: "\xCDcono (SVG o imagen)",
@@ -170,6 +173,7 @@ var config_default = defineConfig({
                     type: "string",
                     list: true
                   },
+                  { name: "bullets_en", label: "Bullets (EN)", type: "string", list: true },
                   { name: "url", label: "URL del servicio", type: "string" }
                 ]
               }
@@ -590,6 +594,7 @@ var config_default = defineConfig({
             label: "Soluci\xF3n padre (nombre para breadcrumb)",
             type: "string"
           },
+          { name: "solucionTitle_en", label: "Soluci\xF3n padre (EN)", type: "string" },
           // ── SPEC 63: qué tags del blog aparecen en las novedades de esta página ──
           {
             name: "blogTags",

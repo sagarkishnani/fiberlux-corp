@@ -136,7 +136,7 @@ export default function HeroSolucionReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Soluciones
+                {locale === "en" ? "Solutions" : "Soluciones"}
               </a>
               <span>/</span>
               <span

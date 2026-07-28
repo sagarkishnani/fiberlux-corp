@@ -2,23 +2,51 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { FaMagnifyingGlass, FaXmark, FaArrowRight } from "react-icons/fa6";
 import { searchEntries, type SearchEntry } from "../../utils/search";
+import type { Locale } from "../../i18n/config";
 
 /* Índice cacheado en memoria: se baja una sola vez por sesión. */
 let cachedIndex: SearchEntry[] | null = null;
 
-const TYPE_LABEL: Record<SearchEntry["type"], string> = {
-  solucion: "Solución",
-  subservicio: "Servicio",
-  pagina: "Página",
-  blog: "Blog",
+const TYPE_LABEL: Record<Locale, Record<SearchEntry["type"], string>> = {
+  es: { solucion: "Solución", subservicio: "Servicio", pagina: "Página", blog: "Blog" },
+  en: { solucion: "Solution", subservicio: "Service", pagina: "Page", blog: "Blog" },
 };
+
+const UI = {
+  es: {
+    title: "Busca información o soluciones",
+    placeholder: "Ejem. Soluciones de conectividad",
+    aria: "Buscar en el sitio",
+    close: "Cerrar búsqueda",
+    noResults: (q: string) => `Sin resultados para “${q}”.`,
+  },
+  en: {
+    title: "Search information or solutions",
+    placeholder: "e.g. Connectivity solutions",
+    aria: "Search the site",
+    close: "Close search",
+    noResults: (q: string) => `No results for “${q}”.`,
+  },
+} as const;
+
+/* Devuelve la entrada con título/descripción/categoría en el idioma activo. */
+function localize(e: SearchEntry, locale: Locale): SearchEntry {
+  if (locale !== "en") return e;
+  return {
+    ...e,
+    title: e.title_en || e.title,
+    description: e.description_en || e.description,
+    category: e.category_en || e.category,
+  };
+}
 
 interface SearchOverlayProps {
   open: boolean;
   onClose: () => void;
+  locale?: Locale;
 }
 
-export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
+export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOverlayProps) {
   const [entries, setEntries] = useState<SearchEntry[]>(cachedIndex || []);
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -66,14 +94,21 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     if (!open) setQuery("");
   }, [open]);
 
+  // Entradas con título/descripción/categoría en el idioma activo.
+  const localized = useMemo(
+    () => entries.map((e) => localize(e, locale)),
+    [entries, locale]
+  );
   const categories = useMemo(
-    () => entries.filter((e) => e.type === "solucion"),
-    [entries]
+    () => localized.filter((e) => e.type === "solucion"),
+    [localized]
   );
   const results = useMemo(
-    () => (query.trim() ? searchEntries(entries, query) : []),
-    [entries, query]
+    () => (query.trim() ? searchEntries(localized, query) : []),
+    [localized, query]
   );
+  const ui = UI[locale];
+  const typeLabel = TYPE_LABEL[locale];
 
   if (!open || typeof document === "undefined") return null;
 
@@ -95,11 +130,11 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
       <div className="relative flex w-full max-w-[720px] max-h-[75vh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-greyscale-darkest/95 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.85)]">
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
           <p className="text-[15px] font-medium text-white">
-            Busca información o soluciones
+            {ui.title}
           </p>
           <button
             type="button"
-            aria-label="Cerrar búsqueda"
+            aria-label={ui.close}
             onClick={onClose}
             className="text-white/60 transition-colors hover:text-white"
           >
@@ -115,9 +150,9 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Ejem. Soluciones de conectividad"
+              placeholder={ui.placeholder}
               className="w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/40"
-              aria-label="Buscar en el sitio"
+              aria-label={ui.aria}
             />
           </div>
         </div>
@@ -141,7 +176,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             </ul>
           ) : results.length === 0 ? (
             <p className="px-3 py-6 text-sm text-white/50">
-              Sin resultados para “{query.trim()}”.
+              {ui.noResults(query.trim())}
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
@@ -157,7 +192,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                           {r.title}
                         </span>
                         <span className="shrink-0 rounded-full bg-[#96237A]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#c65fac]">
-                          {TYPE_LABEL[r.type]}
+                          {typeLabel[r.type]}
                         </span>
                       </div>
                       {r.category && (

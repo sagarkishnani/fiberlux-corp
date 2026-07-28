@@ -9,10 +9,13 @@ export type SearchType = "solucion" | "subservicio" | "pagina" | "blog";
 
 export interface SearchEntry {
   title: string;
+  title_en?: string;
   description?: string;
+  description_en?: string;
   url: string;
   type: SearchType;
   category?: string;
+  category_en?: string;
 }
 
 /** minúsculas + sin diacríticos (á→a). */

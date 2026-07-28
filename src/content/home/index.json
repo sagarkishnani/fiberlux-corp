@@ -40,7 +40,18 @@
           "SD-WAN",
           "Y más..."
         ],
-        "url": "/soluciones/conectividad-empresarial"
+        "url": "/soluciones/conectividad-empresarial",
+        "title_en": "Business Connectivity",
+        "description_en": "Real fiber-optic connectivity for forward-thinking companies.",
+        "bullets_en": [
+          "Corporate Internet",
+          "High-Availability Corporate Internet",
+          "Satellite Connectivity",
+          "Enterprise Radio Links",
+          "Data Transmission (Lan To Lan)",
+          "SD-WAN",
+          "And more..."
+        ]
       },
       {
         "number": "02",
@@ -56,7 +67,18 @@
           "Cyber SOC 24/7 y Monitoreo",
           "Y más..."
         ],
-        "url": "/soluciones/ciberseguridad-gestionada"
+        "url": "/soluciones/ciberseguridad-gestionada",
+        "title_en": "Managed Cybersecurity",
+        "description_en": "Protect your critical operation with cybersecurity.",
+        "bullets_en": [
+          "NGFW & Perimeter Security",
+          "EDR / XDR / MDR",
+          "MFA & Identity Control",
+          "ZTNA & Secure Access Control",
+          "WAF & Application Protection",
+          "Cyber SOC 24/7 & Monitoring",
+          "And more..."
+        ]
       },
       {
         "number": "03",
@@ -71,7 +93,17 @@
           "Storage y Cómputo Empresarial",
           "Arquitectura basada en Microservicios"
         ],
-        "url": "/soluciones/data-center-cloud"
+        "url": "/soluciones/data-center-cloud",
+        "title_en": "Data Center, Cloud & Business Continuity",
+        "description_en": "Infrastructure ready to grow and recover.",
+        "bullets_en": [
+          "Housing & Colocation",
+          "Public & Private Cloud",
+          "Backup as a Service (BaaS)",
+          "Disaster Recovery (DRaaS)",
+          "Enterprise Storage & Compute",
+          "Microservices-based Architecture"
+        ]
       },
       {
         "number": "04",
@@ -87,9 +119,21 @@
           "Videovigilancia gestionada",
           "Y más..."
         ],
-        "url": "/soluciones/servicios-gestionados"
+        "url": "/soluciones/servicios-gestionados",
+        "title_en": "Managed Services",
+        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
+        "bullets_en": [
+          "Help Desk",
+          "Unified Communications",
+          "LAN Network Management",
+          "Managed WiFi",
+          "Endpoint Management",
+          "Managed Video Surveillance",
+          "And more..."
+        ]
       }
-    ]
+    ],
+    "title_en": "Our solutions"
   },
   "testimonials": {
     "visible": true,

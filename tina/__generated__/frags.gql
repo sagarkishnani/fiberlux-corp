@@ -23,13 +23,17 @@ fragment HomeParts on Home {
   services {
     __typename
     title
+    title_en
     items {
       __typename
       number
       title
+      title_en
       description
+      description_en
       icon
       bullets
+      bullets_en
       url
     }
   }
@@ -165,6 +169,7 @@ fragment SubservicioParts on Subservicio {
   slug
   solucionSlug
   solucionTitle
+  solucionTitle_en
   blogTags
   hero {
     __typename

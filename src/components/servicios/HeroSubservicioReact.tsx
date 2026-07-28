@@ -125,7 +125,7 @@ export default function HeroSubservicioReact({
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"
               >
-                Soluciones
+                {locale === "en" ? "Solutions" : "Soluciones"}
               </a>
               <span>/</span>
               <a
@@ -133,7 +133,7 @@ export default function HeroSubservicioReact({
                 className="hover:text-greyscale-white transition-colors"
                 data-tina-field={tinaField(sub, "solucionTitle")}
               >
-                {sub.solucionTitle || "Solución"}
+                {tField(sub as any, "solucionTitle", locale) || "Solución"}
               </a>
               <span>/</span>
               <span
