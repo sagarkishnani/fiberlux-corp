@@ -13,7 +13,10 @@
       "quote": "La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir más sedes a nivel nacional. Este año hemos aperturado locales en provincia como Arequipa, Huancayo, Barranca y hemos contado con el servicio de Fiberlux. En el 2022 llegamos a sumar 36 sedes adicionales. Actualmente contamos con 115 sedes.",
       "author": "Bernardo Olivar",
       "role": "Jefe de Tecnología, Informática y Comunicaciones de Boticas Hogar y Salud",
-      "badge": "Casos de éxito con Fiberlux"
+      "badge": "Casos de éxito con Fiberlux",
+      "quote_en": "Fiberlux's coverage allows us at Boticas Hogar y Salud to open more locations nationwide. This year we opened stores in provinces such as Arequipa, Huancayo and Barranca, all with Fiberlux service. In 2022 we added 36 new locations. We currently have 115 branches.",
+      "role_en": "Head of Technology, IT and Communications at Boticas Hogar y Salud",
+      "badge_en": "Success stories with Fiberlux"
     },
     {
       "poster": "/images/casos/caso-de-exito-camara-comercio.jpg",
@@ -23,7 +26,10 @@
       "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales. Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.",
       "author": "Broswi Gálvez",
       "role": "Gerente General de la Cámara de Comercio e Industria de Arequipa",
-      "badge": "Casos de éxito con Fiberlux"
+      "badge": "Casos de éxito con Fiberlux",
+      "quote_en": "The pandemic changed the way we work and virtual meetings became essential. Fiberlux has been a pillar in that transition and in strengthening our bond with Arequipa's business community.",
+      "role_en": "General Manager of the Chamber of Commerce and Industry of Arequipa",
+      "badge_en": "Success stories with Fiberlux"
     },
     {
       "poster": "/images/casos/caso-de-exito-grupo-gloria.jpg",
@@ -33,12 +39,18 @@
       "quote": "A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G donde los tiempos de respuesta mejoraron notablemente dando eficiencia y tiempo de respuesta acorde a la necesidad entre Sede Principal corporativo y Planta Huachipa.",
       "author": "Gustavo Pazos",
       "role": "Gerente de TI de Grupo Gloria",
-      "badge": "Casos de éxito con Fiberlux"
+      "badge": "Casos de éxito con Fiberlux",
+      "quote_en": "Following natural events, Fiberlux offered us a 10G dark fiber connection where response times improved notably, delivering efficiency and response time matching the need between our corporate headquarters and the Huachipa plant.",
+      "role_en": "IT Manager at Grupo Gloria",
+      "badge_en": "Success stories with Fiberlux"
     }
   ],
   "seo": {
     "metaTitle": "Casos de éxito",
     "metaDescription": "Conoce cómo empresas líderes potencian su conectividad, seguridad y comunicación con las soluciones de Fiberlux Corp.",
     "ogImage": ""
-  }
+  },
+  "breadcrumb_en": "Success stories",
+  "heading_en": "Success stories",
+  "intro_en": "Discover how we've helped our clients meet their connectivity, security and communication needs through Digital Transformation solutions."
 }

@@ -3,17 +3,22 @@ import type {
   CasosDeExitoQuery,
   CasosDeExitoQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import { t } from "../../i18n/ui";
+import type { Locale } from "../../i18n/config";
 
 interface HeroCasosProps {
   query: string;
   variables: CasosDeExitoQueryVariables;
   data: CasosDeExitoQuery;
+  locale?: Locale;
 }
 
 export default function HeroCasosReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: HeroCasosProps) {
   const { data } = useTina<CasosDeExitoQuery>({
     query,
@@ -57,14 +62,14 @@ export default function HeroCasosReact({
           {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
           <nav className="flex items-center gap-2 text-sm mb-8" aria-label="Breadcrumb">
             <a href={base} className="text-white/50 hover:text-white transition-colors">
-              Inicio
+              {t("breadcrumb.home", locale)}
             </a>
             <span className="text-white/30">/</span>
             <span
               className="text-white font-medium"
               data-tina-field={tinaField(page, "breadcrumb")}
             >
-              {page.breadcrumb}
+              {tField(page as any, "breadcrumb", locale)}
             </span>
           </nav>
 
@@ -72,14 +77,14 @@ export default function HeroCasosReact({
             className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white mb-6 tracking-[-1.6px]"
             data-tina-field={tinaField(page, "heading")}
           >
-            {page.heading}
+            {tField(page as any, "heading", locale)}
           </h1>
 
           <p
             className="text-body-lg text-greyscale-light max-w-[560px]"
             data-tina-field={tinaField(page, "intro")}
           >
-            {page.intro}
+            {tField(page as any, "intro", locale)}
           </p>
         </div>
       </div>

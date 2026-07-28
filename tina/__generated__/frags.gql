@@ -335,8 +335,11 @@ fragment ServiciosParts on Servicios {
 fragment CasosDeExitoParts on CasosDeExito {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   heroImage
   sectionTitle
   items {
@@ -346,9 +349,12 @@ fragment CasosDeExitoParts on CasosDeExito {
     videoFile
     logo
     quote
+    quote_en
     author
     role
+    role_en
     badge
+    badge_en
   }
   seo {
     __typename

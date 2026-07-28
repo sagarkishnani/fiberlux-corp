@@ -1453,9 +1453,12 @@ export type CasosDeExitoItems = {
   videoFile?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
   quote?: Maybe<Scalars['String']['output']>;
+  quote_en?: Maybe<Scalars['String']['output']>;
   author?: Maybe<Scalars['String']['output']>;
   role?: Maybe<Scalars['String']['output']>;
+  role_en?: Maybe<Scalars['String']['output']>;
   badge?: Maybe<Scalars['String']['output']>;
+  badge_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type CasosDeExitoSeo = {
@@ -1468,8 +1471,11 @@ export type CasosDeExitoSeo = {
 export type CasosDeExito = Node & Document & {
   __typename?: 'CasosDeExito';
   breadcrumb?: Maybe<Scalars['String']['output']>;
+  breadcrumb_en?: Maybe<Scalars['String']['output']>;
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
+  intro_en?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
   sectionTitle?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<CasosDeExitoItems>>>;
@@ -1485,9 +1491,12 @@ export type CasosDeExitoItemsFilter = {
   videoFile?: InputMaybe<ImageFilter>;
   logo?: InputMaybe<ImageFilter>;
   quote?: InputMaybe<StringFilter>;
+  quote_en?: InputMaybe<StringFilter>;
   author?: InputMaybe<StringFilter>;
   role?: InputMaybe<StringFilter>;
+  role_en?: InputMaybe<StringFilter>;
   badge?: InputMaybe<StringFilter>;
+  badge_en?: InputMaybe<StringFilter>;
 };
 
 export type CasosDeExitoSeoFilter = {
@@ -1498,8 +1507,11 @@ export type CasosDeExitoSeoFilter = {
 
 export type CasosDeExitoFilter = {
   breadcrumb?: InputMaybe<StringFilter>;
+  breadcrumb_en?: InputMaybe<StringFilter>;
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
+  intro_en?: InputMaybe<StringFilter>;
   heroImage?: InputMaybe<ImageFilter>;
   sectionTitle?: InputMaybe<StringFilter>;
   items?: InputMaybe<CasosDeExitoItemsFilter>;
@@ -3348,9 +3360,12 @@ export type CasosDeExitoItemsMutation = {
   videoFile?: InputMaybe<Scalars['String']['input']>;
   logo?: InputMaybe<Scalars['String']['input']>;
   quote?: InputMaybe<Scalars['String']['input']>;
+  quote_en?: InputMaybe<Scalars['String']['input']>;
   author?: InputMaybe<Scalars['String']['input']>;
   role?: InputMaybe<Scalars['String']['input']>;
+  role_en?: InputMaybe<Scalars['String']['input']>;
   badge?: InputMaybe<Scalars['String']['input']>;
+  badge_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CasosDeExitoSeoMutation = {
@@ -3361,8 +3376,11 @@ export type CasosDeExitoSeoMutation = {
 
 export type CasosDeExitoMutation = {
   breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  breadcrumb_en?: InputMaybe<Scalars['String']['input']>;
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
+  intro_en?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
   sectionTitle?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<CasosDeExitoItemsMutation>>>;
@@ -3827,7 +3845,7 @@ export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadc
 
 export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formSubtitle?: string | null };
 
-export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, description?: string | null } | null> | null };
 
@@ -4006,7 +4024,7 @@ export type CasosDeExitoQueryVariables = Exact<{
 }>;
 
 
-export type CasosDeExitoQuery = { __typename?: 'Query', casosDeExito: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type CasosDeExitoQuery = { __typename?: 'Query', casosDeExito: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type CasosDeExitoConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4018,7 +4036,7 @@ export type CasosDeExitoConnectionQueryVariables = Exact<{
 }>;
 
 
-export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, author?: string | null, role?: string | null, badge?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type CertificacionesQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4556,8 +4574,11 @@ export const CasosDeExitoPartsFragmentDoc = gql`
     fragment CasosDeExitoParts on CasosDeExito {
   __typename
   breadcrumb
+  breadcrumb_en
   heading
+  heading_en
   intro
+  intro_en
   heroImage
   sectionTitle
   items {
@@ -4567,9 +4588,12 @@ export const CasosDeExitoPartsFragmentDoc = gql`
     videoFile
     logo
     quote
+    quote_en
     author
     role
+    role_en
     badge
+    badge_en
   }
   seo {
     __typename

@@ -1038,9 +1038,12 @@ type CasosDeExitoItems {
   videoFile: String
   logo: String
   quote: String
+  quote_en: String
   author: String
   role: String
+  role_en: String
   badge: String
+  badge_en: String
 }
 
 type CasosDeExitoSeo {
@@ -1051,8 +1054,11 @@ type CasosDeExitoSeo {
 
 type CasosDeExito implements Node & Document {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   heroImage: String
   sectionTitle: String
   items: [CasosDeExitoItems]
@@ -1068,9 +1074,12 @@ input CasosDeExitoItemsFilter {
   videoFile: ImageFilter
   logo: ImageFilter
   quote: StringFilter
+  quote_en: StringFilter
   author: StringFilter
   role: StringFilter
+  role_en: StringFilter
   badge: StringFilter
+  badge_en: StringFilter
 }
 
 input CasosDeExitoSeoFilter {
@@ -1081,8 +1090,11 @@ input CasosDeExitoSeoFilter {
 
 input CasosDeExitoFilter {
   breadcrumb: StringFilter
+  breadcrumb_en: StringFilter
   heading: StringFilter
+  heading_en: StringFilter
   intro: StringFilter
+  intro_en: StringFilter
   heroImage: ImageFilter
   sectionTitle: StringFilter
   items: CasosDeExitoItemsFilter
@@ -2589,9 +2601,12 @@ input CasosDeExitoItemsMutation {
   videoFile: String
   logo: String
   quote: String
+  quote_en: String
   author: String
   role: String
+  role_en: String
   badge: String
+  badge_en: String
 }
 
 input CasosDeExitoSeoMutation {
@@ -2602,8 +2617,11 @@ input CasosDeExitoSeoMutation {
 
 input CasosDeExitoMutation {
   breadcrumb: String
+  breadcrumb_en: String
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   heroImage: String
   sectionTitle: String
   items: [CasosDeExitoItemsMutation]

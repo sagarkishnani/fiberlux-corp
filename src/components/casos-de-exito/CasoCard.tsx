@@ -1,5 +1,7 @@
 import { tinaField } from "tinacms/dist/react";
 import { mediaUrl } from "../../utils/mediaUrl";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 export interface Caso {
   poster?: string | null;
@@ -7,9 +9,12 @@ export interface Caso {
   videoFile?: string | null;
   logo?: string | null;
   quote?: string | null;
+  quote_en?: string | null;
   author?: string | null;
   role?: string | null;
+  role_en?: string | null;
   badge?: string | null;
+  badge_en?: string | null;
 }
 
 interface CasoCardProps {
@@ -18,6 +23,7 @@ interface CasoCardProps {
   tinaItem?: any;
   /** Called when the play button is pressed; only wired when a video exists. */
   onPlay?: () => void;
+  locale?: Locale;
 }
 
 /** A case has a playable video if it has a YouTube URL or an uploaded mp4. */
@@ -74,7 +80,7 @@ function PlayButton({ onPlay, disabled }: { onPlay?: () => void; disabled: boole
   );
 }
 
-export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
+export default function CasoCard({ caso, tinaItem, onPlay, locale = "es" }: CasoCardProps) {
   const playable = hasVideo(caso);
 
   /* ── Video panel (left column / top on mobile) ── */
@@ -100,7 +106,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
         >
           <span className="w-[5px] h-[5px] rounded-sm bg-[#96237A]" />
           <span className="text-[10px] uppercase tracking-[0.5px] text-white/70 font-medium">
-            {caso.badge}
+            {tField(caso as any, "badge", locale)}
           </span>
         </div>
       )}
@@ -130,7 +136,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
         className="text-[14px] leading-[1.8] text-white/55"
         data-tina-field={tinaItem ? tinaField(tinaItem, "quote") : undefined}
       >
-        {caso.quote}
+        {tField(caso as any, "quote", locale)}
       </p>
     </div>
   );
@@ -148,7 +154,7 @@ export default function CasoCard({ caso, tinaItem, onPlay }: CasoCardProps) {
         className="text-[10px] uppercase tracking-[1.5px] text-white/70 text-center"
         data-tina-field={tinaItem ? tinaField(tinaItem, "role") : undefined}
       >
-        {caso.role}
+        {tField(caso as any, "role", locale)}
       </p>
     </div>
   );

@@ -7,6 +7,7 @@ import type {
 import CasoCard, { type Caso } from "./CasoCard";
 import VideoModal from "./VideoModal";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
+import type { Locale } from "../../i18n/config";
 import SliderArrows from "../shared/SliderArrows";
 
 interface CasosSliderProps {
@@ -16,6 +17,7 @@ interface CasosSliderProps {
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
+  locale?: Locale;
 }
 
 export default function CasosSliderReact({
@@ -25,6 +27,7 @@ export default function CasosSliderReact({
   autoplay = true,
   intervalMs = 6000,
   effect = "none",
+  locale = "es",
 }: CasosSliderProps) {
   const { data } = useTina<CasosDeExitoQuery>({ query, variables, data: initialData });
 
@@ -78,6 +81,7 @@ export default function CasosSliderReact({
                 >
                   <CasoCard
                     caso={item as Caso}
+                    locale={locale}
                     tinaItem={page?.items?.[i]}
                     onPlay={() => setModalCaso(item as Caso)}
                   />

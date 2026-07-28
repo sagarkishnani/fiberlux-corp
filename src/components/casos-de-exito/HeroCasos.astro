@@ -1,10 +1,13 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import HeroCasosReact from "./HeroCasosReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const casosQuery = await client.queries.casosDeExito({
   relativePath: "index.json",
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <HeroCasosReact
@@ -12,4 +15,5 @@ const casosQuery = await client.queries.casosDeExito({
   query={casosQuery.query}
   variables={casosQuery.variables}
   data={casosQuery.data}
+  locale={locale}
 />

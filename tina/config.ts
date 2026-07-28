@@ -1322,18 +1322,21 @@ export default defineConfig({
         fields: [
           // ── Hero ──
           { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          { name: "breadcrumb_en", label: "Migaja de pan (EN)", type: "string" },
           {
             name: "heading",
             label: "Título principal (H1)",
             type: "string",
             ui: { component: "textarea" },
           },
+          { name: "heading_en", label: "Título principal (H1) (EN)", type: "string", ui: { component: "textarea" } },
           {
             name: "intro",
             label: "Párrafo introductorio",
             type: "string",
             ui: { component: "textarea" },
           },
+          { name: "intro_en", label: "Párrafo introductorio (EN)", type: "string", ui: { component: "textarea" } },
           { name: "heroImage", label: "Imagen de fondo del hero", type: "image" },
 
           // ── Sección carrusel ──
@@ -1369,9 +1372,17 @@ export default defineConfig({
                 type: "string",
                 ui: { component: "textarea" },
               },
+              {
+                name: "quote_en",
+                label: "Cita / testimonio (EN)",
+                type: "string",
+                ui: { component: "textarea" },
+              },
               { name: "author", label: "Nombre del autor", type: "string" },
               { name: "role", label: "Cargo (mayúsculas)", type: "string" },
+              { name: "role_en", label: "Cargo (EN)", type: "string" },
               { name: "badge", label: "Texto del badge", type: "string" },
+              { name: "badge_en", label: "Texto del badge (EN)", type: "string" },
             ],
           },
 
