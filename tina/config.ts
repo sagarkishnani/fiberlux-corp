@@ -808,12 +808,14 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subtítulo",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "subtitle_en", label: "Subtítulo (EN)", type: "string", ui: { component: "textarea" } },
             ],
           },
 
@@ -821,6 +823,11 @@ export default defineConfig({
           {
             name: "missionVisionTitle",
             label: "Título sección Misión/Visión",
+            type: "string",
+          },
+          {
+            name: "missionVisionTitle_en",
+            label: "Título sección Misión/Visión (EN)",
             type: "string",
           },
           {
@@ -846,12 +853,14 @@ export default defineConfig({
                 ],
               },
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "text",
                 label: "Texto",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
             ],
           },
           {
@@ -877,12 +886,14 @@ export default defineConfig({
                 ],
               },
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "text",
                 label: "Texto",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
             ],
           },
           {
@@ -898,19 +909,24 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subtítulo",
                 type: "string",
                 ui: { component: "textarea" },
               },
+              { name: "subtitle_en", label: "Subtítulo (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Valores",
                 type: "object",
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.name || "Valor" }) },
-                fields: [{ name: "name", label: "Nombre", type: "string" }],
+                fields: [
+                  { name: "name", label: "Nombre", type: "string" },
+                  { name: "name_en", label: "Nombre (EN)", type: "string" },
+                ],
               },
             ],
           },
@@ -922,6 +938,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Antítulo (eyebrow)", type: "string" },
+              { name: "title_en", label: "Antítulo (eyebrow) (EN)", type: "string" },
               { name: "startYear", label: "Año inicio (etiqueta barra)", type: "string" },
               { name: "endYear", label: "Año fin (etiqueta barra)", type: "string" },
               {
@@ -938,6 +955,12 @@ export default defineConfig({
                     type: "string",
                     ui: { component: "textarea" },
                   },
+                  {
+                    name: "heading_en",
+                    label: "Texto del hito (EN)",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
                 ],
               },
             ],
@@ -950,6 +973,7 @@ export default defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
               {
                 name: "items",
                 label: "Rubros",
@@ -985,6 +1009,7 @@ export default defineConfig({
                     ],
                   },
                   { name: "label", label: "Nombre del rubro", type: "string" },
+                  { name: "label_en", label: "Nombre del rubro (EN)", type: "string" },
                   {
                     name: "image",
                     label: "Imagen de fondo (opcional)",

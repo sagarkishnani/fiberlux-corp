@@ -757,18 +757,25 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subt\xEDtulo",
                 type: "string",
                 ui: { component: "textarea" }
-              }
+              },
+              { name: "subtitle_en", label: "Subt\xEDtulo (EN)", type: "string", ui: { component: "textarea" } }
             ]
           },
           // ── Misión y Visión ──
           {
             name: "missionVisionTitle",
             label: "T\xEDtulo secci\xF3n Misi\xF3n/Visi\xF3n",
+            type: "string"
+          },
+          {
+            name: "missionVisionTitle_en",
+            label: "T\xEDtulo secci\xF3n Misi\xF3n/Visi\xF3n (EN)",
             type: "string"
           },
           {
@@ -794,12 +801,14 @@ var config_default = defineConfig({
                 ]
               },
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "text",
                 label: "Texto",
                 type: "string",
                 ui: { component: "textarea" }
-              }
+              },
+              { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
             ]
           },
           {
@@ -825,12 +834,14 @@ var config_default = defineConfig({
                 ]
               },
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "text",
                 label: "Texto",
                 type: "string",
                 ui: { component: "textarea" }
-              }
+              },
+              { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
             ]
           },
           {
@@ -845,19 +856,24 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "subtitle",
                 label: "Subt\xEDtulo",
                 type: "string",
                 ui: { component: "textarea" }
               },
+              { name: "subtitle_en", label: "Subt\xEDtulo (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Valores",
                 type: "object",
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.name || "Valor" }) },
-                fields: [{ name: "name", label: "Nombre", type: "string" }]
+                fields: [
+                  { name: "name", label: "Nombre", type: "string" },
+                  { name: "name_en", label: "Nombre (EN)", type: "string" }
+                ]
               }
             ]
           },
@@ -868,6 +884,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "Ant\xEDtulo (eyebrow)", type: "string" },
+              { name: "title_en", label: "Ant\xEDtulo (eyebrow) (EN)", type: "string" },
               { name: "startYear", label: "A\xF1o inicio (etiqueta barra)", type: "string" },
               { name: "endYear", label: "A\xF1o fin (etiqueta barra)", type: "string" },
               {
@@ -883,6 +900,12 @@ var config_default = defineConfig({
                     label: "Texto del hito",
                     type: "string",
                     ui: { component: "textarea" }
+                  },
+                  {
+                    name: "heading_en",
+                    label: "Texto del hito (EN)",
+                    type: "string",
+                    ui: { component: "textarea" }
                   }
                 ]
               }
@@ -895,6 +918,7 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
                 name: "items",
                 label: "Rubros",
@@ -930,6 +954,7 @@ var config_default = defineConfig({
                     ]
                   },
                   { name: "label", label: "Nombre del rubro", type: "string" },
+                  { name: "label_en", label: "Nombre del rubro (EN)", type: "string" },
                   {
                     name: "image",
                     label: "Imagen de fondo (opcional)",

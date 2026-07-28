@@ -1,18 +1,21 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 
 /* ── Types ── */
 interface ValuesProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  locale?: Locale;
 }
 
 interface ValueItem {
   name?: string | null;
 }
 
-export default function ValuesReact({ query, variables, data: initialData }: ValuesProps) {
+export default function ValuesReact({ query, variables, data: initialData, locale = "es" }: ValuesProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
   // Fallback chain: useTina data → initialData
@@ -23,8 +26,8 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
   const fallbackValues = fallbackAbout?.values;
 
   // Use Tina values if they have items, otherwise fallback
-  const title = tinaValues?.title || fallbackValues?.title || '';
-  const subtitle = tinaValues?.subtitle || fallbackValues?.subtitle || '';
+  const title = tField(tinaValues as any, "title", locale) || tField(fallbackValues as any, "title", locale) || "";
+  const subtitle = tField(tinaValues as any, "subtitle", locale) || tField(fallbackValues as any, "subtitle", locale) || "";
 
   const tinaItems = (tinaValues?.items || []).filter(Boolean) as ValueItem[];
   const fallbackItems = (fallbackValues?.items || []).filter(Boolean) as ValueItem[];
@@ -70,7 +73,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
             <div className="relative overflow-hidden">
               <div className="values-marquee-up flex flex-col gap-4">
                 {duplicated(leftItems).map((item, i) => (
-                  <ValueCard key={`l-${i}`} item={item} />
+                  <ValueCard key={`l-${i}`} item={item} locale={locale} />
                 ))}
               </div>
             </div>
@@ -79,7 +82,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
             <div className="relative overflow-hidden">
               <div className="values-marquee-down flex flex-col gap-4">
                 {duplicated(rightItems).map((item, i) => (
-                  <ValueCard key={`r-${i}`} item={item} />
+                  <ValueCard key={`r-${i}`} item={item} locale={locale} />
                 ))}
               </div>
             </div>
@@ -89,7 +92,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
           <div className="md:hidden h-[400px] overflow-hidden marquee-container">
             <div className="values-marquee-down flex flex-col gap-4 px-6">
               {duplicated(items).map((item, i) => (
-                <ValueCard key={`m-${i}`} item={item} />
+                <ValueCard key={`m-${i}`} item={item} locale={locale} />
               ))}
             </div>
           </div>
@@ -125,7 +128,7 @@ export default function ValuesReact({ query, variables, data: initialData }: Val
 }
 
 /* ── Value Card ── */
-function ValueCard({ item }: { item: ValueItem }) {
+function ValueCard({ item, locale }: { item: ValueItem; locale: Locale }) {
   return (
     <div
       className="flex items-center justify-center shrink-0"
@@ -141,7 +144,7 @@ function ValueCard({ item }: { item: ValueItem }) {
         className="text-sm font-medium text-center"
         style={{ color: '#7F1866' }}
       >
-        {item.name}
+        {tField(item as any, "name", locale)}
       </span>
     </div>
   );

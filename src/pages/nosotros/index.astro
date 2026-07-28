@@ -10,11 +10,14 @@ import StatsReact from "../../components/StatsReact";
 import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
 import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
 import BannerApp from "../../components/fiberlux-app/BannerApp.astro";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const aboutQuery = await client.queries.about({ relativePath: "index.json" });
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <BaseLayout title="Nosotros">
@@ -23,24 +26,28 @@ const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
     query={aboutQuery.query}
     variables={aboutQuery.variables}
     data={aboutQuery.data}
+    locale={locale}
   />
   <MissionVisionReact
     client:load
     query={aboutQuery.query}
     variables={aboutQuery.variables}
     data={aboutQuery.data}
+    locale={locale}
   />
   <ValuesReact
     client:load
     query={aboutQuery.query}
     variables={aboutQuery.variables}
     data={aboutQuery.data}
+    locale={locale}
   />
   <TimelineReact
     client:visible
     query={aboutQuery.query}
     variables={aboutQuery.variables}
     data={aboutQuery.data}
+    locale={locale}
   />
   <div class="-mt-16 relative z-20" data-reveal="up">
     <StatsReact
@@ -48,6 +55,7 @@ const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
       query={homeQuery.query}
       variables={homeQuery.variables}
       data={homeQuery.data}
+      locale={locale}
     />
   </div>
   <div class="-mt-4 relative z-30" data-reveal="up">
@@ -56,6 +64,7 @@ const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
       query={aboutQuery.query}
       variables={aboutQuery.variables}
       data={aboutQuery.data}
+    locale={locale}
       autoplay={rubrosCfg.autoplay ?? true}
       intervalMs={rubrosCfg.intervalMs ?? 3500}
       effect={rubrosCfg.effect ?? "none"}

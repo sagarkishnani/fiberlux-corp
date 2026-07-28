@@ -638,38 +638,49 @@ type SubservicioConnection implements Connection {
 
 type AboutHero {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
 }
 
 type AboutMission {
   icon: String
   title: String
+  title_en: String
   text: String
+  text_en: String
 }
 
 type AboutVision {
   icon: String
   title: String
+  title_en: String
   text: String
+  text_en: String
 }
 
 type AboutValuesItems {
   name: String
+  name_en: String
 }
 
 type AboutValues {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   items: [AboutValuesItems]
 }
 
 type AboutTimelineMilestones {
   year: String
   heading: String
+  heading_en: String
 }
 
 type AboutTimeline {
   title: String
+  title_en: String
   startYear: String
   endYear: String
   milestones: [AboutTimelineMilestones]
@@ -678,11 +689,13 @@ type AboutTimeline {
 type AboutRubrosItems {
   icon: String
   label: String
+  label_en: String
   image: String
 }
 
 type AboutRubros {
   title: String
+  title_en: String
   items: [AboutRubrosItems]
 }
 
@@ -711,6 +724,7 @@ type AboutTeam {
 type About implements Node & Document {
   hero: AboutHero
   missionVisionTitle: String
+  missionVisionTitle_en: String
   mission: AboutMission
   vision: AboutVision
   missionImage: String
@@ -726,38 +740,49 @@ type About implements Node & Document {
 
 input AboutHeroFilter {
   title: StringFilter
+  title_en: StringFilter
   subtitle: StringFilter
+  subtitle_en: StringFilter
 }
 
 input AboutMissionFilter {
   icon: StringFilter
   title: StringFilter
+  title_en: StringFilter
   text: StringFilter
+  text_en: StringFilter
 }
 
 input AboutVisionFilter {
   icon: StringFilter
   title: StringFilter
+  title_en: StringFilter
   text: StringFilter
+  text_en: StringFilter
 }
 
 input AboutValuesItemsFilter {
   name: StringFilter
+  name_en: StringFilter
 }
 
 input AboutValuesFilter {
   title: StringFilter
+  title_en: StringFilter
   subtitle: StringFilter
+  subtitle_en: StringFilter
   items: AboutValuesItemsFilter
 }
 
 input AboutTimelineMilestonesFilter {
   year: StringFilter
   heading: StringFilter
+  heading_en: StringFilter
 }
 
 input AboutTimelineFilter {
   title: StringFilter
+  title_en: StringFilter
   startYear: StringFilter
   endYear: StringFilter
   milestones: AboutTimelineMilestonesFilter
@@ -766,11 +791,13 @@ input AboutTimelineFilter {
 input AboutRubrosItemsFilter {
   icon: StringFilter
   label: StringFilter
+  label_en: StringFilter
   image: ImageFilter
 }
 
 input AboutRubrosFilter {
   title: StringFilter
+  title_en: StringFilter
   items: AboutRubrosItemsFilter
 }
 
@@ -799,6 +826,7 @@ input AboutTeamFilter {
 input AboutFilter {
   hero: AboutHeroFilter
   missionVisionTitle: StringFilter
+  missionVisionTitle_en: StringFilter
   mission: AboutMissionFilter
   vision: AboutVisionFilter
   missionImage: ImageFilter
@@ -2452,38 +2480,49 @@ input SubservicioMutation {
 
 input AboutHeroMutation {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
 }
 
 input AboutMissionMutation {
   icon: String
   title: String
+  title_en: String
   text: String
+  text_en: String
 }
 
 input AboutVisionMutation {
   icon: String
   title: String
+  title_en: String
   text: String
+  text_en: String
 }
 
 input AboutValuesItemsMutation {
   name: String
+  name_en: String
 }
 
 input AboutValuesMutation {
   title: String
+  title_en: String
   subtitle: String
+  subtitle_en: String
   items: [AboutValuesItemsMutation]
 }
 
 input AboutTimelineMilestonesMutation {
   year: String
   heading: String
+  heading_en: String
 }
 
 input AboutTimelineMutation {
   title: String
+  title_en: String
   startYear: String
   endYear: String
   milestones: [AboutTimelineMilestonesMutation]
@@ -2492,11 +2531,13 @@ input AboutTimelineMutation {
 input AboutRubrosItemsMutation {
   icon: String
   label: String
+  label_en: String
   image: String
 }
 
 input AboutRubrosMutation {
   title: String
+  title_en: String
   items: [AboutRubrosItemsMutation]
 }
 
@@ -2525,6 +2566,7 @@ input AboutTeamMutation {
 input AboutMutation {
   hero: AboutHeroMutation
   missionVisionTitle: String
+  missionVisionTitle_en: String
   mission: AboutMissionMutation
   vision: AboutVisionMutation
   missionImage: String

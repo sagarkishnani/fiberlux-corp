@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, type ReactNode, type PointerEvent as React
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 
 /* ── Animation constants (measured from effortel.com/about) ── */
 const SLIDE_MS = 1000;
@@ -16,6 +18,7 @@ interface TimelineProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  locale?: Locale;
 }
 
 type Direction = 'next' | 'prev';
@@ -121,7 +124,7 @@ function barProgress(yearStr: string, startStr: string, endStr: string): number 
   return Math.min(1, Math.max(0, (cur - start) / (end - start)));
 }
 
-export default function TimelineReact({ query, variables, data: initialData }: TimelineProps) {
+export default function TimelineReact({ query, variables, data: initialData, locale = "es" }: TimelineProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
   // Fallback chain: useTina data → initialData
@@ -225,7 +228,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
         className={`max-w-[900px] font-medium leading-[1.15] tracking-tight text-white ${sizeCls}`}
         data-tina-field={ref ? tinaField(ref, 'heading') : undefined}
       >
-        {item?.heading}
+        {tField(item as any, "heading", locale)}
       </h2>
     );
   };
@@ -259,7 +262,7 @@ export default function TimelineReact({ query, variables, data: initialData }: T
       className="mb-4 text-sm uppercase tracking-[0.15em] text-[#909da4]"
       data-tina-field={tinaField(timeline, 'title')}
     >
-      {timeline.title}
+      {tField(timeline as any, "title", locale)}
     </p>
   ) : null;
 

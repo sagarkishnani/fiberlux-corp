@@ -1,16 +1,19 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 
 /* ── Types ── */
 interface MissionVisionProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  locale?: Locale;
 }
 
 const DEFAULT_IMAGE = '/images/nosotros/ux-design.avif';
 
-export default function MissionVisionReact({ query, variables, data: initialData }: MissionVisionProps) {
+export default function MissionVisionReact({ query, variables, data: initialData, locale = "es" }: MissionVisionProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
   const about = data?.about;
@@ -21,7 +24,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
   const image = about.missionImage || DEFAULT_IMAGE;
 
   // Section title from a dedicated field or fallback
-  const sectionTitle = (about as any)?.missionVisionTitle || 'Comprometidos con el desarrollo tecnológico del Perú';
+  const sectionTitle = tField(about as any, "missionVisionTitle", locale) || 'Comprometidos con el desarrollo tecnológico del Perú';
 
   return (
     <section
@@ -69,14 +72,14 @@ export default function MissionVisionReact({ query, variables, data: initialData
                     <path d="M2 12h20" />
                   </svg>
                   <h3 className="text-lg font-semibold text-brand-purple-darkest">
-                    {mission.title}
+                    {tField(mission as any, "title", locale)}
                   </h3>
                 </div>
                 <p
                   className="text-brand-purple-darkest/70 text-sm leading-relaxed"
                   data-tina-field={tinaField(mission, 'text')}
                 >
-                  {mission.text}
+                  {tField(mission as any, "text", locale)}
                 </p>
               </div>
             )}
@@ -94,14 +97,14 @@ export default function MissionVisionReact({ query, variables, data: initialData
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                   <h3 className="text-lg font-semibold text-brand-purple-darkest">
-                    {vision.title}
+                    {tField(vision as any, "title", locale)}
                   </h3>
                 </div>
                 <p
                   className="text-brand-purple-darkest/70 text-sm leading-relaxed"
                   data-tina-field={tinaField(vision, 'text')}
                 >
-                  {vision.text}
+                  {tField(vision as any, "text", locale)}
                 </p>
               </div>
             )}

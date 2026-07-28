@@ -189,49 +189,63 @@ fragment AboutParts on About {
   hero {
     __typename
     title
+    title_en
     subtitle
+    subtitle_en
   }
   missionVisionTitle
+  missionVisionTitle_en
   mission {
     __typename
     icon
     title
+    title_en
     text
+    text_en
   }
   vision {
     __typename
     icon
     title
+    title_en
     text
+    text_en
   }
   missionImage
   values {
     __typename
     title
+    title_en
     subtitle
+    subtitle_en
     items {
       __typename
       name
+      name_en
     }
   }
   timeline {
     __typename
     title
+    title_en
     startYear
     endYear
     milestones {
       __typename
       year
       heading
+      heading_en
     }
   }
   rubros {
     __typename
     title
+    title_en
     items {
       __typename
       icon
       label
+      label_en
       image
     }
   }

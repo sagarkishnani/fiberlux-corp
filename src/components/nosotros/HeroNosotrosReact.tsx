@@ -1,21 +1,24 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 
 /* ── Types ── */
 interface HeroNosotrosProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  locale?: Locale;
 }
 
-export default function HeroNosotrosReact({ query, variables, data: initialData }: HeroNosotrosProps) {
+export default function HeroNosotrosReact({ query, variables, data: initialData, locale = "es" }: HeroNosotrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
   const about = data?.about || initialData?.about;
   const hero = about?.hero;
 
-  const title = hero?.title || 'La red que impulsa a las empresas del Perú';
-  const subtitle = hero?.subtitle || '';
+  const title = tField(hero as any, 'title', locale) || 'La red que impulsa a las empresas del Perú';
+  const subtitle = tField(hero as any, 'subtitle', locale) || '';
 
   return (
     <section
@@ -32,11 +35,11 @@ export default function HeroNosotrosReact({ query, variables, data: initialData 
           <ol className="flex items-center gap-2 text-sm">
             <li>
               <a href="/" className="text-white/50 hover:text-white transition-colors">
-                Inicio
+                {locale === 'en' ? 'Home' : 'Inicio'}
               </a>
             </li>
             <li className="text-white/30">/</li>
-            <li className="text-white font-medium">Nosotros</li>
+            <li className="text-white font-medium">{locale === 'en' ? 'About us' : 'Nosotros'}</li>
           </ol>
         </nav>
 

@@ -1,18 +1,24 @@
 {
   "hero": {
     "title": "La red que impulsa a las empresas del Perú",
-    "subtitle": "Más de 15 años desarrollando infraestructura de conectividad de alta calidad para organizaciones que no pueden detenerse."
+    "subtitle": "Más de 15 años desarrollando infraestructura de conectividad de alta calidad para organizaciones que no pueden detenerse.",
+    "title_en": "The network that powers Peru's businesses",
+    "subtitle_en": "Over 15 years building high-quality connectivity infrastructure for organizations that can't afford to stop."
   },
   "missionVisionTitle": "Comprometidos con el desarrollo tecnológico del Perú",
   "mission": {
     "icon": "globe",
     "title": "Misión",
-    "text": "Impulsar el desarrollo de más peruanos a través del acceso a la tecnología."
+    "text": "Impulsar el desarrollo de más peruanos a través del acceso a la tecnología.",
+    "title_en": "Mission",
+    "text_en": "To drive the development of more Peruvians through access to technology."
   },
   "vision": {
     "icon": "sparkles",
     "title": "Visión",
-    "text": "Ser la empresa tecnológica más confiable y respetada del Perú. Convirtiéndonos en el referente local en innovación para empresas y personas."
+    "text": "Ser la empresa tecnológica más confiable y respetada del Perú. Convirtiéndonos en el referente local en innovación para empresas y personas.",
+    "title_en": "Vision",
+    "text_en": "To be the most trusted and respected technology company in Peru, becoming the benchmark in high-quality enterprise connectivity."
   },
   "missionImage": "/images/nosotros/ux-design.avif",
   "values": {
@@ -20,24 +26,32 @@
     "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",
     "items": [
       {
-        "name": "Conectividad con propósito"
+        "name": "Conectividad con propósito",
+        "name_en": "Purpose-driven connectivity"
       },
       {
-        "name": "Transparencia"
+        "name": "Transparencia",
+        "name_en": "Transparency"
       },
       {
-        "name": "Confiabilidad"
+        "name": "Confiabilidad",
+        "name_en": "Reliability"
       },
       {
-        "name": "Impacto local"
+        "name": "Impacto local",
+        "name_en": "Local impact"
       },
       {
-        "name": "Innovación"
+        "name": "Innovación",
+        "name_en": "Innovation"
       },
       {
-        "name": "Resiliencia"
+        "name": "Resiliencia",
+        "name_en": "Resilience"
       }
-    ]
+    ],
+    "title_en": "Our values",
+    "subtitle_en": "We connect Peru's most important organizations with state-of-the-art fiber-optic infrastructure."
   },
   "timeline": {
     "title": "Nuestra historia",
@@ -46,35 +60,86 @@
     "milestones": [
       {
         "year": "2006",
-        "heading": "Más de 19 años construyendo la red que conecta a las empresas del Perú"
+        "heading": "Más de 19 años construyendo la red que conecta a las empresas del Perú",
+        "heading_en": "Over 19 years building the network that connects Peru's businesses"
       },
       {
         "year": "2012",
-        "heading": "Expansión de nuestra red de fibra óptica a nivel nacional"
+        "heading": "Expansión de nuestra red de fibra óptica a nivel nacional",
+        "heading_en": "Expansion of our fiber-optic network nationwide"
       },
       {
         "year": "2019",
-        "heading": "Consolidación como referente B2B en conectividad empresarial"
+        "heading": "Consolidación como referente B2B en conectividad empresarial",
+        "heading_en": "Established as a B2B benchmark in enterprise connectivity"
       },
       {
         "year": "2025",
-        "heading": "Red propia presente en 92 ciudades del Perú"
+        "heading": "Red propia presente en 92 ciudades del Perú",
+        "heading_en": "Our own network present in 92 cities across Peru"
       }
-    ]
+    ],
+    "title_en": "Our history"
   },
   "rubros": {
     "title": "Rubros con los que trabajamos",
     "items": [
-      { "icon": "consultoria", "label": "Consultoría", "image": "images/rubros/consultoriarubro.webp" },
-      { "icon": "banca", "label": "Finanzas y Bancos", "image": "images/rubros/finanzasbancosrubro.webp" },
-      { "icon": "salud", "label": "Salud", "image": "images/rubros/saludrubro.webp" },
-      { "icon": "energia", "label": "Energía y Minería", "image": "images/rubros/mineriarubro.webp" },
-      { "icon": "educacion", "label": "Educación", "image": "images/rubros/educacionrubro.webp" },
-      { "icon": "tecnologia", "label": "Tecnología", "image": "images/rubros/tecnologiarubro.webp" },
-      { "icon": "industria", "label": "Industria", "image": "images/rubros/industriarubro.webp" },
-      { "icon": "retail", "label": "Comercio", "image": "images/rubros/comerciorubro.webp" },
-      { "icon": "servicios", "label": "Servicios", "image": "images/rubros/serviciosrubro.webp" }
-    ]
+      {
+        "icon": "consultoria",
+        "label": "Consultoría",
+        "image": "images/rubros/consultoriarubro.webp",
+        "label_en": "Consulting"
+      },
+      {
+        "icon": "banca",
+        "label": "Finanzas y Bancos",
+        "image": "images/rubros/finanzasbancosrubro.webp",
+        "label_en": "Finance & Banking"
+      },
+      {
+        "icon": "salud",
+        "label": "Salud",
+        "image": "images/rubros/saludrubro.webp",
+        "label_en": "Healthcare"
+      },
+      {
+        "icon": "energia",
+        "label": "Energía y Minería",
+        "image": "images/rubros/mineriarubro.webp",
+        "label_en": "Energy & Mining"
+      },
+      {
+        "icon": "educacion",
+        "label": "Educación",
+        "image": "images/rubros/educacionrubro.webp",
+        "label_en": "Education"
+      },
+      {
+        "icon": "tecnologia",
+        "label": "Tecnología",
+        "image": "images/rubros/tecnologiarubro.webp",
+        "label_en": "Technology"
+      },
+      {
+        "icon": "industria",
+        "label": "Industria",
+        "image": "images/rubros/industriarubro.webp",
+        "label_en": "Industry"
+      },
+      {
+        "icon": "retail",
+        "label": "Comercio",
+        "image": "images/rubros/comerciorubro.webp",
+        "label_en": "Retail"
+      },
+      {
+        "icon": "servicios",
+        "label": "Servicios",
+        "image": "images/rubros/serviciosrubro.webp",
+        "label_en": "Services"
+      }
+    ],
+    "title_en": "Industries we work with"
   },
   "stats": {
     "title": "¿Por qué Fiberlux?",
@@ -104,5 +169,6 @@
   "team": {
     "title": "Nuestro equipo",
     "members": []
-  }
+  },
+  "missionVisionTitle_en": "Committed to Peru's technological development"
 }

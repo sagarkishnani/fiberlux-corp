@@ -1,6 +1,8 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { IconType } from 'react-icons';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
+import { tField } from '../../utils/i18n';
+import type { Locale } from '../../i18n/config';
 import SliderArrows from '../shared/SliderArrows';
 // obs_6: set de íconos en estilo outline (Lucide) para coincidir con la referencia.
 import {
@@ -39,6 +41,7 @@ interface RubrosProps {
   query: string;
   variables: AboutQueryVariables;
   data: AboutQuery;
+  locale?: Locale;
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
@@ -73,6 +76,7 @@ export default function RubrosReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
   autoplay = true,
   intervalMs = 3500,
   effect = "none",
@@ -154,7 +158,7 @@ export default function RubrosReact({
           className="relative z-10 text-xl font-semibold text-white"
           data-tina-field={ref ? tinaField(ref, 'label') : undefined}
         >
-          {item.label}
+          {tField(item as any, "label", locale)}
         </h3>
       </article>
     );
@@ -169,7 +173,7 @@ export default function RubrosReact({
             className="max-w-[623px] text-[56px] font-medium leading-[1.15] tracking-tight text-white"
             data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
           >
-            {rubros?.title}
+            {tField(rubros as any, "title", locale)}
           </h2>
           {arrows}
         </div>
@@ -179,7 +183,7 @@ export default function RubrosReact({
           className="mb-8 max-w-[623px] text-[32px] font-medium leading-[1.15] tracking-tight text-white md:hidden"
           data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
         >
-          {rubros?.title}
+          {tField(rubros as any, "title", locale)}
         </h2>
 
         <div
