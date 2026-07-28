@@ -1470,12 +1470,14 @@ export default defineConfig({
             type: "string",
             ui: { component: "textarea" },
           },
+          { name: "heading_en", label: "Título (H1) (EN)", type: "string", ui: { component: "textarea" } },
           {
             name: "intro",
             label: "Párrafo intro (opcional)",
             type: "string",
             ui: { component: "textarea" },
           },
+          { name: "intro_en", label: "Párrafo intro (EN)", type: "string", ui: { component: "textarea" } },
 
           // ── Etiquetas de los selectores ──
           {
@@ -1483,11 +1485,13 @@ export default defineConfig({
             label: "Placeholder selector de banco",
             type: "string",
           },
+          { name: "bankSelectLabel_en", label: "Placeholder selector de banco (EN)", type: "string" },
           {
             name: "methodSelectLabel",
             label: "Placeholder selector de método",
             type: "string",
           },
+          { name: "methodSelectLabel_en", label: "Placeholder selector de método (EN)", type: "string" },
 
           // ── Bancos (nivel 1) ──
           {
@@ -1504,6 +1508,7 @@ export default defineConfig({
                 type: "string",
                 description: 'Ej: "Desde BBVA".',
               },
+              { name: "optionLabel_en", label: "Texto en el dropdown (EN)", type: "string" },
 
               // ── Métodos (nivel 2) ──
               {
@@ -1519,6 +1524,7 @@ export default defineConfig({
                     type: "string",
                     description: 'Ej: "Desde la aplicación".',
                   },
+                  { name: "label_en", label: "Texto en el dropdown (EN)", type: "string" },
 
                   // ── Pasos (nivel 3) ──
                   {
@@ -1531,12 +1537,20 @@ export default defineConfig({
                     },
                     fields: [
                       { name: "title", label: "Título del paso", type: "string" },
+                      { name: "title_en", label: "Título del paso (EN)", type: "string" },
                       {
                         name: "description",
                         label: "Descripción",
                         type: "rich-text",
                         description:
                           "Usa negrita (bold) para resaltar palabras en magenta.",
+                      },
+                      {
+                        name: "description_en",
+                        label: "Descripción (EN)",
+                        type: "rich-text",
+                        description:
+                          "Traducción EN opcional; si está vacía se usa la versión en español.",
                       },
                       {
                         name: "image",

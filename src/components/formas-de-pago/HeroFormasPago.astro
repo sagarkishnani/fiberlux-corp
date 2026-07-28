@@ -1,10 +1,13 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import HeroFormasPagoReact from "./HeroFormasPagoReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const formasQuery = await client.queries.formasDePago({
   relativePath: "index.json",
 });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <HeroFormasPagoReact
@@ -12,4 +15,5 @@ const formasQuery = await client.queries.formasDePago({
   query={formasQuery.query}
   variables={formasQuery.variables}
   data={formasQuery.data}
+  locale={locale}
 />

@@ -1395,23 +1395,27 @@ var config_default = defineConfig({
             type: "string",
             ui: { component: "textarea" }
           },
+          { name: "heading_en", label: "T\xEDtulo (H1) (EN)", type: "string", ui: { component: "textarea" } },
           {
             name: "intro",
             label: "P\xE1rrafo intro (opcional)",
             type: "string",
             ui: { component: "textarea" }
           },
+          { name: "intro_en", label: "P\xE1rrafo intro (EN)", type: "string", ui: { component: "textarea" } },
           // ── Etiquetas de los selectores ──
           {
             name: "bankSelectLabel",
             label: "Placeholder selector de banco",
             type: "string"
           },
+          { name: "bankSelectLabel_en", label: "Placeholder selector de banco (EN)", type: "string" },
           {
             name: "methodSelectLabel",
             label: "Placeholder selector de m\xE9todo",
             type: "string"
           },
+          { name: "methodSelectLabel_en", label: "Placeholder selector de m\xE9todo (EN)", type: "string" },
           // ── Bancos (nivel 1) ──
           {
             name: "banks",
@@ -1427,6 +1431,7 @@ var config_default = defineConfig({
                 type: "string",
                 description: 'Ej: "Desde BBVA".'
               },
+              { name: "optionLabel_en", label: "Texto en el dropdown (EN)", type: "string" },
               // ── Métodos (nivel 2) ──
               {
                 name: "methods",
@@ -1441,6 +1446,7 @@ var config_default = defineConfig({
                     type: "string",
                     description: 'Ej: "Desde la aplicaci\xF3n".'
                   },
+                  { name: "label_en", label: "Texto en el dropdown (EN)", type: "string" },
                   // ── Pasos (nivel 3) ──
                   {
                     name: "steps",
@@ -1452,11 +1458,18 @@ var config_default = defineConfig({
                     },
                     fields: [
                       { name: "title", label: "T\xEDtulo del paso", type: "string" },
+                      { name: "title_en", label: "T\xEDtulo del paso (EN)", type: "string" },
                       {
                         name: "description",
                         label: "Descripci\xF3n",
                         type: "rich-text",
                         description: "Usa negrita (bold) para resaltar palabras en magenta."
+                      },
+                      {
+                        name: "description_en",
+                        label: "Descripci\xF3n (EN)",
+                        type: "rich-text",
+                        description: "Traducci\xF3n EN opcional; si est\xE1 vac\xEDa se usa la versi\xF3n en espa\xF1ol."
                       },
                       {
                         name: "image",

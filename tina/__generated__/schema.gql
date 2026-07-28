@@ -1142,18 +1142,22 @@ type CertificacionesConnection implements Connection {
 
 type FormasDePagoBanksMethodsSteps {
   title: String
+  title_en: String
   description: JSON
+  description_en: JSON
   image: String
 }
 
 type FormasDePagoBanksMethods {
   label: String
+  label_en: String
   steps: [FormasDePagoBanksMethodsSteps]
 }
 
 type FormasDePagoBanks {
   name: String
   optionLabel: String
+  optionLabel_en: String
   methods: [FormasDePagoBanksMethods]
 }
 
@@ -1165,9 +1169,13 @@ type FormasDePagoSeo {
 
 type FormasDePago implements Node & Document {
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   bankSelectLabel: String
+  bankSelectLabel_en: String
   methodSelectLabel: String
+  methodSelectLabel_en: String
   banks: [FormasDePagoBanks]
   seo: FormasDePagoSeo
   id: ID!
@@ -1177,18 +1185,22 @@ type FormasDePago implements Node & Document {
 
 input FormasDePagoBanksMethodsStepsFilter {
   title: StringFilter
+  title_en: StringFilter
   description: RichTextFilter
+  description_en: RichTextFilter
   image: ImageFilter
 }
 
 input FormasDePagoBanksMethodsFilter {
   label: StringFilter
+  label_en: StringFilter
   steps: FormasDePagoBanksMethodsStepsFilter
 }
 
 input FormasDePagoBanksFilter {
   name: StringFilter
   optionLabel: StringFilter
+  optionLabel_en: StringFilter
   methods: FormasDePagoBanksMethodsFilter
 }
 
@@ -1200,9 +1212,13 @@ input FormasDePagoSeoFilter {
 
 input FormasDePagoFilter {
   heading: StringFilter
+  heading_en: StringFilter
   intro: StringFilter
+  intro_en: StringFilter
   bankSelectLabel: StringFilter
+  bankSelectLabel_en: StringFilter
   methodSelectLabel: StringFilter
+  methodSelectLabel_en: StringFilter
   banks: FormasDePagoBanksFilter
   seo: FormasDePagoSeoFilter
 }
@@ -2609,18 +2625,22 @@ input CertificacionesMutation {
 
 input FormasDePagoBanksMethodsStepsMutation {
   title: String
+  title_en: String
   description: JSON
+  description_en: JSON
   image: String
 }
 
 input FormasDePagoBanksMethodsMutation {
   label: String
+  label_en: String
   steps: [FormasDePagoBanksMethodsStepsMutation]
 }
 
 input FormasDePagoBanksMutation {
   name: String
   optionLabel: String
+  optionLabel_en: String
   methods: [FormasDePagoBanksMethodsMutation]
 }
 
@@ -2632,9 +2652,13 @@ input FormasDePagoSeoMutation {
 
 input FormasDePagoMutation {
   heading: String
+  heading_en: String
   intro: String
+  intro_en: String
   bankSelectLabel: String
+  bankSelectLabel_en: String
   methodSelectLabel: String
+  methodSelectLabel_en: String
   banks: [FormasDePagoBanksMutation]
   seo: FormasDePagoSeoMutation
 }

@@ -1566,13 +1566,16 @@ export type CertificacionesConnection = Connection & {
 export type FormasDePagoBanksMethodsSteps = {
   __typename?: 'FormasDePagoBanksMethodsSteps';
   title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['JSON']['output']>;
+  description_en?: Maybe<Scalars['JSON']['output']>;
   image?: Maybe<Scalars['String']['output']>;
 };
 
 export type FormasDePagoBanksMethods = {
   __typename?: 'FormasDePagoBanksMethods';
   label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
   steps?: Maybe<Array<Maybe<FormasDePagoBanksMethodsSteps>>>;
 };
 
@@ -1580,6 +1583,7 @@ export type FormasDePagoBanks = {
   __typename?: 'FormasDePagoBanks';
   name?: Maybe<Scalars['String']['output']>;
   optionLabel?: Maybe<Scalars['String']['output']>;
+  optionLabel_en?: Maybe<Scalars['String']['output']>;
   methods?: Maybe<Array<Maybe<FormasDePagoBanksMethods>>>;
 };
 
@@ -1593,9 +1597,13 @@ export type FormasDePagoSeo = {
 export type FormasDePago = Node & Document & {
   __typename?: 'FormasDePago';
   heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
+  intro_en?: Maybe<Scalars['String']['output']>;
   bankSelectLabel?: Maybe<Scalars['String']['output']>;
+  bankSelectLabel_en?: Maybe<Scalars['String']['output']>;
   methodSelectLabel?: Maybe<Scalars['String']['output']>;
+  methodSelectLabel_en?: Maybe<Scalars['String']['output']>;
   banks?: Maybe<Array<Maybe<FormasDePagoBanks>>>;
   seo?: Maybe<FormasDePagoSeo>;
   id: Scalars['ID']['output'];
@@ -1605,18 +1613,22 @@ export type FormasDePago = Node & Document & {
 
 export type FormasDePagoBanksMethodsStepsFilter = {
   title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   description?: InputMaybe<RichTextFilter>;
+  description_en?: InputMaybe<RichTextFilter>;
   image?: InputMaybe<ImageFilter>;
 };
 
 export type FormasDePagoBanksMethodsFilter = {
   label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
   steps?: InputMaybe<FormasDePagoBanksMethodsStepsFilter>;
 };
 
 export type FormasDePagoBanksFilter = {
   name?: InputMaybe<StringFilter>;
   optionLabel?: InputMaybe<StringFilter>;
+  optionLabel_en?: InputMaybe<StringFilter>;
   methods?: InputMaybe<FormasDePagoBanksMethodsFilter>;
 };
 
@@ -1628,9 +1640,13 @@ export type FormasDePagoSeoFilter = {
 
 export type FormasDePagoFilter = {
   heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
+  intro_en?: InputMaybe<StringFilter>;
   bankSelectLabel?: InputMaybe<StringFilter>;
+  bankSelectLabel_en?: InputMaybe<StringFilter>;
   methodSelectLabel?: InputMaybe<StringFilter>;
+  methodSelectLabel_en?: InputMaybe<StringFilter>;
   banks?: InputMaybe<FormasDePagoBanksFilter>;
   seo?: InputMaybe<FormasDePagoSeoFilter>;
 };
@@ -3368,18 +3384,22 @@ export type CertificacionesMutation = {
 
 export type FormasDePagoBanksMethodsStepsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['JSON']['input']>;
+  description_en?: InputMaybe<Scalars['JSON']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type FormasDePagoBanksMethodsMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
   steps?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMethodsStepsMutation>>>;
 };
 
 export type FormasDePagoBanksMutation = {
   name?: InputMaybe<Scalars['String']['input']>;
   optionLabel?: InputMaybe<Scalars['String']['input']>;
+  optionLabel_en?: InputMaybe<Scalars['String']['input']>;
   methods?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMethodsMutation>>>;
 };
 
@@ -3391,9 +3411,13 @@ export type FormasDePagoSeoMutation = {
 
 export type FormasDePagoMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
+  intro_en?: InputMaybe<Scalars['String']['input']>;
   bankSelectLabel?: InputMaybe<Scalars['String']['input']>;
+  bankSelectLabel_en?: InputMaybe<Scalars['String']['input']>;
   methodSelectLabel?: InputMaybe<Scalars['String']['input']>;
+  methodSelectLabel_en?: InputMaybe<Scalars['String']['input']>;
   banks?: InputMaybe<Array<InputMaybe<FormasDePagoBanksMutation>>>;
   seo?: InputMaybe<FormasDePagoSeoMutation>;
 };
@@ -3807,7 +3831,7 @@ export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb
 
 export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, description?: string | null } | null> | null };
 
-export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, bankSelectLabel?: string | null, bankSelectLabel_en?: string | null, methodSelectLabel?: string | null, methodSelectLabel_en?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, optionLabel_en?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, label_en?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, title_en?: string | null, description?: any | null, description_en?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type GlobalPartsFragment = { __typename: 'Global', nav?: { __typename: 'GlobalNav', links?: Array<{ __typename: 'GlobalNavLinks', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildren', text?: string | null, text_en?: string | null, url?: string | null, children?: Array<{ __typename: 'GlobalNavLinksChildrenChildren', text?: string | null, text_en?: string | null, url?: string | null } | null> | null } | null> | null } | null> | null } | null, header?: { __typename: 'GlobalHeader', logo?: string | null, topBar?: { __typename: 'GlobalHeaderTopBar', empresasLabel?: string | null, empresasLabel_en?: string | null, empresasUrl?: string | null, negociosLabel?: string | null, negociosLabel_en?: string | null, negociosUrl?: string | null, abonadosLabel?: string | null, abonadosLabel_en?: string | null, abonadosUrl?: string | null } | null, desktopNav?: Array<{ __typename: 'GlobalHeaderDesktopNav', text?: string | null, text_en?: string | null, url?: string | null } | null> | null, secondaryNav?: Array<{ __typename: 'GlobalHeaderSecondaryNav', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null, whatsapp?: { __typename: 'GlobalWhatsapp', phone?: string | null, message?: string | null } | null, footer?: { __typename: 'GlobalFooter', tagline?: string | null, tagline_en?: string | null, copyright?: string | null, copyright_en?: string | null, logo?: string | null, agencyLogo?: string | null, agencyUrl?: string | null, columns?: Array<{ __typename: 'GlobalFooterColumns', title?: string | null, title_en?: string | null, links?: Array<{ __typename: 'GlobalFooterColumnsLinks', text?: string | null, text_en?: string | null, url?: string | null, external?: boolean | null } | null> | null } | null> | null, social?: Array<{ __typename: 'GlobalFooterSocial', platform?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'GlobalPartners', eyebrow?: string | null, title?: string | null, logos?: Array<{ __typename: 'GlobalPartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, seo?: { __typename: 'GlobalSeo', siteName?: string | null, defaultDescription?: string | null, ogImage?: string | null } | null, codeInjection?: { __typename: 'GlobalCodeInjection', head?: string | null, bodyEnd?: string | null } | null, htmlInjections?: Array<{ __typename: 'GlobalHtmlInjections', label?: string | null, enabled?: boolean | null, location?: string | null, html?: string | null } | null> | null, sliders?: { __typename: 'GlobalSliders', certificaciones?: { __typename: 'GlobalSlidersCertificaciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, soluciones?: { __typename: 'GlobalSlidersSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, testimonios?: { __typename: 'GlobalSlidersTestimonios', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, casos?: { __typename: 'GlobalSlidersCasos', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, catalogoSoluciones?: { __typename: 'GlobalSlidersCatalogoSoluciones', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, blogPreview?: { __typename: 'GlobalSlidersBlogPreview', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null, rubros?: { __typename: 'GlobalSlidersRubros', autoplay?: boolean | null, intervalMs?: number | null, effect?: string | null } | null } | null };
 
@@ -4020,7 +4044,7 @@ export type FormasDePagoQueryVariables = Exact<{
 }>;
 
 
-export type FormasDePagoQuery = { __typename?: 'Query', formasDePago: { __typename: 'FormasDePago', id: string, heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type FormasDePagoQuery = { __typename?: 'Query', formasDePago: { __typename: 'FormasDePago', id: string, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, bankSelectLabel?: string | null, bankSelectLabel_en?: string | null, methodSelectLabel?: string | null, methodSelectLabel_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, optionLabel_en?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, label_en?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, title_en?: string | null, description?: any | null, description_en?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type FormasDePagoConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4032,7 +4056,7 @@ export type FormasDePagoConnectionQueryVariables = Exact<{
 }>;
 
 
-export type FormasDePagoConnectionQuery = { __typename?: 'Query', formasDePagoConnection: { __typename?: 'FormasDePagoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FormasDePagoConnectionEdges', cursor: string, node?: { __typename: 'FormasDePago', id: string, heading?: string | null, intro?: string | null, bankSelectLabel?: string | null, methodSelectLabel?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, description?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type FormasDePagoConnectionQuery = { __typename?: 'Query', formasDePagoConnection: { __typename?: 'FormasDePagoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FormasDePagoConnectionEdges', cursor: string, node?: { __typename: 'FormasDePago', id: string, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, bankSelectLabel?: string | null, bankSelectLabel_en?: string | null, methodSelectLabel?: string | null, methodSelectLabel_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, optionLabel_en?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, label_en?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, title_en?: string | null, description?: any | null, description_en?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type GlobalQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4573,20 +4597,28 @@ export const FormasDePagoPartsFragmentDoc = gql`
     fragment FormasDePagoParts on FormasDePago {
   __typename
   heading
+  heading_en
   intro
+  intro_en
   bankSelectLabel
+  bankSelectLabel_en
   methodSelectLabel
+  methodSelectLabel_en
   banks {
     __typename
     name
     optionLabel
+    optionLabel_en
     methods {
       __typename
       label
+      label_en
       steps {
         __typename
         title
+        title_en
         description
+        description_en
         image
       }
     }

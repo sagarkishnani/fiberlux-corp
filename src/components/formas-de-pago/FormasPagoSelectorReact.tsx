@@ -7,11 +7,14 @@ import type {
   FormasDePagoQuery,
   FormasDePagoQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface FormasPagoSelectorProps {
   query: string;
   variables: FormasDePagoQueryVariables;
   data: FormasDePagoQuery;
+  locale?: Locale;
 }
 
 /** Render bold marks as magenta emphasis + tidy sub-bullets, per the design. */
@@ -32,17 +35,22 @@ const descriptionComponents: Components<{}> = {
 
 interface StepData {
   title?: string | null;
+  title_en?: string | null;
   description?: any;
+  description_en?: any;
   image?: string | null;
 }
 
 /** One numbered step: title + checkmark description on the left, screenshot on the right. */
-function StepRow({ step, tinaId }: { step: StepData; tinaId?: string }) {
+function StepRow({ step, tinaId, locale }: { step: StepData; tinaId?: string; locale: Locale }) {
+  // Rich-text: usa la versión EN si existe y el locale es 'en'; si no, ES.
+  const description =
+    locale === "en" && step.description_en ? step.description_en : step.description;
   return (
     <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 md:gap-10 items-center py-10 border-t border-white/10">
       <div>
         <h3 className="text-[24px] md:text-[28px] leading-[1.2] font-semibold text-greyscale-white">
-          {step.title}
+          {tField(step as any, "title", locale)}
         </h3>
         <div className="flex gap-3 mt-4">
           <FaCheck
@@ -55,7 +63,7 @@ function StepRow({ step, tinaId }: { step: StepData; tinaId?: string }) {
             data-tina-field={tinaId}
           >
             <TinaMarkdown
-              content={step.description}
+              content={description}
               components={descriptionComponents}
             />
           </div>
@@ -124,6 +132,7 @@ export default function FormasPagoSelectorReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: FormasPagoSelectorProps) {
   const { data } = useTina<FormasDePagoQuery>({
     query,
@@ -157,19 +166,19 @@ export default function FormasPagoSelectorReact({
         {/* Selectors */}
         <div className="flex flex-col sm:flex-row gap-4 pt-2 pb-6">
           <Dropdown
-            ariaLabel={page.bankSelectLabel || "Selecciona tu banco"}
+            ariaLabel={tField(page as any, "bankSelectLabel", locale) || "Selecciona tu banco"}
             value={safeBankIdx}
             onChange={handleBankChange}
             options={banks.map(
-              (b, i) => b?.optionLabel || b?.name || `Banco ${i + 1}`
+              (b, i) => tField(b as any, "optionLabel", locale) || b?.name || `Banco ${i + 1}`
             )}
           />
           {methods.length > 0 && (
             <Dropdown
-              ariaLabel={page.methodSelectLabel || "Selecciona el método"}
+              ariaLabel={tField(page as any, "methodSelectLabel", locale) || "Selecciona el método"}
               value={safeMethodIdx}
               onChange={setMethodIdx}
-              options={methods.map((m, i) => m?.label || `Método ${i + 1}`)}
+              options={methods.map((m, i) => tField(m as any, "label", locale) || `Método ${i + 1}`)}
             />
           )}
         </div>
@@ -181,6 +190,7 @@ export default function FormasPagoSelectorReact({
               <StepRow
                 key={`${safeBankIdx}-${safeMethodIdx}-${i}`}
                 step={step}
+                locale={locale}
                 tinaId={method ? tinaField(method as any, "steps") : undefined}
               />
             ))}

@@ -14,29 +14,35 @@
             {
               "title": "Paso 1",
               "description": "Seleccione la opción de: **Pagar Servicio**",
-              "image": "/images/formas-de-pago/bbva-app-1.jpg"
+              "image": "/images/formas-de-pago/bbva-app-1.jpg",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Seleccionar: **Agregar servicio a pagar**",
-              "image": "/images/formas-de-pago/bbva-app-2.png"
+              "image": "/images/formas-de-pago/bbva-app-2.png",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Escribir **FIBERLUX TECH** en el cuadro de búsqueda y seleccionar el tipo de moneda según la factura\n\n- ME para dólares\n- MN para soles",
-              "image": "/images/formas-de-pago/bbva-app-3.png"
+              "image": "/images/formas-de-pago/bbva-app-3.png",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Colocar su número de DNI o RUC que figura en la factura",
-              "image": "/images/formas-de-pago/bbva-app-4.png"
+              "image": "/images/formas-de-pago/bbva-app-4.png",
+              "title_en": "Step 4"
             },
             {
               "title": "Paso 5",
               "description": "Seleccionar el servicio a pagar. La deuda figura en orden de antigüedad, así que verá primero la deuda más vencida.",
-              "image": "/images/formas-de-pago/bbva-app-5.png"
+              "image": "/images/formas-de-pago/bbva-app-5.png",
+              "title_en": "Step 5"
             }
-          ]
+          ],
+          "label_en": "Mobile Banking (Individuals)"
         },
         {
           "label": "Banca Empresas",
@@ -44,24 +50,29 @@
             {
               "title": "Paso 1",
               "description": "Seleccionar la opción de **PAGOS A INSTITUCIONES**",
-              "image": "/images/formas-de-pago/bbva-empresas-1.png"
+              "image": "/images/formas-de-pago/bbva-empresas-1.png",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar.\n\nSeleccionar la empresa **FIBERLUX TECH** y el servicio que se desea pagar en Soles o Dólares y continuar.\n\n- ME para dólares\n- MN para soles",
-              "image": "/images/formas-de-pago/bbva-empresas-2.png"
+              "image": "/images/formas-de-pago/bbva-empresas-2.png",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Ingrese su **código de cliente**",
-              "image": "/images/formas-de-pago/bbva-empresas-3.png"
+              "image": "/images/formas-de-pago/bbva-empresas-3.png",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Seleccione el recibo o los recibos que se van a pagar.\n\nEl cliente puede seleccionar el monto a pagar de su factura.",
-              "image": "/images/formas-de-pago/bbva-empresas-4.png"
+              "image": "/images/formas-de-pago/bbva-empresas-4.png",
+              "title_en": "Step 4"
             }
-          ]
+          ],
+          "label_en": "Business Banking"
         },
         {
           "label": "Banca Personas",
@@ -69,31 +80,38 @@
             {
               "title": "Paso 1",
               "description": "Selecciona la opción de **Pago de Servicio**",
-              "image": "/images/formas-de-pago/bbva-personas-1.png"
+              "image": "/images/formas-de-pago/bbva-personas-1.png",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Seleccionar **INSTITUCIONES Y EMPRESAS**.\n\nEscribir y buscar **Fiberlux Tech**",
-              "image": "/images/formas-de-pago/bbva-personas-2.png"
+              "image": "/images/formas-de-pago/bbva-personas-2.png",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Seleccionar la opción de **PAGO** en la moneda de tu deuda.\n\n- ME para dólares\n- MN para soles",
-              "image": "/images/formas-de-pago/bbva-personas-3.png"
+              "image": "/images/formas-de-pago/bbva-personas-3.png",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Ingresar el **Código de Cliente**",
-              "image": "/images/formas-de-pago/bbva-personas-4.png"
+              "image": "/images/formas-de-pago/bbva-personas-4.png",
+              "title_en": "Step 4"
             },
             {
               "title": "Paso 5",
               "description": "Seleccionar el recibo que se pagará",
-              "image": "/images/formas-de-pago/bbva-personas-5.png"
+              "image": "/images/formas-de-pago/bbva-personas-5.png",
+              "title_en": "Step 5"
             }
-          ]
+          ],
+          "label_en": "Personal Banking"
         }
-      ]
+      ],
+      "optionLabel_en": "From BBVA"
     },
     {
       "name": "BCP",
@@ -105,24 +123,29 @@
             {
               "title": "Paso 1",
               "description": "Selecciona la opción de **Pago de Servicios**",
-              "image": "/images/formas-de-pago/bcp-movil-1.png"
+              "image": "/images/formas-de-pago/bcp-movil-1.png",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar.\n\nElegir la moneda según factura.",
-              "image": "/images/formas-de-pago/bcp-movil-2.png"
+              "image": "/images/formas-de-pago/bcp-movil-2.png",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Seleccionar el servicio que se desea pagar en Soles o Dólares.\n\n- ME para dólares\n- MN para soles\n\nIngresar su número de DNI o RUC.",
-              "image": "/images/formas-de-pago/bcp-movil-3.png"
+              "image": "/images/formas-de-pago/bcp-movil-3.png",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Seleccionar las facturas a pagar. Se muestran las facturas más antiguas **PRIMERO**.",
-              "image": "/images/formas-de-pago/bcp-movil-4.png"
+              "image": "/images/formas-de-pago/bcp-movil-4.png",
+              "title_en": "Step 4"
             }
-          ]
+          ],
+          "label_en": "Mobile Banking"
         },
         {
           "label": "Telecrédito",
@@ -130,29 +153,35 @@
             {
               "title": "Paso 1",
               "description": "Selecciona la opción de **Pago de Servicios**",
-              "image": "/images/formas-de-pago/bcp-web-1.jpg"
+              "image": "/images/formas-de-pago/bcp-web-1.jpg",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar",
-              "image": "/images/formas-de-pago/bcp-web-2.jpg"
+              "image": "/images/formas-de-pago/bcp-web-2.jpg",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Seleccionar la empresa **FIBERLUX TECH** y el servicio que se desea pagar en Soles o Dólares y continuar.\n\n- ME para dólares\n- MN para soles",
-              "image": "/images/formas-de-pago/bcp-web-3.jpg"
+              "image": "/images/formas-de-pago/bcp-web-3.jpg",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Ingresar su número de DNI o RUC",
-              "image": "/images/formas-de-pago/bcp-web-4.jpg"
+              "image": "/images/formas-de-pago/bcp-web-4.jpg",
+              "title_en": "Step 4"
             },
             {
               "title": "Paso 5",
               "description": "Seleccionar las facturas a pagar y finaliza la transacción",
-              "image": ""
+              "image": "",
+              "title_en": "Step 5"
             }
-          ]
+          ],
+          "label_en": "Telecrédito"
         },
         {
           "label": "Banca por Internet",
@@ -160,36 +189,46 @@
             {
               "title": "Paso 1",
               "description": "Selecciona la opción de **Pago de Servicios**",
-              "image": "/images/formas-de-pago/bcp-banca-1.png"
+              "image": "/images/formas-de-pago/bcp-banca-1.png",
+              "title_en": "Step 1"
             },
             {
               "title": "Paso 2",
               "description": "Escribir en el recuadro de búsqueda **FIBERLUX TECH** y buscar",
-              "image": "/images/formas-de-pago/bcp-banca-2.png"
+              "image": "/images/formas-de-pago/bcp-banca-2.png",
+              "title_en": "Step 2"
             },
             {
               "title": "Paso 3",
               "description": "Seleccionar el servicio que se desea pagar en Soles o Dólares y continuar.\n\n- ME para dólares\n- MN para soles",
-              "image": "/images/formas-de-pago/bcp-banca-3.png"
+              "image": "/images/formas-de-pago/bcp-banca-3.png",
+              "title_en": "Step 3"
             },
             {
               "title": "Paso 4",
               "description": "Ingresar su número de DNI o RUC",
-              "image": "/images/formas-de-pago/bcp-banca-4.png"
+              "image": "/images/formas-de-pago/bcp-banca-4.png",
+              "title_en": "Step 4"
             },
             {
               "title": "Paso 5",
               "description": "Seleccionar las facturas a pagar y finaliza la transacción. Se muestran las facturas más antiguas **PRIMERO**.",
-              "image": "/images/formas-de-pago/bcp-banca-5.png"
+              "image": "/images/formas-de-pago/bcp-banca-5.png",
+              "title_en": "Step 5"
             }
-          ]
+          ],
+          "label_en": "Internet Banking"
         }
-      ]
+      ],
+      "optionLabel_en": "From BCP"
     }
   ],
   "seo": {
     "metaTitle": "Formas de pago | Fiberlux Corp",
     "metaDescription": "Aprende a pagar tus recibos de Fiberlux desde tu banco de forma sencilla, paso a paso.",
     "ogImage": ""
-  }
+  },
+  "heading_en": "Choose your bank and pay your invoices easily",
+  "bankSelectLabel_en": "Choose your bank",
+  "methodSelectLabel_en": "Choose the method"
 }

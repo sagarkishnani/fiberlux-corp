@@ -3,17 +3,21 @@ import type {
   FormasDePagoQuery,
   FormasDePagoQueryVariables,
 } from "../../../tina/__generated__/types";
+import { tField } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
 
 interface HeroFormasPagoProps {
   query: string;
   variables: FormasDePagoQueryVariables;
   data: FormasDePagoQuery;
+  locale?: Locale;
 }
 
 export default function HeroFormasPagoReact({
   query,
   variables,
   data: initialData,
+  locale = "es",
 }: HeroFormasPagoProps) {
   const { data } = useTina<FormasDePagoQuery>({
     query,
@@ -34,15 +38,15 @@ export default function HeroFormasPagoReact({
           className="text-[44px] md:text-[60px] leading-[1.15] font-medium text-greyscale-white max-w-[820px] tracking-[-1.6px]"
           data-tina-field={tinaField(page, "heading")}
         >
-          {page.heading}
+          {tField(page as any, "heading", locale)}
         </h1>
 
-        {page.intro && (
+        {tField(page as any, "intro", locale) && (
           <p
             className="mt-6 text-[22px] leading-[34px] text-greyscale-light max-w-[640px]"
             data-tina-field={tinaField(page, "intro")}
           >
-            {page.intro}
+            {tField(page as any, "intro", locale)}
           </p>
         )}
       </div>

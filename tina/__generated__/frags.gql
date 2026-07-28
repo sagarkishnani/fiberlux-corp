@@ -374,20 +374,28 @@ fragment CertificacionesParts on Certificaciones {
 fragment FormasDePagoParts on FormasDePago {
   __typename
   heading
+  heading_en
   intro
+  intro_en
   bankSelectLabel
+  bankSelectLabel_en
   methodSelectLabel
+  methodSelectLabel_en
   banks {
     __typename
     name
     optionLabel
+    optionLabel_en
     methods {
       __typename
       label
+      label_en
       steps {
         __typename
         title
+        title_en
         description
+        description_en
         image
       }
     }
