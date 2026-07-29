@@ -127,6 +127,16 @@ const whatsappMessage = whatsappContext
       document.documentElement.classList.add("reveal-js");
     </script>
     <style is:global>
+      /* Guard anti scroll horizontal: los reveals con desplazamiento horizontal
+         (data-reveal="left|right", y el scrub que se aleja ×1.7 al salir) trasladan
+         elementos hasta ~170px fuera del viewport, generando scroll horizontal
+         hasta que el reveal se asienta. Se recorta en el wrapper de contenido
+         (elemento no-root; el root `html` no propaga `clip` al viewport). `clip`
+         no crea scroll-container (no rompe position:sticky, Lenis ni los carruseles
+         con su propio overflow) y no afecta al header fixed ni al scroll vertical. */
+      #a11y-content {
+        overflow-x: clip;
+      }
       .reveal-js [data-reveal]:not([data-reveal-stagger]) {
         opacity: 0;
         will-change: transform, opacity;

@@ -212,7 +212,7 @@ export default function TimelineReact({ query, variables, data: initialData, loc
     const ref = refAt(i);
     return (
       <span
-        className={`block px-[0.16em] py-[0.12em] font-bold leading-none tracking-tighter tabular-nums text-[#836d7d] ${sizeCls}`}
+        className={`block w-[3em] py-[0.24em] text-center font-bold leading-none tracking-tighter tabular-nums text-[#836d7d] ${sizeCls}`}
         data-tina-field={ref ? tinaField(ref, 'year') : undefined}
       >
         {item?.year}
