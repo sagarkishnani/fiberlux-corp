@@ -100,27 +100,36 @@ export default function VideoShowcaseAppReact({
 
           {/* ── Derecha: laptop + play ── */}
           <div className="order-2 relative">
+            {/* Glow/sombra difusa bajo el dispositivo (efecto flotante) */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-[1%] w-[82%] h-[44%] z-0 blur-2xl"
+              style={{
+                background:
+                  "radial-gradient(ellipse at center, rgba(150,35,122,0.22) 0%, rgba(150,35,122,0.09) 42%, transparent 72%)",
+              }}
+            />
             {hasImage && (
               <>
                 <img
                   src={desktopSrc}
                   alt=""
                   aria-hidden="true"
-                  className="hidden lg:block w-full h-auto"
+                  className="hidden lg:block relative z-10 w-full h-auto"
                   data-tina-field={tinaField(vs, "imageDesktop")}
                 />
                 <img
                   src={mobileSrc}
                   alt=""
                   aria-hidden="true"
-                  className="lg:hidden w-full h-auto"
+                  className="lg:hidden relative z-10 w-full h-auto"
                   data-tina-field={tinaField(vs, "imageMobile")}
                 />
               </>
             )}
 
             {videoUrl && (
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 z-20 flex items-center justify-center">
                 <button
                   type="button"
                   onClick={openVideo}
