@@ -91,9 +91,56 @@ function loadState(): A11yState {
   }
 }
 
+/* Textos del panel (i18n, SPEC 83). `L(k)` cae a ES si falta la traducción. */
+const A11Y_UI: Record<Locale, Record<string, string>> = {
+  es: {
+    open: "Abrir panel de accesibilidad",
+    panel: "Panel de accesibilidad",
+    close: "Cerrar panel de accesibilidad",
+    title: "Accesibilidad",
+    subtitle: "Ajusta la experiencia visual a tus necesidades",
+    secVisual: "Visual",
+    secFine: "Ajuste fino",
+    contraste: "Contraste",
+    agrandar: "Agrandar texto",
+    espaciadoLetras: "Espaciado entre letras",
+    ocultarImg: "Ocultar imágenes",
+    dislexia: "Dislexia Amigable",
+    saturacion: "Saturación",
+    invertir: "Invertir colores",
+    sliderTexto: "Texto",
+    sliderEspaciado: "Espaciado",
+    reset: "Restablecer valores",
+    levelWord: "nivel",
+    ofWord: "de",
+  },
+  en: {
+    open: "Open accessibility panel",
+    panel: "Accessibility panel",
+    close: "Close accessibility panel",
+    title: "Accessibility",
+    subtitle: "Adjust the visual experience to your needs",
+    secVisual: "Visual",
+    secFine: "Fine-tuning",
+    contraste: "Contrast",
+    agrandar: "Enlarge text",
+    espaciadoLetras: "Letter spacing",
+    ocultarImg: "Hide images",
+    dislexia: "Dyslexia-friendly",
+    saturacion: "Saturation",
+    invertir: "Invert colors",
+    sliderTexto: "Text",
+    sliderEspaciado: "Spacing",
+    reset: "Reset values",
+    levelWord: "level",
+    ofWord: "of",
+  },
+};
+
 /* ─────────────────────────── Component ─────────────────────────── */
 
 export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale }) {
+  const L = (k: string) => A11Y_UI[locale]?.[k] ?? A11Y_UI.es[k] ?? k;
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<A11yState>(DEFAULTS);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -161,7 +208,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
         ref={fabRef}
         type="button"
         className="a11y-fab"
-        aria-label="Abrir panel de accesibilidad"
+        aria-label={L("open")}
         aria-expanded={open}
         aria-haspopup="dialog"
         onClick={() => setOpen(true)}
@@ -187,7 +234,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
         className={`a11y-panel ${open ? "is-open" : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Panel de accesibilidad"
+        aria-label={L("panel")}
         aria-hidden={!open}
         inert={!open ? true : undefined}
         tabIndex={-1}
@@ -198,13 +245,13 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
               <FaUniversalAccess />
             </span>
             <div>
-              <h2 className="a11y-title">Accesibilidad</h2>
+              <h2 className="a11y-title">{L("title")}</h2>
             </div>
           </div>
           <button
             type="button"
             className="a11y-close"
-            aria-label="Cerrar panel de accesibilidad"
+            aria-label={L("close")}
             onClick={() => {
               setOpen(false);
               fabRef.current?.focus();
@@ -213,17 +260,19 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
             <FaXmark aria-hidden="true" />
           </button>
         </div>
-        <p className="a11y-subtitle">Ajusta la experiencia visual a tus necesidades</p>
+        <p className="a11y-subtitle">{L("subtitle")}</p>
 
         <div className="a11y-body">
           {/* ── VISUAL ── */}
-          <p className="a11y-section-label">Visual</p>
+          <p className="a11y-section-label">{L("secVisual")}</p>
           <div className="a11y-grid">
             {/* Contraste con niveles (obs11): Desactivado / Bajo / Medio / Alto.
                 Click cicla el nivel; la barra de 3 segmentos muestra el actual. */}
             <LevelCard
               icon={<FaCircleHalfStroke />}
-              label="Contraste"
+              label={L("contraste")}
+              levelWord={L("levelWord")}
+              ofWord={L("ofWord")}
               level={state.contrastLevel}
               max={CONTRAST_LEVELS.length - 1}
               onCycle={() =>
@@ -235,7 +284,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
             />
             <ToggleCard
               icon={<FaTextHeight />}
-              label="Agrandar texto"
+              label={L("agrandar")}
               active={state.fontScale > 1}
               onClick={() =>
                 update({ fontScale: state.fontScale > 1 ? 1 : FONT_PRESET })
@@ -243,7 +292,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
             />
             <ToggleCard
               icon={<FaArrowsLeftRight />}
-              label="Espaciado entre letras"
+              label={L("espaciadoLetras")}
               active={state.letterSpacing > 0}
               onClick={() =>
                 update({
@@ -253,35 +302,35 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
             />
             <ToggleCard
               icon={<FaRegImage />}
-              label="Ocultar imágenes"
+              label={L("ocultarImg")}
               active={state.hideImages}
               onClick={() => update({ hideImages: !state.hideImages })}
             />
             <ToggleCard
               icon={<FaFont />}
-              label="Dislexia Amigable"
+              label={L("dislexia")}
               active={state.dyslexia}
               onClick={() => update({ dyslexia: !state.dyslexia })}
             />
             <ToggleCard
               icon={<FaDroplet />}
-              label="Saturación"
+              label={L("saturacion")}
               active={state.saturation}
               onClick={() => update({ saturation: !state.saturation })}
             />
             <ToggleCard
               icon={<FaClone />}
-              label="Invertir colores"
+              label={L("invertir")}
               active={state.invert}
               onClick={() => update({ invert: !state.invert })}
             />
           </div>
 
           {/* ── AJUSTE FINO ── */}
-          <p className="a11y-section-label">Ajuste fino</p>
+          <p className="a11y-section-label">{L("secFine")}</p>
           <div className="a11y-slider-row">
             <label htmlFor="a11y-font" className="a11y-slider-label">
-              Texto
+              {L("sliderTexto")}
             </label>
             <input
               id="a11y-font"
@@ -299,7 +348,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
           </div>
           <div className="a11y-slider-row">
             <label htmlFor="a11y-spacing" className="a11y-slider-label">
-              Espaciado
+              {L("sliderEspaciado")}
             </label>
             <input
               id="a11y-spacing"
@@ -318,7 +367,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
 
           <button type="button" className="a11y-reset" onClick={reset}>
             <FaRotateLeft aria-hidden="true" />
-            Restablecer valores
+            {L("reset")}
           </button>
         </div>
       </div>
@@ -363,19 +412,23 @@ function LevelCard({
   level,
   max,
   onCycle,
+  levelWord = "nivel",
+  ofWord = "de",
 }: {
   icon: ReactNode;
   label: string;
   level: number;
   max: number;
   onCycle: () => void;
+  levelWord?: string;
+  ofWord?: string;
 }) {
   return (
     <button
       type="button"
       className={`a11y-card ${level > 0 ? "is-active" : ""}`}
       aria-pressed={level > 0}
-      aria-label={`${label} (nivel ${level} de ${max})`}
+      aria-label={`${label} (${levelWord} ${level} ${ofWord} ${max})`}
       onClick={onCycle}
     >
       <span className="a11y-card-icon" aria-hidden="true">
