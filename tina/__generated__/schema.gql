@@ -2231,6 +2231,18 @@ type FiberluxAppBeneficios {
   items: [FiberluxAppBeneficiosItems]
 }
 
+type FiberluxAppVideoShowcase {
+  heading: String
+  heading_en: String
+  body: JSON
+  body_en: JSON
+  buttonLabel: String
+  buttonLabel_en: String
+  videoUrl: String
+  imageDesktop: String
+  imageMobile: String
+}
+
 type FiberluxAppCasosDeUso {
   eyebrow: String
   eyebrow_en: String
@@ -2248,6 +2260,7 @@ type FiberluxApp implements Node & Document {
   banner: FiberluxAppBanner
   hero: FiberluxAppHero
   beneficios: FiberluxAppBeneficios
+  videoShowcase: FiberluxAppVideoShowcase
   casosDeUso: FiberluxAppCasosDeUso
   whyUsTitle: String
   whyUsTitle_en: String
@@ -2306,6 +2319,18 @@ input FiberluxAppBeneficiosFilter {
   items: FiberluxAppBeneficiosItemsFilter
 }
 
+input FiberluxAppVideoShowcaseFilter {
+  heading: StringFilter
+  heading_en: StringFilter
+  body: RichTextFilter
+  body_en: RichTextFilter
+  buttonLabel: StringFilter
+  buttonLabel_en: StringFilter
+  videoUrl: StringFilter
+  imageDesktop: ImageFilter
+  imageMobile: ImageFilter
+}
+
 input FiberluxAppCasosDeUsoFilter {
   eyebrow: StringFilter
   eyebrow_en: StringFilter
@@ -2323,6 +2348,7 @@ input FiberluxAppFilter {
   banner: FiberluxAppBannerFilter
   hero: FiberluxAppHeroFilter
   beneficios: FiberluxAppBeneficiosFilter
+  videoShowcase: FiberluxAppVideoShowcaseFilter
   casosDeUso: FiberluxAppCasosDeUsoFilter
   whyUsTitle: StringFilter
   whyUsTitle_en: StringFilter
@@ -3353,6 +3379,18 @@ input FiberluxAppBeneficiosMutation {
   items: [FiberluxAppBeneficiosItemsMutation]
 }
 
+input FiberluxAppVideoShowcaseMutation {
+  heading: String
+  heading_en: String
+  body: JSON
+  body_en: JSON
+  buttonLabel: String
+  buttonLabel_en: String
+  videoUrl: String
+  imageDesktop: String
+  imageMobile: String
+}
+
 input FiberluxAppCasosDeUsoMutation {
   eyebrow: String
   eyebrow_en: String
@@ -3370,6 +3408,7 @@ input FiberluxAppMutation {
   banner: FiberluxAppBannerMutation
   hero: FiberluxAppHeroMutation
   beneficios: FiberluxAppBeneficiosMutation
+  videoShowcase: FiberluxAppVideoShowcaseMutation
   casosDeUso: FiberluxAppCasosDeUsoMutation
   whyUsTitle: String
   whyUsTitle_en: String

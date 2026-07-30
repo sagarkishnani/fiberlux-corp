@@ -853,6 +853,18 @@ fragment FiberluxAppParts on FiberluxApp {
       text_en
     }
   }
+  videoShowcase {
+    __typename
+    heading
+    heading_en
+    body
+    body_en
+    buttonLabel
+    buttonLabel_en
+    videoUrl
+    imageDesktop
+    imageMobile
+  }
   casosDeUso {
     __typename
     eyebrow

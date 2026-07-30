@@ -2863,6 +2863,41 @@ var config_default = defineConfig({
               }
             ]
           },
+          // ── "Lleva la eficiencia" (video showcase) ──
+          {
+            name: "videoShowcase",
+            label: "Secci\xF3n video (Lleva la eficiencia)",
+            type: "object",
+            fields: [
+              { name: "heading", label: "Titular", type: "string" },
+              { name: "heading_en", label: "Titular (EN)", type: "string" },
+              { name: "body", label: "P\xE1rrafo", type: "rich-text" },
+              { name: "body_en", label: "P\xE1rrafo (EN)", type: "rich-text" },
+              { name: "buttonLabel", label: "Texto del bot\xF3n", type: "string" },
+              {
+                name: "buttonLabel_en",
+                label: "Texto del bot\xF3n (EN)",
+                type: "string"
+              },
+              {
+                name: "videoUrl",
+                label: "URL del video (YouTube)",
+                type: "string",
+                description: "Link de YouTube; se abre en el mismo modal que Casos de \xE9xito."
+              },
+              {
+                name: "imageDesktop",
+                label: "Imagen laptop (desktop)",
+                type: "image"
+              },
+              {
+                name: "imageMobile",
+                label: "Imagen laptop (mobile)",
+                type: "image",
+                description: "Si se deja vac\xEDo, se usa la imagen de desktop."
+              }
+            ]
+          },
           // ── "Casos de uso" ──
           {
             name: "casosDeUso",

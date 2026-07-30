@@ -3006,6 +3006,43 @@ export default defineConfig({
             ],
           },
 
+          // ── "Lleva la eficiencia" (video showcase) ──
+          {
+            name: "videoShowcase",
+            label: "Sección video (Lleva la eficiencia)",
+            type: "object",
+            fields: [
+              { name: "heading", label: "Titular", type: "string" },
+              { name: "heading_en", label: "Titular (EN)", type: "string" },
+              { name: "body", label: "Párrafo", type: "rich-text" },
+              { name: "body_en", label: "Párrafo (EN)", type: "rich-text" },
+              { name: "buttonLabel", label: "Texto del botón", type: "string" },
+              {
+                name: "buttonLabel_en",
+                label: "Texto del botón (EN)",
+                type: "string",
+              },
+              {
+                name: "videoUrl",
+                label: "URL del video (YouTube)",
+                type: "string",
+                description:
+                  "Link de YouTube; se abre en el mismo modal que Casos de éxito.",
+              },
+              {
+                name: "imageDesktop",
+                label: "Imagen laptop (desktop)",
+                type: "image",
+              },
+              {
+                name: "imageMobile",
+                label: "Imagen laptop (mobile)",
+                type: "image",
+                description: "Si se deja vacío, se usa la imagen de desktop.",
+              },
+            ],
+          },
+
           // ── "Casos de uso" ──
           {
             name: "casosDeUso",
