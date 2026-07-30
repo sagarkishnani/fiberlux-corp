@@ -127,6 +127,9 @@ export default function SplineScene({
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
   const [posterGone, setPosterGone] = useState(false);
+  // Cuando la escena está fuera de pantalla (o la pestaña oculta) renderizamos a
+  // resolución mínima en vez de pausar — ver la nota extensa en el efecto de abajo.
+  const [throttled, setThrottled] = useState(false);
 
   // Avisa al preloader de Home de que "ya no hay nada que esperar": o la escena
   // cargó, o falló, o directamente no se va a cargar (static/sin URL).
@@ -146,27 +149,41 @@ export default function SplineScene({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allowMobile, signalReady, scene]);
 
-  // Pausa el loop de render (WebGL/rAF) cuando la escena NO aporta nada:
-  // fuera del viewport (p.ej. tras hacer scroll pasando el hero) o con la
-  // pestaña oculta. Esto es clave para el rendimiento: un Spley corriendo
-  // fuera de pantalla compite con el scroll y genera lag en toda la página.
+  // Ahorro de GPU fuera de pantalla SIN romper el efecto del chip.
+  //
+  // La escena reproduce EN BUCLE un pulso magenta periódico por las líneas del
+  // chip (un "State" de Spline disparado por el evento `start`). `app.stop()` no
+  // solo pausa el render: mata ese bucle de forma IRREVERSIBLE — `app.play()`
+  // reanuda el dibujo pero el pulso queda muerto (verificado midiendo el canvas:
+  // 3 pulsos/13s antes de stop() → 0 después; ni re-emitir `start` ni el mixer
+  // de animación lo reviven). Ese era el bug: bajabas del hero, volvías, y el
+  // chip seguía ahí pero sin efecto.
+  //
+  // Pero dejar la escena a resolución completa fuera de pantalla satura la GPU y
+  // genera jank al hacer scroll. Solución: en vez de pausar, renderizamos a
+  // resolución MÍNIMA cuando no se ve. Spline sincroniza el tamaño del canvas al
+  // de su contenedor vía ResizeObserver, así que encoger la caja de render baja
+  // el drawingBuffer a ~48×32 (≈2000× menos píxeles → coste casi nulo) mientras
+  // el loop sigue vivo y el bucle del pulso NO se interrumpe. Al reentrar (con
+  // margen de 300px de anticipación) restauramos el tamaño real antes de que sea
+  // visible. Observamos `wrapperRef` (que NO se encoge) para que la geometría del
+  // IntersectionObserver sea estable; solo se encoge la caja interna de render.
   useEffect(() => {
     if (renderMode !== "spline" || !loaded) return;
-    const app = appRef.current;
     const el = wrapperRef.current;
-    if (!app || !el) return;
+    if (!el) return;
 
     let onScreen = true;
     let tabVisible = !document.hidden;
-    const apply = () => (onScreen && tabVisible ? app.play() : app.stop());
+    const apply = () => setThrottled(!(onScreen && tabVisible));
 
     const io = new IntersectionObserver(
       ([entry]) => {
         onScreen = entry.isIntersecting;
         apply();
       },
-      // Reanuda un poco antes de entrar para que no se note el "arranque".
-      { rootMargin: "200px 0px" }
+      // Restaura un poco antes de entrar para que no se vea un frame en baja res.
+      { rootMargin: "300px 0px" }
     );
     io.observe(el);
 
@@ -240,6 +257,18 @@ export default function SplineScene({
       )}
 
       {showSpline && (
+        // Caja de render: a pantalla completa (inset-0) cuando la escena se ve;
+        // encogida a un tamaño mínimo cuando está fuera de pantalla, para que
+        // Spline baje el drawingBuffer y el render cueste casi nada sin pausar el
+        // loop (así el pulso de las líneas no se rompe). overflow:hidden evita que
+        // el canvas mínimo desborde durante la transición.
+        <div
+          style={
+            throttled
+              ? { position: "absolute", top: 0, left: 0, width: 48, height: 32, overflow: "hidden", pointerEvents: "none" }
+              : { position: "absolute", inset: 0 }
+          }
+        >
         <SplineBoundary
           onFail={() => {
             setFailed(true);
@@ -294,6 +323,7 @@ export default function SplineScene({
             />
           </Suspense>
         </SplineBoundary>
+        </div>
       )}
 
       <style>{`

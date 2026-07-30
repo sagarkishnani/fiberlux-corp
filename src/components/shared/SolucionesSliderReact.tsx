@@ -180,7 +180,7 @@ export default function SolucionesSliderReact({
   );
 
   return (
-    <section className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+    <section id="soluciones-cards" className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden scroll-mt-24">
       {/* SPEC 55: 3 vectores blur. Bloom magenta grande y brillante (fiel a la
           referencia): el principal sube desde abajo-centro por detrás de la card
           activa; line como streak arriba-izq; tercer bloom detrás de la peek/derecha.

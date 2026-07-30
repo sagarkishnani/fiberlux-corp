@@ -71,12 +71,12 @@ export default function MissionVisionReact({ query, variables, data: initialData
                     <path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20" />
                     <path d="M2 12h20" />
                   </svg>
-                  <h3 className="text-lg font-semibold text-brand-purple-darkest">
+                  <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
                     {tField(mission as any, "title", locale)}
                   </h3>
                 </div>
                 <p
-                  className="text-brand-purple-darkest/70 text-sm leading-relaxed"
+                  className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
                   data-tina-field={tinaField(mission, 'text')}
                 >
                   {tField(mission as any, "text", locale)}
@@ -96,12 +96,12 @@ export default function MissionVisionReact({ query, variables, data: initialData
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
-                  <h3 className="text-lg font-semibold text-brand-purple-darkest">
+                  <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
                     {tField(vision as any, "title", locale)}
                   </h3>
                 </div>
                 <p
-                  className="text-brand-purple-darkest/70 text-sm leading-relaxed"
+                  className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
                   data-tina-field={tinaField(vision, 'text')}
                 >
                   {tField(vision as any, "text", locale)}
