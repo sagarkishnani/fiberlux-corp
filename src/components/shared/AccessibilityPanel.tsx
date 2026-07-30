@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import type { Locale } from "../../i18n/config";
 import {
   FaUniversalAccess,
   FaCircleHalfStroke,
@@ -92,7 +93,7 @@ function loadState(): A11yState {
 
 /* ─────────────────────────── Component ─────────────────────────── */
 
-export default function AccessibilityPanel() {
+export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale }) {
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<A11yState>(DEFAULTS);
   const panelRef = useRef<HTMLDivElement>(null);

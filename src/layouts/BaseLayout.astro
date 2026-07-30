@@ -275,7 +275,7 @@ const whatsappMessage = whatsappContext
             phone={whatsappPhone}
             message={whatsappMessage}
           />
-          <AccessibilityPanel client:idle />
+          <AccessibilityPanel client:idle locale={locale} />
           {/* Scripts globales editables en Tina (global.codeInjection.bodyEnd). */}
           {injectBodyEnd && <Fragment set:html={injectBodyEnd} />}
         </Fragment>
