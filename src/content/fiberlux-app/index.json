@@ -50,6 +50,17 @@
     ],
     "title_en": "Benefits"
   },
+  "videoShowcase": {
+    "heading": "Lleva la eficiencia de tu empresa al siguiente nivel",
+    "heading_en": "Take your company's efficiency to the next level",
+    "body": "En **Fiberlux App** encontrarás el estado de tus servicios en tiempo real, sedes operativas, diagnósticos avanzados y mucho más.",
+    "body_en": "With **Fiberlux App** you'll find the status of your services in real time, operational sites, advanced diagnostics and much more.",
+    "buttonLabel": "Ver video",
+    "buttonLabel_en": "Watch video",
+    "videoUrl": "https://www.youtube.com/watch?v=3gFQ_iDwl4A",
+    "imageDesktop": "images/fiberlux-app/laptop-mockup.png",
+    "imageMobile": ""
+  },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Para todas las empresas que deseen **monitorear el estado de sus servicios Fiberlux en tiempo real**.",
