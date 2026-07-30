@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { client } from "../../tina/__generated__/client";
 import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
 import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
+import VideoShowcaseApp from "../components/fiberlux-app/VideoShowcaseApp.astro";
 import CasosDeUsoApp from "../components/fiberlux-app/CasosDeUsoApp.astro";
 import Stats from "../components/Stats.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
@@ -36,6 +37,9 @@ const metaDescription =
       <div class="relative z-10">
         <BeneficiosApp />
       </div>
+    </div>
+    <div class="relative z-10" data-reveal="up">
+      <VideoShowcaseApp />
     </div>
     <div data-reveal="up">
       <CasosDeUsoApp />
