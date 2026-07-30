@@ -4,7 +4,6 @@ import { client } from "../../tina/__generated__/client";
 import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
 import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
 import VideoShowcaseApp from "../components/fiberlux-app/VideoShowcaseApp.astro";
-import CasosDeUsoApp from "../components/fiberlux-app/CasosDeUsoApp.astro";
 import Stats from "../components/Stats.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
 import { getLocale, tField } from "../utils/i18n";
@@ -40,9 +39,6 @@ const metaDescription =
     </div>
     <div class="relative z-10" data-reveal="up">
       <VideoShowcaseApp />
-    </div>
-    <div data-reveal="up">
-      <CasosDeUsoApp />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
       <Stats title={tField(app as any, "whyUsTitle", locale) || undefined} />
