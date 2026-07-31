@@ -1408,6 +1408,7 @@ export type ContactCards = {
   label?: Maybe<Scalars['String']['output']>;
   label_en?: Maybe<Scalars['String']['output']>;
   value?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
 };
 
 export type Contact = Node & Document & {
@@ -1429,6 +1430,7 @@ export type ContactCardsFilter = {
   label?: InputMaybe<StringFilter>;
   label_en?: InputMaybe<StringFilter>;
   value?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
 };
 
 export type ContactFilter = {
@@ -3595,6 +3597,7 @@ export type ContactCardsMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
   label_en?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ContactMutation = {
@@ -4185,7 +4188,7 @@ export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: str
 
 export type PostPartsFragment = { __typename: 'Post', title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
-export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null };
+export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null, href?: string | null } | null> | null };
 
 export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
 
@@ -4313,7 +4316,7 @@ export type ContactQueryVariables = Exact<{
 }>;
 
 
-export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null } };
+export type ContactQuery = { __typename?: 'Query', contact: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null, href?: string | null } | null> | null } };
 
 export type ContactConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4325,7 +4328,7 @@ export type ContactConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null } | null> | null } | null } | null> | null } };
+export type ContactConnectionQuery = { __typename?: 'Query', contactConnection: { __typename?: 'ContactConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ContactConnectionEdges', cursor: string, node?: { __typename: 'Contact', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cards?: Array<{ __typename: 'ContactCards', icon?: string | null, label?: string | null, label_en?: string | null, value?: string | null, href?: string | null } | null> | null } | null } | null> | null } };
 
 export type SoporteTecnicoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4933,6 +4936,7 @@ export const ContactPartsFragmentDoc = gql`
     label
     label_en
     value
+    href
   }
 }
     `;

@@ -158,6 +158,25 @@ const whatsappMessage = whatsappContext
           transform: none !important;
         }
       }
+      /* Guard anti-FOUC del panel de accesibilidad: la isla React que lo estiliza
+         carga con client:idle y su <style> vive al final del <body>. En teléfonos
+         que pintan el markup antes de parsear ese <style>, el panel aparecía un
+         instante en su posición "abierta" y luego se deslizaba fuera (flash de
+         ~300ms al navegar). Este CSS crítico en el <head> se parsea ANTES del
+         primer paint y lo deja oculto desde el inicio; `.is-open` (más específico)
+         lo vuelve visible cuando el usuario lo abre. */
+      .a11y-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-105%);
+      }
+      .a11y-backdrop {
+        position: fixed;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+      }
     </style>
     {/* Accessibility: apply saved preferences before first paint (no flash) */}
     <script is:inline>

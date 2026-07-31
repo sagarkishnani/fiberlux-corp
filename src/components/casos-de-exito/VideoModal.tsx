@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import type { Caso } from "./CasoCard";
 
 interface VideoModalProps {
@@ -46,7 +47,12 @@ export default function VideoModal({ caso, onClose }: VideoModalProps) {
   const ytId = caso.youtubeUrl?.trim() ? youtubeId(caso.youtubeUrl.trim()) : null;
   const mp4 = caso.videoFile?.trim() || null;
 
-  return (
+  // Portal a <body>: evita quedar atrapado por un ancestro con `transform`
+  // (p. ej. el wrapper `data-reveal` de fiberlux-app), que convierte al modal
+  // `fixed` en relativo a ese ancestro y lo tapa la sección siguiente.
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
       role="dialog"
@@ -92,6 +98,7 @@ export default function VideoModal({ caso, onClose }: VideoModalProps) {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

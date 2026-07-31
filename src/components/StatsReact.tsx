@@ -139,6 +139,14 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
 
   const displayNumber = formatNumber(count, decimals, hasCommas);
 
+  // En la banda xl (1280–1536) el grid ya es de 4 columnas pero las celdas son
+  // estrechas; se reduce el número para que "+17,000 km" no invada la celda
+  // vecina, y se vuelve a 64px en 2xl, donde hay espacio de sobra.
+  const numberCls =
+    "text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] xl:text-[50px] xl:leading-[54px] 2xl:text-[64px] 2xl:leading-[68px] font-bold";
+  const suffixCls =
+    "text-[24px] leading-[28px] sm:text-[30px] sm:leading-[34px] xl:text-[24px] xl:leading-[28px] 2xl:text-[30px] 2xl:leading-[34px] font-semibold ml-0.5";
+
   return (
     <div ref={ref} className="flex flex-col gap-3">
       {/* SPEC 54: número protagonista suelto sobre el fondo (sin card), en lila malva con degradé. */}
@@ -146,19 +154,9 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
         style={{ color: '#C9A9C4' }}
         data-tina-field={tinaField(item as any, 'number')}
       >
-        {prefix && (
-          <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
-            {prefix}
-          </span>
-        )}
-        <span className="text-[44px] leading-[48px] sm:text-[64px] sm:leading-[68px] font-bold">
-          {displayNumber}
-        </span>
-        {suffix && (
-          <span className="text-[24px] leading-[28px] sm:text-[30px] sm:leading-[34px] font-semibold ml-0.5">
-            {suffix}
-          </span>
-        )}
+        {prefix && <span className={numberCls}>{prefix}</span>}
+        <span className={numberCls}>{displayNumber}</span>
+        {suffix && <span className={suffixCls}>{suffix}</span>}
       </p>
 
       {/* Description below number */}
@@ -205,7 +203,7 @@ export default function StatsReact({ query, variables, data: initialData, titleO
         </h2>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 items-start">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-6 gap-y-10 items-start">
           {items.map((item, i) => (
             <StatCard key={i} item={item} index={i} locale={locale} />
           ))}

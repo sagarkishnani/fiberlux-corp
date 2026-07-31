@@ -1005,6 +1005,7 @@ type ContactCards {
   label: String
   label_en: String
   value: String
+  href: String
 }
 
 type Contact implements Node & Document {
@@ -1025,6 +1026,7 @@ input ContactCardsFilter {
   label: StringFilter
   label_en: StringFilter
   value: StringFilter
+  href: StringFilter
 }
 
 input ContactFilter {
@@ -2835,6 +2837,7 @@ input ContactCardsMutation {
   label: String
   label_en: String
   value: String
+  href: String
 }
 
 input ContactMutation {

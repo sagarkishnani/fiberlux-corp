@@ -65,6 +65,10 @@ export default function CasosSliderReact({
           El viewport va dentro de site-container (igual que el hero) para que la
           primera card quede alineada al título y la descripción. */}
       <div className="site-container">
+        {/* Móvil: flechas ARRIBA del carrusel — la card (video + testimonio) es
+            alta y las flechas de abajo quedaban fuera de vista; arriba dan una
+            pista clara de que se puede arrastrar. En desktop van debajo. */}
+        {items.length > 1 && <div className="lg:hidden mb-6">{arrowsPill}</div>}
         <div
           ref={slider.viewportRef}
           className="overflow-hidden pt-2 pb-3 select-none casos-carousel"
@@ -97,8 +101,8 @@ export default function CasosSliderReact({
           </div>
         </div>
 
-        {/* Arrows: below the video, aligned to the card's left edge */}
-        {items.length > 1 && <div className="mt-8">{arrowsPill}</div>}
+        {/* Arrows: below the video, aligned to the card's left edge (desktop) */}
+        {items.length > 1 && <div className="hidden lg:block mt-8">{arrowsPill}</div>}
       </div>
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />

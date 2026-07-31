@@ -123,12 +123,12 @@ export default function FooterReact({ query, variables, data: initialData, local
     <footer className="bg-brand-purple rounded-t-xl">
       {/* ═══ Main content ═══ */}
       <div className="site-container pt-16 sm:pt-20 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
           {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
-          <div className="order-2 md:order-1 flex flex-col justify-between gap-10">
+          <div className="order-2 lg:order-1 flex flex-col justify-between gap-10">
             <h2
-              className="text-[32px] leading-[36px] sm:text-[40px] lg:text-[56px] sm:leading-[60px] font-semibold text-white"
+              className="text-[32px] leading-[36px] sm:text-[40px] xl:text-[56px] sm:leading-[60px] font-semibold text-white"
               data-tina-field={tinaField(footer, 'tagline')}
             >
               {tField(footer as any, 'tagline', locale)}
@@ -159,7 +159,7 @@ export default function FooterReact({ query, variables, data: initialData, local
               row (3 across on desktop); long groups span full width below with
               their links in multiple columns. `dense` backfills short groups
               into the gap left beside a spanning column. */}
-          <div className="order-1 md:order-2 col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense gap-x-8 gap-y-10">
+          <div className="order-1 lg:order-2 col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense gap-x-8 gap-y-10">
             {columns.map((column, ci) => renderColumn(column, ci))}
           </div>
         </div>
@@ -179,8 +179,9 @@ export default function FooterReact({ query, variables, data: initialData, local
             </a>
           </div>
 
-          {/* Copyright + agency credit */}
-          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-white/80">
+          {/* Copyright + agency credit — flujo inline para que el logo de la
+              agencia quede al costado del texto (no debajo) al envolver. */}
+          <p className="text-white/80">
             <span data-tina-field={tinaField(footer, 'copyright')}>{copyrightText}</span>
             {agencyLogo &&
               (agencyUrl ? (
@@ -189,15 +190,16 @@ export default function FooterReact({ query, variables, data: initialData, local
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="TWNSTUDIOS"
+                  className="ml-2 inline-block align-middle"
                   data-tina-field={tinaField(footer as any, 'agencyLogo')}
                 >
-                  <img src={agencyLogo} alt="TWNSTUDIOS" className="h-4 w-auto brightness-0 invert" />
+                  <img src={agencyLogo} alt="TWNSTUDIOS" className="inline h-4 w-auto brightness-0 invert" />
                 </a>
               ) : (
                 <img
                   src={agencyLogo}
                   alt="TWNSTUDIOS"
-                  className="h-4 w-auto brightness-0 invert"
+                  className="ml-2 inline-block h-4 w-auto align-middle brightness-0 invert"
                   data-tina-field={tinaField(footer as any, 'agencyLogo')}
                 />
               ))}

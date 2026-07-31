@@ -43,17 +43,39 @@ export default function ContactReact({
   const cards = (contact.cards || []).filter(Boolean);
   const base = import.meta.env.BASE_URL || "/";
 
+  /* Resuelve el enlace de la tarjeta: usa el `href` configurado en Tina y, si
+     está vacío, lo deriva del ícono (teléfono→tel:, correo→mailto:, ubicación→
+     búsqueda en Google Maps). Devuelve null si no hay enlace posible. */
+  const cardHref = (card: any): string | null => {
+    const explicit = card?.href?.trim();
+    if (explicit) return explicit;
+    const value = card?.value?.trim();
+    if (!value) return null;
+    switch (card?.icon) {
+      case "phone": {
+        const tel = value.replace(/[^\d+]/g, "");
+        return tel ? `tel:${tel}` : null;
+      }
+      case "email":
+        return `mailto:${value}`;
+      case "location":
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`;
+      default:
+        return null;
+    }
+  };
+
   /* Cards are rendered in two spots (desktop left column / mobile below form),
      so build them through a helper to avoid duplicating the markup. */
   const renderCards = () =>
     cards.map((card, i) => {
       const Icon = ICONS[card?.icon || ""] || FaPhone;
-      return (
-        <div
-          key={i}
-          className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4"
-          data-tina-field={tinaField(card, "value")}
-        >
+      const href = cardHref(card);
+      const external = href?.startsWith("http");
+      const cardClass =
+        "flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4";
+      const inner = (
+        <>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-purple/20 text-[#D26AB6]">
             <Icon className="h-4 w-4" />
           </div>
@@ -65,6 +87,22 @@ export default function ContactReact({
               {card?.value}
             </span>
           </div>
+        </>
+      );
+
+      return href ? (
+        <a
+          key={i}
+          href={href}
+          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          className={`${cardClass} transition-colors hover:border-white/25 hover:bg-white/[0.06]`}
+          data-tina-field={tinaField(card, "value")}
+        >
+          {inner}
+        </a>
+      ) : (
+        <div key={i} className={cardClass} data-tina-field={tinaField(card, "value")}>
+          {inner}
         </div>
       );
     });

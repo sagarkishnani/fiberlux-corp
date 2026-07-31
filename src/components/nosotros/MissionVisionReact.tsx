@@ -34,7 +34,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
       <div className="site-container">
 
         {/* ── Desktop layout ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-40">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-40">
 
           {/* Left column: Title + Cards */}
           <div className="flex flex-col" data-reveal="left" data-reveal-scrub>
@@ -48,7 +48,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
 
             {/* Mobile: Image appears here */}
             {image && (
-              <div className="block md:hidden mb-8">
+              <div className="block lg:hidden mb-8">
                 <img
                   src={image}
                   alt="Compromiso tecnológico"
@@ -111,7 +111,7 @@ export default function MissionVisionReact({ query, variables, data: initialData
           </div>
 
           {/* Right column: Image (desktop only) */}
-          <div className="hidden md:flex items-start" data-reveal="right" data-reveal-scrub>
+          <div className="hidden lg:flex items-start" data-reveal="right" data-reveal-scrub>
             {image ? (
               <img
                 src={image}

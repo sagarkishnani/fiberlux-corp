@@ -85,7 +85,7 @@ export default function TestimonialSliderReact({
           </h2>
 
           {/* Desktop arrows */}
-          <div className="hidden md:flex">{arrowsPill}</div>
+          <div className="hidden lg:flex">{arrowsPill}</div>
         </div>
       </div>
 
@@ -101,7 +101,7 @@ export default function TestimonialSliderReact({
               ? items.map((item, i) => (
                   <div
                     key={i}
-                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
+                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] lg:w-[calc(80%-12px)] max-w-[1100px]"
                     data-tina-field={
                       testimonials?.items?.[i]
                         ? tinaField(testimonials.items[i], 'quote')
@@ -122,7 +122,7 @@ export default function TestimonialSliderReact({
               : [1, 2].map((_, i) => (
                   <div
                     key={i}
-                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] md:w-[calc(80%-12px)] max-w-[1100px]"
+                    className="testimonial-slide shrink-0 w-[calc(100%-48px)] lg:w-[calc(80%-12px)] max-w-[1100px]"
                   >
                     <div className="bg-white/40 border border-brand-purple/20 rounded-2xl h-[320px] md:h-[400px] flex items-center justify-center text-brand-purple/40 text-sm">
                       Testimonio — próximamente
@@ -134,7 +134,7 @@ export default function TestimonialSliderReact({
       </div>
 
       {/* Mobile navigation arrows */}
-      <div className="md:hidden mt-6">
+      <div className="lg:hidden mt-6">
         {arrowsPill}
       </div>
 

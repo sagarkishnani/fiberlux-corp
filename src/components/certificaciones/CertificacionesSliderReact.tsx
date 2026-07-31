@@ -74,13 +74,13 @@ export default function CertificacionesSliderReact({
           items.map((item, i) => (
             <div
               key={i}
-              className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
+              className="cert-slide shrink-0 w-[85%] lg:w-[calc((100%-1.5rem)/2)]"
             >
               <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} locale={locale} />
             </div>
           ))
         ) : (
-          <div className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]">
+          <div className="cert-slide shrink-0 w-[85%] lg:w-[calc((100%-1.5rem)/2)]">
             <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
               {locale === "en" ? "Certifications — coming soon" : "Certificaciones — próximamente"}
             </div>
@@ -119,23 +119,23 @@ export default function CertificacionesSliderReact({
         />
       </div>
 
-      <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
+      <div className="relative z-10 site-container lg:flex lg:items-center lg:gap-16">
         {/* Left column: title + arrows (desktop) */}
-        <div className="md:w-[34%] md:shrink-0">
+        <div className="lg:w-[34%] lg:shrink-0">
           <h2
             className="text-[32px] md:text-[48px] leading-[1.1] font-semibold text-white max-w-[16ch]"
             data-tina-field={page ? tinaField(page, "sectionTitle") : undefined}
           >
             {sectionTitle}
           </h2>
-          {items.length > 1 && <div className="hidden md:block mt-9">{arrowsPill}</div>}
+          {items.length > 1 && <div className="hidden lg:block mt-9">{arrowsPill}</div>}
         </div>
 
         {/* Right column: carousel */}
-        <div className="md:flex-1 md:min-w-0 mt-8 md:mt-0">{carousel}</div>
+        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0">{carousel}</div>
 
         {/* Mobile arrows: below the carousel, left-aligned */}
-        {items.length > 1 && <div className="md:hidden mt-8">{arrowsPill}</div>}
+        {items.length > 1 && <div className="lg:hidden mt-8">{arrowsPill}</div>}
       </div>
 
     </section>

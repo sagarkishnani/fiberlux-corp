@@ -1221,6 +1221,13 @@ export default defineConfig({
               { name: "label", label: "Etiqueta", type: "string" },
               { name: "label_en", label: "Etiqueta (EN)", type: "string" },
               { name: "value", label: "Valor", type: "string" },
+              {
+                name: "href",
+                label: "Enlace (opcional)",
+                type: "string",
+                description:
+                  "Hace la tarjeta clickeable. Ej.: 'tel:+5117480606', 'mailto:hola@fiberlux.pe' o un link de Google Maps. Si se deja vacío, se genera automáticamente según el ícono (teléfono→tel:, correo→mailto:, ubicación→Google Maps).",
+              },
             ],
           },
         ],

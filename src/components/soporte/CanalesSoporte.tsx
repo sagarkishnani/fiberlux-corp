@@ -86,20 +86,21 @@ export default function CanalesSoporte({
                     <ChannelIcon className="h-4 w-4" />
                   </span>
                 )}
-                <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-brand-purple/10 px-3 py-1 text-caption-sm font-bold text-brand-purple">
-                  {row?.label}
-                </span>
-                <span className="text-body-md text-greyscale-darkest group-hover:text-brand-purple transition-colors whitespace-nowrap">
-                  {value}
-                </span>
-                {row?.optionLabel && (
-                  <span
-                    className="text-body-sm text-greyscale-dark/45 whitespace-nowrap"
-                    style={{ marginLeft: "auto" }}
-                  >
-                    {row.optionLabel}
+                {/* Contenido flexible: en móvil envuelve (badge + valor + opción)
+                    para que teléfonos/correos largos no se corten a la derecha. */}
+                <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="inline-flex shrink-0 items-center justify-center rounded-full bg-brand-purple/10 px-3 py-1 text-caption-sm font-bold text-brand-purple">
+                    {row?.label}
                   </span>
-                )}
+                  <span className="min-w-0 break-words text-body-md text-greyscale-darkest group-hover:text-brand-purple transition-colors">
+                    {value}
+                  </span>
+                  {row?.optionLabel && (
+                    <span className="ml-auto shrink-0 text-body-sm text-greyscale-dark/45">
+                      {row.optionLabel}
+                    </span>
+                  )}
+                </span>
               </a>
             </li>
           );

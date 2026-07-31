@@ -7,19 +7,22 @@
       "icon": "phone",
       "label": "Teléfono",
       "value": "(01) 748-0606",
-      "label_en": "Phone"
+      "label_en": "Phone",
+      "href": "tel:+5117480606"
     },
     {
       "icon": "email",
       "label": "Correo",
       "value": "hola@fiberlux.pe",
-      "label_en": "Email"
+      "label_en": "Email",
+      "href": "mailto:hola@fiberlux.pe"
     },
     {
       "icon": "location",
       "label": "Oficina",
       "value": "Av. José Pardo 513 – Miraflores",
-      "label_en": "Office"
+      "label_en": "Office",
+      "href": "https://www.google.com/maps/search/?api=1&query=Av.+Jos%C3%A9+Pardo+513+Miraflores+Lima"
     }
   ],
   "breadcrumb_en": "Contact",

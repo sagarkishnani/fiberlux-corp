@@ -1160,7 +1160,13 @@ var config_default = defineConfig({
               },
               { name: "label", label: "Etiqueta", type: "string" },
               { name: "label_en", label: "Etiqueta (EN)", type: "string" },
-              { name: "value", label: "Valor", type: "string" }
+              { name: "value", label: "Valor", type: "string" },
+              {
+                name: "href",
+                label: "Enlace (opcional)",
+                type: "string",
+                description: "Hace la tarjeta clickeable. Ej.: 'tel:+5117480606', 'mailto:hola@fiberlux.pe' o un link de Google Maps. Si se deja vac\xEDo, se genera autom\xE1ticamente seg\xFAn el \xEDcono (tel\xE9fono\u2192tel:, correo\u2192mailto:, ubicaci\xF3n\u2192Google Maps)."
+              }
             ]
           }
         ]

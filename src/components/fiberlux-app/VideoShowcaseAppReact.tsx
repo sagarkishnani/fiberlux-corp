@@ -75,7 +75,7 @@ export default function VideoShowcaseAppReact({
   };
 
   return (
-    <section className="bg-greyscale-white rounded-t-[2rem] py-16 md:py-24">
+    <section className="bg-greyscale-white rounded-t-[2rem] pt-16 pb-32 md:pt-24 md:pb-40">
       <div className="max-w-[1264px] mx-auto px-6 md:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* ── Izquierda: texto ── */}

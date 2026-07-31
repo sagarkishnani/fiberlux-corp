@@ -25,7 +25,7 @@ export default function TestimonialCard({
     <div className="relative w-full h-full">
       {/* ── Desktop border SVG (contorno magenta, sin relleno) ── */}
       <svg
-        className="hidden md:block absolute inset-0 w-full h-full"
+        className="hidden lg:block absolute inset-0 w-full h-full"
         viewBox="0 0 1057 438"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ export default function TestimonialCard({
 
       {/* ── Mobile border SVG ── */}
       <svg
-        className="md:hidden absolute inset-0 w-full h-full"
+        className="lg:hidden absolute inset-0 w-full h-full"
         viewBox="0 0 351 346"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -54,9 +54,9 @@ export default function TestimonialCard({
       </svg>
 
       {/* ── Content (tema claro: texto oscuro sobre el panel claro) ── */}
-      <div className="relative z-10 p-6 pt-8 md:p-10 md:pt-16 h-full">
+      <div className="relative z-10 p-6 pt-8 lg:p-10 lg:pt-16 h-full">
         {/* Desktop layout: logo left + content right */}
-        <div className="hidden md:grid md:grid-cols-[240px_1fr] md:gap-10 h-full">
+        <div className="hidden lg:grid lg:grid-cols-[240px_1fr] lg:gap-10 h-full">
           {/* Logo de la empresa (sin marco magenta ni placeholder). Fallback:
               nombre de la empresa como texto si aún no hay logo. */}
           <div className="flex items-center justify-center">
@@ -94,7 +94,7 @@ export default function TestimonialCard({
         </div>
 
         {/* Mobile layout: stacked */}
-        <div className="md:hidden flex flex-col justify-between h-full min-h-[300px]">
+        <div className="lg:hidden flex flex-col justify-between h-full min-h-[300px]">
           <div>
             {/* Logo arriba del testimonio (fallback: nombre de empresa como texto) */}
             {logoSrc ? (

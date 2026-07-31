@@ -171,7 +171,7 @@ export default function SolucionesSliderReact({
     >
       <div className="flex items-stretch gap-6">
         {items.map((item, i) => (
-          <div key={i} className="sol-slide shrink-0 w-[86%] md:w-[52%]">
+          <div key={i} className="sol-slide shrink-0 w-[86%] lg:w-[80%] min-[1440px]:w-[52%]">
             {renderCard(item, i)}
           </div>
         ))}
@@ -244,9 +244,9 @@ export default function SolucionesSliderReact({
         }}
       />
 
-      <div className="relative z-10 site-container md:flex md:items-center md:gap-10 lg:gap-16">
+      <div className="relative z-10 site-container lg:flex lg:items-center lg:gap-16">
         {/* Left column: eyebrow + active-solution title + description + arrows */}
-        <div className="md:w-[40%] md:shrink-0">
+        <div className="lg:w-[40%] lg:shrink-0">
           {sectionTitle && (
             <p
               className="mb-5 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
@@ -275,14 +275,14 @@ export default function SolucionesSliderReact({
               </p>
             </div>
           )}
-          {items.length > 1 && <div className="hidden md:block mt-9">{arrowsPill}</div>}
+          {items.length > 1 && <div className="hidden lg:block mt-9">{arrowsPill}</div>}
         </div>
 
         {/* Right column: carousel */}
-        <div className="md:flex-1 md:min-w-0 mt-8 md:mt-0" data-reveal="up" data-reveal-delay="0.15">{carousel}</div>
+        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0" data-reveal="up" data-reveal-delay="0.15">{carousel}</div>
 
         {/* Mobile arrows: below the carousel, left-aligned */}
-        {items.length > 1 && <div className="md:hidden mt-8">{arrowsPill}</div>}
+        {items.length > 1 && <div className="lg:hidden mt-8">{arrowsPill}</div>}
       </div>
 
       <style>{`
