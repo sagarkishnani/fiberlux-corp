@@ -407,13 +407,13 @@
           },
           {
             "text": "Manual de derechos ARCO",
-            "url": "/legales/derechos-arco",
+            "url": "/legales/manual-derechos-arco.pdf",
+            "external": true,
             "text_en": "ARCO rights manual"
           },
           {
             "text": "Formulario de solicitud de derechos ARCO",
-            "url": "/legales/formulario-derechos-arco.pdf",
-            "external": true,
+            "url": "/legales/derechos-arco",
             "text_en": "ARCO rights request form"
           },
           {

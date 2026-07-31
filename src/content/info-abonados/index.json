@@ -8,21 +8,21 @@
       "documents": [
         {
           "title": "TUO de las condiciones de uso de los servicios públicos de telecomunicaciones",
-          "url": "/documents/RES-000132-2025-CD-OSIPTEL-CONDICIONES-DE-USO.pdf",
+          "url": "/legales/condiciones-uso-servicios-telecomunicaciones.pdf",
           "icon": "document",
           "visible": true,
           "title_en": "Consolidated text of the conditions of use of public telecommunications services"
         },
         {
           "title": "Reglamento de calidad de los servicios públicos de telecomunicaciones",
-          "url": "",
+          "url": "/legales/reglamento-calidad-servicios-telecomunicaciones.pdf",
           "icon": "document",
           "visible": true,
           "title_en": "Quality regulation for public telecommunications services"
         },
         {
           "title": "TUO para atención de gestiones y reclamos de usuarios",
-          "url": "",
+          "url": "/legales/tuo-atencion-gestiones-reclamos.pdf",
           "icon": "document",
           "visible": true,
           "title_en": "Consolidated text for handling user requests and complaints"
@@ -36,7 +36,7 @@
       "documents": [
         {
           "title": "Conoce la Guía para la presentación de Reclamos de OSIPTEL",
-          "url": "",
+          "url": "https://www.osiptel.gob.pe/guiareclamos/",
           "icon": "document",
           "visible": true,
           "title_en": "See OSIPTEL's complaints filing guide"

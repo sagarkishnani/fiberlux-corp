@@ -255,26 +255,34 @@ export default function SolucionesSliderReact({
               [ {sectionTitle.toUpperCase()} ]
             </p>
           )}
-          <div data-reveal="down">
-            <h2
-              key={`t-${activeIndex}`}
-              className="sol-fade text-[34px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
-              data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
-            >
-              {tField(active as any, "title", locale)}
-            </h2>
-          </div>
-          {active?.description && (
-            <div data-reveal="up" data-reveal-delay="0.1">
-              <p
-                key={`d-${activeIndex}`}
-                className="sol-fade mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[32ch]"
-                data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+          {/* Alto fijo en móvil: el título/descripción varían de largo por slide
+              (el más largo es "Data Center, Cloud y Continuidad de Negocio") y ese
+              reflujo por slide se percibía como lag en celulares de bajo rendimiento.
+              Se fija la altura del bloque (y se baja el título a 30px en móvil) para
+              que el carrusel de abajo no se mueva al cambiar de slide. En desktop
+              (lg) el layout es de 2 columnas y no aplica. */}
+          <div className="min-h-[208px] md:min-h-0">
+            <div data-reveal="down">
+              <h2
+                key={`t-${activeIndex}`}
+                className="sol-fade text-[30px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
+                data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
               >
-                {tField(active as any, "description", locale)}
-              </p>
+                {tField(active as any, "title", locale)}
+              </h2>
             </div>
-          )}
+            {active?.description && (
+              <div data-reveal="up" data-reveal-delay="0.1">
+                <p
+                  key={`d-${activeIndex}`}
+                  className="sol-fade mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[32ch]"
+                  data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+                >
+                  {tField(active as any, "description", locale)}
+                </p>
+              </div>
+            )}
+          </div>
           {items.length > 1 && <div className="hidden lg:block mt-9">{arrowsPill}</div>}
         </div>
 
