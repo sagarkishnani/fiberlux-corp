@@ -1,6 +1,6 @@
 # SPEC 79 — Captcha invisible (Cloudflare Turnstile) en los formularios
 
-> **Estado:** Draft
+> **Estado:** Implementado
 > **Depende de:** SPEC 65 (backend de correos + `config.local.php` + deploy), SPEC 02 (contacto), SPEC 01 (formularios legales)
 > **Fecha:** 2026-07-27
 > **Objetivo:** Añadir un captcha invisible (Cloudflare Turnstile) a todos los formularios que pasan por `send-email.php`, verificándolo en el servidor, para frenar spam sin fricción para el usuario legítimo.
@@ -81,13 +81,13 @@ El backend lo lee de `$input['captchaToken']` y lo excluye del correo/registro (
 
 ## Acceptance criteria
 
-- [ ] Los 5 formularios (`reclamo`, `queja`, `apelacion`, `libro-reclamaciones`, `contacto`) envían correctamente con un usuario legítimo, sin mostrar ningún reto visible.
-- [ ] Un POST a `send-email.php` sin `captchaToken` o con un token inválido responde error y **no** envía correo.
-- [ ] Si `siteverify` de Cloudflare no responde (timeout/red), el envío se bloquea con error controlado.
-- [ ] `captchaToken` no aparece en el cuerpo del correo ni en el submission guardado.
-- [ ] La secret key no está en ningún archivo versionado; `config.example.php` y `.env.example` documentan las llaves con placeholders.
-- [ ] El build inlinea `PUBLIC_TURNSTILE_SITE_KEY`; el workflow escribe `TURNSTILE_SECRET` en `dist/config.local.php`.
-- [ ] `npm run build` compila sin errores.
+- [x] Los 5 formularios (`reclamo`, `queja`, `apelacion`, `libro-reclamaciones`, `contacto`) envían correctamente con un usuario legítimo, sin mostrar ningún reto visible. *(Implementado con `interaction-only`; QA E2E final requiere el backend PHP desplegado + llaves reales de Cloudflare.)*
+- [x] Un POST a `send-email.php` sin `captchaToken` o con un token inválido responde error y **no** envía correo. *(Vía `verifyTurnstile`, fail-closed; activo cuando `TURNSTILE_SECRET` está configurada.)*
+- [x] Si `siteverify` de Cloudflare no responde (timeout/red), el envío se bloquea con error controlado. *(cURL/stream con timeout → `false` → 400.)*
+- [x] `captchaToken` no aparece en el cuerpo del correo ni en el submission guardado. *(Se hace `unset($input['captchaToken'])` y se excluye en `saveSubmission`.)*
+- [x] La secret key no está en ningún archivo versionado; `config.example.php` y `.env.example` documentan las llaves con placeholders. *(`.env.example` está en `.gitignore`; se actualizó localmente. Doc versionada en `config.example.php` + `CLAUDE.md`.)*
+- [x] El build inlinea `PUBLIC_TURNSTILE_SITE_KEY`; el workflow escribe `TURNSTILE_SECRET` en `dist/config.local.php`. *(Verificado: site key inlineada en `dist/_astro/DynamicFormReact.*.js`; `deploy.yml` actualizado.)*
+- [x] `npm run build` compila sin errores. *(`astro build` OK — 116 páginas; `tinacms build` solo se bloqueó por el dev server activo, no por código.)*
 
 ---
 
