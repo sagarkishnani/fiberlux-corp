@@ -1,24 +1,26 @@
 <?php
 session_start();
 
-// Secrets (config.local.php generado en CI desde GitHub Secrets, NO versionado)
-$cfg = file_exists(__DIR__ . '/config.local.php') ? (require __DIR__ . '/config.local.php') : [];
+// Secrets (fiberlux-config.php subido por FTP, fuera del repo y de dist/ — SPEC 85/86)
+$cfg = file_exists(__DIR__ . '/fiberlux-config.php') ? (require __DIR__ . '/fiberlux-config.php') : [];
 if (!is_array($cfg)) $cfg = [];
 
-$VALID_USER = $cfg['PANEL_USER'] ?? '';
-$VALID_PASS = $cfg['PANEL_PASS'] ?? '';
+$VALID_USER = $cfg['panel_user'] ?? '';
+$PASS_HASH  = $cfg['panel_pass_hash'] ?? '';   // hash bcrypt; nunca en claro
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $PER_PAGE = 15;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     header('Content-Type: application/json');
     if ($_POST['action'] === 'login') {
-        if ($VALID_USER === '' || $VALID_PASS === '') {
-            // Credenciales no configuradas (falta config.local.php): nunca autenticar.
+        if ($VALID_USER === '' || $PASS_HASH === '') {
+            // Credenciales no configuradas (falta fiberlux-config.php): nunca autenticar.
             echo json_encode(['success' => false, 'error' => 'Panel no configurado']);
             exit;
         }
-        if ($_POST['user'] === $VALID_USER && $_POST['pass'] === $VALID_PASS) {
+        $user = $_POST['user'] ?? '';
+        $pass = $_POST['pass'] ?? '';
+        if (hash_equals($VALID_USER, $user) && password_verify($pass, $PASS_HASH)) {
             $_SESSION['panel_auth'] = true;
             echo json_encode(['success' => true]);
         } else {
