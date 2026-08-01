@@ -6,6 +6,9 @@
  * - Sends email via Office 365 SMTP
  */
 
+// Zona horaria de Perú: deja el campo `date` de los registros nuevos en hora local (SPEC 87).
+date_default_timezone_set('America/Lima');
+
 // ─── Secrets (fiberlux-config.php subido por FTP, fuera del repo y de dist/ — SPEC 85) ───
 $CONFIG_PATH = __DIR__ . '/fiberlux-config.php';
 if (!file_exists($CONFIG_PATH)) {
