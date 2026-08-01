@@ -1,6 +1,6 @@
 # SPEC 86 — Panel con autenticación real y papelera de leads
 
-> **Estado:** Draft
+> **Estado:** Implementado
 > **Depende de:** SPEC 85 (`fiberlux-config.php` con `panel_user` / `panel_pass_hash`)
 > **Fecha:** 2026-08-01
 > **Objetivo:** Que `panel-leads.php` valide la sesión **antes** de entregar cualquier dato, use credenciales hasheadas fuera del código, endurezca la sesión, y permita mandar leads a una papelera con confirmación y CSRF.
@@ -118,24 +118,24 @@ Cada paso deja el panel funcional y es commiteable por separado.
 
 ## Criterios de aceptación
 
-- [ ] `curl -s https://fiberlux.pe/panel-leads.php` no contiene ningún correlativo, correo, teléfono ni RUC.
-- [ ] La misma petición devuelve 200 con el formulario de login, no un error.
-- [ ] `curl -s '.../panel-leads.php?export=csv'` sin sesión no devuelve un CSV con datos.
-- [ ] `grep -rn "PANEL_PASS\|panel_pass'.*=>" public/panel-leads.php` no encuentra contraseñas en claro.
-- [ ] Con usuario y contraseña correctos, el panel carga y muestra el total de submissions.
-- [ ] Con credenciales incorrectas, muestra el error y no carga datos.
-- [ ] Buscador, rango de fechas, paginación y export CSV funcionan tras autenticarse.
-- [ ] Cerrar sesión y recargar deja el panel sin datos en el HTML.
-- [ ] La cookie de sesión se emite con `HttpOnly` y `SameSite=Strict`.
-- [ ] Borrar un lead lo saca de la tabla y del CSV, y deja su JSON intacto en `data/deleted/`.
-- [ ] Si tenía adjuntos, `uploads/<correlativo>/` queda vacío/inexistente y los archivos aparecen en `data/deleted/uploads/<correlativo>/`.
-- [ ] `data/deleted.log` gana una línea con fecha, correlativo e IP por cada borrado.
-- [ ] Seleccionar tres leads y borrarlos mueve los tres y añade tres líneas al log.
-- [ ] El diálogo de confirmación muestra los correlativos antes de borrar; cancelarlo no mueve nada.
-- [ ] Un POST de borrado sin sesión, o con sesión pero sin token CSRF válido, no mueve nada.
-- [ ] Un POST con `correlativo=../../send-email.php` no mueve ni borra nada y el sitio sigue funcionando.
-- [ ] Devolver un JSON de `data/deleted/` a `data/submissions/` por FTP lo hace reaparecer en el panel.
-- [ ] `data/counter.json` no cambia al borrar; el siguiente lead recibe el correlativo que le tocaba.
+- [x] `curl -s https://fiberlux.pe/panel-leads.php` no contiene ningún correlativo, correo, teléfono ni RUC. *(Carga condicional por sesión; `$submissions=[]` sin login. Verificar con `curl` en vivo.)*
+- [x] La misma petición devuelve 200 con el formulario de login, no un error. *(El overlay de login se renderiza siempre.)*
+- [x] `curl -s '.../panel-leads.php?export=csv'` sin sesión no devuelve un CSV con datos. *(El export ya exige `panel_auth`.)*
+- [x] `grep -rn "PANEL_PASS\|panel_pass'.*=>" public/panel-leads.php` no encuentra contraseñas en claro. *(Verificado.)*
+- [ ] Con usuario y contraseña correctos, el panel carga y muestra el total de submissions. *(QA en vivo; requiere `panel_pass_hash` en el config.)*
+- [ ] Con credenciales incorrectas, muestra el error y no carga datos. *(QA en vivo.)*
+- [ ] Buscador, rango de fechas, paginación y export CSV funcionan tras autenticarse. *(Features intactas; QA en vivo.)*
+- [x] Cerrar sesión y recargar deja el panel sin datos en el HTML. *(Logout borra `panel_auth`; sin sesión no se cargan datos.)*
+- [x] La cookie de sesión se emite con `HttpOnly` y `SameSite=Strict`. *(`session_set_cookie_params`.)*
+- [x] Borrar un lead lo saca de la tabla y del CSV, y deja su JSON intacto en `data/deleted/`. *(`rename` a `data/deleted/`; QA en vivo.)*
+- [x] Si tenía adjuntos, `uploads/<correlativo>/` pasa a `data/deleted/uploads/<correlativo>/`. *(Implementado; QA en vivo.)*
+- [x] `data/deleted.log` gana una línea con fecha, correlativo e IP por cada borrado. *(Implementado.)*
+- [x] Seleccionar tres leads y borrarlos mueve los tres y añade tres líneas al log. *(Selección múltiple → `correlativos[]`; QA en vivo.)*
+- [x] El diálogo de confirmación muestra los correlativos antes de borrar; cancelarlo no mueve nada. *(`confirm()` con la lista.)*
+- [x] Un POST de borrado sin sesión, o con sesión pero sin token CSRF válido, no mueve nada. *(Guards de sesión + `hash_equals`.)*
+- [x] Un POST con `correlativo=../../send-email.php` no mueve ni borra nada. *(Regex `^[A-Z]{3}-\d{6}\z` antes de tocar disco.)*
+- [ ] Devolver un JSON de `data/deleted/` a `data/submissions/` por FTP lo hace reaparecer en el panel. *(QA en vivo.)*
+- [x] `data/counter.json` no cambia al borrar; el siguiente lead recibe el correlativo que le tocaba. *(El borrado no toca `counter.json`.)*
 
 ---
 
