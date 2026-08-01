@@ -37,6 +37,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         echo json_encode(['success' => true]);
         exit;
     }
+    // ─── Papelera: mueve leads a data/deleted/ (no borra) — SPEC 86 ───
+    if ($_POST['action'] === 'delete') {
+        if (empty($_SESSION['panel_auth'])) {
+            echo json_encode(['success' => false, 'error' => 'No autorizado']); exit;
+        }
+        $token = $_POST['csrf'] ?? '';
+        if (empty($_SESSION['csrf']) || !hash_equals($_SESSION['csrf'], $token)) {
+            echo json_encode(['success' => false, 'error' => 'Token de seguridad inválido']); exit;
+        }
+        $ids = $_POST['correlativos'] ?? [];
+        if (is_string($ids)) $ids = [$ids];
+        $DELETED_DIR     = __DIR__ . '/data/deleted';
+        $DELETED_UPLOADS = $DELETED_DIR . '/uploads';
+        $UPLOADS_DIR     = __DIR__ . '/uploads';
+        $LOG             = __DIR__ . '/data/deleted.log';
+        if (!is_dir($DELETED_DIR)) mkdir($DELETED_DIR, 0755, true);
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        $moved = [];
+        foreach ((array)$ids as $cor) {
+            // Solo correlativos con el formato EXACTO que genera send-email.php.
+            // Se usa \z (no $) para que "CON-000001\n" no pase la validación.
+            if (!is_string($cor) || !preg_match('/^[A-Z]{3}-\d{6}\z/', $cor)) continue;
+            $src = $SUBMISSIONS_DIR . '/' . $cor . '.json';
+            if (!is_file($src)) continue;
+            if (!@rename($src, $DELETED_DIR . '/' . $cor . '.json')) continue;
+            // Arrastra los adjuntos del lead, si los hay.
+            $upSrc = $UPLOADS_DIR . '/' . $cor;
+            if (is_dir($upSrc)) {
+                if (!is_dir($DELETED_UPLOADS)) mkdir($DELETED_UPLOADS, 0755, true);
+                @rename($upSrc, $DELETED_UPLOADS . '/' . $cor);
+            }
+            file_put_contents($LOG, date('Y-m-d H:i:s') . ' | ' . $cor . ' | ' . $ip . "\n", FILE_APPEND);
+            $moved[] = $cor;
+        }
+        echo json_encode(['success' => true, 'moved' => $moved]);
+        exit;
+    }
 }
 
 if (isset($_GET['export']) && $_GET['export'] === 'csv' && !empty($_SESSION['panel_auth'])) {
