@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import {
   FormPageHeader,
@@ -21,6 +21,35 @@ import { FormSuccess } from "../shared/FormSuccess";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
+/* ══════════════════════════════════════════════════
+   CLOUDFLARE TURNSTILE (captcha invisible) — SPEC 79
+   Site key pública inlineada por Vite en build. La verificación real
+   es server-side en send-email.php; aquí solo obtenemos el token.
+   ══════════════════════════════════════════════════ */
+
+const TURNSTILE_SITE_KEY: string =
+  (import.meta as any).env?.PUBLIC_TURNSTILE_SITE_KEY || "";
+const TURNSTILE_SRC =
+  "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+
+/* Carga el script una sola vez (singleton) para todo el sitio. */
+let turnstileScriptPromise: Promise<void> | null = null;
+function loadTurnstile(): Promise<void> {
+  if (typeof window === "undefined") return Promise.resolve();
+  if ((window as any).turnstile) return Promise.resolve();
+  if (turnstileScriptPromise) return turnstileScriptPromise;
+  turnstileScriptPromise = new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = TURNSTILE_SRC;
+    s.async = true;
+    s.defer = true;
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error("turnstile script failed to load"));
+    document.head.appendChild(s);
+  });
+  return turnstileScriptPromise;
+}
+
 /* Textos por defecto de la UI del form (los que no vienen del CMS). */
 const FORM_UI = {
   es: {
@@ -36,6 +65,7 @@ const FORM_UI = {
     contactSuccess: "¡Gracias! Tu mensaje ha sido enviado.",
     genericError: "Ocurrió un error al enviar.",
     connError: "No se pudo conectar con el servidor.",
+    captchaMissing: "Verificación de seguridad no disponible. Contacta al administrador.",
   },
   en: {
     sending: "Sending...",
@@ -50,6 +80,7 @@ const FORM_UI = {
     contactSuccess: "Thank you! Your message has been sent.",
     genericError: "An error occurred while sending.",
     connError: "Could not connect to the server.",
+    captchaMissing: "Security verification unavailable. Please contact the administrator.",
   },
 } as const;
 
@@ -486,6 +517,50 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
   const [honeypot, setHoneypot] = useState("");
   const [isMobile, setIsMobile] = useState(false);
 
+  /* ── Turnstile (captcha invisible) ── */
+  const [captchaToken, setCaptchaToken] = useState("");
+  const captchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
+  const captchaConfigured = !!TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!captchaConfigured) return;
+    let cancelled = false;
+    loadTurnstile()
+      .then(() => {
+        if (cancelled || !captchaRef.current || widgetIdRef.current) return;
+        const ts = (window as any).turnstile;
+        if (!ts) return;
+        widgetIdRef.current = ts.render(captchaRef.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          appearance: "interaction-only",
+          callback: (token: string) => setCaptchaToken(token),
+          "error-callback": () => setCaptchaToken(""),
+          "expired-callback": () => setCaptchaToken(""),
+        });
+      })
+      .catch(() => {
+        /* Script bloqueado/caído → token vacío; el backend rechaza (fail-closed). */
+      });
+    return () => {
+      cancelled = true;
+      const ts = (window as any).turnstile;
+      if (ts && widgetIdRef.current) {
+        try { ts.remove(widgetIdRef.current); } catch { /* ignore */ }
+        widgetIdRef.current = null;
+      }
+    };
+  }, []);
+
+  /* Resetea el widget para forzar un token nuevo (los tokens son de un solo uso). */
+  const resetCaptcha = () => {
+    const ts = (window as any).turnstile;
+    if (ts && widgetIdRef.current) {
+      try { ts.reset(widgetIdRef.current); } catch { /* ignore */ }
+    }
+    setCaptchaToken("");
+  };
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768);
     check();
@@ -602,6 +677,12 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return;
     }
 
+    /* Sin site key configurada no se puede verificar el captcha → no se envía. */
+    if (!captchaConfigured) {
+      setSendError(ui.captchaMissing);
+      return;
+    }
+
     setSending(true);
     try {
       const { submitForm } = await import("../../utils/submitForm");
@@ -641,6 +722,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         data: textData,
         files: Object.keys(fileData).length > 0 ? fileData : undefined,
         honeypot,
+        captchaToken,
       });
 
       if (result.success) {
@@ -657,6 +739,8 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       );
     } finally {
       setSending(false);
+      /* Token de un solo uso: pedir uno nuevo para el próximo intento. */
+      resetCaptcha();
     }
   };
 
@@ -1109,6 +1193,12 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       <div style={{ position: "absolute", left: "-9999px", opacity: 0, height: 0, overflow: "hidden" }} aria-hidden="true">
         <input type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
       </div>
+
+      {/* Cloudflare Turnstile — captcha invisible (interaction-only). Con esta
+          apariencia el widget mide 0px y es invisible para usuarios legítimos;
+          solo se expande para mostrar un reto ante señales de bot, por lo que
+          va en el flujo (no display:none) para poder renderizarlo si hace falta. */}
+      <div ref={captchaRef} style={{ marginTop: "16px" }} />
 
       {/* Submit */}
       <div style={{ marginTop: "24px" }}>
