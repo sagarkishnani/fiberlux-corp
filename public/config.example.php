@@ -15,4 +15,5 @@ return [
   'FALLBACK_EMAIL' => 'destino@fiberlux.pe',  // usado si form-config.json no trae recipients
   'PANEL_USER'     => 'admin',                // login de panel-leads.php
   'PANEL_PASS'     => 'CHANGE_ME',
+  'TURNSTILE_SECRET' => 'CHANGE_ME',          // secret key de Cloudflare Turnstile (SPEC 79)
 ];
