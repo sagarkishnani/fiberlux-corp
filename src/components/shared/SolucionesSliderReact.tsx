@@ -147,8 +147,10 @@ export default function SolucionesSliderReact({
             {url && (
               <a
                 href={withBase(url)}
-                className={`inline-flex items-center gap-2 whitespace-nowrap text-[16px] md:text-[20px] font-medium transition-colors ${
-                  isActive ? "text-[#D5A7CA] hover:text-white" : "text-white/35"
+                className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-[15px] md:text-[17px] font-medium transition-colors ${
+                  isActive
+                    ? "bg-white text-[#3B0E30] hover:bg-white/90"
+                    : "bg-white/10 text-white/45 hover:bg-white/15"
                 }`}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "url") : undefined}
               >

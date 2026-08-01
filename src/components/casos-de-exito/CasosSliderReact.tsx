@@ -65,15 +65,40 @@ export default function CasosSliderReact({
           El viewport va dentro de site-container (igual que el hero) para que la
           primera card quede alineada al título y la descripción. */}
       <div className="site-container">
-        {/* Móvil: flechas ARRIBA del carrusel — la card (video + testimonio) es
-            alta y las flechas de abajo quedaban fuera de vista; arriba dan una
-            pista clara de que se puede arrastrar. En desktop van debajo. */}
-        {items.length > 1 && <div className="lg:hidden mb-6">{arrowsPill}</div>}
-        <div
-          ref={slider.viewportRef}
-          className="overflow-hidden pt-2 pb-3 select-none casos-carousel"
-          style={{ cursor: hasItems ? "grab" : "default" }}
-        >
+        {/* Móvil: una flecha a cada lado del video (centradas verticalmente),
+            como un carrusel clásico. La card es alta y, con las flechas
+            arriba/abajo, el usuario no notaba que podía moverse; a los lados del
+            video quedan a la vista justo donde está mirando. Desktop: debajo. */}
+        <div className="relative">
+          {items.length > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label="Anterior"
+                onClick={slider.prev}
+                className="md:hidden absolute left-3 top-[148px] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#96237A] text-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.7)] transition-colors hover:bg-[#650F50] active:bg-[#650F50]"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="Siguiente"
+                onClick={slider.next}
+                className="md:hidden absolute right-3 top-[148px] -translate-y-1/2 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#96237A] text-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.7)] transition-colors hover:bg-[#650F50] active:bg-[#650F50]"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </>
+          )}
+          <div
+            ref={slider.viewportRef}
+            className="overflow-hidden pt-2 pb-3 select-none casos-carousel"
+            style={{ cursor: hasItems ? "grab" : "default" }}
+          >
           <div className="flex gap-14">
             {hasItems ? (
               items.map((item, i) => (
@@ -99,10 +124,11 @@ export default function CasosSliderReact({
               </div>
             )}
           </div>
+          </div>
         </div>
 
         {/* Arrows: below the video, aligned to the card's left edge (desktop) */}
-        {items.length > 1 && <div className="hidden lg:block mt-8">{arrowsPill}</div>}
+        {items.length > 1 && <div className="hidden md:block mt-8">{arrowsPill}</div>}
       </div>
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />
