@@ -1,4 +1,7 @@
 <?php
+// Zona horaria de Perú: deja `data/deleted.log` (usa date()) en hora local, coherente
+// con lo que muestra el panel (SPEC 87). localDate() usa su propia DateTimeZone.
+date_default_timezone_set('America/Lima');
 // Cookie de sesión endurecida: HttpOnly + SameSite=Strict (SPEC 86).
 session_set_cookie_params(['httponly' => true, 'samesite' => 'Strict']);
 session_start();
