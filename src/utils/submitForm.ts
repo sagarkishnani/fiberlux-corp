@@ -14,9 +14,11 @@ interface SubmitOptions {
   data: Record<string, string | boolean>;
   files?: Record<string, File[]>;
   honeypot?: string;
+  /** Token de Cloudflare Turnstile; el backend lo verifica server-side (SPEC 79). */
+  captchaToken?: string;
 }
 
-export async function submitForm({ formType, data, files, honeypot }: SubmitOptions): Promise<SubmitResult> {
+export async function submitForm({ formType, data, files, honeypot, captchaToken }: SubmitOptions): Promise<SubmitResult> {
   const base = (import.meta as any).env?.BASE_URL || "/";
   const endpoint = `${base}send-email.php`.replace(/\/\//g, "/");
 
@@ -29,6 +31,7 @@ export async function submitForm({ formType, data, files, honeypot }: SubmitOpti
     const formData = new FormData();
     formData.append('formType', formType);
     if (honeypot) formData.append('website', honeypot);
+    formData.append('captchaToken', captchaToken || '');
 
     // Add all text fields
     for (const [key, val] of Object.entries(data)) {
@@ -48,7 +51,7 @@ export async function submitForm({ formType, data, files, honeypot }: SubmitOpti
     res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ formType, ...data, website: honeypot || '' }),
+      body: JSON.stringify({ formType, ...data, website: honeypot || '', captchaToken: captchaToken || '' }),
     });
   }
 
