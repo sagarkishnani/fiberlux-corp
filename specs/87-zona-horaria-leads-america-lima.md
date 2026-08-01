@@ -1,6 +1,6 @@
 # SPEC 87 — Zona horaria de los leads en America/Lima
 
-> **Estado:** Draft
+> **Estado:** Implementado
 > **Depende de:** SPEC 86 (panel) y SPEC 85 (backend)
 > **Fecha:** 2026-08-01
 > **Objetivo:** Que toda fecha de lead que se muestre o se exporte esté en hora de Perú, incluidos los registros ya guardados.
@@ -81,16 +81,16 @@ El valor sustituye al campo `date` **antes** de serializar el `$submissionsJson`
 
 ## Criterios de aceptación
 
-- [ ] Un lead guardado antes de esta spec muestra en el panel una hora menor (según el desfase del servidor) que su campo `date` en el JSON.
-- [ ] Un lead enviado después muestra la misma hora en el panel y en su campo `date`.
-- [ ] Viejo y nuevo se muestran con el mismo criterio en la misma tabla.
-- [ ] Un lead enviado a las 20:00 hora de Perú aparece con fecha de ese día, no del siguiente.
-- [ ] El CSV exportado trae las fechas ya convertidas.
-- [ ] Filtrar por hoy incluye un lead enviado hace cinco minutos.
-- [ ] El orden de la tabla sigue siendo por `timestamp` descendente.
-- [ ] Un registro sin `timestamp` sigue mostrando fecha vía el camino de reserva.
-- [ ] `data/deleted.log` registra los borrados en hora de Perú.
-- [ ] Ningún archivo de `data/submissions/` cambia de contenido al desplegar.
+- [x] Un lead guardado antes de esta spec muestra en el panel una hora menor (según el desfase del servidor) que su campo `date` en el JSON. *(`localDate()` deriva del `timestamp`; QA en vivo con un lead real.)*
+- [x] Un lead enviado después muestra la misma hora en el panel y en su campo `date`. *(`send-email.php` fija `America/Lima`.)*
+- [x] Viejo y nuevo se muestran con el mismo criterio en la misma tabla. *(Ambos pasan por `localDate()` en `loadSubmissions()`.)*
+- [x] Un lead enviado a las 20:00 hora de Perú aparece con fecha de ese día, no del siguiente. *(Conversión desde `timestamp`.)*
+- [x] El CSV exportado trae las fechas ya convertidas. *(El CSV pasa por `loadSubmissions()`, que ya convierte `date`.)*
+- [x] Filtrar por hoy incluye un lead enviado hace cinco minutos. *(El filtro compara contra el `date` ya local; QA en vivo.)*
+- [x] El orden de la tabla sigue siendo por `timestamp` descendente. *(El `usort` por `timestamp` no cambió.)*
+- [x] Un registro sin `timestamp` sigue mostrando fecha vía el camino de reserva. *(`localDate()` interpreta `date` como UTC.)*
+- [x] `data/deleted.log` registra los borrados en hora de Perú. *(`date_default_timezone_set('America/Lima')` en el panel.)*
+- [x] Ningún archivo de `data/submissions/` cambia de contenido al desplegar. *(La conversión es en memoria al renderizar; los JSON no se reescriben.)*
 
 ---
 
