@@ -6,22 +6,29 @@
  * - Sends email via Office 365 SMTP
  */
 
-// ─── Secrets (config.local.php generado en CI desde GitHub Secrets, NO versionado) ───
-$cfg = file_exists(__DIR__ . '/config.local.php') ? (require __DIR__ . '/config.local.php') : [];
+// ─── Secrets (fiberlux-config.php subido por FTP, fuera del repo y de dist/ — SPEC 85) ───
+$CONFIG_PATH = __DIR__ . '/fiberlux-config.php';
+if (!file_exists($CONFIG_PATH)) {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['success' => false, 'error' => 'Configuración no disponible.']);
+    exit;
+}
+$cfg = require $CONFIG_PATH;
 if (!is_array($cfg)) $cfg = [];
 
-// ─── SMTP Config ───
-$SMTP_HOST     = 'smtp.office365.com';       // no sensible
-$SMTP_PORT     = 587;                         // no sensible
-$SMTP_USER     = $cfg['SMTP_USER'] ?? 'hola@fiberlux.pe';
-$SMTP_PASS     = $cfg['SMTP_PASS'] ?? 'HoFi032026MKT!*';
+// ─── SMTP Config (sin fallbacks literales; los secretos viven en fiberlux-config.php) ───
+$SMTP_HOST     = $cfg['smtp_host'] ?? 'smtp.office365.com';   // no sensible
+$SMTP_PORT     = $cfg['smtp_port'] ?? 587;                    // no sensible
+$SMTP_USER     = $cfg['smtp_user'] ?? '';
+$SMTP_PASS     = $cfg['smtp_pass'] ?? '';
 $UPLOAD_DIR    = __DIR__ . '/uploads';
 $COUNTER_FILE  = __DIR__ . '/data/counter.json';
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $CONFIG_FILE   = __DIR__ . '/form-config.json';
 
-// ─── Fallback recipients (used if config file is missing) ───
-$FALLBACK_EMAIL = $cfg['FALLBACK_EMAIL'] ?? 'sagarkishnani67@gmail.com';
+// ─── Fallback recipient (usado si form-config.json no trae recipients) ───
+$FALLBACK_EMAIL = $cfg['fallback_email'] ?? '';
 
 // ─── Base absoluta de imágenes de correo (public/mail) ───
 // Derivada del host en runtime: /mail en producción, /staging/mail en staging.
@@ -62,7 +69,7 @@ if (!empty($input['website'])) {
 // El token nunca debe llegar al correo ni al registro: se extrae de $input aquí.
 $captchaToken = $input['captchaToken'] ?? '';
 unset($input['captchaToken']);
-$TURNSTILE_SECRET = $cfg['TURNSTILE_SECRET'] ?? '';
+$TURNSTILE_SECRET = $cfg['turnstile_secret'] ?? '';   // clave migrada a fiberlux-config.php (SPEC 85)
 // Solo se exige captcha si hay secret configurada (se despliega junto a la site
 // key). Con secret presente: token ausente/inválido o verificación no completable
 // → se rechaza sin enviar correo (fail-closed).
