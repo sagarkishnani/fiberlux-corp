@@ -106,11 +106,31 @@ function loadSubmissions($dir) {
     if (is_dir($dir)) {
         foreach (glob($dir.'/*.json') as $f) {
             $d = json_decode(file_get_contents($f), true);
-            if ($d) $subs[] = $d;
+            if ($d) {
+                // Convierte `date` a hora de Perú ANTES de servir el registro, así
+                // tabla, detalle, buscador, filtro y CSV ven un único valor ya
+                // convertido (un solo punto de cambio — SPEC 87).
+                $d['date'] = localDate($d);
+                $subs[] = $d;
+            }
         }
+        // El orden sigue siendo por timestamp (epoch), independiente de la zona.
         usort($subs, fn($a,$b) => ($b['timestamp']??0) - ($a['timestamp']??0));
     }
     return $subs;
+}
+
+// Deriva la fecha local (America/Lima) del `timestamp` epoch, la fuente de verdad.
+// Reserva para registros sin timestamp: interpreta `date` como UTC y convierte.
+function localDate(array $s): string {
+    $tz = new DateTimeZone('America/Lima');
+    if (!empty($s['timestamp'])) {
+        return (new DateTime('@' . $s['timestamp']))->setTimezone($tz)->format('Y-m-d H:i:s');
+    }
+    if (!empty($s['date'])) {
+        return (new DateTime($s['date'], new DateTimeZone('UTC')))->setTimezone($tz)->format('Y-m-d H:i:s');
+    }
+    return '';
 }
 ?>
 <!DOCTYPE html>
