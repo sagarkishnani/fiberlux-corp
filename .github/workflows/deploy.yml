@@ -24,6 +24,8 @@ jobs:
         env:
           TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
           TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          # Site key pública de Cloudflare Turnstile: Vite la inlinea en el build (SPEC 79).
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
           # En staging el sitio se sirve bajo /staging/; en cualquier otra rama, raíz.
           DEPLOY_BASE: ${{ github.ref_name == 'staging' && '/staging' || '' }}
 
@@ -37,6 +39,7 @@ jobs:
           MAIL_FALLBACK: ${{ secrets.MAIL_FALLBACK }}
           PANEL_USER: ${{ secrets.PANEL_USER }}
           PANEL_PASS: ${{ secrets.PANEL_PASS }}
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
         run: |
           php_escape() {
             local s=$1
@@ -52,6 +55,7 @@ jobs:
             echo "  'FALLBACK_EMAIL' => '$(php_escape "$MAIL_FALLBACK")',"
             echo "  'PANEL_USER'     => '$(php_escape "$PANEL_USER")',"
             echo "  'PANEL_PASS'     => '$(php_escape "$PANEL_PASS")',"
+            echo "  'TURNSTILE_SECRET' => '$(php_escape "$TURNSTILE_SECRET")',"
             echo "];"
           } > dist/config.local.php
 
