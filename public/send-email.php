@@ -58,6 +58,22 @@ if (!empty($input['website'])) {
     exit;
 }
 
+// ─── Captcha (Cloudflare Turnstile) — verificación server-side (SPEC 79) ───
+// El token nunca debe llegar al correo ni al registro: se extrae de $input aquí.
+$captchaToken = $input['captchaToken'] ?? '';
+unset($input['captchaToken']);
+$TURNSTILE_SECRET = $cfg['TURNSTILE_SECRET'] ?? '';
+// Solo se exige captcha si hay secret configurada (se despliega junto a la site
+// key). Con secret presente: token ausente/inválido o verificación no completable
+// → se rechaza sin enviar correo (fail-closed).
+if ($TURNSTILE_SECRET !== '') {
+    if (!verifyTurnstile($TURNSTILE_SECRET, $captchaToken, $_SERVER['REMOTE_ADDR'] ?? '')) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'error' => 'Verificación de seguridad fallida. Recarga la página e inténtalo de nuevo.']);
+        exit;
+    }
+}
+
 // ─── Validate form type ───
 $formType = $input['formType'] ?? '';
 // Permite guion bajo y guion (corp usa 'libro_reclamaciones' y 'derechos-arco').
@@ -235,7 +251,7 @@ function saveSubmission(string $type, string $correlativo, array $data, array $f
         'label'       => getSubjectPrefix($type),
         'date'        => date('Y-m-d H:i:s'),
         'timestamp'   => time(),
-        'data'        => array_diff_key($data, array_flip(['formType', 'website'])),
+        'data'        => array_diff_key($data, array_flip(['formType', 'website', 'captchaToken'])),
         'files'       => array_map(fn($f) => ['name' => $f['name'], 'size' => $f['size']], $files),
     ];
 
@@ -262,6 +278,48 @@ function generateCorrelative(string $type): string {
 
 function sanitizeFilename(string $name): string {
     return substr(preg_replace('/_+/', '_', preg_replace('/[^a-zA-Z0-9._-]/', '_', $name)), 0, 200);
+}
+
+/**
+ * Verifica un token de Cloudflare Turnstile contra el endpoint siteverify.
+ * Devuelve true solo si Cloudflare responde success:true. Cualquier fallo
+ * (token vacío, error de red/timeout, respuesta no parseable) → false (fail-closed).
+ */
+function verifyTurnstile(string $secret, string $token, string $remoteIp): bool {
+    if ($token === '') return false;
+
+    $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    $fields = ['secret' => $secret, 'response' => $token];
+    if ($remoteIp !== '') $fields['remoteip'] = $remoteIp;
+
+    $resp = false;
+    if (function_exists('curl_init')) {
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => http_build_query($fields),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => 5,
+            CURLOPT_TIMEOUT        => 10,
+        ]);
+        $resp = curl_exec($ch);
+        $failed = ($resp === false) || curl_errno($ch) !== 0;
+        curl_close($ch);
+        if ($failed) return false;
+    } else {
+        // Fallback sin cURL.
+        $ctx = stream_context_create(['http' => [
+            'method'  => 'POST',
+            'header'  => 'Content-Type: application/x-www-form-urlencoded',
+            'content' => http_build_query($fields),
+            'timeout' => 10,
+        ]]);
+        $resp = @file_get_contents($url, false, $ctx);
+        if ($resp === false) return false;
+    }
+
+    $data = json_decode($resp, true);
+    return is_array($data) && !empty($data['success']);
 }
 
 function getSubjectPrefix(string $type): string {
