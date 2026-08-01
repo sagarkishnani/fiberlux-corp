@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         if (hash_equals($VALID_USER, $user) && password_verify($pass, $PASS_HASH)) {
             session_regenerate_id(true);   // evita fijación de sesión
             $_SESSION['panel_auth'] = true;
+            $_SESSION['csrf'] = bin2hex(random_bytes(32));   // token para acciones destructivas
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'error' => 'Usuario o contraseña incorrectos']);
@@ -203,6 +204,7 @@ tr:hover .view-link{opacity:1}
 
 <script>
 const submissions = <?= $submissionsJson ?>;
+const CSRF = <?= $isLoggedIn ? json_encode($_SESSION['csrf'] ?? '') : "''" ?>;
 const PER_PAGE = <?= $PER_PAGE ?>;
 let currentFilter = '';
 let searchQuery = '';
