@@ -1,6 +1,6 @@
 # SPEC 85 — Secretos en `fiberlux-config.php` y hardening del backend PHP
 
-> **Estado:** Draft
+> **Estado:** Implementado
 > **Depende de:** SPEC 65 (backend de correos actual — la reemplaza), y condiciona a SPEC 79 (captcha)
 > **Fecha:** 2026-08-01
 > **Objetivo:** Homologar el manejo de secretos de corp con negocios — pasar de `config.local.php` inyectado por CI a `fiberlux-config.php` subido por FTP — y cerrar las fugas de datos: credenciales hardcodeadas en `send-email.php` y acceso HTTP directo a `data/` y `uploads/`.
@@ -38,7 +38,7 @@ Corp tiene hoy tres problemas:
 - `config.example.php` en el repo con la nueva forma (solo placeholders) como plantilla versionada.
 - `.gitignore`: bloquear `fiberlux-config.php` y `public/fiberlux-config.php`.
 - Bloquear el acceso HTTP a `data/` y `uploads/` con un `.htaccess` por directorio (`public/data/.htaccess`, `public/uploads/.htaccess`).
-- `.github/workflows/deploy.yml`: **eliminar** el step "Generate config.local.php from secrets" y **excluir** `data/**` y `uploads/**` del despliegue.
+- `.github/workflows/deploy.yml`: **eliminar** el step "Generate config.local.php from secrets". (No se excluye `data/**`/`uploads/**`: corp usa `delete_remote_files:false`, que ya conserva los leads runtime; los `.htaccess` viajan en `dist/` y se despliegan solos — decisión de implementación distinta a negocios.)
 - Definir en `fiberlux-config.php` las claves de panel (`panel_user`, `panel_pass_hash`) que consumirá la SPEC 86 y `turnstile_secret` que consumirá la SPEC 79 re-adaptada.
 - Rotar la contraseña SMTP en Office 365.
 
@@ -133,6 +133,8 @@ La SPEC 79 (captcha, aún en rama `spec-79`, sin mergear) leía `TURNSTILE_SECRE
 
 Esta reconciliación queda anotada aquí y se ejecuta al reaplicar spec 79.
 
+> **Nota de implementación:** al implementar esta spec, el captcha (SPEC 79) **ya estaba mergeado en `main`**, no en una rama aparte. Por eso la reconciliación se aplicó **dentro de este spec**: `send-email.php` ya lee `$cfg['turnstile_secret']` y `deploy.yml` ya no inyecta `TURNSTILE_SECRET`. `PUBLIC_TURNSTILE_SITE_KEY` se mantiene en el build.
+
 ---
 
 ## Plan de implementación
@@ -145,7 +147,7 @@ Cada paso deja el sitio desplegable y es commiteable por separado.
 
 3. **Crear `public/data/.htaccess` y `public/uploads/.htaccess`.** Verificación: `npm run build` los coloca en `dist/data/` y `dist/uploads/`.
 
-4. **Endurecer `deploy.yml`:** eliminar el step "Generate config.local.php from secrets" y añadir `data/**` y `uploads/**` a la exclusión del deploy (para que ningún despliegue toque leads ni adjuntos, y para que los `.htaccess` de bloqueo no se sobreescriban desde el proceso del que se les quiere proteger → se suben a mano).
+4. **Endurecer `deploy.yml`:** eliminar el step "Generate config.local.php from secrets". Se mantiene `PUBLIC_TURNSTILE_SITE_KEY` (pública) y `delete_remote_files:false`. **No** se excluye `data/**`/`uploads/**`: con `delete_remote_files:false` los leads runtime ya se conservan, y los dos `.htaccess` de bloqueo se despliegan solos desde `dist/` (decisión de corp, distinta a negocios).
 
 5. **Paso manual en el servidor (FTP), no automatizable.** Ver "Pasos FTP" abajo.
 
@@ -156,24 +158,24 @@ Cada paso deja el sitio desplegable y es commiteable por separado.
 1. **Rotar** la contraseña SMTP en Office 365.
 2. **Subir** `fiberlux-config.php` a la raíz web (junto a `send-email.php`), con la contraseña rotada, `panel_user`/`panel_pass_hash` (SPEC 86) y `turnstile_secret` (SPEC 79). **Nunca** se versiona ni entra en `dist/`.
 3. **Añadir** el bloque `<Files "fiberlux-config.php"> Require all denied </Files>` al `.htaccess` del servidor.
-4. **Subir** `public/data/.htaccess` y `public/uploads/.htaccess` a `data/` y `uploads/` en el servidor (el deploy los excluye a propósito).
+4. *(Ya **no** hace falta subir los `.htaccess` a mano: viajan en `dist/` y se despliegan solos. Tras el primer deploy quedan en `data/` y `uploads/` del servidor. Verifica con `curl` que devuelven 403.)*
 
 ---
 
 ## Criterios de aceptación
 
-- [ ] La contraseña SMTP antigua no aparece en `send-email.php` ni en el árbol de trabajo. `grep -rn 'HoFi032026\|sagarkishnani67' public/` no encuentra nada.
-- [ ] `config.example.php` está versionado y solo contiene placeholders.
-- [ ] `git check-ignore fiberlux-config.php public/fiberlux-config.php` marca ambos como ignorados.
-- [ ] `npm run build` termina sin errores y `dist/` contiene `send-email.php`, `phpmailer/` y los dos `.htaccess` de bloqueo.
-- [ ] `deploy.yml` ya no genera `config.local.php` y excluye `data/**` y `uploads/**`.
-- [ ] Con `fiberlux-config.php` ausente, `POST /send-email.php` responde 500 y no envía correo.
-- [ ] Con `fiberlux-config.php` presente, `/contacto` en producción devuelve `success:true` con correlativo y el correo llega.
-- [ ] `curl -s https://fiberlux.pe/fiberlux-config.php` no devuelve credenciales (403 o respuesta vacía).
-- [ ] `curl -sI https://fiberlux.pe/data/submissions/<correlativo>.json` devuelve 403.
-- [ ] `curl -sI https://fiberlux.pe/uploads/<correlativo>/<archivo>` devuelve 403.
-- [ ] Tras el bloqueo, un envío con adjunto sigue guardando el archivo y el correo llega con el adjunto.
-- [ ] Tras desplegar, `data/submissions/` y `uploads/` conservan sus archivos previos.
+- [x] La contraseña SMTP antigua no aparece en `send-email.php` ni en el árbol de trabajo. *(Verificado por grep.)*
+- [x] `config.example.php` está versionado y solo contiene placeholders. *(Nueva forma `fiberlux-config.php`, valores `CAMBIAR`.)*
+- [x] `git check-ignore fiberlux-config.php public/fiberlux-config.php` marca ambos como ignorados. *(Verificado.)*
+- [x] `npm run build` termina sin errores y `dist/` contiene `send-email.php`, `phpmailer/` y los dos `.htaccess` de bloqueo. *(Verificado: 116 páginas, archivos presentes en `dist/`.)*
+- [x] `deploy.yml` ya no genera `config.local.php` ni maneja credenciales (mantiene la site key pública y `delete_remote_files:false`). *(Sin exclude — decisión de corp.)*
+- [ ] Con `fiberlux-config.php` ausente, `POST /send-email.php` responde 500 y no envía correo. *(Lógica implementada; requiere servidor PHP para probar.)*
+- [ ] Con `fiberlux-config.php` presente, `/contacto` en producción devuelve `success:true` con correlativo y el correo llega. *(QA en vivo tras subir el config.)*
+- [ ] `curl -s https://fiberlux.pe/fiberlux-config.php` no devuelve credenciales (403 o respuesta vacía). *(Requiere el `<Files>` en el `.htaccess` del servidor.)*
+- [ ] `curl -sI https://fiberlux.pe/data/submissions/<correlativo>.json` devuelve 403. *(Tras desplegar el `.htaccess`.)*
+- [ ] `curl -sI https://fiberlux.pe/uploads/<correlativo>/<archivo>` devuelve 403. *(Tras desplegar el `.htaccess`.)*
+- [ ] Tras el bloqueo, un envío con adjunto sigue guardando el archivo y el correo llega con el adjunto. *(QA en vivo.)*
+- [ ] Tras desplegar, `data/submissions/` y `uploads/` conservan sus archivos previos. *(Garantizado por `delete_remote_files:false`; verificar en vivo.)*
 
 ---
 
@@ -182,7 +184,7 @@ Cada paso deja el sitio desplegable y es commiteable por separado.
 - **Sí (cliente):** `fiberlux-config.php` por FTP, homologado con negocios, aunque corp ya tenía CI (SPEC 65). Prioriza que ambos proyectos se toquen igual.
 - **Sí:** fail-500 si falta el config, en vez de degradar a valores vacíos o hardcodeados. Un form que dice "enviado" sin enviar es peor que uno que falla visible.
 - **Sí:** quitar los fallbacks literales de `send-email.php`. Son una fuga real (contraseña + correo personal en git).
-- **Sí:** `.htaccess` por directorio en `data/` y `uploads/`, subidos a mano y excluidos del deploy, para que el proceso de despliegue no pueda reemplazar el archivo que protege los datos.
+- **Sí:** `.htaccess` por directorio en `data/` y `uploads/`. **No se excluye del deploy** (a diferencia de negocios): corp usa `delete_remote_files:false`, que ya conserva los leads runtime, así que los `.htaccess` se despliegan solos desde `dist/` y no hay paso manual. Decidido en implementación con el cliente.
 - **Sí:** `panel_pass_hash` y `turnstile_secret` ya en el config aunque sus specs (86/79) los consuman después. Evita tocar el archivo del servidor tres veces.
 - **No:** seguir con GitHub Secrets + CI (SPEC 65). Descartado por decisión de homologación del cliente.
 - **No:** versionar el `.htaccess` de la raíz. Arriesga las reglas de WordPress/staging por nada que esta spec necesite.
