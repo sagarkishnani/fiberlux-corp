@@ -196,6 +196,9 @@ tr:hover .view-link{opacity:1}
 .pagination button:hover:not(.active):not(:disabled){border-color:#96237A;color:#96237A}
 .pagination button:disabled{opacity:.3;cursor:not-allowed}
 .pagination .page-info{font-size:12px;color:#999;margin:0 8px}
+.delete-btn{background:rgba(220,50,50,.08);border:1px solid rgba(220,50,50,.25);color:#c43c3c;padding:7px 16px;border-radius:12px;font-size:12px;font-weight:500;font-family:'Poppins',sans-serif;cursor:pointer;transition:all .2s}
+.delete-btn:hover{background:rgba(220,50,50,.14);border-color:#c43c3c}
+.rowcheck,#selectAll{width:16px;height:16px;accent-color:#96237A;cursor:pointer;vertical-align:middle}
 @media(max-width:768px){.stats{flex-direction:column}.detail-row{grid-template-columns:1fr;gap:4px}td:nth-child(4),th:nth-child(4){display:none}.login-card{margin:16px;padding:36px 28px}.header{padding:14px 20px}.container{padding:24px 16px}.toolbar{flex-direction:column}.search-box{min-width:100%}}
 </style>
 </head>
@@ -231,9 +234,10 @@ tr:hover .view-link{opacity:1}
         <input type="text" class="search-box" id="searchBox" placeholder="Buscar nombre, email, RUC...">
         <input type="date" class="date-input" id="dateFrom" title="Desde">
         <input type="date" class="date-input" id="dateTo" title="Hasta">
+        <button class="delete-btn" id="deleteSelectedBtn" style="display:none">🗑 Borrar (<span id="selCount">0</span>)</button>
     </div>
     <div class="table-wrap" id="tableWrap">
-        <table><thead><tr><th>Correlativo</th><th>Tipo</th><th>Contacto</th><th>Fecha</th><th></th></tr></thead><tbody id="tableBody"></tbody></table>
+        <table><thead><tr><th style="width:36px"><input type="checkbox" id="selectAll" title="Seleccionar todos"></th><th>Correlativo</th><th>Tipo</th><th>Contacto</th><th>Fecha</th><th></th></tr></thead><tbody id="tableBody"></tbody></table>
     </div>
     <div class="pagination" id="pagination"></div>
     <div id="detailView" style="display:none;"></div>
@@ -309,18 +313,20 @@ function renderTable(){
     document.getElementById('pagination').style.display='flex';
 
     const tb=document.getElementById('tableBody');
-    if(!page.length){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:60px;color:#ccc">Sin resultados</td></tr>';document.getElementById('pagination').innerHTML='';return;}
+    if(!page.length){tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:60px;color:#ccc">Sin resultados</td></tr>';document.getElementById('pagination').innerHTML='';document.getElementById('selectAll').checked=false;updateSelection();return;}
 
     tb.innerHTML=page.map(s=>{
         const d=s.data||{};let nm=d.nombre||d.nombreCompleto||d.ruc||'-';if(d.apellido)nm+=' '+d.apellido;
         const em=d.email||d.correo||d.celular||'-';
         return `<tr onclick="showDetail('${s.correlativo}')">
+            <td onclick="event.stopPropagation()"><input type="checkbox" class="rowcheck" value="${s.correlativo}" onchange="updateSelection()"></td>
             <td><span class="correlativo">${s.correlativo}</span></td>
             <td><span class="type-badge ${s.formType}">${(s.formType||'').replace('_',' ')}</span></td>
             <td><div class="contact-name">${esc(nm)}</div><div class="contact-email">${esc(em)}</div></td>
             <td class="date">${s.date||''}</td>
             <td><span class="view-link">Ver →</span></td></tr>`;
     }).join('');
+    document.getElementById('selectAll').checked=false;updateSelection();
 
     // Pagination
     let pg='';
@@ -346,7 +352,36 @@ function showDetail(id){
         `<div class="detail-row"><div class="detail-label">${esc(k)}</div><div class="detail-value">${esc(String(v))}</div></div>`).join('');
     const fhtml=(s.files&&s.files.length)?`<div class="detail-row"><div class="detail-label">Archivos</div><div class="detail-value">${s.files.map(f=>esc(f.name)+' ('+Math.round(f.size/1024)+'KB)').join('<br>')}</div></div>`:'';
     dv.innerHTML=`<button class="back-btn" onclick="renderTable()">← Volver</button>
-        <div class="detail"><h2>${esc(s.label||s.formType)}</h2><div class="meta"><span>${esc(s.correlativo)}</span> · ${esc(s.date||'')}</div><div class="detail-grid">${rows}${fhtml}</div></div>`;
+        <div class="detail"><h2>${esc(s.label||s.formType)}</h2><div class="meta"><span>${esc(s.correlativo)}</span> · ${esc(s.date||'')}</div><div class="detail-grid">${rows}${fhtml}</div>
+        <button class="delete-btn" style="margin-top:28px" onclick="deleteLeads(['${s.correlativo}'])">🗑 Enviar a la papelera</button></div>`;
+}
+
+// ─── Papelera (selección múltiple + borrado con confirmación) — SPEC 86 ───
+function updateSelection(){
+    const n=document.querySelectorAll('.rowcheck:checked').length;
+    document.getElementById('selCount').textContent=n;
+    document.getElementById('deleteSelectedBtn').style.display=n?'inline-block':'none';
+}
+document.getElementById('selectAll').addEventListener('change',e=>{
+    document.querySelectorAll('.rowcheck').forEach(c=>c.checked=e.target.checked);
+    updateSelection();
+});
+document.getElementById('deleteSelectedBtn').addEventListener('click',()=>{
+    const ids=[...document.querySelectorAll('.rowcheck:checked')].map(c=>c.value);
+    if(ids.length)deleteLeads(ids);
+});
+async function deleteLeads(ids){
+    const msg=ids.length===1
+        ? `¿Enviar el lead ${ids[0]} a la papelera?`
+        : `¿Enviar estos ${ids.length} leads a la papelera?\n\n${ids.join(', ')}`;
+    if(!confirm(msg))return;
+    const fd=new FormData();fd.append('action','delete');fd.append('csrf',CSRF);
+    ids.forEach(id=>fd.append('correlativos[]',id));
+    try{
+        const res=await fetch('',{method:'POST',body:fd});const data=await res.json();
+        if(data.success){location.reload();}
+        else{alert(data.error||'No se pudo borrar');}
+    }catch{alert('Error de conexión');}
 }
 
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
