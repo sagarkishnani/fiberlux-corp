@@ -20,6 +20,13 @@ import {
 import { FormSuccess } from "../shared/FormSuccess";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
+import {
+  NUMERIC_FIELD_RULES,
+  isNumericField,
+  sanitizeNumeric,
+  isNumericValid,
+  type NumericFieldType,
+} from "../../utils/numericFields";
 
 /* ══════════════════════════════════════════════════
    CLOUDFLARE TURNSTILE (captcha invisible) — SPEC 79
@@ -845,19 +852,28 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
     const fieldOptions = locOptions(field.options);
     const selectPlaceholder = placeholder || ui.selectPlaceholder;
 
+    /* Reglas numéricas (tel/ruc): filtrado, longitud e inputMode desde código (SPEC 84).
+     * numOnChange sirve también a los tipos no numéricos (cae al slice por maxLen). */
+    const numType: NumericFieldType | null = isNumericField(field.fieldType) ? field.fieldType : null;
+    const numMaxLen = numType ? NUMERIC_FIELD_RULES[numType].length : maxLen;
+    const numInputMode: "numeric" | undefined = numType ? "numeric" : undefined;
+    const numOnChange = (v: string) =>
+      updateField(name, numType ? sanitizeNumeric(v, numType) : maxLen ? v.slice(0, maxLen) : v);
+
     if (isContact) {
       /* ════ CONTACT VARIANT ════ */
 
-      if (field.fieldType === "text" || field.fieldType === "tel" || field.fieldType === "number") {
+      if (field.fieldType === "text" || field.fieldType === "tel" || field.fieldType === "number" || field.fieldType === "ruc") {
         return (
           <ContactInput
             label={label}
             placeholder={placeholder}
-            type={field.fieldType === "tel" ? "tel" : field.fieldType === "number" ? "number" : "text"}
+            type={numType ? "tel" : field.fieldType === "number" ? "number" : "text"}
+            inputMode={numInputMode}
             value={val || ""}
-            onChange={(v) => updateField(name, maxLen ? v.slice(0, maxLen) : v)}
+            onChange={numOnChange}
             required={required}
-            maxLength={maxLen}
+            maxLength={numMaxLen}
             error={err}
             dark={isDark}
           />
@@ -935,7 +951,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
 
     /* ════ DEFAULT VARIANT (inline styles) ════ */
 
-    if (field.fieldType === "text" || field.fieldType === "tel" || field.fieldType === "number" || field.fieldType === "email") {
+    if (field.fieldType === "text" || field.fieldType === "tel" || field.fieldType === "number" || field.fieldType === "email" || field.fieldType === "ruc") {
       return (
         <FormInput
           label={label}
@@ -943,16 +959,17 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
           type={
             field.fieldType === "email"
               ? "email"
-              : field.fieldType === "tel"
+              : numType
               ? "tel"
               : field.fieldType === "number"
               ? "number"
               : "text"
           }
+          inputMode={numInputMode}
           value={val || ""}
-          onChange={(v) => updateField(name, maxLen ? v.slice(0, maxLen) : v)}
+          onChange={numOnChange}
           required={required}
-          maxLength={maxLen}
+          maxLength={numMaxLen}
           error={err}
         />
       );
