@@ -225,10 +225,11 @@ function contactCls(dark?: boolean) {
 }
 
 function ContactInput({
-  label, placeholder, type = "text", value, onChange, required, maxLength, error, dark,
+  label, placeholder, type = "text", value, onChange, required, maxLength, error, dark, inputMode,
 }: {
   label: string; placeholder?: string; type?: string; value: string;
   onChange: (v: string) => void; required?: boolean; maxLength?: number; error?: string; dark?: boolean;
+  inputMode?: "numeric" | "text";
 }) {
   const c = contactCls(dark);
   return (
@@ -240,6 +241,7 @@ function ContactInput({
       )}
       <input
         type={type}
+        inputMode={inputMode}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}

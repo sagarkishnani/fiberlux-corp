@@ -88,10 +88,11 @@ interface InputProps {
   maxLength?: number;
   error?: string;
   disabled?: boolean;
+  inputMode?: "numeric" | "text";
 }
 
 export function FormInput({
-  label, placeholder, type = "text", value, onChange, required, maxLength, error, disabled,
+  label, placeholder, type = "text", value, onChange, required, maxLength, error, disabled, inputMode,
 }: InputProps) {
   return (
     <div>
@@ -102,6 +103,7 @@ export function FormInput({
       )}
       <input
         type={type}
+        inputMode={inputMode}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}
