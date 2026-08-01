@@ -1,4 +1,6 @@
 <?php
+// Cookie de sesión endurecida: HttpOnly + SameSite=Strict (SPEC 86).
+session_set_cookie_params(['httponly' => true, 'samesite' => 'Strict']);
 session_start();
 
 // Secrets (fiberlux-config.php subido por FTP, fuera del repo y de dist/ — SPEC 85/86)
@@ -21,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $user = $_POST['user'] ?? '';
         $pass = $_POST['pass'] ?? '';
         if (hash_equals($VALID_USER, $user) && password_verify($pass, $PASS_HASH)) {
+            session_regenerate_id(true);   // evita fijación de sesión
             $_SESSION['panel_auth'] = true;
             echo json_encode(['success' => true]);
         } else {
