@@ -72,7 +72,7 @@
       "fieldType": "tel",
       "name": "telefono",
       "label": "Teléfono",
-      "placeholder": "+51 999 999 999",
+      "placeholder": "987654321",
       "required": true,
       "width": "half",
       "order": 7

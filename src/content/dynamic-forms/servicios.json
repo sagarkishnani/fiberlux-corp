@@ -27,20 +27,15 @@
       "order": 1
     },
     {
-      "fieldType": "text",
+      "fieldType": "ruc",
       "name": "ruc",
       "label": "RUC",
       "label_en": "Tax ID (RUC)",
-      "placeholder": "RUC",
-      "placeholder_en": "Tax ID (RUC)",
+      "placeholder": "20123456789",
+      "placeholder_en": "20123456789",
       "required": true,
       "width": "half",
-      "order": 2,
-      "validation": {
-        "pattern": "^\\d{11}$",
-        "patternMessage": "El RUC debe tener 11 dígitos",
-        "patternMessage_en": "Tax ID (RUC) must be 11 digits"
-      }
+      "order": 2
     },
     {
       "fieldType": "text",
@@ -327,8 +322,8 @@
       "name": "telefono",
       "label": "Teléfono / Celular",
       "label_en": "Phone / Mobile",
-      "placeholder": "Teléfono / Celular",
-      "placeholder_en": "Phone / Mobile",
+      "placeholder": "987654321",
+      "placeholder_en": "987654321",
       "required": true,
       "width": "half",
       "order": 6

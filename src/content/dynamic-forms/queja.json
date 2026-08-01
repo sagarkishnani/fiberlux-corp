@@ -52,6 +52,7 @@
       "fieldType": "tel",
       "name": "telefono",
       "label": "N° de teléfono",
+      "placeholder": "987654321",
       "required": true,
       "width": "half",
       "order": 5

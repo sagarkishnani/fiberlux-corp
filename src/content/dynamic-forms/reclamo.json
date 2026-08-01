@@ -151,7 +151,7 @@
       "fieldType": "tel",
       "name": "telefono",
       "label": "Teléfono de contacto",
-      "placeholder": "Teléfono de contacto",
+      "placeholder": "987654321",
       "required": true,
       "width": "half",
       "order": 16
