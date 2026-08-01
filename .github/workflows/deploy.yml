@@ -29,35 +29,10 @@ jobs:
           # En staging el sitio se sirve bajo /staging/; en cualquier otra rama, raíz.
           DEPLOY_BASE: ${{ github.ref_name == 'staging' && '/staging' || '' }}
 
-      # Genera dist/config.local.php (NO versionado) con los secretos del backend
-      # PHP. Se escribe DESPUÉS del build (que crea dist/) y ANTES del deploy FTP.
-      # Escape seguro para claves con caracteres especiales (#, !, $, ', \, …).
-      - name: Generate config.local.php from secrets
-        env:
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASS: ${{ secrets.SMTP_PASS }}
-          MAIL_FALLBACK: ${{ secrets.MAIL_FALLBACK }}
-          PANEL_USER: ${{ secrets.PANEL_USER }}
-          PANEL_PASS: ${{ secrets.PANEL_PASS }}
-          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
-        run: |
-          php_escape() {
-            local s=$1
-            s=${s//\\/\\\\}   # \ -> \\
-            s=${s//\'/\\\'}   # ' -> \'
-            printf '%s' "$s"
-          }
-          {
-            echo "<?php"
-            echo "return ["
-            echo "  'SMTP_USER'      => '$(php_escape "$SMTP_USER")',"
-            echo "  'SMTP_PASS'      => '$(php_escape "$SMTP_PASS")',"
-            echo "  'FALLBACK_EMAIL' => '$(php_escape "$MAIL_FALLBACK")',"
-            echo "  'PANEL_USER'     => '$(php_escape "$PANEL_USER")',"
-            echo "  'PANEL_PASS'     => '$(php_escape "$PANEL_PASS")',"
-            echo "  'TURNSTILE_SECRET' => '$(php_escape "$TURNSTILE_SECRET")',"
-            echo "];"
-          } > dist/config.local.php
+      # Los secretos del backend PHP viven ahora en fiberlux-config.php, subido a
+      # mano por FTP al servidor (SPEC 85). El deploy ya NO genera config.local.php
+      # ni maneja credenciales: solo inyecta la site key PÚBLICA de Turnstile en el
+      # build (arriba). Los .htaccess de bloqueo de data/ y uploads/ viajan en dist/.
 
       # Deploy por SFTP (el servidor es SFTP/puerto 22, no FTP).
       # Sube el contenido de dist/ al remote_path. delete_remote_files=false:
