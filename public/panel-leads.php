@@ -53,7 +53,9 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv' && !empty($_SESSION['pan
 }
 
 $isLoggedIn = !empty($_SESSION['panel_auth']);
-$submissions = loadSubmissions($SUBMISSIONS_DIR);
+// Los datos SOLO se cargan y serializan con sesión válida: sin login, el HTML
+// no lleva ningún lead (cierra la fuga por curl al panel — SPEC 86).
+$submissions = $isLoggedIn ? loadSubmissions($SUBMISSIONS_DIR) : [];
 $submissionsJson = json_encode($submissions, JSON_UNESCAPED_UNICODE);
 
 function loadSubmissions($dir) {
@@ -208,7 +210,7 @@ document.getElementById('loginBtn').addEventListener('click', async () => {
     const u=document.getElementById('loginUser').value.trim(), p=document.getElementById('loginPass').value.trim();
     const fd=new FormData(); fd.append('action','login'); fd.append('user',u); fd.append('pass',p);
     const res=await fetch('',{method:'POST',body:fd}); const data=await res.json();
-    if(data.success){document.getElementById('loginOverlay').classList.add('hidden');document.getElementById('loginError').textContent='';}
+    if(data.success){location.reload();}
     else{document.getElementById('loginError').textContent=data.error;document.getElementById('loginPass').value='';}
 });
 document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('loginBtn').click();});
