@@ -637,6 +637,16 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         }
       }
 
+      /* Numérico (tel/ruc): longitud exacta + prefijo desde código (SPEC 84).
+       * Las reglas de código pisan el pattern/minLength del JSON para estos tipos.
+       * Si no es required y está vacío, ya pasó el bloque anterior sin error. */
+      if (isNumericField(field.fieldType)) {
+        if (val && typeof val === "string" && val.trim() && !isNumericValid(val, field.fieldType)) {
+          errs[field.name] = L(field, "errorMessage") || NUMERIC_FIELD_RULES[field.fieldType].message;
+        }
+        continue;
+      }
+
       /* Email */
       if (field.fieldType === "email" && val && typeof val === "string" && val.trim()) {
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim())) {
