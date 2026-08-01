@@ -38,7 +38,11 @@ FTP_HOST, FTP_USER, FTP_PASS          # deploy connection
 FTP_SERVER_DIR                        # remote path dist/ is uploaded to (e.g. /public_html/)
 SMTP_USER, SMTP_PASS, MAIL_FALLBACK   # → config.local.php (Office 365 SMTP + fallback recipient)
 PANEL_USER, PANEL_PASS                # → config.local.php (panel-leads.php login)
+TURNSTILE_SITE_KEY                    # build → PUBLIC_TURNSTILE_SITE_KEY (Vite inlines the public site key)
+TURNSTILE_SECRET                      # → config.local.php (Cloudflare Turnstile server-side verify)
 ```
+
+**Captcha (Cloudflare Turnstile — SPEC 79).** Every form that hits `send-email.php` carries an invisible Turnstile token (`appearance: interaction-only`, no visible challenge for legit users). `DynamicFormReact` loads the widget with the **public** site key from build env `PUBLIC_TURNSTILE_SITE_KEY`; `send-email.php` verifies the token server-side against Cloudflare's `siteverify` using `TURNSTILE_SECRET` from `config.local.php`, and **fail-closed**: a missing/invalid token, or an unreachable `siteverify`, is rejected with no email sent (enforced only while `TURNSTILE_SECRET` is set). Both keys are per-project and deploy together; the Turnstile widget lists `fiberlux.pe` (covers `negocios.fiberlux.pe` and the `/portal-de-trabajo` subpath) plus `localhost` for dev. `PUBLIC_TURNSTILE_SITE_KEY=` is documented in `.env.example` (git-ignored) and `TURNSTILE_SECRET` in `public/config.example.php`.
 
 The FTP sync **excludes** `data/**` and `uploads/**` so runtime-created submissions, `counter.json` and uploaded attachments on the server are never deleted.
 
