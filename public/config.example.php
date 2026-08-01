@@ -1,19 +1,20 @@
 <?php
 /**
- * Plantilla de configuración de secretos del backend de correos.
+ * Plantilla de `fiberlux-config.php` — secretos del backend PHP (SPEC 85).
  *
- * NO edites este archivo con valores reales ni lo renombres en el repo.
- * En producción, el GitHub Action genera `config.local.php` (git-ignored)
- * a partir de los GitHub Secrets, con esta misma forma. `send-email.php` y
- * `panel-leads.php` hacen `require` de `config.local.php`.
+ * En producción se sube por FTP como `fiberlux-config.php`, FUERA del repo y
+ * de `dist/`, junto a `send-email.php`. `send-email.php` y `panel-leads.php`
+ * hacen `require` de ese archivo. NUNCA se versiona con valores reales.
  *
- * Para probar en local: copia este archivo a `config.local.php` y rellena.
+ * Para probar en local: copia este archivo a `public/fiberlux-config.php` y rellena.
  */
 return [
-  'SMTP_USER'      => 'contacto@fiberlux.pe', // cuenta SMTP Office 365 corp
-  'SMTP_PASS'      => 'CHANGE_ME',
-  'FALLBACK_EMAIL' => 'destino@fiberlux.pe',  // usado si form-config.json no trae recipients
-  'PANEL_USER'     => 'admin',                // login de panel-leads.php
-  'PANEL_PASS'     => 'CHANGE_ME',
-  'TURNSTILE_SECRET' => 'CHANGE_ME',          // secret key de Cloudflare Turnstile (SPEC 79)
+  'smtp_host'        => 'smtp.office365.com',  // no sensible
+  'smtp_port'        => 587,                   // no sensible
+  'smtp_user'        => 'contacto@fiberlux.pe',
+  'smtp_pass'        => 'CAMBIAR',
+  'fallback_email'   => 'destino@fiberlux.pe', // usado si form-config.json no trae recipients
+  'panel_user'       => 'admin',               // login de panel-leads.php (SPEC 86)
+  'panel_pass_hash'  => 'CAMBIAR',             // password_hash('<pass>', PASSWORD_DEFAULT) (SPEC 86)
+  'turnstile_secret' => 'CAMBIAR',             // secret key de Cloudflare Turnstile (SPEC 79)
 ];

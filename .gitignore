@@ -6,6 +6,8 @@ dist/
 .DS_Store
 public/config.local.php
 dist/config.local.php
+fiberlux-config.php
+public/fiberlux-config.php
 .env.example
 .playwright-mcp
 .playwright-screens
