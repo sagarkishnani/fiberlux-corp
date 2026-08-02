@@ -11,7 +11,7 @@ $cfg = file_exists(__DIR__ . '/fiberlux-config.php') ? (require __DIR__ . '/fibe
 if (!is_array($cfg)) $cfg = [];
 
 $VALID_USER = $cfg['panel_user'] ?? '';
-$PASS_HASH  = $cfg['panel_pass_hash'] ?? '';   // hash bcrypt; nunca en claro
+$PASS_HASH  = $cfg['panel_pass_hash'] ?? '';
 $SUBMISSIONS_DIR = __DIR__ . '/data/submissions';
 $PER_PAGE = 15;
 
@@ -222,7 +222,35 @@ tr:hover .view-link{opacity:1}
 .delete-btn{background:rgba(220,50,50,.08);border:1px solid rgba(220,50,50,.25);color:#c43c3c;padding:7px 16px;border-radius:12px;font-size:12px;font-weight:500;font-family:'Poppins',sans-serif;cursor:pointer;transition:all .2s}
 .delete-btn:hover{background:rgba(220,50,50,.14);border-color:#c43c3c}
 .rowcheck,#selectAll{width:16px;height:16px;accent-color:#96237A;cursor:pointer;vertical-align:middle}
-@media(max-width:768px){.stats{flex-direction:column}.detail-row{grid-template-columns:1fr;gap:4px}td:nth-child(4),th:nth-child(4){display:none}.login-card{margin:16px;padding:36px 28px}.header{padding:14px 20px}.container{padding:24px 16px}.toolbar{flex-direction:column}.search-box{min-width:100%}}
+/* Tablet / phone grande */
+@media(max-width:768px){
+  .header{padding:14px 20px;flex-wrap:wrap;gap:10px}
+  .header-right{gap:8px}
+  .container{padding:24px 16px}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr)}
+  .stat{min-width:0}
+  .filters{flex:1 1 100%}
+  .search-box{flex:1 1 100%;min-width:0}
+  .date-input{flex:1 1 0;min-width:0}
+  #deleteSelectedBtn{flex:1 1 100%}
+  .table-wrap{overflow-x:auto}
+  .detail{padding:24px 20px}
+  .detail-row{grid-template-columns:1fr;gap:4px}
+  .login-card{margin:16px;padding:36px 28px}
+}
+/* Celular: cada fila de la tabla se convierte en una tarjeta apilada */
+@media(max-width:600px){
+  .table-wrap{overflow:hidden}
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tbody tr{position:relative;padding:14px 16px 14px 46px;border-top:1px solid rgba(0,0,0,.05)}
+  tbody tr:first-child{border-top:none}
+  td{padding:2px 0;border-top:none}
+  td:first-child{position:absolute;left:14px;top:15px;padding:0}
+  .view-link{display:none}
+  .date{margin-top:3px}
+  .pagination{flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
