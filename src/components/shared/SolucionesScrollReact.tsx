@@ -166,7 +166,7 @@ export default function SolucionesScrollReact({
   }, []);
 
   const runLoop = () => {
-    const k = 0.12; // menor = más lag
+    const k = 0.06; // menor = más lag (persigue el cursor más lento)
     pos.current.x += (target.current.x - pos.current.x) * k;
     pos.current.y += (target.current.y - pos.current.y) * k;
     const el = tooltipRef.current;
@@ -182,7 +182,7 @@ export default function SolucionesScrollReact({
     delayRef.current = window.setTimeout(() => {
       setTooltipOn(true);
       if (rafRef.current == null) rafRef.current = requestAnimationFrame(runLoop);
-    }, 340);
+    }, 140);
   };
   const handleListMove = (e: ReactMouseEvent) => {
     if (!finePointer.current) return;
