@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, type ReactNode, type PointerEvent as ReactPointerEvent } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
+import { FaArrowLeft, FaArrowRight, FaArrowUp, FaArrowDown } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { tField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
@@ -236,23 +236,26 @@ export default function TimelineReact({ query, variables, data: initialData, loc
   /* ── Shared pieces (reused by the desktop and mobile layouts) ── */
   // Flechas: el timeline hace loop, así que ambas siempre navegan → mismo look
   // magenta "enabled" que el resto de sliders (SliderArrows, SPEC 68).
+  // Horizontal en móvil (←/→); vertical en desktop (↑/↓) como la referencia.
   const arrows = (
-    <div className="inline-flex overflow-hidden rounded-[12px] shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)]">
+    <div className="inline-flex flex-row overflow-hidden rounded-[12px] shadow-[0_8px_24px_-8px_rgba(0,0,0,0.6)] md:flex-col">
       <button
         type="button"
         aria-label="Hito anterior"
         onClick={prev}
         className="flex h-[49px] w-[49px] items-center justify-center bg-[#96237A] text-white transition-colors hover:bg-[#650F50]"
       >
-        <FaArrowLeft className="text-sm" />
+        <FaArrowLeft className="text-sm md:hidden" />
+        <FaArrowUp className="hidden text-sm md:block" />
       </button>
       <button
         type="button"
         aria-label="Hito siguiente"
         onClick={next}
-        className="flex h-[49px] w-[49px] items-center justify-center border-l border-white/15 bg-[#96237A] text-white transition-colors hover:bg-[#650F50]"
+        className="flex h-[49px] w-[49px] items-center justify-center border-l border-white/15 bg-[#96237A] text-white transition-colors hover:bg-[#650F50] md:border-l-0 md:border-t"
       >
-        <FaArrowRight className="text-sm" />
+        <FaArrowRight className="text-sm md:hidden" />
+        <FaArrowDown className="hidden text-sm md:block" />
       </button>
     </div>
   );
