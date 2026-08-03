@@ -65,8 +65,9 @@ uniform int   u_iRippleCount;
 const int SAMPLES = 8;
 const float EPHEMERAL_DRIP = 1.0;
 
-const float I_HOVER_R = 0.42;      // radio de influencia del hover (espacio p)
-const float I_HOVER_AMP = 0.14;    // cuánto empuja/abre las líneas cercanas
+const float I_HOVER_RING = 0.14;   // radio del anillo del hover (espacio p)
+const float I_HOVER_WIDTH = 0.12;  // grosor del anillo del hover
+const float I_HOVER_AMP = 0.06;    // empuje del hover (bien ligero)
 const float I_RIPPLE_SPEED = 1.2;  // velocidad de expansión de la onda
 const float I_RIPPLE_WIDTH = 0.13; // grosor del anillo
 const float I_RIPPLE_AMP = 0.38;   // cuánto abre las líneas
@@ -186,12 +187,12 @@ void main() {
         p += dir * shell * I_RIPPLE_AMP * decay;
     }
 
-    // Hover: empuja suavemente el dominio alrededor del cursor, abriendo/moviendo
-    // las líneas cercanas (misma idea que la onda del click, pero suave y fija).
+    // Hover: anillo tipo onda (como el click) pero bien ligero y fijo alrededor
+    // del cursor — abre las líneas cercanas sin el pinchazo central.
     float dm = distance(p0, u_iMouse);
-    float hoverFall = smoothstep(I_HOVER_R, 0.0, dm);
+    float hShell = exp(-pow((dm - I_HOVER_RING) / I_HOVER_WIDTH, 2.0));
     vec2 hdir = dm > 1e-4 ? (p0 - u_iMouse) / dm : vec2(0.0);
-    p += hdir * hoverFall * u_iHover * I_HOVER_AMP;
+    p += hdir * hShell * u_iHover * I_HOVER_AMP;
 
     int colorCount = u_colors_length;
 
