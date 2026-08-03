@@ -163,16 +163,26 @@ export default function SolucionesScrollReact({
           <ul key={`r-${activeIndex}`} className="solscroll-fade border-t border-white/12">
             {subservicios.map((sub, i) => {
               const label = tField(sub as any, "label", locale);
+              const href = sub?.url ? withBase(sub.url) : null;
+              const rowInner = (
+                <div className="flex items-center gap-6 py-5 md:py-6">
+                  <span className="font-mono text-[13px] tabular-nums text-white/35 transition-colors group-hover:text-white/70">
+                    {pad2(i)}
+                  </span>
+                  <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
+                    {label}
+                  </span>
+                </div>
+              );
               return (
                 <li key={i} className="border-b border-white/12">
-                  <div className="flex items-center gap-6 py-5 md:py-6">
-                    <span className="font-mono text-[13px] tabular-nums text-white/35">
-                      {pad2(i)}
-                    </span>
-                    <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85">
-                      {label}
-                    </span>
-                  </div>
+                  {href ? (
+                    <a href={href} className="group block outline-none focus-visible:text-white">
+                      {rowInner}
+                    </a>
+                  ) : (
+                    <div className="cursor-default">{rowInner}</div>
+                  )}
                 </li>
               );
             })}
