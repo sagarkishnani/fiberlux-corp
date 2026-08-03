@@ -56,8 +56,21 @@ uniform vec4 u_mousePosition;
 uniform float u_mousePointerDown;
 uniform float u_mouseHover;
 
+// Interacción (SPEC 88+): hover disipa las líneas, click genera una onda.
+uniform vec2  u_iMouse;      // cursor en espacio p (aspect-fix)
+uniform float u_iHover;      // 0..1 intensidad del hover
+uniform vec3  u_iRipples[5]; // (x, y, startTime) por onda activa
+uniform int   u_iRippleCount;
+
 const int SAMPLES = 8;
 const float EPHEMERAL_DRIP = 1.0;
+
+const float I_HOVER_R = 0.42;      // radio de influencia del hover (espacio p)
+const float I_HOVER_AMP = 0.14;    // cuánto empuja/abre las líneas cercanas
+const float I_RIPPLE_SPEED = 1.2;  // velocidad de expansión de la onda
+const float I_RIPPLE_WIDTH = 0.13; // grosor del anillo
+const float I_RIPPLE_AMP = 0.38;   // cuánto abre las líneas
+const float I_RIPPLE_LIFE = 1.7;   // duración de la onda (s)
 
 // === PCG hash - https://www.jcgt.org/published/0009/03/02/
 uvec3 hash3(uvec3 v) {
@@ -155,6 +168,30 @@ void main() {
     vec2 r = u_resolution;
     vec2 p = (fragCoord * 2.0 - r) / r.y;
     float t = u_time * u_speed;
+
+    // Posición base sin warp (para el hover) y warp de ondas (click):
+    // cada onda empuja el dominio radialmente en un anillo que se expande,
+    // "abriendo" las líneas como agua.
+    vec2 p0 = p;
+    for (int i = 0; i < 5; i++) {
+        if (i >= u_iRippleCount) break;
+        vec2 rc = u_iRipples[i].xy;
+        float age = u_time - u_iRipples[i].z;
+        if (age < 0.0 || age > I_RIPPLE_LIFE) continue;
+        float d = distance(p0, rc);
+        float R = age * I_RIPPLE_SPEED;
+        float shell = exp(-pow((d - R) / I_RIPPLE_WIDTH, 2.0));
+        float decay = 1.0 - age / I_RIPPLE_LIFE;
+        vec2 dir = d > 1e-4 ? (p0 - rc) / d : vec2(0.0);
+        p += dir * shell * I_RIPPLE_AMP * decay;
+    }
+
+    // Hover: empuja suavemente el dominio alrededor del cursor, abriendo/moviendo
+    // las líneas cercanas (misma idea que la onda del click, pero suave y fija).
+    float dm = distance(p0, u_iMouse);
+    float hoverFall = smoothstep(I_HOVER_R, 0.0, dm);
+    vec2 hdir = dm > 1e-4 ? (p0 - u_iMouse) / dm : vec2(0.0);
+    p += hdir * hoverFall * u_iHover * I_HOVER_AMP;
 
     int colorCount = u_colors_length;
 
@@ -326,6 +363,10 @@ export default function WaveformEffect({ className, signalReady }: Props) {
 
     const uRes = U("u_resolution");
     const uTime = U("u_time");
+    const uIMouse = U("u_iMouse");
+    const uIHover = U("u_iHover");
+    const uIRipples = U("u_iRipples");
+    const uIRippleCount = U("u_iRippleCount");
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     function resize() {
@@ -351,9 +392,72 @@ export default function WaveformEffect({ className, signalReady }: Props) {
     let visible = true;
     let signaled = false;
 
+    // ── Interacción: hover disipa las líneas, click genera una onda ──
+    const MAX_RIPPLES = 5;
+    const RIPPLE_LIFE_S = 1.7; // = I_RIPPLE_LIFE del shader
+    let hover = 0;
+    let hoverTarget = 0;
+    let mousePX = 0;
+    let mousePY = 0;
+    const ripples: Array<{ x: number; y: number; t0: number }> = [];
+    const rippleBuf = new Float32Array(MAX_RIPPLES * 3);
+
+    // Cliente → espacio p del shader (aspect-fix, y hacia arriba).
+    function toP(clientX: number, clientY: number) {
+      const rect = canvas.getBoundingClientRect();
+      const uvx = (clientX - rect.left) / rect.width;
+      const uvy = 1 - (clientY - rect.top) / rect.height;
+      const aspect = rect.width / Math.max(rect.height, 1);
+      return {
+        x: (uvx * 2 - 1) * aspect,
+        y: uvy * 2 - 1,
+        inside: uvx >= 0 && uvx <= 1 && uvy >= 0 && uvy <= 1,
+      };
+    }
+    function onMove(e: PointerEvent) {
+      const q = toP(e.clientX, e.clientY);
+      if (q.inside) {
+        mousePX = q.x;
+        mousePY = q.y;
+        hoverTarget = 1;
+      } else {
+        hoverTarget = 0;
+      }
+    }
+    function onLeave() {
+      hoverTarget = 0;
+    }
+    function onDown(e: PointerEvent) {
+      const q = toP(e.clientX, e.clientY);
+      if (!q.inside) return;
+      ripples.push({ x: q.x, y: q.y, t0: (performance.now() - start) / 1000 });
+      if (ripples.length > MAX_RIPPLES) ripples.shift();
+    }
+    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerleave", onLeave);
+    canvas.addEventListener("pointerdown", onDown);
+
     function frame(now: number) {
       resize();
-      gl.uniform1f(uTime, (now - start) / 1000);
+      const nowS = (now - start) / 1000;
+      gl.uniform1f(uTime, nowS);
+
+      // Interacción: suaviza el hover y sube las ondas activas al shader.
+      hover += (hoverTarget - hover) * 0.12;
+      gl.uniform2f(uIMouse, mousePX, mousePY);
+      gl.uniform1f(uIHover, hover);
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        if (nowS - ripples[i].t0 > RIPPLE_LIFE_S) ripples.splice(i, 1);
+      }
+      const nR = Math.min(ripples.length, MAX_RIPPLES);
+      for (let i = 0; i < nR; i++) {
+        rippleBuf[i * 3] = ripples[i].x;
+        rippleBuf[i * 3 + 1] = ripples[i].y;
+        rippleBuf[i * 3 + 2] = ripples[i].t0;
+      }
+      gl.uniform3fv(uIRipples, rippleBuf);
+      gl.uniform1i(uIRippleCount, nR);
+
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       if (signalReady && !signaled) {
         signaled = true;
@@ -390,6 +494,9 @@ export default function WaveformEffect({ className, signalReady }: Props) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerleave", onLeave);
+      canvas.removeEventListener("pointerdown", onDown);
       io.disconnect();
       gl.deleteProgram(prog);
       gl.deleteShader(vs);
