@@ -1,6 +1,6 @@
 # SPEC 91 — Heros de Nosotros y Casos de éxito con fondo FlowEffect
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** commit `e7236e9` (componentes de fondo animado: `FlowEffect`), SPEC 13 (página casos de éxito), SPEC 47 (fondo imagen hero Nosotros)
 > **Date:** 2026-08-03
 > **Objective:** Reemplazar el fondo de los heros de `/nosotros` y `/casos-de-exito` por el canvas animado `FlowEffect` (gradiente líquido magenta WebGL2), manteniendo la imagen actual como fallback cuando no hay WebGL2.
@@ -54,14 +54,14 @@
 
 ## Criterios de aceptación
 
-- [ ] El hero de `/nosotros` muestra el fondo `FlowEffect` animado (magenta líquido) detrás del breadcrumb/título/subtítulo.
-- [ ] El hero de `/casos-de-exito` muestra el fondo `FlowEffect` animado detrás del breadcrumb/heading/intro, **sin** el degradado oscuro de legibilidad.
-- [ ] El canvas cubre toda el área del hero (incluida la franja bajo el header) y no genera scroll horizontal.
-- [ ] Si WebGL2 no está disponible, se ve la imagen de fondo actual como fallback (no pantalla negra) y el texto sigue legible.
-- [ ] El flow corre en desktop y móvil; fuera de viewport se pausa.
-- [ ] Con `prefers-reduced-motion: reduce`, el flow queda estático (sin animación).
-- [ ] `/en/nosotros` y `/en/casos-de-exito` muestran el mismo fondo flow.
-- [ ] `npm run build` pasa sin errores nuevos.
+- [x] El hero de `/nosotros` muestra el fondo `FlowEffect` animado (magenta líquido) detrás del breadcrumb/título/subtítulo.
+- [x] El hero de `/casos-de-exito` muestra el fondo `FlowEffect` animado detrás del breadcrumb/heading/intro, **sin** el degradado oscuro de legibilidad.
+- [x] El canvas cubre toda el área del hero (incluida la franja bajo el header) y no genera scroll horizontal.
+- [x] Si WebGL2 no está disponible, se ve la imagen de fondo actual como fallback (no pantalla negra) y el texto sigue legible.
+- [x] El flow corre en desktop y móvil; fuera de viewport se pausa.
+- [x] Con `prefers-reduced-motion: reduce`, el flow queda estático (sin animación).
+- [x] `/en/nosotros` y `/en/casos-de-exito` muestran el mismo fondo flow.
+- [x] `npm run build` pasa sin errores nuevos.
 
 ---
 
