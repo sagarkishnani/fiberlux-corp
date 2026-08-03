@@ -1,0 +1,17 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import SolucionesScrollReact from "./SolucionesScrollReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+---
+
+<SolucionesScrollReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+  locale={locale}
+/>
