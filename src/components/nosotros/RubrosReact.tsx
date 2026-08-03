@@ -120,13 +120,13 @@ export default function RubrosReact({
   );
 
   return (
-    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]">
+    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[116px] pt-[92px]">
       <div className="site-container">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-14">
           {/* Columna izquierda: título + descripción (fija en desktop, arriba en móvil) */}
           <div className="shrink-0 md:max-w-[440px]">
             <h2
-              className="text-[36px] font-medium leading-[1.1] tracking-tight text-white md:text-[64px]"
+              className="text-[32px] font-medium leading-[1.15] tracking-tight text-white md:text-[52px]"
               data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
             >
               {tField(rubros as any, 'title', locale)}
