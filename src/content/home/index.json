@@ -37,7 +37,9 @@
           { "label": "Conectividad satelital", "label_en": "Satellite Connectivity", "url": "/soluciones/conectividad-empresarial/conectividad-satelital" },
           { "label": "Radioenlaces empresariales", "label_en": "Enterprise Radio Links", "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales" },
           { "label": "Transmisión de datos (Lan To Lan)", "label_en": "Data Transmission (Lan To Lan)", "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l" },
-          { "label": "SD-WAN", "label_en": "SD-WAN", "url": "/soluciones/conectividad-empresarial/sd-wan" }
+          { "label": "SD-WAN", "label_en": "SD-WAN", "url": "/soluciones/conectividad-empresarial/sd-wan" },
+          { "label": "Fibra Oscura", "label_en": "Dark Fiber", "url": "/soluciones/conectividad-empresarial/fibra-oscura" },
+          { "label": "Balanceo de enlaces", "label_en": "Link Balancing", "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces" }
         ],
         "url": "/soluciones/conectividad-empresarial",
         "title_en": "Business Connectivity",
@@ -54,7 +56,14 @@
           { "label": "MFA y Control de Identidad", "label_en": "MFA & Identity Control", "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad" },
           { "label": "ZTNA y Control de Acceso Seguro", "label_en": "ZTNA & Secure Access Control", "url": "/soluciones/ciberseguridad-gestionada/ztna" },
           { "label": "WAF y Protección de Aplicaciones", "label_en": "WAF & Application Protection", "url": "/soluciones/ciberseguridad-gestionada/waf" },
-          { "label": "Cyber SOC 24/7 y Monitoreo", "label_en": "Cyber SOC 24/7 & Monitoring", "url": "/soluciones/ciberseguridad-gestionada/soc-24-7" }
+          { "label": "Cyber SOC 24/7 y Monitoreo", "label_en": "Cyber SOC 24/7 & Monitoring", "url": "/soluciones/ciberseguridad-gestionada/soc-24-7" },
+          { "label": "VPN Segura y Acceso Remoto Protegido", "label_en": "Secure VPN & Protected Remote Access", "url": "/soluciones/ciberseguridad-gestionada/vpn-segura" },
+          { "label": "Seguridad de Correo y Filtrado Web", "label_en": "Email Security & Web Filtering", "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web" },
+          { "label": "NAC", "label_en": "NAC", "url": "/soluciones/ciberseguridad-gestionada/nac" },
+          { "label": "Anti-DDoS", "label_en": "Anti-DDoS", "url": "/soluciones/ciberseguridad-gestionada/anti-ddos" },
+          { "label": "Concientización en Phishing", "label_en": "Phishing Awareness", "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing" },
+          { "label": "Correlación de Eventos (SIEM)", "label_en": "Event Correlation (SIEM)", "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos" },
+          { "label": "Pentesting", "label_en": "Pentesting", "url": "/soluciones/ciberseguridad-gestionada/pentesting" }
         ],
         "url": "/soluciones/ciberseguridad-gestionada",
         "title_en": "Managed Cybersecurity",
@@ -88,7 +97,8 @@
           { "label": "Gestión de Redes LAN", "label_en": "LAN Network Management", "url": "/soluciones/servicios-gestionados/gestion-redes-lan" },
           { "label": "Wifi Gestionado", "label_en": "Managed WiFi", "url": "/soluciones/servicios-gestionados/wifi-gestionado" },
           { "label": "Gestión de Endpoints", "label_en": "Endpoint Management", "url": "/soluciones/servicios-gestionados/gestion-endpoints" },
-          { "label": "Videovigilancia gestionada", "label_en": "Managed Video Surveillance", "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada" }
+          { "label": "Videovigilancia gestionada", "label_en": "Managed Video Surveillance", "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada" },
+          { "label": "Colaboración Empresarial", "label_en": "Enterprise Collaboration", "url": "/soluciones/servicios-gestionados/colaboracion-empresarial" }
         ],
         "url": "/soluciones/servicios-gestionados",
         "title_en": "Managed Services",
