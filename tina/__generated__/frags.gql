@@ -32,8 +32,12 @@ fragment HomeParts on Home {
       description
       description_en
       icon
-      bullets
-      bullets_en
+      bullets {
+        __typename
+        label
+        label_en
+        url
+      }
       url
     }
   }

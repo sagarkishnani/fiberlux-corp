@@ -162,6 +162,12 @@ type HomeHero {
   buttons: [HomeHeroButtons]
 }
 
+type HomeServicesItemsBullets {
+  label: String
+  label_en: String
+  url: String
+}
+
 type HomeServicesItems {
   number: String
   title: String
@@ -169,8 +175,7 @@ type HomeServicesItems {
   description: String
   description_en: String
   icon: String
-  bullets: [String]
-  bullets_en: [String]
+  bullets: [HomeServicesItemsBullets]
   url: String
 }
 
@@ -278,6 +283,12 @@ input HomeHeroFilter {
   buttons: HomeHeroButtonsFilter
 }
 
+input HomeServicesItemsBulletsFilter {
+  label: StringFilter
+  label_en: StringFilter
+  url: StringFilter
+}
+
 input HomeServicesItemsFilter {
   number: StringFilter
   title: StringFilter
@@ -285,8 +296,7 @@ input HomeServicesItemsFilter {
   description: StringFilter
   description_en: StringFilter
   icon: ImageFilter
-  bullets: StringFilter
-  bullets_en: StringFilter
+  bullets: HomeServicesItemsBulletsFilter
   url: StringFilter
 }
 
@@ -2480,6 +2490,12 @@ input HomeHeroMutation {
   buttons: [HomeHeroButtonsMutation]
 }
 
+input HomeServicesItemsBulletsMutation {
+  label: String
+  label_en: String
+  url: String
+}
+
 input HomeServicesItemsMutation {
   number: String
   title: String
@@ -2487,8 +2503,7 @@ input HomeServicesItemsMutation {
   description: String
   description_en: String
   icon: String
-  bullets: [String]
-  bullets_en: [String]
+  bullets: [HomeServicesItemsBulletsMutation]
   url: String
 }
 

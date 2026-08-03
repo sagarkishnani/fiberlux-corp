@@ -170,11 +170,18 @@ var config_default = defineConfig({
                   },
                   {
                     name: "bullets",
-                    label: "Bullets",
-                    type: "string",
-                    list: true
+                    label: "Subservicios",
+                    type: "object",
+                    list: true,
+                    ui: {
+                      itemProps: (b) => ({ label: b?.label || "Subservicio" })
+                    },
+                    fields: [
+                      { name: "label", label: "Nombre", type: "string" },
+                      { name: "label_en", label: "Nombre (EN)", type: "string" },
+                      { name: "url", label: "URL destino", type: "string" }
+                    ]
                   },
-                  { name: "bullets_en", label: "Bullets (EN)", type: "string", list: true },
                   { name: "url", label: "URL del servicio", type: "string" }
                 ]
               }
