@@ -6,6 +6,7 @@ import type {
 import { tField } from "../../utils/i18n";
 import { t } from "../../i18n/ui";
 import type { Locale } from "../../i18n/config";
+import FlowEffect from "../effects/FlowEffect";
 
 interface HeroCasosProps {
   query: string;
@@ -38,7 +39,7 @@ export default function HeroCasosReact({
       className="relative overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      {/* Magenta gradient backdrop image */}
+      {/* Magenta gradient backdrop image (fallback si no hay WebGL2) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-no-repeat"
         style={{
@@ -47,15 +48,8 @@ export default function HeroCasosReact({
         }}
         aria-hidden="true"
       />
-      {/* Dark overlay so the left-column copy stays legible */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "linear-gradient(90deg, #0a0a0a 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0.15) 62%, rgba(10,10,10,0) 100%)",
-        }}
-        aria-hidden="true"
-      />
+      {/* Canvas FlowEffect encima de la imagen, debajo del contenido */}
+      <FlowEffect className="absolute inset-0 z-0 h-full w-full" />
 
       <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
         <div className="max-w-[600px]" data-reveal="up">
