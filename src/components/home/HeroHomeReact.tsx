@@ -6,6 +6,7 @@ import type { Locale } from "../../i18n/config";
 import SplineScene from "../shared/SplineScene";
 import { mediaUrl } from "../../utils/mediaUrl";
 import Button from "../shared/Button";
+import WaveformEffect from "../effects/WaveformEffect";
 
 interface HeroHomeProps {
   query: string;
@@ -155,6 +156,14 @@ export default function HeroHomeReact({
             </div>
           </div>
         </>
+      )}
+
+      {/* Modo waveform (SPEC 88): shader WebGL2 a sangre, animado también en
+          mobile. Base #0a0a0a incluida en el propio shader. */}
+      {mode === "waveform" && (
+        <div className="absolute inset-0 z-0">
+          <WaveformEffect className="h-full w-full" signalReady />
+        </div>
       )}
 
       {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}

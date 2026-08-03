@@ -74,6 +74,7 @@ export default defineConfig({
                   { value: "3d", label: "Escena 3D (Spline)" },
                   { value: "video", label: "Video de fondo" },
                   { value: "imagen", label: "Imagen de fondo" },
+                  { value: "waveform", label: "Waveform (shader animado)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
