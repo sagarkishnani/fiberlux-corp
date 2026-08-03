@@ -25,8 +25,11 @@ function withBase(path: string): string {
 const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 
 /* Alto de scroll (en unidades de viewport) que ocupa cada categoría antes de
-   pasar a la siguiente. Menor a 1 ⇒ el scroll-jack se siente más ágil. */
-const VH_PER_CATEGORY = 0.8;
+   pasar a la siguiente. Más recorrido ⇒ el cambio se siente más suave. */
+const VH_PER_CATEGORY = 1;
+
+/* Duración (ms) del fade-out antes de intercambiar el contenido en el crossfade. */
+const FADE_MS = 180;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
@@ -49,9 +52,10 @@ export default function SolucionesScrollReact({
 
   /* ── Motor scroll-jack ──
      El <section> mide N × VH_PER_CATEGORY viewports de alto y su panel interno
-     queda pinned (sticky). El progreso del scroll dentro del track (0..1) se
-     reparte en N segmentos iguales → categoría activa. rAF-throttled: no bloquea
-     el scroll nativo, solo mapea posición (compatible con Lenis). */
+     queda pinned (sticky). El progreso del scroll (0..1) se reparte en N segmentos
+     → índice activo. El número gigante translada a -activeIndex·em con una
+     transición CSS (rueda como odómetro, suave, y queda siempre alineado con el
+     título). rAF-throttled: no bloquea el scroll nativo (compatible con Lenis). */
   useEffect(() => {
     if (N <= 1) return;
     const track = trackRef.current;
@@ -81,6 +85,22 @@ export default function SolucionesScrollReact({
       window.removeEventListener("resize", onScroll);
     };
   }, [N]);
+
+  /* ── Crossfade suave del contenido (título/descr/lista) ──
+     No se remonta con `key` (eso producía un "pop" brusco). En vez de eso:
+     al cambiar el índice, el bloque se desvanece (opacity/translate), luego se
+     intercambia el contenido a `renderIdx` y vuelve a aparecer. */
+  const [renderIdx, setRenderIdx] = useState(0);
+  const [shown, setShown] = useState(true);
+  useEffect(() => {
+    if (activeIndex === renderIdx) return;
+    setShown(false);
+    const t = window.setTimeout(() => {
+      setRenderIdx(activeIndex);
+      setShown(true);
+    }, FADE_MS);
+    return () => window.clearTimeout(t);
+  }, [activeIndex, renderIdx]);
 
   /* ── Tooltip "Ver más" con delay + lag ──
      Solo en punteros finos. Aparece tras un delay y persigue al cursor con un
@@ -146,8 +166,8 @@ export default function SolucionesScrollReact({
   const tooltipLabel = locale === "en" ? "See more" : "Ver más";
 
   if (items.length === 0) return null;
-  const active = items[Math.min(activeIndex, N - 1)];
-  const activeTina = services?.items?.[Math.min(activeIndex, N - 1)];
+  const active = items[Math.min(renderIdx, N - 1)];
+  const activeTina = services?.items?.[Math.min(renderIdx, N - 1)];
   const sectionTitle = (tField(services as any, "title", locale) || "").trim();
 
   const subservicios = (active?.bullets || []).filter(Boolean) as {
@@ -157,6 +177,11 @@ export default function SolucionesScrollReact({
   }[];
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
+
+  /* Clases del bloque que hace crossfade (título/descr/botón y lista). */
+  const fadeCls = `transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none motion-reduce:transform-none ${
+    shown ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+  }`;
 
   return (
     <section
@@ -175,88 +200,101 @@ export default function SolucionesScrollReact({
         />
 
         <div className="relative z-10 w-full site-container py-10 md:py-20 lg:flex lg:items-center lg:gap-16">
-        {/* ── Columna izquierda: categoría activa ── */}
-        <div className="lg:w-[42%] lg:shrink-0">
-          {sectionTitle && (
-            <p
-              className="mb-6 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
-              data-tina-field={services ? tinaField(services, "title") : undefined}
-            >
-              [ {sectionTitle.toUpperCase()} ]
-            </p>
-          )}
-
-          <div key={`l-${activeIndex}`} className="solscroll-fade">
-            <span
-              className="block text-[48px] md:text-[88px] font-semibold leading-none text-white"
-              data-tina-field={activeTina ? tinaField(activeTina, "number") : undefined}
-            >
-              {active?.number}
-            </span>
-
-            <h2
-              className="mt-3 md:mt-4 text-[26px] md:text-[44px] leading-[1.1] font-semibold text-white max-w-[14ch]"
-              data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
-            >
-              {tField(active as any, "title", locale)}
-            </h2>
-
-            {active?.description && (
+          {/* ── Columna izquierda: categoría activa ── */}
+          <div className="lg:w-[42%] lg:shrink-0">
+            {sectionTitle && (
               <p
-                className="mt-3 md:mt-5 text-[15px] md:text-[18px] leading-relaxed text-white/60 max-w-[34ch]"
-                data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+                className="mb-6 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
+                data-tina-field={services ? tinaField(services, "title") : undefined}
               >
-                {tField(active as any, "description", locale)}
+                [ {sectionTitle.toUpperCase()} ]
               </p>
             )}
 
-            {active?.url && (
-              <a
-                href={withBase(active.url)}
-                className="mt-6 md:mt-9 inline-flex items-center rounded-full border border-white/50 px-6 md:px-7 py-2.5 md:py-3 text-[15px] md:text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#3B0E30]"
-                data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
+            {/* Número odómetro: ventana de 1em con una tira vertical de números;
+                translada a -activeIndex·em con transición CSS (rueda suave por
+                categoría, siempre alineado con el título). */}
+            <div
+              aria-hidden="true"
+              className="relative overflow-hidden text-[52px] md:text-[92px] font-semibold leading-none text-white"
+              style={{ height: "1em" }}
+            >
+              <div
+                className="will-change-transform transition-transform duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
+                style={{ transform: `translateY(-${activeIndex}em)` }}
               >
-                {ctaLabel}
-              </a>
-            )}
-          </div>
-        </div>
+                {items.map((it, i) => (
+                  <div key={i} style={{ height: "1em", lineHeight: 1 }}>
+                    {it?.number}
+                  </div>
+                ))}
+              </div>
+            </div>
 
-        {/* ── Columna derecha: subservicios de la categoría activa ── */}
-        <div
-          className="lg:flex-1 lg:min-w-0 mt-7 lg:mt-0"
-          onMouseEnter={handleListEnter}
-          onMouseMove={handleListMove}
-          onMouseLeave={handleListLeave}
-        >
-          <ul key={`r-${activeIndex}`} className="solscroll-fade border-t border-white/12">
-            {subservicios.map((sub, i) => {
-              const label = tField(sub as any, "label", locale);
-              const href = sub?.url ? withBase(sub.url) : null;
-              const rowInner = (
-                <div className="flex items-center gap-6 py-3.5 md:py-6">
-                  <span className="font-mono text-[13px] tabular-nums text-white/35 transition-colors group-hover:text-white/70">
-                    {pad2(i)}
-                  </span>
-                  <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
-                    {label}
-                  </span>
-                </div>
-              );
-              return (
-                <li key={i} className="border-b border-white/12">
-                  {href ? (
-                    <a href={href} className="group block outline-none focus-visible:text-white">
-                      {rowInner}
-                    </a>
-                  ) : (
-                    <div className="cursor-default">{rowInner}</div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            <div className={fadeCls}>
+              <h2
+                className="mt-3 md:mt-4 text-[26px] md:text-[44px] leading-[1.1] font-semibold text-white max-w-[14ch]"
+                data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
+              >
+                {tField(active as any, "title", locale)}
+              </h2>
+
+              {active?.description && (
+                <p
+                  className="mt-3 md:mt-5 text-[15px] md:text-[18px] leading-relaxed text-white/60 max-w-[34ch]"
+                  data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+                >
+                  {tField(active as any, "description", locale)}
+                </p>
+              )}
+
+              {active?.url && (
+                <a
+                  href={withBase(active.url)}
+                  className="mt-6 md:mt-9 inline-flex items-center rounded-full border border-white/50 px-6 md:px-7 py-2.5 md:py-3 text-[15px] md:text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#3B0E30]"
+                  data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
+                >
+                  {ctaLabel}
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* ── Columna derecha: subservicios de la categoría activa ── */}
+          <div
+            className="lg:flex-1 lg:min-w-0 mt-7 lg:mt-0"
+            onMouseEnter={handleListEnter}
+            onMouseMove={handleListMove}
+            onMouseLeave={handleListLeave}
+          >
+            <ul className={`${fadeCls} border-t border-white/12`}>
+              {subservicios.map((sub, i) => {
+                const label = tField(sub as any, "label", locale);
+                const href = sub?.url ? withBase(sub.url) : null;
+                const rowInner = (
+                  <div className="flex items-center gap-6 py-3.5 md:py-6">
+                    <span className="font-mono text-[13px] tabular-nums text-white/35 transition-colors group-hover:text-white/70">
+                      {pad2(i)}
+                    </span>
+                    <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
+                      {label}
+                    </span>
+                  </div>
+                );
+                return (
+                  <li key={i} className="border-b border-white/12">
+                    {href ? (
+                      <a href={href} className="group block outline-none focus-visible:text-white">
+                        {rowInner}
+                      </a>
+                    ) : (
+                      <div className="cursor-default">{rowInner}</div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -277,17 +315,6 @@ export default function SolucionesScrollReact({
           {tooltipLabel}
         </div>
       </div>
-
-      <style>{`
-        @keyframes solscroll-in {
-          from { opacity: 0; transform: translateY(14px); }
-          to   { opacity: 1; transform: none; }
-        }
-        .solscroll-fade { animation: solscroll-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
-        @media (prefers-reduced-motion: reduce) {
-          .solscroll-fade { animation: none; }
-        }
-      `}</style>
     </section>
   );
 }
