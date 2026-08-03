@@ -120,7 +120,7 @@ export default function RubrosReact({
   );
 
   return (
-    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[116px] pt-[92px]">
+    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[64px] pt-[92px] md:pb-[116px]">
       <div className="site-container">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-14">
           {/* Columna izquierda: título + descripción (fija en desktop, arriba en móvil) */}
