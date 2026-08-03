@@ -4,6 +4,7 @@ import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
+import { buttonClass } from "./Button";
 
 /* ── Props ── */
 interface SolucionesScrollProps {
@@ -24,8 +25,9 @@ function withBase(path: string): string {
 /* A two-digit index label ("01", "02"…). */
 const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 
-/* Alto de scroll (en viewports) por categoría. Más recorrido ⇒ más suave. */
-const VH_PER_CATEGORY = 1.15;
+/* Alto de scroll (en viewports) por categoría. Regula la velocidad del recorrido;
+   el snap remata el encaje en el centro de cada categoría. */
+const VH_PER_CATEGORY = 1.05;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
@@ -49,9 +51,8 @@ export default function SolucionesScrollReact({
   const trackRef = useRef<HTMLElement | null>(null);
   const bgNumRef = useRef<HTMLDivElement | null>(null); // número gigante de fondo (parallax)
   const glowRef = useRef<HTMLDivElement | null>(null); // glow reactivo
-  const railFillRef = useRef<HTMLDivElement | null>(null); // relleno del riel de progreso
   const fgRef = useRef<HTMLDivElement | null>(null); // contenido izq (título/descr/botón): envelope
-  const listRef = useRef<HTMLUListElement | null>(null); // lista derecha: envelope
+  const listRef = useRef<HTMLDivElement | null>(null); // lista derecha (+ "ver todas"): envelope
   const reduceRef = useRef(false);
   const snapTimer = useRef<number | null>(null);
 
@@ -73,9 +74,9 @@ export default function SolucionesScrollReact({
       if (total <= 0) return;
       const scrolled = -track.getBoundingClientRect().top;
       const progress = clamp(scrolled / total, 0, 1);
-      const cont = progress * (N - 1);
-      const idx = clamp(Math.round(cont), 0, N - 1);
-      const frac = cont - idx; // [-0.5, 0.5]
+      const seg = progress * N; // 0..N: cada categoría ocupa un segmento igual
+      const idx = clamp(Math.floor(seg), 0, N - 1);
+      const frac = seg - (idx + 0.5); // [-0.5, 0.5): distancia al centro del segmento
       const envelope = 1 - Math.min(1, Math.abs(frac) * 2); // 1 centro → 0 borde
       const reduce = reduceRef.current;
 
@@ -86,10 +87,6 @@ export default function SolucionesScrollReact({
       // Glow: sube y crece con el progreso.
       if (glowRef.current) {
         glowRef.current.style.transform = `translate3d(0, ${(progress * 180).toFixed(1)}px, 0) scale(${(1 + progress * 0.18).toFixed(3)})`;
-      }
-      // Riel de progreso: relleno continuo.
-      if (railFillRef.current) {
-        railFillRef.current.style.transform = `scaleY(${progress.toFixed(4)})`;
       }
       // Envelope direccional del contenido (crossfade + slide con el scroll).
       const slide = reduce ? 0 : (-frac * 34).toFixed(1);
@@ -117,7 +114,7 @@ export default function SolucionesScrollReact({
        más cercana usando Lenis (sin pelear con el smooth-scroll global). */
     const scheduleSnap = () => {
       if (snapTimer.current != null) window.clearTimeout(snapTimer.current);
-      snapTimer.current = window.setTimeout(runSnap, 160);
+      snapTimer.current = window.setTimeout(runSnap, 110);
     };
     const runSnap = () => {
       const total = track.offsetHeight - window.innerHeight;
@@ -125,13 +122,13 @@ export default function SolucionesScrollReact({
       const rectTop = track.getBoundingClientRect().top;
       const scrolled = -rectTop;
       const progress = clamp(scrolled / total, 0, 1);
-      if (progress <= 0.001 || progress >= 0.999) return; // libre en los extremos
-      const cont = progress * (N - 1);
-      const idx = clamp(Math.round(cont), 0, N - 1);
-      const frac = cont - idx;
+      if (progress <= 0.02 || progress >= 0.98) return; // libre en los extremos (permite salir)
+      const seg = progress * N;
+      const idx = clamp(Math.floor(seg), 0, N - 1);
+      const frac = seg - (idx + 0.5);
       if (Math.abs(frac) < 0.04) return; // ya está prácticamente encajado
       const trackTopAbs = rectTop + window.scrollY;
-      const targetProgress = idx / (N - 1);
+      const targetProgress = (idx + 0.5) / N;
       const targetY = Math.round(trackTopAbs + targetProgress * total);
       const lenis = (window as any).__lenis;
       if (lenis?.scrollTo) lenis.scrollTo(targetY, { duration: 0.5 });
@@ -215,8 +212,13 @@ export default function SolucionesScrollReact({
     label_en?: string | null;
     url?: string | null;
   }[];
+  /* Se muestran las primeras MAX_VISIBLE; si hay más, un enlace "Ver todas (N)". */
+  const MAX_VISIBLE = 6;
+  const visible = subservicios.slice(0, MAX_VISIBLE);
+  const overflow = subservicios.length - MAX_VISIBLE;
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
+  const seeAllLabel = locale === "en" ? "See all" : "Ver todas";
 
   /* Transición CSS del odómetro (número) — rueda por categoría, alineado. */
   const numTransition =
@@ -262,35 +264,9 @@ export default function SolucionesScrollReact({
           </div>
         </div>
 
-        <div className="relative z-10 w-full site-container py-10 md:py-20 lg:flex lg:items-center lg:gap-14">
-          {/* Riel de progreso vertical (desktop). */}
-          <div
-            aria-hidden="true"
-            className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 h-[320px] items-stretch"
-          >
-            <div className="relative w-px bg-white/12">
-              <div
-                ref={railFillRef}
-                className="absolute inset-x-0 top-0 h-full origin-top bg-gradient-to-b from-brand-purple to-white/70 will-change-transform"
-                style={{ transform: "scaleY(0)" }}
-              />
-              {items.map((_, i) => {
-                const on = i <= activeIndex;
-                return (
-                  <span
-                    key={i}
-                    className={`absolute -left-[3px] h-[7px] w-[7px] -translate-y-1/2 rounded-full transition-colors duration-500 ${
-                      on ? "bg-white" : "bg-white/25"
-                    }`}
-                    style={{ top: `${(i / (N - 1)) * 100}%` }}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
+        <div className="relative z-10 w-full site-container py-8 md:py-16 lg:py-20 md:flex md:items-center md:gap-10 lg:gap-14">
           {/* ── Columna izquierda ── */}
-          <div className="lg:w-[42%] lg:shrink-0 lg:pl-10">
+          <div className="md:w-[42%] md:shrink-0">
             {sectionTitle && (
               <p
                 className="mb-6 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
@@ -336,7 +312,7 @@ export default function SolucionesScrollReact({
               {active?.url && (
                 <a
                   href={withBase(active.url)}
-                  className="mt-6 md:mt-9 inline-flex items-center rounded-full border border-white/50 px-6 md:px-7 py-2.5 md:py-3 text-[15px] md:text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#3B0E30]"
+                  className={buttonClass("secondary", "mt-6 md:mt-9")}
                   data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
                 >
                   {ctaLabel}
@@ -347,21 +323,19 @@ export default function SolucionesScrollReact({
 
           {/* ── Columna derecha: subservicios ── */}
           <div
-            className="lg:flex-1 lg:min-w-0 mt-7 lg:mt-0"
+            className="md:flex-1 md:min-w-0 mt-7 md:mt-0"
             onMouseEnter={handleListEnter}
             onMouseMove={handleListMove}
             onMouseLeave={handleListLeave}
           >
-            <ul
-              ref={listRef}
-              className="border-t border-white/12 will-change-transform sol-stagger"
-            >
-              {subservicios.map((sub, i) => {
+            <div ref={listRef} className="will-change-transform">
+            <ul className="border-t border-white/12 sol-stagger">
+              {visible.map((sub, i) => {
                 const label = tField(sub as any, "label", locale);
                 const href = sub?.url ? withBase(sub.url) : null;
                 const rowInner = (
-                  <div className="flex items-center gap-6 py-3.5 md:py-6">
-                    <span className="font-mono text-[13px] tabular-nums text-white/35 transition-colors group-hover:text-white/70">
+                  <div className="flex items-center gap-6 py-3 md:py-6">
+                    <span className="text-[18px] md:text-[24px] font-medium tabular-nums text-white/35 transition-colors group-hover:text-white/70">
                       {pad2(i)}
                     </span>
                     <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
@@ -386,6 +360,24 @@ export default function SolucionesScrollReact({
                 );
               })}
             </ul>
+
+            {overflow > 0 && active?.url && (
+              <div className="mt-6 flex justify-end">
+                <a
+                  href={withBase(active.url)}
+                  className="group inline-flex items-center gap-2 text-[15px] font-medium text-white/65 transition-colors hover:text-white"
+                >
+                  {seeAllLabel} ({subservicios.length})
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </a>
+              </div>
+            )}
+            </div>
           </div>
         </div>
       </div>
@@ -398,7 +390,7 @@ export default function SolucionesScrollReact({
         style={{ transform: "translate3d(-200px, -200px, 0)" }}
       >
         <div
-          className={`-translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95 px-3.5 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-200 ${
+          className={`-translate-x-1/2 -translate-y-1/2 rounded-[8px] bg-white/95 px-3.5 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-200 ${
             tooltipOn ? "opacity-100" : "opacity-0"
           }`}
         >
