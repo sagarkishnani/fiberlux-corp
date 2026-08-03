@@ -94,12 +94,12 @@ export default function RubrosReact({
   const tile = (item: Rubro, key: string, ref?: Rubro) => {
     const Icon = (item.icon && ICONS[item.icon]) || FALLBACK_ICON;
     return (
-      <div key={key} className="rubro-tile shrink-0 flex flex-col items-center gap-2.5">
-        <span className="grid h-[88px] w-[88px] place-items-center rounded-[18px] border border-white/10 bg-white/[0.03]">
-          <Icon className="text-[30px] text-white/80" strokeWidth={1.5} />
+      <div key={key} className="rubro-tile shrink-0 flex flex-col items-center gap-3">
+        <span className="grid h-[116px] w-[116px] place-items-center rounded-[22px] border border-white/10 bg-white/[0.03]">
+          <Icon className="text-[38px] text-white/80" strokeWidth={1.5} />
         </span>
         <span
-          className="whitespace-nowrap text-sm text-white/70"
+          className="whitespace-nowrap text-[15px] text-white/70"
           data-tina-field={ref ? tinaField(ref as any, 'label') : undefined}
         >
           {tField(item as any, 'label', locale)}
@@ -122,14 +122,24 @@ export default function RubrosReact({
   return (
     <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]">
       <div className="site-container">
-        <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
-          {/* Título: fijo a la izquierda (desktop), arriba (móvil) */}
-          <h2
-            className="shrink-0 text-[32px] font-medium leading-[1.15] tracking-tight text-white md:max-w-[360px] md:text-[52px]"
-            data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
-          >
-            {tField(rubros as any, 'title', locale)}
-          </h2>
+        <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-14">
+          {/* Columna izquierda: título + descripción (fija en desktop, arriba en móvil) */}
+          <div className="shrink-0 md:max-w-[440px]">
+            <h2
+              className="text-[36px] font-medium leading-[1.1] tracking-tight text-white md:text-[64px]"
+              data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
+            >
+              {tField(rubros as any, 'title', locale)}
+            </h2>
+            {tField(rubros as any, 'description', locale) && (
+              <p
+                className="mt-6 max-w-[440px] text-base leading-relaxed text-white/60 md:text-lg"
+                data-tina-field={rubros ? tinaField(rubros, 'description') : undefined}
+              >
+                {tField(rubros as any, 'description', locale)}
+              </p>
+            )}
+          </div>
 
           {/* Marquee: 2 filas en sentidos opuestos, opacidad tenue + fade en bordes */}
           <div className="rubro-marquee min-w-0 flex-1">
@@ -143,7 +153,7 @@ export default function RubrosReact({
         .rubro-marquee {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 36px;
           opacity: 0.5;
         }
         .rubro-row {
@@ -152,10 +162,10 @@ export default function RubrosReact({
           mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
         }
         .rubro-track {
-          gap: 40px;
-          padding-right: 40px; /* iguala el gap tras la última tile para un loop continuo */
+          gap: 48px;
+          padding-right: 48px; /* iguala el gap tras la última tile para un loop continuo */
           will-change: transform;
-          animation: rubro-marquee 42s linear infinite;
+          animation: rubro-marquee 46s linear infinite;
         }
         /* Fila superior corre a la derecha (reverse); inferior a la izquierda (normal). */
         .rubro-track--top { animation-direction: reverse; }
@@ -168,13 +178,16 @@ export default function RubrosReact({
           .rubro-track { animation: none; }
         }
         @media (max-width: 1024px) {
-          .rubro-track { gap: 32px; padding-right: 32px; }
+          .rubro-marquee { gap: 28px; }
+          .rubro-track { gap: 40px; padding-right: 40px; }
+          .rubro-tile span:first-child { height: 100px; width: 100px; border-radius: 20px; }
+          .rubro-tile span:first-child svg { font-size: 34px; }
         }
         @media (max-width: 767px) {
-          .rubro-marquee { gap: 20px; }
-          .rubro-track { gap: 24px; padding-right: 24px; }
-          .rubro-tile span:first-child { height: 72px; width: 72px; border-radius: 15px; }
-          .rubro-tile span:first-child svg { font-size: 26px; }
+          .rubro-marquee { gap: 22px; }
+          .rubro-track { gap: 28px; padding-right: 28px; }
+          .rubro-tile span:first-child { height: 84px; width: 84px; border-radius: 17px; }
+          .rubro-tile span:first-child svg { font-size: 30px; }
         }
       `}</style>
     </section>

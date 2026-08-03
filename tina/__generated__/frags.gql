@@ -296,6 +296,8 @@ fragment AboutParts on About {
     __typename
     title
     title_en
+    description
+    description_en
     items {
       __typename
       icon

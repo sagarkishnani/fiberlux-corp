@@ -1042,6 +1042,8 @@ export default defineConfig({
             fields: [
               { name: "title", label: "Título", type: "string" },
               { name: "title_en", label: "Título (EN)", type: "string" },
+              { name: "description", label: "Descripción", type: "string", ui: { component: "textarea" } },
+              { name: "description_en", label: "Descripción (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Rubros",

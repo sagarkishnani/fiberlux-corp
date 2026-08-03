@@ -987,6 +987,8 @@ var config_default = defineConfig({
             fields: [
               { name: "title", label: "T\xEDtulo", type: "string" },
               { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+              { name: "description", label: "Descripci\xF3n", type: "string", ui: { component: "textarea" } },
+              { name: "description_en", label: "Descripci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Rubros",

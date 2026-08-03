@@ -808,6 +808,8 @@ type AboutRubrosItems {
 type AboutRubros {
   title: String
   title_en: String
+  description: String
+  description_en: String
   items: [AboutRubrosItems]
 }
 
@@ -910,6 +912,8 @@ input AboutRubrosItemsFilter {
 input AboutRubrosFilter {
   title: StringFilter
   title_en: StringFilter
+  description: StringFilter
+  description_en: StringFilter
   items: AboutRubrosItemsFilter
 }
 
@@ -2794,6 +2798,8 @@ input AboutRubrosItemsMutation {
 input AboutRubrosMutation {
   title: String
   title_en: String
+  description: String
+  description_en: String
   items: [AboutRubrosItemsMutation]
 }
 
