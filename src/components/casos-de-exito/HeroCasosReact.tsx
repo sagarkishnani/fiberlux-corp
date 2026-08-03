@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   CasosDeExitoQuery,
@@ -26,6 +27,8 @@ export default function HeroCasosReact({
     variables,
     data: initialData,
   });
+  // La imagen fallback solo aparece si FlowEffect no puede inicializar (no como flash inicial).
+  const [showFallback, setShowFallback] = useState(false);
 
   const page = data?.casosDeExito;
   if (!page) return null;
@@ -39,17 +42,24 @@ export default function HeroCasosReact({
       className="relative overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      {/* Magenta gradient backdrop image (fallback si no hay WebGL2) */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: `url(${heroImage})`,
-          backgroundPosition: "75% center",
-        }}
-        aria-hidden="true"
+      {/* Imagen fallback: solo si FlowEffect no puede inicializar */}
+      {showFallback && (
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-no-repeat"
+          style={{
+            backgroundImage: `url(${heroImage})`,
+            backgroundPosition: "75% center",
+          }}
+          aria-hidden="true"
+        />
+      )}
+      {/* Canvas FlowEffect encima, debajo del contenido */}
+      <FlowEffect
+        className="absolute inset-0 z-0 h-full w-full"
+        onUnsupported={() => setShowFallback(true)}
       />
-      {/* Canvas FlowEffect encima de la imagen, debajo del contenido */}
-      <FlowEffect className="absolute inset-0 z-0 h-full w-full" />
+      {/* Capa oscura para atenuar el flow */}
+      <div className="absolute inset-0 z-0 bg-black/40" aria-hidden="true" />
 
       <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
         <div className="max-w-[600px]" data-reveal="up">

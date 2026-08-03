@@ -380,12 +380,54 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string) {
   return sh;
 }
 
+/* Pass de SIMULACIÓN del empuje de fluido. Mantiene un campo de desplazamiento
+   (RG) que el pass DISPLAY consume en `p -= rot * pushField * 2.0`: cada frame
+   decae el campo (relajación) e inyecta desplazamiento con forma de gota,
+   estirado en la dirección del movimiento del cursor. */
+const SIM_FRAG = `#version 300 es
+precision highp float;
+
+in vec2 v_uv;
+out vec4 fragColor;
+
+uniform sampler2D u_field;   // campo previo (ping-pong)
+uniform vec2 u_mouse;        // posición del cursor en uv (0..1)
+uniform vec2 u_vel;          // velocidad del cursor (uv, escalada)
+uniform float u_active;      // 1 si hay hover (pointer fino) dentro del canvas
+uniform float u_push;        // fuerza de inyección
+uniform float u_radius;      // radio de la gota (uv)
+uniform float u_stretch;     // estiramiento a lo largo de la velocidad
+uniform float u_persist;     // factor de decaimiento por frame
+uniform vec2 u_aspect;       // (ancho/alto, 1) para que la gota sea redonda
+
+void main() {
+    vec2 field = texture(u_field, v_uv).xy;
+    field *= u_persist;
+    if (u_active > 0.5) {
+        vec2 d = (v_uv - u_mouse) * u_aspect;
+        float vl = length(u_vel);
+        vec2 vdir = vl > 1e-5 ? u_vel / vl : vec2(0.0);
+        float along = dot(d, vdir);
+        vec2 perpv = d - along * vdir;
+        float perp = length(perpv);
+        float a = along / (u_radius * u_stretch);
+        float b = perp / u_radius;
+        float g = exp(-(a * a + b * b));
+        field += u_vel * u_push * g;
+    }
+    fragColor = vec4(field, 0.0, 1.0);
+}
+`;
+
 interface Props {
   className?: string;
   signalReady?: boolean;
+  /* Se llama si WebGL2/shaders no están disponibles: el consumidor muestra su
+     propio fallback SOLO en ese caso (no como flash inicial). */
+  onUnsupported?: () => void;
 }
 
-export default function FlowEffect({ className, signalReady }: Props) {
+export default function FlowEffect({ className, signalReady, onUnsupported }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -397,19 +439,27 @@ export default function FlowEffect({ className, signalReady }: Props) {
     }) as WebGL2RenderingContext | null;
     if (!gl) {
       console.warn("FlowEffect: WebGL2 no disponible");
+      onUnsupported?.();
       return;
     }
 
     const vs = compile(gl, gl.VERTEX_SHADER, VERT);
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return;
+    if (!vs || !fs) {
+      onUnsupported?.();
+      return;
+    }
 
     const prog = gl.createProgram()!;
     gl.attachShader(prog, vs);
     gl.attachShader(prog, fs);
+    // Ubicaciones fijas 0/1 para compartir el mismo VBO con el pass de simulación.
+    gl.bindAttribLocation(prog, 0, "a_position");
+    gl.bindAttribLocation(prog, 1, "a_texCoord");
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
       console.error("FlowEffect link error:", gl.getProgramInfoLog(prog));
+      onUnsupported?.();
       return;
     }
     gl.useProgram(prog);
@@ -507,23 +557,160 @@ export default function FlowEffect({ className, signalReady }: Props) {
     let visible = true;
     let signaled = false;
 
+    /* ── Interacción hover: pass de simulación que empuja el fluido ──
+       Solo con puntero fino y soporte de texturas float; si no, se mantiene
+       el buffer de ceros (comportamiento base sin interacción). */
+    const finePointer =
+      window.matchMedia?.("(pointer: fine)").matches ?? false;
+    const floatExt = gl.getExtension("EXT_color_buffer_float");
+    const SIM = 512; // resolución del campo de empuje (independiente del canvas)
+
+    let simProg: WebGLProgram | null = null;
+    let fieldA: { t: WebGLTexture; f: WebGLFramebuffer } | null = null;
+    let fieldB: { t: WebGLTexture; f: WebGLFramebuffer } | null = null;
+    let simU: Record<string, WebGLUniformLocation | null> = {};
+    const mouse = { x: 0.5, y: 0.5, vx: 0, vy: 0, active: false, has: false, lastX: 0.5, lastY: 0.5 };
+
+    // Se escucha en window (no en el canvas): el contenido del hero (z-10) tapa
+    // el canvas (z-0) e interceptaría los eventos. Se mapea la posición contra
+    // el rect del canvas y solo se activa el empuje si el cursor está dentro.
+    const onPointerMove = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const ux = (e.clientX - rect.left) / rect.width;
+      const uy = 1 - (e.clientY - rect.top) / rect.height; // uv: origen abajo-izq
+      const inside = ux >= 0 && ux <= 1 && uy >= 0 && uy <= 1;
+      if (inside && mouse.has) {
+        mouse.vx = Math.max(-0.8, Math.min(0.8, mouse.vx + (ux - mouse.lastX) * 4));
+        mouse.vy = Math.max(-0.8, Math.min(0.8, mouse.vy + (uy - mouse.lastY) * 4));
+      }
+      mouse.x = ux;
+      mouse.y = uy;
+      mouse.lastX = ux;
+      mouse.lastY = uy;
+      mouse.active = inside;
+      mouse.has = true;
+    };
+
+    if (finePointer && floatExt && !reduce) {
+      const simFs = compile(gl, gl.FRAGMENT_SHADER, SIM_FRAG);
+      if (simFs) {
+        const sp = gl.createProgram()!;
+        gl.attachShader(sp, vs);
+        gl.attachShader(sp, simFs);
+        gl.bindAttribLocation(sp, 0, "a_position");
+        gl.bindAttribLocation(sp, 1, "a_texCoord");
+        gl.linkProgram(sp);
+        if (gl.getProgramParameter(sp, gl.LINK_STATUS)) simProg = sp;
+      }
+      const mkField = () => {
+        const tx = gl.createTexture()!;
+        gl.bindTexture(gl.TEXTURE_2D, tx);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, SIM, SIM, 0, gl.RGBA, gl.HALF_FLOAT, null);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        const fb = gl.createFramebuffer()!;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tx, 0);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        return { t: tx, f: fb };
+      };
+      if (simProg) {
+        fieldA = mkField();
+        fieldB = mkField();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.useProgram(simProg);
+        simU = {
+          field: gl.getUniformLocation(simProg, "u_field"),
+          mouse: gl.getUniformLocation(simProg, "u_mouse"),
+          vel: gl.getUniformLocation(simProg, "u_vel"),
+          active: gl.getUniformLocation(simProg, "u_active"),
+          push: gl.getUniformLocation(simProg, "u_push"),
+          radius: gl.getUniformLocation(simProg, "u_radius"),
+          stretch: gl.getUniformLocation(simProg, "u_stretch"),
+          persist: gl.getUniformLocation(simProg, "u_persist"),
+          aspect: gl.getUniformLocation(simProg, "u_aspect"),
+        };
+        gl.useProgram(prog);
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+      }
+    }
+    const simActive = !!simProg && !!fieldA && !!fieldB;
+
     function frame(now: number) {
       resize();
-      gl.uniform1f(uTime, (now - start) / 1000);
-      gl.uniform1f(uDt, Math.min(0.05, (now - prev) / 1000));
+      const dt = Math.min(0.05, (now - prev) / 1000);
       prev = now;
+
+      if (simActive) {
+        // Pass de simulación: decae el campo e inyecta empuje en el cursor.
+        mouse.vx *= 0.82;
+        mouse.vy *= 0.82;
+        const aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight);
+        gl.useProgram(simProg);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fieldB!.f);
+        gl.viewport(0, 0, SIM, SIM);
+        gl.activeTexture(gl.TEXTURE1);
+        gl.bindTexture(gl.TEXTURE_2D, fieldA!.t);
+        gl.uniform1i(simU.field, 1);
+        gl.uniform2f(simU.mouse, mouse.x, mouse.y);
+        gl.uniform2f(simU.vel, mouse.active ? mouse.vx : 0, mouse.active ? mouse.vy : 0);
+        gl.uniform1f(simU.active, mouse.active ? 1 : 0);
+        gl.uniform1f(simU.push, 0.06);
+        gl.uniform1f(simU.radius, 0.16);
+        gl.uniform1f(simU.stretch, 2.2);
+        gl.uniform1f(simU.persist, 0.9);
+        gl.uniform2f(simU.aspect, aspect, 1);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        const tmp = fieldA;
+        fieldA = fieldB;
+        fieldB = tmp; // swap ping-pong
+
+        // El DISPLAY lee el campo recién escrito por u_push_buffer (unit 0).
+        gl.useProgram(prog);
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, fieldA!.t);
+      }
+
+      gl.uniform1f(uTime, (now - start) / 1000);
+      gl.uniform1f(uDt, dt);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
       if (signalReady && !signaled) {
         signaled = true;
         window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
       }
       if (!reduce && visible) raf = requestAnimationFrame(frame);
+      else raf = 0; // permite que el IntersectionObserver reinicie el loop al volver
     }
+
+    // Limpia el campo de empuje (evita deformación residual congelada al volver).
+    const clearFields = () => {
+      for (const fld of [fieldA, fieldB]) {
+        if (!fld) continue;
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fld.f);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      }
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    };
 
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
-        if (visible && !reduce && !raf) raf = requestAnimationFrame(frame);
+        if (visible) {
+          if (!reduce && !raf) raf = requestAnimationFrame(frame);
+        } else if (simActive) {
+          // Al salir del viewport: sin velocidad ni empuje residual al regresar.
+          mouse.vx = 0;
+          mouse.vy = 0;
+          mouse.active = false;
+          mouse.has = false;
+          clearFields();
+        }
       },
       { threshold: 0 }
     );
@@ -542,7 +729,17 @@ export default function FlowEffect({ className, signalReady }: Props) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       io.disconnect();
+      window.removeEventListener("pointermove", onPointerMove);
       gl.deleteProgram(prog);
+      if (simProg) gl.deleteProgram(simProg);
+      if (fieldA) {
+        gl.deleteTexture(fieldA.t);
+        gl.deleteFramebuffer(fieldA.f);
+      }
+      if (fieldB) {
+        gl.deleteTexture(fieldB.t);
+        gl.deleteFramebuffer(fieldB.f);
+      }
       gl.deleteShader(vs);
       gl.deleteShader(fs);
       gl.deleteBuffer(buf);

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { tField } from '../../utils/i18n';
@@ -14,6 +15,8 @@ interface HeroNosotrosProps {
 
 export default function HeroNosotrosReact({ query, variables, data: initialData, locale = "es" }: HeroNosotrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
+  // La imagen fallback solo aparece si FlowEffect no puede inicializar (no como flash inicial).
+  const [showFallback, setShowFallback] = useState(false);
 
   const about = data?.about || initialData?.about;
   const hero = about?.hero;
@@ -26,9 +29,14 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
       className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Fondo: imagen (fallback si no hay WebGL2) + canvas FlowEffect encima */}
-      <div className="absolute inset-0 z-0 hero-nosotros-bg" />
-      <FlowEffect className="absolute inset-0 z-0 h-full w-full" />
+      {/* Imagen fallback: solo si FlowEffect no puede inicializar */}
+      {showFallback && <div className="absolute inset-0 z-0 hero-nosotros-bg" />}
+      <FlowEffect
+        className="absolute inset-0 z-0 h-full w-full"
+        onUnsupported={() => setShowFallback(true)}
+      />
+      {/* Capa oscura para atenuar el flow */}
+      <div className="absolute inset-0 z-0 bg-black/40" aria-hidden="true" />
 
       {/* Content */}
       <div className="relative z-10 site-container flex flex-col flex-1">
