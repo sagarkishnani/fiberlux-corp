@@ -76,7 +76,11 @@ export default function SolucionesScrollReact({
       const progress = clamp(scrolled / total, 0, 1);
       const seg = progress * N; // 0..N: cada categoría ocupa un segmento igual
       const idx = clamp(Math.floor(seg), 0, N - 1);
-      const frac = seg - (idx + 0.5); // [-0.5, 0.5): distancia al centro del segmento
+      let frac = seg - (idx + 0.5); // [-0.5, 0.5): distancia al centro del segmento
+      // En los extremos, mantener el contenido totalmente visible: la 1ª
+      // categoría al ENTRAR (antes de su centro) y la última al SALIR (tras el
+      // suyo). Sin esto, seg=0 y seg=N caen en el borde → opacidad 0.
+      if (seg < 0.5 || seg > N - 0.5) frac = 0;
       const envelope = 1 - Math.min(1, Math.abs(frac) * 2); // 1 centro → 0 borde
       const reduce = reduceRef.current;
 
