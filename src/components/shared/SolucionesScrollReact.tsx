@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
@@ -23,6 +23,12 @@ function withBase(path: string): string {
 /* A two-digit index label ("01", "02"…). */
 const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 
+/* Alto de scroll (en unidades de viewport) que ocupa cada categoría antes de
+   pasar a la siguiente. Menor a 1 ⇒ el scroll-jack se siente más ágil. */
+const VH_PER_CATEGORY = 0.8;
+
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+
 export default function SolucionesScrollReact({
   query,
   variables,
@@ -36,11 +42,46 @@ export default function SolucionesScrollReact({
     NonNullable<typeof services>["items"]
   >;
 
-  const [activeIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const trackRef = useRef<HTMLElement | null>(null);
+  const N = items.length;
+
+  /* ── Motor scroll-jack ──
+     El <section> mide N × VH_PER_CATEGORY viewports de alto y su panel interno
+     queda pinned (sticky). El progreso del scroll dentro del track (0..1) se
+     reparte en N segmentos iguales → categoría activa. rAF-throttled: no bloquea
+     el scroll nativo, solo mapea posición (compatible con Lenis). */
+  useEffect(() => {
+    if (N <= 1) return;
+    const track = trackRef.current;
+    if (!track) return;
+
+    let ticking = false;
+    const compute = () => {
+      ticking = false;
+      const total = track.offsetHeight - window.innerHeight;
+      if (total <= 0) return;
+      const scrolled = -track.getBoundingClientRect().top;
+      const progress = clamp(scrolled / total, 0, 1);
+      const idx = clamp(Math.floor(progress * N), 0, N - 1);
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(compute);
+    };
+
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [N]);
 
   if (items.length === 0) return null;
-
-  const N = items.length;
   const active = items[Math.min(activeIndex, N - 1)];
   const activeTina = services?.items?.[Math.min(activeIndex, N - 1)];
   const sectionTitle = (tField(services as any, "title", locale) || "").trim();
@@ -55,17 +96,21 @@ export default function SolucionesScrollReact({
 
   return (
     <section
+      ref={trackRef}
       id="soluciones-scroll"
-      className="relative bg-greyscale-darkest overflow-hidden"
+      className="relative bg-greyscale-darkest"
+      style={{ height: `${N * VH_PER_CATEGORY * 100}svh` }}
     >
-      {/* Glow magenta superior-izquierda (referencia Figma). */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-[10%] -left-[8%] z-0 h-[520px] w-[620px] rounded-full opacity-40 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
-      />
+      {/* Panel pinned: queda fijo mientras se recorre el track. */}
+      <div className="sticky top-0 flex min-h-[100svh] items-center overflow-hidden">
+        {/* Glow magenta superior-izquierda (referencia Figma). */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-[10%] -left-[8%] z-0 h-[520px] w-[620px] rounded-full opacity-40 blur-[120px]"
+          style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
+        />
 
-      <div className="relative z-10 site-container py-20 md:py-28 lg:flex lg:items-center lg:gap-16">
+        <div className="relative z-10 w-full site-container py-16 md:py-20 lg:flex lg:items-center lg:gap-16">
         {/* ── Columna izquierda: categoría activa ── */}
         <div className="lg:w-[42%] lg:shrink-0">
           {sectionTitle && (
@@ -130,6 +175,7 @@ export default function SolucionesScrollReact({
               );
             })}
           </ul>
+        </div>
         </div>
       </div>
     </section>
