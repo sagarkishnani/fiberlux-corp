@@ -56,18 +56,14 @@ uniform vec4 u_mousePosition;
 uniform float u_mousePointerDown;
 uniform float u_mouseHover;
 
-// Interacción (SPEC 88+): hover disipa las líneas, click genera una onda.
-uniform vec2  u_iMouse;      // cursor en espacio p (aspect-fix)
-uniform float u_iHover;      // 0..1 intensidad del hover
-uniform vec3  u_iRipples[5]; // (x, y, startTime) por onda activa
+// Interacción (SPEC 88+): ondas de agua. Click = onda fuerte; hover = estela de
+// ondas ligeras siguiendo al cursor. Cada onda lleva su amplitud propia (.w).
+uniform vec4  u_iRipples[16]; // (x, y, startTime, amplitud) por onda activa
 uniform int   u_iRippleCount;
 
 const int SAMPLES = 8;
 const float EPHEMERAL_DRIP = 1.0;
 
-const float I_HOVER_RING = 0.14;   // radio del anillo del hover (espacio p)
-const float I_HOVER_WIDTH = 0.12;  // grosor del anillo del hover
-const float I_HOVER_AMP = 0.06;    // empuje del hover (bien ligero)
 const float I_RIPPLE_SPEED = 1.2;  // velocidad de expansión de la onda
 const float I_RIPPLE_WIDTH = 0.13; // grosor del anillo
 const float I_RIPPLE_AMP = 0.38;   // cuánto abre las líneas
@@ -174,25 +170,19 @@ void main() {
     // cada onda empuja el dominio radialmente en un anillo que se expande,
     // "abriendo" las líneas como agua.
     vec2 p0 = p;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 16; i++) {
         if (i >= u_iRippleCount) break;
         vec2 rc = u_iRipples[i].xy;
         float age = u_time - u_iRipples[i].z;
         if (age < 0.0 || age > I_RIPPLE_LIFE) continue;
         float d = distance(p0, rc);
         float R = age * I_RIPPLE_SPEED;
-        float shell = exp(-pow((d - R) / I_RIPPLE_WIDTH, 2.0));
+        float q = (d - R) / I_RIPPLE_WIDTH;
+        float shell = exp(-q * q);
         float decay = 1.0 - age / I_RIPPLE_LIFE;
         vec2 dir = d > 1e-4 ? (p0 - rc) / d : vec2(0.0);
-        p += dir * shell * I_RIPPLE_AMP * decay;
+        p += dir * shell * I_RIPPLE_AMP * decay * u_iRipples[i].w;
     }
-
-    // Hover: anillo tipo onda (como el click) pero bien ligero y fijo alrededor
-    // del cursor — abre las líneas cercanas sin el pinchazo central.
-    float dm = distance(p0, u_iMouse);
-    float hShell = exp(-pow((dm - I_HOVER_RING) / I_HOVER_WIDTH, 2.0));
-    vec2 hdir = dm > 1e-4 ? (p0 - u_iMouse) / dm : vec2(0.0);
-    p += hdir * hShell * u_iHover * I_HOVER_AMP;
 
     int colorCount = u_colors_length;
 
@@ -364,8 +354,6 @@ export default function WaveformEffect({ className, signalReady }: Props) {
 
     const uRes = U("u_resolution");
     const uTime = U("u_time");
-    const uIMouse = U("u_iMouse");
-    const uIHover = U("u_iHover");
     const uIRipples = U("u_iRipples");
     const uIRippleCount = U("u_iRippleCount");
 
@@ -393,15 +381,19 @@ export default function WaveformEffect({ className, signalReady }: Props) {
     let visible = true;
     let signaled = false;
 
-    // ── Interacción: hover disipa las líneas, click genera una onda ──
-    const MAX_RIPPLES = 5;
+    // ── Interacción: ondas de agua. Misma onda del click, pero el hover emite
+    //    una estela de ondas MUY ligeras siguiendo al cursor. ──
+    const MAX_RIPPLES = 16;
     const RIPPLE_LIFE_S = 1.7; // = I_RIPPLE_LIFE del shader
-    let hover = 0;
-    let hoverTarget = 0;
-    let mousePX = 0;
-    let mousePY = 0;
-    const ripples: Array<{ x: number; y: number; t0: number }> = [];
-    const rippleBuf = new Float32Array(MAX_RIPPLES * 3);
+    const HOVER_AMP = 0.1; // intensidad de la onda de hover (click = 1.0)
+    const HOVER_EMIT_S = 0.22; // cada cuánto emite una onda al mover el mouse
+    // La estela de hover solo con mouse real (evita spawnear ondas al arrastrar
+    // el dedo en móvil → mejor performance y comportamiento correcto).
+    const finePointer =
+      window.matchMedia?.("(pointer: fine)").matches ?? true;
+    const ripples: Array<{ x: number; y: number; t0: number; amp: number }> = [];
+    const rippleBuf = new Float32Array(MAX_RIPPLES * 4);
+    let lastEmit = -1;
 
     // Cliente → espacio p del shader (aspect-fix, y hacia arriba).
     function toP(clientX: number, clientY: number) {
@@ -415,27 +407,25 @@ export default function WaveformEffect({ className, signalReady }: Props) {
         inside: uvx >= 0 && uvx <= 1 && uvy >= 0 && uvy <= 1,
       };
     }
-    function onMove(e: PointerEvent) {
-      const q = toP(e.clientX, e.clientY);
-      if (q.inside) {
-        mousePX = q.x;
-        mousePY = q.y;
-        hoverTarget = 1;
-      } else {
-        hoverTarget = 0;
-      }
+    function emit(x: number, y: number, amp: number) {
+      ripples.push({ x, y, t0: (performance.now() - start) / 1000, amp });
+      if (ripples.length > MAX_RIPPLES) ripples.shift();
     }
-    function onLeave() {
-      hoverTarget = 0;
+    function onMove(e: PointerEvent) {
+      if (!finePointer) return;
+      const q = toP(e.clientX, e.clientY);
+      if (!q.inside) return;
+      const nowS = (performance.now() - start) / 1000;
+      if (nowS - lastEmit < HOVER_EMIT_S) return; // throttle de la estela
+      lastEmit = nowS;
+      emit(q.x, q.y, HOVER_AMP);
     }
     function onDown(e: PointerEvent) {
       const q = toP(e.clientX, e.clientY);
       if (!q.inside) return;
-      ripples.push({ x: q.x, y: q.y, t0: (performance.now() - start) / 1000 });
-      if (ripples.length > MAX_RIPPLES) ripples.shift();
+      emit(q.x, q.y, 1.0); // onda fuerte
     }
     window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerleave", onLeave);
     canvas.addEventListener("pointerdown", onDown);
 
     function frame(now: number) {
@@ -443,20 +433,18 @@ export default function WaveformEffect({ className, signalReady }: Props) {
       const nowS = (now - start) / 1000;
       gl.uniform1f(uTime, nowS);
 
-      // Interacción: suaviza el hover y sube las ondas activas al shader.
-      hover += (hoverTarget - hover) * 0.12;
-      gl.uniform2f(uIMouse, mousePX, mousePY);
-      gl.uniform1f(uIHover, hover);
+      // Interacción: purga ondas expiradas y sube las activas (x, y, t0, amp).
       for (let i = ripples.length - 1; i >= 0; i--) {
         if (nowS - ripples[i].t0 > RIPPLE_LIFE_S) ripples.splice(i, 1);
       }
       const nR = Math.min(ripples.length, MAX_RIPPLES);
       for (let i = 0; i < nR; i++) {
-        rippleBuf[i * 3] = ripples[i].x;
-        rippleBuf[i * 3 + 1] = ripples[i].y;
-        rippleBuf[i * 3 + 2] = ripples[i].t0;
+        rippleBuf[i * 4] = ripples[i].x;
+        rippleBuf[i * 4 + 1] = ripples[i].y;
+        rippleBuf[i * 4 + 2] = ripples[i].t0;
+        rippleBuf[i * 4 + 3] = ripples[i].amp;
       }
-      gl.uniform3fv(uIRipples, rippleBuf);
+      gl.uniform4fv(uIRipples, rippleBuf);
       gl.uniform1i(uIRippleCount, nR);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -496,7 +484,6 @@ export default function WaveformEffect({ className, signalReady }: Props) {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("pointerdown", onDown);
       io.disconnect();
       gl.deleteProgram(prog);
