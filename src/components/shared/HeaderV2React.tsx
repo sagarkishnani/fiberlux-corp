@@ -98,9 +98,6 @@ const LOGO_TRAVEL_DISTANCE = 320; // px de scroll para ir de grande → normal
 const LOGO_HEADER_H = 20; // altura en reposo del logo (= h-5 del header)
 const LOGO_HERO_H = 64; // altura del logo grande sobre el hero
 const LOGO_START_OFFSET_Y = 195; // px que el logo baja hacia el hero al tope
-// El slot del logo está corrido por el hamburguesa (w-7 = 28px + gap md:gap-6 =
-// 24px). El logo grande compensa este offset en X para alinearse con el h1.
-const LOGO_SLOT_INDENT = 52;
 
 /* ── Icons ── */
 const ChevronRight = ({ className = "" }: { className?: string }) => (
@@ -365,11 +362,22 @@ export default function HeaderV2React({
       const inv = 1 - progress;
       const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
       const offset = LOGO_START_OFFSET_Y * inv;
-      // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y y,
-      // sólo mientras está grande, corrige en X para alinear con el h1 (el slot
-      // del logo está corrido por el hamburguesa — LOGO_SLOT_INDENT).
+      // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y.
+      // SPEC 88: en estado hero (inv→1) el logo se centra horizontalmente sobre
+      // el título; al hacer scroll (inv→0) vuelve al slot del header (izquierda).
+      const anchor = img.parentElement;
+      let centerX = 0;
+      if (anchor) {
+        const aspect =
+          img.naturalWidth && img.naturalHeight
+            ? img.naturalWidth / img.naturalHeight
+            : 7; // fallback (wordmark ancho) hasta que cargue el SVG
+        const logoW = LOGO_HERO_H * aspect;
+        const anchorLeft = anchor.getBoundingClientRect().left;
+        centerX = window.innerWidth / 2 - logoW / 2 - anchorLeft;
+      }
       img.style.height = `${height}px`;
-      img.style.transform = `translateX(${-LOGO_SLOT_INDENT * inv}px) translateY(calc(-50% + ${offset}px))`;
+      img.style.transform = `translateX(${centerX * inv}px) translateY(calc(-50% + ${offset}px))`;
     },
     [heroLogo]
   );
@@ -633,6 +641,7 @@ export default function HeaderV2React({
                   ref={logoRef}
                   src={logoSrc}
                   alt="Fiberlux"
+                  onLoad={() => scheduleLogoTransform()}
                   className={`absolute left-0 top-1/2 w-auto max-w-none will-change-transform ${logoFilter}`}
                   style={{
                     height: `${LOGO_HEADER_H}px`,
