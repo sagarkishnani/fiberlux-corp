@@ -236,6 +236,13 @@ export default function SolucionesScrollReact({
       style={{ height: `${N * VH_PER_CATEGORY * 100}svh` }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center overflow-hidden">
+        {/* Fade superior: difumina el borde con la sección anterior (hero) para
+            que el bloque no arranque con un corte brusco. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 z-[2] h-[90px] bg-gradient-to-b from-greyscale-darkest to-transparent md:h-[130px]"
+        />
+
         {/* Glow magenta reactivo. */}
         <div
           ref={glowRef}

@@ -66,7 +66,7 @@ export default function HeroServiciosReact({
 
             {page.ctaLabel && (
               <a
-                href="#soluciones-cards"
+                href="#soluciones-scroll"
                 className={buttonClass("primary")}
                 data-tina-field={tinaField(page, "ctaLabel")}
               >
