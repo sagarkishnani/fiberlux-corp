@@ -1,6 +1,6 @@
 # SPEC 90 — Nosotros: Rubros marquee de 2 filas (íconos outline)
 
-> **Status:** Aprobado
+> **Status:** Implementado
 > **Depends on:** SPEC 05 (slider de rubros actual), SPEC 47 (imagen de fondo en rubros — que este spec retira en esta sección), SPEC 40/62/68 (motor de slider Embla — deja de usarse aquí)
 > **Date:** 2026-08-03
 > **Objective:** Reemplazar el slider de rubros de `/nosotros` por un marquee de dos filas de tiles con ícono outline y nombre debajo (fila superior corre a la derecha, inferior a la izquierda), con el título fijo a la izquierda y la fila derecha a opacidad tenue, funcional en 1024/768/móvil.
@@ -66,16 +66,16 @@
 
 ## Criterios de aceptación
 
-- [ ] `/nosotros` muestra el título "Rubros con los que trabajamos" fijo a la izquierda y dos filas de tiles a la derecha (desktop).
-- [ ] Cada tile es un cuadro redondeado con ícono outline centrado y el nombre del rubro **debajo** del cuadro; no hay fotos de fondo.
-- [ ] La fila superior corre hacia la derecha y la inferior hacia la izquierda, en loop continuo sin salto perceptible al reciclar.
-- [ ] Ambas filas contienen los 9 rubros (duplicados para el loop); la fila inferior arranca con offset respecto a la superior.
-- [ ] La zona del marquee se ve a opacidad tenue y con desvanecido en los bordes izquierdo y derecho.
-- [ ] No hay flechas, autoplay CMS ni interacción de hover; los tiles no son clicables.
-- [ ] Con `prefers-reduced-motion: reduce` las filas quedan estáticas (sin animación).
-- [ ] En 1024, 768 y móvil la sección se ve correcta: en móvil el título va arriba y las filas debajo; no aparece scroll horizontal en la página.
-- [ ] En `/en/nosotros` el título y los nombres leen `_en` con fallback a ES.
-- [ ] `npm run build` pasa sin errores ni warnings de tipos.
+- [x] `/nosotros` muestra el título "Rubros con los que trabajamos" fijo a la izquierda y dos filas de tiles a la derecha (desktop).
+- [x] Cada tile es un cuadro redondeado con ícono outline centrado y el nombre del rubro **debajo** del cuadro; no hay fotos de fondo.
+- [x] La fila superior corre hacia la derecha y la inferior hacia la izquierda, en loop continuo sin salto perceptible al reciclar.
+- [x] Ambas filas contienen los 9 rubros (duplicados para el loop); la fila inferior arranca con offset respecto a la superior.
+- [x] La zona del marquee se ve a opacidad tenue y con desvanecido en los bordes izquierdo y derecho.
+- [x] No hay flechas, autoplay CMS ni interacción de hover; los tiles no son clicables.
+- [x] Con `prefers-reduced-motion: reduce` las filas quedan estáticas (sin animación).
+- [x] En 1024, 768 y móvil la sección se ve correcta: en móvil el título va arriba y las filas debajo; no aparece scroll horizontal en la página.
+- [x] En `/en/nosotros` el título y los nombres leen `_en` con fallback a ES.
+- [x] `npm run build` pasa sin errores ni warnings de tipos.
 
 ---
 
