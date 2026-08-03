@@ -27,7 +27,7 @@ const pad2 = (n: number) => String(n + 1).padStart(2, "0");
 
 /* Alto de scroll (en viewports) por categoría. Regula la velocidad del recorrido;
    el snap remata el encaje en el centro de cada categoría. */
-const VH_PER_CATEGORY = 1.05;
+const VH_PER_CATEGORY = 1.15;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
@@ -182,7 +182,7 @@ export default function SolucionesScrollReact({
     delayRef.current = window.setTimeout(() => {
       setTooltipOn(true);
       if (rafRef.current == null) rafRef.current = requestAnimationFrame(runLoop);
-    }, 140);
+    }, 340);
   };
   const handleListMove = (e: ReactMouseEvent) => {
     if (!finePointer.current) return;
