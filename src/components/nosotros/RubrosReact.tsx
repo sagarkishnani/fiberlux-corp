@@ -3,7 +3,6 @@ import type { IconType } from 'react-icons';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { tField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
-import SliderArrows from '../shared/SliderArrows';
 // obs_6: set de íconos en estilo outline (Lucide) para coincidir con la referencia.
 import {
   LuPickaxe,
@@ -27,8 +26,6 @@ import {
   LuBriefcase,
   LuSettings,
 } from 'react-icons/lu';
-import { useSlider, type SliderEffect } from '../../hooks/useSlider';
-import { mediaUrl } from '../../utils/mediaUrl';
 
 /* ── Types ── */
 interface Rubro {
@@ -42,9 +39,6 @@ interface RubrosProps {
   variables: AboutQueryVariables;
   data: AboutQuery;
   locale?: Locale;
-  autoplay?: boolean;
-  intervalMs?: number;
-  effect?: SliderEffect;
 }
 
 /* ── Icon map: CMS select key → react-icons component ── */
@@ -76,10 +70,7 @@ export default function RubrosReact({
   query,
   variables,
   data: initialData,
-  locale = "es",
-  autoplay = true,
-  intervalMs = 3500,
-  effect = "none",
+  locale = 'es',
 }: RubrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
@@ -93,116 +84,98 @@ export default function RubrosReact({
   const items = tinaItems.length > 0 ? tinaItems : fallbackItems;
 
   const total = items.length;
-  const enough = total > 1;
-
-  /* Embla slider: left-aligned cards, autoplay w/ loop (arrows wrap via loop). */
-  const slider = useSlider({
-    align: 'start',
-    loop: false,
-    autoplay: autoplay && enough,
-    intervalMs,
-    effect,
-  });
-
   if (total === 0) return null;
 
-  const refAt = (i: number) => tinaItems[i] || fallbackItems[i];
+  // Fila 2 arranca rotada respecto a la 1 para que no se vean sincronizadas.
+  const rowTop = items;
+  const rowBottom = [...items.slice(Math.floor(total / 2)), ...items.slice(0, Math.floor(total / 2))];
 
-  const arrows = (
-    <SliderArrows
-      canPrev={slider.canPrev}
-      canNext={slider.canNext}
-      onPrev={slider.prev}
-      onNext={slider.next}
-      labelPrev="Rubro anterior"
-      labelNext="Rubro siguiente"
-    />
-  );
-
-  const card = (item: Rubro, i: number) => {
+  // Cada tile del marquee. `ref` (solo copia original de la fila superior) habilita edición inline.
+  const tile = (item: Rubro, key: string, ref?: Rubro) => {
     const Icon = (item.icon && ICONS[item.icon]) || FALLBACK_ICON;
-    const ref = refAt(i);
-    const hasImage = Boolean(item.image);
     return (
-      <article
-        key={i}
-        className={`rubro-slide group snap-start relative overflow-hidden flex min-h-[295px] shrink-0 flex-col justify-between rounded-[24.62px] p-8 [width:calc((100%-3*0.5rem)/4)] max-md:[width:78%] ${
-          hasImage ? '' : 'bg-[rgba(42,42,42,0.5)] backdrop-blur-[2px]'
-        }`}
-      >
-        {hasImage && (
-          <>
-            {/* Imagen de fondo a sangre; el default (sin imagen) mantiene el look negro. */}
-            <img
-              src={mediaUrl(item.image)}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              className="absolute inset-0 z-0 h-full w-full object-cover opacity-80 transition-[transform,filter,opacity] duration-300 ease-out group-hover:scale-105 group-hover:opacity-100 group-hover:brightness-110"
-            />
-            {/* Overlay en degradado, más oscuro abajo (donde va el nombre) para legibilidad. */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 z-0"
-              style={{
-                background:
-                  'linear-gradient(180deg, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0.30) 45%, rgba(10,10,10,0.82) 100%)',
-              }}
-            />
-          </>
-        )}
-        <span className="relative z-10 flex h-[61px] w-[61px] items-center justify-center rounded-[12.31px] bg-[#b565a2] text-[#3B0E30]">
-          <Icon className="text-[28px]" />
+      <div key={key} className="rubro-tile shrink-0 flex flex-col items-center gap-2.5">
+        <span className="grid h-[88px] w-[88px] place-items-center rounded-[18px] border border-white/10 bg-white/[0.03]">
+          <Icon className="text-[30px] text-white/80" strokeWidth={1.5} />
         </span>
-        <h3
-          className="relative z-10 text-xl font-semibold text-white"
-          data-tina-field={ref ? tinaField(ref, 'label') : undefined}
+        <span
+          className="whitespace-nowrap text-sm text-white/70"
+          data-tina-field={ref ? tinaField(ref as any, 'label') : undefined}
         >
-          {tField(item as any, "label", locale)}
-        </h3>
-      </article>
+          {tField(item as any, 'label', locale)}
+        </span>
+      </div>
     );
   };
+
+  // Track = contenido duplicado ([...base, ...base]) para loop sin costura.
+  const track = (base: Rubro[], rowKey: string, withRefs: boolean) => (
+    <div className={`rubro-track rubro-track--${rowKey} flex w-max`}>
+      {[...base, ...base].map((item, i) => {
+        const inFirstCopy = i < base.length;
+        const ref = withRefs && inFirstCopy ? item : undefined;
+        return tile(item, `${rowKey}-${i}`, ref);
+      })}
+    </div>
+  );
 
   return (
     <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[100px] pt-[72px]">
       <div className="site-container">
-        {/* Desktop header: title left, arrows right */}
-        <div className="mb-12 hidden items-start justify-between gap-6 md:flex">
+        <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-12">
+          {/* Título: fijo a la izquierda (desktop), arriba (móvil) */}
           <h2
-            className="max-w-[623px] text-[56px] font-medium leading-[1.15] tracking-tight text-white"
+            className="shrink-0 text-[32px] font-medium leading-[1.15] tracking-tight text-white md:max-w-[360px] md:text-[52px]"
             data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
           >
-            {tField(rubros as any, "title", locale)}
+            {tField(rubros as any, 'title', locale)}
           </h2>
-          {arrows}
-        </div>
 
-        {/* Mobile header: title only */}
-        <h2
-          className="mb-8 max-w-[623px] text-[32px] font-medium leading-[1.15] tracking-tight text-white md:hidden"
-          data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
-        >
-          {tField(rubros as any, "title", locale)}
-        </h2>
-
-        <div
-          ref={slider.viewportRef}
-          className="overflow-hidden select-none rubros-carousel"
-          style={{ cursor: 'grab' }}
-        >
-          <div className="flex gap-2">
-            {items.map((item, i) => card(item, i))}
+          {/* Marquee: 2 filas en sentidos opuestos, opacidad tenue + fade en bordes */}
+          <div className="rubro-marquee min-w-0 flex-1">
+            <div className="rubro-row">{track(rowTop, 'top', true)}</div>
+            <div className="rubro-row">{track(rowBottom, 'bottom', false)}</div>
           </div>
         </div>
-
-        {/* Mobile arrows: below, left-aligned */}
-        <div className="mt-8 flex md:hidden">{arrows}</div>
       </div>
 
       <style>{`
-        .rubros-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
-        .rubros-carousel::-webkit-scrollbar { display: none; }
+        .rubro-marquee {
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+          opacity: 0.5;
+        }
+        .rubro-row {
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        }
+        .rubro-track {
+          gap: 40px;
+          padding-right: 40px; /* iguala el gap tras la última tile para un loop continuo */
+          will-change: transform;
+          animation: rubro-marquee 42s linear infinite;
+        }
+        /* Fila superior corre a la derecha (reverse); inferior a la izquierda (normal). */
+        .rubro-track--top { animation-direction: reverse; }
+        .rubro-track--bottom { animation-direction: normal; }
+        @keyframes rubro-marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .rubro-track { animation: none; }
+        }
+        @media (max-width: 1024px) {
+          .rubro-track { gap: 32px; padding-right: 32px; }
+        }
+        @media (max-width: 767px) {
+          .rubro-marquee { gap: 20px; }
+          .rubro-track { gap: 24px; padding-right: 24px; }
+          .rubro-tile span:first-child { height: 72px; width: 72px; border-radius: 15px; }
+          .rubro-tile span:first-child svg { font-size: 26px; }
+        }
       `}</style>
     </section>
   );
