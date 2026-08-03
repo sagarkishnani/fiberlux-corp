@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
@@ -81,6 +82,69 @@ export default function SolucionesScrollReact({
     };
   }, [N]);
 
+  /* ── Tooltip "Ver más" con delay + lag ──
+     Solo en punteros finos. Aparece tras un delay y persigue al cursor con un
+     lerp (más lento que el puntero). Todo vía refs para no re-renderizar por
+     frame; `tooltipOn` solo alterna la opacidad. */
+  const finePointer = useRef(false);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const target = useRef({ x: 0, y: 0 });
+  const pos = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
+  const delayRef = useRef<number | null>(null);
+  const [tooltipOn, setTooltipOn] = useState(false);
+
+  useEffect(() => {
+    finePointer.current =
+      typeof window !== "undefined" &&
+      window.matchMedia("(pointer: fine)").matches;
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      if (delayRef.current != null) clearTimeout(delayRef.current);
+    };
+  }, []);
+
+  const runLoop = () => {
+    const k = 0.12; // menor = más lag (persigue más lento)
+    pos.current.x += (target.current.x - pos.current.x) * k;
+    pos.current.y += (target.current.y - pos.current.y) * k;
+    const el = tooltipRef.current;
+    if (el) {
+      el.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0)`;
+    }
+    rafRef.current = requestAnimationFrame(runLoop);
+  };
+
+  const handleListEnter = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    target.current = { x: e.clientX, y: e.clientY };
+    pos.current = { ...target.current }; // arranca en el cursor (sin volar desde 0,0)
+    if (delayRef.current != null) clearTimeout(delayRef.current);
+    delayRef.current = window.setTimeout(() => {
+      setTooltipOn(true);
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(runLoop);
+    }, 140);
+  };
+
+  const handleListMove = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    target.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleListLeave = () => {
+    if (delayRef.current != null) {
+      clearTimeout(delayRef.current);
+      delayRef.current = null;
+    }
+    setTooltipOn(false);
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  };
+
+  const tooltipLabel = locale === "en" ? "See more" : "Ver más";
+
   if (items.length === 0) return null;
   const active = items[Math.min(activeIndex, N - 1)];
   const activeTina = services?.items?.[Math.min(activeIndex, N - 1)];
@@ -159,7 +223,12 @@ export default function SolucionesScrollReact({
         </div>
 
         {/* ── Columna derecha: subservicios de la categoría activa ── */}
-        <div className="lg:flex-1 lg:min-w-0 mt-12 lg:mt-0">
+        <div
+          className="lg:flex-1 lg:min-w-0 mt-12 lg:mt-0"
+          onMouseEnter={handleListEnter}
+          onMouseMove={handleListMove}
+          onMouseLeave={handleListLeave}
+        >
           <ul key={`r-${activeIndex}`} className="solscroll-fade border-t border-white/12">
             {subservicios.map((sub, i) => {
               const label = tField(sub as any, "label", locale);
@@ -188,6 +257,24 @@ export default function SolucionesScrollReact({
             })}
           </ul>
         </div>
+        </div>
+      </div>
+
+      {/* Tooltip "Ver más" flotante: posición por JS (lag), centrado sobre el
+          cursor vía la capa interna. pointer-events-none para no interferir. */}
+      <div
+        ref={tooltipRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[90] will-change-transform"
+        style={{ transform: "translate3d(-200px, -200px, 0)" }}
+      >
+        <div
+          className={`-translate-x-1/2 -translate-y-1/2 rounded-full bg-white/95 px-3.5 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-200 ${
+            tooltipOn ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <span aria-hidden="true" className="mr-1">↵</span>
+          {tooltipLabel}
         </div>
       </div>
 
