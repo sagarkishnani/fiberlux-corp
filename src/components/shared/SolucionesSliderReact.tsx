@@ -24,9 +24,6 @@ function withBase(path: string): string {
   return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/* A bullet that just signals "there's more" — rendered as the muted label, not a line. */
-const isMoreLabel = (b: string) => /^y\s*m[aá]s/i.test(b.trim());
-
 /* Decorative background glows (static assets, not CMS-driven). */
 const GLOW_PLANET = withBase("/images/soluciones/planet.svg");
 const GLOW_LINE = withBase("/images/soluciones/line.svg");
@@ -84,9 +81,11 @@ export default function SolucionesSliderReact({
      flat and muted. "Conoce más →" and the number share the bottom row. */
   const renderCard = (item: (typeof items)[number], i: number) => {
     const tinaItem = services?.items?.[i];
-    const bullets = ((locale === "en" && (item as any)?.bullets_en?.length ? (item as any).bullets_en : item?.bullets) || []).filter(Boolean) as string[];
-    const lines = bullets.filter((b) => !isMoreLabel(b));
-    const hasMore = bullets.some(isMoreLabel);
+    const lines = (item?.bullets || []).filter(Boolean) as {
+      label?: string | null;
+      label_en?: string | null;
+      url?: string | null;
+    }[];
     const url = item?.url || "";
     const isActive = i === activeIndex;
 
@@ -121,17 +120,10 @@ export default function SolucionesSliderReact({
                     isActive ? "bg-white" : "bg-white/40"
                   }`}
                 />
-                <span>{line}</span>
+                <span>{tField(line as any, "label", locale)}</span>
               </li>
             ))}
           </ul>
-
-          {/* "Y más" — only when the card's content includes it */}
-          {hasMore && (
-            <p className={`mt-6 text-[16px] md:text-[18px] ${isActive ? "text-white/70" : "text-white/35"}`}>
-              {locale === "en" ? "And more" : "Y más"}
-            </p>
-          )}
 
           {/* Bottom row: number (left) + "Conoce más →" (right) */}
           <div className="mt-auto flex items-center justify-between gap-4 pt-8 md:pt-10">
