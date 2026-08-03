@@ -267,21 +267,21 @@ export default function CookieConsentReact({
             <button
               type="button"
               onClick={rejectAll}
-              className="flex-1 px-4 py-2.5 rounded-full border border-[#96237A] text-[#96237A] text-[13px] font-semibold hover:bg-[#96237A]/[0.04] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-[8px] border border-[#96237A] text-[#96237A] text-[13px] font-semibold hover:bg-[#96237A]/[0.04] transition-colors"
             >
               {btnReject}
             </button>
             <button
               type="button"
               onClick={savePrefs}
-              className="flex-1 px-4 py-2.5 rounded-full border border-[#96237A] text-[#96237A] text-[13px] font-semibold hover:bg-[#96237A]/[0.04] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-[8px] border border-[#96237A] text-[#96237A] text-[13px] font-semibold hover:bg-[#96237A]/[0.04] transition-colors"
             >
               {btnSave}
             </button>
             <button
               type="button"
               onClick={acceptAll}
-              className="flex-1 px-4 py-2.5 rounded-full bg-[#96237A] text-white text-[13px] font-semibold hover:bg-[#650F50] transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-[8px] bg-[#96237A] text-white text-[13px] font-semibold hover:bg-[#650F50] transition-colors"
             >
               {btnAccept}
             </button>

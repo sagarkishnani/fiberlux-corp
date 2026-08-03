@@ -400,7 +400,7 @@ function ContactSubmitButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full py-4 rounded-xl text-greyscale-white text-body-md font-semibold transition-all ${
+      className={`w-full h-12 flex items-center justify-center rounded-[8px] text-greyscale-white text-body-md font-semibold transition-all ${
         disabled
           ? "bg-brand-purple/60 cursor-not-allowed"
           : dark
