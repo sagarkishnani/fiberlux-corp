@@ -357,7 +357,9 @@ export default function WaveformEffect({ className, signalReady }: Props) {
     const uIRipples = U("u_iRipples");
     const uIRippleCount = U("u_iRippleCount");
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Cap de DPR a 1.5: menos píxeles a procesar (mejor performance) con
+    // impacto visual mínimo en un shader tan suave.
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     function resize() {
       const w = canvas.clientWidth;
       const h = canvas.clientHeight;
@@ -385,8 +387,8 @@ export default function WaveformEffect({ className, signalReady }: Props) {
     //    una estela de ondas MUY ligeras siguiendo al cursor. ──
     const MAX_RIPPLES = 16;
     const RIPPLE_LIFE_S = 1.7; // = I_RIPPLE_LIFE del shader
-    const HOVER_AMP = 0.1; // intensidad de la onda de hover (click = 1.0)
-    const HOVER_EMIT_S = 0.22; // cada cuánto emite una onda al mover el mouse
+    const HOVER_AMP = 0.045; // intensidad de la onda de hover (click = 1.0)
+    const HOVER_EMIT_S = 0.34; // cada cuánto emite una onda al mover el mouse
     // La estela de hover solo con mouse real (evita spawnear ondas al arrastrar
     // el dedo en móvil → mejor performance y comportamiento correcto).
     const finePointer =
