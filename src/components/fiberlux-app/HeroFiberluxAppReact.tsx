@@ -1,4 +1,5 @@
 import { useTina, tinaField } from "tinacms/dist/react";
+import { buttonClass } from "../shared/Button";
 import { FaApple, FaGooglePlay, FaMobileScreenButton } from "react-icons/fa6";
 import type {
   FiberluxAppQuery,
@@ -127,16 +128,13 @@ export default function HeroFiberluxAppReact({
                 const Icon =
                   (d.store && STORE_ICONS[d.store]) || FaMobileScreenButton;
                 const isPrimary = i === 0;
-                const variantClasses = isPrimary
-                  ? "bg-[#96237A] hover:bg-[#650F50] text-white shadow-[0_8px_32px_-8px_rgba(150,35,122,0.6)] hover:shadow-[0_8px_32px_-4px_rgba(150,35,122,0.8)] hover:translate-y-[-1px]"
-                  : "border border-white/80 hover:border-white bg-transparent hover:bg-white/5 text-white backdrop-blur-sm";
                 return (
                   <a
                     key={i}
                     href={d.url || "#"}
                     target={d.url && d.url !== "#" ? "_blank" : undefined}
                     rel={d.url && d.url !== "#" ? "noopener noreferrer" : undefined}
-                    className={`inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-full font-medium text-base transition-all duration-300 ${variantClasses}`}
+                    className={buttonClass(isPrimary ? "primary" : "secondary", "gap-3")}
                     data-tina-field={tinaField(d as any, "label")}
                   >
                     <Icon size={22} />

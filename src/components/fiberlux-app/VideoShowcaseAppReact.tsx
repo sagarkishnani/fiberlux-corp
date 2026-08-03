@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { buttonClass } from "../shared/Button";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import type { Components } from "tinacms/dist/rich-text";
@@ -149,7 +150,7 @@ export default function VideoShowcaseAppReact({
             <button
               type="button"
               onClick={openVideo}
-              className="inline-flex items-center gap-2 rounded-full bg-[#96237A] hover:bg-[#650F50] text-white font-medium px-8 py-3.5 transition-all duration-300 hover:translate-y-[-1px] shadow-[0_8px_32px_-8px_rgba(150,35,122,0.5)]"
+              className={buttonClass("primary", "gap-2")}
               data-tina-field={tinaField(vs, "buttonLabel")}
             >
               {buttonLabel}

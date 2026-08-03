@@ -1,4 +1,5 @@
 import { useTina, tinaField } from "tinacms/dist/react";
+import { buttonClass } from "../shared/Button";
 import type {
   HomeQuery,
   HomeQueryVariables,
@@ -80,7 +81,7 @@ export default function BlogPreviewReact({
             </h2>
             <a
               href={buttonUrl}
-              className="hidden md:inline-flex items-center justify-center border border-white text-white rounded-full px-8 py-3 text-sm font-medium hover:bg-white hover:text-greyscale-darkest transition-all"
+              className={buttonClass("secondary", "hidden md:inline-flex")}
               data-tina-field={
                 blogPreview ? tinaField(blogPreview, "buttonText") : undefined
               }
