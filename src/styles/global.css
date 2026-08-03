@@ -88,26 +88,11 @@
 }
 
 @layer components {
-  /* ── Buttons ── */
-  .btn-primary {
-    @apply inline-flex items-center justify-center
-           bg-brand-purple text-greyscale-white
-           px-8 py-3 rounded-lg
-           text-body-md font-semibold
-           transition-all duration-200
-           hover:bg-brand-purple-dark
-           active:scale-[0.98];
-  }
-
-  .btn-secondary {
-    @apply inline-flex items-center justify-center
-           border border-greyscale-white text-greyscale-white
-           px-8 py-3 rounded-lg
-           text-body-md font-semibold
-           transition-all duration-200
-           hover:bg-greyscale-white hover:text-greyscale-darkest
-           active:scale-[0.98];
-  }
+  /* ── Buttons ──
+     Fuente única de botón CTA: src/components/shared/Button.tsx
+     (componente <Button> + helper buttonClass()). SPEC 88.
+     Las clases .btn-primary/.btn-secondary se retiraron: este global.css
+     nunca se bundlea, así que eran dead code y nadie las usaba. */
 
   /* ── Card base ── */
   .card {
