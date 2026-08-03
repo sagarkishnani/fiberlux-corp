@@ -2,6 +2,7 @@ import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { tField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
+import FlowEffect from '../effects/FlowEffect';
 
 /* ── Types ── */
 interface HeroNosotrosProps {
@@ -25,8 +26,9 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
       className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Background gradient image */}
+      {/* Fondo: imagen (fallback si no hay WebGL2) + canvas FlowEffect encima */}
       <div className="absolute inset-0 z-0 hero-nosotros-bg" />
+      <FlowEffect className="absolute inset-0 z-0 h-full w-full" />
 
       {/* Content */}
       <div className="relative z-10 site-container flex flex-col flex-1">
