@@ -32,26 +32,16 @@
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          "Internet Corporativo",
-          "Internet Corporativo de alta disponibilidad",
-          "Conectividad satelital",
-          "Radioenlaces empresariales",
-          "Transmisión de datos (Lan To Lan)",
-          "SD-WAN",
-          "Y más..."
+          { "label": "Internet Corporativo", "label_en": "Corporate Internet", "url": "/soluciones/conectividad-empresarial/internet-corporativo" },
+          { "label": "Internet Corporativo de alta disponibilidad", "label_en": "High-Availability Corporate Internet", "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad" },
+          { "label": "Conectividad satelital", "label_en": "Satellite Connectivity", "url": "/soluciones/conectividad-empresarial/conectividad-satelital" },
+          { "label": "Radioenlaces empresariales", "label_en": "Enterprise Radio Links", "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales" },
+          { "label": "Transmisión de datos (Lan To Lan)", "label_en": "Data Transmission (Lan To Lan)", "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l" },
+          { "label": "SD-WAN", "label_en": "SD-WAN", "url": "/soluciones/conectividad-empresarial/sd-wan" }
         ],
         "url": "/soluciones/conectividad-empresarial",
         "title_en": "Business Connectivity",
-        "description_en": "Real fiber-optic connectivity for forward-thinking companies.",
-        "bullets_en": [
-          "Corporate Internet",
-          "High-Availability Corporate Internet",
-          "Satellite Connectivity",
-          "Enterprise Radio Links",
-          "Data Transmission (Lan To Lan)",
-          "SD-WAN",
-          "And more..."
-        ]
+        "description_en": "Real fiber-optic connectivity for forward-thinking companies."
       },
       {
         "number": "02",
@@ -59,26 +49,16 @@
         "description": "Protege tu operación crítica con ciberseguridad.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          "NGFW y Seguridad Perimetral",
-          "EDR / XDR / MDR",
-          "MFA y Control de Identidad",
-          "ZTNA y Control de Acceso Seguro",
-          "WAF y Protección de Aplicaciones",
-          "Cyber SOC 24/7 y Monitoreo",
-          "Y más..."
+          { "label": "NGFW y Seguridad Perimetral", "label_en": "NGFW & Perimeter Security", "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral" },
+          { "label": "EDR / XDR / MDR", "label_en": "EDR / XDR / MDR", "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr" },
+          { "label": "MFA y Control de Identidad", "label_en": "MFA & Identity Control", "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad" },
+          { "label": "ZTNA y Control de Acceso Seguro", "label_en": "ZTNA & Secure Access Control", "url": "/soluciones/ciberseguridad-gestionada/ztna" },
+          { "label": "WAF y Protección de Aplicaciones", "label_en": "WAF & Application Protection", "url": "/soluciones/ciberseguridad-gestionada/waf" },
+          { "label": "Cyber SOC 24/7 y Monitoreo", "label_en": "Cyber SOC 24/7 & Monitoring", "url": "/soluciones/ciberseguridad-gestionada/soc-24-7" }
         ],
         "url": "/soluciones/ciberseguridad-gestionada",
         "title_en": "Managed Cybersecurity",
-        "description_en": "Protect your critical operation with cybersecurity.",
-        "bullets_en": [
-          "NGFW & Perimeter Security",
-          "EDR / XDR / MDR",
-          "MFA & Identity Control",
-          "ZTNA & Secure Access Control",
-          "WAF & Application Protection",
-          "Cyber SOC 24/7 & Monitoring",
-          "And more..."
-        ]
+        "description_en": "Protect your critical operation with cybersecurity."
       },
       {
         "number": "03",
@@ -86,24 +66,16 @@
         "description": "Infraestructura lista para crecer y recuperarse",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          "Housing y colocación",
-          "Nube Pública y Privada",
-          "Backup as a Service (BaaS)",
-          "Disaster Recovery (DRaaS)",
-          "Storage y Cómputo Empresarial",
-          "Arquitectura basada en Microservicios"
+          { "label": "Housing y colocación", "label_en": "Housing & Colocation", "url": "/soluciones/data-center-cloud/housing-colocacion" },
+          { "label": "Nube Pública y Privada", "label_en": "Public & Private Cloud", "url": "/soluciones/data-center-cloud/nube-publica" },
+          { "label": "Backup as a Service (BaaS)", "label_en": "Backup as a Service (BaaS)", "url": "/soluciones/data-center-cloud/baas" },
+          { "label": "Disaster Recovery (DRaaS)", "label_en": "Disaster Recovery (DRaaS)", "url": "/soluciones/data-center-cloud/draas" },
+          { "label": "Storage y Cómputo Empresarial", "label_en": "Enterprise Storage & Compute", "url": "/soluciones/data-center-cloud/storage-computo" },
+          { "label": "Arquitectura basada en Microservicios", "label_en": "Microservices-based Architecture", "url": "/soluciones/data-center-cloud/microservicios" }
         ],
         "url": "/soluciones/data-center-cloud",
         "title_en": "Data Center, Cloud & Business Continuity",
-        "description_en": "Infrastructure ready to grow and recover.",
-        "bullets_en": [
-          "Housing & Colocation",
-          "Public & Private Cloud",
-          "Backup as a Service (BaaS)",
-          "Disaster Recovery (DRaaS)",
-          "Enterprise Storage & Compute",
-          "Microservices-based Architecture"
-        ]
+        "description_en": "Infrastructure ready to grow and recover."
       },
       {
         "number": "04",
@@ -111,26 +83,16 @@
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          "Mesa de ayuda",
-          "Comunicaciones Unificadas",
-          "Gestión de Redes LAN",
-          "Wifi Gestionado",
-          "Gestión de Endpoints",
-          "Videovigilancia gestionada",
-          "Y más..."
+          { "label": "Mesa de ayuda", "label_en": "Help Desk", "url": "/soluciones/servicios-gestionados/mesa-de-ayuda" },
+          { "label": "Comunicaciones Unificadas", "label_en": "Unified Communications", "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas" },
+          { "label": "Gestión de Redes LAN", "label_en": "LAN Network Management", "url": "/soluciones/servicios-gestionados/gestion-redes-lan" },
+          { "label": "Wifi Gestionado", "label_en": "Managed WiFi", "url": "/soluciones/servicios-gestionados/wifi-gestionado" },
+          { "label": "Gestión de Endpoints", "label_en": "Endpoint Management", "url": "/soluciones/servicios-gestionados/gestion-endpoints" },
+          { "label": "Videovigilancia gestionada", "label_en": "Managed Video Surveillance", "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada" }
         ],
         "url": "/soluciones/servicios-gestionados",
         "title_en": "Managed Services",
-        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
-        "bullets_en": [
-          "Help Desk",
-          "Unified Communications",
-          "LAN Network Management",
-          "Managed WiFi",
-          "Endpoint Management",
-          "Managed Video Surveillance",
-          "And more..."
-        ]
+        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel."
       }
     ],
     "title_en": "Our solutions"
