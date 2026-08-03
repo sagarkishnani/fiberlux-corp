@@ -1,6 +1,6 @@
 # SPEC 88 — Botones CTA a radio 8px (fuente única) y hero home centrado con fondo waveform
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 76 (fondos de hero 3d/video/imagen) · rama `feat/background-effects` (componente `WaveformEffect`)
 > **Fecha:** 2026-08-03
 > **Objetivo:** Unificar los botones CTA del sitio en un componente único con radio 8px, alto 48px y sin glow, y rediseñar el hero del home a contenido centrado con fondo animado waveform.
