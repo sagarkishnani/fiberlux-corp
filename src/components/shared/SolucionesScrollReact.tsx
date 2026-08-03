@@ -122,43 +122,45 @@ export default function SolucionesScrollReact({
             </p>
           )}
 
-          <span
-            className="block text-[64px] md:text-[88px] font-semibold leading-none text-white"
-            data-tina-field={activeTina ? tinaField(activeTina, "number") : undefined}
-          >
-            {active?.number}
-          </span>
-
-          <h2
-            className="mt-4 text-[30px] md:text-[44px] leading-[1.08] font-semibold text-white max-w-[14ch]"
-            data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
-          >
-            {tField(active as any, "title", locale)}
-          </h2>
-
-          {active?.description && (
-            <p
-              className="mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[34ch]"
-              data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+          <div key={`l-${activeIndex}`} className="solscroll-fade">
+            <span
+              className="block text-[64px] md:text-[88px] font-semibold leading-none text-white"
+              data-tina-field={activeTina ? tinaField(activeTina, "number") : undefined}
             >
-              {tField(active as any, "description", locale)}
-            </p>
-          )}
+              {active?.number}
+            </span>
 
-          {active?.url && (
-            <a
-              href={withBase(active.url)}
-              className="mt-9 inline-flex items-center rounded-full border border-white/50 px-7 py-3 text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#3B0E30]"
-              data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
+            <h2
+              className="mt-4 text-[30px] md:text-[44px] leading-[1.08] font-semibold text-white max-w-[14ch]"
+              data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
             >
-              {ctaLabel}
-            </a>
-          )}
+              {tField(active as any, "title", locale)}
+            </h2>
+
+            {active?.description && (
+              <p
+                className="mt-5 text-[16px] md:text-[18px] leading-relaxed text-white/60 max-w-[34ch]"
+                data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
+              >
+                {tField(active as any, "description", locale)}
+              </p>
+            )}
+
+            {active?.url && (
+              <a
+                href={withBase(active.url)}
+                className="mt-9 inline-flex items-center rounded-full border border-white/50 px-7 py-3 text-[16px] font-medium text-white transition-colors hover:bg-white hover:text-[#3B0E30]"
+                data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
+              >
+                {ctaLabel}
+              </a>
+            )}
+          </div>
         </div>
 
         {/* ── Columna derecha: subservicios de la categoría activa ── */}
         <div className="lg:flex-1 lg:min-w-0 mt-12 lg:mt-0">
-          <ul className="border-t border-white/12">
+          <ul key={`r-${activeIndex}`} className="solscroll-fade border-t border-white/12">
             {subservicios.map((sub, i) => {
               const label = tField(sub as any, "label", locale);
               return (
@@ -178,6 +180,17 @@ export default function SolucionesScrollReact({
         </div>
         </div>
       </div>
+
+      <style>{`
+        @keyframes solscroll-in {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: none; }
+        }
+        .solscroll-fade { animation: solscroll-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
+        @media (prefers-reduced-motion: reduce) {
+          .solscroll-fade { animation: none; }
+        }
+      `}</style>
     </section>
   );
 }
