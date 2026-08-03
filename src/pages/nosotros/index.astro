@@ -15,8 +15,6 @@ import { isLocale } from "../../i18n/config";
 
 const aboutQuery = await client.queries.about({ relativePath: "index.json" });
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
-const globalQuery = await client.queries.global({ relativePath: "index.json" });
-const rubrosCfg = (globalQuery.data?.global as any)?.sliders?.rubros ?? {};
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
@@ -66,10 +64,7 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
       query={aboutQuery.query}
       variables={aboutQuery.variables}
       data={aboutQuery.data}
-    locale={locale}
-      autoplay={rubrosCfg.autoplay ?? true}
-      intervalMs={rubrosCfg.intervalMs ?? 3500}
-      effect={rubrosCfg.effect ?? "none"}
+      locale={locale}
     />
   </div>
   <div data-reveal="up">
