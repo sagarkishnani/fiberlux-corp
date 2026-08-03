@@ -359,13 +359,20 @@ export default function WaveformEffect({ className, signalReady }: Props) {
         signaled = true;
         window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
       }
+      // Al pausar (fuera de viewport) hay que resetear raf a 0; si no, el id
+      // viejo impide que el IntersectionObserver reanude al volver a verse.
       if (!reduce && visible) raf = requestAnimationFrame(frame);
+      else raf = 0;
     }
 
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
         if (visible && !reduce && !raf) raf = requestAnimationFrame(frame);
+        else if (!visible && raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
       },
       { threshold: 0 }
     );
