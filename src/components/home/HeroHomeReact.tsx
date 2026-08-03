@@ -5,6 +5,7 @@ import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import SplineScene from "../shared/SplineScene";
 import { mediaUrl } from "../../utils/mediaUrl";
+import Button from "../shared/Button";
 
 interface HeroHomeProps {
   query: string;
@@ -177,9 +178,9 @@ export default function HeroHomeReact({
         }}
       />
 
-      {/* ══════════ Contenido (z-10) ══════════ */}
+      {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32">
-        <div className="flex flex-col justify-start md:justify-center max-w-[640px] min-h-0 lg:min-h-[640px]">
+        <div className="mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]">
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
@@ -189,7 +190,7 @@ export default function HeroHomeReact({
 
           {hero.subtitle && (
             <p
-              className="mt-6 text-white text-body-lg leading-relaxed max-w-[480px]"
+              className="mt-6 text-white text-body-lg leading-relaxed max-w-[520px] mx-auto"
               data-tina-field={tinaField(hero, "subtitle")}
             >
               {tField(hero as any, "subtitle", locale)}
@@ -197,24 +198,20 @@ export default function HeroHomeReact({
           )}
 
           {buttons.length > 0 && (
-            <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+            <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full sm:w-auto">
               {buttons.map((btn, i) => {
                 if (!btn) return null;
                 const isPrimary = btn.variant !== "secondary";
-                const baseClasses =
-                  "group pointer-events-auto inline-flex items-center justify-center px-7 py-4 rounded-full font-medium text-base transition-all duration-300";
-                const variantClasses = isPrimary
-                  ? "bg-[#96237A] hover:bg-[#650F50] text-white shadow-[0_8px_32px_-8px_rgba(150,35,122,0.6)] hover:shadow-[0_8px_32px_-4px_rgba(150,35,122,0.8)] hover:translate-y-[-1px]"
-                  : "border border-white/80 hover:border-white bg-transparent hover:bg-white/5 text-white backdrop-blur-sm";
                 return (
-                  <a
+                  <Button
                     key={i}
+                    variant={isPrimary ? "primary" : "secondary"}
                     href={btn.url || "#"}
                     data-tina-field={tinaField(btn as any, "text")}
-                    className={`${baseClasses} ${variantClasses}`}
+                    className="pointer-events-auto w-full sm:w-auto"
                   >
                     {tField(btn as any, "text", locale)}
-                  </a>
+                  </Button>
                 );
               })}
             </div>
