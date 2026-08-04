@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaCloud,
   FaLock,
@@ -6,6 +6,9 @@ import {
   FaCircleNodes,
 } from "react-icons/fa6";
 import type { WidgetConfig } from "./ValorSolucionReact";
+
+const BASE = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+const AVATAR = `${BASE}/images/testimonials/avatar-placeholder.svg`;
 
 /* SPEC 93 — Widget interactivo del card "El desafío", uno por categoría.
    El dispatcher elige el sub-widget según config.type. El contenido es fijo
@@ -15,7 +18,23 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
     <div className="dw-root relative z-10 flex w-full items-center justify-center">
       {config.type === "toggle" && <ToggleWidget config={config} />}
       {config.type === "stats" && <StatsWidget config={config} />}
+      {config.type === "chat" && <ChatWidget config={config} />}
     </div>
+  );
+}
+
+/* Avatar circular con punto "en línea" (verde). */
+function Avatar() {
+  return (
+    <span className="relative shrink-0">
+      <img
+        src={AVATAR}
+        alt=""
+        aria-hidden="true"
+        className="h-7 w-7 rounded-full bg-white/20 object-cover"
+      />
+      <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[#37B24D] ring-2 ring-[#2c0a26]" />
+    </span>
   );
 }
 
@@ -179,6 +198,88 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
         </span>
         {config.hint}
       </span>
+    </div>
+  );
+}
+
+/* ── Servicios Gestionados — chat (hover revela; móvil = autoplay en loop) ── */
+function ChatWidget({ config }: { config: WidgetConfig }) {
+  const [revealed, setRevealed] = useState(false);
+  const [autoplay, setAutoplay] = useState(false);
+  const msgs = config.messages || [];
+  const user = msgs[0];
+  const agent = msgs[1];
+
+  useEffect(() => {
+    // Reduced-motion: conversación completa estática, sin animación.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setRevealed(true);
+      return;
+    }
+    // Con hover (desktop) el revelado lo maneja el puntero; sin hover
+    // (touch) se anima sola en bucle: escribiendo → mensaje → repetir.
+    if (window.matchMedia("(hover: hover)").matches) return;
+    setAutoplay(true);
+    let state = false;
+    let t = window.setTimeout(function tick() {
+      state = !state;
+      setRevealed(state);
+      t = window.setTimeout(tick, state ? 2200 : 1600);
+    }, 1600);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  const onEnter = () => {
+    if (!autoplay) setRevealed(true);
+  };
+  const onLeave = () => {
+    if (!autoplay) setRevealed(false);
+  };
+
+  return (
+    <div
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      className="flex w-[300px] flex-col gap-3"
+    >
+      {/* Mensaje del usuario (claro, a la derecha) */}
+      {user && (
+        <div className="flex items-end justify-end gap-2">
+          <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
+            <p className="text-[13px] leading-snug text-[#3B0E30]">{user.text}</p>
+            <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
+          </div>
+          <Avatar />
+        </div>
+      )}
+
+      {/* Respuesta del agente (magenta, a la izquierda): escribiendo → mensaje */}
+      {agent && (
+        <div className="flex items-end gap-2">
+          <Avatar />
+          {revealed ? (
+            <div
+              key="msg"
+              className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
+            >
+              <p className="text-[13px] leading-snug text-white">{agent.text}</p>
+              <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
+            </div>
+          ) : (
+            <div
+              key="typing"
+              className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
+              aria-label="Escribiendo…"
+            >
+              <span className="dw-typing flex items-center gap-1">
+                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+              </span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
