@@ -703,7 +703,7 @@ export default function HeaderV2React({
 
                   {withChildren && (
                     <div
-                      className={`absolute left-0 top-full pt-4 transition-all duration-200 ${
+                      className={`absolute left-0 top-full z-[60] pt-4 transition-all duration-200 ${
                         open
                           ? "opacity-100 visible translate-y-0"
                           : "opacity-0 invisible -translate-y-1 pointer-events-none"

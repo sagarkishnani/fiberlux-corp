@@ -127,7 +127,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
 function ValueCard({ item, locale }: { item: ValueItem; locale: Locale }) {
   return (
     <div
-      className="flex items-center justify-center shrink-0 h-[130px] md:h-auto md:aspect-[7/5]"
+      className="flex items-center justify-center shrink-0 h-[130px] md:h-auto md:aspect-[16/7]"
       style={{
         background: 'rgba(150, 35, 122, 0.06)',
         border: '1px solid rgba(150, 35, 122, 0.1)',

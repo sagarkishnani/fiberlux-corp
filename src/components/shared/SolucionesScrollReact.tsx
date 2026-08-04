@@ -22,9 +22,6 @@ function withBase(path: string): string {
   return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/* A two-digit index label ("01", "02"…). */
-const pad2 = (n: number) => String(n + 1).padStart(2, "0");
-
 /* Alto de scroll (en viewports) por categoría. Regula la velocidad del recorrido;
    el snap remata el encaje en el centro de cada categoría. */
 const VH_PER_CATEGORY = 1.15;
@@ -45,7 +42,18 @@ export default function SolucionesScrollReact({
   >;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const N = items.length;
+
+  /* En mobile no hay recorrido guiado (scroll-jacking): desorienta sin una guía
+     de progreso. Se renderizan las categorías apiladas en flujo natural. */
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   /* Refs de elementos que animo de forma CONTINUA por rAF (sin re-render). */
   const trackRef = useRef<HTMLElement | null>(null);
@@ -63,6 +71,7 @@ export default function SolucionesScrollReact({
      directo en los nodos (no re-render por frame). rAF-throttled, no bloquea el
      scroll nativo (compatible con Lenis). */
   useEffect(() => {
+    if (isMobile) return; // en mobile el recorrido guiado está desactivado
     if (N <= 1) return;
     const track = trackRef.current;
     if (!track) return;
@@ -148,7 +157,7 @@ export default function SolucionesScrollReact({
       window.removeEventListener("resize", onScroll);
       if (snapTimer.current != null) window.clearTimeout(snapTimer.current);
     };
-  }, [N]);
+  }, [N, isMobile]);
 
   /* ── Tooltip "Ver más" con delay + lag ── */
   const finePointer = useRef(false);
@@ -218,8 +227,6 @@ export default function SolucionesScrollReact({
   }[];
   /* Se muestran las primeras MAX_VISIBLE; si hay más, un enlace "Ver todas (N)". */
   const MAX_VISIBLE = 6;
-  const visible = subservicios.slice(0, MAX_VISIBLE);
-  const overflow = subservicios.length - MAX_VISIBLE;
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
   const seeAllLabel = locale === "en" ? "See all" : "Ver todas";
@@ -227,6 +234,161 @@ export default function SolucionesScrollReact({
   /* Transición CSS del odómetro (número) — rueda por categoría, alineado. */
   const numTransition =
     "transition-transform duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none";
+
+  /* Lista de subservicios (+ "Ver todas") — compartida por desktop y mobile. */
+  const renderSubList = (
+    subs: typeof subservicios,
+    url: string | null | undefined,
+    keyPrefix: string,
+  ) => {
+    const vis = subs.slice(0, MAX_VISIBLE);
+    const ov = subs.length - MAX_VISIBLE;
+    return (
+      <>
+        <ul className="border-t border-white/50 sol-stagger">
+          {vis.map((sub, i) => {
+            const label = tField(sub as any, "label", locale);
+            const href = sub?.url ? withBase(sub.url) : null;
+            const rowInner = (
+              <div className="flex items-center gap-6 py-3 md:py-6">
+                <span
+                  aria-hidden="true"
+                  className="text-[13px] md:text-[15px] text-white/35 transition-colors group-hover:text-white/70"
+                >
+                  ➤
+                </span>
+                <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
+                  {label}
+                </span>
+              </div>
+            );
+            return (
+              <li
+                key={`${keyPrefix}-${i}`}
+                className="sol-row border-b border-white/50"
+                style={{ animationDelay: `${i * 45}ms` }}
+              >
+                {href ? (
+                  <a href={href} className="group block outline-none focus-visible:text-white">
+                    {rowInner}
+                  </a>
+                ) : (
+                  <div className="cursor-default">{rowInner}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        {ov > 0 && url && (
+          <div className="mt-6 flex justify-end">
+            <a
+              href={withBase(url)}
+              className="group inline-flex items-center gap-2 text-[15px] font-medium text-white/65 transition-colors hover:text-white"
+            >
+              {seeAllLabel} ({subs.length})
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </a>
+          </div>
+        )}
+      </>
+    );
+  };
+
+  /* ── Mobile: sin scroll-jacking. Categorías apiladas en flujo natural. ── */
+  if (isMobile) {
+    return (
+      <section
+        id="soluciones-scroll"
+        className="relative overflow-hidden bg-greyscale-darkest"
+      >
+        {/* Glows magenta estáticos de ambiente, distribuidos a lo largo de la
+            sección para que el fondo no se vea plano/negro en mobile. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-[4%] -left-[18%] z-0 h-[380px] w-[460px] rounded-full opacity-35 blur-[120px]"
+          style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-[38%] -right-[22%] z-0 h-[420px] w-[500px] rounded-full opacity-25 blur-[130px]"
+          style={{ background: "radial-gradient(circle, #650F50 0%, transparent 70%)" }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-[2%] -left-[16%] z-0 h-[400px] w-[480px] rounded-full opacity-30 blur-[125px]"
+          style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
+        />
+
+        <div className="relative z-10 w-full site-container py-12">
+          {sectionTitle && (
+            <p
+              className="mb-8 font-mono text-xs uppercase tracking-[0.2em] text-white/50"
+              data-tina-field={services ? tinaField(services, "title") : undefined}
+            >
+              [ {sectionTitle.toUpperCase()} ]
+            </p>
+          )}
+
+          <div className="space-y-16">
+            {items.map((it, idx) => {
+              const subs = (it?.bullets || []).filter(Boolean) as typeof subservicios;
+              const tina = services?.items?.[idx];
+              return (
+                <div key={idx}>
+                  <div className="text-[52px] font-semibold leading-none text-white">
+                    {it?.number}
+                  </div>
+                  <h2
+                    className="mt-3 text-[26px] leading-[1.1] font-semibold text-white max-w-[14ch]"
+                    data-tina-field={tina ? tinaField(tina, "title") : undefined}
+                  >
+                    {tField(it as any, "title", locale)}
+                  </h2>
+                  {it?.description && (
+                    <p
+                      className="mt-3 text-[15px] leading-relaxed text-white/60 max-w-[34ch]"
+                      data-tina-field={tina ? tinaField(tina, "description") : undefined}
+                    >
+                      {tField(it as any, "description", locale)}
+                    </p>
+                  )}
+
+                  <div className="mt-7">{renderSubList(subs, it?.url, `m-${idx}`)}</div>
+
+                  {it?.url && (
+                    <a
+                      href={withBase(it.url)}
+                      className={buttonClass("secondary", "mt-7")}
+                      data-tina-field={tina ? tinaField(tina, "url") : undefined}
+                    >
+                      {ctaLabel}
+                    </a>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes sol-row-in {
+            from { opacity: 0; transform: translateX(24px); }
+            to   { opacity: 1; transform: none; }
+          }
+          .sol-stagger .sol-row { animation: sol-row-in 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+          @media (prefers-reduced-motion: reduce) {
+            .sol-stagger .sol-row { animation: none; }
+          }
+        `}</style>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -251,36 +413,12 @@ export default function SolucionesScrollReact({
           style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
         />
 
-        {/* Número gigante de fondo (protagonista + parallax). Rueda su valor con
-            el odómetro y deriva de forma continua con el scroll. */}
-        <div
-          ref={bgNumRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute right-[2%] top-1/2 z-0 -translate-y-1/2 select-none will-change-transform"
-        >
-          <div
-            className="relative overflow-hidden font-semibold leading-none text-white/[0.05]"
-            style={{ height: "1em", fontSize: "min(42vw, 640px)" }}
-          >
-            <div
-              className={numTransition}
-              style={{ transform: `translateY(-${activeIndex}em)` }}
-            >
-              {items.map((it, i) => (
-                <div key={i} style={{ height: "1em", lineHeight: 1 }}>
-                  {it?.number}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <div className="relative z-10 w-full site-container py-8 md:py-16 lg:py-20 md:flex md:items-center md:gap-10 lg:gap-14">
           {/* ── Columna izquierda ── */}
           <div className="md:w-[42%] md:shrink-0">
             {sectionTitle && (
               <p
-                className="mb-6 font-mono text-[13px] uppercase tracking-[0.2em] text-white/45"
+                className="mb-6 font-mono text-xs md:text-sm uppercase tracking-[0.2em] text-white/50"
                 data-tina-field={services ? tinaField(services, "title") : undefined}
               >
                 [ {sectionTitle.toUpperCase()} ]
@@ -340,54 +478,7 @@ export default function SolucionesScrollReact({
             onMouseLeave={handleListLeave}
           >
             <div ref={listRef} className="will-change-transform">
-            <ul className="border-t border-white/12 sol-stagger">
-              {visible.map((sub, i) => {
-                const label = tField(sub as any, "label", locale);
-                const href = sub?.url ? withBase(sub.url) : null;
-                const rowInner = (
-                  <div className="flex items-center gap-6 py-3 md:py-6">
-                    <span className="text-[18px] md:text-[24px] font-medium tabular-nums text-white/35 transition-colors group-hover:text-white/70">
-                      {pad2(i)}
-                    </span>
-                    <span className="ml-auto text-right text-[17px] md:text-[19px] text-white/85 transition-colors group-hover:text-white">
-                      {label}
-                    </span>
-                  </div>
-                );
-                return (
-                  <li
-                    key={`${activeIndex}-${i}`}
-                    className="sol-row border-b border-white/12"
-                    style={{ animationDelay: `${i * 45}ms` }}
-                  >
-                    {href ? (
-                      <a href={href} className="group block outline-none focus-visible:text-white">
-                        {rowInner}
-                      </a>
-                    ) : (
-                      <div className="cursor-default">{rowInner}</div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-
-            {overflow > 0 && active?.url && (
-              <div className="mt-6 flex justify-end">
-                <a
-                  href={withBase(active.url)}
-                  className="group inline-flex items-center gap-2 text-[15px] font-medium text-white/65 transition-colors hover:text-white"
-                >
-                  {seeAllLabel} ({subservicios.length})
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
-                </a>
-              </div>
-            )}
+              {renderSubList(subservicios, active?.url, String(activeIndex))}
             </div>
           </div>
         </div>

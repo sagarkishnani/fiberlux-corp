@@ -131,17 +131,17 @@ export default function HeroSolucionReact({
         >
           {/* ════ LEFT — content ════ */}
           <div className="max-w-[560px]">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-6">
+            {/* Breadcrumb — mismo tamaño/contraste que el de Nosotros. */}
+            <nav className="flex items-center gap-2 text-sm mb-6">
               <a
                 href={serviciosHref}
-                className="hover:text-greyscale-white transition-colors"
+                className="text-white/50 hover:text-white transition-colors"
               >
                 {locale === "en" ? "Solutions" : "Soluciones"}
               </a>
-              <span>/</span>
+              <span className="text-white/30">/</span>
               <span
-                className="text-greyscale-white"
+                className="text-white font-medium"
                 data-tina-field={tinaField(service, "title")}
               >
                 {tField(service as any, "title", locale)}

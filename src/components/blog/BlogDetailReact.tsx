@@ -296,57 +296,6 @@ export default function BlogDetailReact({
         </div>
       </section>
 
-      {/* ═══ NEWSLETTER ═══ */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-[940px] mx-auto px-6 md:px-10">
-          <div
-            className="rounded-2xl overflow-hidden p-8 md:p-12 relative"
-            style={{
-              background:
-                'linear-gradient(135deg, #650F50 0%, #96237A 50%, #3B0E30 100%)',
-            }}
-          >
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-center">
-              <div>
-                <h3 className="text-[28px] md:text-[32px] leading-[34px] md:leading-[40px] font-bold text-white mb-3">
-                  Suscríbete a nuestro newsletter
-                </h3>
-                <p className="text-white/70 text-[14px] leading-[22px] mb-6">
-                  Entérate de lo último sobre tecnología para empresas y recibe
-                  información para potenciar tu conexión.
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Tu correo electrónico"
-                    className="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-white/40 transition-colors"
-                  />
-                  <button className="bg-white text-[#96237A] font-semibold text-[14px] px-6 py-2.5 rounded-lg hover:bg-white/90 transition-colors shrink-0">
-                    Enviar
-                  </button>
-                </div>
-              </div>
-              {/* Mail icon */}
-              <div className="hidden md:flex items-center justify-center w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm">
-                <svg
-                  className="w-10 h-10 text-white/80"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ RELATED POSTS ═══ */}
       {relatedPosts.length > 0 && (
         <section className="py-12 md:py-16 bg-white">

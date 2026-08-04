@@ -40,7 +40,7 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
 // Velocidad constante: la duración del marquee crece con la cantidad de logos
 // (~9s por logo), así no se acelera por tener muchos logos juntos pero mantiene
 // un ritmo algo más ágil.
-const durationSeconds = Math.max(logos.length * 9, 45);
+const durationSeconds = Math.max(logos.length * 3.5, 20);
 ---
 
 <PartnersMarquee client:visible partners={partners} durationSeconds={durationSeconds} locale={locale} />

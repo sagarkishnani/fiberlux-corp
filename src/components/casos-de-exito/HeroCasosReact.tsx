@@ -39,7 +39,7 @@ export default function HeroCasosReact({
 
   return (
     <section
-      className="relative overflow-hidden -mt-16"
+      className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
       {/* Imagen fallback: solo si FlowEffect no puede inicializar */}
@@ -61,22 +61,25 @@ export default function HeroCasosReact({
       {/* Capa oscura para atenuar el flow */}
       <div className="absolute inset-0 z-0 bg-black/40" aria-hidden="true" />
 
-      <div className="relative z-10 site-container pt-40 pb-24 lg:pt-48 lg:pb-10">
-        <div className="max-w-[600px]" data-reveal="up">
-          {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
-          <nav className="flex items-center gap-2 text-sm mb-8" aria-label="Breadcrumb">
-            <a href={base} className="text-white/50 hover:text-white transition-colors">
-              {t("breadcrumb.home", locale)}
-            </a>
-            <span className="text-white/30">/</span>
-            <span
-              className="text-white font-medium"
-              data-tina-field={tinaField(page, "breadcrumb")}
-            >
-              {tField(page as any, "breadcrumb", locale)}
-            </span>
-          </nav>
+      <div className="relative z-10 site-container flex flex-col flex-1">
+        {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
+        <nav className="flex items-center gap-2 text-sm pt-24 md:pt-28" aria-label="Breadcrumb">
+          <a href={base} className="text-white/50 hover:text-white transition-colors">
+            {t("breadcrumb.home", locale)}
+          </a>
+          <span className="text-white/30">/</span>
+          <span
+            className="text-white font-medium"
+            data-tina-field={tinaField(page, "breadcrumb")}
+          >
+            {tField(page as any, "breadcrumb", locale)}
+          </span>
+        </nav>
 
+        {/* Spacer — empuja el título/intro hacia la base (igual que Nosotros). */}
+        <div className="flex-1" />
+
+        <div className="max-w-[600px]" data-reveal="up">
           <h1
             className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white mb-6 tracking-[-1.6px]"
             data-tina-field={tinaField(page, "heading")}
@@ -85,7 +88,7 @@ export default function HeroCasosReact({
           </h1>
 
           <p
-            className="text-body-lg text-greyscale-light max-w-[560px]"
+            className="text-body-lg text-greyscale-light max-w-[560px] mb-16 md:mb-20"
             data-tina-field={tinaField(page, "intro")}
           >
             {tField(page as any, "intro", locale)}
