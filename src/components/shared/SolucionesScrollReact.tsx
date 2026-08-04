@@ -413,6 +413,30 @@ export default function SolucionesScrollReact({
           style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
         />
 
+        {/* Número gigante de fondo (protagonista + parallax). Rueda su valor con
+            el odómetro y deriva de forma continua con el scroll. */}
+        <div
+          ref={bgNumRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[2%] top-1/2 z-0 -translate-y-1/2 select-none will-change-transform"
+        >
+          <div
+            className="relative overflow-hidden font-semibold leading-none text-white/[0.05]"
+            style={{ height: "1em", fontSize: "min(42vw, 640px)" }}
+          >
+            <div
+              className={numTransition}
+              style={{ transform: `translateY(-${activeIndex}em)` }}
+            >
+              {items.map((it, i) => (
+                <div key={i} style={{ height: "1em", lineHeight: 1 }}>
+                  {it?.number}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="relative z-10 w-full site-container py-8 md:py-16 lg:py-20 md:flex md:items-center md:gap-10 lg:gap-14">
           {/* ── Columna izquierda ── */}
           <div className="md:w-[42%] md:shrink-0">
