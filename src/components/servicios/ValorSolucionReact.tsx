@@ -130,6 +130,14 @@ export default function ValorSolucionReact({
       tipRaf.current = null;
     }
   };
+  // El click sobre cualquier parte del bloque (misma superficie que el hover)
+  // reenvía al control del widget; si ya cayó sobre él, lo maneja el propio botón.
+  const onDesafioClick = (e: ReactMouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[role="switch"]')) return;
+    const btn = e.currentTarget.querySelector<HTMLElement>('[role="switch"]');
+    btn?.click();
+  };
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -246,11 +254,14 @@ export default function ValorSolucionReact({
           {/* ── Left — El desafío (tall, dark purple + wave) ── */}
           {challenge && (
             <article
-              className="valor-card relative lg:row-span-2 flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] min-h-[300px] lg:min-h-[560px] p-7 md:p-9 bg-[radial-gradient(120%_90%_at_15%_0%,#4a1240_0%,#2c0a26_45%,#180614_100%)]"
+              className={`valor-card relative lg:row-span-2 flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] min-h-[300px] lg:min-h-[560px] p-7 md:p-9 bg-[radial-gradient(120%_90%_at_15%_0%,#4a1240_0%,#2c0a26_45%,#180614_100%)]${
+                widget ? " cursor-pointer" : ""
+              }`}
               style={{ ["--d" as any]: "0.15s" }}
               onMouseEnter={widget ? onDesafioEnter : undefined}
               onMouseMove={widget ? onDesafioMove : undefined}
               onMouseLeave={widget ? onDesafioLeave : undefined}
+              onClick={widget ? onDesafioClick : undefined}
             >
               {/* Base "horizonte" magenta — sólo en el widget de toggle (data-center). */}
               {widget?.type === "toggle" && (
