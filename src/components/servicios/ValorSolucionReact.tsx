@@ -21,6 +21,35 @@ interface Card {
   image?: string | null;
 }
 
+/* Widget interactivo por categoría dentro del card "El desafío" (SPEC 93).
+   La clave es el slug del servicio (variables.relativePath sin ".json").
+   Los slugs sin entrada (p. ej. conectividad-empresarial) conservan la onda. */
+export interface WidgetConfig {
+  type: "toggle" | "stats" | "chat";
+  hint?: string;
+  onLabel?: string;
+  before?: { confianza: string; trend: string; dir: "up" | "down" };
+  after?: { confianza: string; trend: string; dir: "up" | "down" };
+  messages?: { from: "user" | "agent"; text: string; time: string }[];
+}
+
+const WIDGETS: Record<string, WidgetConfig> = {
+  "data-center-cloud": { type: "toggle", hint: "Proteger", onLabel: "PROTEGIDO" },
+  "ciberseguridad-gestionada": {
+    type: "stats",
+    hint: "Mejorar",
+    before: { confianza: "22%", trend: "↓ 32%", dir: "down" },
+    after: { confianza: "100%", trend: "↑ 54%", dir: "up" },
+  },
+  "servicios-gestionados": {
+    type: "chat",
+    messages: [
+      { from: "user", text: "¡Hola! Quiero crear un nuevo proyecto.", time: "Hace 1 min" },
+      { from: "agent", text: "¡Genial, ¿en qué te puedo asistir?", time: "Hace 1 min" },
+    ],
+  },
+};
+
 export default function ValorSolucionReact({
   query,
   variables,
@@ -118,6 +147,10 @@ export default function ValorSolucionReact({
   const [challenge, solution, industries] = cards;
   const vis = inView ? "is-visible" : "";
 
+  // Widget interactivo del card "El desafío" según la categoría (SPEC 93).
+  const slug = (variables?.relativePath || "").replace(/\.json$/, "");
+  const widget = WIDGETS[slug];
+
   return (
     <section
       ref={sectionRef}
@@ -168,7 +201,7 @@ export default function ValorSolucionReact({
                   {tField(challenge as any, "text", locale)}
                 </p>
               )}
-              {challenge.image && (
+              {widget ? null : challenge.image ? (
                 <img
                   src={challenge.image}
                   alt=""
@@ -179,7 +212,7 @@ export default function ValorSolucionReact({
                     (e.currentTarget as HTMLImageElement).style.display = "none";
                   }}
                 />
-              )}
+              ) : null}
             </article>
           )}
 
