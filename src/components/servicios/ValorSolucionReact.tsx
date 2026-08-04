@@ -6,6 +6,7 @@ import type {
 } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
+import DesafioWidget from "./DesafioWidget";
 
 interface ValorSolucionProps {
   query: string;
@@ -201,7 +202,11 @@ export default function ValorSolucionReact({
                   {tField(challenge as any, "text", locale)}
                 </p>
               )}
-              {widget ? null : challenge.image ? (
+              {widget ? (
+                <div className="mt-8 flex flex-1 items-center justify-center">
+                  <DesafioWidget slug={slug} config={widget} />
+                </div>
+              ) : challenge.image ? (
                 <img
                   src={challenge.image}
                   alt=""
