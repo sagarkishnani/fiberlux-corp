@@ -1,14 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import {
-  FaCloud,
-  FaLock,
-  FaTowerBroadcast,
-  FaCircleNodes,
-} from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import { FaCloud, FaLock, FaTowerBroadcast } from "react-icons/fa6";
 import type { WidgetConfig } from "./ValorSolucionReact";
 
 const BASE = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
 const AVATAR = `${BASE}/images/testimonials/avatar-placeholder.svg`;
+const NODE_GLYPH = `${BASE}/images/soluciones/fiberlux-purple.svg`;
 
 /* SPEC 93 — Widget interactivo del card "El desafío", uno por categoría.
    El dispatcher elige el sub-widget según config.type. El contenido es fijo
@@ -50,6 +46,54 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
   );
 }
 
+/* Tooltip-hint: aparece en hover (desktop) y, en touch, unos segundos como
+   guía inicial. Se maneja con useHint() y se muestra sólo en el estado inicial. */
+function useHint() {
+  const [hover, setHover] = useState(false);
+  const [guide, setGuide] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Sin hover (touch): mostrar el tooltip unos segundos como guía y ocultarlo.
+    if (!window.matchMedia("(hover: hover)").matches) {
+      setGuide(true);
+      const t = window.setTimeout(() => setGuide(false), 3200);
+      return () => window.clearTimeout(t);
+    }
+  }, []);
+
+  return {
+    visible: hover || guide,
+    bind: {
+      onMouseEnter: () => setHover(true),
+      onMouseLeave: () => setHover(false),
+    },
+  };
+}
+
+function HintTip({
+  show,
+  label,
+  className = "",
+}: {
+  show: boolean;
+  label?: string;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`pointer-events-none absolute z-30 whitespace-nowrap rounded-[8px] bg-white/95 px-2.5 py-1 text-[12px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
+        show ? "opacity-100" : "opacity-0"
+      } ${className}`}
+    >
+      <span aria-hidden="true" className="mr-1">
+        ↵
+      </span>
+      {label}
+    </span>
+  );
+}
+
 /* Avatar circular con punto "en línea" (verde). */
 function Avatar() {
   return (
@@ -68,9 +112,10 @@ function Avatar() {
 /* ── Data Center — toggle de protección (click alterna ida y vuelta) ── */
 function ToggleWidget({ config }: { config: WidgetConfig }) {
   const [on, setOn] = useState(false);
+  const hint = useHint();
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center" {...hint.bind}>
       {/* Label "PROTEGIDO": reserva su altura siempre para que nada salte. */}
       <span
         className={`mb-3 font-mono text-[11px] uppercase tracking-[0.25em] text-white/85 transition-opacity duration-300 ${
@@ -101,17 +146,11 @@ function ToggleWidget({ config }: { config: WidgetConfig }) {
           </span>
         </button>
 
-        {/* Tooltip-hint: invita a interactuar, solo en el estado inicial. */}
-        <span
-          className={`pointer-events-none absolute -right-1 -top-7 whitespace-nowrap rounded-[8px] bg-white/95 px-2.5 py-1 text-[12px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
-            on ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          <span aria-hidden="true" className="mr-1">
-            ↵
-          </span>
-          {config.hint}
-        </span>
+        <HintTip
+          show={hint.visible && !on}
+          label={config.hint}
+          className="-right-1 -top-7"
+        />
       </div>
 
       {/* Línea punteada + nodo señal. */}
@@ -132,34 +171,56 @@ function ToggleWidget({ config }: { config: WidgetConfig }) {
 /* ── Ciberseguridad — métricas comprometido↔protegido (click alterna) ── */
 function StatsWidget({ config }: { config: WidgetConfig }) {
   const [on, setOn] = useState(false);
+  const hint = useHint();
   const s = on ? config.after : config.before;
   const up = on; // true → tendencia positiva (verde)
   const accent = up ? "#2F9E44" : "#E5484D";
   const badgeBg = up ? "rgba(55,178,77,0.14)" : "rgba(229,72,77,0.14)";
   // Polilíneas de tendencia: bajando (rojo) vs subiendo (verde).
   const line = up
-    ? "0,42 20,34 40,38 60,26 80,30 100,17 120,21 140,9 160,7"
-    : "0,11 20,17 40,13 60,25 80,21 100,33 120,29 140,41 160,39";
+    ? "0,60 20,48 40,54 60,37 80,42 100,24 120,30 140,13 160,10"
+    : "0,15 20,24 40,18 60,35 80,29 100,46 120,41 140,58 160,55";
 
   return (
-    <div className="relative">
+    <div className="relative pt-6" {...hint.bind}>
       <button
         type="button"
         role="switch"
         aria-checked={on}
         aria-label={config.hint || "Mejorar"}
         onClick={() => setOn((v) => !v)}
-        className="relative block cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-white/70 rounded-[22px]"
+        className="block cursor-pointer rounded-[18px] outline-none focus-visible:ring-2 focus-visible:ring-white/70"
       >
-        <div className="relative h-[210px] w-[300px]">
+        <div className="relative flex items-end gap-3">
+          {/* CONFIANZA — card con barra de progreso */}
+          <div className="flex h-[112px] w-[168px] flex-col justify-between rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#3B0E30]/55">
+                Confianza
+              </span>
+              <span className="text-[15px] font-bold text-[#3B0E30]">
+                {s?.confianza}
+              </span>
+            </div>
+            <div
+              className="h-[6px] w-full overflow-hidden rounded-full"
+              style={{ background: "rgba(59,14,48,0.12)" }}
+            >
+              <span
+                className="dw-bar block h-full rounded-full bg-[#96237A] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                style={{ width: s?.confianza }}
+              />
+            </div>
+          </div>
+
           {/* USUARIOS TOTALES — card con mini line-chart */}
-          <div className="absolute right-0 top-0 w-[196px] rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
+          <div className="flex h-[150px] w-[196px] flex-col rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#3B0E30]/55">
               Usuarios totales
             </p>
             <svg
-              viewBox="0 0 160 50"
-              className="mt-3 h-[52px] w-full"
+              viewBox="0 0 160 70"
+              className="mt-2 w-full flex-1"
               fill="none"
               preserveAspectRatio="none"
               aria-hidden="true"
@@ -170,10 +231,11 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
                 strokeWidth={2.4}
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                vectorEffect="non-scaling-stroke"
                 className="dw-trend"
               />
             </svg>
-            <div className="mt-2 flex justify-end">
+            <div className="mt-1 flex justify-end">
               <span
                 className="rounded-full px-2 py-0.5 text-[12px] font-semibold"
                 style={{ background: badgeBg, color: accent }}
@@ -183,130 +245,101 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
             </div>
           </div>
 
-          {/* CONFIANZA — card con barra de progreso */}
-          <div className="absolute bottom-0 left-0 z-10 w-[214px] rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
-            <div className="flex items-baseline justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#3B0E30]/55">
-                Confianza
-              </span>
-              <span className="text-[15px] font-bold text-[#3B0E30]">
-                {s?.confianza}
-              </span>
-            </div>
-            <div
-              className="mt-3 h-[6px] w-full overflow-hidden rounded-full"
-              style={{ background: "rgba(59,14,48,0.12)" }}
-            >
-              <span
-                className="dw-bar block h-full rounded-full bg-[#96237A] transition-[width] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                style={{ width: s?.confianza }}
-              />
-            </div>
-          </div>
-
-          {/* Nodo con glifo de conexiones, superpuesto arriba a la izquierda */}
+          {/* Nodo con glifo Fiberlux, superpuesto sobre la unión de las cards. */}
           <span
             aria-hidden="true"
-            className="absolute left-0 top-8 z-20 flex h-[48px] w-[48px] items-center justify-center rounded-[14px] bg-white text-[#96237A] shadow-lg"
+            className="absolute left-[148px] top-0 z-20 flex h-[48px] w-[48px] items-center justify-center rounded-[14px] bg-white shadow-lg"
           >
-            <FaCircleNodes size={20} />
+            <img src={NODE_GLYPH} alt="" className="h-[18px] w-auto" />
           </span>
         </div>
       </button>
 
-      {/* Tooltip-hint: solo en el estado inicial (comprometido). */}
-      <span
-        className={`pointer-events-none absolute -top-3 right-2 whitespace-nowrap rounded-[8px] bg-white/95 px-2.5 py-1 text-[12px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
-          on ? "opacity-0" : "opacity-100"
-        }`}
-      >
-        <span aria-hidden="true" className="mr-1">
-          ↵
-        </span>
-        {config.hint}
-      </span>
+      <HintTip
+        show={hint.visible && !on}
+        label={config.hint}
+        className="left-[196px] top-3"
+      />
     </div>
   );
 }
 
-/* ── Servicios Gestionados — chat (hover revela; móvil = autoplay en loop) ── */
+/* ── Servicios Gestionados — chat (click revela la respuesta) ── */
 function ChatWidget({ config }: { config: WidgetConfig }) {
   const [revealed, setRevealed] = useState(false);
-  const [autoplay, setAutoplay] = useState(false);
+  const hint = useHint();
   const msgs = config.messages || [];
   const user = msgs[0];
   const agent = msgs[1];
 
   useEffect(() => {
-    // Reduced-motion: conversación completa estática, sin animación.
+    // Reduced-motion: conversación completa estática desde el inicio.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setRevealed(true);
-      return;
     }
-    // Con hover (desktop) el revelado lo maneja el puntero; sin hover
-    // (touch) se anima sola en bucle: escribiendo → mensaje → repetir.
-    if (window.matchMedia("(hover: hover)").matches) return;
-    setAutoplay(true);
-    let state = false;
-    let t = window.setTimeout(function tick() {
-      state = !state;
-      setRevealed(state);
-      t = window.setTimeout(tick, state ? 2200 : 1600);
-    }, 1600);
-    return () => window.clearTimeout(t);
   }, []);
 
-  const onEnter = () => {
-    if (!autoplay) setRevealed(true);
-  };
-  const onLeave = () => {
-    if (!autoplay) setRevealed(false);
-  };
-
   return (
-    <div
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      className="flex w-[300px] flex-col gap-3"
-    >
-      {/* Mensaje del usuario (claro, a la derecha) */}
-      {user && (
-        <div className="flex items-end justify-end gap-2">
-          <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
-            <p className="text-[13px] leading-snug text-[#3B0E30]">{user.text}</p>
-            <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
-          </div>
-          <Avatar />
-        </div>
-      )}
-
-      {/* Respuesta del agente (magenta, a la izquierda): escribiendo → mensaje */}
-      {agent && (
-        <div className="flex items-end gap-2">
-          <Avatar />
-          {revealed ? (
-            <div
-              key="msg"
-              className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
-            >
-              <p className="text-[13px] leading-snug text-white">{agent.text}</p>
-              <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
+    <div className="relative" {...hint.bind}>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={revealed}
+        aria-label={config.hint || "Ver"}
+        onClick={() => setRevealed((v) => !v)}
+        className="block w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      >
+        <div className="flex flex-col gap-3">
+          {/* Mensaje del usuario (claro, a la derecha) */}
+          {user && (
+            <div className="flex items-end justify-end gap-2">
+              <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
+                <p className="text-[13px] leading-snug text-[#3B0E30]">
+                  {user.text}
+                </p>
+                <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
+              </div>
+              <Avatar />
             </div>
-          ) : (
-            <div
-              key="typing"
-              className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
-              aria-label="Escribiendo…"
-            >
-              <span className="dw-typing flex items-center gap-1">
-                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-              </span>
+          )}
+
+          {/* Respuesta del agente: escribiendo → (click) mensaje */}
+          {agent && (
+            <div className="flex items-end gap-2">
+              <Avatar />
+              {revealed ? (
+                <div
+                  key="msg"
+                  className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
+                >
+                  <p className="text-[13px] leading-snug text-white">
+                    {agent.text}
+                  </p>
+                  <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
+                </div>
+              ) : (
+                <div
+                  key="typing"
+                  className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
+                  aria-label="Escribiendo…"
+                >
+                  <span className="dw-typing flex items-center gap-1">
+                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </div>
-      )}
+      </button>
+
+      <HintTip
+        show={hint.visible && !revealed}
+        label={config.hint}
+        className="bottom-1 left-[92px]"
+      />
     </div>
   );
 }

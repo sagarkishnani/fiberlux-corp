@@ -44,6 +44,7 @@ const WIDGETS: Record<string, WidgetConfig> = {
   },
   "servicios-gestionados": {
     type: "chat",
+    hint: "Ver",
     messages: [
       { from: "user", text: "¡Hola! Quiero crear un nuevo proyecto.", time: "Hace 1 min" },
       { from: "agent", text: "¡Genial, ¿en qué te puedo asistir?", time: "Hace 1 min" },
@@ -186,9 +187,37 @@ export default function ValorSolucionReact({
               className="valor-card relative lg:row-span-2 flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] min-h-[300px] lg:min-h-[560px] p-7 md:p-9 bg-[radial-gradient(120%_90%_at_15%_0%,#4a1240_0%,#2c0a26_45%,#180614_100%)]"
               style={{ ["--d" as any]: "0.15s" }}
             >
+              {/* Base "horizonte" magenta — sólo en el widget de toggle (data-center). */}
+              {widget?.type === "toggle" && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[42%] overflow-hidden rounded-b-[28px]"
+                >
+                  <svg
+                    viewBox="0 0 600 240"
+                    preserveAspectRatio="xMidYMax slice"
+                    className="h-full w-full"
+                    fill="none"
+                  >
+                    <defs>
+                      <linearGradient id="dw-hill" x1="0" y1="0" x2="0.9" y2="1">
+                        <stop offset="0" stopColor="#B23E97" />
+                        <stop offset="1" stopColor="#7c1c64" />
+                      </linearGradient>
+                    </defs>
+                    <path
+                      d="M-40 150 Q300 66 640 150"
+                      fill="none"
+                      stroke="rgba(213,167,202,0.28)"
+                      strokeWidth="1.5"
+                    />
+                    <ellipse cx="300" cy="368" rx="470" ry="220" fill="url(#dw-hill)" />
+                  </svg>
+                </div>
+              )}
               {challenge.heading && (
                 <h3
-                  className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-3"
+                  className="relative z-10 text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-3"
                   data-tina-field={tinaField(challenge as any, "heading")}
                 >
                   {tField(challenge as any, "heading", locale)}
@@ -196,14 +225,14 @@ export default function ValorSolucionReact({
               )}
               {challenge.text && (
                 <p
-                  className="text-body-sm md:text-body-md text-white/70 max-w-[420px]"
+                  className="relative z-10 text-body-sm md:text-body-md text-white/70 max-w-[420px]"
                   data-tina-field={tinaField(challenge as any, "text")}
                 >
                   {tField(challenge as any, "text", locale)}
                 </p>
               )}
               {widget ? (
-                <div className="mt-8 flex flex-1 items-center justify-center">
+                <div className="relative z-10 mt-8 flex flex-1 items-center justify-center">
                   <DesafioWidget slug={slug} config={widget} />
                 </div>
               ) : challenge.image ? (
