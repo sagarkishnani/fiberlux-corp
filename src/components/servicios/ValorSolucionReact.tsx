@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   ServiceQuery,
@@ -60,10 +61,75 @@ export default function ValorSolucionReact({
 }: ValorSolucionProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
+  // Widget interactivo del card "El desafío" según la categoría (SPEC 93).
+  const slug = (variables?.relativePath || "").replace(/\.json$/, "");
+  const widget = WIDGETS[slug];
+
   const sectionRef = useRef<HTMLElement>(null);
   const industriesRef = useRef<HTMLElement>(null);
   const barsRef = useRef<SVGSVGElement>(null);
   const [inView, setInView] = useState(false);
+
+  /* Tooltip-hint que sigue el cursor sobre TODO el bloque "El desafío"
+     (misma línea que el tooltip de Soluciones del home: delay 140ms + lag).
+     Sólo en punteros finos; en touch se muestra una guía breve al entrar. */
+  const finePointer = useRef(false);
+  const tipRef = useRef<HTMLDivElement | null>(null);
+  const tipTarget = useRef({ x: 0, y: 0 });
+  const tipPos = useRef({ x: 0, y: 0 });
+  const tipRaf = useRef<number | null>(null);
+  const tipDelay = useRef<number | null>(null);
+  const [tipOn, setTipOn] = useState(false);
+  const [guideOn, setGuideOn] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    finePointer.current = window.matchMedia("(pointer: fine)").matches;
+    // Touch (sin puntero fino): mostrar la guía unos segundos y ocultarla.
+    if (widget && !finePointer.current) {
+      setGuideOn(true);
+      const t = window.setTimeout(() => setGuideOn(false), 3200);
+      return () => window.clearTimeout(t);
+    }
+    return () => {
+      if (tipRaf.current != null) cancelAnimationFrame(tipRaf.current);
+      if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    };
+  }, [widget]);
+
+  const tipLoop = () => {
+    const k = 0.06; // menor = más lag (persigue el cursor más lento)
+    tipPos.current.x += (tipTarget.current.x - tipPos.current.x) * k;
+    tipPos.current.y += (tipTarget.current.y - tipPos.current.y) * k;
+    const el = tipRef.current;
+    if (el) el.style.transform = `translate3d(${tipPos.current.x}px, ${tipPos.current.y}px, 0)`;
+    tipRaf.current = requestAnimationFrame(tipLoop);
+  };
+  const onDesafioEnter = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+    tipPos.current = { ...tipTarget.current };
+    if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    tipDelay.current = window.setTimeout(() => {
+      setTipOn(true);
+      if (tipRaf.current == null) tipRaf.current = requestAnimationFrame(tipLoop);
+    }, 140);
+  };
+  const onDesafioMove = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+  };
+  const onDesafioLeave = () => {
+    if (tipDelay.current != null) {
+      clearTimeout(tipDelay.current);
+      tipDelay.current = null;
+    }
+    setTipOn(false);
+    if (tipRaf.current != null) {
+      cancelAnimationFrame(tipRaf.current);
+      tipRaf.current = null;
+    }
+  };
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -149,10 +215,6 @@ export default function ValorSolucionReact({
   const [challenge, solution, industries] = cards;
   const vis = inView ? "is-visible" : "";
 
-  // Widget interactivo del card "El desafío" según la categoría (SPEC 93).
-  const slug = (variables?.relativePath || "").replace(/\.json$/, "");
-  const widget = WIDGETS[slug];
-
   return (
     <section
       ref={sectionRef}
@@ -186,6 +248,9 @@ export default function ValorSolucionReact({
             <article
               className="valor-card relative lg:row-span-2 flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] min-h-[300px] lg:min-h-[560px] p-7 md:p-9 bg-[radial-gradient(120%_90%_at_15%_0%,#4a1240_0%,#2c0a26_45%,#180614_100%)]"
               style={{ ["--d" as any]: "0.15s" }}
+              onMouseEnter={widget ? onDesafioEnter : undefined}
+              onMouseMove={widget ? onDesafioMove : undefined}
+              onMouseLeave={widget ? onDesafioLeave : undefined}
             >
               {/* Base "horizonte" magenta — sólo en el widget de toggle (data-center). */}
               {widget?.type === "toggle" && (
@@ -230,6 +295,18 @@ export default function ValorSolucionReact({
                 >
                   {tField(challenge as any, "text", locale)}
                 </p>
+              )}
+              {/* Guía breve del hint en touch (sin puntero fino). */}
+              {widget && (
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute bottom-6 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-[8px] bg-white/95 px-3 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
+                    guideOn ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <span className="mr-1">↵</span>
+                  {widget.hint}
+                </span>
               )}
               {widget ? (
                 <div className="relative z-10 mt-8 flex flex-1 items-center justify-center">
@@ -377,6 +454,25 @@ export default function ValorSolucionReact({
           )}
         </div>
       </div>
+
+      {/* Tooltip-hint flotante que sigue el cursor (puntero fino). */}
+      {widget && (
+        <div
+          ref={tipRef}
+          aria-hidden="true"
+          className="pointer-events-none fixed left-0 top-0 z-[90] will-change-transform"
+          style={{ transform: "translate3d(-200px, -200px, 0)" }}
+        >
+          <div
+            className={`-translate-x-1/2 -translate-y-1/2 rounded-[8px] bg-white/95 px-3.5 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-200 ${
+              tipOn ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <span className="mr-1">↵</span>
+            {widget.hint}
+          </div>
+        </div>
+      )}
 
       <style>{`
         /* Scroll-reveal: fade + rise, staggered via --d */

@@ -8,7 +8,8 @@ const NODE_GLYPH = `${BASE}/images/soluciones/fiberlux-purple.svg`;
 
 /* SPEC 93 — Widget interactivo del card "El desafío", uno por categoría.
    El dispatcher elige el sub-widget según config.type. El contenido es fijo
-   por categoría (hardcoded en ValorSolucionReact). */
+   por categoría (hardcoded en ValorSolucionReact). El tooltip-hint que sigue
+   al cursor lo maneja ValorSolucionReact sobre todo el bloque. */
 export default function DesafioWidget({ config }: { slug: string; config: WidgetConfig }) {
   return (
     <div className="dw-root relative z-10 flex w-full items-center justify-center">
@@ -46,54 +47,6 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
   );
 }
 
-/* Tooltip-hint: aparece en hover (desktop) y, en touch, unos segundos como
-   guía inicial. Se maneja con useHint() y se muestra sólo en el estado inicial. */
-function useHint() {
-  const [hover, setHover] = useState(false);
-  const [guide, setGuide] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    // Sin hover (touch): mostrar el tooltip unos segundos como guía y ocultarlo.
-    if (!window.matchMedia("(hover: hover)").matches) {
-      setGuide(true);
-      const t = window.setTimeout(() => setGuide(false), 3200);
-      return () => window.clearTimeout(t);
-    }
-  }, []);
-
-  return {
-    visible: hover || guide,
-    bind: {
-      onMouseEnter: () => setHover(true),
-      onMouseLeave: () => setHover(false),
-    },
-  };
-}
-
-function HintTip({
-  show,
-  label,
-  className = "",
-}: {
-  show: boolean;
-  label?: string;
-  className?: string;
-}) {
-  return (
-    <span
-      className={`pointer-events-none absolute z-30 whitespace-nowrap rounded-[8px] bg-white/95 px-2.5 py-1 text-[12px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
-        show ? "opacity-100" : "opacity-0"
-      } ${className}`}
-    >
-      <span aria-hidden="true" className="mr-1">
-        ↵
-      </span>
-      {label}
-    </span>
-  );
-}
-
 /* Avatar circular con punto "en línea" (verde). */
 function Avatar() {
   return (
@@ -112,10 +65,9 @@ function Avatar() {
 /* ── Data Center — toggle de protección (click alterna ida y vuelta) ── */
 function ToggleWidget({ config }: { config: WidgetConfig }) {
   const [on, setOn] = useState(false);
-  const hint = useHint();
 
   return (
-    <div className="flex flex-col items-center" {...hint.bind}>
+    <div className="flex flex-col items-center">
       {/* Label "PROTEGIDO": reserva su altura siempre para que nada salte. */}
       <span
         className={`mb-3 font-mono text-[11px] uppercase tracking-[0.25em] text-white/85 transition-opacity duration-300 ${
@@ -125,33 +77,25 @@ function ToggleWidget({ config }: { config: WidgetConfig }) {
         {config.onLabel}
       </span>
 
-      <div className="relative">
-        <button
-          type="button"
-          role="switch"
-          aria-checked={on}
-          aria-label={config.onLabel || "Proteger"}
-          onClick={() => setOn((v) => !v)}
-          className="dw-pill relative flex h-[64px] w-[132px] cursor-pointer items-center rounded-full px-2 outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-white/70"
-          style={{ background: on ? "linear-gradient(135deg,#96237A,#650F50)" : "#E7C3DD" }}
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        aria-label={config.onLabel || "Proteger"}
+        onClick={() => setOn((v) => !v)}
+        className="dw-pill relative flex h-[64px] w-[132px] cursor-pointer items-center rounded-full px-2 outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-white/70"
+        style={{ background: on ? "linear-gradient(135deg,#96237A,#650F50)" : "#E7C3DD" }}
+      >
+        <span
+          className="dw-knob flex h-[48px] w-[48px] items-center justify-center rounded-full text-white shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{
+            transform: on ? "translateX(68px)" : "translateX(0)",
+            background: on ? "#1a0716" : "linear-gradient(135deg,#96237A,#650F50)",
+          }}
         >
-          <span
-            className="dw-knob flex h-[48px] w-[48px] items-center justify-center rounded-full text-white shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-            style={{
-              transform: on ? "translateX(68px)" : "translateX(0)",
-              background: on ? "#1a0716" : "linear-gradient(135deg,#96237A,#650F50)",
-            }}
-          >
-            {on ? <FaLock size={19} /> : <FaCloud size={22} />}
-          </span>
-        </button>
-
-        <HintTip
-          show={hint.visible && !on}
-          label={config.hint}
-          className="-right-1 -top-7"
-        />
-      </div>
+          {on ? <FaLock size={19} /> : <FaCloud size={22} />}
+        </span>
+      </button>
 
       {/* Línea punteada + nodo señal. */}
       <span
@@ -171,7 +115,6 @@ function ToggleWidget({ config }: { config: WidgetConfig }) {
 /* ── Ciberseguridad — métricas comprometido↔protegido (click alterna) ── */
 function StatsWidget({ config }: { config: WidgetConfig }) {
   const [on, setOn] = useState(false);
-  const hint = useHint();
   const s = on ? config.after : config.before;
   const up = on; // true → tendencia positiva (verde)
   const accent = up ? "#2F9E44" : "#E5484D";
@@ -182,7 +125,7 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
     : "0,15 20,24 40,18 60,35 80,29 100,46 120,41 140,58 160,55";
 
   return (
-    <div className="relative pt-6" {...hint.bind}>
+    <div className="relative pt-6">
       <button
         type="button"
         role="switch"
@@ -254,12 +197,6 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
           </span>
         </div>
       </button>
-
-      <HintTip
-        show={hint.visible && !on}
-        label={config.hint}
-        className="left-[196px] top-3"
-      />
     </div>
   );
 }
@@ -267,7 +204,6 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
 /* ── Servicios Gestionados — chat (click revela la respuesta) ── */
 function ChatWidget({ config }: { config: WidgetConfig }) {
   const [revealed, setRevealed] = useState(false);
-  const hint = useHint();
   const msgs = config.messages || [];
   const user = msgs[0];
   const agent = msgs[1];
@@ -280,66 +216,58 @@ function ChatWidget({ config }: { config: WidgetConfig }) {
   }, []);
 
   return (
-    <div className="relative" {...hint.bind}>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={revealed}
-        aria-label={config.hint || "Ver"}
-        onClick={() => setRevealed((v) => !v)}
-        className="block w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-      >
-        <div className="flex flex-col gap-3">
-          {/* Mensaje del usuario (claro, a la derecha) */}
-          {user && (
-            <div className="flex items-end justify-end gap-2">
-              <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
-                <p className="text-[13px] leading-snug text-[#3B0E30]">
-                  {user.text}
+    <button
+      type="button"
+      role="switch"
+      aria-checked={revealed}
+      aria-label={config.hint || "Ver"}
+      onClick={() => setRevealed((v) => !v)}
+      className="block w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+    >
+      <div className="flex flex-col gap-3">
+        {/* Mensaje del usuario (claro, a la derecha) */}
+        {user && (
+          <div className="flex items-end justify-end gap-2">
+            <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
+              <p className="text-[13px] leading-snug text-[#3B0E30]">
+                {user.text}
+              </p>
+              <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
+            </div>
+            <Avatar />
+          </div>
+        )}
+
+        {/* Respuesta del agente: escribiendo → (click) mensaje */}
+        {agent && (
+          <div className="flex items-end gap-2">
+            <Avatar />
+            {revealed ? (
+              <div
+                key="msg"
+                className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
+              >
+                <p className="text-[13px] leading-snug text-white">
+                  {agent.text}
                 </p>
-                <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
+                <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
               </div>
-              <Avatar />
-            </div>
-          )}
-
-          {/* Respuesta del agente: escribiendo → (click) mensaje */}
-          {agent && (
-            <div className="flex items-end gap-2">
-              <Avatar />
-              {revealed ? (
-                <div
-                  key="msg"
-                  className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
-                >
-                  <p className="text-[13px] leading-snug text-white">
-                    {agent.text}
-                  </p>
-                  <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
-                </div>
-              ) : (
-                <div
-                  key="typing"
-                  className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
-                  aria-label="Escribiendo…"
-                >
-                  <span className="dw-typing flex items-center gap-1">
-                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                    <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </button>
-
-      <HintTip
-        show={hint.visible && !revealed}
-        label={config.hint}
-        className="bottom-1 left-[92px]"
-      />
-    </div>
+            ) : (
+              <div
+                key="typing"
+                className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
+                aria-label="Escribiendo…"
+              >
+                <span className="dw-typing flex items-center gap-1">
+                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </button>
   );
 }
