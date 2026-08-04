@@ -19,6 +19,33 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
       {config.type === "toggle" && <ToggleWidget config={config} />}
       {config.type === "stats" && <StatsWidget config={config} />}
       {config.type === "chat" && <ChatWidget config={config} />}
+
+      <style>{`
+        /* Aparición de la burbuja de chat / indicador de escritura. */
+        @keyframes dw-pop {
+          from { opacity: 0; transform: translateY(6px) scale(0.96); }
+          to   { opacity: 1; transform: none; }
+        }
+        .dw-root .dw-pop { animation: dw-pop 0.28s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Puntos "escribiendo…". */
+        @keyframes dw-blink {
+          0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
+          30%           { opacity: 1;    transform: translateY(-2px); }
+        }
+        .dw-root .dw-typing i { animation: dw-blink 1.2s infinite ease-in-out; }
+        .dw-root .dw-typing i:nth-child(2) { animation-delay: 0.18s; }
+        .dw-root .dw-typing i:nth-child(3) { animation-delay: 0.36s; }
+
+        /* Reduced-motion: sin transiciones ni animaciones; los estados siguen
+           alternando de forma instantánea (los maneja React). */
+        @media (prefers-reduced-motion: reduce) {
+          .dw-root, .dw-root * {
+            transition: none !important;
+            animation: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
