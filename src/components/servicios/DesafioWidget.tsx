@@ -132,11 +132,12 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
         aria-checked={on}
         aria-label={config.hint || "Mejorar"}
         onClick={() => setOn((v) => !v)}
-        className="block cursor-pointer rounded-[18px] outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        className="block w-full max-w-[300px] cursor-pointer rounded-[18px] outline-none focus-visible:ring-2 focus-visible:ring-white/70 sm:w-auto sm:max-w-none"
       >
-        <div className="relative flex items-end gap-3">
+        {/* Mobile: cards apiladas en columna; sm+: en fila. */}
+        <div className="relative flex flex-col gap-3 sm:flex-row sm:items-end">
           {/* CONFIANZA — card con barra de progreso */}
-          <div className="flex h-[112px] w-[168px] flex-col justify-between rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
+          <div className="flex h-[112px] w-full flex-col justify-between rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg sm:w-[168px]">
             <div className="flex items-center justify-between">
               <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#3B0E30]/55">
                 Confianza
@@ -157,7 +158,7 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
           </div>
 
           {/* USUARIOS TOTALES — card con mini line-chart */}
-          <div className="flex h-[150px] w-[196px] flex-col rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg">
+          <div className="flex h-[150px] w-full flex-col rounded-[16px] bg-[#F3E9F0] p-3.5 shadow-lg sm:w-[196px]">
             <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#3B0E30]/55">
               Usuarios totales
             </p>
@@ -188,10 +189,11 @@ function StatsWidget({ config }: { config: WidgetConfig }) {
             </div>
           </div>
 
-          {/* Nodo con glifo Fiberlux, superpuesto sobre la unión de las cards. */}
+          {/* Nodo con glifo Fiberlux, superpuesto sobre la unión de las cards.
+              Mobile (columna): centrado en la costura; sm+ (fila): a la izquierda. */}
           <span
             aria-hidden="true"
-            className="absolute left-[148px] top-0 z-20 flex h-[48px] w-[48px] items-center justify-center rounded-[14px] bg-white shadow-lg"
+            className="absolute left-1/2 top-[94px] z-20 flex h-[48px] w-[48px] -translate-x-1/2 items-center justify-center rounded-[14px] bg-white shadow-lg sm:left-[148px] sm:top-0 sm:translate-x-0"
           >
             <img src={NODE_GLYPH} alt="" className="h-[18px] w-auto" />
           </span>
@@ -222,7 +224,7 @@ function ChatWidget({ config }: { config: WidgetConfig }) {
       aria-checked={revealed}
       aria-label={config.hint || "Ver"}
       onClick={() => setRevealed((v) => !v)}
-      className="block w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      className="block w-full max-w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
     >
       <div className="flex flex-col gap-3">
         {/* Mensaje del usuario (claro, a la derecha) */}
