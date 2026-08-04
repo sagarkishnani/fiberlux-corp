@@ -66,7 +66,8 @@ var config_default = defineConfig({
                   { value: "3d", label: "Escena 3D (Spline)" },
                   { value: "video", label: "Video de fondo" },
                   { value: "imagen", label: "Imagen de fondo" },
-                  { value: "waveform", label: "Waveform (shader animado)" }
+                  { value: "waveform", label: "Waveform (shader animado)" },
+                  { value: "nodefield", label: "Node field (part\xEDculas plexus)" }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
