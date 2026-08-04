@@ -75,6 +75,7 @@ export default defineConfig({
                   { value: "video", label: "Video de fondo" },
                   { value: "imagen", label: "Imagen de fondo" },
                   { value: "waveform", label: "Waveform (shader animado)" },
+                  { value: "nodefield", label: "Node field (partículas plexus)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",

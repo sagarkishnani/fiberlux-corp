@@ -7,6 +7,7 @@ import SplineScene from "../shared/SplineScene";
 import { mediaUrl } from "../../utils/mediaUrl";
 import Button from "../shared/Button";
 import WaveformEffect from "../effects/WaveformEffect";
+import NodeField from "../effects/NodeField";
 
 interface HeroHomeProps {
   query: string;
@@ -163,6 +164,14 @@ export default function HeroHomeReact({
       {mode === "waveform" && (
         <div className="absolute inset-0 z-0">
           <WaveformEffect className="h-full w-full" signalReady />
+        </div>
+      )}
+
+      {/* Modo node field: red de partículas plexus (canvas 2D, morado).
+          Transparente sobre el negro base de la sección. */}
+      {mode === "nodefield" && (
+        <div className="absolute inset-0 z-0">
+          <NodeField className="h-full w-full" signalReady />
         </div>
       )}
 
