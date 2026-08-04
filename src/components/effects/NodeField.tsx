@@ -15,20 +15,22 @@ import { useEffect, useRef } from "react";
  */
 
 const PARAMS = {
-  count: 90, // COUNT — nº de partículas base (se escala por área del canvas)
-  maxCount: 160, // techo de partículas en pantallas grandes
-  minCount: 30, // piso de partículas en pantallas chicas
+  count: 190, // COUNT — nº de partículas base (se escala por área del canvas)
+  maxCount: 340, // techo de partículas en pantallas grandes
+  minCount: 60, // piso de partículas en pantallas chicas
   speed: 0.18, // SPEED — velocidad de deriva base (px/frame en CSS px)
-  linkDistance: 130, // DISTANCE — radio (CSS px) para conectar dos partículas
-  cursorRadius: 220, // radio de influencia del cursor (CSS px)
+  linkDistance: 150, // DISTANCE — radio (CSS px) para conectar dos partículas
+  cursorRadius: 240, // radio de influencia del cursor (CSS px)
   attractForce: 0.09, // FORCE — aceleración de atracción hacia el cursor
   relax: 0.03, // relajación hacia la deriva base (evita que las velocidades se disparen)
-  dotRadius: 1.6, // radio de cada punto (CSS px)
+  dotRadius: 2.2, // radio de cada punto (CSS px)
   lineWidth: 1, // grosor de línea
-  dotColor: [150, 35, 122] as [number, number, number], // brand-purple #96237A
-  lineColor: [150, 35, 122] as [number, number, number], // idem para las líneas
-  maxLineAlpha: 0.5, // opacidad máx. de línea (a distancia 0)
-  dotAlpha: 0.9, // opacidad de los puntos
+  // Puntos en un morado CLARO para que resalten sobre negro; líneas en el
+  // morado de marca (#96237A) con alpha por distancia.
+  dotColor: [206, 102, 184] as [number, number, number], // magenta claro
+  lineColor: [168, 52, 140] as [number, number, number], // morado de marca (algo más vivo)
+  maxLineAlpha: 0.6, // opacidad máx. de línea (a distancia 0)
+  dotAlpha: 1, // opacidad de los puntos
 };
 
 const AREA_REF = 1280 * 720; // área de referencia para la densidad responsive
