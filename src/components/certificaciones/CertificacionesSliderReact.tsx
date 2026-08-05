@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   CertificacionesQuery,
@@ -62,11 +63,44 @@ export default function CertificacionesSliderReact({
     />
   );
 
+  /* Navegación por hover en los bordes del carrusel (obs. cliente): pasar el
+     cursor por el borde derecho avanza al siguiente ISO; por el izquierdo, al
+     anterior. Mientras el cursor siga en la zona, sigue avanzando con calma
+     hasta llegar al extremo. Sólo en dispositivos con hover real (desktop);
+     las flechas siguen disponibles para touch y accesibilidad. */
+  const holdRef = useRef<number | null>(null);
+  const canNextRef = useRef(false);
+  const canPrevRef = useRef(false);
+  canNextRef.current = slider.canNext;
+  canPrevRef.current = slider.canPrev;
+
+  const stopHold = () => {
+    if (holdRef.current != null) {
+      clearInterval(holdRef.current);
+      holdRef.current = null;
+    }
+  };
+  const startHold = (dir: "next" | "prev") => {
+    stopHold();
+    const step = () => {
+      const can = dir === "next" ? canNextRef.current : canPrevRef.current;
+      if (!can) {
+        stopHold();
+        return;
+      }
+      if (dir === "next") slider.next();
+      else slider.prev();
+    };
+    step(); // primer paso inmediato al entrar
+    holdRef.current = window.setInterval(step, 900);
+  };
+  useEffect(() => stopHold, []);
+
   /* ── Carousel viewport (Embla): mobile ~1 card + peek, desktop exactly 2 ── */
   const carousel = (
     <div
       ref={slider.viewportRef}
-      className="overflow-hidden py-2 select-none cert-carousel"
+      className="relative overflow-hidden py-2 select-none cert-carousel"
       style={{ cursor: hasItems ? "grab" : "default" }}
     >
       <div className="flex items-stretch gap-6">
@@ -87,6 +121,25 @@ export default function CertificacionesSliderReact({
           </div>
         )}
       </div>
+
+      {/* Zonas de hover en los bordes: izq → ISO anterior, der → siguiente.
+          Sólo en dispositivos con hover real; el centro sigue siendo arrastrable. */}
+      {enough && (
+        <>
+          <div
+            aria-hidden="true"
+            onMouseEnter={() => startHold("prev")}
+            onMouseLeave={stopHold}
+            className="absolute inset-y-0 left-0 z-20 hidden w-[15%] [@media(hover:hover)]:block"
+          />
+          <div
+            aria-hidden="true"
+            onMouseEnter={() => startHold("next")}
+            onMouseLeave={stopHold}
+            className="absolute inset-y-0 right-0 z-20 hidden w-[15%] [@media(hover:hover)]:block"
+          />
+        </>
+      )}
     </div>
   );
 

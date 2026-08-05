@@ -145,8 +145,19 @@ export default function TimelineReact({ query, variables, data: initialData, loc
   const [dragging, setDragging] = useState(false);
   const [navTick, setNavTick] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
-  const dragRef = useRef<{ x: number; active: boolean; fired: boolean } | null>(null);
+  const dragRef = useRef<{ x: number; y: number; active: boolean; fired: boolean } | null>(null);
   const DRAG_THRESHOLD = 45;
+
+  // En desktop (md+) el drag es vertical (coherente con las flechas ↑/↓ y la
+  // animación vertical); en móvil sigue siendo horizontal (←/→).
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
 
   const total = milestones.length;
   const safeIndex = total > 0 ? activeIndex % total : 0;
@@ -174,13 +185,14 @@ export default function TimelineReact({ query, variables, data: initialData, loc
   const prev = () => goTo(safeIndex - 1, 'prev');
   const next = () => goTo(safeIndex + 1, 'next');
 
-  // Drag/swipe horizontal sobre la animación vertical existente: al soltar, si el
-  // desplazamiento supera el umbral, avanza o retrocede un hito (no migra a Embla).
+  // Drag/swipe sobre la animación vertical existente: al superar el umbral,
+  // avanza o retrocede un hito. Vertical en desktop (↑ = siguiente), horizontal
+  // en móvil (← = siguiente); no migra a Embla.
   const onPointerDown = (e: ReactPointerEvent) => {
     if (total <= 1) return;
     // No secuestrar el gesto si arranca sobre un control (flechas): dejar su click.
     if ((e.target as HTMLElement).closest('button, a')) return;
-    dragRef.current = { x: e.clientX, active: true, fired: false };
+    dragRef.current = { x: e.clientX, y: e.clientY, active: true, fired: false };
     setDragging(true);
     try { (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId); } catch {}
   };
@@ -189,9 +201,9 @@ export default function TimelineReact({ query, variables, data: initialData, loc
   const onPointerMove = (e: ReactPointerEvent) => {
     const d = dragRef.current;
     if (!d || !d.active || d.fired) return;
-    const dx = e.clientX - d.x;
-    if (dx <= -DRAG_THRESHOLD) { d.fired = true; next(); }
-    else if (dx >= DRAG_THRESHOLD) { d.fired = true; prev(); }
+    const delta = isDesktop ? e.clientY - d.y : e.clientX - d.x;
+    if (delta <= -DRAG_THRESHOLD) { d.fired = true; next(); }
+    else if (delta >= DRAG_THRESHOLD) { d.fired = true; prev(); }
   };
   const onPointerEnd = () => {
     dragRef.current = null;

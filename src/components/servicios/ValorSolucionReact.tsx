@@ -25,24 +25,18 @@ interface Card {
 
 /* Widget interactivo por categoría dentro del card "El desafío" (SPEC 93).
    La clave es el slug del servicio (variables.relativePath sin ".json").
-   Los slugs sin entrada (p. ej. conectividad-empresarial) conservan la onda. */
+   Los slugs sin entrada conservan la onda estática. */
 export interface WidgetConfig {
-  type: "toggle" | "stats" | "chat";
+  type: "toggle" | "chat" | "failover" | "shield";
   hint?: string;
   onLabel?: string;
-  before?: { confianza: string; trend: string; dir: "up" | "down" };
-  after?: { confianza: string; trend: string; dir: "up" | "down" };
   messages?: { from: "user" | "agent"; text: string; time: string }[];
 }
 
 const WIDGETS: Record<string, WidgetConfig> = {
   "data-center-cloud": { type: "toggle", hint: "Proteger", onLabel: "PROTEGIDO" },
-  "ciberseguridad-gestionada": {
-    type: "stats",
-    hint: "Mejorar",
-    before: { confianza: "22%", trend: "↓ 32%", dir: "down" },
-    after: { confianza: "100%", trend: "↑ 54%", dir: "up" },
-  },
+  "conectividad-empresarial": { type: "failover", hint: "Activar respaldo" },
+  "ciberseguridad-gestionada": { type: "shield", hint: "Proteger" },
   "servicios-gestionados": {
     type: "chat",
     hint: "Ver",
