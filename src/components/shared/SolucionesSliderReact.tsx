@@ -4,6 +4,7 @@ import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "./SliderArrows";
+import SliderSideArrows from "./SliderSideArrows";
 
 /* ── Props ── */
 interface SolucionesSliderProps {
@@ -277,11 +278,22 @@ export default function SolucionesSliderReact({
               </div>
             )}
           </div>
-          {items.length > 1 && <div className="hidden lg:block mt-9">{arrowsPill}</div>}
         </div>
 
-        {/* Right column: carousel */}
-        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0" data-reveal="up" data-reveal-delay="0.15">{carousel}</div>
+        {/* Right column: carousel + flechas laterales (desktop, SPEC 94) */}
+        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0" data-reveal="up" data-reveal-delay="0.15">
+          <div className="relative">
+            {carousel}
+            {items.length > 1 && (
+              <SliderSideArrows
+                canPrev={slider.canPrev}
+                canNext={slider.canNext}
+                onPrev={slider.prev}
+                onNext={slider.next}
+              />
+            )}
+          </div>
+        </div>
 
         {/* Mobile arrows: below the carousel, left-aligned */}
         {items.length > 1 && <div className="lg:hidden mt-8">{arrowsPill}</div>}
