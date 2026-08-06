@@ -29,6 +29,9 @@ interface HeaderProps {
   theme?: "light" | "dark";
   /** Solo la home activa el logo grande animado del hero (SPEC 39). */
   heroLogo?: boolean;
+  /** Alineación horizontal del logo en estado hero: centrado (SPEC 88, default)
+      o a la izquierda (modo morph, SPEC 96). */
+  heroLogoAlign?: "center" | "left";
   /** Fuerza el fondo opaco/blur desde el inicio (sin esperar scroll). Se usa en
       páginas con hero de imagen (soluciones) para que el menú no se pierda. */
   solidOnLoad?: boolean;
@@ -243,6 +246,7 @@ export default function HeaderV2React({
   data: initialData,
   theme = "dark",
   heroLogo = false,
+  heroLogoAlign = "center",
   solidOnLoad = false,
   locale = "es",
   currentPath = "/",
@@ -355,13 +359,18 @@ export default function HeaderV2React({
         img.style.transform = "translateY(-50%)";
         return;
       }
-      const progress = Math.min(
-        Math.max(currentY / LOGO_TRAVEL_DISTANCE, 0),
-        1
-      );
+      // En morph (logo a la izquierda) el logo es más chico, arranca pegado al
+      // título y "sube" más rápido: la distancia de scroll para acoplar es menor
+      // que el offset, así el logo viaja más rápido que el scroll y nunca cruza
+      // el título (el gap se mantiene o crece). (SPEC 96)
+      const isLeft = heroLogoAlign === "left";
+      const travel = isLeft ? 150 : LOGO_TRAVEL_DISTANCE;
+      const progress = Math.min(Math.max(currentY / travel, 0), 1);
       const inv = 1 - progress;
-      const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
-      const offset = LOGO_START_OFFSET_Y * inv;
+      const heroH = isLeft ? 40 : LOGO_HERO_H;
+      const height = LOGO_HEADER_H + (heroH - LOGO_HEADER_H) * inv;
+      const startOffsetY = isLeft ? 190 : LOGO_START_OFFSET_Y;
+      const offset = startOffsetY * inv;
       // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y.
       // SPEC 88: en estado hero (inv→1) el logo se centra horizontalmente sobre
       // el título; al hacer scroll (inv→0) vuelve al slot del header (izquierda).
@@ -372,15 +381,43 @@ export default function HeaderV2React({
           img.naturalWidth && img.naturalHeight
             ? img.naturalWidth / img.naturalHeight
             : 7; // fallback (wordmark ancho) hasta que cargue el SVG
-        const logoW = LOGO_HERO_H * aspect;
+        const logoW = heroH * aspect;
         const anchorLeft = anchor.getBoundingClientRect().left;
-        centerX = window.innerWidth / 2 - logoW / 2 - anchorLeft;
+        if (heroLogoAlign === "left") {
+          // SPEC 96: alinea el borde izquierdo del logo con el contenido del
+          // hero (izquierda del site-container), no al centro.
+          const sc = anchor.closest(".site-container") as HTMLElement | null;
+          let targetLeft = anchorLeft;
+          if (sc) {
+            const r = sc.getBoundingClientRect();
+            const padL = parseFloat(getComputedStyle(sc).paddingLeft) || 0;
+            targetLeft = r.left + padL;
+          }
+          centerX = targetLeft - anchorLeft;
+        } else {
+          centerX = window.innerWidth / 2 - logoW / 2 - anchorLeft;
+        }
       }
       img.style.height = `${height}px`;
       img.style.transform = `translateX(${centerX * inv}px) translateY(calc(-50% + ${offset}px))`;
     },
-    [heroLogo]
+    [heroLogo, heroLogoAlign]
   );
+
+  // SPEC 96: en modo morph el hero desvanece su contenido al mostrar las
+  // soluciones; el logo grande del hero (que es este) también se oculta para no
+  // competir con el chip central. HeroHomeReact emite `fbx:hero-morph`.
+  useEffect(() => {
+    const onMorph = (e: Event) => {
+      const img = logoRef.current;
+      if (!img) return;
+      const active = !!(e as CustomEvent).detail?.active;
+      img.style.opacity = active ? "0" : "1";
+    };
+    window.addEventListener("fbx:hero-morph", onMorph as EventListener);
+    return () =>
+      window.removeEventListener("fbx:hero-morph", onMorph as EventListener);
+  }, []);
 
   // Programa una aplicación del transform del logo en el próximo frame.
   const scheduleLogoTransform = useCallback(() => {
@@ -646,6 +683,7 @@ export default function HeaderV2React({
                   style={{
                     height: `${LOGO_HEADER_H}px`,
                     transform: "translateY(-50%)",
+                    transition: "opacity 0.4s ease",
                   }}
                 />
               </a>

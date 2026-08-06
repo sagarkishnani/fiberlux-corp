@@ -148,6 +148,19 @@ type HomeHeroButtons {
   variant: String
 }
 
+type HomeHeroMorphSolutionNodes {
+  label: String
+  label_en: String
+  url: String
+  icon: String
+}
+
+type HomeHeroMorph {
+  triggerLabel: String
+  triggerLabel_en: String
+  solutionNodes: [HomeHeroMorphSolutionNodes]
+}
+
 type HomeHero {
   title: String!
   title_en: String
@@ -160,6 +173,7 @@ type HomeHero {
   heroBgImage: String
   heroBgOpacity: Float
   buttons: [HomeHeroButtons]
+  morph: HomeHeroMorph
 }
 
 type HomeServicesItemsBullets {
@@ -269,6 +283,19 @@ input HomeHeroButtonsFilter {
   variant: StringFilter
 }
 
+input HomeHeroMorphSolutionNodesFilter {
+  label: StringFilter
+  label_en: StringFilter
+  url: StringFilter
+  icon: StringFilter
+}
+
+input HomeHeroMorphFilter {
+  triggerLabel: StringFilter
+  triggerLabel_en: StringFilter
+  solutionNodes: HomeHeroMorphSolutionNodesFilter
+}
+
 input HomeHeroFilter {
   title: StringFilter
   title_en: StringFilter
@@ -281,6 +308,7 @@ input HomeHeroFilter {
   heroBgImage: ImageFilter
   heroBgOpacity: NumberFilter
   buttons: HomeHeroButtonsFilter
+  morph: HomeHeroMorphFilter
 }
 
 input HomeServicesItemsBulletsFilter {
@@ -2484,6 +2512,19 @@ input HomeHeroButtonsMutation {
   variant: String
 }
 
+input HomeHeroMorphSolutionNodesMutation {
+  label: String
+  label_en: String
+  url: String
+  icon: String
+}
+
+input HomeHeroMorphMutation {
+  triggerLabel: String
+  triggerLabel_en: String
+  solutionNodes: [HomeHeroMorphSolutionNodesMutation]
+}
+
 input HomeHeroMutation {
   title: String
   title_en: String
@@ -2496,6 +2537,7 @@ input HomeHeroMutation {
   heroBgImage: String
   heroBgOpacity: Float
   buttons: [HomeHeroButtonsMutation]
+  morph: HomeHeroMorphMutation
 }
 
 input HomeServicesItemsBulletsMutation {
