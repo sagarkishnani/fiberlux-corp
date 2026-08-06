@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type ReactNode, type PointerEvent as ReactPointerEvent } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, type CSSProperties, type ReactNode, type PointerEvent as ReactPointerEvent } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import { FaArrowLeft, FaArrowRight, FaArrowUp, FaArrowDown } from 'react-icons/fa6';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
@@ -44,7 +44,14 @@ function usePrefersReducedMotion(): boolean {
    - prev: outgoing slides down & out the bottom, incoming slides in from above.
    With reduced motion it swaps the content instantly (no second render).
    The incoming element flows normally so the window always fits the current
-   content height; the outgoing element is overlaid absolutely. */
+   content height; the outgoing element is overlaid absolutely.
+
+   Both layers slide by the SAME pixel distance (`--d` = the window height,
+   sized to the taller of the two contents) instead of `translateY(100%)`,
+   which would be each layer's *own* height. Without this, a taller outgoing
+   heading's lower lines linger inside the window while the shorter incoming
+   one rises into the same area, and the two texts overlap (visible on the
+   multi-line mobile headings). */
 interface Anim {
   outgoing: number;
   direction: Direction;
@@ -70,6 +77,10 @@ function SlideWindow({
   const [prevKey, setPrevKey] = useState(activeKey);
   const [anim, setAnim] = useState<Anim | null>(null);
   const nonceRef = useRef(0);
+  const winRef = useRef<HTMLDivElement>(null);
+  const inRef = useRef<HTMLDivElement>(null);
+  const outRef = useRef<HTMLDivElement>(null);
+  const [dist, setDist] = useState<number | undefined>(undefined);
 
   if (activeKey !== prevKey) {
     const outgoing = prevKey;
@@ -92,13 +103,37 @@ function SlideWindow({
     return () => clearTimeout(t);
   }, [animNonce]);
 
+  // Measure both layers before paint and slide by the tallest of: the incoming
+  // content, the outgoing content, and the window's own `min-height` floor.
+  // The min-height keeps every slide the same height (so the year/bar below
+  // never jump), and folding it into the distance means each slide travels the
+  // full box height instead of just its text height.
+  useLayoutEffect(() => {
+    if (!anim) {
+      setDist(undefined);
+      return;
+    }
+    const a = inRef.current?.offsetHeight ?? 0;
+    const b = outRef.current?.offsetHeight ?? 0;
+    const floor = winRef.current
+      ? parseFloat(getComputedStyle(winRef.current).minHeight) || 0
+      : 0;
+    setDist(Math.max(a, b, floor));
+  }, [animNonce, activeKey]);
+
   const inClass = anim ? `tl-anim tl-in-${anim.direction}` : '';
+  // During the slide the window is forced to the taller height and exposes the
+  // shared slide distance as `--d`; both keyframes read `var(--d, 100%)`.
+  const winStyle =
+    anim && dist != null
+      ? ({ height: dist, '--d': `${dist}px` } as CSSProperties)
+      : undefined;
 
   return (
-    <div className={`relative overflow-hidden ${windowClass}`}>
-      {/* Incoming / current — in normal flow, defines the window size */}
+    <div ref={winRef} className={`relative overflow-hidden ${windowClass}`} style={winStyle}>
+      {/* Incoming / current — in normal flow, defines the window size/width */}
       <div key={`cur-${activeKey}`} className={inClass}>
-        {render(activeKey)}
+        <div ref={inRef}>{render(activeKey)}</div>
       </div>
       {/* Outgoing — overlaid, slides out */}
       {anim && (
@@ -107,7 +142,7 @@ function SlideWindow({
           className={`absolute inset-0 tl-anim tl-out-${anim.direction}`}
           aria-hidden="true"
         >
-          {render(anim.outgoing)}
+          <div ref={outRef}>{render(anim.outgoing)}</div>
         </div>
       )}
     </div>
@@ -387,6 +422,7 @@ export default function TimelineReact({ query, variables, data: initialData, loc
               activeKey={safeIndex}
               direction={direction}
               reduced={reducedMotion}
+              windowClass="min-h-[132px]"
               render={(i) => renderHeading(i, 'text-[28px]')}
             />
             <div className="my-4 flex justify-end">
@@ -420,20 +456,20 @@ export default function TimelineReact({ query, variables, data: initialData, loc
         .tl-in-prev { animation-name: tlInPrev; }
         .tl-out-prev { animation-name: tlOutPrev; }
         @keyframes tlInNext {
-          from { transform: translateY(100%); }
+          from { transform: translateY(var(--d, 100%)); }
           to { transform: translateY(0); }
         }
         @keyframes tlOutNext {
           from { transform: translateY(0); }
-          to { transform: translateY(-100%); }
+          to { transform: translateY(calc(-1 * var(--d, 100%))); }
         }
         @keyframes tlInPrev {
-          from { transform: translateY(-100%); }
+          from { transform: translateY(calc(-1 * var(--d, 100%))); }
           to { transform: translateY(0); }
         }
         @keyframes tlOutPrev {
           from { transform: translateY(0); }
-          to { transform: translateY(100%); }
+          to { transform: translateY(var(--d, 100%)); }
         }
         @media (prefers-reduced-motion: reduce) {
           .timeline-bar-fill { transition: none; }
