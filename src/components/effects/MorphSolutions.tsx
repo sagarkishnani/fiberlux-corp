@@ -193,11 +193,14 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
     const count = isMobile ? PARAMS.particleCountMobile : PARAMS.particleCount;
 
-    // Posiciones objetivo precomputadas: home (esfera) y node (cúmulos).
-    // Además, por partícula: fase/velocidad de orbitado para dar vida a los
-    // cúmulos en estado soluciones (no quedan estáticos).
+    // Posiciones objetivo: home (esfera) fija, y node (cúmulos) = centro del
+    // cúmulo (responsivo al viewport) + offset gaussiano fijo por partícula.
+    // Guardamos el offset e índice de cúmulo para recomputar los cúmulos al
+    // redimensionar sin re-randomizar (evita saltos).
     const homePos = new Float32Array(count * 3);
     const nodePos = new Float32Array(count * 3);
+    const nodeOff = new Float32Array(count * 3);
+    const clusterIdx = new Uint8Array(count);
     const swirlPhase = new Float32Array(count);
     const swirlSpeed = new Float32Array(count);
     const swirlAmp = new Float32Array(count);
@@ -208,17 +211,46 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       homePos[i * 3 + 1] = hy;
       homePos[i * 3 + 2] = hz;
       // Reparto fijo por índice (~25% a cada cúmulo → densidad pareja).
-      const cluster = Math.floor((i / count) * nodeCount) % nodeCount;
-      const [cx, cy, cz] = PARAMS.clusters[cluster];
-      nodePos[i * 3] = cx + gaussian() * PARAMS.clusterRadius;
-      nodePos[i * 3 + 1] = cy + gaussian() * PARAMS.clusterRadius;
-      nodePos[i * 3 + 2] = cz + gaussian() * PARAMS.clusterRadius * 0.5;
+      clusterIdx[i] = Math.floor((i / count) * nodeCount) % nodeCount;
+      nodeOff[i * 3] = gaussian() * PARAMS.clusterRadius;
+      nodeOff[i * 3 + 1] = gaussian() * PARAMS.clusterRadius;
+      nodeOff[i * 3 + 2] = gaussian() * PARAMS.clusterRadius * 0.5;
       swirlPhase[i] = Math.random() * Math.PI * 2;
       swirlSpeed[i] =
         PARAMS.swirlSpeedMin +
         Math.random() * (PARAMS.swirlSpeedMax - PARAMS.swirlSpeedMin);
       swirlAmp[i] = (0.35 + Math.random() * 0.65) * PARAMS.swirlAmp;
     }
+
+    // Centros de los 4 cúmulos (grid 2×2). Se calculan según el frustum visible
+    // a z=0 para que, en pantallas angostas, no se salgan de cuadro ni corten
+    // las etiquetas. Se recomputan en cada resize.
+    const halfH =
+      Math.tan(((PARAMS.fov * Math.PI) / 180) / 2) * PARAMS.cameraZ;
+    const clusterCenters = [
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+      new THREE.Vector3(),
+    ];
+    const computeClusters = () => {
+      const halfW = halfH * camera.aspect;
+      const sx = Math.min(1.3, 0.5 * halfW); // spread horizontal (con techo)
+      const sy = 0.64 * halfH; // spread vertical
+      const grid: [number, number][] = [
+        [-sx, sy],
+        [sx, sy],
+        [-sx, -sy],
+        [sx, -sy],
+      ];
+      for (let k = 0; k < 4; k++) clusterCenters[k].set(grid[k][0], grid[k][1], 0.1);
+      for (let i = 0; i < count; i++) {
+        const c = clusterCenters[clusterIdx[i]];
+        nodePos[i * 3] = c.x + nodeOff[i * 3];
+        nodePos[i * 3 + 1] = c.y + nodeOff[i * 3 + 1];
+        nodePos[i * 3 + 2] = c.z + nodeOff[i * 3 + 2];
+      }
+    };
 
     const geo = new THREE.BufferGeometry();
     const posAttr = new THREE.BufferAttribute(new Float32Array(homePos), 3);
@@ -260,7 +292,7 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
     // ── Overlay: proyecta los centros de cúmulo (nodos) y el centro (chip) a
     //    % de pantalla; posiciona anclas, chip y trazos chip↔nodo. ──
-    const centerVecs = PARAMS.clusters.map((c) => new THREE.Vector3(c[0], c[1], c[2]));
+    const centerVecs = clusterCenters; // se actualizan en computeClusters()
     const chipVec = new THREE.Vector3(0, 0, 0);
     const project = (v: THREE.Vector3) => {
       const p = v.clone().project(camera);
@@ -316,6 +348,7 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      computeClusters(); // spread de cúmulos responsivo al nuevo aspect
       updateAnchors();
     };
     resize();
@@ -573,20 +606,7 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
               <span className="morph-node__ring">
                 <Icon size={30} strokeWidth={1.6} />
               </span>
-              <span
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: "0.74rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  textAlign: "center",
-                  maxWidth: "10rem",
-                  lineHeight: 1.3,
-                  textShadow: "0 2px 12px rgba(0,0,0,0.9)",
-                }}
-              >
-                {n.label}
-              </span>
+              <span className="morph-node__label">{n.label}</span>
             </a>
           );
         })}
@@ -628,6 +648,25 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
             inset 0 0 22px rgba(214,77,184,0.3);
         }
         .morph-node:hover, .morph-node:focus-visible { color: #FFD4F4; outline: none; }
+        .morph-node__label {
+          font-family: 'Space Mono', monospace;
+          font-size: 0.74rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          text-align: center;
+          max-width: 10rem;
+          line-height: 1.3;
+          text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+        }
+        /* En pantallas angostas: chip, anillos y etiquetas más chicos, para que
+           el conjunto no se salga ni se encime. */
+        @media (max-width: 900px) {
+          .morph-chip { width: 118px; height: 118px; }
+          .morph-chip__logo { width: 52px; }
+          .morph-node__ring { width: 3rem; height: 3rem; }
+          .morph-node__ring::after { width: 3.9rem; height: 3.9rem; }
+          .morph-node__label { font-size: 0.6rem; max-width: 6.5rem; letter-spacing: 0.1em; }
+        }
 
         /* Chip central + logo de Fiberlux dentro. */
         .morph-chip {

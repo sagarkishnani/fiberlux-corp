@@ -107,7 +107,13 @@ export default function HeroHomeReact({
   const mobileCover = mediaUrl(hero.splinePosterUrl);
 
   return (
-    <section className="relative w-full min-h-[600px] lg:min-h-[820px] overflow-hidden bg-[#0a0a0a]">
+    <section
+      className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
+        mode === "morph"
+          ? "min-h-[88svh] md:min-h-[780px] lg:min-h-[900px]"
+          : "min-h-[600px] lg:min-h-[820px]"
+      }`}
+    >
       {/* ══════════ FONDO (z-0) según el modo elegido ══════════ */}
 
       {mode === "video" && bgVideo && (
@@ -259,6 +265,73 @@ export default function HeroHomeReact({
             "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.45) 38%, rgba(10,10,10,0.82) 60%, #0a0a0a 80%, #0a0a0a 100%)",
         }}
       />
+
+      {/* Modo morph: luces de color animadas en zonas del hero (dinamismo).
+          Blend screen sobre el negro; se ubican en esquinas/izquierda para no
+          restar legibilidad al texto. */}
+      {mode === "morph" && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[1] overflow-hidden"
+        >
+          <span className="morph-light morph-light--a" />
+          <span className="morph-light morph-light--b" />
+          <span className="morph-light morph-light--c" />
+          <span className="morph-light morph-light--d" />
+          <style>{`
+            .morph-light {
+              position: absolute;
+              border-radius: 9999px;
+              filter: blur(70px);
+              mix-blend-mode: screen;
+              will-change: transform, opacity;
+            }
+            .morph-light--a {
+              width: 42vw; max-width: 460px; aspect-ratio: 1;
+              left: -8%; top: 6%;
+              background: radial-gradient(circle, rgba(150,35,122,0.55), transparent 70%);
+              animation: morph-light-a 15s ease-in-out infinite;
+            }
+            .morph-light--b {
+              width: 34vw; max-width: 380px; aspect-ratio: 1;
+              left: 4%; bottom: -12%;
+              background: radial-gradient(circle, rgba(214,77,184,0.5), transparent 70%);
+              animation: morph-light-b 19s ease-in-out infinite;
+            }
+            .morph-light--c {
+              width: 30vw; max-width: 340px; aspect-ratio: 1;
+              right: 30%; top: -10%;
+              background: radial-gradient(circle, rgba(101,15,80,0.65), transparent 70%);
+              animation: morph-light-c 17s ease-in-out infinite;
+            }
+            .morph-light--d {
+              width: 26vw; max-width: 300px; aspect-ratio: 1;
+              right: 4%; bottom: 8%;
+              background: radial-gradient(circle, rgba(122,40,150,0.5), transparent 70%);
+              animation: morph-light-d 21s ease-in-out infinite;
+            }
+            @keyframes morph-light-a {
+              0%,100% { transform: translate(0,0) scale(1); opacity: 0.35; }
+              50% { transform: translate(6%, 5%) scale(1.18); opacity: 0.6; }
+            }
+            @keyframes morph-light-b {
+              0%,100% { transform: translate(0,0) scale(1.05); opacity: 0.3; }
+              50% { transform: translate(8%, -6%) scale(1); opacity: 0.55; }
+            }
+            @keyframes morph-light-c {
+              0%,100% { transform: translate(0,0) scale(1); opacity: 0.3; }
+              50% { transform: translate(-6%, 8%) scale(1.2); opacity: 0.5; }
+            }
+            @keyframes morph-light-d {
+              0%,100% { transform: translate(0,0) scale(1.1); opacity: 0.25; }
+              50% { transform: translate(-8%, -5%) scale(1); opacity: 0.5; }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .morph-light { animation: none !important; }
+            }
+          `}</style>
+        </div>
+      )}
 
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div
