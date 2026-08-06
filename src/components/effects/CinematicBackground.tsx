@@ -14,23 +14,23 @@ import type { IconType } from "react-icons";
 /**
  * CinematicBackground — atmósfera "cinematic" del hero (SPEC 97), en WebGL.
  *
- * Interpretación de marca (morado) del look FXology (analizado del video ref):
- * luz volumétrica a través de humo + elementos 3D ligeros MUY tenues (íconos de
- * las soluciones, tipo contorno) que entran volando desde los costados y
- * tumblean en la periferia. Todo aparece con un fade-in coreografiado (uIntro).
- *
+ * Interpretación de marca (morado) del look FXology:
  *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica.
- *   2. ICON TILES 3D   → íconos de las 4 soluciones (Data Center, Conectividad,
- *      Ciberseguridad, Gestionados) en tiles tenues que tumblean y entran desde
- *      izquierda/derecha (planos con textura de canvas, cámara en perspectiva).
- *   3. DUST/EMBERS     → partículas GPU additivas flotando cerca del centro.
+ *   2. GLASS TILES 3D  → tiles "glass" con los íconos de las soluciones,
+ *      ubicados en los COSTADOS (no al centro), que entran volando desde los
+ *      lados y se mecen con una leve inclinación (NO giran del todo → el ícono
+ *      siempre se ve bien). Decorativos (sin click).
+ *   3. DUST/EMBERS     → partículas GPU additivas cerca del centro.
+ *
+ * Respeta prefers-reduced-motion, pausa el rAF fuera de viewport y libera todo
+ * al desmontar. Parallax por puntero (desktop).
  */
 
 const PARAMS = {
   dustCount: 220,
   dustCountMobile: 90,
-  cardCount: 15,
-  cardCountMobile: 8,
+  cardCount: 12,
+  cardCountMobile: 6,
   renderScale: 0.9,
   renderScaleMobile: 0.6,
   raySamples: 48,
@@ -42,7 +42,6 @@ const PARAMS = {
   cameraZ: 6,
 } as const;
 
-// Íconos de las 4 soluciones (mapa cerrado, mismo criterio que RubrosReact).
 const ICONS: Record<string, IconType> = {
   datacenter: FaServer,
   conectividad: FaNetworkWired,
@@ -60,7 +59,7 @@ const DEFAULT_ICON_KEYS = [
 
 interface Props {
   className?: string;
-  /* Claves de ícono de las soluciones (del CMS o default). */
+  /* Íconos de las soluciones (del CMS o default). Solo decorativo. */
   iconKeys?: string[];
   signalReady?: boolean;
   onUnsupported?: () => void;
@@ -163,10 +162,11 @@ const DUST_FRAG = /* glsl */ `
   }
 `;
 
-// Textura de un tile: marco tenue + ícono de solución. Cacheada por clave.
-// Estilo del ref: contorno finísimo, muy tenue (no chip brillante).
-function makeIconTexture(
+// Textura "glass" del tile: rect redondeado con relleno translúcido + brillo
+// superior + borde + ícono de solución. Cacheada por clave.
+function makeGlassTexture(
   key: string,
+  color: readonly number[],
   light: readonly number[]
 ): THREE.CanvasTexture {
   const S = 256;
@@ -174,40 +174,66 @@ function makeIconTexture(
   c.width = S;
   c.height = S;
   const g = c.getContext("2d")!;
+  const [cr, cg, cb] = color;
   const [lr, lg, lb] = light;
-  // Marco redondeado fino.
-  const pad = 28;
-  const r = 40;
+  const pad = 26;
+  const r = 46;
   const x = pad, y = pad, w = S - pad * 2, h = S - pad * 2;
-  g.lineWidth = 3;
+  const roundPath = () => {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  };
+
+  // Relleno glass (gradiente vertical translúcido).
+  g.save();
+  roundPath();
+  g.clip();
+  const fill = g.createLinearGradient(0, y, 0, y + h);
+  fill.addColorStop(0, `rgba(${lr},${lg},${lb},0.20)`);
+  fill.addColorStop(0.5, `rgba(${cr},${cg},${cb},0.10)`);
+  fill.addColorStop(1, `rgba(${cr},${cg},${cb},0.03)`);
+  g.fillStyle = fill;
+  g.fillRect(x, y, w, h);
+  // Brillo superior (highlight de vidrio).
+  const shine = g.createLinearGradient(0, y, 0, y + h * 0.5);
+  shine.addColorStop(0, "rgba(255,255,255,0.16)");
+  shine.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = shine;
+  g.fillRect(x, y, w, h * 0.5);
+  g.restore();
+
+  // Borde.
+  g.lineWidth = 2.5;
   g.strokeStyle = `rgba(${lr},${lg},${lb},0.6)`;
-  g.beginPath();
-  g.moveTo(x + r, y);
-  g.arcTo(x + w, y, x + w, y + h, r);
-  g.arcTo(x + w, y + h, x, y + h, r);
-  g.arcTo(x, y + h, x, y, r);
-  g.arcTo(x, y, x + w, y, r);
-  g.closePath();
+  roundPath();
   g.stroke();
 
   const tex = new THREE.CanvasTexture(c);
   const Icon = ICONS[key] || FaServer;
   try {
     const svg = renderToStaticMarkup(
-      createElement(Icon, { color: `rgb(${lr},${lg},${lb})`, size: 128 })
+      createElement(Icon, { color: "rgb(255,236,251)", size: 128 })
     );
     const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     const img = new Image();
     img.onload = () => {
-      const sz = 112;
-      g.globalAlpha = 0.92;
+      const sz = 104;
+      g.save();
+      g.shadowColor = `rgba(${lr},${lg},${lb},0.85)`;
+      g.shadowBlur = 16;
+      g.globalAlpha = 0.95;
       g.drawImage(img, (S - sz) / 2, (S - sz) / 2, sz, sz);
-      g.globalAlpha = 1;
+      g.restore();
       tex.needsUpdate = true;
     };
     img.src = url;
   } catch {
-    /* si falla el render del ícono, queda solo el marco */
+    /* si falla, queda el tile glass sin ícono */
   }
   return tex;
 }
@@ -215,15 +241,20 @@ function makeIconTexture(
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
-  baseX: number; // posición de deriva (persistente)
-  baseY: number;
-  vx: number;
-  rvx: number;
-  rvy: number;
-  rvz: number;
+  homeX: number; // posición de reposo (en un costado)
+  homeY: number;
+  z: number;
+  bobPhase: number;
+  bobSpeed: number;
+  bobAmpX: number;
+  bobAmpY: number;
+  tiltPhase: number;
+  tiltSpeed: number;
+  tiltAmpX: number;
+  tiltAmpY: number;
   baseOpacity: number;
-  enterSide: number; // -1 izquierda, 1 derecha
-  introDelay: number; // 0..~0.5 (stagger de entrada)
+  enterSide: number; // -1 izq, 1 der
+  introDelay: number;
 }
 
 export default function CinematicBackground({
@@ -305,7 +336,7 @@ export default function CinematicBackground({
     quad.renderOrder = -2;
     scene.add(quad);
 
-    // ── Tiles de íconos de solución (tenues, tumbleando) ──
+    // ── Glass tiles en los costados ──
     const halfH = () => Math.tan((PARAMS.fov * Math.PI) / 360) * PARAMS.cameraZ;
     const halfW = () => halfH() * camera.aspect;
     const cardGeo = new THREE.PlaneGeometry(1, 1);
@@ -313,7 +344,7 @@ export default function CinematicBackground({
     const getTex = (k: string) => {
       let x = texCache.get(k);
       if (!x) {
-        x = makeIconTexture(k, PARAMS.colorLight);
+        x = makeGlassTexture(k, PARAMS.color, PARAMS.colorLight);
         texCache.set(k, x);
       }
       return x;
@@ -327,37 +358,49 @@ export default function CinematicBackground({
         transparent: true,
         depthWrite: false,
         depthTest: false,
-        blending: THREE.NormalBlending, // tenue (no additive)
+        blending: THREE.NormalBlending,
         opacity: 0,
       });
       const mesh = new THREE.Mesh(cardGeo, mat);
       const z = rand(-6.5, -1.8);
-      const depth = (z + 6.5) / 4.7; // 0 lejos .. 1 cerca
-      const scale = 0.46 + depth * 0.56;
+      const depth = (z + 6.5) / 4.7;
+      const scale = 0.5 + depth * 0.55;
       mesh.scale.set(scale, scale, 1);
       const side = i % 2 === 0 ? -1 : 1;
-      mesh.position.set(
-        side * rand(0.5, 1.35) * halfW(),
-        rand(-0.82, 0.82) * halfH(),
-        z
-      );
-      mesh.rotation.set(rand(-0.5, 0.5), rand(-0.7, 0.7), rand(-0.4, 0.4));
+      // Reposo en un costado (|x| grande), fuera de la zona del texto.
+      const homeX = side * rand(0.6, 1.06) * halfH() * (16 / 9); // aprox; se recalcula abajo
+      const homeY = rand(-0.82, 0.86) * halfH();
+      mesh.position.set(homeX, homeY, z);
       mesh.renderOrder = -1;
       scene.add(mesh);
       cards.push({
         mesh,
         mat,
-        baseX: mesh.position.x,
-        baseY: mesh.position.y,
-        vx: -side * rand(0.1, 0.34) * (0.6 + depth),
-        rvx: rand(-0.22, 0.22),
-        rvy: rand(-0.3, 0.3),
-        rvz: rand(-0.18, 0.18),
-        baseOpacity: 0.3 + depth * 0.36,
+        homeX,
+        homeY,
+        z,
+        bobPhase: rand(0, Math.PI * 2),
+        bobSpeed: rand(0.15, 0.4),
+        bobAmpX: (0.03 + depth * 0.05) * halfH(),
+        bobAmpY: (0.04 + depth * 0.06) * halfH(),
+        tiltPhase: rand(0, Math.PI * 2),
+        tiltSpeed: rand(0.25, 0.5),
+        tiltAmpX: rand(0.08, 0.18),
+        tiltAmpY: rand(0.1, 0.2),
+        baseOpacity: 0.42 + depth * 0.36,
         enterSide: side,
         introDelay: (i / cardN) * 0.5,
       });
     }
+    // Reajusta homeX a los costados según el ancho real del frustum.
+    const placeSides = () => {
+      const hw = halfW();
+      for (let i = 0; i < cards.length; i++) {
+        const cd = cards[i];
+        cd.homeX = cd.enterSide * rand(0.62, 1.05) * hw;
+      }
+    };
+    placeSides();
 
     // ── Polvo ──
     const dustCount = mobile ? PARAMS.dustCountMobile : PARAMS.dustCount;
@@ -405,25 +448,25 @@ export default function CinematicBackground({
       rayUniforms.uRes.value.set(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
+      placeSides();
     }
     resize();
     window.addEventListener("resize", resize);
 
+    // Parallax por puntero (desktop).
     const ptr = { tx: 0, ty: 0, cx: 0, cy: 0 };
     const onPointerMove = (e: PointerEvent) => {
       const rect = root!.getBoundingClientRect();
       ptr.tx = ((e.clientX - rect.left) / Math.max(1, rect.width) - 0.5) * 2;
       ptr.ty = ((e.clientY - rect.top) / Math.max(1, rect.height) - 0.5) * 2;
     };
-    const parallaxOn = finePointer && !reduce;
-    if (parallaxOn)
+    if (finePointer && !reduce)
       window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     let raf = 0;
     let visible = true;
     let signaled = false;
     let startMs = -1;
-    let prevMs = -1;
     function signalOnce() {
       if (signalReady && !signaled) {
         signaled = true;
@@ -431,41 +474,36 @@ export default function CinematicBackground({
       }
     }
 
-    function updateCards(dt: number, introE: number) {
+    function updateCards(t: number, introE: number) {
       const hw = halfW();
       for (let i = 0; i < cards.length; i++) {
         const cd = cards[i];
         const m = cd.mesh;
-        // Entrada escalonada volando desde su costado.
         const local = Math.max(
           0,
           Math.min(1, (introE - cd.introDelay) / (1 - 0.5))
         );
         const localE = 1 - Math.pow(1 - local, 3);
-        const enterX = (1 - localE) * cd.enterSide * hw * 1.8;
+        const enterX = (1 - localE) * cd.enterSide * hw * 1.2;
 
-        // Deriva base persistente (wrap por los costados).
-        cd.baseX += cd.vx * dt;
-        if (cd.vx < 0 && cd.baseX < -hw * 1.5) cd.baseX = hw * 1.5;
-        else if (cd.vx > 0 && cd.baseX > hw * 1.5) cd.baseX = -hw * 1.5;
-        m.rotation.x += cd.rvx * dt;
-        m.rotation.y += cd.rvy * dt;
-        m.rotation.z += cd.rvz * dt;
+        // Mecido suave alrededor del reposo (sin cruzar al centro).
+        const bx = Math.sin(t * cd.bobSpeed + cd.bobPhase) * cd.bobAmpX;
+        const by = Math.cos(t * cd.bobSpeed * 0.8 + cd.bobPhase) * cd.bobAmpY;
+        m.position.x = cd.homeX + bx + enterX + ptr.cx * 0.2;
+        m.position.y = cd.homeY + by - ptr.cy * 0.12;
 
-        // Render = base + offsets transitorios (entrada + parallax), sin acumular.
-        m.position.x = cd.baseX + enterX + ptr.cx * 0.15;
-        m.position.y = cd.baseY - ptr.cy * 0.1;
+        // Inclinación leve (no gira del todo → el ícono siempre se ve).
+        m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
+        m.rotation.y =
+          Math.sin(t * cd.tiltSpeed * 0.9 + cd.tiltPhase * 1.3) * cd.tiltAmpY;
+        m.rotation.z = Math.sin(t * cd.tiltSpeed * 0.5) * 0.05;
 
-        const centerFade =
-          0.32 + 0.68 * Math.min(1, Math.abs(m.position.x) / (hw * 0.4));
-        cd.mat.opacity = cd.baseOpacity * centerFade * localE;
+        cd.mat.opacity = cd.baseOpacity * localE;
       }
     }
 
     function frame(ms: number) {
       if (startMs < 0) startMs = ms;
-      const dt = prevMs < 0 ? 0.016 : Math.min(0.05, (ms - prevMs) / 1000);
-      prevMs = ms;
       const t = ms * 0.001;
       const intro = reduce ? 1 : Math.min(1, (ms - startMs) / PARAMS.introMs);
       const introE = 1 - Math.pow(1 - intro, 3);
@@ -476,7 +514,7 @@ export default function CinematicBackground({
       rayUniforms.uTime.value = t;
       rayUniforms.uMouse.value.set(ptr.cx, -ptr.cy);
       dustUniforms.uTime.value = t;
-      updateCards(dt, introE);
+      updateCards(t, introE);
 
       renderer.render(scene, camera);
       signalOnce();
@@ -487,10 +525,7 @@ export default function CinematicBackground({
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
-        if (visible && !reduce && !raf) {
-          prevMs = -1;
-          raf = requestAnimationFrame(frame);
-        }
+        if (visible && !reduce && !raf) raf = requestAnimationFrame(frame);
       },
       { threshold: 0 }
     );
