@@ -7,6 +7,7 @@ import type {
 import CertCard, { type Cert } from "./CertCard";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
+import SliderSideArrows from "../shared/SliderSideArrows";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
@@ -214,11 +215,17 @@ export default function CertificacionesSliderReact({
           >
             {sectionTitle}
           </h2>
-          {items.length > 1 && <div className="hidden lg:block mt-9">{arrowsPill}</div>}
         </div>
 
-        {/* Right column: carousel */}
-        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0">{carousel}</div>
+        {/* Right column: carousel + flechas laterales (desktop, SPEC 94) */}
+        <div className="lg:flex-1 lg:min-w-0 mt-8 lg:mt-0">
+          <div className="relative">
+            {carousel}
+            {items.length > 1 && (
+              <SliderSideArrows canPrev={enough} canNext={enough} onPrev={goPrev} onNext={goNext} />
+            )}
+          </div>
+        </div>
 
         {/* Mobile arrows: below the carousel, left-aligned */}
         {items.length > 1 && <div className="lg:hidden mt-8">{arrowsPill}</div>}
