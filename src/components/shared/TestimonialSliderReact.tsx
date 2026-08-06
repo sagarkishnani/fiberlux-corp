@@ -5,6 +5,7 @@ import type { Locale } from '../../i18n/config';
 import TestimonialCard from './TestimonialCard';
 import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from './SliderArrows';
+import SliderSideArrows from './SliderSideArrows';
 
 /* ── Types ── */
 interface TestimonialSliderProps {
@@ -83,9 +84,6 @@ export default function TestimonialSliderReact({
           >
             {sectionTitle}
           </h2>
-
-          {/* Desktop arrows */}
-          <div className="hidden lg:flex">{arrowsPill}</div>
         </div>
       </div>
 
@@ -131,6 +129,16 @@ export default function TestimonialSliderReact({
                 ))}
           </div>
         </div>
+
+        {/* Desktop: flechas laterales superpuestas (SPEC 94) */}
+        {enough && (
+          <SliderSideArrows
+            canPrev={slider.canPrev}
+            canNext={slider.canNext}
+            onPrev={slider.prev}
+            onNext={slider.next}
+          />
+        )}
       </div>
 
       {/* Mobile navigation arrows */}
