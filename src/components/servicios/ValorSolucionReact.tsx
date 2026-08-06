@@ -281,14 +281,46 @@ export default function ValorSolucionReact({
                         <stop offset="0" stopColor="#B23E97" />
                         <stop offset="1" stopColor="#7c1c64" />
                       </linearGradient>
+                      <linearGradient id="dw-hill-sheen" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0" stopColor="rgba(255,255,255,0)" />
+                        <stop offset="0.5" stopColor="rgba(255,255,255,0.28)" />
+                        <stop offset="1" stopColor="rgba(255,255,255,0)" />
+                      </linearGradient>
+                      <clipPath id="dw-hill-clip">
+                        <ellipse cx="300" cy="368" rx="470" ry="220" />
+                      </clipPath>
                     </defs>
+                    {/* Semiesfera magenta. */}
+                    <ellipse cx="300" cy="368" rx="470" ry="220" fill="url(#dw-hill)" />
+                    {/* Destello que barre la semiesfera (le da vida y profundidad). */}
+                    <g clipPath="url(#dw-hill-clip)">
+                      <rect
+                        className="valor-hill-sheen"
+                        x="0"
+                        y="150"
+                        width="150"
+                        height="240"
+                        fill="url(#dw-hill-sheen)"
+                      />
+                    </g>
+                    {/* Línea del horizonte — base tenue. */}
                     <path
                       d="M-40 150 Q300 66 640 150"
                       fill="none"
                       stroke="rgba(213,167,202,0.28)"
                       strokeWidth="1.5"
                     />
-                    <ellipse cx="300" cy="368" rx="470" ry="220" fill="url(#dw-hill)" />
+                    {/* Luz que recorre la línea del horizonte. */}
+                    <path
+                      className="valor-horizon-beam"
+                      d="M-40 150 Q300 66 640 150"
+                      pathLength={100}
+                      fill="none"
+                      stroke="#D64DB8"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeDasharray="15 85"
+                    />
                   </svg>
                 </div>
               )}
@@ -518,6 +550,24 @@ export default function ValorSolucionReact({
           }
         }
 
+        /* Vida en la base "horizonte": luz que recorre la línea + destello que
+           barre la semiesfera magenta (SPEC 95). */
+        @keyframes valor-horizon { to { stroke-dashoffset: -100; } }
+        .valor-horizon-beam {
+          filter: drop-shadow(0 0 4px rgba(214, 77, 184, 0.9));
+          animation: valor-horizon 5s linear infinite;
+        }
+        @keyframes valor-sheen {
+          0%   { transform: skewX(-20deg) translateX(-220px); opacity: 0; }
+          18%  { opacity: 1; }
+          82%  { opacity: 1; }
+          100% { transform: skewX(-20deg) translateX(820px); opacity: 0; }
+        }
+        .valor-hill-sheen {
+          transform: skewX(-20deg) translateX(-220px);
+          animation: valor-sheen 6.5s ease-in-out infinite;
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .valor-fade, .valor-card {
             opacity: 1;
@@ -526,6 +576,8 @@ export default function ValorSolucionReact({
           }
           .valor-wave { clip-path: none; transition: none; }
           .valor-section.is-visible .valor-card:hover { transform: none; }
+          .valor-horizon-beam { animation: none; }
+          .valor-hill-sheen { animation: none; opacity: 0; }
         }
       `}</style>
     </section>
