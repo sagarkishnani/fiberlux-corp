@@ -122,18 +122,21 @@ export default function CertificacionesSliderReact({
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
     >
-      <div className="flex items-stretch gap-6">
+      {/* Con loop de Embla el `gap` de flex no se mide bien al clonar (las cards
+          se pegan). Se usa padding horizontal por slide (px-3 = 1.5rem entre
+          cards) que sí forma parte de la caja medida por Embla. */}
+      <div className="flex items-stretch">
         {hasItems ? (
           items.map((item, i) => (
             <div
               key={i}
-              className="cert-slide shrink-0 w-[85%] lg:w-[58%]"
+              className="cert-slide shrink-0 w-[85%] lg:w-[58%] px-3"
             >
               <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} locale={locale} />
             </div>
           ))
         ) : (
-          <div className="cert-slide shrink-0 w-[85%] lg:w-[58%]">
+          <div className="cert-slide shrink-0 w-[85%] lg:w-[58%] px-3">
             <div className="bg-white/[0.04] border border-white/10 min-h-[420px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
               {locale === "en" ? "Certifications — coming soon" : "Certificaciones — próximamente"}
             </div>
