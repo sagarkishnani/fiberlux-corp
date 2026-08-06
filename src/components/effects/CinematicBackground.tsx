@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * CinematicBackground — atmósfera "cinematic" del hero (SPEC 97).
@@ -83,6 +83,10 @@ export default function CinematicBackground({
   const raysLayerRef = useRef<HTMLDivElement>(null);
   const tokensLayerRef = useRef<HTMLDivElement>(null);
   const tokenElsRef = useRef<HTMLSpanElement[]>([]);
+  // Los tokens se posicionan con Math.random(): sólo se renderizan tras montar
+  // en cliente para evitar mismatch de hidratación (SSR no los pinta).
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   // Lista de tokens de contenido (CMS o default), estable por render.
   const tokenTexts = useMemo(() => {
@@ -361,7 +365,8 @@ export default function CinematicBackground({
         aria-hidden="true"
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       >
-        {tokenSpecs.map((s, i) => (
+        {mounted &&
+          tokenSpecs.map((s, i) => (
           <span
             key={i}
             ref={(el) => {
