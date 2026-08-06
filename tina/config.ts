@@ -2086,6 +2086,7 @@ export default defineConfig({
                   { name: "autoplay", label: "Autoplay", type: "boolean" },
                   { name: "intervalMs", label: "Intervalo (ms)", type: "number" },
                   { name: "effect", label: "Efecto", type: "string", options: [ { value: "none", label: "Ninguno" }, { value: "scale", label: "Escala" }, { value: "opacity", label: "Opacidad" }, { value: "parallax", label: "Parallax" } ] },
+                  { name: "edgeHover", label: "Navegar al pasar el mouse por los bordes", type: "boolean", description: "Si está activo, pasar el cursor por el borde izquierdo/derecho del carrusel avanza a la certificación anterior/siguiente. Desactivado por defecto." },
                 ],
               },
               {

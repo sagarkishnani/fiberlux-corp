@@ -55,6 +55,8 @@ export interface UseSliderOptions {
    * with the previous slide cut off at the left edge.
    */
   containScroll?: "trimSnaps" | "keepSnaps" | false;
+  /** Snap the carousel is booted on (no animation). Default 0. */
+  startIndex?: number;
 }
 
 export interface Slider {
@@ -66,6 +68,8 @@ export interface Slider {
   canNext: boolean;
   /** True while the carousel is moving (drag or animation); false once settled. */
   scrolling: boolean;
+  /** Whether the user prefers reduced motion (autoplay/tweens gated on this). */
+  reducedMotion: boolean;
   next: () => void;
   prev: () => void;
   goTo: (index: number) => void;
@@ -82,6 +86,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     active = true,
     effect = "none",
     containScroll = "trimSnaps",
+    startIndex = 0,
   } = opts;
 
   const prefersReduced = usePrefersReducedMotion();
@@ -101,7 +106,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     : [];
 
   const [viewportRef, embla] = useEmblaCarousel(
-    { loop, align, slidesToScroll, dragFree, active, containScroll },
+    { loop, align, slidesToScroll, dragFree, active, containScroll, startIndex },
     plugins
   );
 
@@ -205,5 +210,5 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const prev = useCallback(() => embla?.scrollPrev(), [embla]);
   const goTo = useCallback((index: number) => embla?.scrollTo(index), [embla]);
 
-  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, scrolling, next, prev, goTo };
+  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, scrolling, reducedMotion: prefersReduced, next, prev, goTo };
 }

@@ -20,5 +20,6 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
   autoplay={cfg.autoplay ?? true}
   intervalMs={cfg.intervalMs ?? 3500}
   effect={cfg.effect ?? "opacity"}
+  edgeHover={cfg.edgeHover ?? false}
   locale={locale}
 />

@@ -616,6 +616,7 @@ fragment GlobalParts on Global {
       autoplay
       intervalMs
       effect
+      edgeHover
     }
     soluciones {
       __typename

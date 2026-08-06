@@ -1535,6 +1535,7 @@ type GlobalSlidersCertificaciones {
   autoplay: Boolean
   intervalMs: Float
   effect: String
+  edgeHover: Boolean
 }
 
 type GlobalSlidersSoluciones {
@@ -1725,6 +1726,7 @@ input GlobalSlidersCertificacionesFilter {
   autoplay: BooleanFilter
   intervalMs: NumberFilter
   effect: StringFilter
+  edgeHover: BooleanFilter
 }
 
 input GlobalSlidersSolucionesFilter {
@@ -3135,6 +3137,7 @@ input GlobalSlidersCertificacionesMutation {
   autoplay: Boolean
   intervalMs: Float
   effect: String
+  edgeHover: Boolean
 }
 
 input GlobalSlidersSolucionesMutation {
