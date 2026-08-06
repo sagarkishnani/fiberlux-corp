@@ -2,10 +2,22 @@
   "hero": {
     "title": "Soluciones de conectividad y TI para tu empresa",
     "subtitle": "Desde Fiberlux impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
-    "heroBackground": "morph",
+    "heroBackground": "cinematic",
     "splineSceneUrl": "https://prod.spline.design/NPf6t5Aswe3I4AKw/scene.splinecode",
     "splinePosterUrl": "images/home/cover-3d-mobile.jpeg",
     "heroBgOpacity": 60,
+    "cinematic": {
+      "floatingTokens": [
+        { "text": "1 Gbps" },
+        { "text": "99.9%" },
+        { "text": "12 ms" },
+        { "text": "FTTH" },
+        { "text": "IPv6" },
+        { "text": "24/7" },
+        { "text": "SLA" },
+        { "text": "10G" }
+      ]
+    },
     "morph": {
       "triggerLabel": "Explora nuestras soluciones",
       "triggerLabel_en": "Explore our solutions",

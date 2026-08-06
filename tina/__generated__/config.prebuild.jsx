@@ -68,7 +68,8 @@ var config_default = defineConfig({
                   { value: "imagen", label: "Imagen de fondo" },
                   { value: "waveform", label: "Waveform (shader animado)" },
                   { value: "nodefield", label: "Node field (part\xEDculas plexus)" },
-                  { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" }
+                  { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" },
+                  { value: "cinematic", label: "Cinematic (god-rays + tokens flotantes)" }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
@@ -171,6 +172,33 @@ var config_default = defineConfig({
                           { value: "ciberseguridad", label: "Ciberseguridad" },
                           { value: "gestionados", label: "Servicios Gestionados" }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              // ── Modo Cinematic (SPEC 97): god-rays + tokens flotantes ──
+              {
+                type: "object",
+                name: "cinematic",
+                label: "Hero \u2014 modo Cinematic (god-rays + tokens)",
+                description: "Solo aplica si el 'Fondo del hero' es 'Cinematic'. Tokens de conectividad que flotan en el fondo (ej. 1 Gbps, 99.9%, 12 ms). Si lo dejas vac\xEDo se usa un set por defecto.",
+                fields: [
+                  {
+                    type: "object",
+                    name: "floatingTokens",
+                    label: "Tokens flotantes (fondo)",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({
+                        label: item?.text || "Token"
+                      })
+                    },
+                    fields: [
+                      {
+                        type: "string",
+                        name: "text",
+                        label: "Texto del token (ej. Gbps, 99.9%, 12 ms)"
                       }
                     ]
                   }

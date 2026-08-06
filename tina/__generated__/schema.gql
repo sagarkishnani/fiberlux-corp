@@ -161,6 +161,14 @@ type HomeHeroMorph {
   solutionNodes: [HomeHeroMorphSolutionNodes]
 }
 
+type HomeHeroCinematicFloatingTokens {
+  text: String
+}
+
+type HomeHeroCinematic {
+  floatingTokens: [HomeHeroCinematicFloatingTokens]
+}
+
 type HomeHero {
   title: String!
   title_en: String
@@ -174,6 +182,7 @@ type HomeHero {
   heroBgOpacity: Float
   buttons: [HomeHeroButtons]
   morph: HomeHeroMorph
+  cinematic: HomeHeroCinematic
 }
 
 type HomeServicesItemsBullets {
@@ -296,6 +305,14 @@ input HomeHeroMorphFilter {
   solutionNodes: HomeHeroMorphSolutionNodesFilter
 }
 
+input HomeHeroCinematicFloatingTokensFilter {
+  text: StringFilter
+}
+
+input HomeHeroCinematicFilter {
+  floatingTokens: HomeHeroCinematicFloatingTokensFilter
+}
+
 input HomeHeroFilter {
   title: StringFilter
   title_en: StringFilter
@@ -309,6 +326,7 @@ input HomeHeroFilter {
   heroBgOpacity: NumberFilter
   buttons: HomeHeroButtonsFilter
   morph: HomeHeroMorphFilter
+  cinematic: HomeHeroCinematicFilter
 }
 
 input HomeServicesItemsBulletsFilter {
@@ -2525,6 +2543,14 @@ input HomeHeroMorphMutation {
   solutionNodes: [HomeHeroMorphSolutionNodesMutation]
 }
 
+input HomeHeroCinematicFloatingTokensMutation {
+  text: String
+}
+
+input HomeHeroCinematicMutation {
+  floatingTokens: [HomeHeroCinematicFloatingTokensMutation]
+}
+
 input HomeHeroMutation {
   title: String
   title_en: String
@@ -2538,6 +2564,7 @@ input HomeHeroMutation {
   heroBgOpacity: Float
   buttons: [HomeHeroButtonsMutation]
   morph: HomeHeroMorphMutation
+  cinematic: HomeHeroCinematicMutation
 }
 
 input HomeServicesItemsBulletsMutation {

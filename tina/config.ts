@@ -77,6 +77,7 @@ export default defineConfig({
                   { value: "waveform", label: "Waveform (shader animado)" },
                   { value: "nodefield", label: "Node field (partículas plexus)" },
                   { value: "morph", label: "Morph (globo de partículas → soluciones)" },
+                  { value: "cinematic", label: "Cinematic (god-rays + tokens flotantes)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
@@ -185,6 +186,34 @@ export default defineConfig({
                           { value: "ciberseguridad", label: "Ciberseguridad" },
                           { value: "gestionados", label: "Servicios Gestionados" },
                         ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              // ── Modo Cinematic (SPEC 97): god-rays + tokens flotantes ──
+              {
+                type: "object",
+                name: "cinematic",
+                label: "Hero — modo Cinematic (god-rays + tokens)",
+                description:
+                  "Solo aplica si el 'Fondo del hero' es 'Cinematic'. Tokens de conectividad que flotan en el fondo (ej. 1 Gbps, 99.9%, 12 ms). Si lo dejas vacío se usa un set por defecto.",
+                fields: [
+                  {
+                    type: "object",
+                    name: "floatingTokens",
+                    label: "Tokens flotantes (fondo)",
+                    list: true,
+                    ui: {
+                      itemProps: (item: any) => ({
+                        label: item?.text || "Token",
+                      }),
+                    },
+                    fields: [
+                      {
+                        type: "string",
+                        name: "text",
+                        label: "Texto del token (ej. Gbps, 99.9%, 12 ms)",
                       },
                     ],
                   },
