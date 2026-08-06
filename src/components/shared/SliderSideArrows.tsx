@@ -21,10 +21,10 @@ interface SliderSideArrowsProps {
   labelNext?: string;
   /**
    * Distancia horizontal desde cada borde del contenedor (longitud CSS).
-   * Por defecto "-2.25rem": la flecha se sienta en el gutter lateral, apenas
-   * rozando el borde de la card (no encima del contenido). Los gutters del
-   * site-container en desktop (lg:64px, xl:96px+) dan espacio de sobra. En
-   * carruseles a sangre usar `leftOffset`/`rightOffset` para no crear scroll
+   * Por defecto "-3.5rem": la flecha se separa del borde de la card hacia el
+   * gutter lateral. Es el máximo seguro a 1024px (gutter del site-container 64px
+   * y `gap-16` de la columna de Certificaciones 64px, dejando ~8px de holgura).
+   * En carruseles a sangre usar `leftOffset`/`rightOffset` para no crear scroll
    * horizontal.
    */
   offset?: string;
@@ -48,7 +48,7 @@ export default function SliderSideArrows({
   onNext,
   labelPrev = "Anterior",
   labelNext = "Siguiente",
-  offset = "-2.25rem",
+  offset = "-3.5rem",
   leftOffset,
   rightOffset,
   className = "",
