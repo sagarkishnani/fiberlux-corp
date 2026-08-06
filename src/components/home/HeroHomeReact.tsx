@@ -293,7 +293,7 @@ export default function HeroHomeReact({
         <div className="absolute inset-0 z-0">
           <CinematicBackground
             className="h-full w-full"
-            tokens={cinematicTokens}
+            iconKeys={morphNodes.map((n) => n.icon).filter(Boolean) as string[]}
             signalReady
           />
         </div>
@@ -411,6 +411,12 @@ export default function HeroHomeReact({
           {/* Modo cinematic: titular con glow morado + barrido de luz (SPEC 97). */}
           {mode === "cinematic" && (
             <style>{`
+              /* Frente de revelado del titular (barrido izq→der al cargar). */
+              @property --cine-rev {
+                syntax: '<percentage>';
+                initial-value: 0%;
+                inherits: false;
+              }
               .cine-headline {
                 background: linear-gradient(100deg,
                   #ffffff 0%, #ffffff 38%,
@@ -424,14 +430,32 @@ export default function HeroHomeReact({
                 filter:
                   drop-shadow(0 0 14px rgba(214,77,184,0.45))
                   drop-shadow(0 0 34px rgba(150,35,122,0.35));
-                animation: cine-sweep 4.2s linear infinite;
+                /* El titular se "dibuja" de izquierda a derecha con un borde
+                   difuso; luego el barrido de luz continúa en loop. */
+                -webkit-mask-image: linear-gradient(90deg,
+                  #000 0%, #000 var(--cine-rev),
+                  rgba(0,0,0,0) calc(var(--cine-rev) + 8%));
+                mask-image: linear-gradient(90deg,
+                  #000 0%, #000 var(--cine-rev),
+                  rgba(0,0,0,0) calc(var(--cine-rev) + 8%));
+                animation:
+                  cine-sweep 4.2s linear infinite,
+                  cine-reveal 1.5s cubic-bezier(.4,0,.2,1) 0.35s both;
               }
               @keyframes cine-sweep {
                 0% { background-position: 120% 0; }
                 100% { background-position: -20% 0; }
               }
+              @keyframes cine-reveal {
+                from { --cine-rev: -8%; }
+                to { --cine-rev: 112%; }
+              }
               @media (prefers-reduced-motion: reduce) {
-                .cine-headline { animation: none; background-position: 50% 0; }
+                .cine-headline {
+                  --cine-rev: 120%;
+                  animation: none;
+                  background-position: 50% 0;
+                }
               }
             `}</style>
           )}
@@ -440,7 +464,6 @@ export default function HeroHomeReact({
             className={`leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl ${
               mode === "cinematic" ? "cine-headline text-white" : "text-white"
             }`}
-            style={revealStyle(250)}
             data-tina-field={tinaField(hero, "title")}
           >
             {tField(hero as any, "title", locale)}
