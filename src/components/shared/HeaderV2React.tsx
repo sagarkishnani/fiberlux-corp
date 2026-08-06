@@ -359,16 +359,17 @@ export default function HeaderV2React({
         img.style.transform = "translateY(-50%)";
         return;
       }
-      const progress = Math.min(
-        Math.max(currentY / LOGO_TRAVEL_DISTANCE, 0),
-        1
-      );
+      // En morph (logo a la izquierda) el logo es más chico, arranca pegado al
+      // título y "sube" más rápido: la distancia de scroll para acoplar es menor
+      // que el offset, así el logo viaja más rápido que el scroll y nunca cruza
+      // el título (el gap se mantiene o crece). (SPEC 96)
+      const isLeft = heroLogoAlign === "left";
+      const travel = isLeft ? 150 : LOGO_TRAVEL_DISTANCE;
+      const progress = Math.min(Math.max(currentY / travel, 0), 1);
       const inv = 1 - progress;
-      const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
-      // En morph (logo a la izquierda) el logo arranca más alto para dejar más
-      // aire sobre el título y evitar que se crucen al hacer scroll (SPEC 96).
-      const startOffsetY =
-        heroLogoAlign === "left" ? 120 : LOGO_START_OFFSET_Y;
+      const heroH = isLeft ? 40 : LOGO_HERO_H;
+      const height = LOGO_HEADER_H + (heroH - LOGO_HEADER_H) * inv;
+      const startOffsetY = isLeft ? 190 : LOGO_START_OFFSET_Y;
       const offset = startOffsetY * inv;
       // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y.
       // SPEC 88: en estado hero (inv→1) el logo se centra horizontalmente sobre
@@ -380,7 +381,7 @@ export default function HeaderV2React({
           img.naturalWidth && img.naturalHeight
             ? img.naturalWidth / img.naturalHeight
             : 7; // fallback (wordmark ancho) hasta que cargue el SVG
-        const logoW = LOGO_HERO_H * aspect;
+        const logoW = heroH * aspect;
         const anchorLeft = anchor.getBoundingClientRect().left;
         if (heroLogoAlign === "left") {
           // SPEC 96: alinea el borde izquierdo del logo con el contenido del

@@ -262,9 +262,7 @@ export default function HeroHomeReact({
 
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div
-        className={`pointer-events-none relative z-10 site-container pb-16 lg:pb-32 ${
-          mode === "morph" ? "pt-28 lg:pt-52" : "pt-28 lg:pt-40"
-        }`}
+        className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32"
       >
         <div
           className={
