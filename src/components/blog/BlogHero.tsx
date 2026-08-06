@@ -138,8 +138,8 @@ export default function BlogHero({ posts = [], autoplay = true, intervalMs = 600
             canNext={slider.canNext}
             onPrev={slider.prev}
             onNext={slider.next}
-            leftOffset={`${leftPad}px`}
-            rightOffset="0.75rem"
+            leftOffset={`${Math.max(leftPad - 40, 8)}px`}
+            rightOffset="0.5rem"
           />
         )}
       </div>
