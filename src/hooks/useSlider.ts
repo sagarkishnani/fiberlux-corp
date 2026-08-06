@@ -173,7 +173,6 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
       const slidesInView = embla.slidesInView();
       const isScroll = eventName === "scroll";
       embla.scrollSnapList().forEach((scrollSnap, snapIndex) => {
-        const diff = scrollSnap - scrollProgress;
         // Cada snap puede agrupar varios slides (containScroll/slidesToScroll):
         // aplicamos el tween a cada slide real del snap, no al índice del snap.
         const slidesInSnap: number[] = engine.slideRegistry[snapIndex] ?? [snapIndex];
@@ -181,6 +180,21 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
           if (isScroll && !slidesInView.includes(slideIndex)) return;
           const node = tweenNodes.current[slideIndex];
           if (!node) return;
+          let diff = scrollSnap - scrollProgress;
+          // Con loop, los slides "envueltos" al otro extremo tienen un diff
+          // grande respecto al progreso (0↔1); sin corregirlo, la card central
+          // queda tenue al reiniciar el bucle. Ajuste estándar de Embla con
+          // loopPoints (solo aplica cuando loop está activo).
+          if (engine.options.loop) {
+            (engine.slideLooper.loopPoints as any[]).forEach((loopItem) => {
+              const target = loopItem.target();
+              if (slideIndex === loopItem.index && target !== 0) {
+                const sign = Math.sign(target);
+                if (sign === -1) diff = scrollSnap - (1 + scrollProgress);
+                if (sign === 1) diff = scrollSnap + (1 - scrollProgress);
+              }
+            });
+          }
           if (effect === "opacity") {
             node.style.opacity = String(clamp(1 - Math.abs(diff * factor), 0.15, 1));
           } else if (effect === "scale") {
