@@ -1,6 +1,6 @@
 # SPEC 94 — Flechas de sliders a los costados (desktop)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 68 (motor Embla + `SliderArrows` compartido), SPEC 34/35/48/55 (diseños de sliders), SPEC 93 (último trabajo en Soluciones).
 > **Fecha:** 2026-08-05
 > **Objetivo:** En desktop (≥1024px), reemplazar el control de flechas de los carruseles de cards por dos flechas circulares magenta superpuestas y centradas verticalmente sobre los bordes izquierdo y derecho de cada slider, sin alterar el comportamiento en mobile/tablet.
