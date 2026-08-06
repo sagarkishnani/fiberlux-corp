@@ -51,6 +51,10 @@ const isHome =
 // scroll.
 const homeHeroMorph =
   isHome && (homeContent as any)?.hero?.heroBackground === "morph";
+// Modo de hero "cinematic" (SPEC 97): entrada coreografiada — el header se
+// revela de a pocos. La clase se aplica desde el SSR para que no haya parpadeo.
+const homeHeroCinematic =
+  isHome && (homeContent as any)?.hero?.heroBackground === "cinematic";
 // Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de
 // imagen: el header arranca con fondo opaco/blur para que el menú no se pierda
 // sobre la imagen (zonas claras de la foto se mezclaban con el texto blanco).
@@ -185,6 +189,18 @@ const whatsappMessage = whatsappContext
         opacity: 0;
         visibility: hidden;
       }
+      /* Hero cinematic (SPEC 97): el header se revela de a pocos al cargar.
+         Aplicado desde el SSR (clase en el wrapper) para no parpadear. */
+      .cine-intro-page header {
+        animation: cine-header-in 1100ms ease-out 200ms both;
+      }
+      @keyframes cine-header-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cine-intro-page header { animation: none; }
+      }
     </style>
     {/* Accessibility: apply saved preferences before first paint (no flash) */}
     <script is:inline>
@@ -288,7 +304,7 @@ const whatsappMessage = whatsappContext
         <Fragment>
           {/* Page content — the accessibility color filter is applied here so
               the fixed overlays below stay reachable while a filter is on. */}
-          <div id="a11y-content">
+          <div id="a11y-content" class:list={[{ "cine-intro-page": homeHeroCinematic }]}>
             {/* <Header theme={headerTheme} /> */}
             <HeaderV2 theme={headerTheme} heroLogo={isHome} heroLogoAlign={homeHeroMorph ? "left" : "center"} solidOnLoad={solidHeader} locale={locale} />
             <slot />

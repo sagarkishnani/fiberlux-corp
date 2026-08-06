@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField, localizeHref } from "../../utils/i18n";
@@ -54,6 +54,10 @@ export default function HeroHomeReact({
   const morphRef = useRef<MorphHandle>(null);
   const [morphActive, setMorphActive] = useState(false);
 
+  // Modo cinematic: coreografía de entrada — el contenido (y el header) aparecen
+  // escalonados tras montar. `intro` false = oculto; true = revelado.
+  const [intro, setIntro] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     setReduceMotion(
@@ -64,6 +68,22 @@ export default function HeroHomeReact({
   // Fondo en modo video: fija `muted` por propiedad (React no lo refleja en SSR)
   // y reproduce si no hay reduce-motion.
   const mode = ((hero as any)?.heroBackground as string) || "3d";
+
+  // Dispara la entrada cinematográfica del contenido (modo cinematic). El
+  // header se revela por CSS desde el SSR (BaseLayout `.cine-intro-page`).
+  useEffect(() => {
+    if (mode !== "cinematic" || typeof window === "undefined") return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (reduce) {
+      setIntro(true);
+      return;
+    }
+    const raf = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setIntro(true))
+    );
+    return () => cancelAnimationFrame(raf);
+  }, [mode]);
   useEffect(() => {
     const el = bgVideoRef.current;
     if (!el) return;
@@ -113,6 +133,20 @@ export default function HeroHomeReact({
 
   // Imagen estática a sangre del modo 3D en mobile (SPEC 44).
   const mobileCover = mediaUrl(hero.splinePosterUrl);
+
+  // Coreografía de entrada (modo cinematic): revela con stagger cada elemento.
+  const cine = mode === "cinematic";
+  const revealStyle = (delayMs: number): CSSProperties | undefined =>
+    cine
+      ? {
+          opacity: intro ? 1 : 0,
+          transform: intro ? "none" : "translateY(22px)",
+          transition:
+            "opacity 0.85s cubic-bezier(.2,.7,.2,1), transform 0.85s cubic-bezier(.2,.7,.2,1)",
+          transitionDelay: `${delayMs}ms`,
+          willChange: "opacity, transform",
+        }
+      : undefined;
 
   return (
     <section
@@ -406,6 +440,7 @@ export default function HeroHomeReact({
             className={`leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl ${
               mode === "cinematic" ? "cine-headline text-white" : "text-white"
             }`}
+            style={revealStyle(250)}
             data-tina-field={tinaField(hero, "title")}
           >
             {tField(hero as any, "title", locale)}
@@ -416,6 +451,7 @@ export default function HeroHomeReact({
               className={`mt-6 text-white text-body-lg leading-relaxed max-w-[520px] mx-auto ${
                 mode === "morph" ? "lg:mx-0" : ""
               }`}
+              style={revealStyle(430)}
               data-tina-field={tinaField(hero, "subtitle")}
             >
               {tField(hero as any, "subtitle", locale)}
@@ -427,6 +463,7 @@ export default function HeroHomeReact({
               className={`mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full sm:w-auto ${
                 mode === "morph" ? "lg:justify-start" : ""
               }`}
+              style={revealStyle(580)}
             >
               {buttons.map((btn, i) => {
                 if (!btn) return null;
