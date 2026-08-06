@@ -2,6 +2,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import {
   FaCloud,
   FaLock,
+  FaLockOpen,
   FaTowerBroadcast,
   FaServer,
   FaShieldHalved,
@@ -9,59 +10,51 @@ import {
   FaEnvelopeOpenText,
   FaUserSecret,
   FaXmark,
+  FaHeartPulse,
 } from "react-icons/fa6";
 import type { WidgetConfig } from "./ValorSolucionReact";
 
-const BASE = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
-const AVATAR = `${BASE}/images/testimonials/avatar-placeholder.svg`;
-
-/* SPEC 93 — Widget interactivo del card "El desafío", uno por categoría.
-   El dispatcher elige el sub-widget según config.type. El contenido es fijo
-   por categoría (hardcoded en ValorSolucionReact). El tooltip-hint que sigue
-   al cursor lo maneja ValorSolucionReact sobre todo el bloque. */
-export default function DesafioWidget({ config }: { slug: string; config: WidgetConfig }) {
+/* SPEC 95 — Animación en loop del card "El desafío", una por categoría.
+   Todas comparten la línea gráfica: nodo blanco redondeado, conectores finos,
+   labels mono en mayúsculas y glow magenta (la base "horizonte" la pinta el
+   card en ValorSolucionReact). Por defecto corren solas en loop; con
+   `clickable` (valor.desafioClickable) vuelve la interacción por click, que
+   sólo tiene efecto real en el switch de ciberseguridad. */
+export default function DesafioWidget({
+  config,
+  clickable = false,
+}: {
+  slug: string;
+  config: WidgetConfig;
+  clickable?: boolean;
+}) {
   return (
     <div className="dw-root relative z-10 flex w-full items-center justify-center">
-      {config.type === "toggle" && <ToggleWidget config={config} />}
-      {config.type === "failover" && <FailoverWidget config={config} />}
-      {config.type === "shield" && <ShieldWidget config={config} />}
-      {config.type === "chat" && <ChatWidget config={config} />}
+      {config.type === "cloud-beam" && <CloudBeamWidget />}
+      {config.type === "fiber" && <FiberWidget />}
+      {config.type === "shield-switch" && (
+        <ShieldSwitchWidget config={config} clickable={clickable} />
+      )}
+      {config.type === "noc" && <NocWidget config={config} />}
 
       <style>{`
-        /* Aparición de la burbuja de chat / indicador de escritura. */
-        @keyframes dw-pop {
-          from { opacity: 0; transform: translateY(6px) scale(0.96); }
-          to   { opacity: 1; transform: none; }
-        }
-        .dw-root .dw-pop { animation: dw-pop 0.28s cubic-bezier(0.16,1,0.3,1) both; }
+        /* Haz de luz que recorre un trazo (nube / hilos de fibra): un segmento
+           iluminado viaja a lo largo del path animando el stroke-dashoffset. */
+        @keyframes dw-trace { to { stroke-dashoffset: -100; } }
+        @keyframes dw-trace2 { to { stroke-dashoffset: -100; } }
 
-        /* Puntos "escribiendo…". */
-        @keyframes dw-blink {
-          0%, 60%, 100% { opacity: 0.35; transform: translateY(0); }
-          30%           { opacity: 1;    transform: translateY(-2px); }
+        /* Endpoints que se encienden en secuencia (data-center). */
+        @keyframes dw-endpoint {
+          0%, 100% { opacity: 0.28; transform: scale(0.82); }
+          45%      { opacity: 1;    transform: scale(1.12); }
         }
-        .dw-root .dw-typing i { animation: dw-blink 1.2s infinite ease-in-out; }
-        .dw-root .dw-typing i:nth-child(2) { animation-delay: 0.18s; }
-        .dw-root .dw-typing i:nth-child(3) { animation-delay: 0.36s; }
+        .dw-root .dw-ep { transform-box: fill-box; transform-origin: center; }
+        .dw-root .dw-ep { animation: dw-endpoint 3s ease-in-out infinite; }
+        .dw-root .dw-ep2 { animation-delay: 1s; }
+        .dw-root .dw-ep3 { animation-delay: 2s; }
 
-        /* Failover: paquetes que recorren el enlace de respaldo (izq → der). */
-        @keyframes dw-flow {
-          0%   { left: 0%;   opacity: 0; }
-          12%  { opacity: 1; }
-          88%  { opacity: 1; }
-          100% { left: 100%; opacity: 0; }
-        }
-        .dw-root .dw-packet {
-          position: absolute;
-          top: 50%;
-          margin-top: -3px;
-          height: 6px;
-          width: 6px;
-          border-radius: 9999px;
-          background: #fff;
-          box-shadow: 0 0 8px 1px #D64DB8;
-          animation: dw-flow 1.5s linear infinite;
-        }
+        /* Punto de luz viajero sobre el hilo de fibra (glow que persigue el dash). */
+        @keyframes dw-comet { to { offset-distance: 100%; } }
 
         /* Escudo: anillo que pulsa hacia afuera cuando está protegido. */
         @keyframes dw-ring {
@@ -71,7 +64,7 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
         }
         .dw-root .dw-ring { animation: dw-ring 2s ease-out infinite; }
 
-        /* Escudo: amenazas "vivas" (halo rojo latente) mientras está expuesto. */
+        /* Amenazas "vivas" (halo rojo latente) mientras está expuesto. */
         @keyframes dw-threat {
           0%, 100% { box-shadow: 0 0 0 0 rgba(229,72,77,0); }
           50%      { box-shadow: 0 0 0 4px rgba(229,72,77,0.14); }
@@ -80,12 +73,28 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
         .dw-root .dw-threat:nth-child(2) { animation-delay: 0.25s; }
         .dw-root .dw-threat:nth-child(3) { animation-delay: 0.5s; }
 
-        /* Reduced-motion: sin transiciones ni animaciones; los estados siguen
-           alternando de forma instantánea (los maneja React). */
+        /* NOC: latido de uptime (dash que recorre la línea EKG) + tiles que respiran. */
+        @keyframes dw-ekg { to { stroke-dashoffset: -240; } }
+        @keyframes dw-breathe {
+          0%, 100% { opacity: 0.55; }
+          50%      { opacity: 1; }
+        }
+        .dw-root .dw-tile { animation: dw-breathe 2.4s ease-in-out infinite; }
+        .dw-root .dw-tile:nth-child(2) { animation-delay: 0.4s; }
+        .dw-root .dw-tile:nth-child(3) { animation-delay: 0.8s; }
+        @keyframes dw-pulse-dot {
+          0%, 100% { opacity: 1; }
+          50%      { opacity: 0.35; }
+        }
+        .dw-root .dw-live { animation: dw-pulse-dot 1.4s ease-in-out infinite; }
+
+        /* Reduced-motion: sin animaciones. Cada widget queda en su frame estático
+           representativo (los estados por defecto de React ya lo componen). */
         @media (prefers-reduced-motion: reduce) {
           .dw-root, .dw-root * {
             transition: none !important;
             animation: none !important;
+            offset-distance: 55% !important;
           }
         }
       `}</style>
@@ -93,238 +102,233 @@ export default function DesafioWidget({ config }: { slug: string; config: Widget
   );
 }
 
-/* Avatar circular con punto "en línea" (verde). */
-function Avatar() {
-  return (
-    <span className="relative shrink-0">
-      <img
-        src={AVATAR}
-        alt=""
-        aria-hidden="true"
-        className="h-7 w-7 rounded-full bg-white/20 object-cover"
-      />
-      <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[#37B24D] ring-2 ring-[#2c0a26]" />
-    </span>
-  );
-}
-
-/* ── Data Center — toggle de protección (click alterna ida y vuelta) ── */
-function ToggleWidget({ config }: { config: WidgetConfig }) {
-  const [on, setOn] = useState(false);
-
+/* Nodo blanco redondeado con ícono de marca — motivo compartido de la línea
+   gráfica. Opcionalmente precedido por un conector punteado vertical. */
+function SignalNode({
+  icon,
+  connector = true,
+  size = 60,
+}: {
+  icon: ReactNode;
+  connector?: boolean;
+  size?: number;
+}) {
   return (
     <div className="flex flex-col items-center">
-      {/* Label "PROTEGIDO": reserva su altura siempre para que nada salte. */}
-      <span
-        className={`mb-3 font-mono text-[11px] uppercase tracking-[0.25em] text-white/85 transition-opacity duration-300 ${
-          on ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {config.onLabel}
-      </span>
-
-      <button
-        type="button"
-        role="switch"
-        aria-checked={on}
-        aria-label={config.onLabel || "Proteger"}
-        onClick={() => setOn((v) => !v)}
-        className="dw-pill relative flex h-[64px] w-[132px] cursor-pointer items-center rounded-full px-2 outline-none transition-colors duration-500 focus-visible:ring-2 focus-visible:ring-white/70"
-        style={{ background: on ? "linear-gradient(135deg,#96237A,#650F50)" : "#E7C3DD" }}
-      >
+      {connector && (
         <span
-          className="dw-knob flex h-[48px] w-[48px] items-center justify-center rounded-full text-white shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-          style={{
-            transform: on ? "translateX(68px)" : "translateX(0)",
-            background: on ? "#1a0716" : "linear-gradient(135deg,#96237A,#650F50)",
-          }}
-        >
-          {on ? <FaLock size={19} /> : <FaCloud size={22} />}
-        </span>
-      </button>
-
-      {/* Línea punteada + nodo señal. */}
+          aria-hidden="true"
+          className="h-9 w-px border-l border-dashed border-white/30"
+        />
+      )}
       <span
         aria-hidden="true"
-        className="mt-4 h-10 w-px border-l border-dashed border-white/30"
-      />
-      <span
-        aria-hidden="true"
-        className="flex h-[60px] w-[60px] items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
+        className="mt-2 flex items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
+        style={{ height: size, width: size }}
       >
-        <FaTowerBroadcast size={24} />
+        {icon}
       </span>
     </div>
   );
 }
 
-/* ── Conectividad — failover de enlace (click activa el respaldo SD-WAN) ── */
-function FailoverWidget({ config }: { config: WidgetConfig }) {
-  const [on, setOn] = useState(false);
-
+/* Etiqueta mono en mayúsculas (línea gráfica compartida). */
+function MonoLabel({ children, tone = "muted" }: { children: ReactNode; tone?: "muted" | "on" | "off" }) {
+  const color =
+    tone === "on" ? "text-[#e9b8dd]" : tone === "off" ? "text-[#f0a0a2]" : "text-white/70";
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      aria-label={config.hint || "Activar respaldo"}
-      onClick={() => setOn((v) => !v)}
-      className="block w-full max-w-[320px] cursor-pointer rounded-[16px] outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-    >
-      {/* Estado del enlace — reserva su altura para que nada salte. */}
-      <div className="mb-4 flex justify-center">
-        <span
-          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors duration-500 ${
-            on
-              ? "bg-[rgba(55,178,77,0.16)] text-[#8ce0a3]"
-              : "bg-[rgba(229,72,77,0.16)] text-[#f0a0a2]"
-          }`}
-        >
-          <span
-            className={`h-2 w-2 rounded-full ${on ? "bg-[#37B24D]" : "bg-[#E5484D]"}`}
-          />
-          {on ? "En línea · Respaldo activo" : "Fuera de línea"}
-        </span>
-      </div>
-
-      {/* Nodos (Sede ↔ Nube) unidos por dos rutas: principal caída + respaldo. */}
-      <div className="flex items-center gap-2">
-        <Node icon={<FaServer size={18} />} label="Sede" />
-
-        <div className="relative h-[72px] flex-1">
-          {/* Ruta principal (arriba) — siempre caída (rojo, cortada con ✕). */}
-          <span className="absolute left-0 top-0 font-mono text-[9px] uppercase tracking-wider text-white/40">
-            Principal
-          </span>
-          <div className="absolute inset-x-0 top-[22px] flex items-center gap-1">
-            <span className="h-[2px] flex-1 rounded bg-[#E5484D]/70" />
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E5484D] text-white shadow">
-              <FaXmark size={11} />
-            </span>
-            <span className="h-[2px] flex-1 rounded bg-[#E5484D]/70" />
-          </div>
-
-          {/* Ruta de respaldo (abajo) — punteada gris → magenta con paquetes. */}
-          <div className="absolute inset-x-0 bottom-[20px] h-[2px]">
-            <span
-              className={`absolute inset-0 rounded transition-colors duration-500 ${
-                on
-                  ? "bg-gradient-to-r from-[#96237A] to-[#D64DB8]"
-                  : "border-t border-dashed border-white/25"
-              }`}
-            />
-            {on && (
-              <>
-                <span className="dw-packet" style={{ animationDelay: "0s" }} />
-                <span className="dw-packet" style={{ animationDelay: "0.5s" }} />
-                <span className="dw-packet" style={{ animationDelay: "1s" }} />
-              </>
-            )}
-          </div>
-          <span
-            className={`absolute bottom-[6px] left-0 font-mono text-[9px] uppercase tracking-wider transition-colors duration-500 ${
-              on ? "text-[#e9b8dd]" : "text-white/40"
-            }`}
-          >
-            Respaldo
-          </span>
-        </div>
-
-        <Node icon={<FaCloud size={20} />} label="Nube" />
-      </div>
-
-      {/* Pie contextual. */}
-      <p
-        className={`mt-3 text-center font-mono text-[10px] uppercase tracking-[0.12em] transition-colors duration-500 ${
-          on ? "text-white/60" : "text-[#f0a0a2]"
-        }`}
-      >
-        {on ? "SD-WAN · conmutación automática" : "Enlace principal caído"}
-      </p>
-    </button>
-  );
-}
-
-/* Nodo cuadrado con glifo + etiqueta (usado por el failover). */
-function Node({ icon, label }: { icon: ReactNode; label: string }) {
-  return (
-    <span className="flex shrink-0 flex-col items-center gap-1.5">
-      <span className="flex h-[52px] w-[52px] items-center justify-center rounded-[14px] bg-white text-[#96237A] shadow-lg">
-        {icon}
-      </span>
-      <span className="font-mono text-[10px] uppercase tracking-wider text-white/70">
-        {label}
-      </span>
+    <span className={`font-mono text-[11px] uppercase tracking-[0.25em] ${color}`}>
+      {children}
     </span>
   );
 }
 
-/* ── Ciberseguridad — escudo Zero Trust que bloquea amenazas (click) ── */
-function ShieldWidget({ config }: { config: WidgetConfig }) {
-  const [on, setOn] = useState(false);
+/* ── Data Center — nube de luz con haz que la recorre + endpoints en secuencia ── */
+function CloudBeamWidget() {
+  return (
+    <div className="flex flex-col items-center">
+      <svg
+        viewBox="0 0 220 150"
+        className="w-[220px] max-w-full"
+        fill="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="dw-cloud" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#D64DB8" />
+            <stop offset="1" stopColor="#96237A" />
+          </linearGradient>
+        </defs>
+
+        {/* Conectores nube → endpoints (líneas punteadas finas). */}
+        <path d="M74 96 L52 128" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 4" />
+        <path d="M110 100 L110 132" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 4" />
+        <path d="M146 96 L168 128" stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 4" />
+
+        {/* Nube — trazo tenue de base. */}
+        <path
+          d="M80 100 C60 100 46 86 46 68 C46 52 58 39 74 40 C78 25 91 16 106 16 C124 16 138 30 139 47 C155 48 168 61 168 76 C168 90 156 100 142 100 Z"
+          stroke="rgba(213,167,202,0.30)"
+          strokeWidth="2"
+        />
+        {/* Nube — haz de luz: segmento iluminado que recorre el contorno. */}
+        <path
+          d="M80 100 C60 100 46 86 46 68 C46 52 58 39 74 40 C78 25 91 16 106 16 C124 16 138 30 139 47 C155 48 168 61 168 76 C168 90 156 100 142 100 Z"
+          pathLength={100}
+          stroke="url(#dw-cloud)"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeDasharray="20 80"
+          strokeDashoffset={-40}
+          style={{
+            filter: "drop-shadow(0 0 5px rgba(214,77,184,0.9))",
+            animation: "dw-trace 3.2s linear infinite",
+          }}
+        />
+
+        {/* Endpoints que se encienden en secuencia. */}
+        <circle className="dw-ep" cx="52" cy="132" r="5" fill="#D64DB8" style={{ filter: "drop-shadow(0 0 4px #D64DB8)" }} />
+        <circle className="dw-ep dw-ep2" cx="110" cy="136" r="5" fill="#D64DB8" style={{ filter: "drop-shadow(0 0 4px #D64DB8)" }} />
+        <circle className="dw-ep dw-ep3" cx="168" cy="132" r="5" fill="#D64DB8" style={{ filter: "drop-shadow(0 0 4px #D64DB8)" }} />
+      </svg>
+
+      <span className="mt-3">
+        <MonoLabel>Sincronizado</MonoLabel>
+      </span>
+      <SignalNode icon={<FaTowerBroadcast size={24} />} />
+    </div>
+  );
+}
+
+/* ── Conectividad — hilo de fibra con punto de luz que lo recorre ── */
+function FiberWidget() {
+  // Curvas bézier recorridas por un punto de luz + estela (offset-path).
+  const P1 = "M8 92 C 70 36, 150 148, 232 62";
+  const P2 = "M8 60 C 78 120, 148 20, 232 96";
+  return (
+    <div className="flex w-full max-w-[300px] flex-col items-center">
+      <div className="relative h-[150px] w-full">
+        {/* Nodos-extremo (línea gráfica: blancos redondeados). */}
+        <span className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+          <FaServer size={16} />
+        </span>
+        <span className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+          <FaCloud size={18} />
+        </span>
+
+        <svg viewBox="0 0 240 150" className="absolute inset-0 h-full w-full" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="dw-fiber" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stopColor="#96237A" />
+              <stop offset="0.5" stopColor="#D64DB8" />
+              <stop offset="1" stopColor="#96237A" />
+            </linearGradient>
+          </defs>
+          {/* Hilos tenues. */}
+          <path d={P1} stroke="rgba(213,167,202,0.22)" strokeWidth="1.5" />
+          <path d={P2} stroke="rgba(213,167,202,0.14)" strokeWidth="1.5" />
+          {/* Estela de luz recorriendo cada hilo. */}
+          <path
+            d={P1}
+            pathLength={100}
+            stroke="url(#dw-fiber)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeDasharray="16 84"
+            strokeDashoffset={-30}
+            style={{ filter: "drop-shadow(0 0 5px rgba(214,77,184,0.9))", animation: "dw-trace 2.6s linear infinite" }}
+          />
+          <path
+            d={P2}
+            pathLength={100}
+            stroke="url(#dw-fiber)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray="12 88"
+            strokeDashoffset={-70}
+            style={{ filter: "drop-shadow(0 0 4px rgba(214,77,184,0.7))", animation: "dw-trace2 3.4s linear infinite" }}
+          />
+        </svg>
+
+        {/* Punto de luz brillante que viaja por el hilo principal (offset-path). */}
+        <span
+          aria-hidden="true"
+          className="absolute left-0 top-0 h-2.5 w-2.5 rounded-full bg-white"
+          style={{
+            offsetPath: `path("${P1}")`,
+            offsetDistance: "55%",
+            boxShadow: "0 0 10px 2px #D64DB8",
+            animation: "dw-comet 2.6s linear infinite",
+          }}
+        />
+      </div>
+      <span className="mt-1">
+        <MonoLabel tone="on">Enlace activo</MonoLabel>
+      </span>
+    </div>
+  );
+}
+
+/* ── Ciberseguridad — interruptor/candado que alterna EXPUESTO ↔ PROTEGIDO ── */
+function ShieldSwitchWidget({
+  config,
+  clickable,
+}: {
+  config: WidgetConfig;
+  clickable: boolean;
+}) {
+  const [on, setOn] = useState(false); // arranca EXPUESTO
   const threats = [
     { icon: <FaBug size={12} />, label: "Malware" },
     { icon: <FaEnvelopeOpenText size={12} />, label: "Phishing" },
     { icon: <FaUserSecret size={12} />, label: "Intrusión" },
   ];
 
-  return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={on}
-      aria-label={config.hint || "Proteger"}
-      onClick={() => setOn((v) => !v)}
-      className="block w-full max-w-[320px] cursor-pointer rounded-[16px] outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-    >
-      {/* Estado del perímetro — reserva su altura. */}
-      <div className="mb-4 flex justify-center">
-        <span
-          className={`inline-flex items-center gap-2 rounded-full px-3 py-1 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors duration-500 ${
-            on
-              ? "bg-[rgba(55,178,77,0.16)] text-[#8ce0a3]"
-              : "bg-[rgba(229,72,77,0.16)] text-[#f0a0a2]"
-          }`}
-        >
-          <span
-            className={`h-2 w-2 rounded-full ${on ? "bg-[#37B24D]" : "bg-[#E5484D]"}`}
-          />
-          {on ? "Protegido · Zero Trust" : "Expuesto"}
-        </span>
-      </div>
+  useEffect(() => {
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Reduced-motion: frame estático protegido.
+    if (reduced) {
+      setOn(true);
+      return;
+    }
+    // Con click activo, no hay autoplay (lo maneja el usuario).
+    if (clickable) return;
+    const id = window.setInterval(() => setOn((v) => !v), 2600);
+    return () => window.clearInterval(id);
+  }, [clickable]);
 
-      {/* Escudo central con anillo pulsante al proteger. */}
-      <div className="relative mx-auto flex h-[104px] w-[104px] items-center justify-center">
-        {on && (
-          <span className="dw-ring absolute h-[94px] w-[94px] rounded-full border-2 border-[#D64DB8]/50" />
-        )}
+  const body = (
+    <div className="flex flex-col items-center">
+      {/* Label mono EXPUESTO/PROTEGIDO — reserva altura para que nada salte. */}
+      <span className="mb-3 h-4">
+        <MonoLabel tone={on ? "on" : "off"}>{on ? config.onLabel : config.offLabel}</MonoLabel>
+      </span>
+
+      {/* Interruptor pill + perilla candado. */}
+      <span
+        className="dw-pill relative flex h-[64px] w-[132px] items-center rounded-full px-2 transition-colors duration-500"
+        style={{ background: on ? "linear-gradient(135deg,#96237A,#650F50)" : "#E7C3DD" }}
+      >
         <span
-          className="flex h-[68px] w-[68px] items-center justify-center rounded-[20px] shadow-lg transition-all duration-500"
+          className="dw-knob flex h-[48px] w-[48px] items-center justify-center rounded-full text-white shadow-lg transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
-            background: on
-              ? "linear-gradient(135deg,#96237A,#650F50)"
-              : "rgba(255,255,255,0.07)",
-            color: on ? "#fff" : "rgba(255,255,255,0.4)",
+            transform: on ? "translateX(68px)" : "translateX(0)",
+            background: on ? "#1a0716" : "linear-gradient(135deg,#B23E97,#7c1c64)",
           }}
         >
-          <FaShieldHalved size={30} />
+          {on ? <FaLock size={19} /> : <FaLockOpen size={19} />}
         </span>
-      </div>
+      </span>
 
-      {/* Contador de amenazas. */}
-      <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">
-        {on ? "Amenazas bloqueadas: 3" : "3 amenazas activas"}
-      </p>
-
-      {/* Chips de amenazas: rojas y "vivas" → grises con ✕ al bloquearlas. */}
-      <div className="mt-3 flex justify-center gap-2">
+      {/* Chips de amenazas: rojas y "vivas" (expuesto) → grises con ✕ (protegido). */}
+      <div className="mt-5 flex flex-wrap justify-center gap-2">
         {threats.map((t, i) => (
           <span
             key={i}
             className={`relative inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-wide transition-all duration-500 ${
-              on
-                ? "bg-white/[0.06] text-white/35"
-                : "dw-threat bg-[rgba(229,72,77,0.16)] text-[#f0a0a2]"
+              on ? "bg-white/[0.06] text-white/35" : "dw-threat bg-[rgba(229,72,77,0.16)] text-[#f0a0a2]"
             }`}
             style={{ transitionDelay: on ? `${i * 90}ms` : "0ms" }}
           >
@@ -338,77 +342,81 @@ function ShieldWidget({ config }: { config: WidgetConfig }) {
           </span>
         ))}
       </div>
-    </button>
+
+      <SignalNode icon={<FaShieldHalved size={22} />} />
+    </div>
   );
+
+  // Con interacción activa, el bloque es un switch operable (lo dispara también
+  // el click sobre todo el card, vía ValorSolucionReact).
+  if (clickable) {
+    return (
+      <button
+        type="button"
+        role="switch"
+        aria-checked={on}
+        aria-label={config.hint || "Proteger"}
+        onClick={() => setOn((v) => !v)}
+        className="cursor-pointer rounded-[16px] outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      >
+        {body}
+      </button>
+    );
+  }
+  return body;
 }
 
-/* ── Servicios Gestionados — chat (click revela la respuesta) ── */
-function ChatWidget({ config }: { config: WidgetConfig }) {
-  const [revealed, setRevealed] = useState(false);
-  const msgs = config.messages || [];
-  const user = msgs[0];
-  const agent = msgs[1];
-
-  useEffect(() => {
-    // Reduced-motion: conversación completa estática desde el inicio.
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setRevealed(true);
-    }
-  }, []);
-
+/* ── Servicios Gestionados — NOC / monitoreo 24/7 (latido de uptime en loop) ── */
+function NocWidget({ config }: { config: WidgetConfig }) {
+  const tiles = [
+    { label: "CPU", value: "32%" },
+    { label: "Red", value: "OK" },
+    { label: "Backup", value: "✓" },
+  ];
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={revealed}
-      aria-label={config.hint || "Ver"}
-      onClick={() => setRevealed((v) => !v)}
-      className="block w-full max-w-[300px] cursor-pointer rounded-[16px] text-left outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-    >
-      <div className="flex flex-col gap-3">
-        {/* Mensaje del usuario (claro, a la derecha) */}
-        {user && (
-          <div className="flex items-end justify-end gap-2">
-            <div className="max-w-[220px] rounded-2xl rounded-br-md bg-[#F3E4EF] px-4 py-2.5 shadow-md">
-              <p className="text-[13px] leading-snug text-[#3B0E30]">
-                {user.text}
-              </p>
-              <p className="mt-1 text-[10px] text-[#3B0E30]/45">{user.time}</p>
-            </div>
-            <Avatar />
-          </div>
-        )}
+    <div className="flex w-full max-w-[300px] flex-col items-center">
+      <div className="w-full rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+        {/* Cabecera: estado OPERATIVO (punto verde latente) + uptime. */}
+        <div className="flex items-center justify-between">
+          <span className="inline-flex items-center gap-2">
+            <span className="dw-live h-2 w-2 rounded-full bg-[#37B24D]" />
+            <MonoLabel tone="on">Operativo</MonoLabel>
+          </span>
+          <span className="font-mono text-[13px] font-semibold text-white">{config.uptime}</span>
+        </div>
 
-        {/* Respuesta del agente: escribiendo → (click) mensaje */}
-        {agent && (
-          <div className="flex items-end gap-2">
-            <Avatar />
-            {revealed ? (
-              <div
-                key="msg"
-                className="dw-pop max-w-[220px] rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-2.5 shadow-md"
-              >
-                <p className="text-[13px] leading-snug text-white">
-                  {agent.text}
-                </p>
-                <p className="mt-1 text-[10px] text-white/60">{agent.time}</p>
-              </div>
-            ) : (
-              <div
-                key="typing"
-                className="dw-pop rounded-2xl rounded-bl-md bg-[#9E2680] px-4 py-3.5 shadow-md"
-                aria-label="Escribiendo…"
-              >
-                <span className="dw-typing flex items-center gap-1">
-                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                  <i className="block h-1.5 w-1.5 rounded-full bg-white/85" />
-                </span>
-              </div>
-            )}
-          </div>
-        )}
+        {/* Latido de uptime (línea EKG recorrida por un dash). */}
+        <svg viewBox="0 0 240 56" className="mt-3 h-[56px] w-full" fill="none" aria-hidden="true">
+          <path
+            d="M0 28 H70 l8 -18 l10 36 l8 -18 H150 l8 -12 l10 24 l6 -12 H240"
+            stroke="rgba(213,167,202,0.22)"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M0 28 H70 l8 -18 l10 36 l8 -18 H150 l8 -12 l10 24 l6 -12 H240"
+            pathLength={240}
+            stroke="#D64DB8"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeDasharray="46 194"
+            strokeDashoffset={0}
+            style={{ filter: "drop-shadow(0 0 4px rgba(214,77,184,0.8))", animation: "dw-ekg 2.2s linear infinite" }}
+          />
+        </svg>
+
+        {/* Tiles de métricas vivas. */}
+        <div className="mt-3 grid grid-cols-3 gap-2">
+          {tiles.map((t, i) => (
+            <div key={i} className="dw-tile rounded-lg bg-white/[0.05] px-2 py-1.5 text-center">
+              <div className="font-mono text-[9px] uppercase tracking-wider text-white/50">{t.label}</div>
+              <div className="font-mono text-[13px] font-semibold text-white">{t.value}</div>
+            </div>
+          ))}
+        </div>
       </div>
-    </button>
+
+      <SignalNode icon={<FaHeartPulse size={22} />} />
+    </div>
   );
 }
