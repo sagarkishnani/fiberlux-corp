@@ -225,7 +225,15 @@ export default function HeroHomeReact({
             nodes={morphNodes}
             logoSrc={logoAsset}
             signalReady
-            onPhaseChange={(p) => setMorphActive(p !== "idle")}
+            onPhaseChange={(p) => {
+              const active = p !== "idle";
+              setMorphActive(active);
+              // El header oculta su logo grande mientras se muestran las soluciones.
+              if (typeof window !== "undefined")
+                window.dispatchEvent(
+                  new CustomEvent("fbx:hero-morph", { detail: { active } })
+                );
+            }}
           />
         </div>
       )}
@@ -270,18 +278,6 @@ export default function HeroHomeReact({
               : undefined
           }
         >
-          {/* Modo morph: wordmark FIBERLUX a la izquierda (reemplaza al logo
-              grande centrado del header, desactivado en este modo). */}
-          {mode === "morph" && (
-            <img
-              src={logoAsset}
-              alt="Fiberlux"
-              draggable={false}
-              className="h-8 lg:h-10 w-auto mb-6 self-center lg:self-start"
-              style={{ filter: "brightness(0) invert(1)" }}
-            />
-          )}
-
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}

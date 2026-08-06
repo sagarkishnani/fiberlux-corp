@@ -44,9 +44,10 @@ const {
 const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
 const isHome =
   normalizePath(Astro.url.pathname) === normalizePath(import.meta.env.BASE_URL);
-// En el modo de hero "morph" (SPEC 96) el hero es texto-izquierda + globo, y el
-// wordmark FIBERLUX va a la izquierda dentro del hero (lo dibuja HeroHomeReact),
-// así que NO se activa el logo grande centrado del header (SPEC 39/88).
+// En el modo de hero "morph" (SPEC 96) el hero es texto-izquierda + globo, así
+// que el logo grande animado del header (SPEC 39) se alinea a la IZQUIERDA en
+// vez de al centro (SPEC 88). Conserva la animación de subir al header al hacer
+// scroll.
 const homeHeroMorph =
   isHome && (homeContent as any)?.hero?.heroBackground === "morph";
 // Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de
@@ -288,7 +289,7 @@ const whatsappMessage = whatsappContext
               the fixed overlays below stay reachable while a filter is on. */}
           <div id="a11y-content">
             {/* <Header theme={headerTheme} /> */}
-            <HeaderV2 theme={headerTheme} heroLogo={isHome && !homeHeroMorph} solidOnLoad={solidHeader} locale={locale} />
+            <HeaderV2 theme={headerTheme} heroLogo={isHome} heroLogoAlign={homeHeroMorph ? "left" : "center"} solidOnLoad={solidHeader} locale={locale} />
             <slot />
             <div class="-mt-6 relative z-40">
               <Footer locale={locale} />

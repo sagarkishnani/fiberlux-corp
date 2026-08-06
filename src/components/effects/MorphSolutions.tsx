@@ -33,8 +33,9 @@ const PARAMS = {
   clusterRadius: 0.22, // dispersión gaussiana de cada cúmulo (cúmulos nítidos)
   color: 0x96237a, // brand-purple #96237A
   colorBright: 0xce66b8, // magenta claro para el brillo del punto
-  morphDuration: 1.2, // s de interpolación globo↔nodos
-  autoRevertMs: 6000, // ~6 s en estado morph → vuelve al globo
+  morphDuration: 1.2, // s de interpolación globo→nodos (ida)
+  morphInDuration: 0.7, // s de interpolación nodos→globo (regreso, más ágil)
+  autoRevertMs: 3000, // s en estado morph antes de volver al globo
   idleRotationSpeed: 0.06, // rad/s de giro del globo en reposo
   idleShiftX: 1.15, // desktop: globo desplazado a la derecha en reposo (texto va a la izquierda)
   swirlAmp: 0.12, // amplitud del orbitado de cada partícula en estado soluciones
@@ -361,13 +362,12 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     };
 
     const step = (dt: number) => {
-      const dur = PARAMS.morphDuration;
       if (phase === "morphing-out") {
-        progress = Math.min(1, progress + dt / dur);
+        progress = Math.min(1, progress + dt / PARAMS.morphDuration);
         bufferDirty = true;
         if (progress >= 1) setPhase("solutions");
       } else if (phase === "morphing-in") {
-        progress = Math.max(0, progress - dt / dur);
+        progress = Math.max(0, progress - dt / PARAMS.morphInDuration);
         bufferDirty = true;
         if (progress <= 0) setPhase("idle");
       } else if (phase === "solutions") {
@@ -497,6 +497,10 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
         {/* Chip central con el logo de Fiberlux dentro. */}
         <div ref={chipRef} className="morph-chip" style={{ opacity: 0 }}>
+          {/* Pulso "radar" que emana + anillo orbital rotando (le dan vida). */}
+          <span className="morph-chip__pulse" aria-hidden="true" />
+          <span className="morph-chip__pulse morph-chip__pulse--2" aria-hidden="true" />
+          <span className="morph-chip__orbit" aria-hidden="true" />
           <svg viewBox="0 0 100 100" className="morph-chip__frame" aria-hidden="true">
             {/* Cuerpo del chip */}
             <rect
@@ -632,9 +636,58 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
           width: 178px;
           height: 178px;
           pointer-events: none;
-          filter: drop-shadow(0 0 22px rgba(150,35,122,0.5));
+          animation: morph-chip-glow 2.6s ease-in-out infinite;
         }
-        .morph-chip__frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+        @keyframes morph-chip-glow {
+          0%, 100% { filter: drop-shadow(0 0 16px rgba(150,35,122,0.45)); }
+          50% { filter: drop-shadow(0 0 30px rgba(214,77,184,0.8)); }
+        }
+        .morph-chip__frame {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          animation: morph-chip-breathe 2.6s ease-in-out infinite;
+        }
+        @keyframes morph-chip-breathe {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.04); }
+        }
+        /* Anillo orbital girando alrededor del chip. */
+        .morph-chip__orbit {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 132%;
+          height: 132%;
+          transform: translate(-50%, -50%);
+          border-radius: 9999px;
+          border: 1px dashed rgba(206,102,184,0.45);
+          animation: morph-orbit 9s linear infinite;
+        }
+        @keyframes morph-orbit {
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        /* Pulso "radar" que emana del chip. */
+        .morph-chip__pulse {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          border-radius: 9999px;
+          border: 1px solid rgba(214,77,184,0.55);
+          transform: translate(-50%, -50%);
+          animation: morph-radar 2.6s ease-out infinite;
+        }
+        .morph-chip__pulse--2 { animation-delay: 1.3s; }
+        @keyframes morph-radar {
+          0% { width: 46%; height: 46%; opacity: 0.7; }
+          100% { width: 165%; height: 165%; opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .morph-chip, .morph-chip__frame, .morph-chip__orbit, .morph-chip__pulse {
+            animation: none;
+          }
+        }
         .morph-chip__logo {
           position: absolute;
           left: 50%;
