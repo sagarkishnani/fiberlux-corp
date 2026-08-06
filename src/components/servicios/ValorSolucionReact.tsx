@@ -27,24 +27,26 @@ interface Card {
    La clave es el slug del servicio (variables.relativePath sin ".json").
    Los slugs sin entrada conservan la onda estática. */
 export interface WidgetConfig {
-  type: "toggle" | "chat" | "failover" | "shield";
+  type: "cloud-beam" | "fiber" | "shield-switch" | "noc";
   hint?: string;
   onLabel?: string;
-  messages?: { from: "user" | "agent"; text: string; time: string }[];
+  offLabel?: string;
+  uptime?: string;
 }
 
+// Animación en loop por categoría (SPEC 95). Por defecto corren solas; el
+// tooltip/click sólo reaparece con valor.desafioClickable = true, y sólo tiene
+// efecto en los widgets con estado binario real (hint definido → shield-switch).
 const WIDGETS: Record<string, WidgetConfig> = {
-  "data-center-cloud": { type: "toggle", hint: "Proteger", onLabel: "PROTEGIDO" },
-  "conectividad-empresarial": { type: "failover", hint: "Activar respaldo" },
-  "ciberseguridad-gestionada": { type: "shield", hint: "Proteger" },
-  "servicios-gestionados": {
-    type: "chat",
-    hint: "Ver",
-    messages: [
-      { from: "user", text: "¡Hola! Quiero crear un nuevo proyecto.", time: "Hace 1 min" },
-      { from: "agent", text: "¡Genial, ¿en qué te puedo asistir?", time: "Hace 1 min" },
-    ],
+  "data-center-cloud": { type: "cloud-beam" },
+  "conectividad-empresarial": { type: "fiber" },
+  "ciberseguridad-gestionada": {
+    type: "shield-switch",
+    onLabel: "PROTEGIDO",
+    offLabel: "EXPUESTO",
+    hint: "Proteger",
   },
+  "servicios-gestionados": { type: "noc", uptime: "99.98%" },
 };
 
 export default function ValorSolucionReact({
@@ -55,9 +57,14 @@ export default function ValorSolucionReact({
 }: ValorSolucionProps) {
   const { data } = useTina<ServiceQuery>({ query, variables, data: initialData });
 
-  // Widget interactivo del card "El desafío" según la categoría (SPEC 93).
+  // Animación del card "El desafío" según la categoría (SPEC 93 → SPEC 95).
   const slug = (variables?.relativePath || "").replace(/\.json$/, "");
   const widget = WIDGETS[slug];
+  // Loop por defecto; con desafioClickable = true vuelve la interacción (SPEC 95).
+  const clickable = !!data?.service?.valor?.desafioClickable;
+  // Sólo hay tooltip/cursor cuando la interacción está activa y el widget tiene
+  // un estado togglable real (hint definido).
+  const interactive = clickable && !!widget?.hint;
 
   const sectionRef = useRef<HTMLElement>(null);
   const industriesRef = useRef<HTMLElement>(null);
@@ -80,7 +87,7 @@ export default function ValorSolucionReact({
     if (typeof window === "undefined") return;
     finePointer.current = window.matchMedia("(pointer: fine)").matches;
     // Touch (sin puntero fino): mostrar la guía unos segundos y ocultarla.
-    if (widget && !finePointer.current) {
+    if (interactive && !finePointer.current) {
       setGuideOn(true);
       const t = window.setTimeout(() => setGuideOn(false), 3200);
       return () => window.clearTimeout(t);
@@ -89,7 +96,7 @@ export default function ValorSolucionReact({
       if (tipRaf.current != null) cancelAnimationFrame(tipRaf.current);
       if (tipDelay.current != null) clearTimeout(tipDelay.current);
     };
-  }, [widget]);
+  }, [interactive]);
 
   const tipLoop = () => {
     const k = 0.06; // menor = más lag (persigue el cursor más lento)
@@ -249,16 +256,16 @@ export default function ValorSolucionReact({
           {challenge && (
             <article
               className={`valor-card relative lg:row-span-2 flex flex-col overflow-hidden rounded-[28px] border border-white/[0.08] min-h-[300px] lg:min-h-[560px] p-7 md:p-9 bg-[radial-gradient(120%_90%_at_15%_0%,#4a1240_0%,#2c0a26_45%,#180614_100%)]${
-                widget ? " cursor-pointer" : ""
+                interactive ? " cursor-pointer" : ""
               }`}
               style={{ ["--d" as any]: "0.15s" }}
-              onMouseEnter={widget ? onDesafioEnter : undefined}
-              onMouseMove={widget ? onDesafioMove : undefined}
-              onMouseLeave={widget ? onDesafioLeave : undefined}
-              onClick={widget ? onDesafioClick : undefined}
+              onMouseEnter={interactive ? onDesafioEnter : undefined}
+              onMouseMove={interactive ? onDesafioMove : undefined}
+              onMouseLeave={interactive ? onDesafioLeave : undefined}
+              onClick={interactive ? onDesafioClick : undefined}
             >
-              {/* Base "horizonte" magenta — sólo en el widget de toggle (data-center). */}
-              {widget?.type === "toggle" && (
+              {/* Base "horizonte" magenta — línea gráfica compartida por todos los widgets (SPEC 95). */}
+              {widget && (
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[42%] overflow-hidden rounded-b-[28px]"
@@ -301,8 +308,8 @@ export default function ValorSolucionReact({
                   {tField(challenge as any, "text", locale)}
                 </p>
               )}
-              {/* Guía breve del hint en touch (sin puntero fino). */}
-              {widget && (
+              {/* Guía breve del hint en touch (sólo con interacción activa). */}
+              {interactive && (
                 <span
                   aria-hidden="true"
                   className={`pointer-events-none absolute bottom-6 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-[8px] bg-white/95 px-3 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-300 ${
@@ -310,12 +317,12 @@ export default function ValorSolucionReact({
                   }`}
                 >
                   <span className="mr-1">↵</span>
-                  {widget.hint}
+                  {widget?.hint}
                 </span>
               )}
               {widget ? (
                 <div className="relative z-10 mt-8 flex flex-1 items-center justify-center">
-                  <DesafioWidget slug={slug} config={widget} />
+                  <DesafioWidget slug={slug} config={widget} clickable={clickable} />
                 </div>
               ) : challenge.image ? (
                 <img
@@ -460,8 +467,8 @@ export default function ValorSolucionReact({
         </div>
       </div>
 
-      {/* Tooltip-hint flotante que sigue el cursor (puntero fino). */}
-      {widget && (
+      {/* Tooltip-hint flotante que sigue el cursor (sólo con interacción activa). */}
+      {interactive && (
         <div
           ref={tipRef}
           aria-hidden="true"
@@ -474,7 +481,7 @@ export default function ValorSolucionReact({
             }`}
           >
             <span className="mr-1">↵</span>
-            {widget.hint}
+            {widget?.hint}
           </div>
         </div>
       )}
