@@ -43,6 +43,28 @@ export default function DesafioWidget({
         @keyframes dw-trace { to { stroke-dashoffset: -100; } }
         @keyframes dw-trace2 { to { stroke-dashoffset: -100; } }
 
+        /* Nube (data-center): el haz recorre el contorno una vez y, al cerrar el
+           ciclo, se corta y reinicia (parpadeo en la costura). */
+        @keyframes dw-cloud-beam {
+          0%   { stroke-dashoffset: 0;    opacity: 0; }
+          5%   { opacity: 1; }
+          78%  { stroke-dashoffset: -100; opacity: 1; }
+          86%  { stroke-dashoffset: -100; opacity: 0; }
+          100% { stroke-dashoffset: -100; opacity: 0; }
+        }
+
+        /* Nodo blanco compartido: anillos de señal que pulsan hacia afuera. */
+        @keyframes dw-node-ring {
+          0%   { transform: scale(0.9);  opacity: 0.5; }
+          70%  { opacity: 0; }
+          100% { transform: scale(1.75); opacity: 0; }
+        }
+        .dw-root .dw-node-ring {
+          transform-origin: center;
+          animation: dw-node-ring 2.4s ease-out infinite;
+        }
+        .dw-root .dw-node-ring2 { animation-delay: 1.2s; }
+
         /* Endpoints que se encienden en secuencia (data-center). */
         @keyframes dw-endpoint {
           0%, 100% { opacity: 0.28; transform: scale(0.82); }
@@ -121,12 +143,22 @@ function SignalNode({
           className="h-9 w-px border-l border-dashed border-white/30"
         />
       )}
-      <span
-        aria-hidden="true"
-        className="mt-2 flex items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
-        style={{ height: size, width: size }}
-      >
-        {icon}
+      <span className="relative mt-2 flex items-center justify-center" style={{ height: size, width: size }}>
+        {/* Anillos de señal que pulsan (efecto de vida en el nodo). */}
+        <span
+          aria-hidden="true"
+          className="dw-node-ring pointer-events-none absolute inset-0 rounded-2xl border border-[#D64DB8]/60"
+        />
+        <span
+          aria-hidden="true"
+          className="dw-node-ring dw-node-ring2 pointer-events-none absolute inset-0 rounded-2xl border border-[#D64DB8]/50"
+        />
+        <span
+          aria-hidden="true"
+          className="relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
+        >
+          {icon}
+        </span>
       </span>
     </div>
   );
@@ -178,11 +210,10 @@ function CloudBeamWidget() {
           stroke="url(#dw-cloud)"
           strokeWidth="2.6"
           strokeLinecap="round"
-          strokeDasharray="20 80"
-          strokeDashoffset={-40}
+          strokeDasharray="24 76"
           style={{
             filter: "drop-shadow(0 0 5px rgba(214,77,184,0.9))",
-            animation: "dw-trace 3.2s linear infinite",
+            animation: "dw-cloud-beam 3.2s linear infinite",
           }}
         />
 
