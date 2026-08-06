@@ -8,6 +8,15 @@ import {
   FaGears,
   FaCloud,
   FaWifi,
+  FaDatabase,
+  FaLock,
+  FaMicrochip,
+  FaSatelliteDish,
+  FaHeadset,
+  FaGlobe,
+  FaTowerBroadcast,
+  FaCode,
+  FaDesktop,
 } from "react-icons/fa6";
 import type { IconType } from "react-icons";
 
@@ -26,14 +35,18 @@ import type { IconType } from "react-icons";
  */
 
 const PARAMS = {
-  dustCount: 220,
-  dustCountMobile: 90,
+  dustCount: 150,
+  dustCountMobile: 60,
   cardCount: 10,
   cardCountMobile: 6,
-  renderScale: 0.9,
-  renderScaleMobile: 0.6,
-  raySamples: 48,
-  raySamplesMobile: 26,
+  // Rendimiento: la escena es de baja frecuencia (humo/luz), así que se renderiza
+  // a menor resolución y con DPR capado sin pérdida visible; los god-rays usan
+  // pocas muestras y el ruido pocas octavas.
+  renderScale: 0.7,
+  renderScaleMobile: 0.5,
+  dprCap: 1.5,
+  raySamples: 26,
+  raySamplesMobile: 16,
   color: [0x96, 0x23, 0x7a] as [number, number, number],
   colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number],
   introMs: 1800,
@@ -48,12 +61,36 @@ const ICONS: Record<string, IconType> = {
   gestionados: FaGears,
   cloud: FaCloud,
   wifi: FaWifi,
+  database: FaDatabase,
+  lock: FaLock,
+  microchip: FaMicrochip,
+  satellite: FaSatelliteDish,
+  headset: FaHeadset,
+  globe: FaGlobe,
+  broadcast: FaTowerBroadcast,
+  code: FaCode,
+  desktop: FaDesktop,
 };
 const DEFAULT_ICON_KEYS = [
   "datacenter",
   "conectividad",
   "ciberseguridad",
   "gestionados",
+];
+// Íconos extra (subservicios/tech) para dar variedad a los tiles y que no se
+// repitan tanto. Se mezclan con los íconos de solución del CMS.
+const EXTRA_ICON_KEYS = [
+  "cloud",
+  "database",
+  "lock",
+  "microchip",
+  "satellite",
+  "headset",
+  "globe",
+  "broadcast",
+  "code",
+  "desktop",
+  "wifi",
 ];
 
 interface Props {
@@ -91,7 +128,7 @@ const rayFrag = (samples: number) => /* glsl */ `
     vec2 u = f * f * (3.0 - 2.0 * f);
     return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
   }
-  float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.02; a*=0.5; } return v; }
+  float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<3;i++){ v+=a*noise(p); p*=2.02; a*=0.5; } return v; }
 
   void main(){
     vec2 uv = vUv;
@@ -138,12 +175,12 @@ const rayFrag = (samples: number) => /* glsl */ `
         ripple += ring * (1.0 - age / 2.2);
       }
     }
-    intensity += ripple * 0.22 * uIntro;
+    intensity += ripple * 0.1 * uIntro;
 
     vec3 col = mix(uColor, uColorLight, clamp(illum * 1.1, 0.0, 0.82));
     vec3 outc = col * intensity
       + uColorLight * topGlow * 0.15 * uIntro * (1.0 - uScroll * 0.5)
-      + uColorLight * ripple * 0.18 * uIntro;
+      + uColorLight * ripple * 0.09 * uIntro;
     gl_FragColor = vec4(outc, 1.0);
   }
 `;
@@ -176,7 +213,7 @@ const DUST_VERT = /* glsl */ `
         float radius = age * 0.55;
         float ring = exp(-pow((d - radius) / 0.05, 2.0));
         vec2 dir = d > 0.0001 ? diff / d : vec2(0.0);
-        p += dir * ring * (1.0 - age / 2.2) * 0.06;
+        p += dir * ring * (1.0 - age / 2.2) * 0.03;
       }
     }
     vA = (0.30 + 0.70 * abs(sin(uTime * aSpeed * 1.5 + aPhase))) * (1.0 - uScroll * 0.6);
@@ -286,6 +323,7 @@ interface Card {
   baseOpacity: number;
   enterSide: number;
   introDelay: number;
+  parallax: number; // cuánto sube al hacer scroll (mayor = más cerca)
 }
 
 export default function CinematicBackground({
@@ -330,7 +368,8 @@ export default function CinematicBackground({
     mount.appendChild(canvas);
 
     const renderScale = mobile ? PARAMS.renderScaleMobile : PARAMS.renderScale;
-    const pr = Math.min(window.devicePixelRatio || 1, 2) * renderScale;
+    const pr =
+      Math.min(window.devicePixelRatio || 1, PARAMS.dprCap) * renderScale;
     renderer.setPixelRatio(pr);
     renderer.setClearColor(0x000000, 0);
 
@@ -396,13 +435,23 @@ export default function CinematicBackground({
     };
     const cardN = mobile ? PARAMS.cardCountMobile : PARAMS.cardCount;
     const perSide = Math.ceil(cardN / 2);
+    // Pool de íconos = soluciones (CMS) + extras (subservicios/tech), sin repetir,
+    // para que los tiles varíen.
+    const pool: string[] = [];
+    const seenKey = new Set<string>();
+    for (const kk of [...keys, ...EXTRA_ICON_KEYS]) {
+      if (ICONS[kk] && !seenKey.has(kk)) {
+        seenKey.add(kk);
+        pool.push(kk);
+      }
+    }
     const cards: Card[] = [];
     let leftK = 0;
     let rightK = 0;
     for (let i = 0; i < cardN; i++) {
       const side = i % 2 === 0 ? -1 : 1;
       const k = side < 0 ? leftK++ : rightK++;
-      const key = keys[i % keys.length];
+      const key = pool[i % pool.length];
       const mat = new THREE.MeshBasicMaterial({
         map: getTex(key),
         transparent: true,
@@ -440,6 +489,7 @@ export default function CinematicBackground({
         baseOpacity: 0.42 + depth * 0.34,
         enterSide: side,
         introDelay: (i / cardN) * 0.5,
+        parallax: 1.0 + depth * 2.0,
       });
     }
     const placeSides = () => {
@@ -494,6 +544,10 @@ export default function CinematicBackground({
     scene.add(dust);
     const dustUniforms = dustMat.uniforms;
 
+    // Cache de la posición del hero en el documento, para calcular el progreso
+    // de scroll con window.scrollY (barato, sin forzar reflow por frame).
+    let heroTop = 0;
+    let heroHeight = 1;
     function resize() {
       const w = mount!.clientWidth || 1;
       const h = mount!.clientHeight || 1;
@@ -502,6 +556,9 @@ export default function CinematicBackground({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       placeSides();
+      const r = root!.getBoundingClientRect();
+      heroTop = window.scrollY + r.top;
+      heroHeight = r.height || 1;
     }
     resize();
     window.addEventListener("resize", resize);
@@ -558,7 +615,8 @@ export default function CinematicBackground({
         const bx = Math.sin(t * cd.bobSpeed + cd.bobPhase) * cd.bobAmpX;
         const by = Math.cos(t * cd.bobSpeed * 0.8 + cd.bobPhase) * cd.bobAmpY;
         m.position.x = cd.homeX + bx + enterX + ptr.cx * 0.2;
-        m.position.y = cd.homeY + by - ptr.cy * 0.12;
+        // Parallax de scroll: los tiles suben (los cercanos, más rápido).
+        m.position.y = cd.homeY + by - ptr.cy * 0.12 + scrollP * cd.parallax;
 
         m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
         m.rotation.y =
@@ -577,13 +635,11 @@ export default function CinematicBackground({
       introUniform.value = introE;
 
       // Progreso de scroll del hero (0 arriba .. 1 cuando sale por arriba).
-      const rect = root!.getBoundingClientRect();
       const scrollP = Math.max(
         0,
-        Math.min(1, -rect.top / Math.max(1, rect.height))
+        Math.min(1, (window.scrollY - heroTop) / heroHeight)
       );
       scrollUniform.value = scrollP;
-      camera.position.y = scrollP * 1.0;
 
       ptr.cx += (ptr.tx - ptr.cx) * 0.05;
       ptr.cy += (ptr.ty - ptr.cy) * 0.05;
