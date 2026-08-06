@@ -8,6 +8,7 @@ import { mediaUrl } from "../../utils/mediaUrl";
 import Button from "../shared/Button";
 import WaveformEffect from "../effects/WaveformEffect";
 import NodeField from "../effects/NodeField";
+import CinematicBackground from "../effects/CinematicBackground";
 import MorphSolutions, {
   type MorphNode,
   type MorphHandle,
@@ -89,6 +90,13 @@ export default function HeroHomeReact({
   const morphTriggerLabel =
     tField((hero as any).morph || {}, "triggerLabel", locale) ||
     (locale === "en" ? "Explore our solutions" : "Explora nuestras soluciones");
+
+  // Tokens flotantes del modo cinematic (SPEC 97): del CMS o el default del island.
+  const cinematicTokens: string[] = (
+    ((hero as any).cinematic?.floatingTokens as any[]) || []
+  )
+    .map((t) => (t?.text || "").trim())
+    .filter(Boolean);
   // Logo FIBERLUX (BASE_URL-aware) para el lockup del hero y el chip central.
   const logoAsset = `${import.meta.env.BASE_URL}images/logo/fiberlux.svg`.replace(
     /\/{2,}/g,
@@ -109,7 +117,7 @@ export default function HeroHomeReact({
   return (
     <section
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
-        mode === "morph"
+        mode === "morph" || mode === "cinematic"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
@@ -244,6 +252,19 @@ export default function HeroHomeReact({
         </div>
       )}
 
+      {/* Modo cinematic (SPEC 97): god-rays + tokens de conectividad flotantes +
+          polvo de luz (atmósfera tipo FXology en morado). Transparente sobre el
+          negro base. z-0 detrás de las vignettes y del contenido. */}
+      {mode === "cinematic" && (
+        <div className="absolute inset-0 z-0">
+          <CinematicBackground
+            className="h-full w-full"
+            tokens={cinematicTokens}
+            signalReady
+          />
+        </div>
+      )}
+
       {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}
       {/* Vignette izquierda */}
       <div
@@ -353,8 +374,38 @@ export default function HeroHomeReact({
               : undefined
           }
         >
+          {/* Modo cinematic: titular con glow morado + barrido de luz (SPEC 97). */}
+          {mode === "cinematic" && (
+            <style>{`
+              .cine-headline {
+                background: linear-gradient(100deg,
+                  #ffffff 0%, #ffffff 38%,
+                  #ffe3f8 47%, #ffffff 50%, #ffe3f8 53%,
+                  #ffffff 62%, #ffffff 100%);
+                background-size: 250% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+                color: transparent;
+                filter:
+                  drop-shadow(0 0 14px rgba(214,77,184,0.45))
+                  drop-shadow(0 0 34px rgba(150,35,122,0.35));
+                animation: cine-sweep 4.2s linear infinite;
+              }
+              @keyframes cine-sweep {
+                0% { background-position: 120% 0; }
+                100% { background-position: -20% 0; }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                .cine-headline { animation: none; background-position: 50% 0; }
+              }
+            `}</style>
+          )}
+
           <h1
-            className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
+            className={`leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl ${
+              mode === "cinematic" ? "cine-headline text-white" : "text-white"
+            }`}
             data-tina-field={tinaField(hero, "title")}
           >
             {tField(hero as any, "title", locale)}
