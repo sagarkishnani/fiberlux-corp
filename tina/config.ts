@@ -76,6 +76,7 @@ export default defineConfig({
                   { value: "imagen", label: "Imagen de fondo" },
                   { value: "waveform", label: "Waveform (shader animado)" },
                   { value: "nodefield", label: "Node field (partículas plexus)" },
+                  { value: "morph", label: "Morph (globo de partículas → soluciones)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
@@ -144,6 +145,47 @@ export default defineConfig({
                     options: [
                       { value: "primary", label: "Primario (magenta sólido)" },
                       { value: "secondary", label: "Secundario (outline)" },
+                    ],
+                  },
+                ],
+              },
+              // ── Modo Morph (SPEC 96): globo de partículas → soluciones ──
+              {
+                type: "object",
+                name: "morph",
+                label: "Hero — modo Morph (globo → soluciones)",
+                description:
+                  "Solo aplica si el 'Fondo del hero' es 'Morph'. Texto del trigger y los 4 nodos-solución que aparecen al pulsarlo.",
+                fields: [
+                  { type: "string", name: "triggerLabel", label: "Texto del trigger (ES)" },
+                  { type: "string", name: "triggerLabel_en", label: "Texto del trigger (EN)" },
+                  {
+                    type: "object",
+                    name: "solutionNodes",
+                    label: "Nodos-solución (hasta 4)",
+                    list: true,
+                    ui: {
+                      itemProps: (item: any) => ({ label: item?.label || "Nodo" }),
+                    },
+                    fields: [
+                      { type: "string", name: "label", label: "Label (ES)" },
+                      { type: "string", name: "label_en", label: "Label (EN)" },
+                      {
+                        type: "string",
+                        name: "url",
+                        label: "URL destino (página de solución)",
+                      },
+                      {
+                        type: "string",
+                        name: "icon",
+                        label: "Ícono",
+                        options: [
+                          { value: "datacenter", label: "Data Center / Cloud" },
+                          { value: "conectividad", label: "Conectividad" },
+                          { value: "ciberseguridad", label: "Ciberseguridad" },
+                          { value: "gestionados", label: "Servicios Gestionados" },
+                        ],
+                      },
                     ],
                   },
                 ],
