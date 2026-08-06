@@ -51,35 +51,21 @@ export default function CertificacionesSliderReact({
   const startIndex = hasItems ? Math.floor(items.length / 2) : 0;
 
   /* Embla slider: cards centradas (la seleccionada queda al medio, las de los
-     costados asoman desvanecidas), una card por flecha. Sin loop de Embla: el
-     "infinito" lo manejamos nosotros con un rebobinado visible (goTo 0) para que
-     se NOTE el reinicio y no parezca que hay infinitos ISOs. */
+     costados asoman desvanecidas), una card por flecha. Con loop de Embla: clona
+     los slides para que SIEMPRE asome una card a izquierda y derecha (efecto
+     "infinito"), incluso en los extremos — así ninguna orilla queda vacía. */
   const slider = useSlider({
     align: "center",
-    loop: false,
-    autoplay: false, // autoplay manual (abajo) para poder rebobinar al reiniciar
+    loop: true,
+    autoplay: false, // autoplay manual (abajo) para pausar al pasar el cursor
     intervalMs,
     effect,
     startIndex,
-    // Permite que la primera/última card se centren (sin recortar el snap).
-    containScroll: false,
   });
 
-  // Índice/nº de snaps en refs para poder decidir la envolvente desde el
-  // autoplay y el hover sin recrear efectos. (No usamos canPrev/canNext porque
-  // con containScroll:false no marcan de forma fiable los extremos.)
-  const activeRef = useRef(0);
-  const snapCountRef = useRef(items.length);
-  activeRef.current = slider.activeIndex;
-  snapCountRef.current = slider.scrollSnaps.length || items.length;
-
-  /* Navegación con envolvente (infinito): al pasar del último se rebobina al
-     primero — goTo(0) anima todo el recorrido de vuelta, así se ve el reinicio.
-     Igual del primero al último. */
-  const goNext = () =>
-    activeRef.current >= snapCountRef.current - 1 ? slider.goTo(0) : slider.next();
-  const goPrev = () =>
-    activeRef.current <= 0 ? slider.goTo(snapCountRef.current - 1) : slider.prev();
+  /* Navegación: con loop, next()/prev() envuelven solos (sin costura). */
+  const goNext = () => slider.next();
+  const goPrev = () => slider.prev();
   const goNextRef = useRef(goNext);
   const goPrevRef = useRef(goPrev);
   goNextRef.current = goNext;
