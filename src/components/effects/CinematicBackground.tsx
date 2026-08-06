@@ -1,54 +1,67 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import * as THREE from "three";
+import {
+  FaServer,
+  FaNetworkWired,
+  FaShieldHalved,
+  FaGears,
+  FaCloud,
+  FaWifi,
+} from "react-icons/fa6";
+import type { IconType } from "react-icons";
 
 /**
  * CinematicBackground — atmósfera "cinematic" del hero (SPEC 97), en WebGL.
  *
- * Interpretación de marca (morado) del look FXology: luz volumétrica a través
- * de humo, con elementos 3D ligeros volando por los costados, sobre el negro
- * base que pone el consumidor. Todo entra con un fade-in coreografiado (uIntro).
+ * Interpretación de marca (morado) del look FXology (analizado del video ref):
+ * luz volumétrica a través de humo + elementos 3D ligeros MUY tenues (íconos de
+ * las soluciones, tipo contorno) que entran volando desde los costados y
+ * tumblean en la periferia. Todo aparece con un fade-in coreografiado (uIntro).
  *
- *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica (marcha hacia una
- *      fuente de luz superior sobre densidad de humo fbm) → haces difusos.
- *   2. CHIPS 3D        → tarjetas/tokens de conectividad (Gbps, 99.9%, ms…) en
- *      marcos redondeados que tumblean en 3D y derivan por los costados
- *      (planos con textura de canvas, cámara en perspectiva).
+ *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica.
+ *   2. ICON TILES 3D   → íconos de las 4 soluciones (Data Center, Conectividad,
+ *      Ciberseguridad, Gestionados) en tiles tenues que tumblean y entran desde
+ *      izquierda/derecha (planos con textura de canvas, cámara en perspectiva).
  *   3. DUST/EMBERS     → partículas GPU additivas flotando cerca del centro.
- *
- * Respeta prefers-reduced-motion (frame estático, sin animación), pausa el rAF
- * fuera de viewport y libera todos los recursos WebGL al desmontar.
  */
 
 const PARAMS = {
   dustCount: 220,
   dustCountMobile: 90,
-  cardCount: 12, // chips 3D voladores (desktop)
-  cardCountMobile: 6,
+  cardCount: 10,
+  cardCountMobile: 5,
   renderScale: 0.9,
   renderScaleMobile: 0.6,
   raySamples: 48,
   raySamplesMobile: 26,
-  color: [0x96, 0x23, 0x7a] as [number, number, number], // brand-purple #96237A
-  colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number], // acento claro
-  introMs: 1600, // fade-in coreografiado de la escena
+  color: [0x96, 0x23, 0x7a] as [number, number, number],
+  colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number],
+  introMs: 1800,
   fov: 50,
   cameraZ: 6,
 } as const;
 
-const DEFAULT_TOKENS = [
-  "1 Gbps",
-  "99.9%",
-  "12 ms",
-  "IPv6",
-  "24/7",
-  "SLA",
-  "FTTH",
-  "10G",
+// Íconos de las 4 soluciones (mapa cerrado, mismo criterio que RubrosReact).
+const ICONS: Record<string, IconType> = {
+  datacenter: FaServer,
+  conectividad: FaNetworkWired,
+  ciberseguridad: FaShieldHalved,
+  gestionados: FaGears,
+  cloud: FaCloud,
+  wifi: FaWifi,
+};
+const DEFAULT_ICON_KEYS = [
+  "datacenter",
+  "conectividad",
+  "ciberseguridad",
+  "gestionados",
 ];
 
 interface Props {
   className?: string;
-  tokens?: string[];
+  /* Claves de ícono de las soluciones (del CMS o default). */
+  iconKeys?: string[];
   signalReady?: boolean;
   onUnsupported?: () => void;
 }
@@ -109,10 +122,10 @@ const rayFrag = (samples: number) => /* glsl */ `
     float vig = smoothstep(1.2, 0.15, length((uv - vec2(0.5, 0.6)) * vec2(1.05, 1.2)));
     intensity *= mix(0.18, 1.0, vig);
     intensity *= smoothstep(-0.05, 0.55, uv.y);
-    intensity *= 0.82 * uIntro;
+    intensity *= 0.78 * uIntro;
 
     vec3 col = mix(uColor, uColorLight, clamp(illum * 1.1, 0.0, 0.82));
-    vec3 outc = col * intensity + uColorLight * topGlow * 0.16 * uIntro;
+    vec3 outc = col * intensity + uColorLight * topGlow * 0.15 * uIntro;
     gl_FragColor = vec4(outc, 1.0);
   }
 `;
@@ -150,22 +163,24 @@ const DUST_FRAG = /* glsl */ `
   }
 `;
 
-// Textura de un chip: marco redondeado + texto (mono, glow). Cacheada por texto.
-function makeChipTexture(text: string, light: readonly number[]): THREE.CanvasTexture {
-  const W = 512, H = 256;
+// Textura de un tile: marco tenue + ícono de solución. Cacheada por clave.
+// Estilo del ref: contorno finísimo, muy tenue (no chip brillante).
+function makeIconTexture(
+  key: string,
+  light: readonly number[]
+): THREE.CanvasTexture {
+  const S = 256;
   const c = document.createElement("canvas");
-  c.width = W;
-  c.height = H;
+  c.width = S;
+  c.height = S;
   const g = c.getContext("2d")!;
   const [lr, lg, lb] = light;
-  const pad = 26;
-  const r = 46;
-  // Marco.
-  g.lineWidth = 7;
-  g.strokeStyle = `rgba(${lr},${lg},${lb},0.55)`;
-  g.shadowColor = `rgba(${lr},${lg},${lb},0.85)`;
-  g.shadowBlur = 22;
-  const x = pad, y = pad, w = W - pad * 2, h = H - pad * 2;
+  // Marco redondeado fino.
+  const pad = 28;
+  const r = 40;
+  const x = pad, y = pad, w = S - pad * 2, h = S - pad * 2;
+  g.lineWidth = 3;
+  g.strokeStyle = `rgba(${lr},${lg},${lb},0.6)`;
   g.beginPath();
   g.moveTo(x + r, y);
   g.arcTo(x + w, y, x + w, y + h, r);
@@ -174,47 +189,56 @@ function makeChipTexture(text: string, light: readonly number[]): THREE.CanvasTe
   g.arcTo(x, y, x + w, y, r);
   g.closePath();
   g.stroke();
-  // Texto (auto-fit).
-  g.shadowBlur = 16;
-  g.fillStyle = "rgba(255,236,251,0.92)";
-  g.textAlign = "center";
-  g.textBaseline = "middle";
-  let fs = 92;
-  do {
-    g.font = `bold ${fs}px 'Space Mono', monospace`;
-    if (g.measureText(text).width <= w - 48) break;
-    fs -= 6;
-  } while (fs > 30);
-  g.fillText(text, W / 2, H / 2 + 4);
+
   const tex = new THREE.CanvasTexture(c);
-  tex.needsUpdate = true;
+  const Icon = ICONS[key] || FaServer;
+  try {
+    const svg = renderToStaticMarkup(
+      createElement(Icon, { color: `rgb(${lr},${lg},${lb})`, size: 128 })
+    );
+    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    const img = new Image();
+    img.onload = () => {
+      const sz = 112;
+      g.globalAlpha = 0.92;
+      g.drawImage(img, (S - sz) / 2, (S - sz) / 2, sz, sz);
+      g.globalAlpha = 1;
+      tex.needsUpdate = true;
+    };
+    img.src = url;
+  } catch {
+    /* si falla el render del ícono, queda solo el marco */
+  }
   return tex;
 }
 
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
+  baseX: number; // posición de deriva (persistente)
+  baseY: number;
   vx: number;
   rvx: number;
   rvy: number;
   rvz: number;
   baseOpacity: number;
-  z: number;
+  enterSide: number; // -1 izquierda, 1 derecha
+  introDelay: number; // 0..~0.5 (stagger de entrada)
 }
 
 export default function CinematicBackground({
   className,
-  tokens,
+  iconKeys,
   signalReady,
   onUnsupported,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const glMountRef = useRef<HTMLDivElement>(null);
 
-  const tokenTexts = useMemo(() => {
-    const t = (tokens || []).map((s) => (s || "").trim()).filter(Boolean);
-    return t.length ? t : DEFAULT_TOKENS;
-  }, [tokens]);
+  const keys = useMemo(() => {
+    const k = (iconKeys || []).filter((s) => s && ICONS[s]);
+    return k.length ? k : DEFAULT_ICON_KEYS;
+  }, [iconKeys]);
 
   useEffect(() => {
     const mount = glMountRef.current;
@@ -257,7 +281,7 @@ export default function CinematicBackground({
 
     const introUniform = { value: reduce ? 1 : 0 };
 
-    // ── God-rays + haze (quad, ignora la cámara: siempre a pantalla completa) ──
+    // ── God-rays + haze ──
     const samples = mobile ? PARAMS.raySamplesMobile : PARAMS.raySamples;
     const rayUniforms = {
       uTime: { value: 0 },
@@ -281,42 +305,40 @@ export default function CinematicBackground({
     quad.renderOrder = -2;
     scene.add(quad);
 
-    // ── Chips 3D voladores ──
+    // ── Tiles de íconos de solución (tenues, tumbleando) ──
     const halfH = () => Math.tan((PARAMS.fov * Math.PI) / 360) * PARAMS.cameraZ;
     const halfW = () => halfH() * camera.aspect;
     const cardGeo = new THREE.PlaneGeometry(1, 1);
     const texCache = new Map<string, THREE.CanvasTexture>();
-    const getTex = (t: string) => {
-      let x = texCache.get(t);
+    const getTex = (k: string) => {
+      let x = texCache.get(k);
       if (!x) {
-        x = makeChipTexture(t, PARAMS.colorLight);
-        texCache.set(t, x);
+        x = makeIconTexture(k, PARAMS.colorLight);
+        texCache.set(k, x);
       }
       return x;
     };
     const cardN = mobile ? PARAMS.cardCountMobile : PARAMS.cardCount;
     const cards: Card[] = [];
     for (let i = 0; i < cardN; i++) {
-      const text = tokenTexts[i % tokenTexts.length];
+      const key = keys[i % keys.length];
       const mat = new THREE.MeshBasicMaterial({
-        map: getTex(text),
+        map: getTex(key),
         transparent: true,
         depthWrite: false,
         depthTest: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending, // tenue (no additive)
         opacity: 0,
       });
       const mesh = new THREE.Mesh(cardGeo, mat);
-      // z bien negativo → chips chicos por perspectiva (periféricos, no tapan).
-      const z = rand(-6.5, -1.8);
-      const depth = (z + 6.5) / 4.7; // 0 lejos .. 1 cerca
+      const z = rand(-6.5, -2.0);
+      const depth = (z + 6.5) / 4.5; // 0 lejos .. 1 cerca
       const scale = 0.4 + depth * 0.5;
-      mesh.scale.set(scale * 2, scale, 1); // chip 2:1
-      // Reparto a los costados; algunos empiezan fuera de cuadro.
+      mesh.scale.set(scale, scale, 1);
       const side = i % 2 === 0 ? -1 : 1;
       mesh.position.set(
-        side * rand(0.45, 1.35) * halfW(),
-        rand(-0.85, 0.85) * halfH(),
+        side * rand(0.5, 1.35) * halfW(),
+        rand(-0.82, 0.82) * halfH(),
         z
       );
       mesh.rotation.set(rand(-0.5, 0.5), rand(-0.7, 0.7), rand(-0.4, 0.4));
@@ -325,16 +347,19 @@ export default function CinematicBackground({
       cards.push({
         mesh,
         mat,
-        vx: -side * rand(0.14, 0.44) * (0.6 + depth), // deriva por el costado
-        rvx: rand(-0.25, 0.25),
-        rvy: rand(-0.35, 0.35),
-        rvz: rand(-0.2, 0.2),
-        baseOpacity: 0.1 + depth * 0.22,
-        z,
+        baseX: mesh.position.x,
+        baseY: mesh.position.y,
+        vx: -side * rand(0.1, 0.34) * (0.6 + depth),
+        rvx: rand(-0.22, 0.22),
+        rvy: rand(-0.3, 0.3),
+        rvz: rand(-0.18, 0.18),
+        baseOpacity: 0.22 + depth * 0.32,
+        enterSide: side,
+        introDelay: (i / cardN) * 0.5,
       });
     }
 
-    // ── Polvo (GPU points, clip-space) ──
+    // ── Polvo ──
     const dustCount = mobile ? PARAMS.dustCountMobile : PARAMS.dustCount;
     const dPos = new Float32Array(dustCount * 3);
     const dPhase = new Float32Array(dustCount);
@@ -406,24 +431,34 @@ export default function CinematicBackground({
       }
     }
 
-    function updateCards(dt: number, intro: number) {
+    function updateCards(dt: number, introE: number) {
       const hw = halfW();
       for (let i = 0; i < cards.length; i++) {
         const cd = cards[i];
         const m = cd.mesh;
-        m.position.x += cd.vx * dt;
-        // Wrap por los costados.
-        if (cd.vx < 0 && m.position.x < -hw * 1.4) m.position.x = hw * 1.4;
-        else if (cd.vx > 0 && m.position.x > hw * 1.4) m.position.x = -hw * 1.4;
+        // Entrada escalonada volando desde su costado.
+        const local = Math.max(
+          0,
+          Math.min(1, (introE - cd.introDelay) / (1 - 0.5))
+        );
+        const localE = 1 - Math.pow(1 - local, 3);
+        const enterX = (1 - localE) * cd.enterSide * hw * 1.8;
+
+        // Deriva base persistente (wrap por los costados).
+        cd.baseX += cd.vx * dt;
+        if (cd.vx < 0 && cd.baseX < -hw * 1.5) cd.baseX = hw * 1.5;
+        else if (cd.vx > 0 && cd.baseX > hw * 1.5) cd.baseX = -hw * 1.5;
         m.rotation.x += cd.rvx * dt;
         m.rotation.y += cd.rvy * dt;
         m.rotation.z += cd.rvz * dt;
-        m.position.x += ptr.cx * 0.15;
-        m.position.y += -ptr.cy * 0.1;
-        // Se atenúa fuerte al pasar por el centro (detrás del titular).
+
+        // Render = base + offsets transitorios (entrada + parallax), sin acumular.
+        m.position.x = cd.baseX + enterX + ptr.cx * 0.15;
+        m.position.y = cd.baseY - ptr.cy * 0.1;
+
         const centerFade =
-          0.12 + 0.88 * Math.min(1, Math.abs(m.position.x) / (hw * 0.5));
-        cd.mat.opacity = cd.baseOpacity * centerFade * intro;
+          0.22 + 0.78 * Math.min(1, Math.abs(m.position.x) / (hw * 0.42));
+        cd.mat.opacity = cd.baseOpacity * centerFade * localE;
       }
     }
 
@@ -432,10 +467,7 @@ export default function CinematicBackground({
       const dt = prevMs < 0 ? 0.016 : Math.min(0.05, (ms - prevMs) / 1000);
       prevMs = ms;
       const t = ms * 0.001;
-      const intro = reduce
-        ? 1
-        : Math.min(1, (ms - startMs) / PARAMS.introMs);
-      // easeOutCubic para un fade-in cinematográfico.
+      const intro = reduce ? 1 : Math.min(1, (ms - startMs) / PARAMS.introMs);
       const introE = 1 - Math.pow(1 - intro, 3);
       introUniform.value = introE;
 
@@ -489,7 +521,7 @@ export default function CinematicBackground({
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signalReady, tokenTexts]);
+  }, [signalReady, keys]);
 
   return (
     <div
