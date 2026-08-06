@@ -9,6 +9,7 @@ import VideoModal from "./VideoModal";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import type { Locale } from "../../i18n/config";
 import SliderArrows from "../shared/SliderArrows";
+import SliderSideArrows from "../shared/SliderSideArrows";
 
 interface CasosSliderProps {
   query: string;
@@ -125,10 +126,20 @@ export default function CasosSliderReact({
             )}
           </div>
           </div>
+
+          {/* Desktop (lg+): flechas laterales superpuestas (SPEC 94) */}
+          {items.length > 1 && (
+            <SliderSideArrows
+              canPrev={slider.canPrev}
+              canNext={slider.canNext}
+              onPrev={slider.prev}
+              onNext={slider.next}
+            />
+          )}
         </div>
 
-        {/* Arrows: below the video, aligned to the card's left edge (desktop) */}
-        {items.length > 1 && <div className="hidden md:block mt-8">{arrowsPill}</div>}
+        {/* Arrows: below the video (tablet md–lg); en lg+ se usan las laterales */}
+        {items.length > 1 && <div className="hidden md:block lg:hidden mt-8">{arrowsPill}</div>}
       </div>
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />
