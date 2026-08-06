@@ -14,22 +14,21 @@ import type { IconType } from "react-icons";
 /**
  * CinematicBackground — atmósfera "cinematic" del hero (SPEC 97), en WebGL.
  *
- * Interpretación de marca (morado) del look FXology:
- *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica.
+ *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica (+ onda de luz al click
+ *      y desvanecido por scroll).
  *   2. GLASS TILES 3D  → tiles "glass" con los íconos de las soluciones,
- *      ubicados en los COSTADOS (no al centro), que entran volando desde los
- *      lados y se mecen con una leve inclinación (NO giran del todo → el ícono
- *      siempre se ve bien). Decorativos (sin click).
- *   3. DUST/EMBERS     → partículas GPU additivas cerca del centro.
+ *      distribuidos en columnas a los COSTADOS (sin solaparse), mecidos con
+ *      leve inclinación (no giran → el ícono siempre se ve). Decorativos.
+ *   3. DUST/EMBERS     → partículas GPU additivas.
  *
- * Respeta prefers-reduced-motion, pausa el rAF fuera de viewport y libera todo
- * al desmontar. Parallax por puntero (desktop).
+ * Al hacer scroll toda la escena se funde/deriva (transición al bajar). Respeta
+ * reduced-motion, pausa el rAF fuera de viewport y libera todo al desmontar.
  */
 
 const PARAMS = {
   dustCount: 220,
   dustCountMobile: 90,
-  cardCount: 12,
+  cardCount: 10,
   cardCountMobile: 6,
   renderScale: 0.9,
   renderScaleMobile: 0.6,
@@ -59,7 +58,6 @@ const DEFAULT_ICON_KEYS = [
 
 interface Props {
   className?: string;
-  /* Íconos de las soluciones (del CMS o default). Solo decorativo. */
   iconKeys?: string[];
   signalReady?: boolean;
   onUnsupported?: () => void;
@@ -77,10 +75,13 @@ const rayFrag = (samples: number) => /* glsl */ `
   varying vec2 vUv;
   uniform float uTime;
   uniform float uIntro;
+  uniform float uScroll;
   uniform vec2 uRes;
   uniform vec2 uMouse;
   uniform vec3 uColor;
   uniform vec3 uColorLight;
+  uniform vec2 uRipplePos[3];
+  uniform float uRippleStart[3];
   #define N ${samples}
 
   float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
@@ -96,7 +97,8 @@ const rayFrag = (samples: number) => /* glsl */ `
     vec2 uv = vUv;
     float aspect = uRes.x / uRes.y;
     vec2 auv = vec2(uv.x * aspect, uv.y);
-    vec2 lp = vec2(0.5 * aspect + uMouse.x * 0.05, 1.16 + uMouse.y * 0.03);
+    // La fuente de luz baja al hacer scroll (parallax).
+    vec2 lp = vec2(0.5 * aspect + uMouse.x * 0.05, 1.16 + uMouse.y * 0.03 - uScroll * 0.22);
 
     vec2 dir = auv - lp;
     vec2 delta = dir / float(N) * 0.9;
@@ -122,9 +124,26 @@ const rayFrag = (samples: number) => /* glsl */ `
     intensity *= mix(0.18, 1.0, vig);
     intensity *= smoothstep(-0.05, 0.55, uv.y);
     intensity *= 0.78 * uIntro;
+    // Se funde a negro al bajar.
+    intensity *= (1.0 - uScroll * 0.5);
+
+    // Onda de luz al click (suave): anillos que se expanden y se apagan.
+    float ripple = 0.0;
+    for (int i = 0; i < 3; i++){
+      float age = uTime - uRippleStart[i];
+      if (age > 0.0 && age < 2.2){
+        float d = distance(uv, uRipplePos[i]);
+        float radius = age * 0.55;
+        float ring = exp(-pow((d - radius) / 0.045, 2.0));
+        ripple += ring * (1.0 - age / 2.2);
+      }
+    }
+    intensity += ripple * 0.22 * uIntro;
 
     vec3 col = mix(uColor, uColorLight, clamp(illum * 1.1, 0.0, 0.82));
-    vec3 outc = col * intensity + uColorLight * topGlow * 0.15 * uIntro;
+    vec3 outc = col * intensity
+      + uColorLight * topGlow * 0.15 * uIntro * (1.0 - uScroll * 0.5)
+      + uColorLight * ripple * 0.18 * uIntro;
     gl_FragColor = vec4(outc, 1.0);
   }
 `;
@@ -134,8 +153,11 @@ const DUST_VERT = /* glsl */ `
   attribute float aSize;
   attribute float aSpeed;
   uniform float uTime;
+  uniform float uScroll;
   uniform vec2 uMouse;
   uniform float uPixelRatio;
+  uniform vec2 uRipplePos[3];
+  uniform float uRippleStart[3];
   varying float vA;
   void main(){
     vec2 p = position.xy;
@@ -143,7 +165,21 @@ const DUST_VERT = /* glsl */ `
     p.y += cos(uTime * aSpeed * 0.7 + aPhase * 1.3) * 0.05;
     p.y += 0.10 * sin(uTime * 0.05 * aSpeed + aPhase);
     p += uMouse * (0.02 + aSize * 0.0015);
-    vA = 0.30 + 0.70 * abs(sin(uTime * aSpeed * 1.5 + aPhase));
+    p.y += uScroll * 0.5; // deriva hacia arriba al bajar
+    // Empuje suave por la onda de luz al click.
+    for (int i = 0; i < 3; i++){
+      float age = uTime - uRippleStart[i];
+      if (age > 0.0 && age < 2.2){
+        vec2 puv = vec2(p.x * 0.5 + 0.5, p.y * 0.5 + 0.5);
+        vec2 diff = puv - uRipplePos[i];
+        float d = length(diff);
+        float radius = age * 0.55;
+        float ring = exp(-pow((d - radius) / 0.05, 2.0));
+        vec2 dir = d > 0.0001 ? diff / d : vec2(0.0);
+        p += dir * ring * (1.0 - age / 2.2) * 0.06;
+      }
+    }
+    vA = (0.30 + 0.70 * abs(sin(uTime * aSpeed * 1.5 + aPhase))) * (1.0 - uScroll * 0.6);
     gl_Position = vec4(p, 0.0, 1.0);
     gl_PointSize = aSize * uPixelRatio;
   }
@@ -162,8 +198,7 @@ const DUST_FRAG = /* glsl */ `
   }
 `;
 
-// Textura "glass" del tile: rect redondeado con relleno translúcido + brillo
-// superior + borde + ícono de solución. Cacheada por clave.
+// Textura "glass" del tile: rect redondeado translúcido + brillo + ícono.
 function makeGlassTexture(
   key: string,
   color: readonly number[],
@@ -188,8 +223,6 @@ function makeGlassTexture(
     g.arcTo(x, y, x + w, y, r);
     g.closePath();
   };
-
-  // Relleno glass (gradiente vertical translúcido).
   g.save();
   roundPath();
   g.clip();
@@ -199,15 +232,12 @@ function makeGlassTexture(
   fill.addColorStop(1, `rgba(${cr},${cg},${cb},0.03)`);
   g.fillStyle = fill;
   g.fillRect(x, y, w, h);
-  // Brillo superior (highlight de vidrio).
   const shine = g.createLinearGradient(0, y, 0, y + h * 0.5);
   shine.addColorStop(0, "rgba(255,255,255,0.16)");
   shine.addColorStop(1, "rgba(255,255,255,0)");
   g.fillStyle = shine;
   g.fillRect(x, y, w, h * 0.5);
   g.restore();
-
-  // Borde.
   g.lineWidth = 2.5;
   g.strokeStyle = `rgba(${lr},${lg},${lb},0.6)`;
   roundPath();
@@ -241,9 +271,10 @@ function makeGlassTexture(
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
-  homeX: number; // posición de reposo (en un costado)
+  xNorm: number; // posición normalizada en el costado (|x| en unidades halfW)
+  yNorm: number; // posición vertical normalizada (halfH)
+  homeX: number;
   homeY: number;
-  z: number;
   bobPhase: number;
   bobSpeed: number;
   bobAmpX: number;
@@ -253,7 +284,7 @@ interface Card {
   tiltAmpX: number;
   tiltAmpY: number;
   baseOpacity: number;
-  enterSide: number; // -1 izq, 1 der
+  enterSide: number;
   introDelay: number;
 }
 
@@ -311,16 +342,30 @@ export default function CinematicBackground({
       new THREE.Color(c[0] / 255, c[1] / 255, c[2] / 255);
 
     const introUniform = { value: reduce ? 1 : 0 };
+    const scrollUniform = { value: 0 };
+    const rippleUniforms = {
+      uRipplePos: {
+        value: [
+          new THREE.Vector2(-9, -9),
+          new THREE.Vector2(-9, -9),
+          new THREE.Vector2(-9, -9),
+        ],
+      },
+      uRippleStart: { value: [-100, -100, -100] as number[] },
+    };
 
     // ── God-rays + haze ──
     const samples = mobile ? PARAMS.raySamplesMobile : PARAMS.raySamples;
     const rayUniforms = {
       uTime: { value: 0 },
       uIntro: introUniform,
+      uScroll: scrollUniform,
       uRes: { value: new THREE.Vector2(1, 1) },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uColor: { value: toVec3(PARAMS.color) },
       uColorLight: { value: toVec3(PARAMS.colorLight) },
+      uRipplePos: rippleUniforms.uRipplePos,
+      uRippleStart: rippleUniforms.uRippleStart,
     };
     const rayMat = new THREE.ShaderMaterial({
       vertexShader: QUAD_VERT,
@@ -336,7 +381,7 @@ export default function CinematicBackground({
     quad.renderOrder = -2;
     scene.add(quad);
 
-    // ── Glass tiles en los costados ──
+    // ── Glass tiles en columnas a los costados (distribución uniforme) ──
     const halfH = () => Math.tan((PARAMS.fov * Math.PI) / 360) * PARAMS.cameraZ;
     const halfW = () => halfH() * camera.aspect;
     const cardGeo = new THREE.PlaneGeometry(1, 1);
@@ -350,8 +395,13 @@ export default function CinematicBackground({
       return x;
     };
     const cardN = mobile ? PARAMS.cardCountMobile : PARAMS.cardCount;
+    const perSide = Math.ceil(cardN / 2);
     const cards: Card[] = [];
+    let leftK = 0;
+    let rightK = 0;
     for (let i = 0; i < cardN; i++) {
+      const side = i % 2 === 0 ? -1 : 1;
+      const k = side < 0 ? leftK++ : rightK++;
       const key = keys[i % keys.length];
       const mat = new THREE.MeshBasicMaterial({
         map: getTex(key),
@@ -362,42 +412,42 @@ export default function CinematicBackground({
         opacity: 0,
       });
       const mesh = new THREE.Mesh(cardGeo, mat);
-      const z = rand(-6.5, -1.8);
-      const depth = (z + 6.5) / 4.7;
-      const scale = 0.5 + depth * 0.55;
+      const z = rand(-6.2, -2.2);
+      const depth = (z + 6.2) / 4.0;
+      const scale = 0.5 + depth * 0.42;
       mesh.scale.set(scale, scale, 1);
-      const side = i % 2 === 0 ? -1 : 1;
-      // Reposo en un costado (|x| grande), fuera de la zona del texto.
-      const homeX = side * rand(0.6, 1.06) * halfH() * (16 / 9); // aprox; se recalcula abajo
-      const homeY = rand(-0.82, 0.86) * halfH();
-      mesh.position.set(homeX, homeY, z);
       mesh.renderOrder = -1;
       scene.add(mesh);
+      // Vertical uniforme por costado (evita solapamiento) + X alternada.
+      const frac = (k + 0.5) / perSide;
+      const yNorm = 0.8 - frac * 1.6 + rand(-0.045, 0.045);
+      const xNorm = 0.66 + (k % 2) * 0.18 + rand(-0.04, 0.04);
       cards.push({
         mesh,
         mat,
-        homeX,
-        homeY,
-        z,
+        xNorm,
+        yNorm,
+        homeX: 0,
+        homeY: 0,
         bobPhase: rand(0, Math.PI * 2),
         bobSpeed: rand(0.15, 0.4),
-        bobAmpX: (0.03 + depth * 0.05) * halfH(),
-        bobAmpY: (0.04 + depth * 0.06) * halfH(),
+        bobAmpX: (0.015 + depth * 0.02) * halfH(),
+        bobAmpY: (0.02 + depth * 0.03) * halfH(),
         tiltPhase: rand(0, Math.PI * 2),
         tiltSpeed: rand(0.25, 0.5),
-        tiltAmpX: rand(0.08, 0.18),
-        tiltAmpY: rand(0.1, 0.2),
-        baseOpacity: 0.42 + depth * 0.36,
+        tiltAmpX: rand(0.08, 0.16),
+        tiltAmpY: rand(0.1, 0.18),
+        baseOpacity: 0.42 + depth * 0.34,
         enterSide: side,
         introDelay: (i / cardN) * 0.5,
       });
     }
-    // Reajusta homeX a los costados según el ancho real del frustum.
     const placeSides = () => {
       const hw = halfW();
-      for (let i = 0; i < cards.length; i++) {
-        const cd = cards[i];
-        cd.homeX = cd.enterSide * rand(0.62, 1.05) * hw;
+      const hh = halfH();
+      for (const cd of cards) {
+        cd.homeX = cd.enterSide * cd.xNorm * hw;
+        cd.homeY = cd.yNorm * hh;
       }
     };
     placeSides();
@@ -427,9 +477,12 @@ export default function CinematicBackground({
       uniforms: {
         uTime: { value: 0 },
         uIntro: introUniform,
+        uScroll: scrollUniform,
         uMouse: rayUniforms.uMouse,
         uPixelRatio: { value: pr },
         uColor: { value: toVec3(PARAMS.colorLight) },
+        uRipplePos: rippleUniforms.uRipplePos,
+        uRippleStart: rippleUniforms.uRippleStart,
       },
       transparent: true,
       depthWrite: false,
@@ -474,8 +527,24 @@ export default function CinematicBackground({
       }
     }
 
-    function updateCards(t: number, introE: number) {
+    // Onda de luz al click (shockwave).
+    let rippleIdx = 0;
+    const onDown = (e: PointerEvent) => {
+      if (reduce) return;
+      const rect = root!.getBoundingClientRect();
+      const u = (e.clientX - rect.left) / Math.max(1, rect.width);
+      const v = (e.clientY - rect.top) / Math.max(1, rect.height);
+      rippleUniforms.uRipplePos.value[rippleIdx].set(u, 1 - v);
+      rippleUniforms.uRippleStart.value[rippleIdx] = rayUniforms.uTime.value;
+      rippleIdx = (rippleIdx + 1) % 3;
+      if (!raf && visible) raf = requestAnimationFrame(frame);
+    };
+    root.addEventListener("pointerdown", onDown, { passive: true });
+    root.style.pointerEvents = "auto";
+
+    function updateCards(t: number, introE: number, scrollP: number) {
       const hw = halfW();
+      const fade = 1 - scrollP * 0.6;
       for (let i = 0; i < cards.length; i++) {
         const cd = cards[i];
         const m = cd.mesh;
@@ -486,19 +555,17 @@ export default function CinematicBackground({
         const localE = 1 - Math.pow(1 - local, 3);
         const enterX = (1 - localE) * cd.enterSide * hw * 1.2;
 
-        // Mecido suave alrededor del reposo (sin cruzar al centro).
         const bx = Math.sin(t * cd.bobSpeed + cd.bobPhase) * cd.bobAmpX;
         const by = Math.cos(t * cd.bobSpeed * 0.8 + cd.bobPhase) * cd.bobAmpY;
         m.position.x = cd.homeX + bx + enterX + ptr.cx * 0.2;
         m.position.y = cd.homeY + by - ptr.cy * 0.12;
 
-        // Inclinación leve (no gira del todo → el ícono siempre se ve).
         m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
         m.rotation.y =
           Math.sin(t * cd.tiltSpeed * 0.9 + cd.tiltPhase * 1.3) * cd.tiltAmpY;
         m.rotation.z = Math.sin(t * cd.tiltSpeed * 0.5) * 0.05;
 
-        cd.mat.opacity = cd.baseOpacity * localE;
+        cd.mat.opacity = cd.baseOpacity * localE * fade;
       }
     }
 
@@ -509,12 +576,21 @@ export default function CinematicBackground({
       const introE = 1 - Math.pow(1 - intro, 3);
       introUniform.value = introE;
 
+      // Progreso de scroll del hero (0 arriba .. 1 cuando sale por arriba).
+      const rect = root!.getBoundingClientRect();
+      const scrollP = Math.max(
+        0,
+        Math.min(1, -rect.top / Math.max(1, rect.height))
+      );
+      scrollUniform.value = scrollP;
+      camera.position.y = scrollP * 1.0;
+
       ptr.cx += (ptr.tx - ptr.cx) * 0.05;
       ptr.cy += (ptr.ty - ptr.cy) * 0.05;
       rayUniforms.uTime.value = t;
       rayUniforms.uMouse.value.set(ptr.cx, -ptr.cy);
       dustUniforms.uTime.value = t;
-      updateCards(t, introE);
+      updateCards(t, introE, scrollP);
 
       renderer.render(scene, camera);
       signalOnce();
@@ -533,7 +609,7 @@ export default function CinematicBackground({
 
     if (reduce) {
       introUniform.value = 1;
-      updateCards(0, 1);
+      updateCards(0, 1, 0);
       renderer.render(scene, camera);
       signalOnce();
     } else {
@@ -544,6 +620,8 @@ export default function CinematicBackground({
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
+      root.removeEventListener("pointerdown", onDown);
+      root.style.pointerEvents = "";
       io.disconnect();
       quad.geometry.dispose();
       rayMat.dispose();

@@ -55,6 +55,8 @@ export default function HeroHomeReact({
   const [morphActive, setMorphActive] = useState(false);
   // Titular (modo cinematic): se revela línea por línea con un barrido de luz.
   const titleRef = useRef<HTMLHeadingElement>(null);
+  // Contenido del hero (modo cinematic): parallax/fade al hacer scroll.
+  const contentRef = useRef<HTMLDivElement>(null);
 
   // Modo cinematic: coreografía de entrada — el contenido (y el header) aparecen
   // escalonados tras montar. `intro` false = oculto; true = revelado.
@@ -121,6 +123,35 @@ export default function HeroHomeReact({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, locale]);
+
+  // Parallax de scroll del contenido del hero (modo cinematic): al bajar, el
+  // texto/botones derivan y se desvanecen (transición de salida del hero).
+  useEffect(() => {
+    if (mode !== "cinematic" || typeof window === "undefined") return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (reduce) return;
+    const el = contentRef.current;
+    const section = el?.closest("section");
+    if (!el || !section) return;
+    let ticking = false;
+    const apply = () => {
+      ticking = false;
+      const rect = section.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height)));
+      el.style.transform = `translateY(${p * 70}px)`;
+      el.style.opacity = String(Math.max(0, 1 - p * 1.15));
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(apply);
+    };
+    el.style.willChange = "transform, opacity";
+    window.addEventListener("scroll", onScroll, { passive: true });
+    apply();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [mode]);
   useEffect(() => {
     const el = bgVideoRef.current;
     if (!el) return;
@@ -431,6 +462,7 @@ export default function HeroHomeReact({
         className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32"
       >
         <div
+          ref={contentRef}
           className={
             mode === "morph"
               ? "flex flex-col items-center text-center lg:items-start lg:text-left justify-start md:justify-center max-w-[760px] lg:max-w-[540px] mx-auto lg:mx-0 min-h-0 lg:min-h-[640px]"
