@@ -399,6 +399,7 @@ type ServiceValor {
   title_en: String
   subtitle: String
   subtitle_en: String
+  desafioClickable: Boolean
   cards: [ServiceValorCards]
 }
 
@@ -500,6 +501,7 @@ input ServiceValorFilter {
   title_en: StringFilter
   subtitle: StringFilter
   subtitle_en: StringFilter
+  desafioClickable: BooleanFilter
   cards: ServiceValorCardsFilter
 }
 
@@ -2596,6 +2598,7 @@ input ServiceValorMutation {
   title_en: String
   subtitle: String
   subtitle_en: String
+  desafioClickable: Boolean
   cards: [ServiceValorCardsMutation]
 }
 

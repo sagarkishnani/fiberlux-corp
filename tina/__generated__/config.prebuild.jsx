@@ -375,6 +375,12 @@ var config_default = defineConfig({
               },
               { name: "subtitle_en", label: "Subt\xEDtulo de secci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
               {
+                name: "desafioClickable",
+                label: "El desaf\xEDo \u2014 activar interacci\xF3n por click (por defecto: animaci\xF3n en loop)",
+                description: "Off (por defecto): la animaci\xF3n del card 'El desaf\xEDo' corre sola en loop. On: reactiva la interacci\xF3n por click con tooltip (SPEC 93).",
+                type: "boolean"
+              },
+              {
                 name: "cards",
                 label: "Cards",
                 type: "object",

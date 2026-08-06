@@ -402,6 +402,13 @@ export default defineConfig({
               },
               { name: "subtitle_en", label: "Subtítulo de sección (EN)", type: "string", ui: { component: "textarea" } },
               {
+                name: "desafioClickable",
+                label: "El desafío — activar interacción por click (por defecto: animación en loop)",
+                description:
+                  "Off (por defecto): la animación del card 'El desafío' corre sola en loop. On: reactiva la interacción por click con tooltip (SPEC 93).",
+                type: "boolean",
+              },
+              {
                 name: "cards",
                 label: "Cards",
                 type: "object",

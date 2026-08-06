@@ -108,6 +108,7 @@ fragment ServiceParts on Service {
     title_en
     subtitle
     subtitle_en
+    desafioClickable
     cards {
       __typename
       heading
