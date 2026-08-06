@@ -365,7 +365,11 @@ export default function HeaderV2React({
       );
       const inv = 1 - progress;
       const height = LOGO_HEADER_H + (LOGO_HERO_H - LOGO_HEADER_H) * inv;
-      const offset = LOGO_START_OFFSET_Y * inv;
+      // En morph (logo a la izquierda) el logo arranca más alto para dejar más
+      // aire sobre el título y evitar que se crucen al hacer scroll (SPEC 96).
+      const startOffsetY =
+        heroLogoAlign === "left" ? 120 : LOGO_START_OFFSET_Y;
+      const offset = startOffsetY * inv;
       // Se anima `height` (SVG nítido a cada tamaño); el transform baja en Y.
       // SPEC 88: en estado hero (inv→1) el logo se centra horizontalmente sobre
       // el título; al hacer scroll (inv→0) vuelve al slot del header (izquierda).
