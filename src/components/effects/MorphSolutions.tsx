@@ -29,7 +29,7 @@ const PARAMS = {
   particleCountMobile: 5000, // versión ligera mobile
   dprCap: 2, // cap desktop
   dprCapMobile: 1.5, // cap mobile
-  globeRadius: 1.15, // radio de la esfera en reposo
+  globeRadius: 0.96, // radio de la esfera en reposo
   clusterRadius: 0.22, // dispersión gaussiana de cada cúmulo (cúmulos nítidos)
   color: 0x96237a, // brand-purple #96237A
   colorBright: 0xce66b8, // magenta claro para el brillo del punto
