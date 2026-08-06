@@ -29,8 +29,8 @@ import type { IconType } from "react-icons";
 const PARAMS = {
   dustCount: 220,
   dustCountMobile: 90,
-  cardCount: 10,
-  cardCountMobile: 5,
+  cardCount: 15,
+  cardCountMobile: 8,
   renderScale: 0.9,
   renderScaleMobile: 0.6,
   raySamples: 48,
@@ -331,9 +331,9 @@ export default function CinematicBackground({
         opacity: 0,
       });
       const mesh = new THREE.Mesh(cardGeo, mat);
-      const z = rand(-6.5, -2.0);
-      const depth = (z + 6.5) / 4.5; // 0 lejos .. 1 cerca
-      const scale = 0.4 + depth * 0.5;
+      const z = rand(-6.5, -1.8);
+      const depth = (z + 6.5) / 4.7; // 0 lejos .. 1 cerca
+      const scale = 0.46 + depth * 0.56;
       mesh.scale.set(scale, scale, 1);
       const side = i % 2 === 0 ? -1 : 1;
       mesh.position.set(
@@ -353,7 +353,7 @@ export default function CinematicBackground({
         rvx: rand(-0.22, 0.22),
         rvy: rand(-0.3, 0.3),
         rvz: rand(-0.18, 0.18),
-        baseOpacity: 0.22 + depth * 0.32,
+        baseOpacity: 0.3 + depth * 0.36,
         enterSide: side,
         introDelay: (i / cardN) * 0.5,
       });
@@ -457,7 +457,7 @@ export default function CinematicBackground({
         m.position.y = cd.baseY - ptr.cy * 0.1;
 
         const centerFade =
-          0.22 + 0.78 * Math.min(1, Math.abs(m.position.x) / (hw * 0.42));
+          0.32 + 0.68 * Math.min(1, Math.abs(m.position.x) / (hw * 0.4));
         cd.mat.opacity = cd.baseOpacity * centerFade * localE;
       }
     }

@@ -53,6 +53,8 @@ export default function HeroHomeReact({
   // disparar por teclado (accesibilidad).
   const morphRef = useRef<MorphHandle>(null);
   const [morphActive, setMorphActive] = useState(false);
+  // Titular (modo cinematic): se revela línea por línea con un barrido de luz.
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   // Modo cinematic: coreografía de entrada — el contenido (y el header) aparecen
   // escalonados tras montar. `intro` false = oculto; true = revelado.
@@ -84,6 +86,41 @@ export default function HeroHomeReact({
     );
     return () => cancelAnimationFrame(raf);
   }, [mode]);
+
+  // Barrido del titular línea por línea: agrupa las palabras por línea (según su
+  // posición real tras el wrap) y les asigna un delay escalonado (línea + palabra).
+  useEffect(() => {
+    if (mode !== "cinematic" || typeof window === "undefined") return;
+    const h1 = titleRef.current;
+    if (!h1) return;
+    const words = Array.from(
+      h1.querySelectorAll<HTMLElement>(".cine-word")
+    );
+    if (!words.length) return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (reduce) {
+      words.forEach((w) => w.classList.add("cine-animate"));
+      return;
+    }
+    const lines = new Map<number, HTMLElement[]>();
+    words.forEach((w) => {
+      const top = w.offsetTop;
+      if (!lines.has(top)) lines.set(top, []);
+      lines.get(top)!.push(w);
+    });
+    const tops = [...lines.keys()].sort((a, b) => a - b);
+    const base = 300,
+      lineGap = 480,
+      wordGap = 55;
+    tops.forEach((top, li) => {
+      lines.get(top)!.forEach((w, wi) => {
+        w.style.setProperty("--wd", `${base + li * lineGap + wi * wordGap}ms`);
+        w.classList.add("cine-animate");
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, locale]);
   useEffect(() => {
     const el = bgVideoRef.current;
     if (!el) return;
@@ -136,6 +173,7 @@ export default function HeroHomeReact({
 
   // Coreografía de entrada (modo cinematic): revela con stagger cada elemento.
   const cine = mode === "cinematic";
+  const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
     cine
       ? {
@@ -411,62 +449,65 @@ export default function HeroHomeReact({
           {/* Modo cinematic: titular con glow morado + barrido de luz (SPEC 97). */}
           {mode === "cinematic" && (
             <style>{`
-              /* Frente de revelado del titular (barrido izq→der al cargar). */
+              /* Frente de revelado por palabra (barrido izq→der, línea por línea). */
               @property --cine-rev {
                 syntax: '<percentage>';
-                initial-value: 0%;
+                initial-value: -30%;
                 inherits: false;
               }
-              .cine-headline {
-                background: linear-gradient(100deg,
-                  #ffffff 0%, #ffffff 38%,
-                  #ffe3f8 47%, #ffffff 50%, #ffe3f8 53%,
-                  #ffffff 62%, #ffffff 100%);
-                background-size: 250% 100%;
-                -webkit-background-clip: text;
-                background-clip: text;
-                -webkit-text-fill-color: transparent;
-                color: transparent;
-                filter:
-                  drop-shadow(0 0 14px rgba(214,77,184,0.45))
-                  drop-shadow(0 0 34px rgba(150,35,122,0.35));
-                /* El titular se "dibuja" de izquierda a derecha con un borde
-                   difuso; luego el barrido de luz continúa en loop. */
+              .cine-headline { color: #fff; }
+              .cine-word {
+                display: inline-block;
+                color: #fff;
+                text-shadow:
+                  0 0 14px rgba(214,77,184,0.5),
+                  0 0 34px rgba(150,35,122,0.4);
+                /* Oculto hasta que se anima (frente de luz que lo dibuja). */
                 -webkit-mask-image: linear-gradient(90deg,
                   #000 0%, #000 var(--cine-rev),
-                  rgba(0,0,0,0) calc(var(--cine-rev) + 8%));
+                  rgba(0,0,0,0) calc(var(--cine-rev) + 22%));
                 mask-image: linear-gradient(90deg,
                   #000 0%, #000 var(--cine-rev),
-                  rgba(0,0,0,0) calc(var(--cine-rev) + 8%));
-                animation:
-                  cine-sweep 4.2s linear infinite,
-                  cine-reveal 1.5s cubic-bezier(.4,0,.2,1) 0.35s both;
+                  rgba(0,0,0,0) calc(var(--cine-rev) + 22%));
               }
-              @keyframes cine-sweep {
-                0% { background-position: 120% 0; }
-                100% { background-position: -20% 0; }
+              .cine-word.cine-animate {
+                animation: cine-reveal 0.85s cubic-bezier(.4,0,.2,1) both;
+                animation-delay: var(--wd, 0ms);
               }
               @keyframes cine-reveal {
-                from { --cine-rev: -8%; }
-                to { --cine-rev: 112%; }
+                from { --cine-rev: -30%; }
+                to { --cine-rev: 130%; }
               }
               @media (prefers-reduced-motion: reduce) {
-                .cine-headline {
-                  --cine-rev: 120%;
-                  animation: none;
-                  background-position: 50% 0;
-                }
+                .cine-word { --cine-rev: 130%; }
+                .cine-word.cine-animate { animation: none; }
               }
             `}</style>
           )}
 
           <h1
+            ref={titleRef}
             className={`leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl ${
               mode === "cinematic" ? "cine-headline text-white" : "text-white"
             }`}
             data-tina-field={tinaField(hero, "title")}
           >
-            {tField(hero as any, "title", locale)}
+            {mode === "cinematic"
+              ? titleText.split(" ").flatMap((w, i, arr) =>
+                  i < arr.length - 1
+                    ? [
+                        <span key={i} className="cine-word">
+                          {w}
+                        </span>,
+                        " ",
+                      ]
+                    : [
+                        <span key={i} className="cine-word">
+                          {w}
+                        </span>,
+                      ]
+                )
+              : titleText}
           </h1>
 
           {hero.subtitle && (
