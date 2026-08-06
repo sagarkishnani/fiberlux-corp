@@ -9,8 +9,8 @@ import Button from "../shared/Button";
 import WaveformEffect from "../effects/WaveformEffect";
 import NodeField from "../effects/NodeField";
 import MorphSolutions, {
-  type MorphHandle,
   type MorphNode,
+  type MorphHandle,
 } from "../effects/MorphSolutions";
 
 // Nodos-solución por defecto (si el CMS no los define): las 4 soluciones.
@@ -47,7 +47,9 @@ export default function HeroHomeReact({
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
 
-  // Modo morph: control del efecto + fade del contenido del hero.
+  // Modo morph: el gráfico (globo) es el disparador por click; aquí desvanecemos
+  // el contenido del hero al salir de reposo y exponemos un botón sr-only para
+  // disparar por teclado (accesibilidad).
   const morphRef = useRef<MorphHandle>(null);
   const [morphActive, setMorphActive] = useState(false);
 
@@ -87,6 +89,11 @@ export default function HeroHomeReact({
   const morphTriggerLabel =
     tField((hero as any).morph || {}, "triggerLabel", locale) ||
     (locale === "en" ? "Explore our solutions" : "Explora nuestras soluciones");
+  // Logo FIBERLUX (BASE_URL-aware) para el lockup del hero y el chip central.
+  const logoAsset = `${import.meta.env.BASE_URL}images/logo/fiberlux.svg`.replace(
+    /\/{2,}/g,
+    "/"
+  );
 
   // Opacidad del medio de fondo (video/imagen). Default 60%.
   const bgOpacity = Math.max(
@@ -216,6 +223,7 @@ export default function HeroHomeReact({
             ref={morphRef}
             className="h-full w-full"
             nodes={morphNodes}
+            logoSrc={logoAsset}
             signalReady
             onPhaseChange={(p) => setMorphActive(p !== "idle")}
           />
@@ -247,7 +255,11 @@ export default function HeroHomeReact({
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32">
         <div
-          className="mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]"
+          className={
+            mode === "morph"
+              ? "flex flex-col items-center text-center lg:items-start lg:text-left justify-start md:justify-center max-w-[760px] lg:max-w-[540px] mx-auto lg:mx-0 min-h-0 lg:min-h-[640px]"
+              : "mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]"
+          }
           style={
             mode === "morph"
               ? {
@@ -258,6 +270,18 @@ export default function HeroHomeReact({
               : undefined
           }
         >
+          {/* Modo morph: wordmark FIBERLUX a la izquierda (reemplaza al logo
+              grande centrado del header, desactivado en este modo). */}
+          {mode === "morph" && (
+            <img
+              src={logoAsset}
+              alt="Fiberlux"
+              draggable={false}
+              className="h-8 lg:h-10 w-auto mb-6 self-center lg:self-start"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
+          )}
+
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
@@ -267,7 +291,9 @@ export default function HeroHomeReact({
 
           {hero.subtitle && (
             <p
-              className="mt-6 text-white text-body-lg leading-relaxed max-w-[520px] mx-auto"
+              className={`mt-6 text-white text-body-lg leading-relaxed max-w-[520px] mx-auto ${
+                mode === "morph" ? "lg:mx-0" : ""
+              }`}
               data-tina-field={tinaField(hero, "subtitle")}
             >
               {tField(hero as any, "subtitle", locale)}
@@ -275,7 +301,11 @@ export default function HeroHomeReact({
           )}
 
           {buttons.length > 0 && (
-            <div className="mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full sm:w-auto">
+            <div
+              className={`mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full sm:w-auto ${
+                mode === "morph" ? "lg:justify-start" : ""
+              }`}
+            >
               {buttons.map((btn, i) => {
                 if (!btn) return null;
                 const isPrimary = btn.variant !== "secondary";
@@ -294,18 +324,15 @@ export default function HeroHomeReact({
             </div>
           )}
 
-          {/* Modo morph: trigger visible que dispara el globo → soluciones. */}
+          {/* Modo morph: botón sr-only para disparar por teclado (accesibilidad);
+              visualmente el disparador es el propio gráfico (click). */}
           {mode === "morph" && (
             <button
               type="button"
               onClick={() => morphRef.current?.trigger()}
-              className="pointer-events-auto mt-8 lg:mt-10 inline-flex items-center gap-2 rounded-full border border-[rgba(206,102,184,0.55)] bg-[rgba(150,35,122,0.15)] px-6 py-3 font-mono text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-[rgba(150,35,122,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ce66b8]"
-              style={{
-                boxShadow: "0 0 24px rgba(150,35,122,0.4)",
-              }}
+              className="pointer-events-auto sr-only focus:not-sr-only focus:mt-6 focus:rounded-full focus:border focus:border-[#ce66b8] focus:px-5 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.14em] focus:text-white"
             >
               {morphTriggerLabel}
-              <span aria-hidden="true">→</span>
             </button>
           )}
         </div>

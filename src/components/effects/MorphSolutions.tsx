@@ -6,7 +6,8 @@ import {
 } from "react";
 import * as THREE from "three";
 import type { IconType } from "react-icons";
-import { FaServer, FaNetworkWired, FaShieldHalved, FaGears } from "react-icons/fa6";
+// Íconos outline (Lucide), mismo lenguaje gráfico que el resto del sitio.
+import { LuServer, LuNetwork, LuShieldCheck, LuActivity } from "react-icons/lu";
 
 /**
  * MorphSolutions — globo de partículas de conectividad (Three.js) que, al
@@ -35,14 +36,18 @@ const PARAMS = {
   morphDuration: 1.2, // s de interpolación globo↔nodos
   autoRevertMs: 6000, // ~6 s en estado morph → vuelve al globo
   idleRotationSpeed: 0.06, // rad/s de giro del globo en reposo
+  idleShiftX: 1.15, // desktop: globo desplazado a la derecha en reposo (texto va a la izquierda)
+  swirlAmp: 0.12, // amplitud del orbitado de cada partícula en estado soluciones
+  swirlSpeedMin: 0.6, // rad/s mín. del orbitado por partícula
+  swirlSpeedMax: 1.6, // rad/s máx.
   cameraZ: 3.4,
   fov: 45,
   // Centros de los 4 cúmulos en coords de mundo (grid 2×2), z levemente frontal.
   clusters: [
-    [-1.0, 0.62, 0.1],
-    [1.0, 0.62, 0.1],
-    [-1.0, -0.62, 0.1],
-    [1.0, -0.62, 0.1],
+    [-1.15, 0.6, 0.1],
+    [1.15, 0.6, 0.1],
+    [-1.15, -0.6, 0.1],
+    [1.15, -0.6, 0.1],
   ] as [number, number, number][],
 } as const;
 
@@ -63,6 +68,8 @@ interface Props {
   className?: string;
   /** Nodos-solución ya localizados (label + url resueltos por el consumidor). */
   nodes: MorphNode[];
+  /** Ruta del logo FIBERLUX (BASE_URL-aware) que va dentro del chip central. */
+  logoSrc?: string;
   /** Dispara `fbx:hero-scene-loaded` en el primer frame (para el preloader). */
   signalReady?: boolean;
   /** ms en estado soluciones antes de revertir al globo (default 6000). */
@@ -73,12 +80,12 @@ interface Props {
   onUnsupported?: () => void;
 }
 
-/* Íconos: clave del CMS → glifo fa6. */
+/* Íconos: clave del CMS → glifo Lucide (outline de marca). */
 const ICONS: Record<string, IconType> = {
-  datacenter: FaServer,
-  conectividad: FaNetworkWired,
-  ciberseguridad: FaShieldHalved,
-  gestionados: FaGears,
+  datacenter: LuServer,
+  conectividad: LuNetwork,
+  ciberseguridad: LuShieldCheck,
+  gestionados: LuActivity,
 };
 
 const easeInOutCubic = (t: number) =>
@@ -122,7 +129,15 @@ function gaussian(): number {
 }
 
 const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
-  { className, nodes, signalReady, autoRevertMs, onPhaseChange, onUnsupported },
+  {
+    className,
+    nodes,
+    logoSrc,
+    signalReady,
+    autoRevertMs,
+    onPhaseChange,
+    onUnsupported,
+  },
   ref
 ) {
   // Contenedor donde Three monta su propio canvas (patrón robusto ante el
@@ -130,6 +145,9 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
   const mountRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const anchorRefs = useRef<Array<HTMLAnchorElement | null>>([]);
+  // Chip central + trazos que conectan el chip con cada nodo-solución.
+  const chipRef = useRef<HTMLDivElement>(null);
+  const lineRefs = useRef<Array<SVGLineElement | null>>([]);
   // Nº de anclas con hover/focus (pausa el auto-revert); leído por el loop.
   const hoverCountRef = useRef(0);
   // Puente imperativo hacia el loop (definido en el efecto de montaje).
@@ -175,8 +193,13 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     const count = isMobile ? PARAMS.particleCountMobile : PARAMS.particleCount;
 
     // Posiciones objetivo precomputadas: home (esfera) y node (cúmulos).
+    // Además, por partícula: fase/velocidad de orbitado para dar vida a los
+    // cúmulos en estado soluciones (no quedan estáticos).
     const homePos = new Float32Array(count * 3);
     const nodePos = new Float32Array(count * 3);
+    const swirlPhase = new Float32Array(count);
+    const swirlSpeed = new Float32Array(count);
+    const swirlAmp = new Float32Array(count);
     const nodeCount = Math.min(4, Math.max(1, nodes.length || 4));
     for (let i = 0; i < count; i++) {
       const [hx, hy, hz] = fibonacciSphere(i, count, PARAMS.globeRadius);
@@ -189,6 +212,11 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       nodePos[i * 3] = cx + gaussian() * PARAMS.clusterRadius;
       nodePos[i * 3 + 1] = cy + gaussian() * PARAMS.clusterRadius;
       nodePos[i * 3 + 2] = cz + gaussian() * PARAMS.clusterRadius * 0.5;
+      swirlPhase[i] = Math.random() * Math.PI * 2;
+      swirlSpeed[i] =
+        PARAMS.swirlSpeedMin +
+        Math.random() * (PARAMS.swirlSpeedMax - PARAMS.swirlSpeedMin);
+      swirlAmp[i] = (0.35 + Math.random() * 0.65) * PARAMS.swirlAmp;
     }
 
     const geo = new THREE.BufferGeometry();
@@ -229,24 +257,54 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       if (phase === "idle" || phase === "morphing-in") setPhase("morphing-out");
     };
 
-    // ── Overlay: proyecta los centros de cúmulo a % de pantalla ──
+    // ── Overlay: proyecta los centros de cúmulo (nodos) y el centro (chip) a
+    //    % de pantalla; posiciona anclas, chip y trazos chip↔nodo. ──
     const centerVecs = PARAMS.clusters.map((c) => new THREE.Vector3(c[0], c[1], c[2]));
+    const chipVec = new THREE.Vector3(0, 0, 0);
+    const project = (v: THREE.Vector3) => {
+      const p = v.clone().project(camera);
+      return { x: (p.x * 0.5 + 0.5) * 100, y: (-p.y * 0.5 + 0.5) * 100 };
+    };
     const updateAnchors = () => {
       const overlay = overlayRef.current;
       if (!overlay) return;
+      camera.updateMatrixWorld();
+      // Si la proyección aún no es válida (cámara sin matriz en el primer frame),
+      // no escribimos coordenadas NaN en el SVG.
+      const test = project(chipVec);
+      if (!Number.isFinite(test.x) || !Number.isFinite(test.y)) return;
       const eased = easeInOutCubic(progress);
+      const op = reduce ? 1 : eased;
       const interactive = progress > 0.85 && phase !== "morphing-in";
       overlay.style.pointerEvents = interactive ? "auto" : "none";
+
+      // Chip central (proyección del origen de mundo).
+      const c = project(chipVec);
+      const chip = chipRef.current;
+      if (chip) {
+        chip.style.left = `${c.x}%`;
+        chip.style.top = `${c.y}%`;
+        chip.style.opacity = `${op}`;
+      }
+
       for (let k = 0; k < nodeCount; k++) {
+        const n = project(centerVecs[k]);
         const a = anchorRefs.current[k];
-        if (!a) continue;
-        const v = centerVecs[k].clone().project(camera);
-        const xPct = (v.x * 0.5 + 0.5) * 100;
-        const yPct = (-v.y * 0.5 + 0.5) * 100;
-        a.style.left = `${xPct}%`;
-        a.style.top = `${yPct}%`;
-        a.style.opacity = reduce ? "1" : `${eased}`;
-        a.style.pointerEvents = interactive || reduce ? "auto" : "none";
+        if (a) {
+          a.style.left = `${n.x}%`;
+          a.style.top = `${n.y}%`;
+          a.style.opacity = `${op}`;
+          a.style.pointerEvents = interactive || reduce ? "auto" : "none";
+        }
+        // Trazo chip → nodo (en % del overlay).
+        const line = lineRefs.current[k];
+        if (line) {
+          line.setAttribute("x1", `${c.x}%`);
+          line.setAttribute("y1", `${c.y}%`);
+          line.setAttribute("x2", `${n.x}%`);
+          line.setAttribute("y2", `${n.y}%`);
+          line.style.opacity = `${op * 0.9}`;
+        }
       }
     };
 
@@ -262,11 +320,29 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     resize();
     window.addEventListener("resize", resize);
 
-    // ── Buffer: escribe la interpolación home↔node en el atributo de posición ──
+    // ── Buffer: interpola home↔node y, en soluciones, orbita cada partícula
+    //    alrededor de su punto del cúmulo (con amplitud proporcional a `eased`,
+    //    así el movimiento aparece al llegar a los nodos y no en el globo). ──
     const arr = posAttr.array as Float32Array;
-    const writeBuffer = (eased: number) => {
-      for (let i = 0; i < count * 3; i++) {
-        arr[i] = homePos[i] + (nodePos[i] - homePos[i]) * eased;
+    const idleShiftX = isMobile ? 0 : PARAMS.idleShiftX;
+    const writeBuffer = (eased: number, time: number) => {
+      const swirl = eased > 0.001;
+      for (let i = 0; i < count; i++) {
+        const k = i * 3;
+        let tx = nodePos[k];
+        let ty = nodePos[k + 1];
+        let tz = nodePos[k + 2];
+        if (swirl) {
+          const ph = swirlPhase[i];
+          const sp = swirlSpeed[i];
+          const amp = swirlAmp[i] * eased;
+          tx += Math.cos(time * sp + ph) * amp;
+          ty += Math.sin(time * sp + ph * 1.3) * amp;
+          tz += Math.sin(time * sp * 0.7 + ph) * amp * 0.5;
+        }
+        arr[k] = homePos[k] + (tx - homePos[k]) * eased;
+        arr[k + 1] = homePos[k + 1] + (ty - homePos[k + 1]) * eased;
+        arr[k + 2] = homePos[k + 2] + (tz - homePos[k + 2]) * eased;
       }
       posAttr.needsUpdate = true;
     };
@@ -275,6 +351,7 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     let visible = true;
     let signaled = false;
     let last = 0;
+    let elapsed = 0; // reloj para el orbitado de las partículas
 
     const signalOnce = () => {
       if (signalReady && !signaled) {
@@ -302,14 +379,20 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
         }
       }
 
+      elapsed += dt;
+
       // El giro del globo se apaga a medida que se morphea (nodos quedan upright).
       spin += PARAMS.idleRotationSpeed * dt;
       const eased = easeInOutCubic(progress);
       points.rotation.y = spin * (1 - eased);
+      // Reposo: globo desplazado a la derecha (el texto ocupa la izquierda);
+      // al morphear vuelve al centro y se reparte en los 4 cúmulos.
+      points.position.x = idleShiftX * (1 - eased);
 
-      // El buffer solo se reescribe mientras hay transición (idle/solutions son estáticos).
-      if (bufferDirty || phase === "morphing-out" || phase === "morphing-in") {
-        writeBuffer(eased);
+      // Se reescribe el buffer siempre que no estemos totalmente en reposo: en
+      // 'solutions' (eased≈1) esto mantiene el orbitado vivo de las partículas.
+      if (bufferDirty || eased > 0.001) {
+        writeBuffer(eased, elapsed);
         bufferDirty = false;
       }
 
@@ -340,7 +423,8 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
     if (reduce) {
       // Frame estático del globo; las anclas quedan visibles y accesibles.
-      writeBuffer(0);
+      writeBuffer(0, 0);
+      points.position.x = idleShiftX;
       renderer.render(scene, camera);
       updateAnchors();
       signalOnce();
@@ -369,19 +453,85 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
   return (
     <div className={className} style={{ position: "absolute", inset: 0 }}>
-      {/* Host del canvas WebGL (Three monta aquí su propio <canvas>). */}
+      {/* Host del canvas WebGL (Three monta aquí su propio <canvas>).
+          Es el disparador por click real sobre el gráfico (reemplaza al botón).
+          No es focusable: la accesibilidad por teclado la da un botón sr-only en
+          el consumidor (evita auto-foco/auto-activación al cargar). El guardado
+          por `isTrusted` ignora clicks sintéticos. */}
       <div
         ref={mountRef}
         aria-hidden="true"
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        onClick={(e) => {
+          if (e.nativeEvent.isTrusted) triggerRef.current();
+        }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          pointerEvents: "auto",
+          cursor: "pointer",
+        }}
       />
       {/* Overlay de nodos-solución (anclas HTML posicionadas sobre cada cúmulo). */}
       <div
         ref={overlayRef}
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       >
+        {/* Trazos que conectan el chip central con cada nodo (conectividad). */}
+        <svg
+          width="100%"
+          height="100%"
+          style={{ position: "absolute", inset: 0, overflow: "visible" }}
+          aria-hidden="true"
+        >
+          {shown.map((_, k) => (
+            <line
+              key={k}
+              ref={(el) => {
+                lineRefs.current[k] = el;
+              }}
+              className="morph-link"
+              style={{ opacity: 0 }}
+            />
+          ))}
+        </svg>
+
+        {/* Chip central con el logo de Fiberlux dentro. */}
+        <div ref={chipRef} className="morph-chip" style={{ opacity: 0 }}>
+          <svg viewBox="0 0 100 100" className="morph-chip__frame" aria-hidden="true">
+            {/* Cuerpo del chip */}
+            <rect
+              x="24"
+              y="24"
+              width="52"
+              height="52"
+              rx="9"
+              fill="rgba(150,35,122,0.16)"
+              stroke="#ce66b8"
+              strokeWidth="1.6"
+            />
+            {/* Pines (4 lados) */}
+            {[34, 50, 66].map((p) => (
+              <g key={p} stroke="#ce66b8" strokeWidth="1.6" strokeLinecap="round">
+                <line x1={p} y1="16" x2={p} y2="24" />
+                <line x1={p} y1="76" x2={p} y2="84" />
+                <line x1="16" y1={p} x2="24" y2={p} />
+                <line x1="76" y1={p} x2="84" y2={p} />
+              </g>
+            ))}
+          </svg>
+          {logoSrc && (
+            <img
+              src={logoSrc}
+              alt="Fiberlux"
+              draggable={false}
+              className="morph-chip__logo"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
+          )}
+        </div>
+
         {shown.map((n, k) => {
-          const Icon = (n.icon && ICONS[n.icon]) || FaServer;
+          const Icon = (n.icon && ICONS[n.icon]) || LuServer;
           return (
             <a
               key={k}
@@ -409,38 +559,25 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.7rem",
                 textDecoration: "none",
                 color: "#fff",
                 pointerEvents: "none",
                 transition: "opacity 0.2s ease",
               }}
             >
-              <span
-                style={{
-                  display: "grid",
-                  placeItems: "center",
-                  width: "3rem",
-                  height: "3rem",
-                  borderRadius: "9999px",
-                  background: "rgba(150,35,122,0.18)",
-                  border: "1px solid rgba(206,102,184,0.5)",
-                  boxShadow: "0 0 24px rgba(150,35,122,0.55)",
-                  color: "#fff",
-                  fontSize: "1.25rem",
-                }}
-              >
-                <Icon />
+              <span className="morph-node__ring">
+                <Icon size={30} strokeWidth={1.6} />
               </span>
               <span
                 style={{
                   fontFamily: "'Space Mono', monospace",
-                  fontSize: "0.72rem",
-                  letterSpacing: "0.12em",
+                  fontSize: "0.74rem",
+                  letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   textAlign: "center",
-                  maxWidth: "9rem",
-                  lineHeight: 1.25,
+                  maxWidth: "10rem",
+                  lineHeight: 1.3,
                   textShadow: "0 2px 12px rgba(0,0,0,0.9)",
                 }}
               >
@@ -450,6 +587,76 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
           );
         })}
       </div>
+
+      {/* Estilos del nodo: anillo de señal de marca + hover. */}
+      <style>{`
+        .morph-node__ring {
+          position: relative;
+          display: grid;
+          place-items: center;
+          width: 4.25rem;
+          height: 4.25rem;
+          border-radius: 9999px;
+          color: #fff;
+          background:
+            radial-gradient(circle at 50% 42%, rgba(214,77,184,0.28) 0%, rgba(150,35,122,0.10) 55%, transparent 72%);
+          border: 1px solid rgba(206,102,184,0.55);
+          box-shadow:
+            0 0 26px rgba(150,35,122,0.5),
+            inset 0 0 18px rgba(214,77,184,0.18);
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        /* Segundo anillo (halo de señal) */
+        .morph-node__ring::after {
+          content: "";
+          position: absolute;
+          width: 5.5rem;
+          height: 5.5rem;
+          border-radius: 9999px;
+          border: 1px solid rgba(206,102,184,0.22);
+        }
+        .morph-node:hover .morph-node__ring,
+        .morph-node:focus-visible .morph-node__ring {
+          transform: scale(1.09);
+          border-color: rgba(255,212,244,0.9);
+          box-shadow:
+            0 0 38px rgba(214,77,184,0.8),
+            inset 0 0 22px rgba(214,77,184,0.3);
+        }
+        .morph-node:hover, .morph-node:focus-visible { color: #FFD4F4; outline: none; }
+
+        /* Chip central + logo de Fiberlux dentro. */
+        .morph-chip {
+          position: absolute;
+          transform: translate(-50%, -50%);
+          width: 178px;
+          height: 178px;
+          pointer-events: none;
+          filter: drop-shadow(0 0 22px rgba(150,35,122,0.5));
+        }
+        .morph-chip__frame { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .morph-chip__logo {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 78px;
+          height: auto;
+        }
+
+        /* Trazos chip → nodo (señal que fluye). */
+        .morph-link {
+          stroke: #ce66b8;
+          stroke-width: 1.4;
+          stroke-dasharray: 5 9;
+          animation: morph-flow 0.9s linear infinite;
+          filter: drop-shadow(0 0 4px rgba(206,102,184,0.7));
+        }
+        @keyframes morph-flow { to { stroke-dashoffset: -14; } }
+        @media (prefers-reduced-motion: reduce) {
+          .morph-link { animation: none; }
+        }
+      `}</style>
     </div>
   );
 });
