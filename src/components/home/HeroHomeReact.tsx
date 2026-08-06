@@ -110,7 +110,7 @@ export default function HeroHomeReact({
     <section
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
         mode === "morph"
-          ? "min-h-[88svh] md:min-h-[780px] lg:min-h-[900px]"
+          ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
     >
