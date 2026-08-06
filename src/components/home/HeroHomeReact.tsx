@@ -1,13 +1,25 @@
 import { useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, localizeHref } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import SplineScene from "../shared/SplineScene";
 import { mediaUrl } from "../../utils/mediaUrl";
 import Button from "../shared/Button";
 import WaveformEffect from "../effects/WaveformEffect";
 import NodeField from "../effects/NodeField";
+import MorphSolutions, {
+  type MorphHandle,
+  type MorphNode,
+} from "../effects/MorphSolutions";
+
+// Nodos-solución por defecto (si el CMS no los define): las 4 soluciones.
+const DEFAULT_MORPH_NODES = [
+  { label: "Data Center & Cloud", url: "/soluciones/data-center-cloud", icon: "datacenter" },
+  { label: "Conectividad Empresarial", url: "/soluciones/conectividad-empresarial", icon: "conectividad" },
+  { label: "Ciberseguridad Gestionada", url: "/soluciones/ciberseguridad-gestionada", icon: "ciberseguridad" },
+  { label: "Servicios Gestionados", url: "/soluciones/servicios-gestionados", icon: "gestionados" },
+];
 
 interface HeroHomeProps {
   query: string;
@@ -35,6 +47,10 @@ export default function HeroHomeReact({
   const bgVideoRef = useRef<HTMLVideoElement>(null);
   const [reduceMotion, setReduceMotion] = useState(false);
 
+  // Modo morph: control del efecto + fade del contenido del hero.
+  const morphRef = useRef<MorphHandle>(null);
+  const [morphActive, setMorphActive] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
     setReduceMotion(
@@ -56,6 +72,21 @@ export default function HeroHomeReact({
   if (!hero) return null;
 
   const buttons = (hero.buttons || []).filter(Boolean);
+
+  // Nodos-solución del modo morph: del CMS (hero.morph.solutionNodes) o el default.
+  const morphRaw = ((hero as any).morph?.solutionNodes as any[])?.filter(Boolean);
+  const morphNodes: MorphNode[] = (
+    morphRaw?.length ? morphRaw : DEFAULT_MORPH_NODES
+  )
+    .slice(0, 4)
+    .map((n) => ({
+      label: tField(n, "label", locale) || "",
+      url: localizeHref(n.url || "#", locale),
+      icon: n.icon,
+    }));
+  const morphTriggerLabel =
+    tField((hero as any).morph || {}, "triggerLabel", locale) ||
+    (locale === "en" ? "Explore our solutions" : "Explora nuestras soluciones");
 
   // Opacidad del medio de fondo (video/imagen). Default 60%.
   const bgOpacity = Math.max(
@@ -175,6 +206,22 @@ export default function HeroHomeReact({
         </div>
       )}
 
+      {/* Modo morph (SPEC 96): globo de partículas (Three.js) que al pulsar el
+          trigger morphea a 4 nodos-solución clicables y vuelve solo a los ~6 s.
+          z-[2] para quedar sobre las vignettes (nodos nítidos y clicables) y
+          bajo el contenido z-10 (que se desvanece durante el morph). */}
+      {mode === "morph" && (
+        <div className="absolute inset-0 z-[2]">
+          <MorphSolutions
+            ref={morphRef}
+            className="h-full w-full"
+            nodes={morphNodes}
+            signalReady
+            onPhaseChange={(p) => setMorphActive(p !== "idle")}
+          />
+        </div>
+      )}
+
       {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}
       {/* Vignette izquierda */}
       <div
@@ -199,7 +246,18 @@ export default function HeroHomeReact({
 
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32">
-        <div className="mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]">
+        <div
+          className="mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]"
+          style={
+            mode === "morph"
+              ? {
+                  transition: "opacity 0.5s ease",
+                  opacity: morphActive ? 0 : 1,
+                  pointerEvents: morphActive ? "none" : undefined,
+                }
+              : undefined
+          }
+        >
           <h1
             className="text-white leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl"
             data-tina-field={tinaField(hero, "title")}
@@ -234,6 +292,21 @@ export default function HeroHomeReact({
                 );
               })}
             </div>
+          )}
+
+          {/* Modo morph: trigger visible que dispara el globo → soluciones. */}
+          {mode === "morph" && (
+            <button
+              type="button"
+              onClick={() => morphRef.current?.trigger()}
+              className="pointer-events-auto mt-8 lg:mt-10 inline-flex items-center gap-2 rounded-full border border-[rgba(206,102,184,0.55)] bg-[rgba(150,35,122,0.15)] px-6 py-3 font-mono text-xs uppercase tracking-[0.14em] text-white transition-colors hover:bg-[rgba(150,35,122,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ce66b8]"
+              style={{
+                boxShadow: "0 0 24px rgba(150,35,122,0.4)",
+              }}
+            >
+              {morphTriggerLabel}
+              <span aria-hidden="true">→</span>
+            </button>
           )}
         </div>
       </div>
