@@ -211,7 +211,14 @@ export default function CertificacionesSliderReact({
           <div className="relative">
             {carousel}
             {items.length > 1 && (
-              <SliderSideArrows canPrev={enough} canNext={enough} onPrev={goPrev} onNext={goNext} />
+              <SliderSideArrows
+                canPrev={enough}
+                canNext={enough}
+                onPrev={goPrev}
+                onNext={goNext}
+                /* Certificaciones mantiene un margen más chico que el resto (SPEC 94). */
+                offset="clamp(-3.5rem, 30px - 4.5vw, -1rem)"
+              />
             )}
           </div>
         </div>

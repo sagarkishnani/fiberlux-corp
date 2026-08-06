@@ -21,11 +21,11 @@ interface SliderSideArrowsProps {
   labelNext?: string;
   /**
    * Distancia horizontal desde cada borde del contenedor (longitud CSS).
-   * Por defecto es RESPONSIVE via `clamp()`: ~-1rem a 1024px (poco margen, la
-   * flecha junto a la card) creciendo con el ancho hasta ~-3.5rem en pantallas
-   * grandes (más separación hacia el gutter). Así evita el exceso de margen a
-   * 1024 y el scroll horizontal. En carruseles a sangre usar
-   * `leftOffset`/`rightOffset`.
+   * Por defecto es RESPONSIVE via `clamp()`: ~-1.5rem a 1024px creciendo con el
+   * ancho hasta ~-4.5rem en pantallas grandes (separación de la card hacia el
+   * gutter). Evita el scroll horizontal (los gutters del site-container dan
+   * espacio de sobra). Certificaciones usa un `offset` propio más chico. En
+   * carruseles a sangre usar `leftOffset`/`rightOffset`.
    */
   offset?: string;
   /** Override del inset izquierdo (p. ej. alinear con el gutter en carruseles a sangre). Cae en `offset`. */
@@ -48,7 +48,7 @@ export default function SliderSideArrows({
   onNext,
   labelPrev = "Anterior",
   labelNext = "Siguiente",
-  offset = "clamp(-3.5rem, 30px - 4.5vw, -1rem)",
+  offset = "clamp(-4.5rem, 30px - 6vw, -1.5rem)",
   leftOffset,
   rightOffset,
   className = "",
