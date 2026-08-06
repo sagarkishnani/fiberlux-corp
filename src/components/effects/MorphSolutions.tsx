@@ -29,7 +29,7 @@ const PARAMS = {
   dprCap: 2, // cap desktop
   dprCapMobile: 1.5, // cap mobile
   globeRadius: 1.15, // radio de la esfera en reposo
-  clusterRadius: 0.34, // dispersión gaussiana de cada cúmulo
+  clusterRadius: 0.22, // dispersión gaussiana de cada cúmulo (cúmulos nítidos)
   color: 0x96237a, // brand-purple #96237A
   colorBright: 0xce66b8, // magenta claro para el brillo del punto
   morphDuration: 1.2, // s de interpolación globo↔nodos
@@ -125,7 +125,9 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
   { className, nodes, signalReady, autoRevertMs, onPhaseChange, onUnsupported },
   ref
 ) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Contenedor donde Three monta su propio canvas (patrón robusto ante el
+  // doble-montaje de React en dev: cada montaje crea un canvas/contexto nuevo).
+  const mountRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const anchorRefs = useRef<Array<HTMLAnchorElement | null>>([]);
   // Nº de anclas con hover/focus (pausa el auto-revert); leído por el loop.
@@ -137,8 +139,8 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
   // Efecto de montaje: crea la escena una sola vez.
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const mount = mountRef.current;
+    if (!mount) return;
 
     const isMobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
     const reduce =
@@ -148,7 +150,6 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     let renderer: THREE.WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({
-        canvas,
         alpha: true,
         antialias: false,
         powerPreference: "high-performance",
@@ -157,6 +158,11 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       onUnsupported?.();
       return;
     }
+    const canvas = renderer.domElement;
+    canvas.setAttribute("aria-hidden", "true");
+    canvas.style.cssText =
+      "display:block;width:100%;height:100%;pointer-events:none;";
+    mount.appendChild(canvas);
 
     const dprCap = isMobile ? PARAMS.dprCapMobile : PARAMS.dprCap;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, dprCap));
@@ -246,8 +252,8 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
     // ── Resize ──
     const resize = () => {
-      const w = canvas.clientWidth || canvas.parentElement?.clientWidth || 1;
-      const h = canvas.clientHeight || canvas.parentElement?.clientHeight || 1;
+      const w = mount.clientWidth || 1;
+      const h = mount.clientHeight || 1;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
@@ -330,7 +336,7 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       },
       { threshold: 0 }
     );
-    io.observe(canvas);
+    io.observe(mount);
 
     if (reduce) {
       // Frame estático del globo; las anclas quedan visibles y accesibles.
@@ -351,6 +357,8 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
       mat.dispose();
       sprite.dispose();
       renderer.dispose();
+      renderer.forceContextLoss?.();
+      canvas.remove();
     };
     // Montaje único: los datos de nodos se leen al montar. Cambios de contenido
     // (edición en Tina) remontan vía key en el consumidor si hiciera falta.
@@ -361,15 +369,11 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
 
   return (
     <div className={className} style={{ position: "absolute", inset: 0 }}>
-      <canvas
-        ref={canvasRef}
+      {/* Host del canvas WebGL (Three monta aquí su propio <canvas>). */}
+      <div
+        ref={mountRef}
         aria-hidden="true"
-        style={{
-          display: "block",
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-        }}
+        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       />
       {/* Overlay de nodos-solución (anclas HTML posicionadas sobre cada cúmulo). */}
       <div
