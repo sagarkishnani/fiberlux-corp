@@ -9,6 +9,7 @@ import type { Locale } from "../../i18n/config";
 import BlogCard from "./BlogCard";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderArrows from "../shared/SliderArrows";
+import SliderSideArrows from "../shared/SliderSideArrows";
 
 /* ── Types ── */
 interface BlogPreviewProps {
@@ -132,10 +133,20 @@ export default function BlogPreviewReact({
                   ))}
             </div>
           </div>
+
+          {/* Desktop (lg+): flechas laterales superpuestas (SPEC 94) */}
+          {enough && (
+            <SliderSideArrows
+              canPrev={slider.canPrev}
+              canNext={slider.canNext}
+              onPrev={slider.prev}
+              onNext={slider.next}
+            />
+          )}
         </div>
 
-        {/* Navigation arrows — pill compartido (magenta / oscuro en extremos). */}
-        <div className="mt-6">
+        {/* Navigation arrows — pill compartido (mobile/tablet; en lg+ laterales). */}
+        <div className="mt-6 lg:hidden">
           <SliderArrows
             canPrev={slider.canPrev}
             canNext={slider.canNext}

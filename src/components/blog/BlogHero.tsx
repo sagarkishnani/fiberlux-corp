@@ -4,6 +4,7 @@ import { tField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
 import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from '../shared/SliderArrows';
+import SliderSideArrows from '../shared/SliderSideArrows';
 
 /* ── Types ── */
 interface PostNode {
@@ -128,11 +129,24 @@ export default function BlogHero({ posts = [], autoplay = true, intervalMs = 600
                 ))}
           </div>
         </div>
+
+        {/* Desktop (lg+): flechas laterales. La izquierda se alinea con el gutter
+            (leftPad) porque el carrusel sangra hacia la derecha (SPEC 94). */}
+        {enough && (
+          <SliderSideArrows
+            canPrev={slider.canPrev}
+            canNext={slider.canNext}
+            onPrev={slider.prev}
+            onNext={slider.next}
+            leftOffset={`${leftPad}px`}
+            rightOffset="0.75rem"
+          />
+        )}
       </div>
 
-      {/* Navigation arrows — pill compartido (magenta / oscuro en extremos) */}
+      {/* Navigation arrows — pill compartido (mobile/tablet; en lg+ laterales) */}
       <div className="relative z-10 site-container">
-        <div className="mt-6">
+        <div className="mt-6 lg:hidden">
           <SliderArrows
             canPrev={slider.canPrev}
             canNext={slider.canNext}
