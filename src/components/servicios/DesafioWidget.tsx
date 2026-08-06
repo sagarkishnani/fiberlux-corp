@@ -55,15 +55,31 @@ export default function DesafioWidget({
 
         /* Nodo blanco compartido: anillos de señal que pulsan hacia afuera. */
         @keyframes dw-node-ring {
-          0%   { transform: scale(0.9);  opacity: 0.5; }
+          0%   { transform: scale(0.92); opacity: 0.75; }
           70%  { opacity: 0; }
-          100% { transform: scale(1.75); opacity: 0; }
+          100% { transform: scale(1.95); opacity: 0; }
         }
         .dw-root .dw-node-ring {
           transform-origin: center;
-          animation: dw-node-ring 2.4s ease-out infinite;
+          animation: dw-node-ring 2s ease-out infinite;
         }
-        .dw-root .dw-node-ring2 { animation-delay: 1.2s; }
+        .dw-root .dw-node-ring2 { animation-delay: 1s; }
+
+        /* Glow que respira en la esfera blanca (vida constante). */
+        @keyframes dw-node-glow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(214,77,184,0); }
+          50%      { box-shadow: 0 0 16px 3px rgba(214,77,184,0.55); }
+        }
+        .dw-root .dw-node-core { animation: dw-node-glow 2s ease-in-out infinite; }
+
+        /* Pulso de luz que baja por la línea punteada hacia el nodo. */
+        @keyframes dw-drip {
+          0%   { transform: translate(-50%, -2px); opacity: 0; }
+          15%  { opacity: 1; }
+          85%  { opacity: 1; }
+          100% { transform: translate(-50%, 36px); opacity: 0; }
+        }
+        .dw-root .dw-drip { animation: dw-drip 1.6s ease-in infinite; }
 
         /* Endpoints que se encienden en secuencia (data-center). */
         @keyframes dw-endpoint {
@@ -138,24 +154,28 @@ function SignalNode({
   return (
     <div className="flex flex-col items-center">
       {connector && (
-        <span
-          aria-hidden="true"
-          className="h-9 w-px border-l border-dashed border-white/30"
-        />
+        <span aria-hidden="true" className="relative block h-9 w-px">
+          <span className="absolute inset-0 border-l border-dashed border-white/30" />
+          {/* Pulso de luz que desciende por la línea hacia el nodo. */}
+          <span
+            className="dw-drip absolute left-1/2 top-0 h-2 w-2 rounded-full bg-[#D64DB8]"
+            style={{ boxShadow: "0 0 8px 2px rgba(214,77,184,0.9)" }}
+          />
+        </span>
       )}
       <span className="relative mt-2 flex items-center justify-center" style={{ height: size, width: size }}>
         {/* Anillos de señal que pulsan (efecto de vida en el nodo). */}
         <span
           aria-hidden="true"
-          className="dw-node-ring pointer-events-none absolute inset-0 rounded-2xl border border-[#D64DB8]/60"
+          className="dw-node-ring pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/70"
         />
         <span
           aria-hidden="true"
-          className="dw-node-ring dw-node-ring2 pointer-events-none absolute inset-0 rounded-2xl border border-[#D64DB8]/50"
+          className="dw-node-ring dw-node-ring2 pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/60"
         />
         <span
           aria-hidden="true"
-          className="relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
+          className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
         >
           {icon}
         </span>
