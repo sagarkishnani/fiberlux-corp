@@ -235,8 +235,8 @@ const MorphSolutions = forwardRef<MorphHandle, Props>(function MorphSolutions(
     ];
     const computeClusters = () => {
       const halfW = halfH * camera.aspect;
-      const sx = Math.min(1.3, 0.5 * halfW); // spread horizontal (con techo)
-      const sy = 0.64 * halfH; // spread vertical
+      const sx = Math.min(1.15, 0.46 * halfW); // spread horizontal (con techo)
+      const sy = 0.53 * halfH; // spread vertical (acortado: cúmulos entran completos)
       const grid: [number, number][] = [
         [-sx, sy],
         [sx, sy],

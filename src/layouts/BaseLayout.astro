@@ -6,6 +6,7 @@ import HeaderV2 from "../components/shared/HeaderV2.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
 import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
 import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
+import CursorTrail from "../components/shared/CursorTrail.tsx";
 import client from "../../tina/__generated__/client";
 import homeContent from "../content/home/index.json";
 import "../styles/site-container.css";
@@ -302,6 +303,8 @@ const whatsappMessage = whatsappContext
             message={whatsappMessage}
           />
           <AccessibilityPanel client:idle locale={locale} />
+          {/* Estela luminosa que sigue al cursor (toda la web, solo desktop). */}
+          <CursorTrail client:idle />
           {/* Scripts globales editables en Tina (global.codeInjection.bodyEnd). */}
           {injectBodyEnd && <Fragment set:html={injectBodyEnd} />}
         </Fragment>
