@@ -19,6 +19,18 @@ fragment HomeParts on Home {
       url
       variant
     }
+    morph {
+      __typename
+      triggerLabel
+      triggerLabel_en
+      solutionNodes {
+        __typename
+        label
+        label_en
+        url
+        icon
+      }
+    }
   }
   services {
     __typename

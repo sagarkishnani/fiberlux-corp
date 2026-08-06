@@ -67,7 +67,8 @@ var config_default = defineConfig({
                   { value: "video", label: "Video de fondo" },
                   { value: "imagen", label: "Imagen de fondo" },
                   { value: "waveform", label: "Waveform (shader animado)" },
-                  { value: "nodefield", label: "Node field (part\xEDculas plexus)" }
+                  { value: "nodefield", label: "Node field (part\xEDculas plexus)" },
+                  { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
@@ -131,6 +132,46 @@ var config_default = defineConfig({
                     options: [
                       { value: "primary", label: "Primario (magenta s\xF3lido)" },
                       { value: "secondary", label: "Secundario (outline)" }
+                    ]
+                  }
+                ]
+              },
+              // ── Modo Morph (SPEC 96): globo de partículas → soluciones ──
+              {
+                type: "object",
+                name: "morph",
+                label: "Hero \u2014 modo Morph (globo \u2192 soluciones)",
+                description: "Solo aplica si el 'Fondo del hero' es 'Morph'. Texto del trigger y los 4 nodos-soluci\xF3n que aparecen al pulsarlo.",
+                fields: [
+                  { type: "string", name: "triggerLabel", label: "Texto del trigger (ES)" },
+                  { type: "string", name: "triggerLabel_en", label: "Texto del trigger (EN)" },
+                  {
+                    type: "object",
+                    name: "solutionNodes",
+                    label: "Nodos-soluci\xF3n (hasta 4)",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({ label: item?.label || "Nodo" })
+                    },
+                    fields: [
+                      { type: "string", name: "label", label: "Label (ES)" },
+                      { type: "string", name: "label_en", label: "Label (EN)" },
+                      {
+                        type: "string",
+                        name: "url",
+                        label: "URL destino (p\xE1gina de soluci\xF3n)"
+                      },
+                      {
+                        type: "string",
+                        name: "icon",
+                        label: "\xCDcono",
+                        options: [
+                          { value: "datacenter", label: "Data Center / Cloud" },
+                          { value: "conectividad", label: "Conectividad" },
+                          { value: "ciberseguridad", label: "Ciberseguridad" },
+                          { value: "gestionados", label: "Servicios Gestionados" }
+                        ]
+                      }
                     ]
                   }
                 ]
