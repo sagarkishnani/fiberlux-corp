@@ -235,6 +235,53 @@ const DUST_FRAG = /* glsl */ `
   }
 `;
 
+// Chorros direccionales: dos emisores que sueltan partículas en una dirección
+// (arriba-izquierda y abajo-derecha). Cada partícula recorre el "stream" en loop.
+const STREAM_VERT = /* glsl */ `
+  attribute float aGroup;
+  attribute float aOffset;
+  attribute float aPerp;
+  attribute float aSpeed;
+  attribute float aSize;
+  attribute float aPhase;
+  uniform float uTime;
+  uniform float uIntro;
+  uniform float uScroll;
+  uniform float uPixelRatio;
+  uniform vec2 uEmitA; uniform vec2 uDirA;
+  uniform vec2 uEmitB; uniform vec2 uDirB;
+  varying float vA;
+  void main(){
+    vec2 emit = aGroup < 0.5 ? uEmitA : uEmitB;
+    vec2 dir  = aGroup < 0.5 ? uDirA : uDirB;
+    vec2 perp = vec2(-dir.y, dir.x);
+    float travel = mod(aOffset + uTime * aSpeed, 1.0);
+    float len = 1.1;
+    vec2 p = emit + dir * (travel * len) + perp * aPerp;
+    p += perp * sin(uTime * 1.5 + aPhase) * 0.02; // leve serpenteo
+    // Aparece al salir del emisor y se apaga al final del recorrido.
+    float edge = smoothstep(0.0, 0.12, travel) * smoothstep(1.0, 0.6, travel);
+    float tw = 0.55 + 0.45 * sin(uTime * 2.0 + aPhase);
+    vA = edge * tw * uIntro * (1.0 - uScroll * 0.7);
+    gl_Position = vec4(p, 0.0, 1.0);
+    gl_PointSize = aSize * uPixelRatio;
+  }
+`;
+
+const STREAM_FRAG = /* glsl */ `
+  precision mediump float;
+  uniform vec3 uColor;
+  varying float vA;
+  void main(){
+    vec2 c = gl_PointCoord - 0.5;
+    float d = length(c);
+    float a = smoothstep(0.5, 0.0, d);
+    // Núcleo brillante (casi blanco) para que la partícula resalte.
+    vec3 col = mix(uColor, vec3(1.0), smoothstep(0.32, 0.0, d) * 0.6);
+    gl_FragColor = vec4(col, a * vA);
+  }
+`;
+
 // Textura "glass" del tile: rect redondeado translúcido + brillo + ícono.
 function makeGlassTexture(
   key: string,
@@ -544,6 +591,56 @@ export default function CinematicBackground({
     scene.add(dust);
     const dustUniforms = dustMat.uniforms;
 
+    // ── Chorros direccionales (arriba-izquierda y abajo-derecha) ──
+    const streamCount = mobile ? 100 : 200;
+    const halfStream = streamCount / 2;
+    const stPos = new Float32Array(streamCount * 3); // requerido por Points (no usado)
+    const stGroup = new Float32Array(streamCount);
+    const stOffset = new Float32Array(streamCount);
+    const stPerp = new Float32Array(streamCount);
+    const stSpeed = new Float32Array(streamCount);
+    const stSize = new Float32Array(streamCount);
+    const stPhase = new Float32Array(streamCount);
+    for (let i = 0; i < streamCount; i++) {
+      stGroup[i] = i < halfStream ? 0 : 1;
+      stOffset[i] = Math.random();
+      stPerp[i] = rand(-0.035, 0.035);
+      stSpeed[i] = rand(0.05, 0.12);
+      stSize[i] = rand(2.2, 6.0);
+      stPhase[i] = rand(0, Math.PI * 2);
+    }
+    const stGeo = new THREE.BufferGeometry();
+    stGeo.setAttribute("position", new THREE.BufferAttribute(stPos, 3));
+    stGeo.setAttribute("aGroup", new THREE.BufferAttribute(stGroup, 1));
+    stGeo.setAttribute("aOffset", new THREE.BufferAttribute(stOffset, 1));
+    stGeo.setAttribute("aPerp", new THREE.BufferAttribute(stPerp, 1));
+    stGeo.setAttribute("aSpeed", new THREE.BufferAttribute(stSpeed, 1));
+    stGeo.setAttribute("aSize", new THREE.BufferAttribute(stSize, 1));
+    stGeo.setAttribute("aPhase", new THREE.BufferAttribute(stPhase, 1));
+    const streamMat = new THREE.ShaderMaterial({
+      vertexShader: STREAM_VERT,
+      fragmentShader: STREAM_FRAG,
+      uniforms: {
+        uTime: { value: 0 },
+        uIntro: introUniform,
+        uScroll: scrollUniform,
+        uPixelRatio: { value: pr },
+        // Emisores en clip-space (-1..1): A arriba-izquierda, B abajo-derecha.
+        uEmitA: { value: new THREE.Vector2(-0.4, 0.34) },
+        uDirA: { value: new THREE.Vector2(-0.7, 0.7) },
+        uEmitB: { value: new THREE.Vector2(0.32, -0.3) },
+        uDirB: { value: new THREE.Vector2(0.7, -0.7) },
+        uColor: { value: toVec3(PARAMS.colorLight) },
+      },
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const streams = new THREE.Points(stGeo, streamMat);
+    streams.frustumCulled = false;
+    scene.add(streams);
+
     // Cache de la posición del hero en el documento, para calcular el progreso
     // de scroll con window.scrollY (barato, sin forzar reflow por frame).
     let heroTop = 0;
@@ -646,6 +743,7 @@ export default function CinematicBackground({
       rayUniforms.uTime.value = t;
       rayUniforms.uMouse.value.set(ptr.cx, -ptr.cy);
       dustUniforms.uTime.value = t;
+      streamMat.uniforms.uTime.value = t;
       updateCards(t, introE, scrollP);
 
       renderer.render(scene, camera);
@@ -683,6 +781,8 @@ export default function CinematicBackground({
       rayMat.dispose();
       dGeo.dispose();
       dustMat.dispose();
+      stGeo.dispose();
+      streamMat.dispose();
       cardGeo.dispose();
       cards.forEach((c) => c.mat.dispose());
       texCache.forEach((t) => t.dispose());
