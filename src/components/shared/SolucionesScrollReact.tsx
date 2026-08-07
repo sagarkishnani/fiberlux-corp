@@ -159,58 +159,6 @@ export default function SolucionesScrollReact({
     };
   }, [N, isMobile]);
 
-  /* ── Puente de scroll desde el grafo del hero (SPEC 98) ──
-     El banner despacha `fbx:goto-solucion` (y deja `window.__gotoSolucion`
-     por si aún no estábamos hidratados). Al recibirlo, bajamos a esa categoría:
-     en desktop con la misma fórmula de snap (posición absoluta del track), en
-     mobile con `scrollIntoView` del bloque de la categoría. */
-  useEffect(() => {
-    if (N <= 0) return;
-
-    const gotoCategory = (rawIndex: number) => {
-      const index = clamp(Math.round(rawIndex), 0, N - 1);
-
-      // Mobile: sin scroll-jack; el bloque de la categoría tiene su propio id.
-      if (window.matchMedia("(max-width: 767px)").matches) {
-        const el = document.getElementById(`soluciones-cat-${index}`);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        return;
-      }
-
-      const track = trackRef.current;
-      if (!track) return;
-      const total = track.offsetHeight - window.innerHeight;
-      if (total <= 0) return;
-      const rectTop = track.getBoundingClientRect().top;
-      const trackTopAbs = rectTop + window.scrollY;
-      const targetProgress = (index + 0.5) / N;
-      const targetY = Math.round(trackTopAbs + targetProgress * total);
-      const lenis = (window as any).__lenis;
-      if (lenis?.scrollTo) lenis.scrollTo(targetY, { duration: 0.7 });
-      else window.scrollTo({ top: targetY, behavior: "smooth" });
-    };
-
-    // Caso ya hidratado: escuchar el evento.
-    const onGoto = (e: Event) => {
-      const idx = (e as CustomEvent).detail?.index;
-      if (typeof idx === "number") {
-        (window as any).__gotoSolucion = undefined;
-        // Esperar a que la sección esté en su sitio antes de calcular targetY.
-        requestAnimationFrame(() => requestAnimationFrame(() => gotoCategory(idx)));
-      }
-    };
-    window.addEventListener("fbx:goto-solucion", onGoto);
-
-    // Caso "aún no hidratado al hacer click": consumir el índice pendiente.
-    const pending = (window as any).__gotoSolucion;
-    if (typeof pending === "number") {
-      (window as any).__gotoSolucion = undefined;
-      requestAnimationFrame(() => requestAnimationFrame(() => gotoCategory(pending)));
-    }
-
-    return () => window.removeEventListener("fbx:goto-solucion", onGoto);
-  }, [N]);
-
   /* ── Tooltip "Ver más" con delay + lag ── */
   const finePointer = useRef(false);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
@@ -392,7 +340,7 @@ export default function SolucionesScrollReact({
               const subs = (it?.bullets || []).filter(Boolean) as typeof subservicios;
               const tina = services?.items?.[idx];
               return (
-                <div key={idx} id={`soluciones-cat-${idx}`} className="scroll-mt-24">
+                <div key={idx}>
                   <div className="text-[52px] font-semibold leading-none text-white">
                     {it?.number}
                   </div>

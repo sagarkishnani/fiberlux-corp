@@ -45,7 +45,7 @@ export default function HeroServiciosReact({
 
   return (
     <section
-      className="relative flex min-h-[86svh] items-center overflow-hidden -mt-16"
+      className="relative flex min-h-[100svh] items-center overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
       {/* Fondo cinematic: god-rays + iconos de categoría flotando + polvo de luz
@@ -75,19 +75,30 @@ export default function HeroServiciosReact({
       />
 
       <div className="relative z-10 w-full site-container py-24 text-center">
-        <div className="mx-auto max-w-[760px]">
-          {/* Breadcrumb */}
-          <nav className="mb-6 flex items-center justify-center gap-2 text-caption-sm text-greyscale">
-            <a href={base} className="hover:text-greyscale-white transition-colors">
-              {locale === "en" ? "Home" : "Inicio"}
-            </a>
-            <span>/</span>
-            <span
-              className="text-greyscale-white"
-              data-tina-field={tinaField(page, "breadcrumb")}
-            >
-              {tField(page as any, "breadcrumb", locale)}
-            </span>
+        <div
+          className="mx-auto max-w-[760px]"
+          data-reveal="up"
+          data-reveal-stagger="0.12"
+        >
+          {/* Breadcrumb (mismo tamaño que Nosotros: text-sm) */}
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex items-center justify-center gap-2 text-sm">
+              <li>
+                <a
+                  href={base}
+                  className="text-white/50 hover:text-white transition-colors"
+                >
+                  {locale === "en" ? "Home" : "Inicio"}
+                </a>
+              </li>
+              <li className="text-white/30">/</li>
+              <li
+                className="text-white font-medium"
+                data-tina-field={tinaField(page, "breadcrumb")}
+              >
+                {tField(page as any, "breadcrumb", locale)}
+              </li>
+            </ol>
           </nav>
 
           <h1
