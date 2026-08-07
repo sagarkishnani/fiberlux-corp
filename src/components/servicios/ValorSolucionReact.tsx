@@ -27,7 +27,7 @@ interface Card {
    La clave es el slug del servicio (variables.relativePath sin ".json").
    Los slugs sin entrada conservan la onda estática. */
 export interface WidgetConfig {
-  type: "cloud-beam" | "fiber" | "shield-switch" | "noc";
+  type: "cloud-beam" | "fiber" | "multisede" | "shield-switch" | "noc";
   hint?: string;
   onLabel?: string;
   offLabel?: string;
@@ -39,7 +39,7 @@ export interface WidgetConfig {
 // efecto en los widgets con estado binario real (hint definido → shield-switch).
 const WIDGETS: Record<string, WidgetConfig> = {
   "data-center-cloud": { type: "cloud-beam" },
-  "conectividad-empresarial": { type: "fiber" },
+  "conectividad-empresarial": { type: "multisede" },
   "ciberseguridad-gestionada": {
     type: "shield-switch",
     onLabel: "PROTEGIDO",

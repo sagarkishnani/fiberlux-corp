@@ -2038,6 +2038,71 @@ export default defineConfig({
                 description:
                   "Enlace del wordmark de crédito en el pie (se abre en pestaña nueva).",
               },
+              // ── Fondo del footer ──
+              {
+                name: "background",
+                label: "Fondo del footer",
+                type: "object",
+                description:
+                  "Controla el fondo del footer: morado sólido, oscuro con resplandor (recomendado), una imagen, o gradientes CSS personalizados.",
+                fields: [
+                  {
+                    name: "mode",
+                    label: "Tipo de fondo",
+                    type: "string",
+                    options: [
+                      { value: "purple", label: "Morado sólido (clásico)" },
+                      { value: "dark-glow", label: "Oscuro con resplandor (recomendado)" },
+                      { value: "image", label: "Imagen" },
+                      { value: "custom", label: "Gradientes personalizados" },
+                    ],
+                  },
+                  {
+                    name: "baseColor",
+                    label: "Color base",
+                    type: "string",
+                    ui: { component: "color" },
+                    description:
+                      "Color de fondo sólido detrás del resplandor / imagen. Por defecto casi negro (#0A0A0A).",
+                  },
+                  {
+                    name: "glowColor",
+                    label: "Color del resplandor",
+                    type: "string",
+                    ui: { component: "color" },
+                    description:
+                      "Color del resplandor difuso (modo «Oscuro con resplandor»). Por defecto magenta de marca.",
+                  },
+                  {
+                    name: "image",
+                    label: "Imagen de fondo",
+                    type: "image",
+                    description:
+                      "Solo para el modo «Imagen». Se muestra a cover, centrada, sobre el color base.",
+                  },
+                  {
+                    name: "gradients",
+                    label: "Gradientes personalizados (CSS)",
+                    type: "object",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({ label: item?.value || "Gradiente" }),
+                    },
+                    description:
+                      "Solo para el modo «Gradientes personalizados». Cada entrada es un valor CSS de fondo (ej: radial-gradient(...) o linear-gradient(...)). Se apilan en orden (el primero queda arriba) sobre el color base.",
+                    fields: [
+                      {
+                        name: "value",
+                        label: "Valor CSS",
+                        type: "string",
+                        ui: { component: "textarea" },
+                        description:
+                          "Ej: radial-gradient(100% 120% at 15% 60%, rgba(150,35,122,0.55), transparent 55%)",
+                      },
+                    ],
+                  },
+                ],
+              },
             ],
           },
 

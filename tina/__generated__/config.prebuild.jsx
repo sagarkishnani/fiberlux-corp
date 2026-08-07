@@ -1941,6 +1941,65 @@ var config_default = defineConfig({
                 label: "URL de la agencia (cr\xE9dito)",
                 type: "string",
                 description: "Enlace del wordmark de cr\xE9dito en el pie (se abre en pesta\xF1a nueva)."
+              },
+              // ── Fondo del footer ──
+              {
+                name: "background",
+                label: "Fondo del footer",
+                type: "object",
+                description: "Controla el fondo del footer: morado s\xF3lido, oscuro con resplandor (recomendado), una imagen, o gradientes CSS personalizados.",
+                fields: [
+                  {
+                    name: "mode",
+                    label: "Tipo de fondo",
+                    type: "string",
+                    options: [
+                      { value: "purple", label: "Morado s\xF3lido (cl\xE1sico)" },
+                      { value: "dark-glow", label: "Oscuro con resplandor (recomendado)" },
+                      { value: "image", label: "Imagen" },
+                      { value: "custom", label: "Gradientes personalizados" }
+                    ]
+                  },
+                  {
+                    name: "baseColor",
+                    label: "Color base",
+                    type: "string",
+                    ui: { component: "color" },
+                    description: "Color de fondo s\xF3lido detr\xE1s del resplandor / imagen. Por defecto casi negro (#0A0A0A)."
+                  },
+                  {
+                    name: "glowColor",
+                    label: "Color del resplandor",
+                    type: "string",
+                    ui: { component: "color" },
+                    description: "Color del resplandor difuso (modo \xABOscuro con resplandor\xBB). Por defecto magenta de marca."
+                  },
+                  {
+                    name: "image",
+                    label: "Imagen de fondo",
+                    type: "image",
+                    description: "Solo para el modo \xABImagen\xBB. Se muestra a cover, centrada, sobre el color base."
+                  },
+                  {
+                    name: "gradients",
+                    label: "Gradientes personalizados (CSS)",
+                    type: "object",
+                    list: true,
+                    ui: {
+                      itemProps: (item) => ({ label: item?.value || "Gradiente" })
+                    },
+                    description: "Solo para el modo \xABGradientes personalizados\xBB. Cada entrada es un valor CSS de fondo (ej: radial-gradient(...) o linear-gradient(...)). Se apilan en orden (el primero queda arriba) sobre el color base.",
+                    fields: [
+                      {
+                        name: "value",
+                        label: "Valor CSS",
+                        type: "string",
+                        ui: { component: "textarea" },
+                        description: "Ej: radial-gradient(100% 120% at 15% 60%, rgba(150,35,122,0.55), transparent 55%)"
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },

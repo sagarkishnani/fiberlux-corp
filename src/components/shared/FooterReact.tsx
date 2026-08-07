@@ -78,6 +78,57 @@ export default function FooterReact({ query, variables, data: initialData, local
 
   const columns = (footer.columns ?? []).filter(Boolean) as ColumnItem[];
 
+  /* ── Fondo del footer (CMS) ──
+     4 modos: morado sólido, oscuro con resplandor (default), imagen, o
+     gradientes CSS personalizados. El resplandor se genera con color-mix
+     para inyectar transparencia sobre el color de marca elegido. */
+  const bg = (footer as any).background as
+    | {
+        mode?: string | null;
+        baseColor?: string | null;
+        glowColor?: string | null;
+        image?: string | null;
+        gradients?: ({ value?: string | null } | null)[] | null;
+      }
+    | null
+    | undefined;
+
+  const mode = bg?.mode || 'purple';
+  const baseColor = bg?.baseColor || '#0A0A0A';
+  const glowColor = bg?.glowColor || '#96237A';
+
+  let footerBgClass = '';
+  let footerBgStyle: React.CSSProperties = {};
+
+  if (mode === 'image' && bg?.image) {
+    footerBgStyle = {
+      backgroundColor: baseColor,
+      backgroundImage: `url("${bg.image}")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    };
+  } else if (mode === 'custom') {
+    const layers = (bg?.gradients ?? [])
+      .map((g) => g?.value?.trim())
+      .filter(Boolean) as string[];
+    footerBgStyle = layers.length
+      ? { background: `${layers.join(', ')}, ${baseColor}` }
+      : { backgroundColor: baseColor };
+  } else if (mode === 'dark-glow') {
+    // Reflector magenta 100% en código (sin imagen). El degradado real vive
+    // en el <style> `.footer-darkglow` de abajo para poder variar en mobile
+    // vía media query; aquí solo inyectamos los colores como variables CSS.
+    footerBgClass = 'footer-darkglow';
+    footerBgStyle = {
+      ['--fx-base' as any]: baseColor,
+      ['--fx-glow' as any]: glowColor,
+    };
+  } else {
+    // 'purple' (clásico) — fallback por defecto
+    footerBgClass = 'bg-brand-purple';
+  }
+
   const renderColumn = (column: ColumnItem, key: number) => {
     const links = (column.links?.filter(Boolean) as LinkItem[]) ?? [];
     // Long columns (e.g. "Legales") span the full width and lay their links
@@ -120,7 +171,44 @@ export default function FooterReact({ query, variables, data: initialData, local
   };
 
   return (
-    <footer className="bg-brand-purple rounded-t-xl">
+    <footer
+      className={`relative overflow-hidden rounded-t-xl ${footerBgClass}`}
+      style={footerBgStyle}
+    >
+      {mode === 'dark-glow' && (
+        <style>{`
+          .footer-darkglow {
+            background-color: var(--fx-base);
+            /* Desktop: reflector desde arriba-centro que se abre en banda horizontal */
+            background-image:
+              radial-gradient(22% 82% at 54% -12%, color-mix(in srgb, var(--fx-glow) 72%, transparent) 0%, color-mix(in srgb, var(--fx-glow) 30%, transparent) 32%, transparent 60%),
+              radial-gradient(90% 56% at 46% 54%, color-mix(in srgb, var(--fx-glow) 66%, transparent) 0%, color-mix(in srgb, var(--fx-glow) 30%, transparent) 42%, transparent 76%),
+              radial-gradient(48% 34% at 43% 54%, color-mix(in srgb, var(--fx-glow) 60%, transparent) 0%, transparent 70%),
+              radial-gradient(55% 60% at 9% 92%, color-mix(in srgb, var(--fx-glow) 26%, transparent) 0%, transparent 60%);
+          }
+          /* Tablet / desktop angosto (768–1279px): el footer es más alto, así
+             que se sube el bloom y se reduce su alcance vertical para no saturar
+             la mitad inferior; el reflector se mantiene. */
+          @media (min-width: 768px) and (max-width: 1279px) {
+            .footer-darkglow {
+              background-image:
+                radial-gradient(30% 58% at 55% -6%, color-mix(in srgb, var(--fx-glow) 62%, transparent) 0%, color-mix(in srgb, var(--fx-glow) 24%, transparent) 34%, transparent 62%),
+                radial-gradient(96% 40% at 46% 38%, color-mix(in srgb, var(--fx-glow) 54%, transparent) 0%, color-mix(in srgb, var(--fx-glow) 22%, transparent) 46%, transparent 80%),
+                radial-gradient(50% 26% at 42% 38%, color-mix(in srgb, var(--fx-glow) 44%, transparent) 0%, transparent 72%),
+                radial-gradient(60% 34% at 8% 82%, color-mix(in srgb, var(--fx-glow) 18%, transparent) 0%, transparent 64%);
+            }
+          }
+          /* Mobile: el footer es alto y angosto → un haz vertical se ve mal.
+             Se reemplaza por un resplandor suave y ancho arriba + brillo inferior. */
+          @media (max-width: 767px) {
+            .footer-darkglow {
+              background-image:
+                radial-gradient(150% 24% at 50% 2%, color-mix(in srgb, var(--fx-glow) 55%, transparent) 0%, color-mix(in srgb, var(--fx-glow) 20%, transparent) 46%, transparent 82%),
+                radial-gradient(160% 20% at 50% 100%, color-mix(in srgb, var(--fx-glow) 38%, transparent) 0%, transparent 72%);
+            }
+          }
+        `}</style>
+      )}
       {/* ═══ Main content ═══ */}
       <div className="site-container pt-16 sm:pt-20 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

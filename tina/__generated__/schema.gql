@@ -1535,6 +1535,18 @@ type GlobalFooterSocial {
   url: String
 }
 
+type GlobalFooterBackgroundGradients {
+  value: String
+}
+
+type GlobalFooterBackground {
+  mode: String
+  baseColor: String
+  glowColor: String
+  image: String
+  gradients: [GlobalFooterBackgroundGradients]
+}
+
 type GlobalFooter {
   tagline: String
   tagline_en: String
@@ -1545,6 +1557,7 @@ type GlobalFooter {
   logo: String
   agencyLogo: String
   agencyUrl: String
+  background: GlobalFooterBackground
 }
 
 type GlobalPartnersLogos {
@@ -1726,6 +1739,18 @@ input GlobalFooterSocialFilter {
   url: StringFilter
 }
 
+input GlobalFooterBackgroundGradientsFilter {
+  value: StringFilter
+}
+
+input GlobalFooterBackgroundFilter {
+  mode: StringFilter
+  baseColor: StringFilter
+  glowColor: StringFilter
+  image: ImageFilter
+  gradients: GlobalFooterBackgroundGradientsFilter
+}
+
 input GlobalFooterFilter {
   tagline: StringFilter
   tagline_en: StringFilter
@@ -1736,6 +1761,7 @@ input GlobalFooterFilter {
   logo: ImageFilter
   agencyLogo: ImageFilter
   agencyUrl: StringFilter
+  background: GlobalFooterBackgroundFilter
 }
 
 input GlobalPartnersLogosFilter {
@@ -3161,6 +3187,18 @@ input GlobalFooterSocialMutation {
   url: String
 }
 
+input GlobalFooterBackgroundGradientsMutation {
+  value: String
+}
+
+input GlobalFooterBackgroundMutation {
+  mode: String
+  baseColor: String
+  glowColor: String
+  image: String
+  gradients: [GlobalFooterBackgroundGradientsMutation]
+}
+
 input GlobalFooterMutation {
   tagline: String
   tagline_en: String
@@ -3171,6 +3209,7 @@ input GlobalFooterMutation {
   logo: String
   agencyLogo: String
   agencyUrl: String
+  background: GlobalFooterBackgroundMutation
 }
 
 input GlobalPartnersLogosMutation {

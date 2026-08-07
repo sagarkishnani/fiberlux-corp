@@ -11,6 +11,8 @@ import {
   FaUserSecret,
   FaXmark,
   FaHeartPulse,
+  FaBuilding,
+  FaLocationDot,
 } from "react-icons/fa6";
 import type { WidgetConfig } from "./ValorSolucionReact";
 
@@ -32,6 +34,7 @@ export default function DesafioWidget({
     <div className="dw-root relative z-10 flex w-full items-center justify-center">
       {config.type === "cloud-beam" && <CloudBeamWidget />}
       {config.type === "fiber" && <FiberWidget />}
+      {config.type === "multisede" && <MultisedeWidget />}
       {config.type === "shield-switch" && (
         <ShieldSwitchWidget config={config} clickable={clickable} />
       )}
@@ -93,6 +96,14 @@ export default function DesafioWidget({
 
         /* Punto de luz viajero sobre el hilo de fibra (glow que persigue el dash). */
         @keyframes dw-comet { to { offset-distance: 100%; } }
+
+        /* Multisede: cada sede "recibe" el haz al final del recorrido (glow que
+           pulsa justo cuando la luz que salió del hub llega al nodo). */
+        @keyframes dw-site-arrive {
+          0%, 74%, 100% { box-shadow: 0 6px 14px -4px rgba(0,0,0,0.45); }
+          86%           { box-shadow: 0 0 18px 4px rgba(214,77,184,0.75); }
+        }
+        .dw-root .dw-site { animation: dw-site-arrive 2s ease-in-out infinite; }
 
         /* Escudo: anillo que pulsa hacia afuera cuando está protegido. */
         @keyframes dw-ring {
@@ -315,6 +326,75 @@ function FiberWidget() {
       </div>
       <span className="mt-1">
         <MonoLabel tone="on">Enlace activo</MonoLabel>
+      </span>
+    </div>
+  );
+}
+
+/* ── Conectividad Empresarial — hub multisede: un nodo central irradia enlaces
+   de fibra hacia varias sedes; la luz sale del hub y viaja a cada sede en
+   secuencia (concepto de red multisede, no un simple punto a punto). ── */
+function MultisedeWidget() {
+  // viewBox 300×196: hub centrado arriba (150,52 = borde inferior del nodo),
+  // tres sedes abajo. Cada enlace lo recorre un haz hub → sede, escalonado.
+  const sites = [
+    { x: 24, d: "M150 52 C 110 100, 50 120, 24 156", delay: "0s" },
+    { x: 150, d: "M150 52 L150 156", delay: "0.5s" },
+    { x: 276, d: "M150 52 C 190 100, 250 120, 276 156", delay: "1s" },
+  ];
+  return (
+    <div className="mb-24 flex w-full max-w-[260px] flex-col items-center sm:max-w-[300px] md:mb-32">
+      <div className="relative h-[176px] w-full">
+        <svg viewBox="0 0 300 176" className="absolute inset-0 h-full w-full" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="dw-hub" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#D64DB8" />
+              <stop offset="1" stopColor="#96237A" />
+            </linearGradient>
+          </defs>
+          {sites.map((s, i) => (
+            <g key={i}>
+              {/* Enlace tenue de base. */}
+              <path d={s.d} stroke="rgba(213,167,202,0.22)" strokeWidth="1.5" />
+              {/* Haz de luz que sale del hub y viaja hacia la sede. */}
+              <path
+                d={s.d}
+                pathLength={100}
+                stroke="url(#dw-hub)"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeDasharray="18 82"
+                style={{
+                  filter: "drop-shadow(0 0 5px rgba(214,77,184,0.9))",
+                  animation: `dw-trace 2s linear ${s.delay} infinite`,
+                }}
+              />
+            </g>
+          ))}
+        </svg>
+
+        {/* Hub central (nodo con anillos de señal que pulsan). */}
+        <span className="absolute left-1/2 top-0 z-10 h-11 w-11 -translate-x-1/2 md:h-[52px] md:w-[52px]">
+          <span aria-hidden="true" className="dw-node-ring pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/70" />
+          <span aria-hidden="true" className="dw-node-ring dw-node-ring2 pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/60" />
+          <span className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+            <FaBuilding className="text-[19px] md:text-[22px]" />
+          </span>
+        </span>
+
+        {/* Sedes — cada una "se enciende" cuando el haz llega (dw-site). */}
+        {sites.map((s, i) => (
+          <span
+            key={i}
+            className="dw-site absolute bottom-0 z-10 flex h-9 w-9 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg md:h-10 md:w-10"
+            style={{ left: `${(s.x / 300) * 100}%`, transform: "translateX(-50%)", animationDelay: s.delay }}
+          >
+            <FaLocationDot className="text-[13px] md:text-[15px]" />
+          </span>
+        ))}
+      </div>
+      <span className="mt-2">
+        <MonoLabel tone="on">3 sedes conectadas</MonoLabel>
       </span>
     </div>
   );

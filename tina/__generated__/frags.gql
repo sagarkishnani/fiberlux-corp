@@ -597,6 +597,17 @@ fragment GlobalParts on Global {
     logo
     agencyLogo
     agencyUrl
+    background {
+      __typename
+      mode
+      baseColor
+      glowColor
+      image
+      gradients {
+        __typename
+        value
+      }
+    }
   }
   partners {
     __typename

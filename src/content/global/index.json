@@ -489,7 +489,12 @@
     "logo": "/images/logo/fiberlux.svg",
     "agencyLogo": "/images/logo/twn.svg",
     "agencyUrl": "https://twnstudios.com/?utm_source=fiberlux-corp&utm_medium=referral&utm_campaign=client_portfolio",
-    "tagline_en": "Power your business connectivity"
+    "tagline_en": "Power your business connectivity",
+    "background": {
+      "mode": "dark-glow",
+      "baseColor": "#0A0A0A",
+      "glowColor": "#B3238F"
+    }
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
