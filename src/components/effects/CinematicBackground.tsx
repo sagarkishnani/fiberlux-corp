@@ -1,385 +1,214 @@
-import { useEffect, useMemo, useRef, createElement } from "react";
-import { renderToStaticMarkup } from "react-dom/server";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import {
-  FaServer,
-  FaNetworkWired,
-  FaShieldHalved,
-  FaGears,
-  FaCloud,
-  FaWifi,
-  FaDatabase,
-  FaLock,
-  FaMicrochip,
-  FaSatelliteDish,
-  FaHeadset,
-  FaGlobe,
-  FaTowerBroadcast,
-  FaCode,
-  FaDesktop,
-} from "react-icons/fa6";
-import type { IconType } from "react-icons";
 
 /**
- * CinematicBackground — atmósfera "cinematic" del hero (SPEC 97), en WebGL.
+ * CinematicBackground — hero "cinematic" (SPEC 97): PLANETA de conectividad.
  *
- *   1. GOD-RAYS + HAZE → shader de dispersión volumétrica (+ onda de luz al click
- *      y desvanecido por scroll).
- *   2. GLASS TILES 3D  → tiles "glass" con los íconos de las soluciones,
- *      distribuidos en columnas a los COSTADOS (sin solaparse), mecidos con
- *      leve inclinación (no giran → el ícono siempre se ve). Decorativos.
- *   3. DUST/EMBERS     → partículas GPU additivas.
+ * Globo punteado (tipo tierra) al fondo, con atmósfera morada en el borde
+ * (el resplandor de la base da el gradiente base-clara → morado → negro), arcos
+ * de fibra conectándose sobre la superficie (cables submarinos), campo de
+ * estrellas y rotación lenta. Todo en WebGL, en morado de marca.
  *
- * Al hacer scroll toda la escena se funde/deriva (transición al bajar). Respeta
- * reduced-motion, pausa el rAF fuera de viewport y libera todo al desmontar.
+ * Rendimiento: geometría barata (points), DPR capado y render a menor escala.
+ * Respeta reduced-motion (frame estático), pausa el rAF fuera de viewport y
+ * libera todo al desmontar. Se funde/deriva al hacer scroll.
  */
 
 const PARAMS = {
-  dustCount: 150,
-  dustCountMobile: 60,
-  cardCount: 10,
-  cardCountMobile: 6,
-  // Rendimiento: la escena es de baja frecuencia (humo/luz), así que se renderiza
-  // a menor resolución y con DPR capado sin pérdida visible; los god-rays usan
-  // pocas muestras y el ruido pocas octavas.
-  renderScale: 0.7,
-  renderScaleMobile: 0.5,
+  globeRadius: 3.7,
+  globeY: -4.05, // centro del globo bajo el viewport (solo se ve el casquete)
+  dotCount: 7000,
+  dotCountMobile: 3200,
+  starCount: 260,
+  starCountMobile: 120,
+  arcCount: 9,
+  arcCountMobile: 5,
+  renderScale: 0.75,
+  renderScaleMobile: 0.55,
   dprCap: 1.5,
-  raySamples: 26,
-  raySamplesMobile: 16,
-  color: [0x96, 0x23, 0x7a] as [number, number, number],
-  colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number],
+  color: [0x96, 0x23, 0x7a] as [number, number, number], // brand-purple
+  colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number], // acento claro
   introMs: 1800,
-  fov: 50,
-  cameraZ: 6,
+  rotSpeed: 0.03, // rad/s del globo
+  fov: 38,
+  cameraZ: 7,
 } as const;
-
-const ICONS: Record<string, IconType> = {
-  datacenter: FaServer,
-  conectividad: FaNetworkWired,
-  ciberseguridad: FaShieldHalved,
-  gestionados: FaGears,
-  cloud: FaCloud,
-  wifi: FaWifi,
-  database: FaDatabase,
-  lock: FaLock,
-  microchip: FaMicrochip,
-  satellite: FaSatelliteDish,
-  headset: FaHeadset,
-  globe: FaGlobe,
-  broadcast: FaTowerBroadcast,
-  code: FaCode,
-  desktop: FaDesktop,
-};
-const DEFAULT_ICON_KEYS = [
-  "datacenter",
-  "conectividad",
-  "ciberseguridad",
-  "gestionados",
-];
-// Íconos extra (subservicios/tech) para dar variedad a los tiles y que no se
-// repitan tanto. Se mezclan con los íconos de solución del CMS.
-const EXTRA_ICON_KEYS = [
-  "cloud",
-  "database",
-  "lock",
-  "microchip",
-  "satellite",
-  "headset",
-  "globe",
-  "broadcast",
-  "code",
-  "desktop",
-  "wifi",
-];
 
 interface Props {
   className?: string;
-  iconKeys?: string[];
+  iconKeys?: string[]; // (no usado: los íconos se reemplazaron por el planeta)
   signalReady?: boolean;
   onUnsupported?: () => void;
 }
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
+const toVec3 = (c: readonly number[]) =>
+  new THREE.Color(c[0] / 255, c[1] / 255, c[2] / 255);
 
-const QUAD_VERT = /* glsl */ `
+// Punto en esfera unidad (Fibonacci) para índice i de n.
+function fib(i: number, n: number): [number, number, number] {
+  const phi = Math.acos(1 - (2 * (i + 0.5)) / n);
+  const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+  return [
+    Math.sin(phi) * Math.cos(theta),
+    Math.cos(phi),
+    Math.sin(phi) * Math.sin(theta),
+  ];
+}
+
+// ── Fondo: resplandor morado en la base (gradiente base→morado→negro) ──
+const BG_VERT = /* glsl */ `
   varying vec2 vUv;
-  void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }
+  void main(){ vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }
 `;
-
-const rayFrag = (samples: number) => /* glsl */ `
+const BG_FRAG = /* glsl */ `
   precision highp float;
   varying vec2 vUv;
-  uniform float uTime;
-  uniform float uIntro;
-  uniform float uScroll;
-  uniform vec2 uRes;
-  uniform vec2 uMouse;
   uniform vec3 uColor;
   uniform vec3 uColorLight;
-  uniform vec2 uRipplePos[3];
-  uniform float uRippleStart[3];
-  #define N ${samples}
-
-  float hash(vec2 p){ p = fract(p * vec2(123.34, 456.21)); p += dot(p, p + 45.32); return fract(p.x * p.y); }
-  float noise(vec2 p){
-    vec2 i = floor(p), f = fract(p);
-    float a = hash(i), b = hash(i + vec2(1.,0.)), c = hash(i + vec2(0.,1.)), d = hash(i + vec2(1.,1.));
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
-  }
-  float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<3;i++){ v+=a*noise(p); p*=2.02; a*=0.5; } return v; }
-
+  uniform float uIntro;
+  uniform float uScroll;
   void main(){
-    vec2 uv = vUv;
-    float aspect = uRes.x / uRes.y;
-    vec2 auv = vec2(uv.x * aspect, uv.y);
-    // La fuente de luz baja al hacer scroll (parallax).
-    vec2 lp = vec2(0.5 * aspect + uMouse.x * 0.05, 1.16 + uMouse.y * 0.03 - uScroll * 0.22);
-
-    vec2 dir = auv - lp;
-    vec2 delta = dir / float(N) * 0.9;
-    vec2 pos = auv;
-    float illum = 0.0, w = 1.0;
-    for (int i = 0; i < N; i++){
-      pos -= delta;
-      float dd = distance(pos, lp);
-      float glow = exp(-dd * dd * 2.7);
-      float s = fbm(pos * vec2(5.0, 1.7) + vec2(0.0, -uTime * 0.03));
-      illum += glow * (0.14 + 0.86 * s) * w;
-      w *= 0.95;
-    }
-    illum = illum / float(N) * 1.9;
-    illum = pow(clamp(illum, 0.0, 1.4), 1.4);
-
-    vec2 sc = auv * 2.4; sc.y -= uTime * 0.02; sc += uMouse * 0.12;
-    float haze = fbm(sc) * fbm(sc * 0.5 + 3.0);
-    float topGlow = exp(-distance(auv, lp) * 1.9);
-
-    float intensity = illum + haze * 0.07 + topGlow * 0.24;
-    float vig = smoothstep(1.2, 0.15, length((uv - vec2(0.5, 0.6)) * vec2(1.05, 1.2)));
-    intensity *= mix(0.18, 1.0, vig);
-    intensity *= smoothstep(-0.05, 0.55, uv.y);
-    intensity *= 0.78 * uIntro;
-    // Se funde a negro al bajar.
-    intensity *= (1.0 - uScroll * 0.5);
-
-    // Onda de luz al click (suave): anillos que se expanden y se apagan.
-    float ripple = 0.0;
-    for (int i = 0; i < 3; i++){
-      float age = uTime - uRippleStart[i];
-      if (age > 0.0 && age < 2.2){
-        float d = distance(uv, uRipplePos[i]);
-        float radius = age * 0.55;
-        float ring = exp(-pow((d - radius) / 0.045, 2.0));
-        ripple += ring * (1.0 - age / 2.2);
-      }
-    }
-    intensity += ripple * 0.1 * uIntro;
-
-    vec3 col = mix(uColor, uColorLight, clamp(illum * 1.1, 0.0, 0.82));
-    vec3 outc = col * intensity
-      + uColorLight * topGlow * 0.15 * uIntro * (1.0 - uScroll * 0.5)
-      + uColorLight * ripple * 0.09 * uIntro;
-    gl_FragColor = vec4(outc, 1.0);
+    // Resplandor desde la base (abajo-centro), aclarando hacia morado y a negro arriba.
+    float d = distance(vUv, vec2(0.5, -0.02));
+    float glow = exp(-d * d * 2.6);
+    float baseLift = smoothstep(0.28, -0.05, vUv.y); // un pelín más claro al fondo
+    vec3 col = uColor * (0.06 + 0.14 * baseLift) + uColorLight * glow * 0.5;
+    float amt = (glow * 0.45 + baseLift * 0.08) * uIntro * (1.0 - uScroll * 0.55);
+    gl_FragColor = vec4(col * amt, 1.0);
   }
 `;
 
-const DUST_VERT = /* glsl */ `
+// ── Globo punteado ──
+const DOT_VERT = /* glsl */ `
+  uniform float uPixelRatio;
+  varying float vFront;
+  varying float vRim;
+  void main(){
+    vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
+    vec3 n = normalize(mat3(modelMatrix) * position);
+    vec3 vdir = normalize(cameraPosition - wp);
+    float f = dot(n, vdir);
+    vFront = smoothstep(-0.15, 0.35, f);
+    vRim = smoothstep(0.55, 0.02, f) * step(0.0, f); // brilla cerca del borde
+    vec4 mv = viewMatrix * vec4(wp, 1.0);
+    gl_Position = projectionMatrix * mv;
+    gl_PointSize = uPixelRatio * 90.0 / max(0.1, -mv.z);
+  }
+`;
+const DOT_FRAG = /* glsl */ `
+  precision mediump float;
+  uniform vec3 uColor;
+  uniform vec3 uColorLight;
+  uniform float uIntro;
+  uniform float uScroll;
+  varying float vFront;
+  varying float vRim;
+  void main(){
+    if (vFront <= 0.02) discard; // oculta el hemisferio trasero
+    vec2 c = gl_PointCoord - 0.5;
+    float a = smoothstep(0.5, 0.0, length(c));
+    vec3 col = mix(uColor * 0.85, uColorLight, vRim * 0.9);
+    float alpha = a * (0.05 + 0.16 * vFront + 0.5 * vRim) * uIntro * (1.0 - uScroll * 0.6);
+    gl_FragColor = vec4(col, alpha);
+  }
+`;
+
+// ── Atmósfera (fresnel en el borde) ──
+const ATM_VERT = /* glsl */ `
+  varying vec3 vN;
+  varying vec3 vWP;
+  void main(){
+    vWP = (modelMatrix * vec4(position, 1.0)).xyz;
+    vN = normalize(mat3(modelMatrix) * position);
+    gl_Position = projectionMatrix * viewMatrix * vec4(vWP, 1.0);
+  }
+`;
+const ATM_FRAG = /* glsl */ `
+  precision mediump float;
+  uniform vec3 uColorLight;
+  uniform float uIntro;
+  uniform float uScroll;
+  varying vec3 vN;
+  varying vec3 vWP;
+  void main(){
+    vec3 vdir = normalize(cameraPosition - vWP);
+    float fres = pow(1.0 - max(0.0, dot(vN, vdir)), 4.5);
+    float a = fres * 0.42 * uIntro * (1.0 - uScroll * 0.55);
+    gl_FragColor = vec4(uColorLight * a, a);
+  }
+`;
+
+// ── Estrellas ──
+const STAR_VERT = /* glsl */ `
   attribute float aPhase;
   attribute float aSize;
-  attribute float aSpeed;
   uniform float uTime;
-  uniform float uScroll;
-  uniform vec2 uMouse;
   uniform float uPixelRatio;
-  uniform vec2 uRipplePos[3];
-  uniform float uRippleStart[3];
+  uniform float uScroll;
   varying float vA;
   void main(){
-    vec2 p = position.xy;
-    p.x += sin(uTime * aSpeed + aPhase) * 0.06;
-    p.y += cos(uTime * aSpeed * 0.7 + aPhase * 1.3) * 0.05;
-    p.y += 0.10 * sin(uTime * 0.05 * aSpeed + aPhase);
-    p += uMouse * (0.02 + aSize * 0.0015);
-    p.y += uScroll * 0.5; // deriva hacia arriba al bajar
-    // Empuje suave por la onda de luz al click.
-    for (int i = 0; i < 3; i++){
-      float age = uTime - uRippleStart[i];
-      if (age > 0.0 && age < 2.2){
-        vec2 puv = vec2(p.x * 0.5 + 0.5, p.y * 0.5 + 0.5);
-        vec2 diff = puv - uRipplePos[i];
-        float d = length(diff);
-        float radius = age * 0.55;
-        float ring = exp(-pow((d - radius) / 0.05, 2.0));
-        vec2 dir = d > 0.0001 ? diff / d : vec2(0.0);
-        p += dir * ring * (1.0 - age / 2.2) * 0.03;
-      }
-    }
-    vA = (0.30 + 0.70 * abs(sin(uTime * aSpeed * 1.5 + aPhase))) * (1.0 - uScroll * 0.6);
-    gl_Position = vec4(p, 0.0, 1.0);
+    vec4 mv = viewMatrix * modelMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * mv;
+    vA = (0.4 + 0.6 * abs(sin(uTime * 0.8 + aPhase))) * (1.0 - uScroll * 0.7);
     gl_PointSize = aSize * uPixelRatio;
   }
 `;
-
-const DUST_FRAG = /* glsl */ `
+const STAR_FRAG = /* glsl */ `
   precision mediump float;
   uniform vec3 uColor;
   uniform float uIntro;
   varying float vA;
   void main(){
     vec2 c = gl_PointCoord - 0.5;
-    float d = length(c);
-    float a = smoothstep(0.5, 0.0, d);
+    float a = smoothstep(0.5, 0.0, length(c));
     gl_FragColor = vec4(uColor, a * vA * uIntro);
   }
 `;
 
-// Chorros direccionales: dos emisores que sueltan partículas en una dirección
-// (arriba-izquierda y abajo-derecha). Cada partícula recorre el "stream" en loop.
-const STREAM_VERT = /* glsl */ `
-  attribute float aGroup;
-  attribute float aOffset;
-  attribute float aPerp;
-  attribute float aSpeed;
-  attribute float aSize;
-  attribute float aPhase;
+// ── Arcos de fibra ──
+const ARC_VERT = /* glsl */ `
+  attribute float aT;      // 0..1 a lo largo del arco
+  attribute float aArc;    // id del arco
   uniform float uTime;
-  uniform float uIntro;
-  uniform float uScroll;
   uniform float uPixelRatio;
-  uniform vec2 uEmitA; uniform vec2 uDirA;
-  uniform vec2 uEmitB; uniform vec2 uDirB;
+  uniform float uScroll;
   varying float vA;
   void main(){
-    vec2 emit = aGroup < 0.5 ? uEmitA : uEmitB;
-    vec2 dir  = aGroup < 0.5 ? uDirA : uDirB;
-    vec2 perp = vec2(-dir.y, dir.x);
-    float travel = mod(aOffset + uTime * aSpeed, 1.0);
-    float len = 1.1;
-    vec2 p = emit + dir * (travel * len) + perp * aPerp;
-    p += perp * sin(uTime * 1.5 + aPhase) * 0.02; // leve serpenteo
-    // Aparece al salir del emisor y se apaga al final del recorrido.
-    float edge = smoothstep(0.0, 0.12, travel) * smoothstep(1.0, 0.6, travel);
-    float tw = 0.55 + 0.45 * sin(uTime * 2.0 + aPhase);
-    vA = edge * tw * uIntro * (1.0 - uScroll * 0.7);
-    gl_Position = vec4(p, 0.0, 1.0);
-    gl_PointSize = aSize * uPixelRatio;
+    vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
+    vec4 mv = viewMatrix * vec4(wp, 1.0);
+    gl_Position = projectionMatrix * mv;
+    // Pulso viajando por el arco.
+    float head = fract(uTime * 0.18 + aArc * 0.37);
+    float dd = abs(aT - head);
+    dd = min(dd, 1.0 - dd);
+    float pulse = smoothstep(0.16, 0.0, dd);
+    float base = 0.12;
+    vA = (base + pulse) * (1.0 - uScroll * 0.7);
+    gl_PointSize = uPixelRatio * (1.4 + pulse * 3.2) * 80.0 / max(0.1, -mv.z);
   }
 `;
-
-const STREAM_FRAG = /* glsl */ `
+const ARC_FRAG = /* glsl */ `
   precision mediump float;
   uniform vec3 uColor;
+  uniform vec3 uColorLight;
+  uniform float uIntro;
   varying float vA;
   void main(){
     vec2 c = gl_PointCoord - 0.5;
-    float d = length(c);
-    float a = smoothstep(0.5, 0.0, d);
-    // Núcleo brillante (casi blanco) para que la partícula resalte.
-    vec3 col = mix(uColor, vec3(1.0), smoothstep(0.32, 0.0, d) * 0.6);
-    gl_FragColor = vec4(col, a * vA);
+    float a = smoothstep(0.5, 0.0, length(c));
+    vec3 col = mix(uColor, uColorLight, clamp(vA, 0.0, 1.0));
+    gl_FragColor = vec4(col, a * vA * uIntro);
   }
 `;
 
-// Textura "glass" del tile: rect redondeado translúcido + brillo + ícono.
-function makeGlassTexture(
-  key: string,
-  color: readonly number[],
-  light: readonly number[]
-): THREE.CanvasTexture {
-  const S = 256;
-  const c = document.createElement("canvas");
-  c.width = S;
-  c.height = S;
-  const g = c.getContext("2d")!;
-  const [cr, cg, cb] = color;
-  const [lr, lg, lb] = light;
-  const pad = 26;
-  const r = 46;
-  const x = pad, y = pad, w = S - pad * 2, h = S - pad * 2;
-  const roundPath = () => {
-    g.beginPath();
-    g.moveTo(x + r, y);
-    g.arcTo(x + w, y, x + w, y + h, r);
-    g.arcTo(x + w, y + h, x, y + h, r);
-    g.arcTo(x, y + h, x, y, r);
-    g.arcTo(x, y, x + w, y, r);
-    g.closePath();
-  };
-  g.save();
-  roundPath();
-  g.clip();
-  const fill = g.createLinearGradient(0, y, 0, y + h);
-  fill.addColorStop(0, `rgba(${lr},${lg},${lb},0.20)`);
-  fill.addColorStop(0.5, `rgba(${cr},${cg},${cb},0.10)`);
-  fill.addColorStop(1, `rgba(${cr},${cg},${cb},0.03)`);
-  g.fillStyle = fill;
-  g.fillRect(x, y, w, h);
-  const shine = g.createLinearGradient(0, y, 0, y + h * 0.5);
-  shine.addColorStop(0, "rgba(255,255,255,0.16)");
-  shine.addColorStop(1, "rgba(255,255,255,0)");
-  g.fillStyle = shine;
-  g.fillRect(x, y, w, h * 0.5);
-  g.restore();
-  g.lineWidth = 2.5;
-  g.strokeStyle = `rgba(${lr},${lg},${lb},0.6)`;
-  roundPath();
-  g.stroke();
-
-  const tex = new THREE.CanvasTexture(c);
-  const Icon = ICONS[key] || FaServer;
-  try {
-    const svg = renderToStaticMarkup(
-      createElement(Icon, { color: "rgb(255,236,251)", size: 128 })
-    );
-    const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
-    const img = new Image();
-    img.onload = () => {
-      const sz = 104;
-      g.save();
-      g.shadowColor = `rgba(${lr},${lg},${lb},0.85)`;
-      g.shadowBlur = 16;
-      g.globalAlpha = 0.95;
-      g.drawImage(img, (S - sz) / 2, (S - sz) / 2, sz, sz);
-      g.restore();
-      tex.needsUpdate = true;
-    };
-    img.src = url;
-  } catch {
-    /* si falla, queda el tile glass sin ícono */
-  }
-  return tex;
-}
-
-interface Card {
-  mesh: THREE.Mesh;
-  mat: THREE.MeshBasicMaterial;
-  dirX: number; // dirección de salida desde el centro
-  dirY: number;
-  speed: number; // velocidad del recorrido (loop)
-  phase: number; // desfase en el loop (para emisión continua)
-  scaleFull: number; // escala al llegar a la esquina
-  tiltPhase: number;
-  tiltSpeed: number;
-  tiltAmpX: number;
-  tiltAmpY: number;
-  baseOpacity: number;
-}
-
 export default function CinematicBackground({
   className,
-  iconKeys,
   signalReady,
   onUnsupported,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const glMountRef = useRef<HTMLDivElement>(null);
-
-  const keys = useMemo(() => {
-    const k = (iconKeys || []).filter((s) => s && ICONS[s]);
-    return k.length ? k : DEFAULT_ICON_KEYS;
-  }, [iconKeys]);
 
   useEffect(() => {
     const mount = glMountRef.current;
@@ -415,211 +244,189 @@ export default function CinematicBackground({
     renderer.setClearColor(0x000000, 0);
 
     const camera = new THREE.PerspectiveCamera(PARAMS.fov, 1, 0.1, 100);
-    camera.position.z = PARAMS.cameraZ;
+    camera.position.set(0, 0.2, PARAMS.cameraZ);
+    camera.lookAt(0, -0.9, 0);
     const scene = new THREE.Scene();
-
-    const toVec3 = (c: readonly number[]) =>
-      new THREE.Color(c[0] / 255, c[1] / 255, c[2] / 255);
 
     const introUniform = { value: reduce ? 1 : 0 };
     const scrollUniform = { value: 0 };
-    const rippleUniforms = {
-      uRipplePos: {
-        value: [
-          new THREE.Vector2(-9, -9),
-          new THREE.Vector2(-9, -9),
-          new THREE.Vector2(-9, -9),
-        ],
-      },
-      uRippleStart: { value: [-100, -100, -100] as number[] },
-    };
+    const col = { value: toVec3(PARAMS.color) };
+    const colL = { value: toVec3(PARAMS.colorLight) };
+    const prU = { value: pr };
+    const timeU = { value: 0 };
 
-    // ── God-rays + haze ──
-    const samples = mobile ? PARAMS.raySamplesMobile : PARAMS.raySamples;
-    const rayUniforms = {
-      uTime: { value: 0 },
-      uIntro: introUniform,
-      uScroll: scrollUniform,
-      uRes: { value: new THREE.Vector2(1, 1) },
-      uMouse: { value: new THREE.Vector2(0, 0) },
-      uColor: { value: toVec3(PARAMS.color) },
-      uColorLight: { value: toVec3(PARAMS.colorLight) },
-      uRipplePos: rippleUniforms.uRipplePos,
-      uRippleStart: rippleUniforms.uRippleStart,
-    };
-    const rayMat = new THREE.ShaderMaterial({
-      vertexShader: QUAD_VERT,
-      fragmentShader: rayFrag(samples),
-      uniforms: rayUniforms,
+    // ── Fondo (resplandor de base) ──
+    const bgMat = new THREE.ShaderMaterial({
+      vertexShader: BG_VERT,
+      fragmentShader: BG_FRAG,
+      uniforms: {
+        uColor: col,
+        uColorLight: colL,
+        uIntro: introUniform,
+        uScroll: scrollUniform,
+      },
       transparent: true,
       depthWrite: false,
       depthTest: false,
       blending: THREE.AdditiveBlending,
     });
-    const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), rayMat);
-    quad.frustumCulled = false;
-    quad.renderOrder = -2;
-    scene.add(quad);
+    const bgQuad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), bgMat);
+    bgQuad.frustumCulled = false;
+    bgQuad.renderOrder = -10;
+    scene.add(bgQuad);
 
-    // ── Glass tiles en columnas a los costados (distribución uniforme) ──
-    const halfH = () => Math.tan((PARAMS.fov * Math.PI) / 360) * PARAMS.cameraZ;
-    const halfW = () => halfH() * camera.aspect;
-    const cardGeo = new THREE.PlaneGeometry(1, 1);
-    const texCache = new Map<string, THREE.CanvasTexture>();
-    const getTex = (k: string) => {
-      let x = texCache.get(k);
-      if (!x) {
-        x = makeGlassTexture(k, PARAMS.color, PARAMS.colorLight);
-        texCache.set(k, x);
-      }
-      return x;
-    };
-    const cardN = mobile ? PARAMS.cardCountMobile : PARAMS.cardCount;
-    // Pool de íconos = soluciones (CMS) + extras (subservicios/tech), sin repetir.
-    const pool: string[] = [];
-    const seenKey = new Set<string>();
-    for (const kk of [...keys, ...EXTRA_ICON_KEYS]) {
-      if (ICONS[kk] && !seenKey.has(kk)) {
-        seenKey.add(kk);
-        pool.push(kk);
-      }
-    }
-    const cards: Card[] = [];
-    for (let i = 0; i < cardN; i++) {
-      const key = pool[i % pool.length];
-      const mat = new THREE.MeshBasicMaterial({
-        map: getTex(key),
-        transparent: true,
-        depthWrite: false,
-        depthTest: false,
-        blending: THREE.NormalBlending,
-        opacity: 0,
-      });
-      const mesh = new THREE.Mesh(cardGeo, mat);
-      mesh.position.z = rand(-4.0, -2.0);
-      mesh.renderOrder = -1;
-      scene.add(mesh);
-      // Dirección de salida desde el centro: hacia izquierda/derecha, abriéndose
-      // a las esquinas (±~40°).
-      const side = i % 2 === 0 ? -1 : 1;
-      const ang = rand(-0.7, 0.7);
-      cards.push({
-        mesh,
-        mat,
-        dirX: side * Math.cos(ang),
-        dirY: Math.sin(ang),
-        speed: rand(0.05, 0.1),
-        phase: i / cardN + rand(-0.02, 0.02),
-        scaleFull: rand(1.3, 2.4),
-        tiltPhase: rand(0, Math.PI * 2),
-        tiltSpeed: rand(0.25, 0.5),
-        tiltAmpX: rand(0.06, 0.14),
-        tiltAmpY: rand(0.08, 0.16),
-        baseOpacity: rand(0.55, 0.85),
-      });
-    }
+    // Grupo del planeta (rota).
+    const globe = new THREE.Group();
+    globe.position.y = PARAMS.globeY;
+    globe.scale.setScalar(PARAMS.globeRadius);
+    globe.rotation.z = 0.35; // leve inclinación del eje
+    scene.add(globe);
 
-    // ── Polvo ──
-    const dustCount = mobile ? PARAMS.dustCountMobile : PARAMS.dustCount;
-    const dPos = new Float32Array(dustCount * 3);
-    const dPhase = new Float32Array(dustCount);
-    const dSize = new Float32Array(dustCount);
-    const dSpeed = new Float32Array(dustCount);
-    for (let i = 0; i < dustCount; i++) {
-      dPos[i * 3] = (Math.random() + Math.random() - 1) * 0.9;
-      dPos[i * 3 + 1] = (Math.random() + Math.random() - 1) * 0.8;
-      dPos[i * 3 + 2] = 0;
-      dPhase[i] = rand(0, Math.PI * 2);
-      dSize[i] = rand(1.0, 4.2);
-      dSpeed[i] = rand(0.2, 0.9);
+    // ── Puntos del globo ──
+    const dotN = mobile ? PARAMS.dotCountMobile : PARAMS.dotCount;
+    const dPos = new Float32Array(dotN * 3);
+    for (let i = 0; i < dotN; i++) {
+      const [x, y, z] = fib(i, dotN);
+      dPos[i * 3] = x;
+      dPos[i * 3 + 1] = y;
+      dPos[i * 3 + 2] = z;
     }
     const dGeo = new THREE.BufferGeometry();
     dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
-    dGeo.setAttribute("aPhase", new THREE.BufferAttribute(dPhase, 1));
-    dGeo.setAttribute("aSize", new THREE.BufferAttribute(dSize, 1));
-    dGeo.setAttribute("aSpeed", new THREE.BufferAttribute(dSpeed, 1));
-    const dustMat = new THREE.ShaderMaterial({
-      vertexShader: DUST_VERT,
-      fragmentShader: DUST_FRAG,
+    const dotMat = new THREE.ShaderMaterial({
+      vertexShader: DOT_VERT,
+      fragmentShader: DOT_FRAG,
       uniforms: {
-        uTime: { value: 0 },
+        uColor: col,
+        uColorLight: colL,
         uIntro: introUniform,
         uScroll: scrollUniform,
-        uMouse: rayUniforms.uMouse,
-        uPixelRatio: { value: pr },
-        uColor: { value: toVec3(PARAMS.colorLight) },
-        uRipplePos: rippleUniforms.uRipplePos,
-        uRippleStart: rippleUniforms.uRippleStart,
+        uPixelRatio: prU,
       },
       transparent: true,
       depthWrite: false,
       depthTest: false,
       blending: THREE.AdditiveBlending,
     });
-    const dust = new THREE.Points(dGeo, dustMat);
-    dust.frustumCulled = false;
-    scene.add(dust);
-    const dustUniforms = dustMat.uniforms;
+    const dots = new THREE.Points(dGeo, dotMat);
+    dots.frustumCulled = false;
+    globe.add(dots);
 
-    // ── Chorros direccionales (arriba-izquierda y abajo-derecha) ──
-    const streamCount = mobile ? 100 : 200;
-    const halfStream = streamCount / 2;
-    const stPos = new Float32Array(streamCount * 3); // requerido por Points (no usado)
-    const stGroup = new Float32Array(streamCount);
-    const stOffset = new Float32Array(streamCount);
-    const stPerp = new Float32Array(streamCount);
-    const stSpeed = new Float32Array(streamCount);
-    const stSize = new Float32Array(streamCount);
-    const stPhase = new Float32Array(streamCount);
-    for (let i = 0; i < streamCount; i++) {
-      stGroup[i] = i < halfStream ? 0 : 1;
-      stOffset[i] = Math.random();
-      stPerp[i] = rand(-0.035, 0.035);
-      stSpeed[i] = rand(0.05, 0.12);
-      stSize[i] = rand(2.2, 6.0);
-      stPhase[i] = rand(0, Math.PI * 2);
+    // ── Atmósfera ──
+    const atmMat = new THREE.ShaderMaterial({
+      vertexShader: ATM_VERT,
+      fragmentShader: ATM_FRAG,
+      uniforms: { uColorLight: colL, uIntro: introUniform, uScroll: scrollUniform },
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.BackSide,
+    });
+    const atm = new THREE.Mesh(new THREE.SphereGeometry(1.16, 48, 48), atmMat);
+    atm.frustumCulled = false;
+    globe.add(atm);
+
+    // ── Arcos de fibra ──
+    const arcN = mobile ? PARAMS.arcCountMobile : PARAMS.arcCount;
+    const segs = 40;
+    const aPos = new Float32Array(arcN * segs * 3);
+    const aT = new Float32Array(arcN * segs);
+    const aArc = new Float32Array(arcN * segs);
+    const va = new THREE.Vector3();
+    const vb = new THREE.Vector3();
+    const vm = new THREE.Vector3();
+    for (let k = 0; k < arcN; k++) {
+      const A = fib(Math.floor(rand(0, dotN)), dotN);
+      const B = fib(Math.floor(rand(0, dotN)), dotN);
+      va.set(A[0], A[1], A[2]);
+      vb.set(B[0], B[1], B[2]);
+      vm.copy(va).add(vb).multiplyScalar(0.5).normalize();
+      const lift = 1.0 + 0.18 + va.distanceTo(vb) * 0.12; // altura del arco
+      vm.multiplyScalar(lift);
+      for (let s = 0; s < segs; s++) {
+        const t = s / (segs - 1);
+        // Bézier cuadrática A→vm→B, normalizada suavemente a la altura.
+        const x =
+          (1 - t) * (1 - t) * va.x + 2 * (1 - t) * t * vm.x + t * t * vb.x;
+        const y =
+          (1 - t) * (1 - t) * va.y + 2 * (1 - t) * t * vm.y + t * t * vb.y;
+        const z =
+          (1 - t) * (1 - t) * va.z + 2 * (1 - t) * t * vm.z + t * t * vb.z;
+        const idx = (k * segs + s) * 3;
+        aPos[idx] = x;
+        aPos[idx + 1] = y;
+        aPos[idx + 2] = z;
+        aT[k * segs + s] = t;
+        aArc[k * segs + s] = k;
+      }
     }
-    const stGeo = new THREE.BufferGeometry();
-    stGeo.setAttribute("position", new THREE.BufferAttribute(stPos, 3));
-    stGeo.setAttribute("aGroup", new THREE.BufferAttribute(stGroup, 1));
-    stGeo.setAttribute("aOffset", new THREE.BufferAttribute(stOffset, 1));
-    stGeo.setAttribute("aPerp", new THREE.BufferAttribute(stPerp, 1));
-    stGeo.setAttribute("aSpeed", new THREE.BufferAttribute(stSpeed, 1));
-    stGeo.setAttribute("aSize", new THREE.BufferAttribute(stSize, 1));
-    stGeo.setAttribute("aPhase", new THREE.BufferAttribute(stPhase, 1));
-    const streamMat = new THREE.ShaderMaterial({
-      vertexShader: STREAM_VERT,
-      fragmentShader: STREAM_FRAG,
+    const arcGeo = new THREE.BufferGeometry();
+    arcGeo.setAttribute("position", new THREE.BufferAttribute(aPos, 3));
+    arcGeo.setAttribute("aT", new THREE.BufferAttribute(aT, 1));
+    arcGeo.setAttribute("aArc", new THREE.BufferAttribute(aArc, 1));
+    const arcMat = new THREE.ShaderMaterial({
+      vertexShader: ARC_VERT,
+      fragmentShader: ARC_FRAG,
       uniforms: {
-        uTime: { value: 0 },
+        uColor: col,
+        uColorLight: colL,
         uIntro: introUniform,
         uScroll: scrollUniform,
-        uPixelRatio: { value: pr },
-        // Emisores en clip-space (-1..1): A arriba-izquierda, B abajo-derecha.
-        uEmitA: { value: new THREE.Vector2(-0.4, 0.34) },
-        uDirA: { value: new THREE.Vector2(-0.7, 0.7) },
-        uEmitB: { value: new THREE.Vector2(0.32, -0.3) },
-        uDirB: { value: new THREE.Vector2(0.7, -0.7) },
-        uColor: { value: toVec3(PARAMS.colorLight) },
+        uPixelRatio: prU,
+        uTime: timeU,
       },
       transparent: true,
       depthWrite: false,
       depthTest: false,
       blending: THREE.AdditiveBlending,
     });
-    const streams = new THREE.Points(stGeo, streamMat);
-    streams.frustumCulled = false;
-    scene.add(streams);
+    const arcs = new THREE.Points(arcGeo, arcMat);
+    arcs.frustumCulled = false;
+    globe.add(arcs);
 
-    // Cache de la posición del hero en el documento, para calcular el progreso
-    // de scroll con window.scrollY (barato, sin forzar reflow por frame).
+    // ── Estrellas (fondo, no rotan con el globo) ──
+    const starN = mobile ? PARAMS.starCountMobile : PARAMS.starCount;
+    const sPos = new Float32Array(starN * 3);
+    const sPhase = new Float32Array(starN);
+    const sSize = new Float32Array(starN);
+    for (let i = 0; i < starN; i++) {
+      sPos[i * 3] = rand(-9, 9);
+      sPos[i * 3 + 1] = rand(-2, 8);
+      sPos[i * 3 + 2] = rand(-6, -1);
+      sPhase[i] = rand(0, Math.PI * 2);
+      sSize[i] = rand(1.0, 2.6);
+    }
+    const sGeo = new THREE.BufferGeometry();
+    sGeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
+    sGeo.setAttribute("aPhase", new THREE.BufferAttribute(sPhase, 1));
+    sGeo.setAttribute("aSize", new THREE.BufferAttribute(sSize, 1));
+    const starMat = new THREE.ShaderMaterial({
+      vertexShader: STAR_VERT,
+      fragmentShader: STAR_FRAG,
+      uniforms: {
+        uColor: { value: new THREE.Color(0.9, 0.85, 0.95) },
+        uIntro: introUniform,
+        uScroll: scrollUniform,
+        uPixelRatio: prU,
+        uTime: timeU,
+      },
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const stars = new THREE.Points(sGeo, starMat);
+    stars.frustumCulled = false;
+    scene.add(stars);
+
+    // ── Resize / scroll ──
     let heroTop = 0;
     let heroHeight = 1;
     function resize() {
       const w = mount!.clientWidth || 1;
       const h = mount!.clientHeight || 1;
       renderer.setSize(w, h, false);
-      rayUniforms.uRes.value.set(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       const r = root!.getBoundingClientRect();
@@ -629,7 +436,7 @@ export default function CinematicBackground({
     resize();
     window.addEventListener("resize", resize);
 
-    // Parallax por puntero (desktop).
+    // Parallax por puntero (leve tilt del globo).
     const ptr = { tx: 0, ty: 0, cx: 0, cy: 0 };
     const onPointerMove = (e: PointerEvent) => {
       const rect = root!.getBoundingClientRect();
@@ -650,70 +457,13 @@ export default function CinematicBackground({
       }
     }
 
-    // Onda de luz al click (shockwave).
-    let rippleIdx = 0;
-    const onDown = (e: PointerEvent) => {
-      if (reduce) return;
-      const rect = root!.getBoundingClientRect();
-      const u = (e.clientX - rect.left) / Math.max(1, rect.width);
-      const v = (e.clientY - rect.top) / Math.max(1, rect.height);
-      rippleUniforms.uRipplePos.value[rippleIdx].set(u, 1 - v);
-      rippleUniforms.uRippleStart.value[rippleIdx] = rayUniforms.uTime.value;
-      rippleIdx = (rippleIdx + 1) % 3;
-      if (!raf && visible) raf = requestAnimationFrame(frame);
-    };
-    root.addEventListener("pointerdown", onDown, { passive: true });
-    root.style.pointerEvents = "auto";
-
-    // smoothstep(a,b,x) en JS.
-    const smooth = (a: number, b: number, x: number) => {
-      const tt = Math.max(0, Math.min(1, (x - a) / (b - a)));
-      return tt * tt * (3 - 2 * tt);
-    };
-    function updateCards(t: number, introE: number, scrollP: number) {
-      const hw = halfW();
-      const hh = halfH();
-      const cx = 0;
-      const cy = 0.12 * hh; // centro de emisión, un pelín arriba (cerca del título)
-      const fadeS = 1 - scrollP * 0.6;
-      for (let i = 0; i < cards.length; i++) {
-        const cd = cards[i];
-        const m = cd.mesh;
-        // Recorrido 0..1 en loop → emisión infinita desde el centro.
-        let travel = (t * cd.speed + cd.phase) % 1;
-        if (travel < 0) travel += 1;
-
-        // Sale del centro hacia su esquina, agrandándose ("acercándose").
-        m.position.x = cx + cd.dirX * travel * hw * 1.35 + ptr.cx * 0.15;
-        m.position.y =
-          cy + cd.dirY * travel * hh * 1.35 - ptr.cy * 0.1 + scrollP * 0.8;
-        const sc = cd.scaleFull * (0.28 + 0.72 * travel);
-        m.scale.set(sc, sc, 1);
-
-        m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
-        m.rotation.y =
-          Math.sin(t * cd.tiltSpeed * 0.9 + cd.tiltPhase * 1.3) * cd.tiltAmpY;
-        m.rotation.z = Math.sin(t * cd.tiltSpeed * 0.5) * 0.05;
-
-        // Fade-in al salir del centro, fade-out al llegar a la esquina → sin pop.
-        const op =
-          cd.baseOpacity *
-          smooth(0.0, 0.18, travel) *
-          smooth(1.0, 0.72, travel) *
-          introE *
-          fadeS;
-        cd.mat.opacity = op;
-      }
-    }
-
     function frame(ms: number) {
       if (startMs < 0) startMs = ms;
       const t = ms * 0.001;
+      timeU.value = t;
       const intro = reduce ? 1 : Math.min(1, (ms - startMs) / PARAMS.introMs);
-      const introE = 1 - Math.pow(1 - intro, 3);
-      introUniform.value = introE;
+      introUniform.value = 1 - Math.pow(1 - intro, 3);
 
-      // Progreso de scroll del hero (0 arriba .. 1 cuando sale por arriba).
       const scrollP = Math.max(
         0,
         Math.min(1, (window.scrollY - heroTop) / heroHeight)
@@ -722,11 +472,10 @@ export default function CinematicBackground({
 
       ptr.cx += (ptr.tx - ptr.cx) * 0.05;
       ptr.cy += (ptr.ty - ptr.cy) * 0.05;
-      rayUniforms.uTime.value = t;
-      rayUniforms.uMouse.value.set(ptr.cx, -ptr.cy);
-      dustUniforms.uTime.value = t;
-      streamMat.uniforms.uTime.value = t;
-      updateCards(t, introE, scrollP);
+
+      globe.rotation.y = t * PARAMS.rotSpeed + ptr.cx * 0.25;
+      globe.rotation.x = 0.06 + ptr.cy * 0.12;
+      globe.position.y = PARAMS.globeY + scrollP * 1.2; // sube al hacer scroll
 
       renderer.render(scene, camera);
       signalOnce();
@@ -745,7 +494,6 @@ export default function CinematicBackground({
 
     if (reduce) {
       introUniform.value = 1;
-      updateCards(0, 1, 0);
       renderer.render(scene, camera);
       signalOnce();
     } else {
@@ -756,23 +504,21 @@ export default function CinematicBackground({
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onPointerMove);
-      root.removeEventListener("pointerdown", onDown);
-      root.style.pointerEvents = "";
       io.disconnect();
-      quad.geometry.dispose();
-      rayMat.dispose();
+      bgQuad.geometry.dispose();
+      bgMat.dispose();
       dGeo.dispose();
-      dustMat.dispose();
-      stGeo.dispose();
-      streamMat.dispose();
-      cardGeo.dispose();
-      cards.forEach((c) => c.mat.dispose());
-      texCache.forEach((t) => t.dispose());
+      dotMat.dispose();
+      atm.geometry.dispose();
+      atmMat.dispose();
+      arcGeo.dispose();
+      arcMat.dispose();
+      sGeo.dispose();
+      starMat.dispose();
       renderer.dispose();
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signalReady, keys]);
+  }, [signalReady]);
 
   return (
     <div
