@@ -13,8 +13,10 @@ import createGlobe from "cobe";
 
 // Colores 0..1
 const WHITE: [number, number, number] = [1, 1, 1]; // continentes (puntos)
-const PURPLE: [number, number, number] = [0.4, 0.16, 0.64]; // halo/atmósfera
+const PURPLE: [number, number, number] = [0.55, 0.22, 0.9]; // halo/atmósfera (glow)
 const MAGENTA: [number, number, number] = [0.85, 0.36, 0.95]; // markers + cables
+
+const BASE_THETA = 0.22;
 
 // Hubs (lat, lng) y cables de fibra (conexiones tipo submarino), con Lima (Perú)
 // como centro de la red.
@@ -67,13 +69,13 @@ export default function CinematicBackground({
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      // Diámetro visual ≈ 92% del ancho; COBE deja el globo a ~80% del canvas.
-      sizePx = Math.min(w * 1.15, h * 1.9);
+      // Globo un poco más alejado (más pequeño) que la versión anterior.
+      sizePx = Math.min(w * 1.0, h * 1.7);
       // Centrado horizontal; posicionado para ver el casquete superior (~60%).
       canvas.style.width = `${sizePx}px`;
       canvas.style.height = `${sizePx}px`;
       canvas.style.left = "50%";
-      canvas.style.top = `${h * 0.14 - sizePx * 0.1}px`;
+      canvas.style.top = `${h * 0.16 - sizePx * 0.1}px`;
       canvas.style.transform = "translateX(-50%)";
     };
     computeSize();
@@ -94,9 +96,9 @@ export default function CinematicBackground({
         width: sizePx * dpr,
         height: sizePx * dpr,
         phi: 0,
-        theta: 0.22,
+        theta: BASE_THETA,
         dark: 1,
-        diffuse: 1.25,
+        diffuse: 2.2, // más contraste luz/sombra → volumen (no plano)
         mapSamples: mobile ? 9000 : 16000,
         mapBrightness: 7.5,
         mapBaseBrightness: 0.06, // océano casi negro
@@ -107,8 +109,8 @@ export default function CinematicBackground({
         arcs: ARCS as any,
         arcColor: MAGENTA,
         arcWidth: 1.3,
-        arcHeight: 0.4,
-        markerElevation: 0.02,
+        arcHeight: 0.12, // cables pegados a la superficie
+        markerElevation: 0.01,
         opacity: reduce ? 1 : 0,
         scale: 1,
       } as any);
@@ -123,18 +125,6 @@ export default function CinematicBackground({
       globe?.update({ width: sizePx * dpr, height: sizePx * dpr });
     };
     window.addEventListener("resize", onResize);
-
-    // Parallax por puntero (leve): desplaza phi/theta.
-    const ptr = { x: 0, y: 0 };
-    const finePointer =
-      window.matchMedia?.("(pointer: fine)").matches ?? false;
-    const onPointerMove = (e: PointerEvent) => {
-      const rect = root.getBoundingClientRect();
-      ptr.x = (e.clientX - rect.left) / Math.max(1, rect.width) - 0.5;
-      ptr.y = (e.clientY - rect.top) / Math.max(1, rect.height) - 0.5;
-    };
-    if (finePointer && !reduce)
-      window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     let phi = 0;
     let raf = 0;
@@ -156,14 +146,15 @@ export default function CinematicBackground({
         0,
         Math.min(1, (window.scrollY - heroTop) / heroHeight)
       );
-      if (!reduce) phi += 0.0016; // rotación lenta
+      if (!reduce) phi += 0.0026; // rotación (un poco más rápida)
 
       globe?.update({
-        phi: phi + ptr.x * 0.35,
-        theta: 0.22 + ptr.y * 0.12,
+        phi,
+        // Al hacer scroll el planeta rueda hacia arriba (en dirección del scroll).
+        theta: BASE_THETA + scrollP * 0.9,
         width: sizePx * dpr,
         height: sizePx * dpr,
-        opacity: introE * (1 - scrollP * 0.9),
+        opacity: introE * (1 - scrollP * 0.85),
       });
       signalOnce();
       if (!reduce && visible) raf = requestAnimationFrame(frame);
@@ -189,7 +180,6 @@ export default function CinematicBackground({
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
-      window.removeEventListener("pointermove", onPointerMove);
       io.disconnect();
       globe?.destroy();
     };
@@ -209,7 +199,7 @@ export default function CinematicBackground({
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(120% 80% at 50% 78%, rgba(120,45,150,0.28) 0%, rgba(60,15,80,0.14) 40%, rgba(0,0,0,0) 72%)",
+            "radial-gradient(115% 78% at 50% 74%, rgba(150,55,190,0.42) 0%, rgba(90,25,130,0.22) 38%, rgba(40,10,60,0.08) 60%, rgba(0,0,0,0) 76%)",
           pointerEvents: "none",
         }}
       />
