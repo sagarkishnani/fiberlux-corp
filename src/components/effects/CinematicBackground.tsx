@@ -17,12 +17,14 @@ import * as THREE from "three";
 const PARAMS = {
   globeRadius: 3.7,
   globeY: -4.05, // centro del globo bajo el viewport (solo se ve el casquete)
-  dotCount: 7000,
-  dotCountMobile: 3200,
-  starCount: 260,
-  starCountMobile: 120,
-  arcCount: 9,
-  arcCountMobile: 5,
+  dotCount: 13000,
+  dotCountMobile: 6000,
+  starCount: 520,
+  starCountMobile: 240,
+  dustCount: 200, // polvo/luz ambiental que llena el espacio (dinamismo)
+  dustCountMobile: 100,
+  arcCount: 10,
+  arcCountMobile: 6,
   renderScale: 0.75,
   renderScaleMobile: 0.55,
   dprCap: 1.5,
@@ -56,6 +58,64 @@ function fib(i: number, n: number): [number, number, number] {
   ];
 }
 
+// Máscara de tierra (continentes aproximados, equirectangular) → sampler
+// (lat,lon) => 1 si es tierra, 0 si es océano. Da al globo aspecto de Tierra.
+function makeLandSampler(): (lat: number, lon: number) => number {
+  const W = 360,
+    H = 180;
+  const c = document.createElement("canvas");
+  c.width = W;
+  c.height = H;
+  const g = c.getContext("2d")!;
+  g.fillStyle = "#000";
+  g.fillRect(0, 0, W, H);
+  g.fillStyle = "#fff";
+  const px = (lon: number) => ((lon + 180) / 360) * W;
+  const py = (lat: number) => ((90 - lat) / 180) * H;
+  const blob = (lon: number, lat: number, rwDeg: number, rhDeg: number) => {
+    g.beginPath();
+    g.ellipse(
+      px(lon),
+      py(lat),
+      (rwDeg / 360) * W,
+      (rhDeg / 180) * H,
+      0,
+      0,
+      Math.PI * 2
+    );
+    g.fill();
+  };
+  // Norteamérica
+  blob(-100, 48, 26, 20); blob(-90, 36, 18, 14); blob(-118, 60, 16, 12); blob(-80, 27, 9, 9);
+  // Centroamérica
+  blob(-85, 15, 6, 9);
+  // Sudamérica
+  blob(-62, -12, 15, 20); blob(-68, -35, 8, 16);
+  // Groenlandia
+  blob(-42, 72, 11, 8);
+  // África
+  blob(20, 3, 19, 24); blob(26, -20, 13, 15); blob(12, 22, 11, 10);
+  // Europa
+  blob(15, 52, 15, 9); blob(35, 57, 11, 8);
+  // Asia
+  blob(92, 50, 42, 24); blob(70, 34, 18, 16); blob(112, 30, 17, 16); blob(135, 62, 14, 12);
+  // India / Sudeste asiático
+  blob(78, 22, 8, 12); blob(115, 5, 10, 8);
+  // Australia
+  blob(134, -25, 16, 11);
+  // Antártida (franja inferior)
+  g.fillRect(0, H - 12, W, 12);
+
+  const data = g.getImageData(0, 0, W, H).data;
+  return (lat: number, lon: number) => {
+    let x = Math.floor(((lon + 180) / 360) * W);
+    let y = Math.floor(((90 - lat) / 180) * H);
+    x = ((x % W) + W) % W;
+    y = Math.max(0, Math.min(H - 1, y));
+    return data[(y * W + x) * 4] > 128 ? 1 : 0;
+  };
+}
+
 // ── Fondo: resplandor morado en la base (gradiente base→morado→negro) ──
 const BG_VERT = /* glsl */ `
   varying vec2 vUv;
@@ -81,9 +141,11 @@ const BG_FRAG = /* glsl */ `
 
 // ── Globo punteado ──
 const DOT_VERT = /* glsl */ `
+  attribute float aLand;
   uniform float uPixelRatio;
   varying float vFront;
   varying float vRim;
+  varying float vLand;
   void main(){
     vec3 wp = (modelMatrix * vec4(position, 1.0)).xyz;
     vec3 n = normalize(mat3(modelMatrix) * position);
@@ -91,9 +153,11 @@ const DOT_VERT = /* glsl */ `
     float f = dot(n, vdir);
     vFront = smoothstep(-0.15, 0.35, f);
     vRim = smoothstep(0.55, 0.02, f) * step(0.0, f); // brilla cerca del borde
+    vLand = aLand;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
     gl_Position = projectionMatrix * mv;
-    gl_PointSize = uPixelRatio * 90.0 / max(0.1, -mv.z);
+    // Los puntos de tierra son un poco más grandes que los de océano.
+    gl_PointSize = uPixelRatio * (52.0 + aLand * 46.0) / max(0.1, -mv.z);
   }
 `;
 const DOT_FRAG = /* glsl */ `
@@ -104,12 +168,15 @@ const DOT_FRAG = /* glsl */ `
   uniform float uScroll;
   varying float vFront;
   varying float vRim;
+  varying float vLand;
   void main(){
     if (vFront <= 0.02) discard; // oculta el hemisferio trasero
     vec2 c = gl_PointCoord - 0.5;
     float a = smoothstep(0.5, 0.0, length(c));
     vec3 col = mix(uColor * 0.85, uColorLight, vRim * 0.9);
-    float alpha = a * (0.05 + 0.16 * vFront + 0.5 * vRim) * uIntro * (1.0 - uScroll * 0.6);
+    // Tierra bien visible, océano muy tenue → se ven los continentes.
+    float landB = mix(0.12, 1.0, vLand);
+    float alpha = a * landB * (0.14 + 0.4 * vFront + 0.7 * vRim) * uIntro * (1.0 - uScroll * 0.6);
     gl_FragColor = vec4(col, alpha);
   }
 `;
@@ -129,12 +196,14 @@ const ATM_FRAG = /* glsl */ `
   uniform vec3 uColorLight;
   uniform float uIntro;
   uniform float uScroll;
+  uniform float uPow;
+  uniform float uAmp;
   varying vec3 vN;
   varying vec3 vWP;
   void main(){
     vec3 vdir = normalize(cameraPosition - vWP);
-    float fres = pow(1.0 - max(0.0, dot(vN, vdir)), 4.5);
-    float a = fres * 0.42 * uIntro * (1.0 - uScroll * 0.55);
+    float fres = pow(1.0 - max(0.0, dot(vN, vdir)), uPow);
+    float a = fres * uAmp * uIntro * (1.0 - uScroll * 0.55);
     gl_FragColor = vec4(uColorLight * a, a);
   }
 `;
@@ -199,6 +268,37 @@ const ARC_FRAG = /* glsl */ `
     float a = smoothstep(0.5, 0.0, length(c));
     vec3 col = mix(uColor, uColorLight, clamp(vA, 0.0, 1.0));
     gl_FragColor = vec4(col, a * vA * uIntro);
+  }
+`;
+
+// ── Polvo / luz ambiental (clip-space, llena el espacio → dinamismo) ──
+const DUST_VERT = /* glsl */ `
+  attribute float aPhase;
+  attribute float aSize;
+  attribute float aSpeed;
+  uniform float uTime;
+  uniform float uPixelRatio;
+  uniform float uScroll;
+  varying float vA;
+  void main(){
+    vec2 p = position.xy;
+    p.x += sin(uTime * aSpeed + aPhase) * 0.05;
+    p.y += cos(uTime * aSpeed * 0.7 + aPhase * 1.3) * 0.04;
+    p.y += 0.12 * sin(uTime * 0.05 * aSpeed + aPhase);
+    vA = (0.28 + 0.72 * abs(sin(uTime * aSpeed * 1.4 + aPhase))) * (1.0 - uScroll * 0.6);
+    gl_Position = vec4(p, 0.0, 1.0);
+    gl_PointSize = aSize * uPixelRatio;
+  }
+`;
+const DUST_FRAG = /* glsl */ `
+  precision mediump float;
+  uniform vec3 uColor;
+  uniform float uIntro;
+  varying float vA;
+  void main(){
+    vec2 c = gl_PointCoord - 0.5;
+    float a = smoothstep(0.5, 0.0, length(c));
+    gl_FragColor = vec4(uColor, a * vA * uIntro);
   }
 `;
 
@@ -282,17 +382,24 @@ export default function CinematicBackground({
     globe.rotation.z = 0.35; // leve inclinación del eje
     scene.add(globe);
 
-    // ── Puntos del globo ──
+    // ── Puntos del globo (con máscara de continentes) ──
+    const land = makeLandSampler();
     const dotN = mobile ? PARAMS.dotCountMobile : PARAMS.dotCount;
     const dPos = new Float32Array(dotN * 3);
+    const dLand = new Float32Array(dotN);
+    const R2D = 180 / Math.PI;
     for (let i = 0; i < dotN; i++) {
       const [x, y, z] = fib(i, dotN);
       dPos[i * 3] = x;
       dPos[i * 3 + 1] = y;
       dPos[i * 3 + 2] = z;
+      const lat = Math.asin(Math.max(-1, Math.min(1, y))) * R2D;
+      const lon = Math.atan2(z, x) * R2D;
+      dLand[i] = land(lat, lon);
     }
     const dGeo = new THREE.BufferGeometry();
     dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
+    dGeo.setAttribute("aLand", new THREE.BufferAttribute(dLand, 1));
     const dotMat = new THREE.ShaderMaterial({
       vertexShader: DOT_VERT,
       fragmentShader: DOT_FRAG,
@@ -312,20 +419,32 @@ export default function CinematicBackground({
     dots.frustumCulled = false;
     globe.add(dots);
 
-    // ── Atmósfera ──
-    const atmMat = new THREE.ShaderMaterial({
-      vertexShader: ATM_VERT,
-      fragmentShader: ATM_FRAG,
-      uniforms: { uColorLight: colL, uIntro: introUniform, uScroll: scrollUniform },
-      transparent: true,
-      depthWrite: false,
-      depthTest: false,
-      blending: THREE.AdditiveBlending,
-      side: THREE.BackSide,
-    });
-    const atm = new THREE.Mesh(new THREE.SphereGeometry(1.16, 48, 48), atmMat);
-    atm.frustumCulled = false;
-    globe.add(atm);
+    // ── Atmósfera (halo): capa interna nítida en el borde + capa externa
+    //    difusa que se funde al espacio → halo real, no una franja. ──
+    const makeAtm = (radius: number, pow: number, amp: number) => {
+      const m = new THREE.ShaderMaterial({
+        vertexShader: ATM_VERT,
+        fragmentShader: ATM_FRAG,
+        uniforms: {
+          uColorLight: colL,
+          uIntro: introUniform,
+          uScroll: scrollUniform,
+          uPow: { value: pow },
+          uAmp: { value: amp },
+        },
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        blending: THREE.AdditiveBlending,
+        side: THREE.BackSide,
+      });
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(radius, 48, 48), m);
+      mesh.frustumCulled = false;
+      globe.add(mesh);
+      return m;
+    };
+    const atmInnerMat = makeAtm(1.015, 2.6, 0.55); // rim nítido pegado al globo
+    const atmOuterMat = makeAtm(1.32, 1.25, 0.4); // glow difuso hacia el espacio
 
     // ── Arcos de fibra ──
     const arcN = mobile ? PARAMS.arcCountMobile : PARAMS.arcCount;
@@ -391,11 +510,11 @@ export default function CinematicBackground({
     const sPhase = new Float32Array(starN);
     const sSize = new Float32Array(starN);
     for (let i = 0; i < starN; i++) {
-      sPos[i * 3] = rand(-9, 9);
-      sPos[i * 3 + 1] = rand(-2, 8);
-      sPos[i * 3 + 2] = rand(-6, -1);
+      sPos[i * 3] = rand(-13, 13);
+      sPos[i * 3 + 1] = rand(-3, 10);
+      sPos[i * 3 + 2] = rand(-7, -1);
       sPhase[i] = rand(0, Math.PI * 2);
-      sSize[i] = rand(1.0, 2.6);
+      sSize[i] = rand(0.9, 2.8);
     }
     const sGeo = new THREE.BufferGeometry();
     sGeo.setAttribute("position", new THREE.BufferAttribute(sPos, 3));
@@ -419,6 +538,45 @@ export default function CinematicBackground({
     const stars = new THREE.Points(sGeo, starMat);
     stars.frustumCulled = false;
     scene.add(stars);
+
+    // ── Polvo / luz ambiental (clip-space, llena el espacio) ──
+    const dustN = mobile ? PARAMS.dustCountMobile : PARAMS.dustCount;
+    const duPos = new Float32Array(dustN * 3);
+    const duPhase = new Float32Array(dustN);
+    const duSize = new Float32Array(dustN);
+    const duSpeed = new Float32Array(dustN);
+    for (let i = 0; i < dustN; i++) {
+      duPos[i * 3] = rand(-1, 1);
+      duPos[i * 3 + 1] = rand(-1, 1);
+      duPos[i * 3 + 2] = 0;
+      duPhase[i] = rand(0, Math.PI * 2);
+      duSize[i] = rand(1.2, 4.4);
+      duSpeed[i] = rand(0.2, 0.9);
+    }
+    const duGeo = new THREE.BufferGeometry();
+    duGeo.setAttribute("position", new THREE.BufferAttribute(duPos, 3));
+    duGeo.setAttribute("aPhase", new THREE.BufferAttribute(duPhase, 1));
+    duGeo.setAttribute("aSize", new THREE.BufferAttribute(duSize, 1));
+    duGeo.setAttribute("aSpeed", new THREE.BufferAttribute(duSpeed, 1));
+    const dustMat = new THREE.ShaderMaterial({
+      vertexShader: DUST_VERT,
+      fragmentShader: DUST_FRAG,
+      uniforms: {
+        uTime: timeU,
+        uIntro: introUniform,
+        uScroll: scrollUniform,
+        uPixelRatio: prU,
+        uColor: colL,
+      },
+      transparent: true,
+      depthWrite: false,
+      depthTest: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const dust = new THREE.Points(duGeo, dustMat);
+    dust.frustumCulled = false;
+    dust.renderOrder = -5;
+    scene.add(dust);
 
     // ── Resize / scroll ──
     let heroTop = 0;
@@ -509,12 +667,14 @@ export default function CinematicBackground({
       bgMat.dispose();
       dGeo.dispose();
       dotMat.dispose();
-      atm.geometry.dispose();
-      atmMat.dispose();
+      atmInnerMat.dispose();
+      atmOuterMat.dispose();
       arcGeo.dispose();
       arcMat.dispose();
       sGeo.dispose();
       starMat.dispose();
+      duGeo.dispose();
+      dustMat.dispose();
       renderer.dispose();
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };

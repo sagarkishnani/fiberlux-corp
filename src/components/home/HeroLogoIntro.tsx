@@ -139,13 +139,10 @@ export default function HeroLogoIntro() {
     let raf = 0;
     let t0 = -1;
     const apply = (e: number) => {
-      // Blur que se va afilando + glow del logo.
-      const blur = (1 - e) * 5.5;
-      svg.style.filter = `blur(${blur.toFixed(2)}px) drop-shadow(0 0 10px rgba(214,77,184,${(
-        0.5 * e
-      ).toFixed(2)})) drop-shadow(0 0 26px rgba(150,35,122,${(0.45 * e).toFixed(
+      // Sin blur (nítido); solo el glow del logo que va apareciendo.
+      svg.style.filter = `drop-shadow(0 0 10px rgba(214,77,184,${(0.5 * e).toFixed(
         2
-      )}))`;
+      )})) drop-shadow(0 0 26px rgba(150,35,122,${(0.45 * e).toFixed(2)}))`;
       paths.forEach((p, i) => {
         p.style.transform = `translate(${(dx[i] * (1 - e)).toFixed(2)}px, 0px)`;
         if (!LETTERS[i].keep) {
