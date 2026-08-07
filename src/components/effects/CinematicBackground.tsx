@@ -393,55 +393,12 @@ export default function CinematicBackground({
     body.renderOrder = 0;
     globe.add(body);
 
-    // ── Puntos del globo: GRILLA regular lat/lon (look de globo punteado
-    //    "halftone") + máscara de continentes. Tierra = puntos brillantes y
-    //    grandes; océano = puntos tenues. ──
-    const land = makeLandSampler();
-    const D2R = Math.PI / 180;
-    const step = mobile ? 3.2 : 2.3; // grados entre puntos (grilla densa tipo halftone)
-    const posArr: number[] = [];
-    const landArr: number[] = [];
-    const landPoints: [number, number, number][] = []; // para los cables
-    for (let lat = -88; lat <= 88; lat += step) {
-      const rad = lat * D2R;
-      const ring = Math.cos(rad);
-      const yy = Math.sin(rad);
-      const count = Math.max(1, Math.round((360 / step) * ring));
-      for (let j = 0; j < count; j++) {
-        const lon = (j / count) * 360 - 180;
-        const lr = lon * D2R;
-        const x = ring * Math.cos(lr);
-        const z = ring * Math.sin(lr);
-        const l = land(lat, lon);
-        posArr.push(x, yy, z);
-        landArr.push(l);
-        if (l > 0.5) landPoints.push([x, yy, z]);
-      }
-    }
-    const dotN = landArr.length;
-    const dPos = new Float32Array(posArr);
-    const dLand = new Float32Array(landArr);
-    const dGeo = new THREE.BufferGeometry();
-    dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
-    dGeo.setAttribute("aLand", new THREE.BufferAttribute(dLand, 1));
-    const dotMat = new THREE.ShaderMaterial({
-      vertexShader: DOT_VERT,
-      fragmentShader: DOT_FRAG,
-      uniforms: {
-        uColor: col,
-        uColorLight: colL,
-        uIntro: introUniform,
-        uScroll: scrollUniform,
-        uPixelRatio: prU,
-      },
-      transparent: true,
-      depthWrite: false,
-      depthTest: false, // el hemisferio trasero ya se descarta por vFront (sin z-fighting)
-      blending: THREE.AdditiveBlending,
-    });
-    const dots = new THREE.Points(dGeo, dotMat);
-    dots.frustumCulled = false;
-    globe.add(dots);
+    // ── Superficie del globo (puntos + cables): se construye tras cargar el
+    //    mapamundi para ubicar los continentes REALES. Refs para disposal. ──
+    let dGeo: THREE.BufferGeometry | null = null;
+    let dotMat: THREE.ShaderMaterial | null = null;
+    let arcGeo: THREE.BufferGeometry | null = null;
+    let arcMat: THREE.ShaderMaterial | null = null;
 
     // ── Atmósfera (halo): capa interna nítida en el borde + capa externa
     //    difusa que se funde al espacio → halo real, no una franja. ──
@@ -470,73 +427,159 @@ export default function CinematicBackground({
     const atmInnerMat = makeAtm(1.012, 4.2, 0.75); // rim fino y brillante en el borde
     const atmOuterMat = makeAtm(1.45, 1.1, 0.4); // glow difuso hacia el espacio
 
-    // ── Cables de fibra: conectan puntos de TIERRA (a través de océanos),
-    //    como los cables submarinos. Línea densa con un pulso viajando. ──
-    const arcN = mobile ? PARAMS.arcCountMobile : PARAMS.arcCount;
-    const segs = 64;
-    const aPos = new Float32Array(arcN * segs * 3);
-    const aT = new Float32Array(arcN * segs);
-    const aArc = new Float32Array(arcN * segs);
-    const va = new THREE.Vector3();
-    const vb = new THREE.Vector3();
-    const vm = new THREE.Vector3();
-    const pick = () =>
-      landPoints.length
-        ? landPoints[Math.floor(rand(0, landPoints.length))]
-        : fib(Math.floor(rand(0, dotN)), dotN);
-    for (let k = 0; k < arcN; k++) {
-      let A = pick();
-      let B = pick();
-      va.set(A[0], A[1], A[2]);
-      vb.set(B[0], B[1], B[2]);
-      // Reintenta para que los extremos estén razonablemente lejos (cruzan mar).
-      for (let tryi = 0; tryi < 6 && va.distanceTo(vb) < 1.0; tryi++) {
-        B = pick();
+    // Construye puntos (grilla lat/lon con máscara de tierra) + cables de fibra
+    // que conectan puntos de TIERRA a través de océanos (cables submarinos).
+    const buildSurface = (sampler: (lat: number, lon: number) => number) => {
+      const D2R = Math.PI / 180;
+      const step = mobile ? 3.2 : 2.3; // grilla densa (halftone)
+      const posArr: number[] = [];
+      const landArr: number[] = [];
+      const landPoints: [number, number, number][] = [];
+      for (let lat = -88; lat <= 88; lat += step) {
+        const rad = lat * D2R;
+        const ring = Math.cos(rad);
+        const yy = Math.sin(rad);
+        const count = Math.max(1, Math.round((360 / step) * ring));
+        for (let j = 0; j < count; j++) {
+          const lon = (j / count) * 360 - 180;
+          const lr = lon * D2R;
+          const x = ring * Math.cos(lr);
+          const z = ring * Math.sin(lr);
+          const l = sampler(lat, lon);
+          posArr.push(x, yy, z);
+          landArr.push(l);
+          if (l > 0.5) landPoints.push([x, yy, z]);
+        }
+      }
+      const dotN = landArr.length;
+      dGeo = new THREE.BufferGeometry();
+      dGeo.setAttribute(
+        "position",
+        new THREE.BufferAttribute(new Float32Array(posArr), 3)
+      );
+      dGeo.setAttribute(
+        "aLand",
+        new THREE.BufferAttribute(new Float32Array(landArr), 1)
+      );
+      dotMat = new THREE.ShaderMaterial({
+        vertexShader: DOT_VERT,
+        fragmentShader: DOT_FRAG,
+        uniforms: {
+          uColor: col,
+          uColorLight: colL,
+          uIntro: introUniform,
+          uScroll: scrollUniform,
+          uPixelRatio: prU,
+        },
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const dots = new THREE.Points(dGeo, dotMat);
+      dots.frustumCulled = false;
+      globe.add(dots);
+
+      // ── Cables de fibra ──
+      const arcN = mobile ? PARAMS.arcCountMobile : PARAMS.arcCount;
+      const segs = 64;
+      const aPos = new Float32Array(arcN * segs * 3);
+      const aT = new Float32Array(arcN * segs);
+      const aArc = new Float32Array(arcN * segs);
+      const va = new THREE.Vector3();
+      const vb = new THREE.Vector3();
+      const vm = new THREE.Vector3();
+      const pick = () =>
+        landPoints.length
+          ? landPoints[Math.floor(rand(0, landPoints.length))]
+          : fib(Math.floor(rand(0, Math.max(1, dotN))), Math.max(1, dotN));
+      for (let k = 0; k < arcN; k++) {
+        let A = pick();
+        let B = pick();
+        va.set(A[0], A[1], A[2]);
         vb.set(B[0], B[1], B[2]);
+        for (let tryi = 0; tryi < 6 && va.distanceTo(vb) < 1.0; tryi++) {
+          B = pick();
+          vb.set(B[0], B[1], B[2]);
+        }
+        vm.copy(va).add(vb).multiplyScalar(0.5).normalize();
+        const lift = 1.0 + 0.05 + va.distanceTo(vb) * 0.08;
+        vm.multiplyScalar(lift);
+        for (let s = 0; s < segs; s++) {
+          const t = s / (segs - 1);
+          const x =
+            (1 - t) * (1 - t) * va.x + 2 * (1 - t) * t * vm.x + t * t * vb.x;
+          const y =
+            (1 - t) * (1 - t) * va.y + 2 * (1 - t) * t * vm.y + t * t * vb.y;
+          const z =
+            (1 - t) * (1 - t) * va.z + 2 * (1 - t) * t * vm.z + t * t * vb.z;
+          const idx = (k * segs + s) * 3;
+          aPos[idx] = x;
+          aPos[idx + 1] = y;
+          aPos[idx + 2] = z;
+          aT[k * segs + s] = t;
+          aArc[k * segs + s] = k;
+        }
       }
-      vm.copy(va).add(vb).multiplyScalar(0.5).normalize();
-      const lift = 1.0 + 0.05 + va.distanceTo(vb) * 0.08; // arco pegado al globo
-      vm.multiplyScalar(lift);
-      for (let s = 0; s < segs; s++) {
-        const t = s / (segs - 1);
-        // Bézier cuadrática A→vm→B, normalizada suavemente a la altura.
-        const x =
-          (1 - t) * (1 - t) * va.x + 2 * (1 - t) * t * vm.x + t * t * vb.x;
-        const y =
-          (1 - t) * (1 - t) * va.y + 2 * (1 - t) * t * vm.y + t * t * vb.y;
-        const z =
-          (1 - t) * (1 - t) * va.z + 2 * (1 - t) * t * vm.z + t * t * vb.z;
-        const idx = (k * segs + s) * 3;
-        aPos[idx] = x;
-        aPos[idx + 1] = y;
-        aPos[idx + 2] = z;
-        aT[k * segs + s] = t;
-        aArc[k * segs + s] = k;
+      arcGeo = new THREE.BufferGeometry();
+      arcGeo.setAttribute("position", new THREE.BufferAttribute(aPos, 3));
+      arcGeo.setAttribute("aT", new THREE.BufferAttribute(aT, 1));
+      arcGeo.setAttribute("aArc", new THREE.BufferAttribute(aArc, 1));
+      arcMat = new THREE.ShaderMaterial({
+        vertexShader: ARC_VERT,
+        fragmentShader: ARC_FRAG,
+        uniforms: {
+          uColor: col,
+          uColorLight: colL,
+          uIntro: introUniform,
+          uScroll: scrollUniform,
+          uPixelRatio: prU,
+          uTime: timeU,
+        },
+        transparent: true,
+        depthWrite: false,
+        depthTest: true,
+        blending: THREE.AdditiveBlending,
+      });
+      const arcs = new THREE.Points(arcGeo, arcMat);
+      arcs.frustumCulled = false;
+      globe.add(arcs);
+    };
+
+    // Carga el mapamundi (continentes REALES); si falla, usa la máscara dibujada.
+    const worldUrl = `${import.meta.env.BASE_URL}images/world-equirect.jpg`.replace(
+      /\/{2,}/g,
+      "/"
+    );
+    const worldImg = new Image();
+    worldImg.onload = () => {
+      try {
+        const cw = 700,
+          ch = 350;
+        const cc = document.createElement("canvas");
+        cc.width = cw;
+        cc.height = ch;
+        const cg = cc.getContext("2d")!;
+        cg.drawImage(worldImg, 0, 0, cw, ch);
+        const pix = cg.getImageData(0, 0, cw, ch).data;
+        buildSurface((lat, lon) => {
+          let x = Math.floor(((lon + 180) / 360) * cw);
+          let y = Math.floor(((90 - lat) / 180) * ch);
+          x = ((x % cw) + cw) % cw;
+          y = Math.max(0, Math.min(ch - 1, y));
+          const i = (y * cw + x) * 4;
+          const r = pix[i],
+            g = pix[i + 1],
+            b = pix[i + 2];
+          // Océano = azul (b domina). Tierra = rojo o verde ≥ azul.
+          return r >= b || g >= b + 6 ? 1 : 0;
+        });
+      } catch {
+        buildSurface(makeLandSampler());
       }
-    }
-    const arcGeo = new THREE.BufferGeometry();
-    arcGeo.setAttribute("position", new THREE.BufferAttribute(aPos, 3));
-    arcGeo.setAttribute("aT", new THREE.BufferAttribute(aT, 1));
-    arcGeo.setAttribute("aArc", new THREE.BufferAttribute(aArc, 1));
-    const arcMat = new THREE.ShaderMaterial({
-      vertexShader: ARC_VERT,
-      fragmentShader: ARC_FRAG,
-      uniforms: {
-        uColor: col,
-        uColorLight: colL,
-        uIntro: introUniform,
-        uScroll: scrollUniform,
-        uPixelRatio: prU,
-        uTime: timeU,
-      },
-      transparent: true,
-      depthWrite: false,
-      depthTest: true, // el cuerpo oculta los cables del lado trasero
-      blending: THREE.AdditiveBlending,
-    });
-    const arcs = new THREE.Points(arcGeo, arcMat);
-    arcs.frustumCulled = false;
-    globe.add(arcs);
+    };
+    worldImg.onerror = () => buildSurface(makeLandSampler());
+    worldImg.src = worldUrl;
 
     // ── Estrellas (fondo, no rotan con el globo) ──
     const starN = mobile ? PARAMS.starCountMobile : PARAMS.starCount;
@@ -701,12 +744,12 @@ export default function CinematicBackground({
       bgMat.dispose();
       body.geometry.dispose();
       bodyMat.dispose();
-      dGeo.dispose();
-      dotMat.dispose();
+      dGeo?.dispose();
+      dotMat?.dispose();
       atmInnerMat.dispose();
       atmOuterMat.dispose();
-      arcGeo.dispose();
-      arcMat.dispose();
+      arcGeo?.dispose();
+      arcMat?.dispose();
       sGeo.dispose();
       starMat.dispose();
       duGeo.dispose();
