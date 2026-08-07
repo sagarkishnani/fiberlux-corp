@@ -201,6 +201,22 @@ const whatsappMessage = whatsappContext
       @media (prefers-reduced-motion: reduce) {
         .cine-intro-page header { animation: none; }
       }
+      /* El logo grande del hero arranca OCULTO en cinematic (desktop, sin
+         reduced-motion) para no mostrar "FIBERLUX" antes de la intro
+         FLX→FIBERLUX; HeroLogoIntro lo revela al terminar el morph. Aplicado
+         desde el SSR (no parpadea). Safety: si el JS no corre (sin-JS), se
+         auto-revela a los 6 s — margen amplio sobre la duración de la intro,
+         incluso en dispositivos lentos, para que el safety NUNCA muestre el
+         logo antes de que el morph termine. Con JS, el handoff lo revela antes. */
+      @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+        .cine-intro-page [data-hero-logo] {
+          visibility: hidden;
+          animation: cine-logo-safety 0.01s linear 6000ms forwards;
+        }
+        @keyframes cine-logo-safety {
+          to { visibility: visible; }
+        }
+      }
     </style>
     {/* Accessibility: apply saved preferences before first paint (no flash) */}
     <script is:inline>

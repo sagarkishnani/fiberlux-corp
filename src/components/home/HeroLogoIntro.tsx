@@ -51,7 +51,10 @@ const MORPH_MS = 1000;
 const HOLD_MS = 420; // muestra "FLX" un instante antes de morphear
 
 function findHeroLogo(): HTMLImageElement | null {
-  return document.querySelector<HTMLImageElement>("header a img, header img");
+  return (
+    document.querySelector<HTMLImageElement>("[data-hero-logo]") ??
+    document.querySelector<HTMLImageElement>("header a img, header img")
+  );
 }
 
 export default function HeroLogoIntro() {
@@ -91,14 +94,18 @@ export default function HeroLogoIntro() {
         }
         return;
       }
+      // El logo ya lo oculta el CSS (`.cine-intro-page [data-hero-logo]`) desde
+      // el SSR, así que NO se ve "FIBERLUX" antes de esta intro. Solo copiamos el
+      // rect para posicionar el overlay; lo revelaremos (visibility: visible) en
+      // el handoff.
       logoRef.current = img;
-      img.style.visibility = "hidden";
       setBox({ left: r.left, top: r.top, width: r.width, height: r.height });
     };
-    timer = window.setTimeout(tryStart, 250);
+    timer = window.setTimeout(tryStart, 120);
     return () => {
       if (timer) clearTimeout(timer);
-      if (logoRef.current) logoRef.current.style.visibility = "";
+      // Al desmontar, garantiza que el logo real quede visible (pisa el CSS).
+      if (logoRef.current) logoRef.current.style.visibility = "visible";
     };
   }, []);
 
@@ -151,8 +158,14 @@ export default function HeroLogoIntro() {
         }
       });
     };
-    // Estado inicial (FLX, letras intermedias ocultas).
+    // Estado inicial (FLX, letras intermedias ocultas) + fade-in del overlay
+    // para que "FLX" no aparezca de golpe.
     apply(0);
+    wrap.style.opacity = "0";
+    requestAnimationFrame(() => {
+      wrap.style.transition = "opacity 0.28s ease";
+      wrap.style.opacity = "1";
+    });
 
     const step = (ts: number) => {
       if (t0 < 0) t0 = ts;
@@ -163,9 +176,9 @@ export default function HeroLogoIntro() {
       else finish();
     };
     const finish = () => {
-      // Handoff: revela el logo real y desvanece el overlay.
+      // Handoff: revela el logo real (pisa el CSS) y desvanece el overlay.
       window.setTimeout(() => {
-        if (logoRef.current) logoRef.current.style.visibility = "";
+        if (logoRef.current) logoRef.current.style.visibility = "visible";
         wrap.style.transition = "opacity 0.35s ease";
         wrap.style.opacity = "0";
         window.setTimeout(() => setGone(true), 380);

@@ -693,6 +693,7 @@ export default function HeaderV2React({
                   ref={logoRef}
                   src={logoSrc}
                   alt="Fiberlux"
+                  data-hero-logo=""
                   onLoad={() => scheduleLogoTransform()}
                   className={`absolute left-0 top-1/2 w-auto max-w-none will-change-transform ${logoFilter}`}
                   style={{
