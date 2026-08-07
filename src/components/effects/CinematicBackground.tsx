@@ -23,8 +23,8 @@ const PARAMS = {
   starCountMobile: 240,
   dustCount: 200, // polvo/luz ambiental que llena el espacio (dinamismo)
   dustCountMobile: 100,
-  arcCount: 10,
-  arcCountMobile: 6,
+  arcCount: 20,
+  arcCountMobile: 11,
   renderScale: 0.75,
   renderScaleMobile: 0.55,
   dprCap: 1.5,
@@ -133,8 +133,8 @@ const BG_FRAG = /* glsl */ `
     float d = distance(vUv, vec2(0.5, -0.02));
     float glow = exp(-d * d * 2.6);
     float baseLift = smoothstep(0.28, -0.05, vUv.y); // un pelín más claro al fondo
-    vec3 col = uColor * (0.06 + 0.14 * baseLift) + uColorLight * glow * 0.5;
-    float amt = (glow * 0.45 + baseLift * 0.08) * uIntro * (1.0 - uScroll * 0.55);
+    vec3 col = uColor * (0.05 + 0.08 * baseLift) + uColorLight * glow * 0.18;
+    float amt = (glow * 0.12 + baseLift * 0.04) * uIntro * (1.0 - uScroll * 0.55);
     gl_FragColor = vec4(col * amt, 1.0);
   }
 `;
@@ -156,8 +156,8 @@ const DOT_VERT = /* glsl */ `
     vLand = aLand;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
     gl_Position = projectionMatrix * mv;
-    // Los puntos de tierra son un poco más grandes que los de océano.
-    gl_PointSize = uPixelRatio * (52.0 + aLand * 46.0) / max(0.1, -mv.z);
+    // Puntos distintos (halftone); tierra algo más grande.
+    gl_PointSize = uPixelRatio * (17.0 + aLand * 20.0) / max(0.1, -mv.z);
   }
 `;
 const DOT_FRAG = /* glsl */ `
@@ -171,12 +171,12 @@ const DOT_FRAG = /* glsl */ `
   varying float vLand;
   void main(){
     if (vFront <= 0.02) discard; // oculta el hemisferio trasero
-    vec2 c = gl_PointCoord - 0.5;
-    float a = smoothstep(0.5, 0.0, length(c));
-    vec3 col = mix(uColor * 0.85, uColorLight, vRim * 0.9);
-    // Tierra bien visible, océano muy tenue → se ven los continentes.
-    float landB = mix(0.12, 1.0, vLand);
-    float alpha = a * landB * (0.14 + 0.4 * vFront + 0.7 * vRim) * uIntro * (1.0 - uScroll * 0.6);
+    // Disco NÍTIDO (no gaussiano) → puntos distintos (halftone), no un wash.
+    float a = 1.0 - smoothstep(0.32, 0.48, length(gl_PointCoord - 0.5));
+    // Tierra clara y definida (pop sobre globo oscuro); borde brilla.
+    vec3 col = mix(uColor * 0.85, uColorLight, max(vRim * 0.9, vLand * 0.7));
+    float landB = mix(0.24, 1.7, vLand);
+    float alpha = a * landB * (0.62 + 0.3 * vFront + 0.45 * vRim) * uIntro * (1.0 - uScroll * 0.6);
     gl_FragColor = vec4(col, alpha);
   }
 `;
@@ -248,13 +248,13 @@ const ARC_VERT = /* glsl */ `
     vec4 mv = viewMatrix * vec4(wp, 1.0);
     gl_Position = projectionMatrix * mv;
     // Pulso viajando por el arco.
-    float head = fract(uTime * 0.18 + aArc * 0.37);
+    float head = fract(uTime * 0.16 + aArc * 0.37);
     float dd = abs(aT - head);
     dd = min(dd, 1.0 - dd);
-    float pulse = smoothstep(0.16, 0.0, dd);
-    float base = 0.12;
-    vA = (base + pulse) * (1.0 - uScroll * 0.7);
-    gl_PointSize = uPixelRatio * (1.4 + pulse * 3.2) * 80.0 / max(0.1, -mv.z);
+    float pulse = smoothstep(0.1, 0.0, dd);
+    float base = 0.13;
+    vA = (base + pulse * 0.9) * (1.0 - uScroll * 0.7);
+    gl_PointSize = uPixelRatio * (1.5 + pulse * 1.8) * 80.0 / max(0.1, -mv.z);
   }
 `;
 const ARC_FRAG = /* glsl */ `
@@ -382,21 +382,45 @@ export default function CinematicBackground({
     globe.rotation.z = 0.35; // leve inclinación del eje
     scene.add(globe);
 
-    // ── Puntos del globo (con máscara de continentes) ──
+    // Cuerpo sólido oscuro del planeta: da un globo real y hace que los puntos
+    // resalten encima (con depth test), en vez de un disco de glow translúcido.
+    const bodyMat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(0.11, 0.03, 0.09),
+      depthWrite: true,
+    });
+    const body = new THREE.Mesh(new THREE.SphereGeometry(0.955, 64, 64), bodyMat);
+    body.frustumCulled = false;
+    body.renderOrder = 0;
+    globe.add(body);
+
+    // ── Puntos del globo: GRILLA regular lat/lon (look de globo punteado
+    //    "halftone") + máscara de continentes. Tierra = puntos brillantes y
+    //    grandes; océano = puntos tenues. ──
     const land = makeLandSampler();
-    const dotN = mobile ? PARAMS.dotCountMobile : PARAMS.dotCount;
-    const dPos = new Float32Array(dotN * 3);
-    const dLand = new Float32Array(dotN);
-    const R2D = 180 / Math.PI;
-    for (let i = 0; i < dotN; i++) {
-      const [x, y, z] = fib(i, dotN);
-      dPos[i * 3] = x;
-      dPos[i * 3 + 1] = y;
-      dPos[i * 3 + 2] = z;
-      const lat = Math.asin(Math.max(-1, Math.min(1, y))) * R2D;
-      const lon = Math.atan2(z, x) * R2D;
-      dLand[i] = land(lat, lon);
+    const D2R = Math.PI / 180;
+    const step = mobile ? 3.2 : 2.3; // grados entre puntos (grilla densa tipo halftone)
+    const posArr: number[] = [];
+    const landArr: number[] = [];
+    const landPoints: [number, number, number][] = []; // para los cables
+    for (let lat = -88; lat <= 88; lat += step) {
+      const rad = lat * D2R;
+      const ring = Math.cos(rad);
+      const yy = Math.sin(rad);
+      const count = Math.max(1, Math.round((360 / step) * ring));
+      for (let j = 0; j < count; j++) {
+        const lon = (j / count) * 360 - 180;
+        const lr = lon * D2R;
+        const x = ring * Math.cos(lr);
+        const z = ring * Math.sin(lr);
+        const l = land(lat, lon);
+        posArr.push(x, yy, z);
+        landArr.push(l);
+        if (l > 0.5) landPoints.push([x, yy, z]);
+      }
     }
+    const dotN = landArr.length;
+    const dPos = new Float32Array(posArr);
+    const dLand = new Float32Array(landArr);
     const dGeo = new THREE.BufferGeometry();
     dGeo.setAttribute("position", new THREE.BufferAttribute(dPos, 3));
     dGeo.setAttribute("aLand", new THREE.BufferAttribute(dLand, 1));
@@ -412,7 +436,7 @@ export default function CinematicBackground({
       },
       transparent: true,
       depthWrite: false,
-      depthTest: false,
+      depthTest: false, // el hemisferio trasero ya se descarta por vFront (sin z-fighting)
       blending: THREE.AdditiveBlending,
     });
     const dots = new THREE.Points(dGeo, dotMat);
@@ -443,25 +467,35 @@ export default function CinematicBackground({
       globe.add(mesh);
       return m;
     };
-    const atmInnerMat = makeAtm(1.015, 2.6, 0.55); // rim nítido pegado al globo
-    const atmOuterMat = makeAtm(1.32, 1.25, 0.4); // glow difuso hacia el espacio
+    const atmInnerMat = makeAtm(1.012, 4.2, 0.75); // rim fino y brillante en el borde
+    const atmOuterMat = makeAtm(1.45, 1.1, 0.4); // glow difuso hacia el espacio
 
-    // ── Arcos de fibra ──
+    // ── Cables de fibra: conectan puntos de TIERRA (a través de océanos),
+    //    como los cables submarinos. Línea densa con un pulso viajando. ──
     const arcN = mobile ? PARAMS.arcCountMobile : PARAMS.arcCount;
-    const segs = 40;
+    const segs = 64;
     const aPos = new Float32Array(arcN * segs * 3);
     const aT = new Float32Array(arcN * segs);
     const aArc = new Float32Array(arcN * segs);
     const va = new THREE.Vector3();
     const vb = new THREE.Vector3();
     const vm = new THREE.Vector3();
+    const pick = () =>
+      landPoints.length
+        ? landPoints[Math.floor(rand(0, landPoints.length))]
+        : fib(Math.floor(rand(0, dotN)), dotN);
     for (let k = 0; k < arcN; k++) {
-      const A = fib(Math.floor(rand(0, dotN)), dotN);
-      const B = fib(Math.floor(rand(0, dotN)), dotN);
+      let A = pick();
+      let B = pick();
       va.set(A[0], A[1], A[2]);
       vb.set(B[0], B[1], B[2]);
+      // Reintenta para que los extremos estén razonablemente lejos (cruzan mar).
+      for (let tryi = 0; tryi < 6 && va.distanceTo(vb) < 1.0; tryi++) {
+        B = pick();
+        vb.set(B[0], B[1], B[2]);
+      }
       vm.copy(va).add(vb).multiplyScalar(0.5).normalize();
-      const lift = 1.0 + 0.18 + va.distanceTo(vb) * 0.12; // altura del arco
+      const lift = 1.0 + 0.05 + va.distanceTo(vb) * 0.08; // arco pegado al globo
       vm.multiplyScalar(lift);
       for (let s = 0; s < segs; s++) {
         const t = s / (segs - 1);
@@ -497,7 +531,7 @@ export default function CinematicBackground({
       },
       transparent: true,
       depthWrite: false,
-      depthTest: false,
+      depthTest: true, // el cuerpo oculta los cables del lado trasero
       blending: THREE.AdditiveBlending,
     });
     const arcs = new THREE.Points(arcGeo, arcMat);
@@ -665,6 +699,8 @@ export default function CinematicBackground({
       io.disconnect();
       bgQuad.geometry.dispose();
       bgMat.dispose();
+      body.geometry.dispose();
+      bodyMat.dispose();
       dGeo.dispose();
       dotMat.dispose();
       atmInnerMat.dispose();
