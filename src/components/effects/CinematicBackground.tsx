@@ -156,8 +156,8 @@ const DOT_VERT = /* glsl */ `
     vLand = aLand;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
     gl_Position = projectionMatrix * mv;
-    // Puntos distintos (halftone); tierra algo más grande.
-    gl_PointSize = uPixelRatio * (17.0 + aLand * 20.0) / max(0.1, -mv.z);
+    // Puntos distintos (halftone); tierra bastante más grande → continentes.
+    gl_PointSize = uPixelRatio * (15.0 + aLand * 26.0) / max(0.1, -mv.z);
   }
 `;
 const DOT_FRAG = /* glsl */ `
@@ -175,8 +175,8 @@ const DOT_FRAG = /* glsl */ `
     float a = 1.0 - smoothstep(0.32, 0.48, length(gl_PointCoord - 0.5));
     // Tierra clara y definida (pop sobre globo oscuro); borde brilla.
     vec3 col = mix(uColor * 0.85, uColorLight, max(vRim * 0.9, vLand * 0.7));
-    float landB = mix(0.24, 1.7, vLand);
-    float alpha = a * landB * (0.62 + 0.3 * vFront + 0.45 * vRim) * uIntro * (1.0 - uScroll * 0.6);
+    float landB = mix(0.16, 2.0, vLand);
+    float alpha = a * landB * (0.65 + 0.3 * vFront + 0.4 * vRim) * uIntro * (1.0 - uScroll * 0.6);
     gl_FragColor = vec4(col, alpha);
   }
 `;
@@ -424,8 +424,8 @@ export default function CinematicBackground({
       globe.add(mesh);
       return m;
     };
-    const atmInnerMat = makeAtm(1.012, 4.2, 0.75); // rim fino y brillante en el borde
-    const atmOuterMat = makeAtm(1.45, 1.1, 0.4); // glow difuso hacia el espacio
+    const atmInnerMat = makeAtm(1.012, 4.2, 0.6); // rim fino y brillante en el borde
+    const atmOuterMat = makeAtm(1.45, 1.1, 0.28); // glow difuso hacia el espacio
 
     // Construye puntos (grilla lat/lon con máscara de tierra) + cables de fibra
     // que conectan puntos de TIERRA a través de océanos (cables submarinos).
