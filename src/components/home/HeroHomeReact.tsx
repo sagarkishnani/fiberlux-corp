@@ -145,6 +145,8 @@ export default function HeroHomeReact({
   // posición real tras el wrap) y les asigna un delay escalonado (línea + palabra).
   useEffect(() => {
     if (mode !== "cinematic" || typeof window === "undefined") return;
+    // Mobile: sin barrido de letras (se sentía lag); el CSS las deja visibles.
+    if (window.matchMedia?.("(max-width: 767px)").matches) return;
     const h1 = titleRef.current;
     if (!h1) return;
     const words = Array.from(
@@ -183,6 +185,9 @@ export default function HeroHomeReact({
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     if (reduce) return;
+    // Mobile: sin el parallax/desvanecimiento del hero al scrollear hacia
+    // soluciones (no se veía bien); el hero se va con el scroll natural.
+    if (window.matchMedia?.("(max-width: 767px)").matches) return;
     const el = contentRef.current;
     const section = el?.closest("section");
     if (!el || !section) return;
@@ -600,6 +605,12 @@ export default function HeroHomeReact({
                 to { --cine-rev: 130%; }
               }
               @media (prefers-reduced-motion: reduce) {
+                .cine-word { --cine-rev: 130%; }
+                .cine-word.cine-animate { animation: none; }
+              }
+              /* Mobile: sin animación de entrada letra por letra (se sentía lag);
+                 las palabras aparecen ya visibles. */
+              @media (max-width: 767px) {
                 .cine-word { --cine-rev: 130%; }
                 .cine-word.cine-animate { animation: none; }
               }
