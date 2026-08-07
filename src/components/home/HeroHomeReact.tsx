@@ -220,8 +220,12 @@ export default function HeroHomeReact({
   return (
     <section
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
-        mode === "morph" || mode === "cinematic"
+        mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
+          : mode === "cinematic"
+          ? // Mobile: altura ajustada al contenido (evita el gran vacío antes de
+            // la sección siguiente). Desktop mantiene el hero alto.
+            "min-h-0 md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
     >
