@@ -355,11 +355,10 @@ function makeGlassTexture(
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
-  dirX: number; // dirección de salida desde el centro (casi fija por costado)
+  dirX: number; // dirección de salida desde el centro (rayo propio del abanico)
   dirY: number;
-  perpOff: number; // offset perpendicular (carril paralelo, evita solaparse)
   speed: number; // velocidad del recorrido (loop)
-  phase: number; // desfase en el loop (espaciado par a lo largo de la línea)
+  phase: number; // desfase en el loop (espaciado par → no coinciden)
   scaleFull: number; // escala al llegar a la esquina
   tiltPhase: number;
   tiltSpeed: number;
@@ -505,17 +504,17 @@ export default function CinematicBackground({
       scene.add(mesh);
       const side = i % 2 === 0 ? -1 : 1;
       const k = side < 0 ? leftK++ : rightK++;
-      // Dirección casi fija por costado → todos siguen una línea coherente:
-      // izquierda ↗ arriba-izquierda, derecha ↘ abajo-derecha (jitter mínimo).
-      const a = 0.5 + rand(-0.06, 0.06);
+      // Abanico hacia las esquinas, con ángulos REPARTIDOS (cada tile en su
+      // propio rayo bien separado) + fases parejas → mantienen el look disperso
+      // pero divergen desde el centro y no colisionan.
+      const frac = perSide > 1 ? k / (perSide - 1) : 0.5; // 0..1 a lo alto del abanico
+      const a = -0.72 + frac * 1.44 + rand(-0.05, 0.05);
       cards.push({
         mesh,
         mat,
         dirX: side * Math.cos(a),
-        dirY: (side < 0 ? 1 : -1) * Math.sin(a),
-        perpOff: rand(-0.55, 0.55),
-        speed: rand(0.05, 0.085),
-        // Espaciado par a lo largo de la línea (evita que se junten/choquen).
+        dirY: Math.sin(a),
+        speed: rand(0.055, 0.08),
         phase: (k + rand(-0.06, 0.06)) / perSide,
         scaleFull: rand(1.3, 2.4),
         tiltPhase: rand(0, Math.PI * 2),
@@ -690,18 +689,10 @@ export default function CinematicBackground({
         let travel = (t * cd.speed + cd.phase) % 1;
         if (travel < 0) travel += 1;
 
-        // Sale del centro a lo largo de su línea (con carril perpendicular),
-        // agrandándose ("acercándose").
-        const perpX = -cd.dirY;
-        const perpY = cd.dirX;
-        m.position.x =
-          cx + cd.dirX * travel * hw * 1.35 + perpX * cd.perpOff + ptr.cx * 0.15;
+        // Sale del centro por su rayo del abanico, agrandándose ("acercándose").
+        m.position.x = cx + cd.dirX * travel * hw * 1.35 + ptr.cx * 0.15;
         m.position.y =
-          cy +
-          cd.dirY * travel * hh * 1.35 +
-          perpY * cd.perpOff -
-          ptr.cy * 0.1 +
-          scrollP * 0.8;
+          cy + cd.dirY * travel * hh * 1.35 - ptr.cy * 0.1 + scrollP * 0.8;
         const sc = cd.scaleFull * (0.28 + 0.72 * travel);
         m.scale.set(sc, sc, 1);
 
