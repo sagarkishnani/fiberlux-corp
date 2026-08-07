@@ -230,9 +230,6 @@ export default function SolucionesNodeGraph({
                         dur={`${hovered ? PARAMS.pulseDurHover : PARAMS.pulseDur}s`}
                         begin={`${i * 0.45}s`}
                         repeatCount="indefinite"
-                        keyPoints="0;1"
-                        keyTimes="0;1"
-                        calcMode="linear"
                       >
                         <mpath href={`#sng-lnk-${i}`} />
                       </animateMotion>
