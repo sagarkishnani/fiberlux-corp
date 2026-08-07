@@ -390,6 +390,19 @@ export default function HeroHomeReact({
         />
       )}
 
+      {/* Modo cinematic — desktop: leve oscurecimiento detrás del título/desc/botones
+          (que quedan sobre el centro brillante del globo) para que se lean mejor. */}
+      {mode === "cinematic" && (
+        <div
+          aria-hidden="true"
+          className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              "radial-gradient(52% 48% at 50% 46%, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.32) 46%, rgba(10,10,10,0) 72%)",
+          }}
+        />
+      )}
+
       {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}
       {/* Vignette izquierda */}
       <div

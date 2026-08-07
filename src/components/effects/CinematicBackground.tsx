@@ -1,28 +1,32 @@
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
-import NodeField from "./NodeField";
 
 /**
  * CinematicBackground — hero "cinematic" (SPEC 97): PLANETA de fibra con COBE.
  *
- * Usa la librería `cobe` (globo punteado WebGL, ~5KB, muy eficiente; el mismo
- * enfoque del componente de Framer de referencia). Paleta de marca: mar oscuro,
- * continentes con puntos blancos, halo morado y cables de fibra magenta que
- * conectan hubs (submarinos). Se muestra ~60% del globo (recortado abajo, como
- * la referencia). Entra con fade y se funde/sube al hacer scroll.
+ * Globo punteado WebGL (librería `cobe`, ~5KB) con paleta de marca Fiberlux:
+ * mar oscuro, continentes en puntos blancos, halo/atmósfera en morado de marca
+ * (#96237A) y cables de fibra que conectan hubs, dibujados como arcos FINOS
+ * sobre la superficie del globo (misma proyección que COBE → quedan pegados a la
+ * rotación y se cortan detrás del planeta). Se muestra ~60% del globo (recortado
+ * abajo, estilo referencia). Entra con fade y se funde/rueda hacia arriba al
+ * hacer scroll.
+ *
+ * RENDIMIENTO: una sola capa 2D (arcos + nodos + estrellas) y un único rAF que
+ * también dirige el render de COBE. Nodos/pulsos y estrellas se pintan con un
+ * sprite radial precomputado (drawImage, barato) en vez de gradientes o
+ * shadowBlur por frame. El loop se pausa fuera del viewport.
  */
 
-// Colores 0..1
+// ── Color de marca Fiberlux (#96237A) y variantes.
+const BRAND = "150,35,122"; // #96237A
+const BRAND_LIT = "205,85,170"; // marca aclarada (núcleos de línea / nodos)
+const BRAND_N: [number, number, number] = [150 / 255, 35 / 255, 122 / 255]; // glow COBE
 const WHITE: [number, number, number] = [1, 1, 1]; // continentes (puntos)
-const PURPLE: [number, number, number] = [0.55, 0.22, 0.9]; // halo/atmósfera (glow)
-const MAGENTA: [number, number, number] = [0.85, 0.36, 0.95]; // markers + cables
 
 const BASE_THETA = 0.22;
 
-// Hubs (lat, lng) — nodos de conexión que brillan sobre la superficie del globo,
-// con Lima (Perú) como centro de la red. Los "cables de fibra" ya no se dibujan
-// con los arcos flotantes de COBE (no integraban); la red de fibra la genera el
-// plexus de partículas (NodeField) en las zonas oscuras de los costados.
+// Hubs (lat, lng), con Lima (Perú) como centro de la red.
 const LIMA: [number, number] = [-12.05, -77.04];
 const NY: [number, number] = [40.71, -74.0];
 const LDN: [number, number] = [51.5, -0.12];
@@ -31,17 +35,16 @@ const SG: [number, number] = [1.35, 103.8];
 const TK: [number, number] = [35.68, 139.69];
 const MX: [number, number] = [19.43, -99.13];
 
-const MARKERS = [
-  { location: LIMA, size: 0.07 },
-  { location: NY, size: 0.045 },
-  { location: LDN, size: 0.045 },
-  { location: SP, size: 0.045 },
-  { location: SG, size: 0.045 },
-  { location: TK, size: 0.04 },
-  { location: MX, size: 0.04 },
+// Nodos únicos (con tamaño de glow) y rutas de fibra (pares conectados).
+const HUBS: { loc: [number, number]; r: number }[] = [
+  { loc: LIMA, r: 9 },
+  { loc: NY, r: 6 },
+  { loc: LDN, r: 6 },
+  { loc: SP, r: 6 },
+  { loc: SG, r: 6 },
+  { loc: TK, r: 5.5 },
+  { loc: MX, r: 5.5 },
 ];
-
-// Rutas de fibra: pares de hubs conectados por un arco fino sobre la superficie.
 const ROUTES: [[number, number], [number, number]][] = [
   [LIMA, NY],
   [LIMA, SP],
@@ -103,6 +106,15 @@ interface Props {
   onUnsupported?: () => void;
 }
 
+interface Star {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  bvx: number;
+  bvy: number;
+}
+
 export default function CinematicBackground({
   className,
   signalReady,
@@ -111,54 +123,103 @@ export default function CinematicBackground({
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
-  const arcsRef = useRef<HTMLCanvasElement>(null);
+  const overlayRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const root = rootRef.current;
     const glow = glowRef.current;
-    const arcsCanvas = arcsRef.current;
+    const overlay = overlayRef.current;
     if (!canvas || !root) return;
-    const actx = arcsCanvas?.getContext("2d") ?? null;
+    const octx = overlay?.getContext("2d") ?? null;
 
-    // Vectores 3D precomputados de cada ruta de fibra (endpoints en la esfera).
+    // Vectores 3D precomputados (endpoints de rutas + nodos).
     const routeVecs = ROUTES.map(
       ([from, to]) => [locToVec3(from), locToVec3(to)] as const
     );
+    const hubVecs = HUBS.map((hub) => ({ v: locToVec3(hub.loc), r: hub.r }));
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const mobile = window.matchMedia?.("(max-width: 1023px)").matches ?? false;
+    const finePointer =
+      window.matchMedia?.("(pointer: fine)").matches ?? false;
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // cap por rendimiento
 
-    // Tamaño del canvas (cuadrado): grande, de modo que se vea ~60% del globo
-    // (el resto queda recortado abajo por el overflow del hero).
+    // ── Sprite radial suave (glow) precomputado → drawImage barato por frame.
+    const SP_SZ = 48;
+    const sprite = document.createElement("canvas");
+    sprite.width = sprite.height = SP_SZ;
+    const sctx = sprite.getContext("2d");
+    if (sctx) {
+      const g = sctx.createRadialGradient(
+        SP_SZ / 2,
+        SP_SZ / 2,
+        0,
+        SP_SZ / 2,
+        SP_SZ / 2,
+        SP_SZ / 2
+      );
+      g.addColorStop(0, "rgba(255,228,248,1)");
+      g.addColorStop(0.32, `rgba(${BRAND_LIT},0.85)`);
+      g.addColorStop(1, `rgba(${BRAND},0)`);
+      sctx.fillStyle = g;
+      sctx.fillRect(0, 0, SP_SZ, SP_SZ);
+    }
+    const drawSoft = (x: number, y: number, rad: number, alpha: number) => {
+      if (!octx || alpha <= 0.01) return;
+      octx.globalAlpha = alpha;
+      octx.drawImage(sprite, x - rad, y - rad, rad * 2, rad * 2);
+      octx.globalAlpha = 1;
+    };
+
+    // Tamaño del globo y geometría en coords del root.
     let sizePx = 0;
-    // Geometría del globo en coords del root (para dibujar los arcos encima).
-    let gLeft = 0; // x del borde izq. del canvas del globo dentro del root
-    let gTop = 0; // y del borde superior del canvas del globo dentro del root
+    let gLeft = 0;
+    let gTop = 0;
+
+    // ── Estrellas laterales (mismo canvas/loop → sin canvas ni rAF extra).
+    let stars: Star[] = [];
+    const seedStars = () => {
+      const w = root.clientWidth || 1;
+      const h = root.clientHeight || 1;
+      const n = Math.round(
+        Math.min(120, Math.max(40, 72 * ((w * h) / (1280 * 720))))
+      );
+      stars = new Array(n);
+      for (let i = 0; i < n; i++) {
+        const ang = Math.random() * Math.PI * 2;
+        const bvx = Math.cos(ang) * 0.12; // deriva lenta
+        const bvy = Math.sin(ang) * 0.12;
+        stars[i] = {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: bvx,
+          vy: bvy,
+          bvx,
+          bvy,
+        };
+      }
+    };
 
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      // Globo un poco más alejado (más pequeño) que la versión anterior.
       sizePx = Math.min(w * 1.0, h * 1.7);
-      // Centrado horizontal; posicionado para ver el casquete superior (~60%).
       const topPx = h * 0.16 - sizePx * 0.1;
       gLeft = w / 2 - sizePx / 2;
       gTop = topPx;
 
-      // Canvas de arcos: cubre todo el root (mismo sistema de coords que el globo).
-      // A DPR 1 (líneas suaves con glow → no necesitan resolución retina; ahorra
-      // ~la mitad del fill-rate de esta capa por frame).
-      if (arcsCanvas && actx) {
+      // Overlay 2D a DPR 1 (líneas/glow suaves → no necesitan retina; ahorra
+      // ~la mitad del fill-rate de esta capa).
+      if (overlay && octx) {
         const pw = Math.max(1, Math.floor(w));
         const ph = Math.max(1, Math.floor(h));
-        if (arcsCanvas.width !== pw || arcsCanvas.height !== ph) {
-          arcsCanvas.width = pw;
-          arcsCanvas.height = ph;
+        if (overlay.width !== pw || overlay.height !== ph) {
+          overlay.width = pw;
+          overlay.height = ph;
         }
-        actx.setTransform(1, 0, 0, 1, 0, 0);
+        octx.setTransform(1, 0, 0, 1, 0, 0);
       }
 
       canvas.style.width = `${sizePx}px`;
@@ -167,12 +228,9 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Anillo de glow: disco del tamaño del globo (≈80% del canvas) centrado en
-      // el globo, con box-shadow ancho → halo grueso alrededor del borde de la
-      // Tierra. Va detrás del canvas, así el globo tapa el interior y solo se ve
-      // el resplandor que desborda el borde.
+      // Anillo de glow (morado de marca) detrás del globo → halo grueso en el borde.
       if (glow) {
-        const diam = sizePx * 0.8; // diámetro visual del globo
+        const diam = sizePx * 0.8;
         const centerY = topPx + sizePx / 2;
         const blur = Math.round(sizePx * 0.16);
         const spread = Math.round(sizePx * 0.03);
@@ -181,8 +239,10 @@ export default function CinematicBackground({
         glow.style.left = "50%";
         glow.style.top = `${centerY - diam / 2}px`;
         glow.style.transform = "translateX(-50%)";
-        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(155,60,210,0.55)`;
+        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(${BRAND},0.6)`;
       }
+
+      seedStars();
     };
     computeSize();
 
@@ -204,15 +264,12 @@ export default function CinematicBackground({
         phi: 0,
         theta: BASE_THETA,
         dark: 1,
-        diffuse: 2.2, // más contraste luz/sombra → volumen (no plano)
-        mapSamples: mobile ? 9000 : 16000,
+        diffuse: 2.2, // volumen (luz/sombra) → no plano
+        mapSamples: mobile ? 7000 : 14000,
         mapBrightness: 7.5,
         mapBaseBrightness: 0.06, // océano casi negro
         baseColor: WHITE, // continentes blancos
-        markerColor: MAGENTA,
-        glowColor: PURPLE,
-        markers: MARKERS,
-        markerElevation: 0.01,
+        glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
         scale: 1,
       } as any);
@@ -228,6 +285,23 @@ export default function CinematicBackground({
     };
     window.addEventListener("resize", onResize);
 
+    // ── Cursor: atracción MUY suave de las estrellas (mucho más leve que antes).
+    const cursor = { x: 0, y: 0, active: false };
+    const CURSOR_R = 170;
+    const FORCE = 0.018; // suave (referencia previa era ~0.09)
+    const RELAX = 0.02;
+    const onPointerMove = (e: PointerEvent) => {
+      const r = root.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      cursor.x = x;
+      cursor.y = y;
+      cursor.active = x >= 0 && x <= r.width && y >= 0 && y <= r.height;
+    };
+    if (finePointer && !reduce) {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
     let phi = 0;
     let raf = 0;
     let startMs = -1;
@@ -240,23 +314,60 @@ export default function CinematicBackground({
       }
     };
 
-    // Dibuja los arcos de fibra sobre la superficie del globo, sincronizados con
-    // su rotación (misma proyección que COBE). Líneas finas + un pulso viajando;
-    // se cortan al pasar por detrás del globo (solo hemisferio frontal).
     const SEG = 44;
     const R = GLOBE_R * 1.004; // apenas por encima de la superficie
-    const drawArcs = (phi: number, theta: number, op: number, ms: number) => {
-      if (!actx || !arcsCanvas) return;
+
+    const stepStars = (w: number, h: number) => {
+      for (let i = 0; i < stars.length; i++) {
+        const p = stars[i];
+        if (cursor.active) {
+          const dx = cursor.x - p.x;
+          const dy = cursor.y - p.y;
+          const d = Math.hypot(dx, dy);
+          if (d > 0.001 && d < CURSOR_R) {
+            const f = FORCE * (1 - d / CURSOR_R);
+            p.vx += (dx / d) * f;
+            p.vy += (dy / d) * f;
+          }
+        }
+        p.vx += (p.bvx - p.vx) * RELAX;
+        p.vy += (p.bvy - p.vy) * RELAX;
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x += w;
+        else if (p.x > w) p.x -= w;
+        if (p.y < 0) p.y += h;
+        else if (p.y > h) p.y -= h;
+      }
+    };
+
+    // Dibuja toda la capa 2D: estrellas (costados) + arcos + nodos/pulsos, todo
+    // sincronizado con la rotación del globo (misma proyección que COBE).
+    const drawOverlay = (phi: number, theta: number, op: number, ms: number) => {
+      if (!octx || !overlay) return;
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      actx.clearRect(0, 0, w, h);
+      octx.clearRect(0, 0, w, h);
       if (op <= 0.01) return;
-      actx.lineCap = "round";
 
+      // Estrellas: más presentes hacia los costados (fade en el centro).
+      const cx = w / 2;
+      const half = w * 0.5;
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        const edge = Math.min(
+          1,
+          Math.max(0, (Math.abs(s.x - cx) / half - 0.28) / 0.5)
+        );
+        drawSoft(s.x, s.y, 2.2, edge * 0.45 * op);
+      }
+
+      // Arcos de fibra (línea fina + halo), recortados al hemisferio frontal.
+      octx.lineCap = "round";
       for (let ri = 0; ri < routeVecs.length; ri++) {
         const [u, v] = routeVecs[ri];
         let started = false;
-        actx.beginPath();
+        octx.beginPath();
         for (let k = 0; k <= SEG; k++) {
           const p = slerp(u, v, k / SEG);
           const pr = project([p[0] * R, p[1] * R, p[2] * R], phi, theta);
@@ -264,36 +375,33 @@ export default function CinematicBackground({
           const sy = gTop + pr.y * sizePx;
           if (pr.front) {
             if (!started) {
-              actx.moveTo(sx, sy);
+              octx.moveTo(sx, sy);
               started = true;
-            } else actx.lineTo(sx, sy);
-          } else started = false; // corta el trazo detrás del globo
+            } else octx.lineTo(sx, sy);
+          } else started = false;
         }
-        // Glow en dos pasadas sobre la misma ruta (más barato que shadowBlur):
-        // trazo ancho y tenue (halo) + trazo fino y brillante (núcleo).
-        actx.lineWidth = 3.2;
-        actx.strokeStyle = `rgba(205,95,235,${0.16 * op})`;
-        actx.stroke();
-        actx.lineWidth = 1.1;
-        actx.strokeStyle = `rgba(235,175,248,${0.7 * op})`;
-        actx.stroke();
+        octx.lineWidth = 3.2;
+        octx.strokeStyle = `rgba(${BRAND},${0.15 * op})`;
+        octx.stroke();
+        octx.lineWidth = 1.1;
+        octx.strokeStyle = `rgba(${BRAND_LIT},${0.7 * op})`;
+        octx.stroke();
 
-        // Pulso brillante que recorre la ruta (halo + núcleo, sin shadowBlur).
+        // Pulso de luz suave viajando por la ruta.
         const tp = (ms / 2600 + ri * 0.37) % 1;
         const pp = slerp(u, v, tp);
         const ppr = project([pp[0] * R, pp[1] * R, pp[2] * R], phi, theta);
         if (ppr.front) {
-          const px = gLeft + ppr.x * sizePx;
-          const py = gTop + ppr.y * sizePx;
-          actx.fillStyle = `rgba(210,110,240,${0.35 * op})`;
-          actx.beginPath();
-          actx.arc(px, py, 4, 0, 6.2832);
-          actx.fill();
-          actx.fillStyle = `rgba(255,220,255,${0.95 * op})`;
-          actx.beginPath();
-          actx.arc(px, py, 1.7, 0, 6.2832);
-          actx.fill();
+          drawSoft(gLeft + ppr.x * sizePx, gTop + ppr.y * sizePx, 6, 0.85 * op);
         }
+      }
+
+      // Nodos (hubs): glow suave sobre la superficie (sin borde duro).
+      for (let i = 0; i < hubVecs.length; i++) {
+        const { v, r } = hubVecs[i];
+        const pr = project([v[0] * R, v[1] * R, v[2] * R], phi, theta);
+        if (pr.front)
+          drawSoft(gLeft + pr.x * sizePx, gTop + pr.y * sizePx, r, 0.8 * op);
       }
     };
 
@@ -305,19 +413,20 @@ export default function CinematicBackground({
         0,
         Math.min(1, (window.scrollY - heroTop) / heroHeight)
       );
-      if (!reduce) phi += 0.0026; // rotación (un poco más rápida)
+      if (!reduce) phi += 0.0026; // rotación
 
+      const theta = BASE_THETA + scrollP * 0.9;
       const op = introE * (1 - scrollP * 0.85);
       globe?.update({
         phi,
-        // Al hacer scroll el planeta rueda hacia arriba (en dirección del scroll).
-        theta: BASE_THETA + scrollP * 0.9,
+        theta, // al hacer scroll rueda hacia arriba (dirección del scroll)
         width: sizePx * dpr,
         height: sizePx * dpr,
         opacity: op,
       });
       if (glow) glow.style.opacity = `${op}`;
-      drawArcs(phi, BASE_THETA + scrollP * 0.9, op, ms);
+      stepStars(root.clientWidth || 1, root.clientHeight || 1);
+      drawOverlay(phi, theta, op, ms);
       signalOnce();
       if (!reduce && visible) raf = requestAnimationFrame(frame);
       else raf = 0;
@@ -334,7 +443,7 @@ export default function CinematicBackground({
 
     if (reduce) {
       globe?.update({ phi: 0.6, opacity: 1 });
-      drawArcs(0.6, BASE_THETA, 1, 0);
+      drawOverlay(0.6, BASE_THETA, 1, 0);
       signalOnce();
     } else {
       raf = requestAnimationFrame(frame);
@@ -343,6 +452,7 @@ export default function CinematicBackground({
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
       io.disconnect();
       globe?.destroy();
     };
@@ -355,46 +465,23 @@ export default function CinematicBackground({
       className={className}
       style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
     >
-      {/* Resplandor morado de base detrás del globo (gradiente base→morado→negro). */}
+      {/* Resplandor de base (morado de marca) detrás del globo. */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(115% 78% at 50% 74%, rgba(150,55,190,0.42) 0%, rgba(90,25,130,0.22) 38%, rgba(40,10,60,0.08) 60%, rgba(0,0,0,0) 76%)",
+            "radial-gradient(115% 78% at 50% 74%, rgba(150,35,122,0.4) 0%, rgba(101,15,80,0.22) 38%, rgba(59,14,48,0.08) 60%, rgba(0,0,0,0) 76%)",
           pointerEvents: "none",
         }}
       />
-
-      {/* Partículas tenues (estrellas que derivan) en las zonas oscuras de los
-          costados — sin líneas y sin reacción al cursor, solo dinamismo sutil.
-          Máscara horizontal: presentes a izquierda/derecha, ausentes en el centro. */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          opacity: 0.55,
-          pointerEvents: "none",
-          WebkitMaskImage:
-            "linear-gradient(90deg, #000 0%, #000 12%, transparent 36%, transparent 64%, #000 88%, #000 100%)",
-          maskImage:
-            "linear-gradient(90deg, #000 0%, #000 12%, transparent 36%, transparent 64%, #000 88%, #000 100%)",
-        }}
-      >
-        <NodeField className="h-full w-full" interactive={false} lines={false} />
-      </div>
 
       {/* Anillo de glow grueso alrededor del borde de la Tierra (detrás del globo). */}
       <div
         ref={glowRef}
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          borderRadius: "50%",
-          pointerEvents: "none",
-        }}
+        style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none" }}
       />
 
       {/* Globo COBE. */}
@@ -404,9 +491,9 @@ export default function CinematicBackground({
         style={{ position: "absolute", display: "block", pointerEvents: "none" }}
       />
 
-      {/* Arcos de fibra dibujados SOBRE la superficie del globo (encima del canvas). */}
+      {/* Capa 2D: estrellas laterales + arcos de fibra + nodos/pulsos (encima del globo). */}
       <canvas
-        ref={arcsRef}
+        ref={overlayRef}
         aria-hidden="true"
         style={{
           position: "absolute",
