@@ -156,8 +156,8 @@ const DOT_VERT = /* glsl */ `
     vLand = aLand;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
     gl_Position = projectionMatrix * mv;
-    // Puntos distintos (halftone); tierra bastante más grande → continentes.
-    gl_PointSize = uPixelRatio * (15.0 + aLand * 26.0) / max(0.1, -mv.z);
+    // Puntos parejos (halftone); tierra apenas más grande.
+    gl_PointSize = uPixelRatio * (16.0 + aLand * 12.0) / max(0.1, -mv.z);
   }
 `;
 const DOT_FRAG = /* glsl */ `
@@ -171,13 +171,12 @@ const DOT_FRAG = /* glsl */ `
   varying float vLand;
   void main(){
     if (vFront <= 0.02) discard; // oculta el hemisferio trasero
-    // Disco NÍTIDO (no gaussiano) → puntos distintos (halftone), no un wash.
-    float a = 1.0 - smoothstep(0.32, 0.48, length(gl_PointCoord - 0.5));
-    // Tierra clara y definida (pop sobre globo oscuro); borde brilla.
-    vec3 col = mix(uColor * 0.85, uColorLight, max(vRim * 0.9, vLand * 0.7));
-    float landB = mix(0.16, 2.0, vLand);
-    float alpha = a * landB * (0.65 + 0.3 * vFront + 0.4 * vRim) * uIntro * (1.0 - uScroll * 0.6);
-    gl_FragColor = vec4(col, alpha);
+    // Disco NÍTIDO → puntos definidos (halftone) sobre la superficie.
+    float a = 1.0 - smoothstep(0.30, 0.48, length(gl_PointCoord - 0.5));
+    // Continentes BLANCOS; océano casi negro (grid muy tenue).
+    float landB = mix(0.06, 1.0, vLand);
+    float alpha = a * landB * (0.85 + 0.15 * vFront) * uIntro * (1.0 - uScroll * 0.6);
+    gl_FragColor = vec4(uColor, alpha); // uColor = blanco
   }
 `;
 
@@ -350,18 +349,25 @@ export default function CinematicBackground({
 
     const introUniform = { value: reduce ? 1 : 0 };
     const scrollUniform = { value: 0 };
-    const col = { value: toVec3(PARAMS.color) };
-    const colL = { value: toVec3(PARAMS.colorLight) };
+    // Paleta (ref del cliente): mar negro, continentes BLANCOS, morado/magenta
+    // solo para los cables de fibra y el halo (morado OSCURO, no magenta encendido).
+    const colWhite = { value: new THREE.Color(0.95, 0.95, 1.0) }; // continentes
+    const colHalo = { value: new THREE.Color(0.36, 0.14, 0.6) }; // morado oscuro (halo/base)
+    const colHaloDark = { value: new THREE.Color(0.08, 0.03, 0.14) }; // base muy oscura
+    const colFiber = { value: new THREE.Color(0.82, 0.34, 0.92) }; // magenta-morado (cables)
     const prU = { value: pr };
     const timeU = { value: 0 };
+    // Alias por compatibilidad con los materiales existentes.
+    const col = colHalo;
+    const colL = colHalo;
 
     // ── Fondo (resplandor de base) ──
     const bgMat = new THREE.ShaderMaterial({
       vertexShader: BG_VERT,
       fragmentShader: BG_FRAG,
       uniforms: {
-        uColor: col,
-        uColorLight: colL,
+        uColor: colHaloDark,
+        uColorLight: colHalo,
         uIntro: introUniform,
         uScroll: scrollUniform,
       },
@@ -385,10 +391,10 @@ export default function CinematicBackground({
     // Cuerpo sólido oscuro del planeta: da un globo real y hace que los puntos
     // resalten encima (con depth test), en vez de un disco de glow translúcido.
     const bodyMat = new THREE.MeshBasicMaterial({
-      color: new THREE.Color(0.11, 0.03, 0.09),
+      color: new THREE.Color(0.035, 0.012, 0.055), // mar casi negro
       depthWrite: true,
     });
-    const body = new THREE.Mesh(new THREE.SphereGeometry(0.955, 64, 64), bodyMat);
+    const body = new THREE.Mesh(new THREE.SphereGeometry(0.985, 64, 64), bodyMat);
     body.frustumCulled = false;
     body.renderOrder = 0;
     globe.add(body);
@@ -465,8 +471,8 @@ export default function CinematicBackground({
         vertexShader: DOT_VERT,
         fragmentShader: DOT_FRAG,
         uniforms: {
-          uColor: col,
-          uColorLight: colL,
+          uColor: colWhite, // continentes blancos
+          uColorLight: colWhite,
           uIntro: introUniform,
           uScroll: scrollUniform,
           uPixelRatio: prU,
@@ -474,7 +480,7 @@ export default function CinematicBackground({
         transparent: true,
         depthWrite: false,
         depthTest: false,
-        blending: THREE.AdditiveBlending,
+        blending: THREE.NormalBlending, // superficie, no luces flotando
       });
       const dots = new THREE.Points(dGeo, dotMat);
       dots.frustumCulled = false;
@@ -529,8 +535,8 @@ export default function CinematicBackground({
         vertexShader: ARC_VERT,
         fragmentShader: ARC_FRAG,
         uniforms: {
-          uColor: col,
-          uColorLight: colL,
+          uColor: colHalo, // base tenue del cable (morado oscuro)
+          uColorLight: colFiber, // pulso magenta-morado brillante
           uIntro: introUniform,
           uScroll: scrollUniform,
           uPixelRatio: prU,
@@ -709,7 +715,8 @@ export default function CinematicBackground({
       ptr.cy += (ptr.ty - ptr.cy) * 0.05;
 
       globe.rotation.y = t * PARAMS.rotSpeed + ptr.cx * 0.25;
-      globe.rotation.x = 0.06 + ptr.cy * 0.12;
+      // Inclina levemente para mirar hacia latitudes con más continentes.
+      globe.rotation.x = -0.32 + ptr.cy * 0.1;
       globe.position.y = PARAMS.globeY + scrollP * 1.2; // sube al hacer scroll
 
       renderer.render(scene, camera);
