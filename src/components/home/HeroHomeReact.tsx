@@ -223,9 +223,9 @@ export default function HeroHomeReact({
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : mode === "cinematic"
-          ? // Mobile: altura moderada — deja un respiro tras los botones sin el
-            // gran vacío de 100svh. Desktop mantiene el hero alto.
-            "min-h-[85svh] md:min-h-[820px] lg:min-h-[900px]"
+          ? // Mobile: hero a pantalla completa con el contenido centrado
+            // verticalmente (ver el div de contenido). Desktop, hero alto.
+            "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
     >
@@ -484,6 +484,10 @@ export default function HeroHomeReact({
           className={
             mode === "morph"
               ? "flex flex-col items-center text-center lg:items-start lg:text-left justify-start md:justify-center max-w-[760px] lg:max-w-[540px] mx-auto lg:mx-0 min-h-0 lg:min-h-[640px]"
+              : mode === "cinematic"
+              ? // Mobile: llena el hero (100svh − padding) y centra el contenido
+                // verticalmente. Desktop: comportamiento normal.
+                "mx-auto flex flex-col items-center text-center justify-center max-w-[760px] min-h-[calc(100svh-11rem)] lg:min-h-[640px]"
               : "mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]"
           }
           style={
