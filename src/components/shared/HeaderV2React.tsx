@@ -1,4 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type CSSProperties,
+} from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   GlobalQuery,
@@ -596,7 +602,10 @@ export default function HeaderV2React({
         <div className={`${topBarBg} transition-colors duration-300`}>
           <div className="site-container h-14 flex items-center justify-between">
             {/* Left: Empresas (active) / Negocios */}
-            <div className="flex items-center gap-6">
+            <div
+              className="flex items-center gap-6 cine-hitem"
+              style={{ "--cine-d": "140ms" } as CSSProperties}
+            >
               {topBar?.empresasLabel && (
                 <a
                   href={hx(topBar.empresasUrl || "/")}
@@ -620,7 +629,10 @@ export default function HeaderV2React({
             </div>
 
             {/* Right: Información a abonados (desktop only) + switcher de idioma */}
-            <div className="flex items-center gap-5">
+            <div
+              className="flex items-center gap-5 cine-hitem"
+              style={{ "--cine-d": "210ms" } as CSSProperties}
+            >
               {topBar?.abonadosLabel && (
                 <a
                   href={hx(topBar.abonadosUrl)}
@@ -646,7 +658,8 @@ export default function HeaderV2React({
           <div className="flex items-center gap-4 md:gap-6">
             <button
               onClick={toggleMenu}
-              className={`flex items-center gap-3 ${controlText} text-sm font-medium z-50`}
+              className={`flex items-center gap-3 ${controlText} text-sm font-medium z-50 cine-hitem`}
+              style={{ "--cine-d": "300ms" } as CSSProperties}
               aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
               aria-expanded={menuOpen}
             >
@@ -728,7 +741,8 @@ export default function HeaderV2React({
               return (
                 <div
                   key={i}
-                  className="relative"
+                  className="relative cine-hitem"
+                  style={{ "--cine-d": `${380 + i * 70}ms` } as CSSProperties}
                   onMouseEnter={() => {
                     setNavHover(withChildren ? i : null);
                     setNavSubHover(null);
@@ -854,7 +868,8 @@ export default function HeaderV2React({
             aria-label={t("search.aria", locale)}
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen(true)}
-            className={`flex items-center justify-center ${controlText} opacity-90 hover:opacity-100 transition-opacity ${
+            style={{ "--cine-d": `${380 + desktopNav.length * 70}ms` } as CSSProperties}
+            className={`flex items-center justify-center ${controlText} opacity-90 hover:opacity-100 transition-opacity cine-hitem ${
               menuOpen ? "hidden lg:flex" : "flex"
             }`}
           >

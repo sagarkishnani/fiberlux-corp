@@ -189,17 +189,20 @@ const whatsappMessage = whatsappContext
         opacity: 0;
         visibility: hidden;
       }
-      /* Hero cinematic (SPEC 97): el header se revela de a pocos al cargar.
-         Aplicado desde el SSR (clase en el wrapper) para no parpadear. */
-      .cine-intro-page header {
-        animation: cine-header-in 1100ms ease-out 200ms both;
+      /* Hero cinematic (SPEC 97): el header ENTRA escalonado, ítem por ítem, con
+         el mismo feel que la coreografía del hero (rise + fade). Cada elemento
+         marcado con .cine-hitem define su retardo en --cine-d. El logo grande lo
+         anima aparte la intro FLX→FIBERLUX. Aplicado desde el SSR (no parpadea);
+         `both` mantiene el estado inicial oculto hasta que corre su retardo. */
+      @media (prefers-reduced-motion: no-preference) {
+        .cine-intro-page .cine-hitem {
+          animation: cine-item-in 0.85s cubic-bezier(0.2, 0.7, 0.2, 1)
+            var(--cine-d, 0ms) both;
+        }
       }
-      @keyframes cine-header-in {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .cine-intro-page header { animation: none; }
+      @keyframes cine-item-in {
+        from { opacity: 0; transform: translateY(22px); }
+        to { opacity: 1; transform: none; }
       }
       /* El logo grande del hero arranca OCULTO en cinematic (desktop, sin
          reduced-motion) para no mostrar "FIBERLUX" antes de la intro
