@@ -510,7 +510,7 @@ export default function CinematicBackground({
         dirY: Math.sin(ang),
         speed: rand(0.05, 0.1),
         phase: i / cardN + rand(-0.02, 0.02),
-        scaleFull: rand(0.85, 1.55),
+        scaleFull: rand(1.3, 2.4),
         tiltPhase: rand(0, Math.PI * 2),
         tiltSpeed: rand(0.25, 0.5),
         tiltAmpX: rand(0.06, 0.14),
