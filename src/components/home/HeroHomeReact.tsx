@@ -15,6 +15,12 @@ import MorphSolutions, {
   type MorphHandle,
 } from "../effects/MorphSolutions";
 
+// Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
+// morph del wordmark FLX→FIBERLUX (~1.4s: hold 420ms + morph 1000ms) y el
+// escalonado de titular/subtítulo/botones, para no dejar scrollear hasta que
+// los elementos de arriba terminen de animarse.
+const INTRO_SCROLL_LOCK_MS = 1700;
+
 // Nodos-solución por defecto (si el CMS no los define): las 4 soluciones.
 const DEFAULT_MORPH_NODES = [
   { label: "Data Center & Cloud", url: "/soluciones/data-center-cloud", icon: "datacenter" },
@@ -88,6 +94,51 @@ export default function HeroHomeReact({
       requestAnimationFrame(() => setIntro(true))
     );
     return () => cancelAnimationFrame(raf);
+  }, [mode]);
+
+  // Bloqueo de scroll durante la intro cinematográfica: al cargar el home no se
+  // permite scrollear hasta que el wordmark FIBERLUX y el contenido de arriba
+  // terminen de animar. Solo si se está en el tope de la página (no cuando se
+  // llega a un ancla) y sin reduced-motion.
+  useEffect(() => {
+    if (mode !== "cinematic" || typeof window === "undefined") return;
+    const reduce =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (reduce) return;
+    if (window.scrollY > 4) return; // ya scrolleó / llegó a un ancla: no bloquear
+
+    const lenis = (window as any).__lenis;
+    lenis?.stop?.();
+
+    const prevent = (e: Event) => e.preventDefault();
+    const SCROLL_KEYS = [
+      "ArrowDown",
+      "ArrowUp",
+      "PageDown",
+      "PageUp",
+      "Home",
+      "End",
+      " ",
+      "Spacebar",
+    ];
+    const onKey = (e: KeyboardEvent) => {
+      if (SCROLL_KEYS.includes(e.key)) e.preventDefault();
+    };
+    window.addEventListener("wheel", prevent, { passive: false });
+    window.addEventListener("touchmove", prevent, { passive: false });
+    window.addEventListener("keydown", onKey, { passive: false });
+
+    const release = () => {
+      lenis?.start?.();
+      window.removeEventListener("wheel", prevent);
+      window.removeEventListener("touchmove", prevent);
+      window.removeEventListener("keydown", onKey);
+    };
+    const t = window.setTimeout(release, INTRO_SCROLL_LOCK_MS);
+    return () => {
+      clearTimeout(t);
+      release();
+    };
   }, [mode]);
 
   // Barrido del titular línea por línea: agrupa las palabras por línea (según su
@@ -220,6 +271,8 @@ export default function HeroHomeReact({
 
   return (
     <section
+      // Cursor a medida "retícula técnica" sobre el hero cinematográfico.
+      data-cursor={mode === "cinematic" ? "reticle" : undefined}
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"

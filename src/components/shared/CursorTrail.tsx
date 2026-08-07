@@ -69,6 +69,9 @@ export default function CursorTrail() {
       while (points.length && now - points[0].t > LIFETIME) points.shift();
 
       ctx.clearRect(0, 0, width, height);
+      // Dentro de una sección con cursor a medida (CursorShapes) no se dibuja la
+      // estela para que no se encimen los dos trazos.
+      if ((window as any).__cursorShapeActive) return;
       if (points.length < 2) return;
 
       ctx.lineCap = "round";

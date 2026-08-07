@@ -45,6 +45,8 @@ export default function HeroServiciosReact({
 
   return (
     <section
+      // Cursor a medida "retícula técnica" sobre el hero cinematográfico de Soluciones.
+      data-cursor="reticle"
       className="relative flex min-h-[100svh] items-center overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
