@@ -5,17 +5,29 @@ import type {
   ServiciosQueryVariables,
 } from "../../../tina/__generated__/types";
 import HeroVideo from "../shared/HeroVideo";
+import type { Locale } from "../../i18n/config";
+
+/** Categoría del grafo (SPEC 98), derivada de `home.services.items`. */
+export interface GraphCategory {
+  title: string;
+  title_en?: string;
+  icon: string;
+}
 
 interface HeroServiciosProps {
   query: string;
   variables: ServiciosQueryVariables;
   data: ServiciosQuery;
+  categories?: GraphCategory[];
+  locale?: Locale;
 }
 
 export default function HeroServiciosReact({
   query,
   variables,
   data: initialData,
+  categories = [],
+  locale = "es",
 }: HeroServiciosProps) {
   const { data } = useTina<ServiciosQuery>({ query, variables, data: initialData });
 

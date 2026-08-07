@@ -1,10 +1,29 @@
 ---
 import { client } from "../../../tina/__generated__/client";
 import HeroServiciosReact from "./HeroServiciosReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const serviciosQuery = await client.queries.servicios({
   relativePath: "index.json",
 });
+
+// Las 4 categorías del grafo salen de la colección `home` (SPEC 98): mismo
+// contenido que alimenta `SolucionesScroll`, para no duplicar la fuente.
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale)
+  ? Astro.currentLocale
+  : getLocale(Astro.url);
+
+// Se pasa solo lo que el grafo necesita (label + label EN + icono), plano y
+// serializable; la edición de este contenido vive en la colección `home`.
+const categories = (homeQuery.data?.home?.services?.items || [])
+  .filter(Boolean)
+  .map((it: any) => ({
+    title: it?.title ?? "",
+    title_en: it?.title_en ?? "",
+    icon: it?.icon ?? "",
+  }));
 ---
 
 <HeroServiciosReact
@@ -12,4 +31,6 @@ const serviciosQuery = await client.queries.servicios({
   query={serviciosQuery.query}
   variables={serviciosQuery.variables}
   data={serviciosQuery.data}
+  categories={categories}
+  locale={locale}
 />
