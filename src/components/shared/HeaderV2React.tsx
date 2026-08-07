@@ -39,6 +39,9 @@ interface HeaderProps {
   locale?: Locale;
   /** Path actual (SSR), para armar el link del switcher al otro idioma. */
   currentPath?: string;
+  /** Glow neón en el logo grande del hero (modo cinematic, SPEC 97); se apaga
+      solo al acoplarse al header. */
+  logoGlow?: boolean;
 }
 
 interface NavGrandChild {
@@ -250,6 +253,7 @@ export default function HeaderV2React({
   solidOnLoad = false,
   locale = "es",
   currentPath = "/",
+  logoGlow = false,
 }: HeaderProps) {
   const { data } = useTina<GlobalQuery>({
     query,
@@ -357,6 +361,8 @@ export default function HeaderV2React({
         // Estado nativo del header (también lo que se ve en SSR / sin JS).
         img.style.height = `${LOGO_HEADER_H}px`;
         img.style.transform = "translateY(-50%)";
+        if (logoGlow && img.parentElement)
+          img.parentElement.style.filter = "none";
         return;
       }
       // En morph (logo a la izquierda) el logo es más chico, arranca pegado al
@@ -400,8 +406,17 @@ export default function HeaderV2React({
       }
       img.style.height = `${height}px`;
       img.style.transform = `translateX(${centerX * inv}px) translateY(calc(-50% + ${offset}px))`;
+      // Glow neón del logo (modo cinematic): fuerte en estado hero (inv→1), se
+      // apaga al acoplarse al header (inv→0). Se aplica al contenedor para no
+      // pisar el filtro brightness/invert del propio <img>.
+      if (logoGlow && anchor) {
+        anchor.style.filter =
+          inv > 0.01
+            ? `drop-shadow(0 0 ${10 * inv}px rgba(214,77,184,${0.6 * inv})) drop-shadow(0 0 ${28 * inv}px rgba(150,35,122,${0.5 * inv}))`
+            : "none";
+      }
     },
-    [heroLogo, heroLogoAlign]
+    [heroLogo, heroLogoAlign, logoGlow]
   );
 
   // SPEC 96: en modo morph el hero desvanece su contenido al mostrar las

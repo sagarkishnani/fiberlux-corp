@@ -355,22 +355,16 @@ function makeGlassTexture(
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
-  xNorm: number; // posición normalizada en el costado (|x| en unidades halfW)
-  yNorm: number; // posición vertical normalizada (halfH)
-  homeX: number;
-  homeY: number;
-  bobPhase: number;
-  bobSpeed: number;
-  bobAmpX: number;
-  bobAmpY: number;
+  dirX: number; // dirección de salida desde el centro
+  dirY: number;
+  speed: number; // velocidad del recorrido (loop)
+  phase: number; // desfase en el loop (para emisión continua)
+  scaleFull: number; // escala al llegar a la esquina
   tiltPhase: number;
   tiltSpeed: number;
   tiltAmpX: number;
   tiltAmpY: number;
   baseOpacity: number;
-  enterSide: number;
-  introDelay: number;
-  parallax: number; // cuánto sube al hacer scroll (mayor = más cerca)
 }
 
 export default function CinematicBackground({
@@ -481,9 +475,7 @@ export default function CinematicBackground({
       return x;
     };
     const cardN = mobile ? PARAMS.cardCountMobile : PARAMS.cardCount;
-    const perSide = Math.ceil(cardN / 2);
-    // Pool de íconos = soluciones (CMS) + extras (subservicios/tech), sin repetir,
-    // para que los tiles varíen.
+    // Pool de íconos = soluciones (CMS) + extras (subservicios/tech), sin repetir.
     const pool: string[] = [];
     const seenKey = new Set<string>();
     for (const kk of [...keys, ...EXTRA_ICON_KEYS]) {
@@ -493,11 +485,7 @@ export default function CinematicBackground({
       }
     }
     const cards: Card[] = [];
-    let leftK = 0;
-    let rightK = 0;
     for (let i = 0; i < cardN; i++) {
-      const side = i % 2 === 0 ? -1 : 1;
-      const k = side < 0 ? leftK++ : rightK++;
       const key = pool[i % pool.length];
       const mat = new THREE.MeshBasicMaterial({
         map: getTex(key),
@@ -508,46 +496,28 @@ export default function CinematicBackground({
         opacity: 0,
       });
       const mesh = new THREE.Mesh(cardGeo, mat);
-      const z = rand(-6.2, -2.2);
-      const depth = (z + 6.2) / 4.0;
-      const scale = 0.5 + depth * 0.42;
-      mesh.scale.set(scale, scale, 1);
+      mesh.position.z = rand(-4.0, -2.0);
       mesh.renderOrder = -1;
       scene.add(mesh);
-      // Vertical uniforme por costado (evita solapamiento) + X alternada.
-      const frac = (k + 0.5) / perSide;
-      const yNorm = 0.8 - frac * 1.6 + rand(-0.045, 0.045);
-      const xNorm = 0.66 + (k % 2) * 0.18 + rand(-0.04, 0.04);
+      // Dirección de salida desde el centro: hacia izquierda/derecha, abriéndose
+      // a las esquinas (±~40°).
+      const side = i % 2 === 0 ? -1 : 1;
+      const ang = rand(-0.7, 0.7);
       cards.push({
         mesh,
         mat,
-        xNorm,
-        yNorm,
-        homeX: 0,
-        homeY: 0,
-        bobPhase: rand(0, Math.PI * 2),
-        bobSpeed: rand(0.15, 0.4),
-        bobAmpX: (0.015 + depth * 0.02) * halfH(),
-        bobAmpY: (0.02 + depth * 0.03) * halfH(),
+        dirX: side * Math.cos(ang),
+        dirY: Math.sin(ang),
+        speed: rand(0.05, 0.1),
+        phase: i / cardN + rand(-0.02, 0.02),
+        scaleFull: rand(0.5, 0.95),
         tiltPhase: rand(0, Math.PI * 2),
         tiltSpeed: rand(0.25, 0.5),
-        tiltAmpX: rand(0.08, 0.16),
-        tiltAmpY: rand(0.1, 0.18),
-        baseOpacity: 0.42 + depth * 0.34,
-        enterSide: side,
-        introDelay: (i / cardN) * 0.5,
-        parallax: 1.0 + depth * 2.0,
+        tiltAmpX: rand(0.06, 0.14),
+        tiltAmpY: rand(0.08, 0.16),
+        baseOpacity: rand(0.55, 0.85),
       });
     }
-    const placeSides = () => {
-      const hw = halfW();
-      const hh = halfH();
-      for (const cd of cards) {
-        cd.homeX = cd.enterSide * cd.xNorm * hw;
-        cd.homeY = cd.yNorm * hh;
-      }
-    };
-    placeSides();
 
     // ── Polvo ──
     const dustCount = mobile ? PARAMS.dustCountMobile : PARAMS.dustCount;
@@ -652,7 +622,6 @@ export default function CinematicBackground({
       rayUniforms.uRes.value.set(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      placeSides();
       const r = root!.getBoundingClientRect();
       heroTop = window.scrollY + r.top;
       heroHeight = r.height || 1;
@@ -696,31 +665,44 @@ export default function CinematicBackground({
     root.addEventListener("pointerdown", onDown, { passive: true });
     root.style.pointerEvents = "auto";
 
+    // smoothstep(a,b,x) en JS.
+    const smooth = (a: number, b: number, x: number) => {
+      const tt = Math.max(0, Math.min(1, (x - a) / (b - a)));
+      return tt * tt * (3 - 2 * tt);
+    };
     function updateCards(t: number, introE: number, scrollP: number) {
       const hw = halfW();
-      const fade = 1 - scrollP * 0.6;
+      const hh = halfH();
+      const cx = 0;
+      const cy = 0.12 * hh; // centro de emisión, un pelín arriba (cerca del título)
+      const fadeS = 1 - scrollP * 0.6;
       for (let i = 0; i < cards.length; i++) {
         const cd = cards[i];
         const m = cd.mesh;
-        const local = Math.max(
-          0,
-          Math.min(1, (introE - cd.introDelay) / (1 - 0.5))
-        );
-        const localE = 1 - Math.pow(1 - local, 3);
-        const enterX = (1 - localE) * cd.enterSide * hw * 1.2;
+        // Recorrido 0..1 en loop → emisión infinita desde el centro.
+        let travel = (t * cd.speed + cd.phase) % 1;
+        if (travel < 0) travel += 1;
 
-        const bx = Math.sin(t * cd.bobSpeed + cd.bobPhase) * cd.bobAmpX;
-        const by = Math.cos(t * cd.bobSpeed * 0.8 + cd.bobPhase) * cd.bobAmpY;
-        m.position.x = cd.homeX + bx + enterX + ptr.cx * 0.2;
-        // Parallax de scroll: los tiles suben (los cercanos, más rápido).
-        m.position.y = cd.homeY + by - ptr.cy * 0.12 + scrollP * cd.parallax;
+        // Sale del centro hacia su esquina, agrandándose ("acercándose").
+        m.position.x = cx + cd.dirX * travel * hw * 1.35 + ptr.cx * 0.15;
+        m.position.y =
+          cy + cd.dirY * travel * hh * 1.35 - ptr.cy * 0.1 + scrollP * 0.8;
+        const sc = cd.scaleFull * (0.28 + 0.72 * travel);
+        m.scale.set(sc, sc, 1);
 
         m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
         m.rotation.y =
           Math.sin(t * cd.tiltSpeed * 0.9 + cd.tiltPhase * 1.3) * cd.tiltAmpY;
         m.rotation.z = Math.sin(t * cd.tiltSpeed * 0.5) * 0.05;
 
-        cd.mat.opacity = cd.baseOpacity * localE * fade;
+        // Fade-in al salir del centro, fade-out al llegar a la esquina → sin pop.
+        const op =
+          cd.baseOpacity *
+          smooth(0.0, 0.18, travel) *
+          smooth(1.0, 0.72, travel) *
+          introE *
+          fadeS;
+        cd.mat.opacity = op;
       }
     }
 

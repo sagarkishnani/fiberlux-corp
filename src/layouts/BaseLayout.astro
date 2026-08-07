@@ -306,7 +306,7 @@ const whatsappMessage = whatsappContext
               the fixed overlays below stay reachable while a filter is on. */}
           <div id="a11y-content" class:list={[{ "cine-intro-page": homeHeroCinematic }]}>
             {/* <Header theme={headerTheme} /> */}
-            <HeaderV2 theme={headerTheme} heroLogo={isHome} heroLogoAlign={homeHeroMorph ? "left" : "center"} solidOnLoad={solidHeader} locale={locale} />
+            <HeaderV2 theme={headerTheme} heroLogo={isHome} heroLogoAlign={homeHeroMorph ? "left" : "center"} solidOnLoad={solidHeader} locale={locale} logoGlow={homeHeroCinematic} />
             <slot />
             <div class="-mt-6 relative z-40">
               <Footer locale={locale} />

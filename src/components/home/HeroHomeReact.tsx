@@ -491,9 +491,14 @@ export default function HeroHomeReact({
               .cine-word {
                 display: inline-block;
                 color: #fff;
+                /* Halo neón envolvente (varias capas: núcleo claro → morado
+                   externo) que "redondea" el texto. */
                 text-shadow:
-                  0 0 14px rgba(214,77,184,0.5),
-                  0 0 34px rgba(150,35,122,0.4);
+                  0 0 4px rgba(255,255,255,0.55),
+                  0 0 9px rgba(245,190,232,0.75),
+                  0 0 18px rgba(214,77,184,0.7),
+                  0 0 34px rgba(150,35,122,0.6),
+                  0 0 60px rgba(150,35,122,0.4);
                 /* Oculto hasta que se anima (frente de luz que lo dibuja). */
                 -webkit-mask-image: linear-gradient(90deg,
                   #000 0%, #000 var(--cine-rev),
