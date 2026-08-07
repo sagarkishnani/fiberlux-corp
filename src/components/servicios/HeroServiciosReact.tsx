@@ -39,9 +39,12 @@ export default function HeroServiciosReact({
   const base = import.meta.env.BASE_URL || "/";
 
   /* Click en un satélite → baja a esa categoría en SolucionesScroll.
-     El puente fino (índice exacto) lo completa el SPEC 98 step 6; aquí queda
-     el destino funcional. */
+     Se deja el índice pendiente en un global (por si el bloque aún no hidrató:
+     `client:visible`) y se despacha el evento (caso ya hidratado). El
+     scrollIntoView acerca la sección —y de paso dispara su hidratación—; la
+     posición exacta la remata el listener de SolucionesScroll. */
   const handleSelect = (index: number) => {
+    (window as any).__gotoSolucion = index;
     window.dispatchEvent(
       new CustomEvent("fbx:goto-solucion", { detail: { index } })
     );
