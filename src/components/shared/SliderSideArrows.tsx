@@ -39,7 +39,10 @@ interface SliderSideArrowsProps {
 const BTN =
   "hidden lg:flex absolute top-1/2 -translate-y-1/2 z-30 h-12 w-12 items-center justify-center rounded-full shadow-[0_8px_24px_-8px_rgba(0,0,0,0.55)] transition-colors";
 const ENABLED = "bg-[#96237A] text-white hover:bg-[#650F50]";
-const DISABLED = "bg-[#3B0E30] text-white/30 cursor-default";
+// Deshabilitada: círculo translúcido esmerilado (blur + baja opacidad) en vez del
+// aubergine sólido, para que no destaque sobre fondos claros/oscuros.
+const DISABLED =
+  "bg-[#3B0E30]/25 text-white/40 backdrop-blur-md border border-white/10 cursor-default";
 
 export default function SliderSideArrows({
   canPrev,

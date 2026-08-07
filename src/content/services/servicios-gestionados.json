@@ -66,7 +66,7 @@
         "featured": true
       },
       {
-        "icon": "generico",
+        "icon": "comunicaciones",
         "title": "Comunicaciones Unificadas",
         "title_en": "Unified Communications",
         "description": "La evolución de la Telefonía IP: unifica la central telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con Microsoft Teams, WhatsApp, CRMs y más.",
@@ -78,7 +78,7 @@
         "featured": false
       },
       {
-        "icon": "generico",
+        "icon": "colaboracion",
         "title": "Colaboración Empresarial",
         "title_en": "Enterprise Collaboration",
         "description": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
@@ -90,7 +90,7 @@
         "featured": false
       },
       {
-        "icon": "generico",
+        "icon": "redes-lan",
         "title": "Gestión de Redes LAN",
         "title_en": "LAN Network Management",
         "description": "Diseño, configuración, actualización y administración proactiva de la infraestructura de red LAN, incluyendo switches, segmentación y políticas de conectividad.",
@@ -114,7 +114,7 @@
         "featured": false
       },
       {
-        "icon": "generico",
+        "icon": "endpoints",
         "title": "Gestión de Endpoints",
         "title_en": "Endpoint Management",
         "description": "Administración centralizada (MDM/UEM). Plataformas cloud que controlan el inventario, despliegue de software y políticas de todos los…",

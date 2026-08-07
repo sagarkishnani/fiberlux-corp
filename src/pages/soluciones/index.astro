@@ -17,7 +17,8 @@ import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
   <main>
     <HeroServicios />
     {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) */}
-    <SolucionesScroll />
+    {/* showAll: en Soluciones se listan todos los subservicios (sin "Ver todas") */}
+    <SolucionesScroll showAll />
     {/* Partners e ISO (certificaciones) reutilizados del home, debajo de las cards */}
     <div data-reveal="up">
       <HomePartners />

@@ -12,6 +12,9 @@ interface SolucionesScrollProps {
   variables: { relativePath: string };
   data: HomeQuery;
   locale?: Locale;
+  /* Si true (página de Soluciones): muestra TODOS los subservicios de cada
+     categoría, sin el enlace "Ver todas". En home/soporte se limita a MAX_VISIBLE. */
+  showAll?: boolean;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -33,6 +36,7 @@ export default function SolucionesScrollReact({
   variables,
   data: initialData,
   locale = "es",
+  showAll = false,
 }: SolucionesScrollProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -227,6 +231,10 @@ export default function SolucionesScrollReact({
   }[];
   /* Se muestran las primeras MAX_VISIBLE; si hay más, un enlace "Ver todas (N)". */
   const MAX_VISIBLE = 6;
+  /* En la página de Soluciones (showAll) se listan todos los subservicios, pero
+     solo si caben en el viewport del recorrido: pasando este umbral la lista
+     desborda y se cortan los primeros, así que se vuelve al enlace "Ver todas". */
+  const SHOW_ALL_LIMIT = 8;
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
   const seeAllLabel = locale === "en" ? "See all" : "Ver todas";
@@ -241,11 +249,12 @@ export default function SolucionesScrollReact({
     url: string | null | undefined,
     keyPrefix: string,
   ) => {
-    const vis = subs.slice(0, MAX_VISIBLE);
-    const ov = subs.length - MAX_VISIBLE;
+    const canShowAll = showAll && subs.length <= SHOW_ALL_LIMIT;
+    const vis = canShowAll ? subs : subs.slice(0, MAX_VISIBLE);
+    const ov = canShowAll ? 0 : subs.length - MAX_VISIBLE;
     return (
       <>
-        <ul className="border-t border-white/50 sol-stagger">
+        <ul className="border-t border-white/[0.08] md:border-white/50 sol-stagger">
           {vis.map((sub, i) => {
             const label = tField(sub as any, "label", locale);
             const href = sub?.url ? withBase(sub.url) : null;
@@ -265,7 +274,7 @@ export default function SolucionesScrollReact({
             return (
               <li
                 key={`${keyPrefix}-${i}`}
-                className="sol-row border-b border-white/50"
+                className="sol-row border-b border-white/[0.08] md:border-white/50"
                 style={{ animationDelay: `${i * 45}ms` }}
               >
                 {href ? (

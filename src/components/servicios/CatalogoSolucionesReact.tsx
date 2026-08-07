@@ -26,6 +26,10 @@ import {
   FaHeadset,
   FaWifi,
   FaVideo,
+  FaPhoneVolume,
+  FaUsers,
+  FaEthernet,
+  FaLaptop,
   FaLayerGroup,
   FaArrowRight,
   FaChevronLeft,
@@ -89,6 +93,10 @@ const ICONS: Record<string, IconType> = {
   "mesa-ayuda": FaHeadset,
   wifi: FaWifi,
   videovigilancia: FaVideo,
+  comunicaciones: FaPhoneVolume,
+  colaboracion: FaUsers,
+  "redes-lan": FaEthernet,
+  endpoints: FaLaptop,
   generico: FaLayerGroup,
 };
 

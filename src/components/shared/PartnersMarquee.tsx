@@ -45,13 +45,14 @@ export default function PartnersMarquee({
   const logos = (partners.logos || []).filter(Boolean) as PartnerLogo[];
   if (logos.length === 0) return null;
 
-  // Repeat the set enough to overflow the widest screen, then duplicate the
-  // whole run so the -50% → 0 loop is seamless. El nº de copias se adapta a la
-  // cantidad de logos: con muchos (p.ej. el home con ~31) basta 1 copia por
-  // mitad, evitando cientos de <img> que causan jank/sobresaltos en mobile.
-  const copies = Math.max(1, Math.ceil(20 / logos.length));
-  const run = Array.from({ length: copies }, () => logos).flat();
-  const track = [...run, ...run];
+  // Dos filas en direcciones opuestas: la mitad de los logos arriba (→) y la
+  // otra mitad abajo (←). Con un solo logo no se parte (queda una sola fila).
+  const half = Math.ceil(logos.length / 2);
+  const rowLogos = logos.length > 1 ? [logos.slice(0, half), logos.slice(half)] : [logos];
+
+  // Velocidad por logo constante: si el consumidor pasa una duración total
+  // (proporcional al nº de logos), se deriva su ritmo; si no, un fallback fijo.
+  const secondsPerLogo = durationSeconds ? durationSeconds / logos.length : 4.5;
 
   const renderLogo = (logo: PartnerLogo, i: number) => {
     const img = (
@@ -98,19 +99,28 @@ export default function PartnersMarquee({
         )}
       </div>
 
-      {/* Full-width marquee */}
-      <div className="partners-marquee w-full overflow-hidden">
-        <div
-          className="partners-track flex w-max items-center"
-          aria-hidden="false"
-          style={
-            durationSeconds
-              ? { animationDuration: `${durationSeconds}s` }
-              : undefined
-          }
-        >
-          {track.map(renderLogo)}
-        </div>
+      {/* Dos filas full-width en direcciones opuestas */}
+      <div className="flex flex-col gap-8 md:gap-12">
+        {rowLogos.map((row, rowIndex) => {
+          // Copias suficientes para desbordar la pantalla, luego duplicadas para
+          // que el bucle -50% → 0 sea continuo. El nº se adapta a la cantidad de
+          // logos de la fila (evita cientos de <img> que causan jank en mobile).
+          const copies = Math.max(1, Math.ceil(20 / row.length));
+          const run = Array.from({ length: copies }, () => row).flat();
+          const track = [...run, ...run];
+          const rowDuration = Math.max(run.length * secondsPerLogo, 20);
+          return (
+            <div key={rowIndex} className="partners-marquee w-full overflow-hidden">
+              <div
+                className={`partners-track ${rowIndex % 2 === 1 ? "partners-track--reverse" : ""} flex w-max items-center`}
+                aria-hidden="false"
+                style={{ animationDuration: `${rowDuration}s` }}
+              >
+                {track.map(renderLogo)}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <style>{`
@@ -131,10 +141,19 @@ export default function PartnersMarquee({
           animation: partners-marquee 90s linear infinite;
           will-change: transform;
         }
-        /* Left → right motion; both halves identical so the reset is seamless. */
+        /* Fila superior: izquierda → derecha. Las dos mitades del track son
+           idénticas, así el reinicio es imperceptible. */
         @keyframes partners-marquee {
           from { transform: translateX(-50%); }
           to { transform: translateX(0); }
+        }
+        /* Fila inferior: derecha → izquierda (sentido opuesto). */
+        .partners-track--reverse {
+          animation-name: partners-marquee-reverse;
+        }
+        @keyframes partners-marquee-reverse {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
         @media (prefers-reduced-motion: reduce) {
           .partners-track { animation: none; transform: translateX(0); }

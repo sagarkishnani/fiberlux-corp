@@ -741,7 +741,11 @@ export default function HeaderV2React({
               return (
                 <div
                   key={i}
-                  className="relative cine-hitem"
+                  // z-[60]: el item (y su dropdown) debe quedar SOBRE el logo
+                  // grande del hero (z-50). `.cine-hitem` anima con transform, lo
+                  // que crea un stacking context propio; sin z-index quedaría en 0
+                  // y el logo (z-50) taparía el dropdown (SPEC 39 morph).
+                  className="relative z-[60] cine-hitem"
                   style={{ "--cine-d": `${380 + i * 70}ms` } as CSSProperties}
                   onMouseEnter={() => {
                     setNavHover(withChildren ? i : null);

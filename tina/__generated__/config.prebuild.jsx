@@ -525,6 +525,10 @@ var config_default = defineConfig({
                       { value: "mesa-ayuda", label: "Mesa de ayuda" },
                       { value: "wifi", label: "WiFi gestionado" },
                       { value: "videovigilancia", label: "Videovigilancia" },
+                      { value: "comunicaciones", label: "Comunicaciones unificadas" },
+                      { value: "colaboracion", label: "Colaboraci\xF3n empresarial" },
+                      { value: "redes-lan", label: "Redes LAN" },
+                      { value: "endpoints", label: "Endpoints" },
                       { value: "generico", label: "Gen\xE9rico" }
                     ]
                   },
