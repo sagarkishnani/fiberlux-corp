@@ -225,7 +225,7 @@ export default function HeroHomeReact({
           : mode === "cinematic"
           ? // Mobile: altura moderada — deja un respiro tras los botones sin el
             // gran vacío de 100svh. Desktop mantiene el hero alto.
-            "min-h-[80svh] md:min-h-[820px] lg:min-h-[900px]"
+            "min-h-[85svh] md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
     >
