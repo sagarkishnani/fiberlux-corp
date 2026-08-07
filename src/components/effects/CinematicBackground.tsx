@@ -355,10 +355,11 @@ function makeGlassTexture(
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
-  dirX: number; // dirección de salida desde el centro
+  dirX: number; // dirección de salida desde el centro (casi fija por costado)
   dirY: number;
+  perpOff: number; // offset perpendicular (carril paralelo, evita solaparse)
   speed: number; // velocidad del recorrido (loop)
-  phase: number; // desfase en el loop (para emisión continua)
+  phase: number; // desfase en el loop (espaciado par a lo largo de la línea)
   scaleFull: number; // escala al llegar a la esquina
   tiltPhase: number;
   tiltSpeed: number;
@@ -484,7 +485,10 @@ export default function CinematicBackground({
         pool.push(kk);
       }
     }
+    const perSide = Math.ceil(cardN / 2);
     const cards: Card[] = [];
+    let leftK = 0;
+    let rightK = 0;
     for (let i = 0; i < cardN; i++) {
       const key = pool[i % pool.length];
       const mat = new THREE.MeshBasicMaterial({
@@ -499,17 +503,20 @@ export default function CinematicBackground({
       mesh.position.z = rand(-4.0, -2.0);
       mesh.renderOrder = -1;
       scene.add(mesh);
-      // Dirección de salida desde el centro: hacia izquierda/derecha, abriéndose
-      // a las esquinas (±~40°).
       const side = i % 2 === 0 ? -1 : 1;
-      const ang = rand(-0.7, 0.7);
+      const k = side < 0 ? leftK++ : rightK++;
+      // Dirección casi fija por costado → todos siguen una línea coherente:
+      // izquierda ↗ arriba-izquierda, derecha ↘ abajo-derecha (jitter mínimo).
+      const a = 0.5 + rand(-0.06, 0.06);
       cards.push({
         mesh,
         mat,
-        dirX: side * Math.cos(ang),
-        dirY: Math.sin(ang),
-        speed: rand(0.05, 0.1),
-        phase: i / cardN + rand(-0.02, 0.02),
+        dirX: side * Math.cos(a),
+        dirY: (side < 0 ? 1 : -1) * Math.sin(a),
+        perpOff: rand(-0.55, 0.55),
+        speed: rand(0.05, 0.085),
+        // Espaciado par a lo largo de la línea (evita que se junten/choquen).
+        phase: (k + rand(-0.06, 0.06)) / perSide,
         scaleFull: rand(1.3, 2.4),
         tiltPhase: rand(0, Math.PI * 2),
         tiltSpeed: rand(0.25, 0.5),
@@ -683,10 +690,18 @@ export default function CinematicBackground({
         let travel = (t * cd.speed + cd.phase) % 1;
         if (travel < 0) travel += 1;
 
-        // Sale del centro hacia su esquina, agrandándose ("acercándose").
-        m.position.x = cx + cd.dirX * travel * hw * 1.35 + ptr.cx * 0.15;
+        // Sale del centro a lo largo de su línea (con carril perpendicular),
+        // agrandándose ("acercándose").
+        const perpX = -cd.dirY;
+        const perpY = cd.dirX;
+        m.position.x =
+          cx + cd.dirX * travel * hw * 1.35 + perpX * cd.perpOff + ptr.cx * 0.15;
         m.position.y =
-          cy + cd.dirY * travel * hh * 1.35 - ptr.cy * 0.1 + scrollP * 0.8;
+          cy +
+          cd.dirY * travel * hh * 1.35 +
+          perpY * cd.perpOff -
+          ptr.cy * 0.1 +
+          scrollP * 0.8;
         const sc = cd.scaleFull * (0.28 + 0.72 * travel);
         m.scale.set(sc, sc, 1);
 
