@@ -23,15 +23,78 @@ const BASE_THETA = 0.22;
 // con Lima (Perú) como centro de la red. Los "cables de fibra" ya no se dibujan
 // con los arcos flotantes de COBE (no integraban); la red de fibra la genera el
 // plexus de partículas (NodeField) en las zonas oscuras de los costados.
+const LIMA: [number, number] = [-12.05, -77.04];
+const NY: [number, number] = [40.71, -74.0];
+const LDN: [number, number] = [51.5, -0.12];
+const SP: [number, number] = [-23.55, -46.63];
+const SG: [number, number] = [1.35, 103.8];
+const TK: [number, number] = [35.68, 139.69];
+const MX: [number, number] = [19.43, -99.13];
+
 const MARKERS = [
-  { location: [-12.05, -77.04] as [number, number], size: 0.09 }, // Lima
-  { location: [40.71, -74.0] as [number, number], size: 0.05 }, // Nueva York
-  { location: [51.5, -0.12] as [number, number], size: 0.05 }, // Londres
-  { location: [-23.55, -46.63] as [number, number], size: 0.05 }, // São Paulo
-  { location: [1.35, 103.8] as [number, number], size: 0.05 }, // Singapur
-  { location: [35.68, 139.69] as [number, number], size: 0.04 }, // Tokio
-  { location: [19.43, -99.13] as [number, number], size: 0.04 }, // CDMX
+  { location: LIMA, size: 0.07 },
+  { location: NY, size: 0.045 },
+  { location: LDN, size: 0.045 },
+  { location: SP, size: 0.045 },
+  { location: SG, size: 0.045 },
+  { location: TK, size: 0.04 },
+  { location: MX, size: 0.04 },
 ];
+
+// Rutas de fibra: pares de hubs conectados por un arco fino sobre la superficie.
+const ROUTES: [[number, number], [number, number]][] = [
+  [LIMA, NY],
+  [LIMA, SP],
+  [LIMA, MX],
+  [NY, LDN],
+  [LDN, SG],
+  [SG, TK],
+];
+
+// ── Proyección idéntica a la de COBE (para dibujar arcos ALINEADOS con el globo).
+const DEG = Math.PI / 180;
+const GLOBE_R = 0.8; // radio del globo en COBE (ee)
+
+/** [lat, lng] → vector 3D unitario (misma fórmula que COBE `U`). */
+function locToVec3([lat, lng]: [number, number]): [number, number, number] {
+  const r = lat * DEG;
+  const a = lng * DEG - Math.PI;
+  const o = Math.cos(r);
+  return [-o * Math.cos(a), Math.sin(r), o * Math.sin(a)];
+}
+
+/** Interpolación esférica (los puntos quedan sobre la superficie de la esfera). */
+function slerp(
+  u: [number, number, number],
+  v: [number, number, number],
+  t: number
+): [number, number, number] {
+  let d = u[0] * v[0] + u[1] * v[1] + u[2] * v[2];
+  d = Math.max(-1, Math.min(1, d));
+  const om = Math.acos(d);
+  if (om < 1e-4) return u;
+  const s = Math.sin(om);
+  const a = Math.sin((1 - t) * om) / s;
+  const b = Math.sin(t * om) / s;
+  return [a * u[0] + b * v[0], a * u[1] + b * v[1], a * u[2] + b * v[2]];
+}
+
+/** Proyecta un punto 3D (ya escalado por el radio) con phi/theta → fracción del
+ *  canvas [0..1] + si está en el hemisferio frontal (misma matemática que `O`). */
+function project(
+  pt: [number, number, number],
+  phi: number,
+  theta: number
+): { x: number; y: number; front: boolean } {
+  const r = Math.cos(theta);
+  const a = Math.cos(phi);
+  const o = Math.sin(theta);
+  const i = Math.sin(phi);
+  const c = a * pt[0] + i * pt[2];
+  const s = i * o * pt[0] + r * pt[1] - a * o * pt[2];
+  const z = -i * r * pt[0] + o * pt[1] + a * r * pt[2];
+  return { x: (c + 1) / 2, y: (-s + 1) / 2, front: z >= 0 };
+}
 
 interface Props {
   className?: string;
@@ -48,12 +111,20 @@ export default function CinematicBackground({
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const arcsRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const root = rootRef.current;
     const glow = glowRef.current;
+    const arcsCanvas = arcsRef.current;
     if (!canvas || !root) return;
+    const actx = arcsCanvas?.getContext("2d") ?? null;
+
+    // Vectores 3D precomputados de cada ruta de fibra (endpoints en la esfera).
+    const routeVecs = ROUTES.map(
+      ([from, to]) => [locToVec3(from), locToVec3(to)] as const
+    );
 
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -63,6 +134,10 @@ export default function CinematicBackground({
     // Tamaño del canvas (cuadrado): grande, de modo que se vea ~60% del globo
     // (el resto queda recortado abajo por el overflow del hero).
     let sizePx = 0;
+    // Geometría del globo en coords del root (para dibujar los arcos encima).
+    let gLeft = 0; // x del borde izq. del canvas del globo dentro del root
+    let gTop = 0; // y del borde superior del canvas del globo dentro del root
+
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
@@ -70,6 +145,22 @@ export default function CinematicBackground({
       sizePx = Math.min(w * 1.0, h * 1.7);
       // Centrado horizontal; posicionado para ver el casquete superior (~60%).
       const topPx = h * 0.16 - sizePx * 0.1;
+      gLeft = w / 2 - sizePx / 2;
+      gTop = topPx;
+
+      // Canvas de arcos: cubre todo el root (mismo sistema de coords que el globo).
+      // A DPR 1 (líneas suaves con glow → no necesitan resolución retina; ahorra
+      // ~la mitad del fill-rate de esta capa por frame).
+      if (arcsCanvas && actx) {
+        const pw = Math.max(1, Math.floor(w));
+        const ph = Math.max(1, Math.floor(h));
+        if (arcsCanvas.width !== pw || arcsCanvas.height !== ph) {
+          arcsCanvas.width = pw;
+          arcsCanvas.height = ph;
+        }
+        actx.setTransform(1, 0, 0, 1, 0, 0);
+      }
+
       canvas.style.width = `${sizePx}px`;
       canvas.style.height = `${sizePx}px`;
       canvas.style.left = "50%";
@@ -149,6 +240,63 @@ export default function CinematicBackground({
       }
     };
 
+    // Dibuja los arcos de fibra sobre la superficie del globo, sincronizados con
+    // su rotación (misma proyección que COBE). Líneas finas + un pulso viajando;
+    // se cortan al pasar por detrás del globo (solo hemisferio frontal).
+    const SEG = 44;
+    const R = GLOBE_R * 1.004; // apenas por encima de la superficie
+    const drawArcs = (phi: number, theta: number, op: number, ms: number) => {
+      if (!actx || !arcsCanvas) return;
+      const w = root.clientWidth || 1;
+      const h = root.clientHeight || 1;
+      actx.clearRect(0, 0, w, h);
+      if (op <= 0.01) return;
+      actx.lineCap = "round";
+
+      for (let ri = 0; ri < routeVecs.length; ri++) {
+        const [u, v] = routeVecs[ri];
+        let started = false;
+        actx.beginPath();
+        for (let k = 0; k <= SEG; k++) {
+          const p = slerp(u, v, k / SEG);
+          const pr = project([p[0] * R, p[1] * R, p[2] * R], phi, theta);
+          const sx = gLeft + pr.x * sizePx;
+          const sy = gTop + pr.y * sizePx;
+          if (pr.front) {
+            if (!started) {
+              actx.moveTo(sx, sy);
+              started = true;
+            } else actx.lineTo(sx, sy);
+          } else started = false; // corta el trazo detrás del globo
+        }
+        // Glow en dos pasadas sobre la misma ruta (más barato que shadowBlur):
+        // trazo ancho y tenue (halo) + trazo fino y brillante (núcleo).
+        actx.lineWidth = 3.2;
+        actx.strokeStyle = `rgba(205,95,235,${0.16 * op})`;
+        actx.stroke();
+        actx.lineWidth = 1.1;
+        actx.strokeStyle = `rgba(235,175,248,${0.7 * op})`;
+        actx.stroke();
+
+        // Pulso brillante que recorre la ruta (halo + núcleo, sin shadowBlur).
+        const tp = (ms / 2600 + ri * 0.37) % 1;
+        const pp = slerp(u, v, tp);
+        const ppr = project([pp[0] * R, pp[1] * R, pp[2] * R], phi, theta);
+        if (ppr.front) {
+          const px = gLeft + ppr.x * sizePx;
+          const py = gTop + ppr.y * sizePx;
+          actx.fillStyle = `rgba(210,110,240,${0.35 * op})`;
+          actx.beginPath();
+          actx.arc(px, py, 4, 0, 6.2832);
+          actx.fill();
+          actx.fillStyle = `rgba(255,220,255,${0.95 * op})`;
+          actx.beginPath();
+          actx.arc(px, py, 1.7, 0, 6.2832);
+          actx.fill();
+        }
+      }
+    };
+
     const frame = (ms: number) => {
       if (startMs < 0) startMs = ms;
       const intro = reduce ? 1 : Math.min(1, (ms - startMs) / 1600);
@@ -169,6 +317,7 @@ export default function CinematicBackground({
         opacity: op,
       });
       if (glow) glow.style.opacity = `${op}`;
+      drawArcs(phi, BASE_THETA + scrollP * 0.9, op, ms);
       signalOnce();
       if (!reduce && visible) raf = requestAnimationFrame(frame);
       else raf = 0;
@@ -185,6 +334,7 @@ export default function CinematicBackground({
 
     if (reduce) {
       globe?.update({ phi: 0.6, opacity: 1 });
+      drawArcs(0.6, BASE_THETA, 1, 0);
       signalOnce();
     } else {
       raf = requestAnimationFrame(frame);
@@ -217,23 +367,23 @@ export default function CinematicBackground({
         }}
       />
 
-      {/* Red de fibra / partículas (plexus) en las zonas oscuras de los costados.
-          Máscara horizontal: fuerte a izquierda/derecha, transparente en el centro
-          (para no competir con el globo ni con el texto). */}
+      {/* Partículas tenues (estrellas que derivan) en las zonas oscuras de los
+          costados — sin líneas y sin reacción al cursor, solo dinamismo sutil.
+          Máscara horizontal: presentes a izquierda/derecha, ausentes en el centro. */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
-          opacity: 0.7,
+          opacity: 0.55,
           pointerEvents: "none",
           WebkitMaskImage:
-            "linear-gradient(90deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 88%, #000 100%)",
+            "linear-gradient(90deg, #000 0%, #000 12%, transparent 36%, transparent 64%, #000 88%, #000 100%)",
           maskImage:
-            "linear-gradient(90deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 88%, #000 100%)",
+            "linear-gradient(90deg, #000 0%, #000 12%, transparent 36%, transparent 64%, #000 88%, #000 100%)",
         }}
       >
-        <NodeField className="h-full w-full" />
+        <NodeField className="h-full w-full" interactive={false} lines={false} />
       </div>
 
       {/* Anillo de glow grueso alrededor del borde de la Tierra (detrás del globo). */}
@@ -247,10 +397,25 @@ export default function CinematicBackground({
         }}
       />
 
+      {/* Globo COBE. */}
       <canvas
         ref={canvasRef}
         aria-hidden="true"
         style={{ position: "absolute", display: "block", pointerEvents: "none" }}
+      />
+
+      {/* Arcos de fibra dibujados SOBRE la superficie del globo (encima del canvas). */}
+      <canvas
+        ref={arcsRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          display: "block",
+          pointerEvents: "none",
+        }}
       />
     </div>
   );

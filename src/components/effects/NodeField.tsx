@@ -50,12 +50,19 @@ interface Props {
   signalReady?: boolean;
   /* Se llama si el contexto 2D no está disponible (el consumidor decide fallback). */
   onUnsupported?: () => void;
+  /* Atracción de partículas hacia el cursor. Por defecto activada. */
+  interactive?: boolean;
+  /* Dibuja las líneas de conexión entre partículas. Por defecto activadas.
+     Con `false` quedan solo los puntos (campo de partículas tenue). */
+  lines?: boolean;
 }
 
 export default function NodeField({
   className,
   signalReady,
   onUnsupported,
+  interactive = true,
+  lines = true,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -133,7 +140,7 @@ export default function NodeField({
       cursor.y = y;
       cursor.active = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
     };
-    if (finePointer && !reduce) {
+    if (interactive && finePointer && !reduce) {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
     }
 
@@ -144,22 +151,24 @@ export default function NodeField({
       ctx!.clearRect(0, 0, cw, ch);
 
       // Líneas por distancia (O(n²), n ≤ maxCount).
-      ctx!.lineWidth = PARAMS.lineWidth;
-      for (let i = 0; i < particles.length; i++) {
-        const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
-          const b = particles[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const d2 = dx * dx + dy * dy;
-          if (d2 < PARAMS.linkDistance * PARAMS.linkDistance) {
-            const d = Math.sqrt(d2);
-            const alpha = PARAMS.maxLineAlpha * (1 - d / PARAMS.linkDistance);
-            ctx!.strokeStyle = `rgba(${lr},${lg},${lb},${alpha})`;
-            ctx!.beginPath();
-            ctx!.moveTo(a.x, a.y);
-            ctx!.lineTo(b.x, b.y);
-            ctx!.stroke();
+      if (lines) {
+        ctx!.lineWidth = PARAMS.lineWidth;
+        for (let i = 0; i < particles.length; i++) {
+          const a = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const b = particles[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < PARAMS.linkDistance * PARAMS.linkDistance) {
+              const d = Math.sqrt(d2);
+              const alpha = PARAMS.maxLineAlpha * (1 - d / PARAMS.linkDistance);
+              ctx!.strokeStyle = `rgba(${lr},${lg},${lb},${alpha})`;
+              ctx!.beginPath();
+              ctx!.moveTo(a.x, a.y);
+              ctx!.lineTo(b.x, b.y);
+              ctx!.stroke();
+            }
           }
         }
       }
