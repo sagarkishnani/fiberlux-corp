@@ -223,9 +223,9 @@ export default function HeroHomeReact({
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : mode === "cinematic"
-          ? // Mobile: altura ajustada al contenido (evita el gran vacío antes de
-            // la sección siguiente). Desktop mantiene el hero alto.
-            "min-h-0 md:min-h-[820px] lg:min-h-[900px]"
+          ? // Mobile: altura moderada — deja un respiro tras los botones sin el
+            // gran vacío de 100svh. Desktop mantiene el hero alto.
+            "min-h-[80svh] md:min-h-[820px] lg:min-h-[900px]"
           : "min-h-[600px] lg:min-h-[820px]"
       }`}
     >
