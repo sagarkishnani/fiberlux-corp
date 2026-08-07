@@ -357,9 +357,9 @@ export default function CinematicBackground({
         const s = stars[i];
         const edge = Math.min(
           1,
-          Math.max(0, (Math.abs(s.x - cx) / half - 0.28) / 0.5)
+          Math.max(0, (Math.abs(s.x - cx) / half - 0.2) / 0.45)
         );
-        drawSoft(s.x, s.y, 2.2, edge * 0.45 * op);
+        drawSoft(s.x, s.y, 2.6, edge * 0.9 * op);
       }
 
       // Arcos de fibra (línea fina + halo), recortados al hemisferio frontal.

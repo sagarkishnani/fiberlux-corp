@@ -398,7 +398,7 @@ export default function HeroHomeReact({
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              "radial-gradient(52% 48% at 50% 46%, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.32) 46%, rgba(10,10,10,0) 72%)",
+              "radial-gradient(56% 52% at 50% 46%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.55) 44%, rgba(10,10,10,0.2) 68%, rgba(10,10,10,0) 80%)",
           }}
         />
       )}
