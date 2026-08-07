@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
+import NodeField from "./NodeField";
 
 /**
  * CinematicBackground — hero "cinematic" (SPEC 97): PLANETA de fibra con COBE.
@@ -18,8 +19,10 @@ const MAGENTA: [number, number, number] = [0.85, 0.36, 0.95]; // markers + cable
 
 const BASE_THETA = 0.22;
 
-// Hubs (lat, lng) y cables de fibra (conexiones tipo submarino), con Lima (Perú)
-// como centro de la red.
+// Hubs (lat, lng) — nodos de conexión que brillan sobre la superficie del globo,
+// con Lima (Perú) como centro de la red. Los "cables de fibra" ya no se dibujan
+// con los arcos flotantes de COBE (no integraban); la red de fibra la genera el
+// plexus de partículas (NodeField) en las zonas oscuras de los costados.
 const MARKERS = [
   { location: [-12.05, -77.04] as [number, number], size: 0.09 }, // Lima
   { location: [40.71, -74.0] as [number, number], size: 0.05 }, // Nueva York
@@ -28,14 +31,6 @@ const MARKERS = [
   { location: [1.35, 103.8] as [number, number], size: 0.05 }, // Singapur
   { location: [35.68, 139.69] as [number, number], size: 0.04 }, // Tokio
   { location: [19.43, -99.13] as [number, number], size: 0.04 }, // CDMX
-];
-const ARCS = [
-  { from: [-12.05, -77.04] as [number, number], to: [40.71, -74.0] as [number, number] },
-  { from: [-12.05, -77.04] as [number, number], to: [-23.55, -46.63] as [number, number] },
-  { from: [-12.05, -77.04] as [number, number], to: [19.43, -99.13] as [number, number] },
-  { from: [40.71, -74.0] as [number, number], to: [51.5, -0.12] as [number, number] },
-  { from: [51.5, -0.12] as [number, number], to: [1.35, 103.8] as [number, number] },
-  { from: [1.35, 103.8] as [number, number], to: [35.68, 139.69] as [number, number] },
 ];
 
 interface Props {
@@ -52,10 +47,12 @@ export default function CinematicBackground({
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const root = rootRef.current;
+    const glow = glowRef.current;
     if (!canvas || !root) return;
 
     const reduce =
@@ -72,11 +69,29 @@ export default function CinematicBackground({
       // Globo un poco más alejado (más pequeño) que la versión anterior.
       sizePx = Math.min(w * 1.0, h * 1.7);
       // Centrado horizontal; posicionado para ver el casquete superior (~60%).
+      const topPx = h * 0.16 - sizePx * 0.1;
       canvas.style.width = `${sizePx}px`;
       canvas.style.height = `${sizePx}px`;
       canvas.style.left = "50%";
-      canvas.style.top = `${h * 0.16 - sizePx * 0.1}px`;
+      canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
+
+      // Anillo de glow: disco del tamaño del globo (≈80% del canvas) centrado en
+      // el globo, con box-shadow ancho → halo grueso alrededor del borde de la
+      // Tierra. Va detrás del canvas, así el globo tapa el interior y solo se ve
+      // el resplandor que desborda el borde.
+      if (glow) {
+        const diam = sizePx * 0.8; // diámetro visual del globo
+        const centerY = topPx + sizePx / 2;
+        const blur = Math.round(sizePx * 0.16);
+        const spread = Math.round(sizePx * 0.03);
+        glow.style.width = `${diam}px`;
+        glow.style.height = `${diam}px`;
+        glow.style.left = "50%";
+        glow.style.top = `${centerY - diam / 2}px`;
+        glow.style.transform = "translateX(-50%)";
+        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(155,60,210,0.55)`;
+      }
     };
     computeSize();
 
@@ -106,10 +121,6 @@ export default function CinematicBackground({
         markerColor: MAGENTA,
         glowColor: PURPLE,
         markers: MARKERS,
-        arcs: ARCS as any,
-        arcColor: MAGENTA,
-        arcWidth: 1.3,
-        arcHeight: 0.12, // cables pegados a la superficie
         markerElevation: 0.01,
         opacity: reduce ? 1 : 0,
         scale: 1,
@@ -148,14 +159,16 @@ export default function CinematicBackground({
       );
       if (!reduce) phi += 0.0026; // rotación (un poco más rápida)
 
+      const op = introE * (1 - scrollP * 0.85);
       globe?.update({
         phi,
         // Al hacer scroll el planeta rueda hacia arriba (en dirección del scroll).
         theta: BASE_THETA + scrollP * 0.9,
         width: sizePx * dpr,
         height: sizePx * dpr,
-        opacity: introE * (1 - scrollP * 0.85),
+        opacity: op,
       });
+      if (glow) glow.style.opacity = `${op}`;
       signalOnce();
       if (!reduce && visible) raf = requestAnimationFrame(frame);
       else raf = 0;
@@ -203,6 +216,37 @@ export default function CinematicBackground({
           pointerEvents: "none",
         }}
       />
+
+      {/* Red de fibra / partículas (plexus) en las zonas oscuras de los costados.
+          Máscara horizontal: fuerte a izquierda/derecha, transparente en el centro
+          (para no competir con el globo ni con el texto). */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.7,
+          pointerEvents: "none",
+          WebkitMaskImage:
+            "linear-gradient(90deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 88%, #000 100%)",
+          maskImage:
+            "linear-gradient(90deg, #000 0%, #000 12%, transparent 34%, transparent 66%, #000 88%, #000 100%)",
+        }}
+      >
+        <NodeField className="h-full w-full" />
+      </div>
+
+      {/* Anillo de glow grueso alrededor del borde de la Tierra (detrás del globo). */}
+      <div
+        ref={glowRef}
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          borderRadius: "50%",
+          pointerEvents: "none",
+        }}
+      />
+
       <canvas
         ref={canvasRef}
         aria-hidden="true"
