@@ -368,6 +368,20 @@ export default function HeroHomeReact({
         </div>
       )}
 
+      {/* Modo cinematic — SOLO mobile: velo oscuro sobre el fondo para que el
+          efecto no compita con el título/descripción (en desktop hay espacio a
+          los costados, así que no se aplica). */}
+      {mode === "cinematic" && (
+        <div
+          aria-hidden="true"
+          className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              "radial-gradient(120% 90% at 50% 42%, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.5) 45%, rgba(10,10,10,0.32) 100%)",
+          }}
+        />
+      )}
+
       {/* ══════════ Vignettes (z-[1]) — para legibilidad, en todos los modos ══════════ */}
       {/* Vignette izquierda */}
       <div
