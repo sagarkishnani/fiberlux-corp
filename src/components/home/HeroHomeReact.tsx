@@ -9,6 +9,7 @@ import Button from "../shared/Button";
 import WaveformEffect from "../effects/WaveformEffect";
 import NodeField from "../effects/NodeField";
 import CinematicBackground from "../effects/CinematicBackground";
+import HeroLogoIntro from "./HeroLogoIntro";
 import MorphSolutions, {
   type MorphNode,
   type MorphHandle,
@@ -371,6 +372,9 @@ export default function HeroHomeReact({
           />
         </div>
       )}
+
+      {/* Intro del wordmark FLX → FIBERLUX al cargar (SPEC 97, desktop). */}
+      {mode === "cinematic" && <HeroLogoIntro />}
 
       {/* Modo cinematic — SOLO mobile: velo oscuro sobre el fondo para que el
           efecto no compita con el título/descripción (en desktop hay espacio a
