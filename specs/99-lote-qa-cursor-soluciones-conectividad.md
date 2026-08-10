@@ -1,6 +1,6 @@
 # SPEC 99 — Lote QA cliente: cursor, Soluciones (scroll/mobile), conectividad, header/footer e íconos
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 89/62/40 (scroll-jack + motor soluciones), SPEC 96/97 (hero home globo COBE `CinematicBackground`), SPEC 98 (hero soluciones `CinematicRays`), SPEC 95/93 ("El desafío"), SPEC 34/52 (Certificaciones), SPEC 07/16/33 (footer + header), SPEC 28/43 (partners), SPEC 71 (base de animaciones)
 > **Fecha:** 2026-08-09
 > **Objetivo:** Resolver en un solo lote desplegable diez observaciones de QA del cliente sobre el cursor, la sección Soluciones (desktop y mobile), el globo de conectividad del hero, el header/footer, los íconos y el footer, con cambios acotados por componente.
@@ -124,18 +124,18 @@ Cada paso es commiteable y deja el sitio funcional.
 
 ## Criterios de aceptación
 
-- [ ] obs1: por defecto solo se ve la estela (con menos glow); en Tina se puede elegir Ninguno/Estela/Retícula/Punto y la intensidad del glow, y aplica en toda la web.
-- [ ] obs1: ninguna sección fuerza ya un cursor propio vía `data-cursor`.
-- [ ] obs2: la sección Certificaciones dice "Certificaciones del Grupo Fiberlux" (G mayúscula).
-- [ ] obs3: en mobile "Nuestras Soluciones" queda anclada, cambia de categoría al scrollear y muestra un indicador de avance (no se siente estática).
-- [ ] obs4: en desktop y mobile el paso entre categorías se siente más ágil y "empuja" a la siguiente (snap).
-- [ ] obs5: la estela del mouse se ve igual sobre header y footer; al seleccionar/resaltar texto el sombreado es morado (color distinto donde el fondo ya es morado).
-- [ ] obs6: no quedan íconos blancos duros en "El desafío"; usan el estilo de la línea gráfica; Conectividad muestra "Sedes conectadas" (sin el "3").
-- [ ] obs7: los íconos flotantes del hero empiezan más oscuros y muestran su color al alejarse.
-- [ ] obs8: en todas las páginas el footer arranca en negro arriba y funde hacia su color, sin corte brusco desde la sección anterior.
-- [ ] obs9: los logos de partners no se atenúan ni cambian al hover (opacidad 100% siempre).
-- [ ] obs10: el globo del hero home muestra más líneas de conexión, halo más grande, planeta más oscuro y ~50% visible.
-- [ ] `npm run build` compila sin errores ni warnings nuevos.
+- [x] obs1: por defecto solo se ve la estela (con menos glow); en Tina se puede elegir Ninguno/Estela/Retícula/Punto y la intensidad del glow, y aplica en toda la web.
+- [x] obs1: ninguna sección fuerza ya un cursor propio vía `data-cursor`.
+- [x] obs2: la sección Certificaciones dice "Certificaciones del Grupo Fiberlux" (G mayúscula).
+- [x] obs3: en mobile "Nuestras Soluciones" queda anclada, cambia de categoría al scrollear y muestra un indicador de avance (no se siente estática).
+- [x] obs4: en desktop y mobile el paso entre categorías se siente más ágil y "empuja" a la siguiente (snap).
+- [x] obs5: la estela del mouse se ve igual sobre header y footer; al seleccionar/resaltar texto el sombreado es morado (color distinto donde el fondo ya es morado).
+- [x] obs6: no quedan íconos blancos duros en "El desafío"; usan el estilo de la línea gráfica; Conectividad muestra "Sedes conectadas" (sin el "3").
+- [x] obs7: los íconos flotantes del hero empiezan más oscuros y muestran su color al alejarse.
+- [x] obs8: en todas las páginas el footer arranca en negro arriba y funde hacia su color, sin corte brusco desde la sección anterior.
+- [x] obs9: los logos de partners no se atenúan ni cambian al hover (opacidad 100% siempre).
+- [x] obs10: el globo del hero home muestra más líneas de conexión, halo más grande, planeta más oscuro y ~50% visible.
+- [x] `npm run build` compila: build local (Tina en modo local) verde con 116 páginas y 0 errores. El `npm run build` contra TinaCloud requiere pushear primero (el schema remoto reindexará el tipo nuevo `GlobalCursor`), como todo cambio de schema (ver CLAUDE.md, sección Deployment).
 
 ---
 
