@@ -39,10 +39,10 @@ export default function HeroCasosReact({
       {/* Glow morado en la esquina superior derecha (decorativo). */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-28 -right-28 z-0 h-[520px] w-[520px] rounded-full opacity-90 blur-[80px]"
+        className="pointer-events-none absolute -top-28 -right-28 z-0 h-[480px] w-[480px] rounded-full opacity-75 blur-[90px]"
         style={{
           background:
-            "radial-gradient(circle, rgba(150,35,122,0.95) 0%, rgba(150,35,122,0.5) 35%, rgba(150,35,122,0) 72%)",
+            "radial-gradient(circle, rgba(150,35,122,0.7) 0%, rgba(150,35,122,0.35) 38%, rgba(150,35,122,0) 72%)",
         }}
       />
 
