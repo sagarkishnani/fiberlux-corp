@@ -34,6 +34,10 @@ const SP: [number, number] = [-23.55, -46.63];
 const SG: [number, number] = [1.35, 103.8];
 const TK: [number, number] = [35.68, 139.69];
 const MX: [number, number] = [19.43, -99.13];
+const LA: [number, number] = [34.05, -118.24];
+const MAD: [number, number] = [40.42, -3.7];
+const DXB: [number, number] = [25.2, 55.27];
+const SYD: [number, number] = [-33.87, 151.21];
 
 // Nodos únicos (con tamaño de glow) y rutas de fibra (pares conectados).
 const HUBS: { loc: [number, number]; r: number }[] = [
@@ -44,6 +48,10 @@ const HUBS: { loc: [number, number]; r: number }[] = [
   { loc: SG, r: 6 },
   { loc: TK, r: 5.5 },
   { loc: MX, r: 5.5 },
+  { loc: LA, r: 5.5 },
+  { loc: MAD, r: 5.5 },
+  { loc: DXB, r: 5 },
+  { loc: SYD, r: 5 },
 ];
 // Rutas de fibra (SPEC 99 obs10): red más densa para que la lógica de
 // conectividad sea más evidente — hub-and-spoke desde Lima + enlaces cruzados.
@@ -60,6 +68,14 @@ const ROUTES: [[number, number], [number, number]][] = [
   [SG, TK],
   [SP, LDN],
   [SP, MX],
+  [LIMA, LA],
+  [LA, NY],
+  [LDN, MAD],
+  [MAD, NY],
+  [LDN, DXB],
+  [DXB, SG],
+  [SG, SYD],
+  [TK, SYD],
 ];
 
 // ── Proyección idéntica a la de COBE (para dibujar arcos ALINEADOS con el globo).
@@ -237,20 +253,26 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Halo del borde del globo (SPEC 99 obs10). Antes era un `box-shadow`, cuyo
-      // desenfoque enorme dejaba una banda plana morada-oscura alrededor del
-      // planeta (el "círculo negro" que marcó el cliente). Ahora es un
-      // radial-gradient MONÓTONO (brillante justo en el borde → transparente hacia
-      // afuera): al no tener mínimos intermedios, no puede formar una banda oscura.
-      // El fondo (fade radial) se define estático en el JSX; aquí solo el tamaño.
+      // Halo del borde del globo (SPEC 99 obs10). Box-shadow doble para un bloom
+      // ANCHO y difuso (ref. cliente): el div coincide con la esfera (diam≈sizePx)
+      // para que el brillo arranque JUSTO en el borde del planeta (sin hueco → sin
+      // banda oscura), una capa brillante cerca del borde + una capa muy difusa y
+      // amplia. Como es luz aditiva monótona, no forma anillo oscuro.
       if (glow) {
-        const diam = sizePx * 2.6; // SPEC 99 obs10: halo mucho más ancho (ref. cliente)
+        const diam = sizePx * 0.98;
         const centerY = topPx + sizePx / 2;
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
         glow.style.left = "50%";
         glow.style.top = `${centerY - diam / 2}px`;
         glow.style.transform = "translateX(-50%)";
+        const b1 = Math.round(sizePx * 0.2);
+        const s1 = Math.round(sizePx * 0.02);
+        const b2 = Math.round(sizePx * 0.48);
+        const s2 = Math.round(sizePx * 0.09);
+        glow.style.boxShadow =
+          `0 0 ${b1}px ${s1}px rgba(214,77,184,0.55), ` +
+          `0 0 ${b2}px ${s2}px rgba(168,45,138,0.4)`;
       }
 
       seedStars();
@@ -488,20 +510,12 @@ export default function CinematicBackground({
         }}
       />
 
-      {/* Halo del borde de la Tierra (detrás del globo). Radial-gradient monótono:
-          transparente en el centro (tapado por el globo), brillante justo en el
-          borde de la esfera (~39% del radio del div = 2.6× el globo) y fade MUY
-          amplio y suave a transparente hacia afuera → halo ancho, sin banda oscura. */}
+      {/* Halo del borde de la Tierra (detrás del globo). El bloom (box-shadow
+          doble, ancho y difuso) se define en computeSize porque depende de sizePx. */}
       <div
         ref={glowRef}
         aria-hidden="true"
-        style={{
-          position: "absolute",
-          borderRadius: "50%",
-          pointerEvents: "none",
-          background:
-            "radial-gradient(circle, rgba(0,0,0,0) 32%, rgba(214,77,184,0.62) 39%, rgba(214,77,184,0.32) 54%, rgba(150,35,122,0.14) 74%, rgba(0,0,0,0) 100%)",
-        }}
+        style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none" }}
       />
 
       {/* Globo COBE. */}
