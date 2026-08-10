@@ -237,20 +237,21 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Anillo de glow (morado de marca) detrás del globo → halo grueso en el borde.
-      // SPEC 99 obs10: halo fuerte por BLUR; el SPREAD se mantiene mínimo para que
-      // no forme un anillo/disco sólido oscuro al costado del planeta.
+      // Anillo de glow detrás del globo → halo del borde. SPEC 99 obs10: el color
+      // era magenta OSCURO (150,35,122) y sobre negro se leía como un "círculo
+      // negro" en los costados; se usa magenta CLARO (BRAND_LIT) para que se lea
+      // como luz (halo), con spread mínimo (sin anillo sólido).
       if (glow) {
         const diam = sizePx * 0.85;
         const centerY = topPx + sizePx / 2;
         const blur = Math.round(sizePx * 0.24);
-        const spread = Math.round(sizePx * 0.012);
+        const spread = Math.round(sizePx * 0.01);
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
         glow.style.left = "50%";
         glow.style.top = `${centerY - diam / 2}px`;
         glow.style.transform = "translateX(-50%)";
-        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(${BRAND},0.6)`;
+        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(${BRAND_LIT},0.5)`;
       }
 
       seedStars();
@@ -277,8 +278,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 5.5, // SPEC 99 obs10: planeta ligeramente más oscuro
-        mapBaseBrightness: 0.04, // océano casi negro
+        mapBrightness: 4.5, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBaseBrightness: 0.03, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,

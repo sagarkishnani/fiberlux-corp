@@ -124,10 +124,10 @@ export default function CursorTrail({ intensity = "med" }: { intensity?: Intensi
         (l) => `rgba(150,35,122,${cfg.haloAlpha * l})`,
         cfg.haloBlur
       );
-      // Pasada 2 — núcleo brillante (magenta claro → casi blanco en la cabeza).
+      // Pasada 2 — núcleo (SPEC 99: magenta de marca, un poco más morado/menos blanco).
       draw(
         (l) => CORE_WIDTH * l + 0.6,
-        (l) => `rgba(245,180,230,${cfg.coreAlpha * l})`,
+        (l) => `rgba(220,110,200,${cfg.coreAlpha * l})`,
         cfg.coreBlur
       );
 
