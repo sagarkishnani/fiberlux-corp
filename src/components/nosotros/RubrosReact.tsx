@@ -39,6 +39,9 @@ interface RubrosProps {
   variables: AboutQueryVariables;
   data: AboutQuery;
   locale?: Locale;
+  /* Degradado radial morado de fondo. Se usa en Casos de éxito para separar el
+     bloque del slider que va encima; en Nosotros va plano. */
+  glow?: boolean;
 }
 
 /* ── Icon map: CMS select key → react-icons component ── */
@@ -71,6 +74,7 @@ export default function RubrosReact({
   variables,
   data: initialData,
   locale = 'es',
+  glow = false,
 }: RubrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
 
@@ -120,8 +124,26 @@ export default function RubrosReact({
   );
 
   return (
-    <section className="rounded-t-[16px] bg-[#0a0a0a] pb-[64px] pt-[92px] md:pb-[116px]">
-      <div className="site-container">
+    <section className="relative overflow-hidden rounded-t-[16px] bg-[#0a0a0a] pb-[64px] pt-[92px] md:pb-[116px]">
+      {/* Halo radial tenue: marca el corte con el bloque anterior sin cambiar el
+          fondo negro de la sección. El halo NACE del negro (máscara vertical que
+          arranca transparente) para que no se vea una línea dura en el borde
+          superior, y se apaga antes del final del bloque. */}
+      {glow && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(115% 68% at 50% 42%, rgba(150,35,122,0.26) 0%, rgba(150,35,122,0.12) 40%, rgba(10,10,10,0) 74%)',
+            WebkitMaskImage:
+              'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 14%, #000 34%, #000 74%, rgba(0,0,0,0) 100%)',
+            maskImage:
+              'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.35) 14%, #000 34%, #000 74%, rgba(0,0,0,0) 100%)',
+          }}
+        />
+      )}
+      <div className="relative site-container">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-14">
           {/* Columna izquierda: título + descripción (fija en desktop, arriba en móvil) */}
           <div className="shrink-0 md:max-w-[440px]">

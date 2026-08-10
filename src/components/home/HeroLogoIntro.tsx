@@ -146,10 +146,7 @@ export default function HeroLogoIntro() {
     let raf = 0;
     let t0 = -1;
     const apply = (e: number) => {
-      // Sin blur (nítido); solo el glow del logo que va apareciendo.
-      svg.style.filter = `drop-shadow(0 0 10px rgba(214,77,184,${(0.5 * e).toFixed(
-        2
-      )})) drop-shadow(0 0 26px rgba(150,35,122,${(0.45 * e).toFixed(2)}))`;
+      // Sin blur y sin glow (pedido del cliente): el wordmark va limpio.
       paths.forEach((p, i) => {
         p.style.transform = `translate(${(dx[i] * (1 - e)).toFixed(2)}px, 0px)`;
         if (!LETTERS[i].keep) {
@@ -215,7 +212,7 @@ export default function HeroLogoIntro() {
         width="100%"
         height="100%"
         preserveAspectRatio="xMidYMid meet"
-        style={{ display: "block", willChange: "filter" }}
+        style={{ display: "block" }}
       >
         {LETTERS.map((l, i) => (
           <path key={i} d={l.d} fill="#fff" />

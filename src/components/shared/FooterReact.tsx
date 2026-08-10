@@ -232,8 +232,9 @@ export default function FooterReact({ query, variables, data: initialData, local
       <div className="site-container pt-16 sm:pt-20 pb-10 relative z-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-          {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
-          <div className="order-2 lg:order-1 flex flex-col justify-between gap-10">
+          {/* Left: Tagline + Social — primero en todos los tamaños (pedido del
+              cliente: en mobile el mensaje abre el footer, con las redes debajo). */}
+          <div className="order-1 flex flex-col justify-between gap-8 lg:gap-10">
             <h2
               className="text-[32px] leading-[36px] sm:text-[40px] xl:text-[56px] sm:leading-[60px] font-semibold text-white"
               data-tina-field={tinaField(footer, 'tagline')}
@@ -262,11 +263,11 @@ export default function FooterReact({ query, variables, data: initialData, local
             </div>
           </div>
 
-          {/* Right: Link groups — first on mobile. Short groups fill the top
+          {/* Right: Link groups — debajo del tagline. Short groups fill the top
               row (3 across on desktop); long groups span full width below with
               their links in multiple columns. `dense` backfills short groups
               into the gap left beside a spanning column. */}
-          <div className="order-1 lg:order-2 col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense gap-x-8 gap-y-10">
+          <div className="order-2 col-span-1 lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense gap-x-8 gap-y-10">
             {columns.map((column, ci) => renderColumn(column, ci))}
           </div>
         </div>

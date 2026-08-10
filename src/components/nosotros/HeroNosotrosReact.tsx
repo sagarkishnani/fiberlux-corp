@@ -29,7 +29,7 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
 
   return (
     <section
-      className="relative min-h-[88vh] flex items-center overflow-hidden -mt-16"
+      className="relative min-h-[74vh] lg:min-h-[88vh] flex items-center overflow-hidden -mt-16"
       style={{ background: '#0a0a0a' }}
     >
       {/* Capa 1 — Red viva (plexus): "la red que impulsa a las empresas" */}
@@ -80,7 +80,9 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
 
       {/* Content: mobile → texto centrado (solapa el candado); desktop → dos
           columnas (texto izquierda · candado derecha, misma altura). */}
-      <div className="relative z-10 site-container w-full min-h-[88vh] lg:min-h-0 flex items-center pt-28 pb-16 md:py-24">
+      {/* Mobile: el bloque de texto va más abajo (pt mayor que pb) y la altura
+          total se recorta, para que no quede un vacío grande bajo el subtítulo. */}
+      <div className="relative z-10 site-container w-full min-h-[74vh] lg:min-h-0 flex items-center pt-40 pb-10 md:py-24">
         <div className="w-full grid items-center gap-0 lg:gap-12 lg:grid-cols-2 lg:min-h-[74vh]">
           {/* Texto */}
           <div className="order-2 lg:order-1 relative z-20 min-w-0" data-reveal="up">

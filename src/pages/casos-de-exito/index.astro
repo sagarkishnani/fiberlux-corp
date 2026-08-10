@@ -3,10 +3,17 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import HeroCasos from "../../components/casos-de-exito/HeroCasos.astro";
 import CasosSlider from "../../components/casos-de-exito/CasosSlider.astro";
+import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
 const casosQuery = await client.queries.casosDeExito({
   relativePath: "index.json",
 });
+/* Rubros (mismo bloque editable que Nosotros): cierra la página de casos con
+   los sectores a los que atiende Fiberlux. */
+const aboutQuery = await client.queries.about({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 const page = casosQuery.data.casosDeExito;
 const seo = page?.seo;
 
@@ -20,5 +27,15 @@ const description =
   <main>
     <HeroCasos />
     <CasosSlider />
+    <div data-reveal="up">
+      <RubrosReact
+        client:visible
+        query={aboutQuery.query}
+        variables={aboutQuery.variables}
+        data={aboutQuery.data}
+        locale={locale}
+        glow
+      />
+    </div>
   </main>
 </BaseLayout>

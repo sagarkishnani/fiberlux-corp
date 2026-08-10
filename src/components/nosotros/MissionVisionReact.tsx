@@ -36,78 +36,89 @@ export default function MissionVisionReact({ query, variables, data: initialData
         {/* ── Desktop layout ── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-40">
 
-          {/* Left column: Title + Cards */}
-          <div className="flex flex-col" data-reveal="left" data-reveal-scrub>
-            {/* Title */}
-            <h2
-              className="text-[30px] leading-[36px] min-[380px]:text-[36px] min-[380px]:leading-[42px] md:text-[48px] md:leading-[56px] font-medium text-brand-purple-darkest mb-10"
-              data-tina-field={tinaField(about as any, 'missionVisionTitle')}
-            >
-              {sectionTitle}
-            </h2>
+          {/* Left column: Title + Cards.
+              Desktop: toda la columna entra desde la izquierda (un solo scrub).
+              Mobile (pedido del cliente): se parte en dos — título + imagen
+              entran de izquierda a derecha, y las tarjetas de misión/visión de
+              derecha a izquierda. `data-reveal-only` elige cuál corre en cada
+              breakpoint (el que no aplica se muestra sin animar). */}
+          <div className="flex flex-col" data-reveal="left" data-reveal-scrub data-reveal-only="desktop">
 
-            {/* Mobile: Image appears here */}
-            {image && (
-              <div className="block lg:hidden mb-8">
-                <img
-                  src={image}
-                  alt="Compromiso tecnológico"
-                  className="w-full h-auto rounded-2xl object-cover"
-                  data-tina-field={tinaField(about, 'missionImage')}
-                />
-              </div>
-            )}
-
-            {/* Mission card */}
-            {mission && (
-              <div
-                className="border border-brand-purple-light rounded-2xl p-6 mb-4"
-                data-tina-field={tinaField(mission, 'title')}
+            {/* Bloque 1 — título + imagen (mobile: entra desde la izquierda) */}
+            <div data-reveal="left" data-reveal-scrub data-reveal-only="mobile">
+              <h2
+                className="text-[30px] leading-[36px] min-[380px]:text-[36px] min-[380px]:leading-[42px] md:text-[48px] md:leading-[56px] font-medium text-brand-purple-darkest mb-10"
+                data-tina-field={tinaField(about as any, 'missionVisionTitle')}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  {/* Mission icon */}
-                  <svg className="w-5 h-5 text-brand-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20" />
-                    <path d="M2 12h20" />
-                  </svg>
-                  <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
-                    {tField(mission as any, "title", locale)}
-                  </h3>
-                </div>
-                <p
-                  className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
-                  data-tina-field={tinaField(mission, 'text')}
-                >
-                  {tField(mission as any, "text", locale)}
-                </p>
-              </div>
-            )}
+                {sectionTitle}
+              </h2>
 
-            {/* Vision card */}
-            {vision && (
-              <div
-                className="border border-brand-purple-light rounded-2xl p-6"
-                data-tina-field={tinaField(vision, 'title')}
-              >
-                <div className="flex items-center gap-2 mb-3">
-                  {/* Vision icon */}
-                  <svg className="w-5 h-5 text-brand-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
-                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                  <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
-                    {tField(vision as any, "title", locale)}
-                  </h3>
+              {/* Mobile: Image appears here */}
+              {image && (
+                <div className="block lg:hidden mb-8">
+                  <img
+                    src={image}
+                    alt="Compromiso tecnológico"
+                    className="w-full h-auto rounded-2xl object-cover"
+                    data-tina-field={tinaField(about, 'missionImage')}
+                  />
                 </div>
-                <p
-                  className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
-                  data-tina-field={tinaField(vision, 'text')}
+              )}
+            </div>
+
+            {/* Bloque 2 — misión y visión (mobile: entra desde la derecha) */}
+            <div data-reveal="right" data-reveal-scrub data-reveal-only="mobile">
+              {/* Mission card */}
+              {mission && (
+                <div
+                  className="border border-brand-purple-light rounded-2xl p-6 mb-4"
+                  data-tina-field={tinaField(mission, 'title')}
                 >
-                  {tField(vision as any, "text", locale)}
-                </p>
-              </div>
-            )}
+                  <div className="flex items-center gap-2 mb-3">
+                    {/* Mission icon */}
+                    <svg className="w-5 h-5 text-brand-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20" />
+                      <path d="M2 12h20" />
+                    </svg>
+                    <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
+                      {tField(mission as any, "title", locale)}
+                    </h3>
+                  </div>
+                  <p
+                    className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
+                    data-tina-field={tinaField(mission, 'text')}
+                  >
+                    {tField(mission as any, "text", locale)}
+                  </p>
+                </div>
+              )}
+
+              {/* Vision card */}
+              {vision && (
+                <div
+                  className="border border-brand-purple-light rounded-2xl p-6"
+                  data-tina-field={tinaField(vision, 'title')}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    {/* Vision icon */}
+                    <svg className="w-5 h-5 text-brand-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+                      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <h3 className="text-lg md:text-2xl font-semibold text-brand-purple-darkest">
+                      {tField(vision as any, "title", locale)}
+                    </h3>
+                  </div>
+                  <p
+                    className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed"
+                    data-tina-field={tinaField(vision, 'text')}
+                  >
+                    {tField(vision as any, "text", locale)}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Right column: Image (desktop only) */}

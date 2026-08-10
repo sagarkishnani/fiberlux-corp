@@ -12,9 +12,6 @@ interface SolucionesScrollProps {
   variables: { relativePath: string };
   data: HomeQuery;
   locale?: Locale;
-  /* Si true (página de Soluciones): muestra TODOS los subservicios de cada
-     categoría, sin el enlace "Ver todas". En home/soporte se limita a MAX_VISIBLE. */
-  showAll?: boolean;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -37,7 +34,6 @@ export default function SolucionesScrollReact({
   variables,
   data: initialData,
   locale = "es",
-  showAll = false,
 }: SolucionesScrollProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -236,12 +232,11 @@ export default function SolucionesScrollReact({
     label_en?: string | null;
     url?: string | null;
   }[];
-  /* Se muestran las primeras MAX_VISIBLE; si hay más, un enlace "Ver todas (N)". */
-  const MAX_VISIBLE = 6;
-  /* En la página de Soluciones (showAll) se listan todos los subservicios, pero
-     solo si caben en el viewport del recorrido: pasando este umbral la lista
-     desborda y se cortan los primeros, así que se vuelve al enlace "Ver todas". */
-  const SHOW_ALL_LIMIT = 8;
+  /* Se listan TODOS los subservicios de la categoría hasta un tope de 8 (lo que
+     entra en el viewport del recorrido). Solo si la categoría tiene más de 8 se
+     recorta y aparece el enlace "Ver todas (N)". Mismo criterio en home,
+     soporte y la página de Soluciones. */
+  const MAX_VISIBLE = 8;
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
   const seeAllLabel = locale === "en" ? "See all" : "Ver todas";
@@ -256,12 +251,15 @@ export default function SolucionesScrollReact({
     url: string | null | undefined,
     keyPrefix: string,
   ) => {
-    // En mobile el bloque va anclado (100svh): se muestran menos filas para que
-    // el contenido no desborde el pin (SPEC 99 obs3).
-    const cap = isMobile ? 4 : MAX_VISIBLE;
-    const canShowAll = !isMobile && showAll && subs.length <= SHOW_ALL_LIMIT;
-    const vis = canShowAll ? subs : subs.slice(0, cap);
-    const ov = canShowAll ? 0 : Math.max(0, subs.length - cap);
+    // En mobile el bloque va anclado (100svh) y la columna de texto ya ocupa
+    // ~2/3 de la pantalla: más de 5 filas desbordan el pin en pantallas de 667px
+    // (iPhone SE), así que ahí se recorta y queda el enlace "Ver todas".
+    const cap = isMobile ? 5 : MAX_VISIBLE;
+    const vis = subs.slice(0, cap);
+    const ov = Math.max(0, subs.length - cap);
+    // Con listas largas se compactan las filas para que entren sin desbordar.
+    const dense = vis.length > 4;
+    const rowPad = dense ? "py-1.5 md:py-3.5" : "py-3 md:py-6";
     return (
       <>
         <ul className="border-t border-white/[0.08] md:border-white/50 sol-stagger">
@@ -269,7 +267,7 @@ export default function SolucionesScrollReact({
             const label = tField(sub as any, "label", locale);
             const href = sub?.url ? withBase(sub.url) : null;
             const rowInner = (
-              <div className="flex items-center gap-6 py-3 md:py-6">
+              <div className={`flex items-center gap-6 ${rowPad}`}>
                 <span
                   aria-hidden="true"
                   className="text-[13px] md:text-[15px] text-white/35 transition-colors group-hover:text-white/70"
@@ -300,7 +298,7 @@ export default function SolucionesScrollReact({
         </ul>
 
         {ov > 0 && url && (
-          <div className="mt-6 flex justify-end">
+          <div className="mt-3 md:mt-6 flex justify-end">
             <a
               href={withBase(url)}
               className="group inline-flex items-center gap-2 text-[15px] font-medium text-white/65 transition-colors hover:text-white"
@@ -366,7 +364,7 @@ export default function SolucionesScrollReact({
           </div>
         </div>
 
-        <div className="relative z-10 w-full site-container py-8 md:py-16 lg:py-20 md:flex md:items-center md:gap-10 lg:gap-14">
+        <div className="relative z-10 w-full site-container py-6 md:py-16 lg:py-20 md:flex md:items-center md:gap-10 lg:gap-14">
           {/* ── Columna izquierda ── */}
           <div className="md:w-[42%] md:shrink-0">
             {sectionTitle && (
@@ -381,7 +379,7 @@ export default function SolucionesScrollReact({
             {/* Indicador de progreso del recorrido (SPEC 99 obs3): barra continua
                 + contador de categoría, para que el avance se note. Solo en mobile
                 (en desktop el odómetro/envelope ya dan feedback de sobra). */}
-            <div className="mb-6 flex items-center gap-3 md:hidden">
+            <div className="mb-5 flex items-center gap-3 md:hidden">
               <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.12]">
                 <div
                   ref={progressRef}
@@ -399,7 +397,7 @@ export default function SolucionesScrollReact({
             {/* Número crisp en flujo (odómetro, rueda alineado con el título). */}
             <div
               aria-hidden="true"
-              className="relative overflow-hidden text-[52px] md:text-[92px] font-semibold leading-none text-white"
+              className="relative overflow-hidden text-[46px] md:text-[92px] font-semibold leading-none text-white"
               style={{ height: "1em" }}
             >
               <div className={numTransition} style={{ transform: `translateY(-${activeIndex}em)` }}>
@@ -414,7 +412,7 @@ export default function SolucionesScrollReact({
             {/* Bloque con envelope (opacidad/slide continuos por scroll). */}
             <div ref={fgRef} className="will-change-transform">
               <h2
-                className="mt-3 md:mt-4 text-[26px] md:text-[44px] leading-[1.1] font-semibold text-white max-w-[14ch]"
+                className="mt-3 md:mt-4 text-[24px] md:text-[44px] leading-[1.1] font-semibold text-white max-w-[14ch]"
                 data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
               >
                 {tField(active as any, "title", locale)}
@@ -443,7 +441,7 @@ export default function SolucionesScrollReact({
 
           {/* ── Columna derecha: subservicios ── */}
           <div
-            className="md:flex-1 md:min-w-0 mt-7 md:mt-0"
+            className="md:flex-1 md:min-w-0 mt-5 md:mt-0"
             onMouseEnter={handleListEnter}
             onMouseMove={handleListMove}
             onMouseLeave={handleListLeave}

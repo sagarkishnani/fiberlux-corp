@@ -1,20 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { FaHeadset, FaBolt, FaServer, FaWhatsapp, FaPhone, FaEnvelope, FaComments } from "react-icons/fa6";
-import type { IconType } from "react-icons";
+import { useEffect, useRef } from "react";
+import { FaWhatsapp, FaPhone, FaEnvelope, FaComments } from "react-icons/fa6";
 
 /**
  * SupportHub — gráfico vivo del hero de Soporte técnico (SPEC 102).
  *
- * Núcleo central (tile con glow que rota) conectado por tuberías curvas a cuatro
- * nodos de canales de soporte (WhatsApp, teléfono, correo, chat). Por cada
- * conector viaja un PULSO de señal del centro al nodo (líneas que "avanzan") y el
- * nodo emite un PING al recibirlo; el ícono del núcleo CICLA entre audífonos,
- * rayo, server y el isotipo Fiberlux (SVG inline).
+ * Núcleo central (tile con glow que rota, con el ISOTIPO de Fiberlux) conectado
+ * por tuberías curvas a cuatro nodos de canales de soporte (WhatsApp, teléfono,
+ * correo, chat). Por cada conector viaja un PULSO de señal del centro al nodo
+ * (líneas que "avanzan", en bucle continuo) y el nodo emite un PING al recibirlo.
  *
  * Interactividad + profundidad: toda la escena hace un leve TILT 3D siguiendo el
  * cursor. Todo SVG (líneas) + HTML/CSS (tiles glass). Sin WebGL, sin líneas
- * verdes. Respeta prefers-reduced-motion (estático) y pausa el ciclo/tilt fuera
- * de viewport o en punteros gruesos (mobile).
+ * verdes. Respeta prefers-reduced-motion (estático); el tilt solo corre en
+ * punteros finos (en mobile no hay hover).
  */
 
 interface SupportHubProps {
@@ -22,41 +20,22 @@ interface SupportHubProps {
 }
 
 const PARAMS = {
-  cycleMs: 2200, // intervalo del ciclo del ícono central
   pulseDur: 2.8, // s — pulso viajando por cada conector
   tiltDeg: 7, // grados máximos de inclinación 3D con el cursor
   coreSize: 23, // % del contenedor (tile del núcleo)
   nodeSize: 15, // % del contenedor (tiles de canales)
 };
 
-/* Isotipo Fiberlux como SVG inline (marca de red: 3 nodos → hub + tallo). */
+/* Isotipo Fiberlux — trazado real del SVG de marca
+   (public/images/soporte-tecnico/isotipo-fiberlux.svg), pintado con
+   `currentColor` para que tome el tono del núcleo. */
 function IsotipoFiberlux() {
   return (
-    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth={3.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {/* conectores del isotipo */}
-      <path d="M42 21 L31 40" />
-      <path d="M14 32 L31 40" />
-      <path d="M44 34 L31 40" />
-      <path d="M31 40 L31 47" />
-      {/* nodos (anillos) */}
-      <circle cx="42" cy="17" r="5" />
-      <circle cx="10" cy="31" r="5" />
-      <circle cx="47" cy="33" r="5" />
-      {/* hub + extremo del tallo (rellenos) */}
-      <circle cx="31" cy="40" r="2.6" fill="currentColor" stroke="none" />
-      <circle cx="31" cy="48" r="2" fill="currentColor" stroke="none" />
+    <svg viewBox="0 0 54 39" fill="currentColor" aria-hidden="true">
+      <path d="M51.4241 16.8506C48.5632 14.7233 44.4592 15.2648 42.2667 18.0496C40.8764 19.8288 40.5957 22.085 41.3176 24.0447L30.1282 32.7729C29.9544 32.6182 29.7673 32.4893 29.5667 32.3732L37.815 14.0013C37.922 14.0013 38.0423 14.0013 38.1626 14.0013C42.1732 14.0013 45.4217 10.8685 45.4217 7.00069C45.4217 3.13292 42.1732 0 38.1626 0C34.1521 0 30.9036 3.13292 30.9036 7.00069C30.9036 9.244 31.9998 11.2552 33.7109 12.5316L27.9893 31.8704C27.8823 31.8704 27.762 31.8317 27.6551 31.8317C27.4144 31.8317 27.1871 31.8575 26.9599 31.8962L25.3022 21.6853H25.2888C26.0374 21.002 26.492 20.035 26.4652 18.9779C26.3984 17.0182 24.7007 15.484 22.6687 15.5356C20.6367 15.6 19.0458 17.2374 19.1126 19.197C19.1661 20.9762 20.5831 22.4073 22.3611 22.6136L26.0508 32.2056C25.8637 32.2959 25.6765 32.3861 25.5161 32.515L12.6824 22.4975C13.4043 20.5379 13.1235 18.2688 11.7332 16.5025C9.54078 13.7048 5.43671 13.1762 2.57586 15.3035C-0.298353 17.4437 -0.846449 21.4274 1.33261 24.2122C3.51166 27.0099 7.61574 27.5514 10.49 25.4113C10.5702 25.3597 10.637 25.2952 10.7039 25.2437L24.5268 33.5465C24.1792 34.088 23.9654 34.7326 23.9654 35.4288C23.9654 37.4013 25.6231 39 27.6684 39C29.7138 39 31.3714 37.4013 31.3714 35.4288C31.3714 34.9646 31.2779 34.5263 31.1041 34.1137L43.2961 26.7907C43.363 26.8552 43.4298 26.9068 43.51 26.9584C46.3708 29.0856 50.4884 28.557 52.6674 25.7594C54.8465 22.9746 54.2983 18.9908 51.4241 16.8506ZM38.176 4.22876C39.7668 4.22876 41.0636 5.47934 41.0636 7.01356C41.0636 8.54777 39.7668 9.79836 38.176 9.79836C36.5852 9.79836 35.2885 8.54777 35.2885 7.01356C35.2885 5.47934 36.5852 4.22876 38.176 4.22876ZM22.8424 20.641C21.9601 20.6668 21.2114 19.9964 21.1847 19.1455C21.158 18.2817 21.8532 17.5726 22.7355 17.5468C23.6312 17.521 24.3664 18.1914 24.3932 19.0423C24.4199 19.8932 23.7248 20.6152 22.8291 20.641H22.8424ZM8.48469 21.9818C7.589 23.0519 5.98478 23.2066 4.88857 22.3557C3.79236 21.4919 3.61861 19.919 4.5143 18.8618C5.40998 17.7917 7.01421 17.6242 8.12379 18.488C9.22 19.3518 9.38038 20.9247 8.49807 21.9947L8.48469 21.9818ZM49.1114 23.8899C48.0152 24.7537 46.4109 24.5861 45.5153 23.5161C44.6329 22.446 44.7934 20.8731 45.8896 20.0093C46.9992 19.1455 48.6033 19.3131 49.499 20.3832C50.3813 21.4533 50.221 23.0132 49.1248 23.877L49.1114 23.8899Z" />
     </svg>
   );
 }
-
-/* Íconos del núcleo. `isotipo` renderiza el SVG inline. */
-type CoreIcon = { key: string; Icon?: IconType; isotipo?: boolean };
-const CORE_ICONS: CoreIcon[] = [
-  { key: "headset", Icon: FaHeadset },
-  { key: "bolt", Icon: FaBolt },
-  { key: "server", Icon: FaServer },
-  { key: "isotipo", isotipo: true },
-];
 
 /* Nodos de canales (posición en % y desfase del pulso alineado a su conector). */
 const NODES = [
@@ -75,7 +54,6 @@ const CONNECTORS = [
 ];
 
 export default function SupportHub({ className = "" }: SupportHubProps) {
-  const [idx, setIdx] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -83,17 +61,6 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
     if (!root) return;
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const finePointer = window.matchMedia?.("(pointer: fine)").matches ?? false;
-
-    // ── Ciclo del ícono central (pausado fuera de viewport) ──
-    let timer: ReturnType<typeof setInterval> | null = null;
-    const start = () => { if (!timer && !reduce) timer = setInterval(() => setIdx((i) => (i + 1) % CORE_ICONS.length), PARAMS.cycleMs); };
-    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
-
-    let io: IntersectionObserver | null = null;
-    if ("IntersectionObserver" in window) {
-      io = new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop()), { threshold: 0 });
-      io.observe(root);
-    } else start();
 
     // ── Tilt 3D siguiendo el cursor (solo puntero fino, sin reduced-motion) ──
     const clamp = (v: number) => Math.max(-1, Math.min(1, v));
@@ -106,7 +73,7 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
     };
     if (finePointer && !reduce) window.addEventListener("pointermove", onMove, { passive: true });
 
-    return () => { stop(); io?.disconnect(); window.removeEventListener("pointermove", onMove); };
+    return () => { window.removeEventListener("pointermove", onMove); };
   }, []);
 
   return (
@@ -140,11 +107,9 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
         <div className="support-hub__core" style={{ left: "50%", top: "50%", width: `${PARAMS.coreSize}%` }}>
           <span className="support-hub__coreglow" />
           <div className="support-hub__coreinner">
-            {CORE_ICONS.map((c, i) => (
-              <span key={c.key} className="support-hub__coreicon" style={{ opacity: i === idx ? 1 : 0 }}>
-                {c.isotipo ? <IsotipoFiberlux /> : c.Icon && <c.Icon />}
-              </span>
-            ))}
+            <span className="support-hub__coreicon">
+              <IsotipoFiberlux />
+            </span>
           </div>
         </div>
       </div>
@@ -181,7 +146,10 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
           filter: drop-shadow(0 0 4px rgba(240, 111, 198, 0.8));
           animation: sh-pulse ${PARAMS.pulseDur}s linear infinite;
         }
-        @keyframes sh-pulse { from { stroke-dashoffset: 1; } to { stroke-dashoffset: -0.28; } }
+        /* 1 → 0 es exactamente un período del patrón (0.28 + 0.72 = pathLength):
+           el bucle empalma sin salto. Con 1 → -0.28 el trazo retrocedía al
+           reiniciar y el recorrido se veía cortado. */
+        @keyframes sh-pulse { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 
         /* Tiles (nodos + núcleo) */
         .support-hub__node, .support-hub__core {
@@ -238,10 +206,14 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
         .support-hub__coreicon {
           position: absolute; inset: 0;
           display: grid; place-items: center;
-          transition: opacity 0.55s ease, transform 0.55s ease;
-          color: rgba(246, 217, 238, 0.96);
+          color: rgba(250, 226, 243, 0.97);
         }
-        .support-hub__coreicon svg { width: 46%; height: 46%; }
+        /* El isotipo es apaisado (54×39): ancho fijo y alto automático para no
+           deformarlo; glow suave para que asiente sobre el núcleo. */
+        .support-hub__coreicon svg {
+          width: 58%; height: auto;
+          filter: drop-shadow(0 0 10px rgba(240, 111, 198, 0.45));
+        }
         @keyframes sh-rotate { to { transform: rotate(360deg); } }
         @keyframes sh-core-pulse {
           0%, 100% { box-shadow: 0 0 38px 4px rgba(226, 79, 184, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18); }
@@ -253,7 +225,6 @@ export default function SupportHub({ className = "" }: SupportHubProps) {
           .conn-pulse { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; opacity: 0.5; }
           .support-hub__nodeinner, .support-hub__coreinner, .support-hub__coreglow, .support-hub__ping { animation: none; }
           .support-hub__ping { opacity: 0; }
-          .support-hub__coreicon { transition: none; }
         }
       `}</style>
     </div>

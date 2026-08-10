@@ -252,6 +252,8 @@ export default function LightHalo({ className, lightPos = [0.72, 0.5], lightPosM
 
     const ptr = { tx: 0, ty: 0, cx: 0, cy: 0 };
     const onPointerMove = (e: PointerEvent) => {
+      // Táctil / lápiz: sin parallax (no hay hover; el dedo es scroll).
+      if (e.pointerType && e.pointerType !== "mouse") return;
       const rect = root!.getBoundingClientRect();
       ptr.tx = ((e.clientX - rect.left) / Math.max(1, rect.width) - 0.5) * 2;
       ptr.ty = ((e.clientY - rect.top) / Math.max(1, rect.height) - 0.5) * 2;

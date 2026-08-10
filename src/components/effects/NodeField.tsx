@@ -5,7 +5,8 @@ import { useEffect, useRef } from "react";
  *
  * Réplica de los settings de https://usenodefield.framer.website/ en morado de
  * marca: puntos que derivan lento y se conectan con líneas tenues cuando están
- * cerca (LINES on), y que se ATRAEN hacia el cursor (MODE attract, CURSOR on).
+ * cerca (LINES on), y que se inclinan LEVEMENTE hacia el cursor (desplazamiento
+ * acotado, no atracción acumulativa: nunca se apelotonan).
  *
  * Autocontenido, sin dependencias (canvas 2D nativo). Respeta
  * prefers-reduced-motion (frame estático) y pausa el rAF fuera de viewport.
@@ -21,8 +22,11 @@ const PARAMS = {
   speed: 0.18, // SPEED — velocidad de deriva base (px/frame en CSS px)
   linkDistance: 150, // DISTANCE — radio (CSS px) para conectar dos partículas
   cursorRadius: 240, // radio de influencia del cursor (CSS px)
-  attractForce: 0.09, // FORCE — aceleración de atracción hacia el cursor
-  relax: 0.03, // relajación hacia la deriva base (evita que las velocidades se disparen)
+  // El cursor NO acelera las partículas (eso las acababa apelotonando en un
+  // grumo si el mouse se quedaba quieto): las desplaza un máximo fijo hacia él
+  // y las devuelve al soltar. Movimiento mínimo, geometría de la red intacta.
+  cursorPull: 14, // desplazamiento máximo hacia el cursor (CSS px)
+  cursorEase: 0.06, // suavizado del desplazamiento (0..1 por frame)
   dotRadius: 2.2, // radio de cada punto (CSS px)
   lineWidth: 1, // grosor de línea
   // Puntos en un morado CLARO para que resalten sobre negro; líneas en el
@@ -36,12 +40,12 @@ const PARAMS = {
 const AREA_REF = 1280 * 720; // área de referencia para la densidad responsive
 
 interface Particle {
-  x: number;
+  x: number; // posición de la deriva (sin el desplazamiento del cursor)
   y: number;
-  vx: number;
+  vx: number; // deriva constante
   vy: number;
-  bvx: number; // deriva base (velocidad de reposo a la que relaja)
-  bvy: number;
+  ox: number; // desplazamiento actual hacia el cursor (se suma al dibujar)
+  oy: number;
 }
 
 interface Props {
@@ -78,8 +82,11 @@ export default function NodeField({
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-    const finePointer =
-      window.matchMedia?.("(pointer: fine)").matches ?? false;
+    // Solo hay "hover" real con ratón. En táctiles (y en híbridos que reportan
+    // `pointer: fine`) la interacción se desactiva del todo: seguir al dedo
+    // competía con el scroll y hacía saltar la página al arrastrar.
+    const hoverCapable =
+      window.matchMedia?.("(hover: hover) and (pointer: fine)").matches ?? false;
 
     let cw = 0; // ancho en CSS px
     let ch = 0; // alto en CSS px
@@ -98,22 +105,29 @@ export default function NodeField({
       particles = new Array(n);
       for (let i = 0; i < n; i++) {
         const angle = rand(0, Math.PI * 2);
-        const bvx = Math.cos(angle) * PARAMS.speed;
-        const bvy = Math.sin(angle) * PARAMS.speed;
         particles[i] = {
           x: rand(0, cw),
           y: rand(0, ch),
-          vx: bvx,
-          vy: bvy,
-          bvx,
-          bvy,
+          vx: Math.cos(angle) * PARAMS.speed,
+          vy: Math.sin(angle) * PARAMS.speed,
+          ox: 0,
+          oy: 0,
         };
       }
     }
 
+    // Medidas con las que se sembró por última vez: en mobile el navegador
+    // muestra/oculta la barra de URL al hacer scroll y dispara `resize` con otro
+    // alto; re-sembrar ahí reiniciaba TODAS las partículas (el salto que se ve
+    // al arrastrar para recargar). Solo re-sembramos ante cambios de layout
+    // reales (ancho, o rotación / cambio grande de alto).
+    let seedW = -1;
+    let seedH = -1;
+
     function resize() {
       const w = canvas!.clientWidth;
       const h = canvas!.clientHeight;
+      if (w === cw && h === ch) return;
       cw = w;
       ch = h;
       const pw = Math.max(1, Math.floor(w * dpr));
@@ -124,15 +138,40 @@ export default function NodeField({
       }
       // Trabajamos en CSS px; el contexto escala por DPR.
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
-      seed();
+
+      const needsSeed =
+        !particles.length ||
+        w !== seedW ||
+        Math.abs(h - seedH) > Math.max(1, seedH) * 0.35;
+      if (needsSeed) {
+        seedW = w;
+        seedH = h;
+        seed();
+      }
     }
     resize();
-    window.addEventListener("resize", resize);
+
+    // Coalescido a un frame: el resize por barra de URL llega en ráfaga durante
+    // el scroll y no debe forzar layout en cada evento.
+    let resizeRaf = 0;
+    const onResize = () => {
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        resize();
+      });
+    };
+    window.addEventListener("resize", onResize, { passive: true });
 
     // ── Cursor: se escucha en window y se mapea contra el rect del canvas,
     //    porque un contenido superpuesto (z superior) interceptaría los eventos.
     const cursor = { x: 0, y: 0, active: false };
     const onPointerMove = (e: PointerEvent) => {
+      // Táctil / lápiz: sin interacción (no existe hover; solo hay scroll).
+      if (e.pointerType && e.pointerType !== "mouse") {
+        cursor.active = false;
+        return;
+      }
       const rect = canvas!.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -140,7 +179,7 @@ export default function NodeField({
       cursor.y = y;
       cursor.active = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
     };
-    if (interactive && finePointer && !reduce) {
+    if (interactive && hoverCapable && !reduce) {
       window.addEventListener("pointermove", onPointerMove, { passive: true });
     }
 
@@ -155,18 +194,22 @@ export default function NodeField({
         ctx!.lineWidth = PARAMS.lineWidth;
         for (let i = 0; i < particles.length; i++) {
           const a = particles[i];
+          const ax = a.x + a.ox;
+          const ay = a.y + a.oy;
           for (let j = i + 1; j < particles.length; j++) {
             const b = particles[j];
-            const dx = a.x - b.x;
-            const dy = a.y - b.y;
+            const bx = b.x + b.ox;
+            const by = b.y + b.oy;
+            const dx = ax - bx;
+            const dy = ay - by;
             const d2 = dx * dx + dy * dy;
             if (d2 < PARAMS.linkDistance * PARAMS.linkDistance) {
               const d = Math.sqrt(d2);
               const alpha = PARAMS.maxLineAlpha * (1 - d / PARAMS.linkDistance);
               ctx!.strokeStyle = `rgba(${lr},${lg},${lb},${alpha})`;
               ctx!.beginPath();
-              ctx!.moveTo(a.x, a.y);
-              ctx!.lineTo(b.x, b.y);
+              ctx!.moveTo(ax, ay);
+              ctx!.lineTo(bx, by);
               ctx!.stroke();
             }
           }
@@ -178,7 +221,7 @@ export default function NodeField({
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         ctx!.beginPath();
-        ctx!.arc(p.x, p.y, PARAMS.dotRadius, 0, Math.PI * 2);
+        ctx!.arc(p.x + p.ox, p.y + p.oy, PARAMS.dotRadius, 0, Math.PI * 2);
         ctx!.fill();
       }
     }
@@ -187,22 +230,7 @@ export default function NodeField({
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Atracción hacia el cursor (MODE attract).
-        if (cursor.active) {
-          const dx = cursor.x - p.x;
-          const dy = cursor.y - p.y;
-          const d = Math.hypot(dx, dy);
-          if (d > 0.001 && d < PARAMS.cursorRadius) {
-            const f = PARAMS.attractForce * (1 - d / PARAMS.cursorRadius);
-            p.vx += (dx / d) * f;
-            p.vy += (dy / d) * f;
-          }
-        }
-
-        // Relajación hacia la deriva base: al alejar el cursor, vuelve a flotar.
-        p.vx += (p.bvx - p.vx) * PARAMS.relax;
-        p.vy += (p.bvy - p.vy) * PARAMS.relax;
-
+        // Deriva constante (nunca la altera el cursor).
         p.x += p.vx;
         p.y += p.vy;
 
@@ -211,6 +239,27 @@ export default function NodeField({
         else if (p.x > cw) p.x -= cw;
         if (p.y < 0) p.y += ch;
         else if (p.y > ch) p.y -= ch;
+
+        // Desplazamiento hacia el cursor: acotado a `cursorPull` px y calculado
+        // SIEMPRE desde la posición de deriva, así el sistema no acumula (con el
+        // mouse quieto las partículas se asientan en su offset y ahí se quedan,
+        // en vez de seguir cayendo hacia el cursor hasta juntarse).
+        let tx = 0;
+        let ty = 0;
+        if (cursor.active) {
+          const dx = cursor.x - p.x;
+          const dy = cursor.y - p.y;
+          const d = Math.hypot(dx, dy);
+          if (d > 0.001 && d < PARAMS.cursorRadius) {
+            // Falloff suave (cae hasta 0 en el borde del radio).
+            const k = 1 - d / PARAMS.cursorRadius;
+            const pull = Math.min(PARAMS.cursorPull * k * k, d * 0.5);
+            tx = (dx / d) * pull;
+            ty = (dy / d) * pull;
+          }
+        }
+        p.ox += (tx - p.ox) * PARAMS.cursorEase;
+        p.oy += (ty - p.oy) * PARAMS.cursorEase;
       }
     }
 
@@ -225,10 +274,18 @@ export default function NodeField({
       }
     }
 
-    function frame() {
-      step();
-      draw();
-      signalOnce();
+    // En dispositivos táctiles limitamos a ~30fps: el efecto es decorativo y
+    // liberar hilo principal evita los tirones al hacer scroll.
+    const minFrameMs = hoverCapable ? 0 : 1000 / 30;
+    let lastFrameMs = -Infinity;
+
+    function frame(ms: number) {
+      if (ms - lastFrameMs >= minFrameMs) {
+        lastFrameMs = ms;
+        step();
+        draw();
+        signalOnce();
+      }
       if (!reduce && visible) raf = requestAnimationFrame(frame);
       else raf = 0; // permite reiniciar el loop al volver al viewport
     }
@@ -252,7 +309,8 @@ export default function NodeField({
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
       io.disconnect();
     };

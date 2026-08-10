@@ -9,7 +9,8 @@
  * Atributos: data-reveal (up|down|left|right|fade|scale, default "up"),
  * data-reveal-delay, data-reveal-duration, data-reveal-distance (px),
  * data-reveal-stagger (cascada de hijos), data-reveal-repeat (re-dispara),
- * data-svg-draw + data-draw-duration.
+ * data-reveal-only ("mobile"|"desktop": limita el reveal a ese breakpoint; en el
+ * otro el elemento se muestra sin animar), data-svg-draw + data-draw-duration.
  *
  * Accesibilidad: con prefers-reduced-motion no anima (el CSS los muestra tal cual).
  * Anti-FOUC: el estado oculto lo pone el CSS gated por `.reveal-js` (solo con JS).
@@ -57,6 +58,20 @@ function hiddenTarget(dir: string, dist: number): Target {
   return t;
 }
 
+/* Un reveal puede limitarse a un breakpoint con data-reveal-only="mobile|desktop".
+   El que no aplica se muestra tal cual (el CSS anti-FOUC lo dejó en opacity 0). */
+function skipForBreakpoint(el: HTMLElement, mobile: boolean): boolean {
+  const only = el.dataset.revealOnly;
+  if (!only) return false;
+  const skip = only === "mobile" ? !mobile : only === "desktop" ? mobile : false;
+  if (skip) {
+    el.style.opacity = "1";
+    el.style.transform = "none";
+    el.style.willChange = "auto";
+  }
+  return skip;
+}
+
 function revealIn(el: HTMLElement, dir: string, dist: number, dur: number, delay: number) {
   const c = animate(el, enterKeyframes(dir, dist) as any, { duration: dur, delay, ease: EASE });
   c.finished.then(() => { el.style.willChange = "auto"; }).catch(() => {});
@@ -70,27 +85,37 @@ function revealOut(el: HTMLElement, dir: string, dist: number, dur: number) {
    aparecer y se desvanece al salir; simétrico al subir. Para bloques de 2
    columnas (ej. Misión/Visión). */
 function initScrub() {
+  // En mobile el bloque ocupa casi toda la pantalla: con la ventana de desktop
+  // (25%/65%) el texto pasaba demasiado tiempo desvanecido con el contenedor aún
+  // visible. Ahí la entrada y la salida se hacen más cortas (y el recorrido más
+  // chico), así el contenido está a plena opacidad casi todo el paso.
+  const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
+  const times = mobile ? [0, 0.12, 0.88, 1] : [0, 0.25, 0.65, 1];
   document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => {
+    if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
     // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
     // ×1.7 en la misma dirección (no solo fade).
-    const dist = Number(el.dataset.revealDistance || 100);
+    const dist = Number(el.dataset.revealDistance || (mobile ? 56 : 100));
     const enter = offsetsFor(dir, dist);
     const exit = offsetsFor(dir, dist * 1.7); // la salida se aleja ×1.7
     const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
     if (enter.x || exit.x) kf.x = [enter.x, 0, 0, exit.x];
     if (enter.y || exit.y) kf.y = [enter.y, 0, 0, exit.y];
     scroll(
-      // 0–25% entra (slide+fade), 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
-      animate(el, kf as any, { times: [0, 0.25, 0.65, 1], ease: "linear" }),
+      // Desktop: 0–25% entra, 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
+      // Mobile: 0–12% / 12–88% / 88–100%.
+      animate(el, kf as any, { times, ease: "linear" }),
       { target: el, offset: ["start end", "end start"] }
     );
   });
 }
 
 function initReveal() {
+  const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
   document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
     if (el.dataset.revealScrub != null) return; // lo maneja initScrub
+    if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
     const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
     const dur = Number(el.dataset.revealDuration || DEFAULT_DURATION);

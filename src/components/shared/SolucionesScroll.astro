@@ -6,10 +6,6 @@ import { isLocale } from "../../i18n/config";
 
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
-
-/* showAll: en la página de Soluciones se muestran todos los subservicios sin el
-   enlace "Ver todas"; en home/soporte se limita a las primeras MAX_VISIBLE. */
-const { showAll = false } = Astro.props;
 ---
 
 <SolucionesScrollReact
@@ -18,5 +14,4 @@ const { showAll = false } = Astro.props;
   variables={homeQuery.variables}
   data={homeQuery.data}
   locale={locale}
-  showAll={showAll}
 />
