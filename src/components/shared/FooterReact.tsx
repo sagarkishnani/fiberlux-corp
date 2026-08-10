@@ -209,8 +209,19 @@ export default function FooterReact({ query, variables, data: initialData, local
           }
         `}</style>
       )}
+      {/* Banda superior negra (SPEC 99 obs8): el footer arranca en negro y funde
+          hacia su color, en cualquier `mode`, para suavizar la transición desde
+          una sección negra anterior. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 md:h-40"
+        style={{
+          background:
+            'linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0) 100%)',
+        }}
+      />
       {/* ═══ Main content ═══ */}
-      <div className="site-container pt-16 sm:pt-20 pb-10">
+      <div className="site-container pt-16 sm:pt-20 pb-10 relative z-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
           {/* Left: Tagline + Social — below the links on mobile, first on desktop */}
@@ -254,7 +265,7 @@ export default function FooterReact({ query, variables, data: initialData, local
       </div>
 
       {/* ═══ Bottom bar ═══ */}
-      <div className="border-t border-white/10">
+      <div className="border-t border-white/10 relative z-[2]">
         <div className="site-container py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           {/* Fiberlux logo */}
           <div data-tina-field={tinaField(footer as any, 'logo')}>
