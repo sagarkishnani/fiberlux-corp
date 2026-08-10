@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { useTina, tinaField } from 'tinacms/dist/react';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
 import { tField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
-import FlowEffect from '../effects/FlowEffect';
+import OrbitLock from '../effects/OrbitLock';
 
 /* ── Types ── */
 interface HeroNosotrosProps {
@@ -15,8 +14,6 @@ interface HeroNosotrosProps {
 
 export default function HeroNosotrosReact({ query, variables, data: initialData, locale = "es" }: HeroNosotrosProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });
-  // La imagen fallback solo aparece si FlowEffect no puede inicializar (no como flash inicial).
-  const [showFallback, setShowFallback] = useState(false);
 
   const about = data?.about || initialData?.about;
   const hero = about?.hero;
@@ -29,13 +26,9 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
       className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
       style={{ background: '#0a0a0a' }}
     >
-      {/* Imagen fallback: solo si FlowEffect no puede inicializar */}
-      {showFallback && <div className="absolute inset-0 z-0 hero-nosotros-bg" />}
-      <FlowEffect
-        className="absolute inset-0 z-0 h-full w-full"
-        onUnsupported={() => setShowFallback(true)}
-      />
-      {/* Capa oscura para atenuar el flow */}
+      {/* Gráfico decorativo: candado orbital morado (SVG/CSS, sin WebGL) */}
+      <OrbitLock className="absolute inset-0 z-0 h-full w-full" />
+      {/* Capa oscura para dar contraste al título sobre el glow */}
       <div className="absolute inset-0 z-0 bg-black/40" aria-hidden="true" />
 
       {/* Content */}
@@ -75,20 +68,6 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
           )}
         </div>
       </div>
-
-      <style>{`
-        .hero-nosotros-bg {
-          background-image: url(/images/nosotros/circular-gradient-bg.avif);
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center 70%;
-        }
-        @media (min-width: 768px) {
-          .hero-nosotros-bg {
-            background-position: center top;
-          }
-        }
-      `}</style>
     </section>
   );
 }
