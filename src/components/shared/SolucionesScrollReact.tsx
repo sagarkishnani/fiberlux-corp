@@ -379,9 +379,9 @@ export default function SolucionesScrollReact({
             )}
 
             {/* Indicador de progreso del recorrido (SPEC 99 obs3): barra continua
-                + contador de categoría, para que el avance se note (sobre todo en
-                mobile, donde antes se sentía "como si no avanzara"). */}
-            <div className="mb-6 flex items-center gap-3">
+                + contador de categoría, para que el avance se note. Solo en mobile
+                (en desktop el odómetro/envelope ya dan feedback de sobra). */}
+            <div className="mb-6 flex items-center gap-3 md:hidden">
               <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.12]">
                 <div
                   ref={progressRef}

@@ -25,9 +25,9 @@ const GLOW_BY_INTENSITY: Record<
   Intensity,
   { haloWidth: number; haloAlpha: number; haloBlur: number; coreAlpha: number; coreBlur: number }
 > = {
-  low: { haloWidth: 9, haloAlpha: 0.12, haloBlur: 10, coreAlpha: 0.75, coreBlur: 5 },
-  med: { haloWidth: 12, haloAlpha: 0.18, haloBlur: 14, coreAlpha: 0.85, coreBlur: 6 },
-  high: { haloWidth: 16, haloAlpha: 0.28, haloBlur: 20, coreAlpha: 0.95, coreBlur: 8 },
+  low: { haloWidth: 6, haloAlpha: 0.05, haloBlur: 5, coreAlpha: 0.35, coreBlur: 2 },
+  med: { haloWidth: 8, haloAlpha: 0.09, haloBlur: 8, coreAlpha: 0.5, coreBlur: 3 },
+  high: { haloWidth: 12, haloAlpha: 0.16, haloBlur: 13, coreAlpha: 0.72, coreBlur: 5 },
 };
 
 export default function CursorTrail({ intensity = "med" }: { intensity?: Intensity }) {

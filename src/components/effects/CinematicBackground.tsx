@@ -238,12 +238,13 @@ export default function CinematicBackground({
       canvas.style.transform = "translateX(-50%)";
 
       // Anillo de glow (morado de marca) detrás del globo → halo grueso en el borde.
-      // SPEC 99 obs10: halo más grande (más blur/spread).
+      // SPEC 99 obs10: halo fuerte por BLUR; el SPREAD se mantiene mínimo para que
+      // no forme un anillo/disco sólido oscuro al costado del planeta.
       if (glow) {
         const diam = sizePx * 0.85;
         const centerY = topPx + sizePx / 2;
-        const blur = Math.round(sizePx * 0.22);
-        const spread = Math.round(sizePx * 0.055);
+        const blur = Math.round(sizePx * 0.24);
+        const spread = Math.round(sizePx * 0.012);
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
         glow.style.left = "50%";
