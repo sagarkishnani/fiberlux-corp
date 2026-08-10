@@ -379,9 +379,9 @@ export default function CinematicBackground({
         const rOuter = dotsR * 1.28; // poco alcance hacia afuera (halo ceñido)
         const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
         halo.addColorStop(0, "rgba(214,77,184,0)");
-        halo.addColorStop(0.4, `rgba(214,77,184,${(0.3 * op).toFixed(3)})`); // sobre los puntos
-        halo.addColorStop(0.5, `rgba(230,120,205,${(0.62 * op).toFixed(3)})`); // pico en el borde de puntos
-        halo.addColorStop(0.68, `rgba(178,50,146,${(0.28 * op).toFixed(3)})`); // apenas afuera
+        halo.addColorStop(0.4, `rgba(214,77,184,${(0.48 * op).toFixed(3)})`); // sobre los puntos
+        halo.addColorStop(0.5, `rgba(236,140,214,${(0.95 * op).toFixed(3)})`); // pico en el borde de puntos
+        halo.addColorStop(0.68, `rgba(190,55,156,${(0.45 * op).toFixed(3)})`); // apenas afuera
         halo.addColorStop(1, "rgba(150,35,122,0)");
         octx.globalCompositeOperation = "lighter";
         octx.fillStyle = halo;
