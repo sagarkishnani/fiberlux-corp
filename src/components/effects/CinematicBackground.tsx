@@ -371,16 +371,17 @@ export default function CinematicBackground({
       {
         const gcx = gLeft + sizePx / 2;
         const gcy = gTop + sizePx / 2;
-        // rInner (transparente) queda dentro de la esfera pero lejos del texto;
-        // el pico brillante cae en el borde (~radio de la esfera = sizePx/2).
-        // Halo CEÑIDO al borde (ref. cliente): poco alcance hacia afuera.
-        const rInner = sizePx * 0.42;
-        const rOuter = sizePx * 0.58;
+        // El borde REAL de los puntos del globo está a ~0.4·sizePx del centro
+        // (la proyección usa GLOBE_R=0.8 → radio 0.4), NO en sizePx/2. El pico del
+        // halo se ancla ahí para quedar PEGADO al planeta (sin negro entremedio).
+        const dotsR = sizePx * 0.4;
+        const rInner = dotsR * 0.72; // arranca sobre los puntos exteriores
+        const rOuter = dotsR * 1.28; // poco alcance hacia afuera (halo ceñido)
         const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
         halo.addColorStop(0, "rgba(214,77,184,0)");
-        halo.addColorStop(0.45, `rgba(214,77,184,${(0.28 * op).toFixed(3)})`); // limbo interno
-        halo.addColorStop(0.62, `rgba(230,120,205,${(0.6 * op).toFixed(3)})`); // pico en el borde
-        halo.addColorStop(0.8, `rgba(178,50,146,${(0.28 * op).toFixed(3)})`); // afuera
+        halo.addColorStop(0.4, `rgba(214,77,184,${(0.3 * op).toFixed(3)})`); // sobre los puntos
+        halo.addColorStop(0.5, `rgba(230,120,205,${(0.62 * op).toFixed(3)})`); // pico en el borde de puntos
+        halo.addColorStop(0.68, `rgba(178,50,146,${(0.28 * op).toFixed(3)})`); // apenas afuera
         halo.addColorStop(1, "rgba(150,35,122,0)");
         octx.globalCompositeOperation = "lighter";
         octx.fillStyle = halo;
