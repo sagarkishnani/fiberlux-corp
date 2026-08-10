@@ -146,13 +146,11 @@ export default function CinematicBackground({
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const root = rootRef.current;
-    const glow = glowRef.current;
     const overlay = overlayRef.current;
     if (!canvas || !root) return;
     const octx = overlay?.getContext("2d") ?? null;
@@ -253,27 +251,9 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Halo del borde del globo (SPEC 99 obs10). Box-shadow doble para un bloom
-      // ANCHO y difuso (ref. cliente): el div coincide con la esfera (diam≈sizePx)
-      // para que el brillo arranque JUSTO en el borde del planeta (sin hueco → sin
-      // banda oscura), una capa brillante cerca del borde + una capa muy difusa y
-      // amplia. Como es luz aditiva monótona, no forma anillo oscuro.
-      if (glow) {
-        const diam = sizePx * 0.98;
-        const centerY = topPx + sizePx / 2;
-        glow.style.width = `${diam}px`;
-        glow.style.height = `${diam}px`;
-        glow.style.left = "50%";
-        glow.style.top = `${centerY - diam / 2}px`;
-        glow.style.transform = "translateX(-50%)";
-        const b1 = Math.round(sizePx * 0.2);
-        const s1 = Math.round(sizePx * 0.02);
-        const b2 = Math.round(sizePx * 0.48);
-        const s2 = Math.round(sizePx * 0.09);
-        glow.style.boxShadow =
-          `0 0 ${b1}px ${s1}px rgba(214,77,184,0.55), ` +
-          `0 0 ${b2}px ${s2}px rgba(168,45,138,0.4)`;
-      }
+      // El halo del planeta ya no se dibuja con un box-shadow externo (llenaba las
+      // esquinas de forma dura): ahora es un gradiente radial en la capa 2D
+      // (drawOverlay), centrado en la esfera. Aquí solo geometría del globo.
 
       seedStars();
     };
@@ -383,6 +363,32 @@ export default function CinematicBackground({
       octx.clearRect(0, 0, w, h);
       if (op <= 0.01) return;
 
+      // Halo/atmósfera del planeta (SPEC 99 obs10): gradiente radial ADITIVO
+      // centrado exactamente en la esfera. El brillo cae SOBRE el limbo (rim) del
+      // globo — donde los puntos de COBE se acaban y quedaba una banda oscura (el
+      // "espacio")— y también un poco hacia afuera (glow). Se desvanece bien antes
+      // del centro para no afectar la legibilidad del texto. Modo "lighter" (luz).
+      {
+        const gcx = gLeft + sizePx / 2;
+        const gcy = gTop + sizePx / 2;
+        // rInner (transparente) queda dentro de la esfera pero lejos del texto;
+        // el pico brillante cae en el borde (~radio de la esfera = sizePx/2).
+        const rInner = sizePx * 0.35;
+        const rOuter = sizePx * 0.64;
+        const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
+        halo.addColorStop(0, "rgba(214,77,184,0)");
+        halo.addColorStop(0.4, `rgba(214,77,184,${(0.3 * op).toFixed(3)})`); // limbo interno
+        halo.addColorStop(0.55, `rgba(230,120,205,${(0.6 * op).toFixed(3)})`); // pico en el borde
+        halo.addColorStop(0.72, `rgba(178,50,146,${(0.34 * op).toFixed(3)})`); // afuera
+        halo.addColorStop(1, "rgba(150,35,122,0)");
+        octx.globalCompositeOperation = "lighter";
+        octx.fillStyle = halo;
+        octx.beginPath();
+        octx.arc(gcx, gcy, rOuter, 0, Math.PI * 2);
+        octx.fill();
+        octx.globalCompositeOperation = "source-over";
+      }
+
       // Estrellas: más presentes hacia los costados (fade en el centro).
       const cx = w / 2;
       const half = w * 0.5;
@@ -457,7 +463,6 @@ export default function CinematicBackground({
         height: sizePx * dpr,
         opacity: op,
       });
-      if (glow) glow.style.opacity = `${op}`;
       stepStars(root.clientWidth || 1, root.clientHeight || 1);
       drawOverlay(phi, theta, op, ms);
       signalOnce();
@@ -510,13 +515,8 @@ export default function CinematicBackground({
         }}
       />
 
-      {/* Halo del borde de la Tierra (detrás del globo). El bloom (box-shadow
-          doble, ancho y difuso) se define en computeSize porque depende de sizePx. */}
-      <div
-        ref={glowRef}
-        aria-hidden="true"
-        style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none" }}
-      />
+      {/* El halo del planeta se dibuja en la capa 2D (overlay) como gradiente
+          radial centrado en la esfera — ver drawOverlay. */}
 
       {/* Globo COBE. */}
       <canvas
