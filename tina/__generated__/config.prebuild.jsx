@@ -1898,6 +1898,40 @@ var config_default = defineConfig({
                 type: "string",
                 ui: { component: "textarea" },
                 description: "Mensaje prellenado en p\xE1ginas generales. En p\xE1ginas de servicio/soluci\xF3n se reemplaza autom\xE1ticamente por uno que alude a ese servicio."
+              },
+              {
+                name: "bubble",
+                label: "Mensaje flotante (burbuja)",
+                type: "object",
+                description: "Burbuja que aparece junto al bot\xF3n seg\xFAn la p\xE1gina. Si el visitante la cierra, no reaparece durante la sesi\xF3n.",
+                fields: [
+                  {
+                    name: "enabled",
+                    label: "Mostrar burbuja",
+                    type: "boolean"
+                  },
+                  {
+                    name: "home",
+                    label: "Mensaje en Home",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
+                  { name: "home_en", label: "Mensaje en Home (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "contacto",
+                    label: "Mensaje en Contacto",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
+                  { name: "contacto_en", label: "Mensaje en Contacto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "solucion",
+                    label: "Mensaje en p\xE1ginas de Soluci\xF3n",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
+                  { name: "solucion_en", label: "Mensaje en Soluci\xF3n (EN)", type: "string", ui: { component: "textarea" } }
+                ]
               }
             ]
           },

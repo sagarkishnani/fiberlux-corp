@@ -11,7 +11,7 @@ import CursorShapes from "../components/shared/CursorShapes.tsx";
 import client from "../../tina/__generated__/client";
 import homeContent from "../content/home/index.json";
 import "../styles/site-container.css";
-import { getLocale } from "../utils/i18n";
+import { getLocale, tField } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 
 // ─── Locale (SPEC 80) ───
@@ -84,6 +84,7 @@ try {
 // ─── Global code injection (editable in Tina: global.codeInjection) ───
 let whatsappPhone: string | undefined;
 let whatsappBaseMessage: string | undefined;
+let whatsappBubble: any = null;
 let injectHead = "";
 let injectBodyEnd = "";
 // ─── Cursor config (editable in Tina: global.cursor) — SPEC 99 obs1 ───
@@ -95,6 +96,7 @@ try {
   const wa = g?.whatsapp;
   whatsappPhone = wa?.phone || undefined;
   whatsappBaseMessage = wa?.message || undefined;
+  whatsappBubble = wa?.bubble || null;
   injectHead = g?.codeInjection?.head || "";
   injectBodyEnd = g?.codeInjection?.bodyEnd || "";
   if (["none", "trail", "reticle", "dot"].includes(g?.cursor?.type))
@@ -111,6 +113,18 @@ const whatsappMessage = whatsappContext
       whatsappKind === "solución" ? "la solución" : "el servicio"
     } de ${whatsappContext}.`
   : whatsappBaseMessage;
+
+// ─── Burbuja de WhatsApp por página (home / contacto / solución) ───
+// Solo aparece en esas páginas; el visitante la puede cerrar (sessionStorage).
+const waPath = Astro.url.pathname;
+let bubbleCtx: "home" | "contacto" | "solucion" | null = null;
+if (isHome || /\/en\/?$/.test(waPath)) bubbleCtx = "home";
+else if (/\/contacto\/?$/.test(waPath)) bubbleCtx = "contacto";
+else if (/\/(servicios|soluciones)(\/|$)/.test(waPath)) bubbleCtx = "solucion";
+const whatsappBubbleMessage =
+  whatsappBubble?.enabled && bubbleCtx
+    ? tField(whatsappBubble, bubbleCtx, locale) || undefined
+    : undefined;
 ---
 
 <!doctype html>
@@ -353,6 +367,7 @@ const whatsappMessage = whatsappContext
             client:idle
             phone={whatsappPhone}
             message={whatsappMessage}
+            bubbleMessage={whatsappBubbleMessage}
           />
           <AccessibilityPanel client:idle locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina

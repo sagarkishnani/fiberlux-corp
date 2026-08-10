@@ -1991,6 +1991,41 @@ export default defineConfig({
                 description:
                   "Mensaje prellenado en páginas generales. En páginas de servicio/solución se reemplaza automáticamente por uno que alude a ese servicio.",
               },
+              {
+                name: "bubble",
+                label: "Mensaje flotante (burbuja)",
+                type: "object",
+                description:
+                  "Burbuja que aparece junto al botón según la página. Si el visitante la cierra, no reaparece durante la sesión.",
+                fields: [
+                  {
+                    name: "enabled",
+                    label: "Mostrar burbuja",
+                    type: "boolean",
+                  },
+                  {
+                    name: "home",
+                    label: "Mensaje en Home",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  { name: "home_en", label: "Mensaje en Home (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "contacto",
+                    label: "Mensaje en Contacto",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  { name: "contacto_en", label: "Mensaje en Contacto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "solucion",
+                    label: "Mensaje en páginas de Solución",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  { name: "solucion_en", label: "Mensaje en Solución (EN)", type: "string", ui: { component: "textarea" } },
+                ],
+              },
             ],
           },
 

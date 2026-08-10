@@ -1517,9 +1517,20 @@ type GlobalHeader {
   secondaryNav: [GlobalHeaderSecondaryNav]
 }
 
+type GlobalWhatsappBubble {
+  enabled: Boolean
+  home: String
+  home_en: String
+  contacto: String
+  contacto_en: String
+  solucion: String
+  solucion_en: String
+}
+
 type GlobalWhatsapp {
   phone: String
   message: String
+  bubble: GlobalWhatsappBubble
 }
 
 type GlobalFooterColumnsLinks {
@@ -1727,9 +1738,20 @@ input GlobalHeaderFilter {
   secondaryNav: GlobalHeaderSecondaryNavFilter
 }
 
+input GlobalWhatsappBubbleFilter {
+  enabled: BooleanFilter
+  home: StringFilter
+  home_en: StringFilter
+  contacto: StringFilter
+  contacto_en: StringFilter
+  solucion: StringFilter
+  solucion_en: StringFilter
+}
+
 input GlobalWhatsappFilter {
   phone: StringFilter
   message: StringFilter
+  bubble: GlobalWhatsappBubbleFilter
 }
 
 input GlobalFooterColumnsLinksFilter {
@@ -3181,9 +3203,20 @@ input GlobalHeaderMutation {
   secondaryNav: [GlobalHeaderSecondaryNavMutation]
 }
 
+input GlobalWhatsappBubbleMutation {
+  enabled: Boolean
+  home: String
+  home_en: String
+  contacto: String
+  contacto_en: String
+  solucion: String
+  solucion_en: String
+}
+
 input GlobalWhatsappMutation {
   phone: String
   message: String
+  bubble: GlobalWhatsappBubbleMutation
 }
 
 input GlobalFooterColumnsLinksMutation {

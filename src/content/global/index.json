@@ -309,7 +309,16 @@
   },
   "whatsapp": {
     "phone": "51986176790",
-    "message": "¡Hola Fiberlux! Quiero iniciar la Transformación Digital de mi empresa. 🛜 Mi número de RUC es:"
+    "message": "¡Hola Fiberlux! Quiero iniciar la Transformación Digital de mi empresa. 🛜 Mi número de RUC es:",
+    "bubble": {
+      "enabled": true,
+      "home": "¡Hola! ¿Listo para llevar la conectividad de tu empresa al siguiente nivel? Escríbenos 👋",
+      "home_en": "Hi! Ready to take your company's connectivity to the next level? Message us 👋",
+      "contacto": "¿Tienes dudas? Un especialista te responde al toque por WhatsApp 💬",
+      "contacto_en": "Have questions? A specialist will reply right away on WhatsApp 💬",
+      "solucion": "¿Te interesa esta solución? Cuéntanos y te asesoramos sin costo 🚀",
+      "solucion_en": "Interested in this solution? Tell us and get free advice 🚀"
+    }
   },
   "footer": {
     "tagline": "Potencia tu conectividad empresarial",

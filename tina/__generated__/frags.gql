@@ -575,6 +575,16 @@ fragment GlobalParts on Global {
     __typename
     phone
     message
+    bubble {
+      __typename
+      enabled
+      home
+      home_en
+      contacto
+      contacto_en
+      solucion
+      solucion_en
+    }
   }
   footer {
     __typename
