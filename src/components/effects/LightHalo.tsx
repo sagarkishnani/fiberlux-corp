@@ -32,6 +32,8 @@ interface Props {
   className?: string;
   /* Posición de la fuente de luz en UV [0..1] (x der, y arriba). Detrás del candado. */
   lightPos?: [number, number];
+  /* Posición de la luz en mobile (<1024px); por defecto usa lightPos. */
+  lightPosMobile?: [number, number];
   onUnsupported?: () => void;
 }
 
@@ -136,7 +138,7 @@ const DUST_FRAG = /* glsl */ `
   }
 `;
 
-export default function LightHalo({ className, lightPos = [0.72, 0.5], onUnsupported }: Props) {
+export default function LightHalo({ className, lightPos = [0.72, 0.5], lightPosMobile, onUnsupported }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +150,7 @@ export default function LightHalo({ className, lightPos = [0.72, 0.5], onUnsuppo
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     const finePointer = window.matchMedia?.("(pointer: fine)").matches ?? false;
     const mobile = window.matchMedia?.("(max-width: 1023px)").matches ?? false;
+    const lp = mobile && lightPosMobile ? lightPosMobile : lightPos;
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -180,7 +183,7 @@ export default function LightHalo({ className, lightPos = [0.72, 0.5], onUnsuppo
       uIntro: introUniform,
       uRes: { value: new THREE.Vector2(1, 1) },
       uMouse: { value: new THREE.Vector2(0, 0) },
-      uLight: { value: new THREE.Vector2(lightPos[0], lightPos[1]) },
+      uLight: { value: new THREE.Vector2(lp[0], lp[1]) },
       uColor: { value: toVec3(PARAMS.color) },
       uColorLight: { value: toVec3(PARAMS.colorLight) },
     };
@@ -205,8 +208,8 @@ export default function LightHalo({ className, lightPos = [0.72, 0.5], onUnsuppo
     const dSpeed = new Float32Array(dustCount);
     for (let i = 0; i < dustCount; i++) {
       // Sesga el polvo hacia la fuente de luz (candado).
-      dPos[i * 3] = (lightPos[0] * 2 - 1) + rand(-0.7, 0.7);
-      dPos[i * 3 + 1] = (lightPos[1] * 2 - 1) + rand(-0.7, 0.7);
+      dPos[i * 3] = (lp[0] * 2 - 1) + rand(-0.7, 0.7);
+      dPos[i * 3 + 1] = (lp[1] * 2 - 1) + rand(-0.7, 0.7);
       dPos[i * 3 + 2] = 0;
       dPhase[i] = rand(0, Math.PI * 2);
       dSize[i] = rand(1.0, 4.0);
@@ -305,7 +308,7 @@ export default function LightHalo({ className, lightPos = [0.72, 0.5], onUnsuppo
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lightPos[0], lightPos[1]]);
+  }, [lightPos[0], lightPos[1], lightPosMobile?.[0], lightPosMobile?.[1]]);
 
   return (
     <div ref={rootRef} className={className} style={{ position: "relative", width: "100%", height: "100%" }}>

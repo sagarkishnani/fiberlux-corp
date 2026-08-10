@@ -35,32 +35,43 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
       {/* Capa 1 — Red viva (plexus): "la red que impulsa a las empresas" */}
       <NodeField className="absolute inset-0 z-0 pointer-events-none" lines interactive />
 
-      {/* Capa 2 — Halo de god-rays (Three.js) detrás del candado, a la derecha */}
+      {/* Capa 2 — Halo de god-rays (Three.js) detrás del candado (derecha en
+          desktop, centrado en mobile) */}
       {haloOk && (
         <div className="pointer-events-none absolute inset-0 z-0">
           <LightHalo
             className="h-full w-full"
             lightPos={[0.72, 0.46]}
+            lightPosMobile={[0.5, 0.58]}
             onUnsupported={() => setHaloOk(false)}
           />
         </div>
       )}
 
-      {/* Velo para legibilidad del texto (más oscuro a la izquierda) */}
+      {/* Velo desktop: más oscuro a la izquierda (texto) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[1]"
+        className="pointer-events-none absolute inset-0 z-[1] hidden lg:block"
         style={{
           background:
             'linear-gradient(90deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.26) 30%, rgba(10,10,10,0) 56%, rgba(10,10,10,0) 100%)',
         }}
       />
+      {/* Velo mobile: opacidad general al fondo + más oscuro abajo (texto encima) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-[1] lg:hidden"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.82) 20%, rgba(10,10,10,0.45) 42%, rgba(10,10,10,0.30) 68%, rgba(10,10,10,0.30) 100%)',
+        }}
+      />
 
       {/* Content: dos columnas (texto izquierda · candado derecha, misma altura) */}
       <div className="relative z-10 site-container w-full pt-28 pb-16 md:py-24">
-        <div className="grid items-center gap-8 lg:gap-12 lg:grid-cols-2 lg:min-h-[74vh]">
-          {/* Texto */}
-          <div className="order-2 lg:order-1" data-reveal="up">
+        <div className="grid items-center gap-0 lg:gap-12 lg:grid-cols-2 lg:min-h-[74vh]">
+          {/* Texto (en mobile solapa un poco el gráfico y va por encima) */}
+          <div className="order-2 lg:order-1 relative z-20 -mt-12 lg:mt-0" data-reveal="up">
             {/* Breadcrumb */}
             <nav className="mb-6" aria-label="Breadcrumb">
               <ol className="flex items-center gap-2 text-sm">
@@ -92,9 +103,10 @@ export default function HeroNosotrosReact({ query, variables, data: initialData,
             )}
           </div>
 
-          {/* Candado orbital (SVG/CSS, sin WebGL) */}
+          {/* Candado orbital (SVG/CSS, sin WebGL). En mobile va centrado, detrás
+              del texto (z menor) y algo atenuado. */}
           <div
-            className="order-1 lg:order-2 relative flex justify-center lg:justify-end"
+            className="order-1 lg:order-2 relative z-0 lg:z-auto flex justify-center lg:justify-end opacity-80 lg:opacity-100"
             data-reveal="up"
           >
             <OrbitLock className="w-full max-w-[380px] sm:max-w-[460px] lg:max-w-[540px] aspect-square" />
