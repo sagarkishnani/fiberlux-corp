@@ -244,7 +244,7 @@ export default function CinematicBackground({
       // afuera): al no tener mínimos intermedios, no puede formar una banda oscura.
       // El fondo (fade radial) se define estático en el JSX; aquí solo el tamaño.
       if (glow) {
-        const diam = sizePx * 1.6;
+        const diam = sizePx * 1.95; // SPEC 99 obs10: halo más amplio (ref. cliente)
         const centerY = topPx + sizePx / 2;
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
@@ -277,8 +277,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 4.5, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
-        mapBaseBrightness: 0.03, // océano casi negro
+        mapBrightness: 3.2, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBaseBrightness: 0.02, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
@@ -490,8 +490,8 @@ export default function CinematicBackground({
 
       {/* Halo del borde de la Tierra (detrás del globo). Radial-gradient monótono:
           transparente en el centro (tapado por el globo), brillante justo en el
-          borde de la esfera (~63% del radio del div = 1.6× el globo) y fade suave
-          a transparente hacia afuera → sin banda oscura. */}
+          borde de la esfera (~52% del radio del div = 1.95× el globo) y fade AMPLIO
+          y suave a transparente hacia afuera → halo ancho, sin banda oscura. */}
       <div
         ref={glowRef}
         aria-hidden="true"
@@ -500,7 +500,7 @@ export default function CinematicBackground({
           borderRadius: "50%",
           pointerEvents: "none",
           background:
-            "radial-gradient(circle, rgba(0,0,0,0) 55%, rgba(214,77,184,0.55) 63%, rgba(214,77,184,0.24) 74%, rgba(150,35,122,0.08) 86%, rgba(0,0,0,0) 100%)",
+            "radial-gradient(circle, rgba(0,0,0,0) 45%, rgba(214,77,184,0.6) 52%, rgba(214,77,184,0.3) 64%, rgba(150,35,122,0.12) 80%, rgba(0,0,0,0) 100%)",
         }}
       />
 
