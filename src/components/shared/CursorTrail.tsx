@@ -12,14 +12,25 @@ import { useEffect, useRef } from "react";
  */
 
 type TrailPoint = { x: number; y: number; t: number };
+type Intensity = "low" | "med" | "high";
 
 // Vida de cada punto (ms): cuánto tarda un tramo en desvanecerse por completo.
 const LIFETIME = 780;
-// Ancho máximo (px CSS) del núcleo y del halo en la cabeza de la estela.
+// Ancho máximo (px CSS) del núcleo en la cabeza de la estela.
 const CORE_WIDTH = 3;
-const GLOW_WIDTH = 16;
 
-export default function CursorTrail() {
+// Intensidad del glow (SPEC 99 obs1): la estela se nota pero con menos "glow".
+// `med` es el nuevo baseline reducido; `high` se acerca al look anterior.
+const GLOW_BY_INTENSITY: Record<
+  Intensity,
+  { haloWidth: number; haloAlpha: number; haloBlur: number; coreAlpha: number; coreBlur: number }
+> = {
+  low: { haloWidth: 9, haloAlpha: 0.12, haloBlur: 10, coreAlpha: 0.75, coreBlur: 5 },
+  med: { haloWidth: 12, haloAlpha: 0.18, haloBlur: 14, coreAlpha: 0.85, coreBlur: 6 },
+  high: { haloWidth: 16, haloAlpha: 0.28, haloBlur: 20, coreAlpha: 0.95, coreBlur: 8 },
+};
+
+export default function CursorTrail({ intensity = "med" }: { intensity?: Intensity }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -37,6 +48,8 @@ export default function CursorTrail() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    const cfg = GLOW_BY_INTENSITY[intensity] ?? GLOW_BY_INTENSITY.med;
 
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let width = 0;
@@ -107,15 +120,15 @@ export default function CursorTrail() {
 
       // Pasada 1 — halo magenta difuso.
       draw(
-        (l) => GLOW_WIDTH * l + 2,
-        (l) => `rgba(150,35,122,${0.28 * l})`,
-        22
+        (l) => cfg.haloWidth * l + 2,
+        (l) => `rgba(150,35,122,${cfg.haloAlpha * l})`,
+        cfg.haloBlur
       );
       // Pasada 2 — núcleo brillante (magenta claro → casi blanco en la cabeza).
       draw(
         (l) => CORE_WIDTH * l + 0.6,
-        (l) => `rgba(245,180,230,${0.9 * l})`,
-        8
+        (l) => `rgba(245,180,230,${cfg.coreAlpha * l})`,
+        cfg.coreBlur
       );
 
       ctx.shadowBlur = 0;
@@ -129,7 +142,7 @@ export default function CursorTrail() {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [intensity]);
 
   return (
     <canvas
