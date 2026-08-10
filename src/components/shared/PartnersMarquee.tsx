@@ -126,14 +126,10 @@ export default function PartnersMarquee({
       </div>
 
       <style>{`
-        /* Logos siempre en blanco (mobile a opacidad plena; desktop atenuados con hover).
+        /* Logos siempre en blanco y a opacidad plena (SPEC 99 obs9: sin sombreado/hover).
            Footprint homogéneo: cada logo se ajusta (object-contain) a una caja de igual
            alto y ancho (clases h-10 w-[128px] / md:h-14 w-[168px] en el <img>). */
-        .partner-logo { opacity: 1; filter: brightness(0) invert(1); transition: filter 0.35s ease, opacity 0.35s ease; }
-        @media (min-width: 768px) {
-          .partner-logo { opacity: 0.55; }
-          .partner-logo:hover { opacity: 1; }
-        }
+        .partner-logo { opacity: 1; filter: brightness(0) invert(1); }
 
         .partners-marquee {
           -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
