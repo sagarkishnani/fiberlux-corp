@@ -33,9 +33,19 @@ export default function HeroCasosReact({
 
   return (
     <section
-      className="relative -mt-16"
+      className="relative -mt-16 overflow-hidden"
       style={{ background: "#0a0a0a" }}
     >
+      {/* Glow morado en la esquina superior derecha (decorativo). */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -right-24 z-0 h-[420px] w-[420px] rounded-full opacity-60 blur-[90px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(150,35,122,0.55) 0%, rgba(150,35,122,0) 70%)",
+        }}
+      />
+
       {/* Cabecera compacta: sin altura de pantalla completa ni spacer; el título
           e intro quedan arriba para que el slider asome dentro del primer viewport. */}
       <div className="relative z-10 site-container pt-24 md:pt-28 pb-6 md:pb-8">
@@ -55,14 +65,14 @@ export default function HeroCasosReact({
 
         <div className="max-w-[640px] mt-8 md:mt-10" data-reveal="up">
           <h1
-            className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white mb-5 tracking-[-1.6px]"
+            className="text-[32px] md:text-[48px] leading-[1.15] font-medium text-greyscale-white mb-5 tracking-[-1.6px]"
             data-tina-field={tinaField(page, "heading")}
           >
             {tField(page as any, "heading", locale)}
           </h1>
 
           <p
-            className="text-body-lg text-greyscale-light max-w-[560px]"
+            className="text-body text-greyscale-light max-w-[560px]"
             data-tina-field={tinaField(page, "intro")}
           >
             {tField(page as any, "intro", locale)}
