@@ -8,7 +8,7 @@ import createGlobe from "cobe";
  * mar oscuro, continentes en puntos blancos, halo/atmósfera en morado de marca
  * (#96237A) y cables de fibra que conectan hubs, dibujados como arcos FINOS
  * sobre la superficie del globo (misma proyección que COBE → quedan pegados a la
- * rotación y se cortan detrás del planeta). Se muestra ~60% del globo (recortado
+ * rotación y se cortan detrás del planeta). Se muestra ~50% del globo (recortado
  * abajo, estilo referencia). Entra con fade y se funde/rueda hacia arriba al
  * hacer scroll.
  *
@@ -45,13 +45,21 @@ const HUBS: { loc: [number, number]; r: number }[] = [
   { loc: TK, r: 5.5 },
   { loc: MX, r: 5.5 },
 ];
+// Rutas de fibra (SPEC 99 obs10): red más densa para que la lógica de
+// conectividad sea más evidente — hub-and-spoke desde Lima + enlaces cruzados.
 const ROUTES: [[number, number], [number, number]][] = [
   [LIMA, NY],
   [LIMA, SP],
   [LIMA, MX],
+  [LIMA, LDN],
+  [LIMA, SG],
+  [LIMA, TK],
   [NY, LDN],
+  [NY, MX],
   [LDN, SG],
   [SG, TK],
+  [SP, LDN],
+  [SP, MX],
 ];
 
 // ── Proyección idéntica a la de COBE (para dibujar arcos ALINEADOS con el globo).
@@ -205,7 +213,8 @@ export default function CinematicBackground({
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      sizePx = Math.min(w * 1.0, h * 1.7);
+      // SPEC 99 obs10: globo más grande → se ve ~50% (antes ~60%, fracción ≈ h/sizePx).
+      sizePx = Math.min(w * 1.15, h * 2.0);
       const topPx = h * 0.16 - sizePx * 0.1;
       gLeft = w / 2 - sizePx / 2;
       gTop = topPx;
@@ -229,11 +238,12 @@ export default function CinematicBackground({
       canvas.style.transform = "translateX(-50%)";
 
       // Anillo de glow (morado de marca) detrás del globo → halo grueso en el borde.
+      // SPEC 99 obs10: halo más grande (más blur/spread).
       if (glow) {
-        const diam = sizePx * 0.8;
+        const diam = sizePx * 0.85;
         const centerY = topPx + sizePx / 2;
-        const blur = Math.round(sizePx * 0.16);
-        const spread = Math.round(sizePx * 0.03);
+        const blur = Math.round(sizePx * 0.22);
+        const spread = Math.round(sizePx * 0.055);
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
         glow.style.left = "50%";
@@ -266,8 +276,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 7.5,
-        mapBaseBrightness: 0.06, // océano casi negro
+        mapBrightness: 5.5, // SPEC 99 obs10: planeta ligeramente más oscuro
+        mapBaseBrightness: 0.04, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
