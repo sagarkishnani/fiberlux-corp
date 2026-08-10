@@ -106,7 +106,7 @@ export default function CasosSliderReact({
                 <div
                   key={i}
                   className={`caso-slide shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
-                    i === activeIndex ? "opacity-100" : "opacity-25"
+                    i === activeIndex ? "opacity-100" : "opacity-40"
                   }`}
                 >
                   <CasoCard
