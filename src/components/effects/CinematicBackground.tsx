@@ -237,21 +237,20 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Anillo de glow detrás del globo → halo del borde. SPEC 99 obs10: el color
-      // era magenta OSCURO (150,35,122) y sobre negro se leía como un "círculo
-      // negro" en los costados; se usa magenta CLARO (BRAND_LIT) para que se lea
-      // como luz (halo), con spread mínimo (sin anillo sólido).
+      // Halo del borde del globo (SPEC 99 obs10). Antes era un `box-shadow`, cuyo
+      // desenfoque enorme dejaba una banda plana morada-oscura alrededor del
+      // planeta (el "círculo negro" que marcó el cliente). Ahora es un
+      // radial-gradient MONÓTONO (brillante justo en el borde → transparente hacia
+      // afuera): al no tener mínimos intermedios, no puede formar una banda oscura.
+      // El fondo (fade radial) se define estático en el JSX; aquí solo el tamaño.
       if (glow) {
-        const diam = sizePx * 0.85;
+        const diam = sizePx * 1.6;
         const centerY = topPx + sizePx / 2;
-        const blur = Math.round(sizePx * 0.24);
-        const spread = Math.round(sizePx * 0.01);
         glow.style.width = `${diam}px`;
         glow.style.height = `${diam}px`;
         glow.style.left = "50%";
         glow.style.top = `${centerY - diam / 2}px`;
         glow.style.transform = "translateX(-50%)";
-        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(${BRAND_LIT},0.5)`;
       }
 
       seedStars();
@@ -489,11 +488,20 @@ export default function CinematicBackground({
         }}
       />
 
-      {/* Anillo de glow grueso alrededor del borde de la Tierra (detrás del globo). */}
+      {/* Halo del borde de la Tierra (detrás del globo). Radial-gradient monótono:
+          transparente en el centro (tapado por el globo), brillante justo en el
+          borde de la esfera (~63% del radio del div = 1.6× el globo) y fade suave
+          a transparente hacia afuera → sin banda oscura. */}
       <div
         ref={glowRef}
         aria-hidden="true"
-        style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none" }}
+        style={{
+          position: "absolute",
+          borderRadius: "50%",
+          pointerEvents: "none",
+          background:
+            "radial-gradient(circle, rgba(0,0,0,0) 55%, rgba(214,77,184,0.55) 63%, rgba(214,77,184,0.24) 74%, rgba(150,35,122,0.08) 86%, rgba(0,0,0,0) 100%)",
+        }}
       />
 
       {/* Globo COBE. */}
