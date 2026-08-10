@@ -3,7 +3,7 @@ import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
-import HeroVideo from "../shared/HeroVideo";
+import SupportHub from "./SupportHub";
 import { tField } from "../../utils/i18n";
 import { t } from "../../i18n/ui";
 import type { Locale } from "../../i18n/config";
@@ -69,15 +69,10 @@ export default function HeroSoporteReact({
             </p>
           </div>
 
-          {/* ════ RIGHT — video del hero (loop, se funde con el fondo) ════ */}
-          {(page as any).heroVideo && (
-            <div className="relative w-full max-w-[440px] mx-auto">
-              <HeroVideo
-                src={(page as any).heroVideo}
-                poster={(page as any).heroVideoPoster}
-              />
-            </div>
-          )}
+          {/* ════ RIGHT — hub de nodos animado (núcleo + canales, SPEC 102) ════ */}
+          <div className="relative w-full min-w-0 max-w-[460px] mx-auto" data-reveal="up">
+            <SupportHub />
+          </div>
         </div>
       </div>
 
