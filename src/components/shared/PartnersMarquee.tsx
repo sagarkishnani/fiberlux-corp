@@ -80,8 +80,6 @@ export default function PartnersMarquee({
 
   return (
     <section
-      // Cursor a medida "punto minimal" sobre la franja de partners.
-      data-cursor="dot"
       className="bg-greyscale-darkest py-16 md:py-20 overflow-hidden"
     >
       <div className="site-container text-center mb-10 md:mb-14">

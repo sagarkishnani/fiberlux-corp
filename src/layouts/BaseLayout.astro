@@ -86,6 +86,9 @@ let whatsappPhone: string | undefined;
 let whatsappBaseMessage: string | undefined;
 let injectHead = "";
 let injectBodyEnd = "";
+// ─── Cursor config (editable in Tina: global.cursor) — SPEC 99 obs1 ───
+let cursorType: "none" | "trail" | "reticle" | "dot" = "trail";
+let cursorGlow: "low" | "med" | "high" = "med";
 try {
   const globalResult = await client.queries.global({ relativePath: "index.json" });
   const g = globalResult.data?.global as any;
@@ -94,6 +97,9 @@ try {
   whatsappBaseMessage = wa?.message || undefined;
   injectHead = g?.codeInjection?.head || "";
   injectBodyEnd = g?.codeInjection?.bodyEnd || "";
+  if (["none", "trail", "reticle", "dot"].includes(g?.cursor?.type))
+    cursorType = g.cursor.type;
+  if (["low", "med", "high"].includes(g?.cursor?.glow)) cursorGlow = g.cursor.glow;
 } catch {
   // Fall back to the component defaults
 }
@@ -339,11 +345,13 @@ const whatsappMessage = whatsappContext
             message={whatsappMessage}
           />
           <AccessibilityPanel client:idle locale={locale} />
-          {/* Estela luminosa que sigue al cursor (toda la web, solo desktop). */}
-          <CursorTrail client:idle />
-          {/* Cursores a medida "hilo fino" en secciones con data-cursor
-              (retícula técnica / punto minimal), solo desktop. */}
-          <CursorShapes client:idle />
+          {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina
+              (global.cursor). Estela por defecto; retícula/punto solo si se eligen.
+              Todos solo desktop / puntero fino (los componentes se autodesactivan). */}
+          {cursorType === "trail" && <CursorTrail client:idle intensity={cursorGlow} />}
+          {(cursorType === "reticle" || cursorType === "dot") && (
+            <CursorShapes client:idle shape={cursorType} />
+          )}
           {/* Scripts globales editables en Tina (global.codeInjection.bodyEnd). */}
           {injectBodyEnd && <Fragment set:html={injectBodyEnd} />}
         </Fragment>

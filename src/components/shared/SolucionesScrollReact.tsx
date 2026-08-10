@@ -403,8 +403,6 @@ export default function SolucionesScrollReact({
     <section
       ref={trackRef}
       id="soluciones-scroll"
-      // Cursor a medida "retícula técnica" en el recorrido de soluciones (desktop).
-      data-cursor="reticle"
       className="relative bg-greyscale-darkest"
       style={{ height: `${N * VH_PER_CATEGORY * 100}svh` }}
     >
