@@ -33,12 +33,14 @@ export default function HeroCasosReact({
 
   return (
     <section
-      className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
+      className="relative -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      <div className="relative z-10 site-container flex flex-col flex-1">
+      {/* Cabecera compacta: sin altura de pantalla completa ni spacer; el título
+          e intro quedan arriba para que el slider asome dentro del primer viewport. */}
+      <div className="relative z-10 site-container pt-24 md:pt-28 pb-6 md:pb-8">
         {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
-        <nav className="flex items-center gap-2 text-sm pt-24 md:pt-28" aria-label="Breadcrumb">
+        <nav className="flex items-center gap-2 text-sm" aria-label="Breadcrumb">
           <a href={base} className="text-white/50 hover:text-white transition-colors">
             {t("breadcrumb.home", locale)}
           </a>
@@ -51,19 +53,16 @@ export default function HeroCasosReact({
           </span>
         </nav>
 
-        {/* Spacer — empuja el título/intro hacia la base (igual que Nosotros). */}
-        <div className="flex-1" />
-
-        <div className="max-w-[600px]" data-reveal="up">
+        <div className="max-w-[640px] mt-8 md:mt-10" data-reveal="up">
           <h1
-            className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white mb-6 tracking-[-1.6px]"
+            className="text-[40px] md:text-[56px] leading-[1.15] font-medium text-greyscale-white mb-5 tracking-[-1.6px]"
             data-tina-field={tinaField(page, "heading")}
           >
             {tField(page as any, "heading", locale)}
           </h1>
 
           <p
-            className="text-body-lg text-greyscale-light max-w-[560px] mb-16 md:mb-20"
+            className="text-body-lg text-greyscale-light max-w-[560px]"
             data-tina-field={tinaField(page, "intro")}
           >
             {tField(page as any, "intro", locale)}
