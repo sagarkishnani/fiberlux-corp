@@ -24,7 +24,7 @@ const PARAMS = {
   coreSize: 190, // px — disco central luminoso
   glowSize: 460, // px — glow morado detrás del candado
   chipOpacity: 0.82, // opacidad de los tiles glass
-  mobileScale: 0.72, // evita que los tiles se recorten en pantallas angostas
+  mobileScale: 0.64, // evita que los tiles se recorten en pantallas angostas
 };
 
 /* ── Íconos orbitales: SVG lineal (stroke, fill:none) ── */
