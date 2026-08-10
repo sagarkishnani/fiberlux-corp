@@ -279,8 +279,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 1.5, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
-        mapBaseBrightness: 0.012, // océano casi negro
+        mapBrightness: 1.0, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBaseBrightness: 0.008, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
