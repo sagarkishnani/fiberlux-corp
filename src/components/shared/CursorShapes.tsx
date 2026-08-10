@@ -4,21 +4,17 @@ import { useEffect, useRef } from "react";
  * Cursores a medida "hilo fino" (basado en el prototipo cursores-hilo-fino.html).
  *
  * Canvas fijo a pantalla completa (pointer-events: none) montado en toda la web.
- * Solo se activa cuando el puntero está sobre una sección que declara el atributo
- * `data-cursor="reticle"` (retícula técnica) o `data-cursor="dot"` (punto minimal);
- * en esas zonas oculta el cursor nativo y dibuja la forma correspondiente con un
- * "hilo fino" que la sigue con lag. Fuera de esas secciones no dibuja nada y el
- * cursor vuelve a ser el del sistema.
- *
- * Mientras hay una forma activa se marca `window.__cursorShapeActive` para que la
- * estela luminosa global (CursorTrail) no se encime.
+ * La forma (`reticle` = retícula técnica, `dot` = punto minimal) llega por prop
+ * `shape` desde la config de cursor de Tina (SPEC 99 obs1). Cuando está montado
+ * oculta el cursor nativo en toda la web y dibuja la forma con un "hilo fino" que
+ * la sigue con lag; sobre enlaces/botones la forma crece (estado interactivo).
  *
  * Se desactiva en punteros gruesos (touch) y con `prefers-reduced-motion`.
  */
 
-type CursorStyle = "reticle" | "dot" | null;
+type CursorStyle = "reticle" | "dot";
 
-export default function CursorShapes() {
+export default function CursorShapes({ shape = "reticle" }: { shape?: CursorStyle }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -54,7 +50,7 @@ export default function CursorShapes() {
     document.documentElement.classList.add("cursor-shapes-ready");
 
     const mouse = { x: W / 2, y: H / 2, active: false };
-    let style: CursorStyle = null;
+    const style: CursorStyle = shape === "dot" ? "dot" : "reticle";
     let interactive = false;
     let pressed = false;
 
@@ -67,29 +63,21 @@ export default function CursorShapes() {
     // Punto de anillo con lag (posición de la forma, más suave que el cursor).
     const ring = { x: mouse.x, y: mouse.y };
 
-    const resolveStyle = (target: EventTarget | null): void => {
-      const el =
-        target instanceof Element
-          ? (target.closest("[data-cursor]") as HTMLElement | null)
-          : null;
-      const s = el?.dataset?.cursor;
-      style = s === "reticle" || s === "dot" ? s : null;
+    const resolveInteractive = (target: EventTarget | null): void => {
       interactive =
-        !!style &&
         target instanceof Element &&
         !!target.closest("a, button, [role='button'], input, select, textarea");
-      (window as any).__cursorShapeActive = !!style;
     };
 
     const onMove = (e: MouseEvent) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
-      resolveStyle(e.target);
+      resolveInteractive(e.target);
+      (window as any).__cursorShapeActive = true;
     };
     const onLeave = () => {
       mouse.active = false;
-      style = null;
       (window as any).__cursorShapeActive = false;
     };
     const onDown = () => (pressed = true);
@@ -197,7 +185,7 @@ export default function CursorShapes() {
       ring.y += (mouse.y - ring.y) * 0.22;
 
       ctx.clearRect(0, 0, W, H);
-      if (!mouse.active || !style) return;
+      if (!mouse.active) return;
 
       drawThread();
       if (style === "reticle") drawReticle(t);
@@ -220,16 +208,16 @@ export default function CursorShapes() {
       document.documentElement.classList.remove("cursor-shapes-ready");
       (window as any).__cursorShapeActive = false;
     };
-  }, []);
+  }, [shape]);
 
   return (
     <>
       <style>{`
-        /* Dentro de las secciones con cursor a medida se oculta el cursor nativo
-           (incluidos enlaces/botones), que pasa a ser la forma del canvas. Solo
-           cuando la isla se montó en desktop (clase en <html>). */
-        html.cursor-shapes-ready [data-cursor],
-        html.cursor-shapes-ready [data-cursor] * { cursor: none !important; }
+        /* Con el cursor a medida activo (elegido en Tina) se oculta el cursor
+           nativo en toda la web; la forma del canvas lo reemplaza. Solo cuando la
+           isla se montó en desktop (clase en <html>). */
+        html.cursor-shapes-ready,
+        html.cursor-shapes-ready * { cursor: none !important; }
       `}</style>
       <canvas
         ref={canvasRef}

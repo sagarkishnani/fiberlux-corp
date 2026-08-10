@@ -692,6 +692,11 @@ export default function CinematicRays({
         const sc = cd.scaleFull * (0.28 + 0.72 * travel);
         m.scale.set(sc, sc, 1);
 
+        // SPEC 99 obs7: el tile entra oscuro (cerca del centro) y va mostrando su
+        // color de marca al alejarse hacia la esquina. `.color` multiplica la textura.
+        const bright = 0.3 + 0.7 * smooth(0.05, 0.5, travel);
+        cd.mat.color.setScalar(bright);
+
         m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
         m.rotation.y =
           Math.sin(t * cd.tiltSpeed * 0.9 + cd.tiltPhase * 1.3) * cd.tiltAmpY;

@@ -8,7 +8,7 @@ import createGlobe from "cobe";
  * mar oscuro, continentes en puntos blancos, halo/atmósfera en morado de marca
  * (#96237A) y cables de fibra que conectan hubs, dibujados como arcos FINOS
  * sobre la superficie del globo (misma proyección que COBE → quedan pegados a la
- * rotación y se cortan detrás del planeta). Se muestra ~60% del globo (recortado
+ * rotación y se cortan detrás del planeta). Se muestra ~50% del globo (recortado
  * abajo, estilo referencia). Entra con fade y se funde/rueda hacia arriba al
  * hacer scroll.
  *
@@ -34,6 +34,10 @@ const SP: [number, number] = [-23.55, -46.63];
 const SG: [number, number] = [1.35, 103.8];
 const TK: [number, number] = [35.68, 139.69];
 const MX: [number, number] = [19.43, -99.13];
+const LA: [number, number] = [34.05, -118.24];
+const MAD: [number, number] = [40.42, -3.7];
+const DXB: [number, number] = [25.2, 55.27];
+const SYD: [number, number] = [-33.87, 151.21];
 
 // Nodos únicos (con tamaño de glow) y rutas de fibra (pares conectados).
 const HUBS: { loc: [number, number]; r: number }[] = [
@@ -44,14 +48,34 @@ const HUBS: { loc: [number, number]; r: number }[] = [
   { loc: SG, r: 6 },
   { loc: TK, r: 5.5 },
   { loc: MX, r: 5.5 },
+  { loc: LA, r: 5.5 },
+  { loc: MAD, r: 5.5 },
+  { loc: DXB, r: 5 },
+  { loc: SYD, r: 5 },
 ];
+// Rutas de fibra (SPEC 99 obs10): red más densa para que la lógica de
+// conectividad sea más evidente — hub-and-spoke desde Lima + enlaces cruzados.
 const ROUTES: [[number, number], [number, number]][] = [
   [LIMA, NY],
   [LIMA, SP],
   [LIMA, MX],
+  [LIMA, LDN],
+  [LIMA, SG],
+  [LIMA, TK],
   [NY, LDN],
+  [NY, MX],
   [LDN, SG],
   [SG, TK],
+  [SP, LDN],
+  [SP, MX],
+  [LIMA, LA],
+  [LA, NY],
+  [LDN, MAD],
+  [MAD, NY],
+  [LDN, DXB],
+  [DXB, SG],
+  [SG, SYD],
+  [TK, SYD],
 ];
 
 // ── Proyección idéntica a la de COBE (para dibujar arcos ALINEADOS con el globo).
@@ -122,13 +146,11 @@ export default function CinematicBackground({
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const root = rootRef.current;
-    const glow = glowRef.current;
     const overlay = overlayRef.current;
     if (!canvas || !root) return;
     const octx = overlay?.getContext("2d") ?? null;
@@ -205,7 +227,8 @@ export default function CinematicBackground({
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      sizePx = Math.min(w * 1.0, h * 1.7);
+      // SPEC 99 obs10: globo más grande → se ve ~50% (antes ~60%, fracción ≈ h/sizePx).
+      sizePx = Math.min(w * 1.15, h * 2.0);
       const topPx = h * 0.16 - sizePx * 0.1;
       gLeft = w / 2 - sizePx / 2;
       gTop = topPx;
@@ -228,19 +251,9 @@ export default function CinematicBackground({
       canvas.style.top = `${topPx}px`;
       canvas.style.transform = "translateX(-50%)";
 
-      // Anillo de glow (morado de marca) detrás del globo → halo grueso en el borde.
-      if (glow) {
-        const diam = sizePx * 0.8;
-        const centerY = topPx + sizePx / 2;
-        const blur = Math.round(sizePx * 0.16);
-        const spread = Math.round(sizePx * 0.03);
-        glow.style.width = `${diam}px`;
-        glow.style.height = `${diam}px`;
-        glow.style.left = "50%";
-        glow.style.top = `${centerY - diam / 2}px`;
-        glow.style.transform = "translateX(-50%)";
-        glow.style.boxShadow = `0 0 ${blur}px ${spread}px rgba(${BRAND},0.6)`;
-      }
+      // El halo del planeta ya no se dibuja con un box-shadow externo (llenaba las
+      // esquinas de forma dura): ahora es un gradiente radial en la capa 2D
+      // (drawOverlay), centrado en la esfera. Aquí solo geometría del globo.
 
       seedStars();
     };
@@ -266,8 +279,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 7.5,
-        mapBaseBrightness: 0.06, // océano casi negro
+        mapBrightness: 1.0, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBaseBrightness: 0.008, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
@@ -350,6 +363,35 @@ export default function CinematicBackground({
       octx.clearRect(0, 0, w, h);
       if (op <= 0.01) return;
 
+      // Halo/atmósfera del planeta (SPEC 99 obs10): gradiente radial ADITIVO
+      // centrado exactamente en la esfera. El brillo cae SOBRE el limbo (rim) del
+      // globo — donde los puntos de COBE se acaban y quedaba una banda oscura (el
+      // "espacio")— y también un poco hacia afuera (glow). Se desvanece bien antes
+      // del centro para no afectar la legibilidad del texto. Modo "lighter" (luz).
+      {
+        const gcx = gLeft + sizePx / 2;
+        const gcy = gTop + sizePx / 2;
+        // El borde REAL de los puntos del globo está a ~0.4·sizePx del centro
+        // (la proyección usa GLOBE_R=0.8 → radio 0.4), NO en sizePx/2. El pico del
+        // halo se ancla ahí para quedar PEGADO al planeta (sin negro entremedio).
+        const dotsR = sizePx * 0.4;
+        const rInner = dotsR * 0.72; // arranca sobre los puntos exteriores
+        const rOuter = dotsR * 1.28; // poco alcance hacia afuera (halo ceñido)
+        const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
+        // Glow en morado de marca profundo (no rosa claro), manteniendo intensidad.
+        halo.addColorStop(0, "rgba(150,35,122,0)");
+        halo.addColorStop(0.4, `rgba(150,35,122,${(0.5 * op).toFixed(3)})`); // sobre los puntos
+        halo.addColorStop(0.5, `rgba(168,45,138,${(0.95 * op).toFixed(3)})`); // pico en el borde de puntos
+        halo.addColorStop(0.68, `rgba(120,28,98,${(0.45 * op).toFixed(3)})`); // apenas afuera
+        halo.addColorStop(1, "rgba(101,15,80,0)");
+        octx.globalCompositeOperation = "lighter";
+        octx.fillStyle = halo;
+        octx.beginPath();
+        octx.arc(gcx, gcy, rOuter, 0, Math.PI * 2);
+        octx.fill();
+        octx.globalCompositeOperation = "source-over";
+      }
+
       // Estrellas: más presentes hacia los costados (fade en el centro).
       const cx = w / 2;
       const half = w * 0.5;
@@ -424,7 +466,6 @@ export default function CinematicBackground({
         height: sizePx * dpr,
         opacity: op,
       });
-      if (glow) glow.style.opacity = `${op}`;
       stepStars(root.clientWidth || 1, root.clientHeight || 1);
       drawOverlay(phi, theta, op, ms);
       signalOnce();
@@ -477,12 +518,8 @@ export default function CinematicBackground({
         }}
       />
 
-      {/* Anillo de glow grueso alrededor del borde de la Tierra (detrás del globo). */}
-      <div
-        ref={glowRef}
-        aria-hidden="true"
-        style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none" }}
-      />
+      {/* El halo del planeta se dibuja en la capa 2D (overlay) como gradiente
+          radial centrado en la esfera — ver drawOverlay. */}
 
       {/* Globo COBE. */}
       <canvas

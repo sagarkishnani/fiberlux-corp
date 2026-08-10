@@ -186,7 +186,7 @@ function SignalNode({
         />
         <span
           aria-hidden="true"
-          className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg"
+          className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-[#180614]/90 text-[#F5B4E6] border border-[#D64DB8]/65 shadow-[0_0_20px_rgba(214,77,184,0.3)] backdrop-blur-sm"
         >
           {icon}
         </span>
@@ -270,11 +270,11 @@ function FiberWidget() {
   return (
     <div className="flex w-full max-w-[300px] flex-col items-center">
       <div className="relative h-[150px] w-full">
-        {/* Nodos-extremo (línea gráfica: blancos redondeados). */}
-        <span className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+        {/* Nodos-extremo (línea gráfica: contenedor translúcido + borde e ícono magenta). */}
+        <span className="absolute left-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-[#180614]/90 text-[#F5B4E6] border border-[#D64DB8]/65 shadow-[0_0_20px_rgba(214,77,184,0.3)] backdrop-blur-sm">
           <FaServer size={16} />
         </span>
-        <span className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+        <span className="absolute right-0 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-2xl bg-[#180614]/90 text-[#F5B4E6] border border-[#D64DB8]/65 shadow-[0_0_20px_rgba(214,77,184,0.3)] backdrop-blur-sm">
           <FaCloud size={18} />
         </span>
 
@@ -377,7 +377,7 @@ function MultisedeWidget() {
         <span className="absolute left-1/2 top-0 z-10 h-11 w-11 -translate-x-1/2 md:h-[52px] md:w-[52px]">
           <span aria-hidden="true" className="dw-node-ring pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/70" />
           <span aria-hidden="true" className="dw-node-ring dw-node-ring2 pointer-events-none absolute inset-0 rounded-2xl border-2 border-[#D64DB8]/60" />
-          <span className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg">
+          <span className="dw-node-core relative flex h-full w-full items-center justify-center rounded-2xl bg-[#180614]/90 text-[#F5B4E6] border border-[#D64DB8]/65 shadow-[0_0_20px_rgba(214,77,184,0.3)] backdrop-blur-sm">
             <FaBuilding className="text-[19px] md:text-[22px]" />
           </span>
         </span>
@@ -386,7 +386,7 @@ function MultisedeWidget() {
         {sites.map((s, i) => (
           <span
             key={i}
-            className="dw-site absolute bottom-0 z-10 flex h-9 w-9 items-center justify-center rounded-2xl bg-white text-[#96237A] shadow-lg md:h-10 md:w-10"
+            className="dw-site absolute bottom-0 z-10 flex h-9 w-9 items-center justify-center rounded-2xl bg-[#180614]/90 text-[#F5B4E6] border border-[#D64DB8]/65 shadow-[0_0_20px_rgba(214,77,184,0.3)] backdrop-blur-sm md:h-10 md:w-10"
             style={{ left: `${(s.x / 300) * 100}%`, transform: "translateX(-50%)", animationDelay: s.delay }}
           >
             <FaLocationDot className="text-[13px] md:text-[15px]" />
@@ -394,7 +394,7 @@ function MultisedeWidget() {
         ))}
       </div>
       <span className="mt-2">
-        <MonoLabel tone="on">3 sedes conectadas</MonoLabel>
+        <MonoLabel tone="on">Sedes conectadas</MonoLabel>
       </span>
     </div>
   );

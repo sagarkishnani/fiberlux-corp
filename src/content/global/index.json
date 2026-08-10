@@ -1,4 +1,8 @@
 {
+  "cursor": {
+    "type": "trail",
+    "glow": "med"
+  },
   "header": {
     "topBar": {
       "empresasLabel": "Empresas",

@@ -1814,6 +1814,35 @@ export default defineConfig({
           allowedActions: { create: false, delete: false },
         },
         fields: [
+          // ── Cursor del sitio (SPEC 99) ──
+          {
+            name: "cursor",
+            label: "Cursor del sitio",
+            type: "object",
+            fields: [
+              {
+                name: "type",
+                label: "Tipo de cursor",
+                type: "string",
+                options: [
+                  { value: "none", label: "Ninguno (cursor del sistema)" },
+                  { value: "trail", label: "Estela luminosa (por defecto)" },
+                  { value: "reticle", label: "Retícula técnica" },
+                  { value: "dot", label: "Punto minimal" },
+                ],
+              },
+              {
+                name: "glow",
+                label: "Intensidad del glow (estela)",
+                type: "string",
+                options: [
+                  { value: "low", label: "Bajo" },
+                  { value: "med", label: "Medio (por defecto)" },
+                  { value: "high", label: "Alto" },
+                ],
+              },
+            ],
+          },
           // ── Navigation ──
           {
             name: "nav",

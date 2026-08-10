@@ -26,8 +26,9 @@ function withBase(path: string): string {
 }
 
 /* Alto de scroll (en viewports) por categoría. Regula la velocidad del recorrido;
-   el snap remata el encaje en el centro de cada categoría. */
-const VH_PER_CATEGORY = 1.15;
+   el snap remata el encaje en el centro de cada categoría. SPEC 99 obs4: se baja
+   para que el paso entre categorías se sienta más ágil (menos scroll lento). */
+const VH_PER_CATEGORY = 0.9;
 
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
@@ -49,8 +50,8 @@ export default function SolucionesScrollReact({
   const [isMobile, setIsMobile] = useState(false);
   const N = items.length;
 
-  /* En mobile no hay recorrido guiado (scroll-jacking): desorienta sin una guía
-     de progreso. Se renderizan las categorías apiladas en flujo natural. */
+  /* `isMobile` ya no desactiva el recorrido (corre en mobile con guía de
+     progreso, SPEC 99 obs3); solo compacta la lista de subservicios en el pin. */
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     const apply = () => setIsMobile(mq.matches);
@@ -65,6 +66,7 @@ export default function SolucionesScrollReact({
   const glowRef = useRef<HTMLDivElement | null>(null); // glow reactivo
   const fgRef = useRef<HTMLDivElement | null>(null); // contenido izq (título/descr/botón): envelope
   const listRef = useRef<HTMLDivElement | null>(null); // lista derecha (+ "ver todas"): envelope
+  const progressRef = useRef<HTMLDivElement | null>(null); // barra de progreso continua (feedback de avance)
   const reduceRef = useRef(false);
   const snapTimer = useRef<number | null>(null);
 
@@ -75,7 +77,8 @@ export default function SolucionesScrollReact({
      directo en los nodos (no re-render por frame). rAF-throttled, no bloquea el
      scroll nativo (compatible con Lenis). */
   useEffect(() => {
-    if (isMobile) return; // en mobile el recorrido guiado está desactivado
+    // SPEC 99 obs3: el recorrido guiado corre también en mobile (con barra de
+    // progreso e indicador de categoría para que se note el avance).
     if (N <= 1) return;
     const track = trackRef.current;
     if (!track) return;
@@ -97,6 +100,10 @@ export default function SolucionesScrollReact({
       const envelope = 1 - Math.min(1, Math.abs(frac) * 2); // 1 centro → 0 borde
       const reduce = reduceRef.current;
 
+      // Barra de progreso continua (feedback de avance del recorrido).
+      if (progressRef.current) {
+        progressRef.current.style.transform = `scaleX(${progress.toFixed(4)})`;
+      }
       // Número gigante de fondo: parallax vertical continuo.
       if (bgNumRef.current) {
         bgNumRef.current.style.transform = `translate3d(0, ${(-progress * 140).toFixed(1)}px, 0)`;
@@ -131,7 +138,7 @@ export default function SolucionesScrollReact({
        más cercana usando Lenis (sin pelear con el smooth-scroll global). */
     const scheduleSnap = () => {
       if (snapTimer.current != null) window.clearTimeout(snapTimer.current);
-      snapTimer.current = window.setTimeout(runSnap, 110);
+      snapTimer.current = window.setTimeout(runSnap, 85);
     };
     const runSnap = () => {
       const total = track.offsetHeight - window.innerHeight;
@@ -148,7 +155,7 @@ export default function SolucionesScrollReact({
       const targetProgress = (idx + 0.5) / N;
       const targetY = Math.round(trackTopAbs + targetProgress * total);
       const lenis = (window as any).__lenis;
-      if (lenis?.scrollTo) lenis.scrollTo(targetY, { duration: 0.5 });
+      if (lenis?.scrollTo) lenis.scrollTo(targetY, { duration: 0.4 });
       else window.scrollTo({ top: targetY, behavior: "smooth" });
     };
 
@@ -161,7 +168,7 @@ export default function SolucionesScrollReact({
       window.removeEventListener("resize", onScroll);
       if (snapTimer.current != null) window.clearTimeout(snapTimer.current);
     };
-  }, [N, isMobile]);
+  }, [N]);
 
   /* ── Tooltip "Ver más" con delay + lag ── */
   const finePointer = useRef(false);
@@ -249,9 +256,12 @@ export default function SolucionesScrollReact({
     url: string | null | undefined,
     keyPrefix: string,
   ) => {
-    const canShowAll = showAll && subs.length <= SHOW_ALL_LIMIT;
-    const vis = canShowAll ? subs : subs.slice(0, MAX_VISIBLE);
-    const ov = canShowAll ? 0 : subs.length - MAX_VISIBLE;
+    // En mobile el bloque va anclado (100svh): se muestran menos filas para que
+    // el contenido no desborde el pin (SPEC 99 obs3).
+    const cap = isMobile ? 4 : MAX_VISIBLE;
+    const canShowAll = !isMobile && showAll && subs.length <= SHOW_ALL_LIMIT;
+    const vis = canShowAll ? subs : subs.slice(0, cap);
+    const ov = canShowAll ? 0 : Math.max(0, subs.length - cap);
     return (
       <>
         <ul className="border-t border-white/[0.08] md:border-white/50 sol-stagger">
@@ -309,102 +319,10 @@ export default function SolucionesScrollReact({
     );
   };
 
-  /* ── Mobile: sin scroll-jacking. Categorías apiladas en flujo natural. ── */
-  if (isMobile) {
-    return (
-      <section
-        id="soluciones-scroll"
-        className="relative overflow-hidden bg-greyscale-darkest"
-      >
-        {/* Glows magenta estáticos de ambiente, distribuidos a lo largo de la
-            sección para que el fondo no se vea plano/negro en mobile. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-[4%] -left-[18%] z-0 h-[380px] w-[460px] rounded-full opacity-35 blur-[120px]"
-          style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute top-[38%] -right-[22%] z-0 h-[420px] w-[500px] rounded-full opacity-25 blur-[130px]"
-          style={{ background: "radial-gradient(circle, #650F50 0%, transparent 70%)" }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-[2%] -left-[16%] z-0 h-[400px] w-[480px] rounded-full opacity-30 blur-[125px]"
-          style={{ background: "radial-gradient(circle, #96237A 0%, transparent 70%)" }}
-        />
-
-        <div className="relative z-10 w-full site-container py-12">
-          {sectionTitle && (
-            <p
-              className="mb-8 font-mono text-xs uppercase tracking-[0.2em] text-white/50"
-              data-tina-field={services ? tinaField(services, "title") : undefined}
-            >
-              [ {sectionTitle.toUpperCase()} ]
-            </p>
-          )}
-
-          <div className="space-y-16">
-            {items.map((it, idx) => {
-              const subs = (it?.bullets || []).filter(Boolean) as typeof subservicios;
-              const tina = services?.items?.[idx];
-              return (
-                <div key={idx}>
-                  <div className="text-[52px] font-semibold leading-none text-white">
-                    {it?.number}
-                  </div>
-                  <h2
-                    className="mt-3 text-[26px] leading-[1.1] font-semibold text-white max-w-[14ch]"
-                    data-tina-field={tina ? tinaField(tina, "title") : undefined}
-                  >
-                    {tField(it as any, "title", locale)}
-                  </h2>
-                  {it?.description && (
-                    <p
-                      className="mt-3 text-[15px] leading-relaxed text-white/60 max-w-[34ch]"
-                      data-tina-field={tina ? tinaField(tina, "description") : undefined}
-                    >
-                      {tField(it as any, "description", locale)}
-                    </p>
-                  )}
-
-                  <div className="mt-7">{renderSubList(subs, it?.url, `m-${idx}`)}</div>
-
-                  {it?.url && (
-                    <a
-                      href={withBase(it.url)}
-                      className={buttonClass("secondary", "mt-7")}
-                      data-tina-field={tina ? tinaField(tina, "url") : undefined}
-                    >
-                      {ctaLabel}
-                    </a>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <style>{`
-          @keyframes sol-row-in {
-            from { opacity: 0; transform: translateX(24px); }
-            to   { opacity: 1; transform: none; }
-          }
-          .sol-stagger .sol-row { animation: sol-row-in 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-          @media (prefers-reduced-motion: reduce) {
-            .sol-stagger .sol-row { animation: none; }
-          }
-        `}</style>
-      </section>
-    );
-  }
-
   return (
     <section
       ref={trackRef}
       id="soluciones-scroll"
-      // Cursor a medida "retícula técnica" en el recorrido de soluciones (desktop).
-      data-cursor="reticle"
       className="relative bg-greyscale-darkest"
       style={{ height: `${N * VH_PER_CATEGORY * 100}svh` }}
     >
@@ -459,6 +377,24 @@ export default function SolucionesScrollReact({
                 [ {sectionTitle.toUpperCase()} ]
               </p>
             )}
+
+            {/* Indicador de progreso del recorrido (SPEC 99 obs3): barra continua
+                + contador de categoría, para que el avance se note. Solo en mobile
+                (en desktop el odómetro/envelope ya dan feedback de sobra). */}
+            <div className="mb-6 flex items-center gap-3 md:hidden">
+              <div className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.12]">
+                <div
+                  ref={progressRef}
+                  aria-hidden="true"
+                  className="absolute inset-y-0 left-0 w-full origin-left rounded-full bg-brand-purple"
+                  style={{ transform: "scaleX(0)" }}
+                />
+              </div>
+              <span className="font-mono text-xs tabular-nums text-white/50">
+                {String(Math.min(activeIndex + 1, N)).padStart(2, "0")} /{" "}
+                {String(N).padStart(2, "0")}
+              </span>
+            </div>
 
             {/* Número crisp en flujo (odómetro, rueda alineado con el título). */}
             <div
