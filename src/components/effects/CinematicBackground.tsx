@@ -279,8 +279,8 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 2.2, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
-        mapBaseBrightness: 0.015, // océano casi negro
+        mapBrightness: 1.5, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBaseBrightness: 0.012, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
@@ -373,13 +373,14 @@ export default function CinematicBackground({
         const gcy = gTop + sizePx / 2;
         // rInner (transparente) queda dentro de la esfera pero lejos del texto;
         // el pico brillante cae en el borde (~radio de la esfera = sizePx/2).
-        const rInner = sizePx * 0.35;
-        const rOuter = sizePx * 0.64;
+        // Halo CEÑIDO al borde (ref. cliente): poco alcance hacia afuera.
+        const rInner = sizePx * 0.42;
+        const rOuter = sizePx * 0.58;
         const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
         halo.addColorStop(0, "rgba(214,77,184,0)");
-        halo.addColorStop(0.4, `rgba(214,77,184,${(0.3 * op).toFixed(3)})`); // limbo interno
-        halo.addColorStop(0.55, `rgba(230,120,205,${(0.6 * op).toFixed(3)})`); // pico en el borde
-        halo.addColorStop(0.72, `rgba(178,50,146,${(0.34 * op).toFixed(3)})`); // afuera
+        halo.addColorStop(0.45, `rgba(214,77,184,${(0.28 * op).toFixed(3)})`); // limbo interno
+        halo.addColorStop(0.62, `rgba(230,120,205,${(0.6 * op).toFixed(3)})`); // pico en el borde
+        halo.addColorStop(0.8, `rgba(178,50,146,${(0.28 * op).toFixed(3)})`); // afuera
         halo.addColorStop(1, "rgba(150,35,122,0)");
         octx.globalCompositeOperation = "lighter";
         octx.fillStyle = halo;
