@@ -61,7 +61,7 @@ export default function CasosSliderReact({
   );
 
   return (
-    <section className="bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-32">
+    <section className="bg-greyscale-darkest pt-2 pb-20 md:pt-4 md:pb-32">
       {/* obs10: sin título "Casos de éxito" (redundante con el H1 del hero).
           El viewport va dentro de site-container (igual que el hero) para que la
           primera card quede alineada al título y la descripción. */}
