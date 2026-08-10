@@ -1456,6 +1456,11 @@ type FormasDePagoConnection implements Connection {
   edges: [FormasDePagoConnectionEdges]
 }
 
+type GlobalCursor {
+  type: String
+  glow: String
+}
+
 type GlobalNavLinksChildrenChildren {
   text: String
   text_en: String
@@ -1646,6 +1651,7 @@ type GlobalSliders {
 }
 
 type Global implements Node & Document {
+  cursor: GlobalCursor
   nav: GlobalNav
   header: GlobalHeader
   whatsapp: GlobalWhatsapp
@@ -1658,6 +1664,11 @@ type Global implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input GlobalCursorFilter {
+  type: StringFilter
+  glow: StringFilter
 }
 
 input GlobalNavLinksChildrenChildrenFilter {
@@ -1850,6 +1861,7 @@ input GlobalSlidersFilter {
 }
 
 input GlobalFilter {
+  cursor: GlobalCursorFilter
   nav: GlobalNavFilter
   header: GlobalHeaderFilter
   whatsapp: GlobalWhatsappFilter
@@ -3108,6 +3120,11 @@ input FormasDePagoMutation {
   seo: FormasDePagoSeoMutation
 }
 
+input GlobalCursorMutation {
+  type: String
+  glow: String
+}
+
 input GlobalNavLinksChildrenChildrenMutation {
   text: String
   text_en: String
@@ -3298,6 +3315,7 @@ input GlobalSlidersMutation {
 }
 
 input GlobalMutation {
+  cursor: GlobalCursorMutation
   nav: GlobalNavMutation
   header: GlobalHeaderMutation
   whatsapp: GlobalWhatsappMutation

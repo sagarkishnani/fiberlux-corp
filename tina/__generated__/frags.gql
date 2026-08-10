@@ -516,6 +516,11 @@ fragment FormasDePagoParts on FormasDePago {
 
 fragment GlobalParts on Global {
   __typename
+  cursor {
+    __typename
+    type
+    glow
+  }
   nav {
     __typename
     links {
