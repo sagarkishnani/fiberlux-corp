@@ -179,12 +179,12 @@ export default function OrbitLock({ className = '' }: OrbitLockProps) {
         }
         .orbitlock__stage > * { grid-area: 1 / 1; }
 
-        /* Glow morado que pulsa */
+        /* Glow morado que pulsa (tenue: el volumen lo da el halo de god-rays) */
         .orbitlock__glow {
           width: var(--glow-size);
           height: var(--glow-size);
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(226,79,184,0.45) 0%, rgba(150,35,122,0.28) 34%, rgba(150,35,122,0) 68%);
+          background: radial-gradient(circle, rgba(226,79,184,0.30) 0%, rgba(150,35,122,0.16) 34%, rgba(150,35,122,0) 66%);
           filter: blur(6px);
           animation: ol-pulse var(--pulse-dur) ease-in-out infinite;
         }
