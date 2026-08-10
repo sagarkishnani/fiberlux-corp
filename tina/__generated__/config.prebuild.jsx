@@ -1459,7 +1459,14 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           { name: "intro_en", label: "P\xE1rrafo introductorio (EN)", type: "string", ui: { component: "textarea" } },
-          { name: "heroImage", label: "Imagen de fondo del hero", type: "image" },
+          {
+            // Obsoleto (SPEC 100): el hero ya no usa imagen de fondo. Se mantiene
+            // el campo para no perder el dato existente, pero se oculta del panel.
+            name: "heroImage",
+            label: "Imagen de fondo del hero (obsoleto)",
+            type: "image",
+            ui: { component: () => null }
+          },
           // ── Sección carrusel ──
           { name: "sectionTitle", label: "T\xEDtulo de la secci\xF3n", type: "string" },
           {
