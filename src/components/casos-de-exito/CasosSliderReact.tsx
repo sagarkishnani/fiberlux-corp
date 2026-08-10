@@ -140,6 +140,28 @@ export default function CasosSliderReact({
 
         {/* Arrows: below the video (tablet md–lg); en lg+ se usan las laterales */}
         {items.length > 1 && <div className="hidden md:block lg:hidden mt-8">{arrowsPill}</div>}
+
+        {/* Dots: indicador de progreso interactivo, centrado bajo el slider.
+            El dot activo se alarga (px) y toma el magenta de marca; clic navega. */}
+        {slider.scrollSnaps.length > 1 && (
+          <div className="mt-8 flex justify-center gap-2.5" role="tablist" aria-label="Casos de éxito">
+            {slider.scrollSnaps.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-label={`Ir al caso ${i + 1}`}
+                aria-selected={i === activeIndex}
+                onClick={() => slider.goTo(i)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === activeIndex
+                    ? "w-6 bg-[#96237A]"
+                    : "w-2 bg-white/25 hover:bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <VideoModal caso={modalCaso} onClose={() => setModalCaso(null)} />
