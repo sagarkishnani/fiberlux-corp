@@ -19,15 +19,16 @@ const LIFETIME = 780;
 // Ancho máximo (px CSS) del núcleo en la cabeza de la estela.
 const CORE_WIDTH = 3;
 
-// Intensidad del glow (SPEC 99 obs1): la estela se nota pero con menos "glow".
-// `med` es el nuevo baseline reducido; `high` se acerca al look anterior.
+// Intensidad del glow. Ajuste pedido por el cliente: la estela debe notarse
+// APENAS, así que se bajaron mucho las opacidades (núcleo y halo). `med` es el
+// baseline muy sutil; `high` sigue siendo discreto.
 const GLOW_BY_INTENSITY: Record<
   Intensity,
   { haloWidth: number; haloAlpha: number; haloBlur: number; coreAlpha: number; coreBlur: number }
 > = {
-  low: { haloWidth: 6, haloAlpha: 0.05, haloBlur: 5, coreAlpha: 0.35, coreBlur: 2 },
-  med: { haloWidth: 8, haloAlpha: 0.09, haloBlur: 8, coreAlpha: 0.5, coreBlur: 3 },
-  high: { haloWidth: 12, haloAlpha: 0.16, haloBlur: 13, coreAlpha: 0.72, coreBlur: 5 },
+  low: { haloWidth: 6, haloAlpha: 0.02, haloBlur: 5, coreAlpha: 0.1, coreBlur: 2 },
+  med: { haloWidth: 7, haloAlpha: 0.035, haloBlur: 7, coreAlpha: 0.18, coreBlur: 3 },
+  high: { haloWidth: 10, haloAlpha: 0.07, haloBlur: 11, coreAlpha: 0.34, coreBlur: 4 },
 };
 
 export default function CursorTrail({ intensity = "med" }: { intensity?: Intensity }) {
