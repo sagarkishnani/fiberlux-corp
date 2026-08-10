@@ -42,7 +42,7 @@ export default function CertificacionesSliderReact({
   const page = data?.certificaciones;
   const sectionTitle =
     tField(page as any, "sectionTitle", locale) ||
-    (locale === "en" ? "Fiberlux group certifications" : "Certificaciones del grupo Fiberlux");
+    (locale === "en" ? "Fiberlux group certifications" : "Certificaciones del Grupo Fiberlux");
   const items = (page?.items || []).filter(Boolean) as any[];
 
   const hasItems = items.length > 0;
