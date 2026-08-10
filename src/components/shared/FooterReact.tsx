@@ -172,9 +172,17 @@ export default function FooterReact({ query, variables, data: initialData, local
 
   return (
     <footer
-      className={`relative overflow-hidden rounded-t-xl ${footerBgClass}`}
+      className={`footer-root relative overflow-hidden rounded-t-xl ${footerBgClass}`}
       style={footerBgStyle}
     >
+      {/* SPEC 99 obs5: donde el fondo del footer ya es morado (`mode: 'purple'`),
+          la selección morada global no se vería → se usa un resaltado claro. */}
+      {mode === 'purple' && (
+        <style>{`
+          .footer-root ::selection { background: rgba(255, 255, 255, 0.35); color: #3B0E30; }
+          .footer-root ::-moz-selection { background: rgba(255, 255, 255, 0.35); color: #3B0E30; }
+        `}</style>
+      )}
       {mode === 'dark-glow' && (
         <style>{`
           .footer-darkglow {

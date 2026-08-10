@@ -156,6 +156,16 @@ const whatsappMessage = whatsappContext
       #a11y-content {
         overflow-x: clip;
       }
+      /* Selección de texto en morado de marca (SPEC 99 obs5). Vive aquí porque
+         global.css no se bundlea; el footer en modo morado la sobreescribe. */
+      ::selection {
+        background-color: rgba(150, 35, 122, 0.3);
+        color: #ffffff;
+      }
+      ::-moz-selection {
+        background-color: rgba(150, 35, 122, 0.3);
+        color: #ffffff;
+      }
       .reveal-js [data-reveal]:not([data-reveal-stagger]) {
         opacity: 0;
         will-change: transform, opacity;

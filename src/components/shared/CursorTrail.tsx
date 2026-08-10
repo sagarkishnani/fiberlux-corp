@@ -155,7 +155,8 @@ export default function CursorTrail({ intensity = "med" }: { intensity?: Intensi
         height: "100%",
         pointerEvents: "none",
         zIndex: 9998,
-        mixBlendMode: "screen",
+        // SPEC 99 obs5: sin mix-blend "screen" la estela compone igual sobre
+        // cualquier fondo (header oscuro / footer morado) → se ve uniforme.
       }}
     />
   );
