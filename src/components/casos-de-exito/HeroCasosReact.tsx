@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type {
   CasosDeExitoQuery,
@@ -7,7 +6,6 @@ import type {
 import { tField } from "../../utils/i18n";
 import { t } from "../../i18n/ui";
 import type { Locale } from "../../i18n/config";
-import FlowEffect from "../effects/FlowEffect";
 
 interface HeroCasosProps {
   query: string;
@@ -27,40 +25,17 @@ export default function HeroCasosReact({
     variables,
     data: initialData,
   });
-  // La imagen fallback solo aparece si FlowEffect no puede inicializar (no como flash inicial).
-  const [showFallback, setShowFallback] = useState(false);
 
   const page = data?.casosDeExito;
   if (!page) return null;
 
   const base = import.meta.env.BASE_URL || "/";
-  // Falls back to the shared services magenta backdrop when no hero image is set.
-  const heroImage = page.heroImage || `${base}images/services/hero-img.png`;
 
   return (
     <section
       className="relative min-h-[70vh] md:min-h-[85vh] flex flex-col overflow-hidden -mt-16"
       style={{ background: "#0a0a0a" }}
     >
-      {/* Imagen fallback: solo si FlowEffect no puede inicializar */}
-      {showFallback && (
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-no-repeat"
-          style={{
-            backgroundImage: `url(${heroImage})`,
-            backgroundPosition: "75% center",
-          }}
-          aria-hidden="true"
-        />
-      )}
-      {/* Canvas FlowEffect encima, debajo del contenido */}
-      <FlowEffect
-        className="absolute inset-0 z-0 h-full w-full"
-        onUnsupported={() => setShowFallback(true)}
-      />
-      {/* Capa oscura para atenuar el flow */}
-      <div className="absolute inset-0 z-0 bg-black/40" aria-hidden="true" />
-
       <div className="relative z-10 site-container flex flex-col flex-1">
         {/* Breadcrumb — mismo tamaño/tono que el de Nosotros (text-sm). */}
         <nav className="flex items-center gap-2 text-sm pt-24 md:pt-28" aria-label="Breadcrumb">
