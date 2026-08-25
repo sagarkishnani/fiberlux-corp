@@ -179,6 +179,14 @@ export default function ContactReact({
           background-position: left -60px top -60px;
           opacity: 0.7;
         }
+        @media (min-width: 1024px) {
+          /* La imagen (1440x784) se pinta con cover corrida -60px, así que en
+             pantallas anchas dejaba descubierta una franja del borde derecho y
+             se veía el corte. Se le da holgura a la capa (la sección recorta). */
+          .contact-hero-bg {
+            inset: -140px;
+          }
+        }
         .contact-hero-scrim {
           background: radial-gradient(70% 60% at 0% 0%, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0) 60%);
         }
