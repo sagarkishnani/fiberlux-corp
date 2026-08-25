@@ -1,9 +1,9 @@
 # SPEC 105 — Beneficios de subservicio: ilustraciones SVG animadas por plantilla
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 12 (plantilla de subservicio nivel 2, sección `beneficios`), SPEC 71 (sistema `data-reveal` de animaciones de entrada), SPEC 80 (i18n `_en`/`tField`)
 > **Fecha:** 2026-08-25
-> **Objetivo:** Portar desde el proyecto nexnet las 14 plantillas de ilustración SVG animada al pie de cada card de "Beneficios" de subservicio, repintadas en morado sobre fondo oscuro y asignadas a las 112 cards existentes sin tocar sus textos.
+> **Objetivo:** Portar desde el proyecto nexnet las 14 plantillas de ilustración SVG animada al pie de cada card de "Beneficios" de subservicio, repintadas en morado sobre fondo oscuro y asignadas a las 111 cards existentes sin tocar sus textos.
 
 ---
 
@@ -29,7 +29,7 @@ Los 35 subservicios de nexnet comparten slug con los de Fiberlux (con ocho varia
 - **Grid de 6 columnas** con cards a `md:col-span-2` y `md:auto-rows-fr`, para que los 6 subservicios que tienen 4 cards centren su última fila en vez de dejarla pegada a la izquierda.
 - **Schema Tina** (colección `subservicio` → `beneficios.items[]`): se **elimina** el campo `icon` y su lista de opciones; se añaden `plantilla` (selector de las 14), `datos` (objeto plano con todos los campos opcionales de todas las plantillas, cada uno documentado con la plantilla a la que pertenece) e `image` (imagen opcional que manda sobre la ilustración).
 - **i18n de las etiquetas del SVG**: cada etiqueta de `datos` gana su sibling `_en` (`etiqueta_en`, `unidad_en`, `filas[].label_en`, `rutas[].label_en`, `nodos[].label_en`, `chips[].label_en`) y se lee con `tField`. Se dejan vacíos: fallback ES, el cliente los rellena en Tina.
-- **Asignar plantilla y datos a las 112 cards** de los 35 JSON de `src/content/subservicios/`, y **borrar el `icon`** de cada una. Los textos `title` / `text` y sus `_en` **no se tocan**.
+- **Asignar plantilla y datos a las 111 cards** de los 35 JSON de `src/content/subservicios/`, y **borrar el `icon`** de cada una. Los textos `title` / `text` y sus `_en` **no se tocan**.
 - **Accesibilidad**: la ilustración es decorativa (`aria-hidden`), no entra en el orden de foco, y con `prefers-reduced-motion` se queda en su fotograma final sin animar.
 
 **Fuera de alcance (para futuros specs):**
@@ -178,7 +178,7 @@ Las 14 plantillas quedan usadas al menos una vez; ninguna card de un mismo subse
 
 8. **Contenido, tanda conectividad.** Asignar `plantilla` + `datos` y borrar `icon` en los subservicios de Conectividad, según la tabla 3.4. Estado: una categoría completa, verificable en `/soluciones/conectividad/internet-corporativo`.
 
-9. **Contenido, resto de categorías.** Mismo trabajo en Ciberseguridad, Data Center / Cloud y Servicios Gestionados. Estado: las 112 cards con ilustración y sin `icon`.
+9. **Contenido, resto de categorías.** Mismo trabajo en Ciberseguridad, Data Center / Cloud y Servicios Gestionados. Estado: las 111 cards con ilustración y sin `icon`.
 
 10. **i18n de etiquetas.** Cablear `tField` en las plantillas que pintan texto (`Velocidad`, `Uptime`, `Prioridad`, `Conmutacion`, `Sedes`, `Consola`, `Mfa`, `Checklist`), pasándoles el `locale` desde `BeneficiosReact`. Estado: `/en` cae a ES por campo vacío, sin texto roto.
 
@@ -191,7 +191,7 @@ Las 14 plantillas quedan usadas al menos una vez; ninguna card de un mismo subse
 - [ ] Ninguna card de beneficio muestra ya el chip de ícono morado.
 - [ ] `grep -c '"icon"' src/content/subservicios/*.json` no devuelve ninguna ocurrencia dentro del bloque `beneficios`.
 - [ ] Los 35 JSON tienen `plantilla` en todas sus cards de `beneficios`.
-- [ ] Los textos `title`, `title_en`, `text` y `text_en` de las 112 cards son byte a byte los de antes del spec (verificable con `git diff` filtrado).
+- [ ] Los textos `title`, `title_en`, `text` y `text_en` de las 111 cards son byte a byte los de antes del spec (verificable con `git diff` filtrado).
 - [ ] La ilustración arranca su animación la primera vez que la sección entra en viewport, y pasar el cursor por encima no la vuelve a lanzar.
 - [ ] En un subservicio de 4 cards (`sd-wan`), la cuarta queda centrada en desktop, no pegada a la izquierda.
 - [ ] En una fila de 3 cards con textos de distinto largo, las tres ilustraciones quedan alineadas a la misma altura.
@@ -216,7 +216,7 @@ Las 14 plantillas quedan usadas al menos una vez; ninguna card de un mismo subse
 - **No:** acento magenta neón. El morado de marca ya distingue lo encendido de lo apagado; el neón habría competido con el glow de los heros cinematic.
 - **Sí:** `datos` como un objeto plano con todos los campos de todas las plantillas. Es la decisión de nexnet y se mantiene por la misma razón: un objeto por plantilla multiplicaría la query de GraphQL por catorce.
 - **Sí:** siblings `_en` en las etiquetas del SVG, vacíos. Es la convención del sitio (SPEC 80) y evita tener que volver a tocar el schema cuando el cliente quiera traducirlas.
-- **No:** rellenar ahora el EN de las ~112 cards. El fallback ES ya deja el sitio coherente y el cliente refina el inglés en Tina.
+- **No:** rellenar ahora el EN de las ~111 cards. El fallback ES ya deja el sitio coherente y el cliente refina el inglés en Tina.
 - **Sí:** campo `image` que manda sobre la plantilla. Válvula de escape para el caso que ninguna de las 14 cubra, sin abrir un spec nuevo.
 - **Sí:** keyframes en el `<style>` del componente y no en `global.css`. En este repo `global.css` no se empaqueta: lo que se escriba ahí no llega al navegador.
 - **Sí:** prefijo `fbx-ben-*` en vez de heredar `nx-ben-*`. El prefijo `nx` es de nexnet y confunde en este repo.
@@ -228,7 +228,7 @@ Las 14 plantillas quedan usadas al menos una vez; ninguna card de un mismo subse
 
 | Riesgo | Mitigación |
 | --- | --- |
-| 112 cards animándose en la misma página pesan en render | Cada ilustración solo arranca al entrar en viewport y son SVG estáticos con CSS animations, sin rAF ni JS por frame. Además solo hay 3–4 cards por página, no 112. |
+| 111 cards animándose en la misma página pesan en render | Cada ilustración solo arranca al entrar en viewport y son SVG estáticos con CSS animations, sin rAF ni JS por frame. Además solo hay 3–4 cards por página, no 112. |
 | Las etiquetas que escribe el editor se salen de su caja SVG | Se portan `anchoTexto` y `cajaEtiquetas` de nexnet, que dimensionan la caja y bajan el cuerpo de la letra antes que recortar. |
 | Ciclo de imports entre el registro y las plantillas | `base.tsx` vive aparte del registro por esta razón exacta (documentada en nexnet): la pila de `Velocidad` lee `C` al evaluar el módulo y con el ciclo reventaba con `Cannot read properties of undefined`. |
 | El repintado a morado deja ilustraciones ilegibles sobre negro | La regla "lo apagado es el mismo color a menos opacidad" se valida card a card en la tanda de contenido de Conectividad (paso 8) antes de escalar al resto. |
