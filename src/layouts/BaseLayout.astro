@@ -132,6 +132,17 @@ const whatsappBubbleMessage =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* Google Tag Manager (GTM-KTV92FNF). Lo más arriba posible del <head>,
+        solo tras charset/viewport. `is:inline` para que Astro NO lo bundlee ni lo
+        mueva: el snippet debe ejecutarse aquí, antes que cualquier otro script.
+        Va también en mantenimiento (una caída medida es mejor que un hueco). */}
+    <script is:inline>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-KTV92FNF');
+    </script>
     <meta
       name="description"
       content={maintenanceMode ? "Sitio en mantenimiento" : description}
@@ -296,6 +307,15 @@ const whatsappBubbleMessage =
     {!maintenanceMode && injectHead && <Fragment set:html={injectHead} />}
   </head>
   <body>
+    {/* Google Tag Manager (noscript) — inmediatamente tras <body>. */}
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KTV92FNF"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      />
+    </noscript>
     {
       maintenanceMode ? (
         <main style="background: linear-gradient(180deg, #96237A 0%, #650F50 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; padding: 0 20px;">
