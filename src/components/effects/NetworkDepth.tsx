@@ -78,7 +78,9 @@ export default function NetworkDepth({
     const scale = density * (small ? 0.55 : 1);
 
     let w = 0, h = 0;
-    const state = { t: 0, mx: 0, my: 0 };
+    /* mx/my = objetivo del cursor; cx/cy = valor suavizado que usa la cámara.
+       El lerp evita el salto seco al entrar/salir del hero. */
+    const state = { t: 0, mx: 0, my: 0, cx: 0, cy: 0 };
 
     /* ── Geometría ── */
     const build = () => {
@@ -108,8 +110,8 @@ export default function NetworkDepth({
               const span = TILE * TILES;
               const z = (((p.z + k * TILE - state.t) % span) + span) % span + NEAR;
               const kk = FOCAL / z;
-              const x = w * 0.5 + (p.x + state.mx * 90) * kk;
-              const y = h * 0.5 + (p.y + state.my * 70) * kk;
+              const x = w * 0.5 + (p.x + state.cx * 320) * kk;
+              const y = h * 0.5 + (p.y + state.cy * 240) * kk;
               const t = Math.min(1, (z - NEAR) / (FAR - NEAR));
               return { x, y, k: kk, z, t, b: bucketFor(z, NEAR, FAR), r: p.r * kk * 1.1 + 0.4, hub: p.hub };
             });
@@ -163,11 +165,11 @@ export default function NetworkDepth({
         state.t += quieta ? 0.0007 : 0.0016;
         /* Quieta: la cámara casi no se mueve, el paralaje del cursor manda. */
         const yaw = quieta
-          ? Math.sin(state.t) * 0.03 + state.mx * 0.13
-          : Math.sin(state.t) * 0.16 + state.mx * 0.1;
+          ? Math.sin(state.t) * 0.03 + state.cx * 0.62
+          : Math.sin(state.t) * 0.16 + state.cx * 0.55;
         const pitch = quieta
-          ? Math.cos(state.t * 0.7) * 0.015 + state.my * 0.07
-          : Math.cos(state.t * 0.7) * 0.06 + state.my * 0.06;
+          ? Math.cos(state.t * 0.7) * 0.015 + state.cy * 0.34
+          : Math.cos(state.t * 0.7) * 0.06 + state.cy * 0.3;
         const cos = Math.cos(yaw), sin = Math.sin(yaw);
         const proj = pts.map((p) => {
           const zc = p.z + Math.sin(state.t * 8 * p.sp + p.ph) * 6;
@@ -177,7 +179,7 @@ export default function NetworkDepth({
           const kk = FOCAL / z;
           const t = (z - NEAR) / (FAR - NEAR);
           return {
-            x: w * cxScene + x0 * kk, y: h * 0.48 + y0 * kk, z, t,
+            x: w * cxScene + x0 * kk - state.cx * 42, y: h * 0.48 + y0 * kk - state.cy * 30, z, t,
             b: bucketFor(z, NEAR, FAR), r: p.r * kk * 0.9 + 0.5, hub: p.hub,
             /* Titileo por nodo: más marcado en la constelación. */
             tw: quieta
@@ -206,6 +208,10 @@ export default function NetworkDepth({
 
     /* ── Render ── */
     const draw = () => {
+      /* Suavizado del paralaje (lerp): la cámara "persigue" al cursor. */
+      state.cx += (state.mx - state.cx) * 0.07;
+      state.cy += (state.my - state.cy) * 0.07;
+
       for (const c of ctxs) {
         c!.clearRect(0, 0, w, h);
         c!.globalCompositeOperation = "lighter";
@@ -271,18 +277,22 @@ export default function NetworkDepth({
     ro.observe(wrap);
     resize();
 
-    /* ── Paralaje con el cursor (solo punteros finos) ── */
+    /* ── Paralaje con el cursor (solo punteros finos) ──
+       Se escucha en `window`, no en el contenedor: la capa del overlay es
+       `pointer-events-none` (para no robarle el hover al hero) y por eso nunca
+       recibía `pointermove`. Fuera del hero el objetivo vuelve a 0 y el lerp
+       lo devuelve suave al centro. */
     const fine = window.matchMedia("(pointer: fine)").matches;
     const onMove = (e: PointerEvent) => {
       const r = wrap.getBoundingClientRect();
-      state.mx = (e.clientX - r.left) / r.width - 0.5;
-      state.my = (e.clientY - r.top) / r.height - 0.5;
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      const dentro = Math.abs(px) <= 0.5 && Math.abs(py) <= 0.5;
+      state.mx = dentro ? px : 0;
+      state.my = dentro ? py : 0;
     };
-    const onLeave = () => { state.mx = 0; state.my = 0; };
-    const host = wrap.parentElement;
-    if (fine && !reduce && host) {
-      host.addEventListener("pointermove", onMove);
-      host.addEventListener("pointerleave", onLeave);
+    if (fine && !reduce) {
+      window.addEventListener("pointermove", onMove, { passive: true });
     }
 
     /* ── Bucle: solo mientras el hero está en pantalla ── */
@@ -308,10 +318,7 @@ export default function NetworkDepth({
       ro.disconnect();
       io.disconnect();
       if (raf != null) cancelAnimationFrame(raf);
-      if (host) {
-        host.removeEventListener("pointermove", onMove);
-        host.removeEventListener("pointerleave", onLeave);
-      }
+      window.removeEventListener("pointermove", onMove);
     };
   }, [variant, density, opacity]);
 

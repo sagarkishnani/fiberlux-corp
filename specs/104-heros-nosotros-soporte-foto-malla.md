@@ -68,7 +68,7 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 - [x] Nosotros usa la variante `malla` y Soporte la `constelacion`: no se repite la animación (una orbita y ocupa todo el hero; la otra está quieta, apiñada a la derecha y titila).
 - [x] En Soporte la malla se disuelve sobre la columna de texto en desktop; en mobile la máscara se retira (ahí el texto vive abajo).
 - [x] La malla tiene profundidad real: los nodos del fondo salen chicos, tenues y desenfocados; los del frente, nítidos y con halo.
-- [x] Con el cursor sobre el hero la escena responde con paralaje (solo en punteros finos).
+- [x] Al mover el cursor sobre el hero **cambia el punto de vista**: la cámara gira hasta ~35° de un extremo al otro y la nube se desplaza, con un lerp que lo hace fluido y devuelve la escena al centro al salir (solo en punteros finos).
 - [x] **60 fps o más** con el hero a la vista: medido 120 fps (tope del refresco) en desktop 1500px y en mobile 390px.
 - [x] Al salir el hero del viewport el bucle se detiene.
 - [x] Con `prefers-reduced-motion: reduce` se dibuja un solo frame y no queda `rAF` corriendo.
@@ -95,5 +95,6 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 | --- | --- |
 | La malla compite con el texto del hero | Vive entre la foto y el velo, así que el velo la atenúa justo sobre la columna de texto; además `opacity` es prop (0.85 y 0.8). |
 | Fotos nuevas cargadas en Tina con el sujeto a la izquierda | El campo lo documenta explícitamente; `focus`/`focusMobile` permiten recolocar el encuadre. |
+| El paralaje no se dispara porque la capa del overlay es `pointer-events-none` | El listener va en `window` y se calcula la posición contra el rect del contenedor. Fue un bug real de la primera versión: el hover no movía nada. |
 | Costo del canvas en equipos modestos | DPR capado, capas de fondo a menor resolución, ~55% de nodos bajo 768px, pausa fuera del viewport. |
 | `filter` de CSS sobre canvas no soportado | Degrada a capas sin desenfoque: se pierde la profundidad de campo, no el dibujo. |
