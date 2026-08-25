@@ -70,12 +70,10 @@ const iconFor = (key?: string | null): IconType => ICONS[key || ""] || LuZap;
 
 /** Palancas de animación del bloque (SPEC 103). */
 const PARAMS = {
-  /** Baraja: duración del reparto (sale una carta, entra la siguiente). */
-  dealMs: 560,
-  /** Desplazamiento lateral de la carta al salir/entrar del mazo, en px. */
-  dealX: 46,
-  /** Escala de la carta cuando está "en el mazo". */
-  dealScale: 0.955,
+  /** Barrido de luz: duración del scan que revela la nueva solución. */
+  scanMs: 560,
+  /** Retardo del pulso del ícono (cuando el barrido llega a la mitad visual). */
+  iconPulseDelayMs: 300,
   /** Retardo acumulado por chip de subservicio, en ms. */
   rowStaggerMs: 45,
   /** Indicador deslizante de la píldora activa, en ms. */
@@ -122,7 +120,7 @@ export default function SolucionesPanelReact({
         // La carta anterior se va al mazo mientras la nueva entra.
         setLeaving({ idx: prev, dir: d });
         if (leaveTimer.current != null) window.clearTimeout(leaveTimer.current);
-        leaveTimer.current = window.setTimeout(() => setLeaving(null), PARAMS.dealMs);
+        leaveTimer.current = window.setTimeout(() => setLeaving(null), PARAMS.scanMs);
         return target;
       });
     },
@@ -160,6 +158,19 @@ export default function SolucionesPanelReact({
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  /* Ancho del mazo: la barra de luz se desplaza por transform (GPU), así que
+     necesita el ancho en px. */
+  const deckRef = useRef<HTMLDivElement | null>(null);
+  const [deckW, setDeckW] = useState(0);
+  useEffect(() => {
+    const el = deckRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setDeckW(el.offsetWidth));
+    ro.observe(el);
+    setDeckW(el.offsetWidth);
+    return () => ro.disconnect();
   }, []);
 
   const tabsRef = useRef<HTMLDivElement | null>(null);
@@ -362,11 +373,13 @@ export default function SolucionesPanelReact({
         style={{
           touchAction: "pan-y",
           background: "linear-gradient(135deg, #24101F 0%, #180B15 55%, #120810 100%)",
-          ["--sol-deal-ms" as any]: `${PARAMS.dealMs}ms`,
-          ["--sol-deal-x" as any]: `${d >= 0 ? PARAMS.dealX : -PARAMS.dealX}px`,
-          ["--sol-deal-scale" as any]: String(PARAMS.dealScale),
+          ["--sol-scan-ms" as any]: `${PARAMS.scanMs}ms`,
         }}
-        className={`${leavingCard ? "sol-deal-out pointer-events-none absolute inset-0 z-20" : "sol-deal-in relative z-10"} overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]`}
+        className={`${
+          leavingCard
+            ? `sol-wipe ${d >= 0 ? "is-fwd" : "is-back"} pointer-events-none absolute inset-0 z-20`
+            : "relative z-10"
+        } overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]`}
       >
         <div className="grid lg:min-h-[620px] lg:grid-cols-[1.16fr_0.84fr]">
           {/* Columna izquierda */}
@@ -481,7 +494,10 @@ export default function SolucionesPanelReact({
                 </div>
 
                 {/* Tile del ícono. */}
-                <div className="relative flex h-[124px] w-[124px] items-center justify-center rounded-[34px] bg-gradient-to-b from-white to-[#EFD5E8] text-[46px] text-brand-purple-darkest shadow-[0_20px_50px_-14px_rgba(0,0,0,0.55)] md:h-[150px] md:w-[150px] md:rounded-[40px] md:text-[56px]">
+                <div
+                  className={`${leavingCard ? "" : "sol-icon-pulse"} relative flex h-[124px] w-[124px] items-center justify-center rounded-[34px] bg-gradient-to-b from-white to-[#EFD5E8] text-[46px] text-brand-purple-darkest shadow-[0_20px_50px_-14px_rgba(0,0,0,0.55)] md:h-[150px] md:w-[150px] md:rounded-[40px] md:text-[56px]`}
+                  style={{ ["--sol-pulse-delay" as any]: `${PARAMS.iconPulseDelayMs}ms` }}
+                >
                   <Icon aria-hidden="true" strokeWidth={1.9} />
                 </div>
               </div>
@@ -612,10 +628,21 @@ export default function SolucionesPanelReact({
             />
           </div>
 
-          {/* Mazo: la carta activa y, mientras dura el reparto, la que sale. */}
-          <div className="relative">
+          {/* Mazo: la carta activa y, mientras dura el barrido, la anterior
+              recortándose detrás de la línea de luz. */}
+          <div ref={deckRef} className="relative">
             {renderCard(idx, "in", dir)}
             {leaving && renderCard(leaving.idx, "out", leaving.dir)}
+            {leaving && deckW > 0 && (
+              <div
+                aria-hidden="true"
+                className={`sol-scan-bar ${leaving.dir >= 0 ? "is-fwd" : "is-back"}`}
+                style={{
+                  ["--sol-scan-ms" as any]: `${PARAMS.scanMs}ms`,
+                  ["--sol-scan-w" as any]: `${deckW}px`,
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -653,49 +680,110 @@ export default function SolucionesPanelReact({
           transition-property: transform, width, opacity;
           transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
         }
-        /* ── Baraja ──
-           La carta que sale se va hacia el mazo (lateral + atrás), la que entra
-           llega desde el mazo hasta el frente. El signo de --sol-deal-x da la
-           dirección del reparto. */
-        @keyframes sol-deal-out {
-          from { opacity: 1; transform: none; }
-          70% {
-            opacity: 1;
-            transform: translate3d(calc(var(--sol-deal-x, 46px) * 1.7), 16px, 0)
-                       scale(var(--sol-deal-scale, 0.955))
-                       rotate(1.4deg);
-          }
-          to {
-            opacity: 0;
-            transform: translate3d(calc(var(--sol-deal-x, 46px) * 2.2), 22px, 0)
-                       scale(calc(var(--sol-deal-scale, 0.955) - 0.02))
-                       rotate(1.8deg);
-          }
+        /* ── Barrido de luz (scan) ──
+           Una línea de luz cruza el mazo y va recortando la tarjeta anterior a
+           su paso, de modo que la nueva (que está debajo, quieta) queda
+           revelada detrás del barrido. is-fwd va de izquierda a derecha;
+           is-back (flecha de retroceso) al revés. */
+        @keyframes sol-wipe-fwd {
+          from { clip-path: inset(0 0 0 0); }
+          to   { clip-path: inset(0 0 0 100%); }
         }
-        .sol-deal-out {
-          animation: sol-deal-out var(--sol-deal-ms, 560ms) cubic-bezier(0.4, 0, 0.2, 1) both;
-          transform-origin: 100% 50%;
+        @keyframes sol-wipe-back {
+          from { clip-path: inset(0 0 0 0); }
+          to   { clip-path: inset(0 100% 0 0); }
         }
-        @keyframes sol-deal-in {
-          from {
-            /* Opaca desde el arranque: queda debajo de la que sale, así no se
-               ven los dos textos superpuestos. */
-            opacity: 1;
-            transform: translate3d(calc(var(--sol-deal-x, 46px) * 0.6), 10px, 0)
-                       scale(var(--sol-deal-scale, 0.955));
-          }
-          to { opacity: 1; transform: none; }
+        .sol-wipe.is-fwd {
+          animation: sol-wipe-fwd var(--sol-scan-ms, 560ms) cubic-bezier(0.42, 0.02, 0.35, 1) both;
         }
-        .sol-deal-in {
-          animation: sol-deal-in var(--sol-deal-ms, 560ms) cubic-bezier(0.16, 1, 0.3, 1) both;
-          transform-origin: 100% 50%;
+        .sol-wipe.is-back {
+          animation: sol-wipe-back var(--sol-scan-ms, 560ms) cubic-bezier(0.42, 0.02, 0.35, 1) both;
         }
+
+        .sol-scan-bar {
+          position: absolute;
+          top: -10px;
+          bottom: -10px;
+          left: 0;
+          z-index: 30;
+          width: 2px;
+          pointer-events: none;
+          border-radius: 2px;
+          background: linear-gradient(
+            to bottom,
+            rgba(243, 228, 239, 0) 0%,
+            #f3e4ef 14%,
+            #ffffff 50%,
+            #f3e4ef 86%,
+            rgba(243, 228, 239, 0) 100%
+          );
+          box-shadow:
+            0 0 22px 4px rgba(243, 228, 239, 0.85),
+            0 0 60px 16px rgba(150, 35, 122, 0.8);
+          will-change: transform, opacity;
+        }
+        /* Estela: banda magenta que arrastra la línea. */
+        .sol-scan-bar::before {
+          content: "";
+          position: absolute;
+          top: 10px;
+          bottom: 10px;
+          width: 140px;
+          pointer-events: none;
+        }
+        .sol-scan-bar.is-fwd::before {
+          right: 0;
+          background: linear-gradient(
+            90deg,
+            rgba(150, 35, 122, 0) 0%,
+            rgba(150, 35, 122, 0.28) 65%,
+            rgba(213, 167, 202, 0.32) 100%
+          );
+        }
+        .sol-scan-bar.is-back::before {
+          left: 0;
+          background: linear-gradient(
+            270deg,
+            rgba(150, 35, 122, 0) 0%,
+            rgba(150, 35, 122, 0.28) 65%,
+            rgba(213, 167, 202, 0.32) 100%
+          );
+        }
+        @keyframes sol-scan-fwd {
+          from { transform: translate3d(0, 0, 0); opacity: 0; }
+          12%  { opacity: 1; }
+          88%  { opacity: 1; }
+          to   { transform: translate3d(var(--sol-scan-w, 100%), 0, 0); opacity: 0; }
+        }
+        @keyframes sol-scan-back {
+          from { transform: translate3d(var(--sol-scan-w, 100%), 0, 0); opacity: 0; }
+          12%  { opacity: 1; }
+          88%  { opacity: 1; }
+          to   { transform: translate3d(0, 0, 0); opacity: 0; }
+        }
+        .sol-scan-bar.is-fwd {
+          animation: sol-scan-fwd var(--sol-scan-ms, 560ms) cubic-bezier(0.42, 0.02, 0.35, 1) both;
+        }
+        .sol-scan-bar.is-back {
+          animation: sol-scan-back var(--sol-scan-ms, 560ms) cubic-bezier(0.42, 0.02, 0.35, 1) both;
+        }
+
+        /* Pulso del ícono cuando el barrido llega a la mitad visual. */
+        @keyframes sol-icon-pulse {
+          0%   { transform: scale(1); box-shadow: 0 20px 50px -14px rgba(0, 0, 0, 0.55); }
+          45%  { transform: scale(1.055); box-shadow: 0 20px 50px -14px rgba(0, 0, 0, 0.55), 0 0 0 14px rgba(243, 228, 239, 0.14); }
+          100% { transform: scale(1); box-shadow: 0 20px 50px -14px rgba(0, 0, 0, 0.55), 0 0 0 30px rgba(243, 228, 239, 0); }
+        }
+        .sol-icon-pulse {
+          animation: sol-icon-pulse 560ms ease-out var(--sol-pulse-delay, 300ms) both;
+        }
+
         @keyframes sol-row-in {
           from { opacity: 0; transform: translate3d(14px, 0, 0); }
           to   { opacity: 1; transform: none; }
         }
         .sol-stagger .sol-row {
-          animation: sol-row-in 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation: sol-row-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         @keyframes sol-float {
           0%, 100% { transform: translate3d(0, calc(var(--sol-float-px, 10px) * -0.5), 0); }
@@ -711,13 +799,17 @@ export default function SolucionesPanelReact({
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
-          .sol-deal-in,
-          .sol-deal-out,
+          .sol-wipe,
+          .sol-scan-bar,
+          .sol-icon-pulse,
           .sol-stagger .sol-row,
           .sol-float {
             animation: none !important;
           }
-          .sol-deal-out { display: none !important; }
+          .sol-wipe,
+          .sol-scan-bar {
+            display: none !important;
+          }
           .sol-indicator { transition: none !important; }
           .sol-tilt {
             transition: none !important;
