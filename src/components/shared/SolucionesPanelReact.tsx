@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type {
   KeyboardEvent as ReactKeyboardEvent,
   PointerEvent as ReactPointerEvent,
@@ -63,6 +63,22 @@ const ICONS: Record<string, IconType> = {
 };
 const iconFor = (key?: string | null): IconType => ICONS[key || ""] || FaBolt;
 
+/** Palancas de animación del bloque (SPEC 103). */
+const PARAMS = {
+  /** Desplazamiento de entrada del texto, en px (signo = dirección del cambio). */
+  slideX: 30,
+  /** Duración del crossfade del texto y de la lista, en ms. */
+  textMs: 520,
+  /** Retardo acumulado por fila del checklist, en ms. */
+  rowStaggerMs: 45,
+  /** Entrada de la card visual: duración, escala inicial y blur inicial. */
+  cardMs: 640,
+  cardScaleFrom: 0.94,
+  cardBlurPx: 10,
+  /** Indicador deslizante de la píldora activa, en ms. */
+  indicatorMs: 480,
+};
+
 export default function SolucionesPanelReact({
   query,
   variables,
@@ -109,6 +125,36 @@ export default function SolucionesPanelReact({
     goTo(target, delta);
     tabRefs.current[target]?.focus();
   };
+
+  /* ── Indicador deslizante de la píldora activa ──
+     Se mide el tab activo (offsetLeft/offsetWidth relativos a la tira, que es
+     `relative`) y se anima el pill de fondo. Se re-mide en resize y cuando
+     cambian los items (fuentes/idioma). */
+  const tabsRef = useRef<HTMLDivElement | null>(null);
+  const [indicator, setIndicator] = useState({ x: 0, w: 0, ready: false });
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = tabRefs.current[Math.min(activeIndex, N - 1)];
+      if (!el) return;
+      setIndicator({ x: el.offsetLeft, w: el.offsetWidth, ready: true });
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [activeIndex, N, locale]);
+
+  /* Re-mide cuando el scroll horizontal de la tira cambia el layout (mobile). */
+  useEffect(() => {
+    const strip = tabsRef.current;
+    if (!strip) return;
+    const ro = new ResizeObserver(() => {
+      const el = tabRefs.current[Math.min(activeIndex, N - 1)];
+      if (el) setIndicator({ x: el.offsetLeft, w: el.offsetWidth, ready: true });
+    });
+    ro.observe(strip);
+    return () => ro.disconnect();
+  }, [activeIndex, N]);
 
   /* ── Arrastre horizontal ──
      Umbral por eje dominante: solo dispara si el gesto es más horizontal que
@@ -174,11 +220,23 @@ export default function SolucionesPanelReact({
         {/* ── Tira de píldoras de categoría ── */}
         <div className="mb-8 md:mb-10">
           <div
+            ref={tabsRef}
             role="tablist"
             aria-label={sectionTitle || "Soluciones"}
             onKeyDown={onTabsKeyDown}
-            className="flex gap-2.5 md:gap-3"
+            className="sol-tabs relative flex gap-2.5 md:gap-3"
           >
+            {/* Pill de fondo que se desliza a la píldora activa. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 left-0 rounded-full border border-brand-purple bg-brand-purple/20 sol-indicator"
+              style={{
+                transform: `translate3d(${indicator.x}px, 0, 0)`,
+                width: `${indicator.w}px`,
+                opacity: indicator.ready ? 1 : 0,
+                transitionDuration: `${PARAMS.indicatorMs}ms`,
+              }}
+            />
             {items.map((it, i) => {
               const Icon = iconFor(it?.tabIcon);
               const isActive = i === idx;
@@ -195,9 +253,9 @@ export default function SolucionesPanelReact({
                     tabRefs.current[i] = el;
                   }}
                   onClick={() => goTo(i)}
-                  className={`inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border px-5 py-3 text-[14px] font-medium transition-colors md:text-[15px] ${
+                  className={`relative z-10 inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border px-5 py-3 text-[14px] font-medium transition-colors md:text-[15px] ${
                     isActive
-                      ? "border-brand-purple bg-brand-purple/20 text-white"
+                      ? "border-transparent text-white"
                       : "border-white/[0.12] bg-white/[0.04] text-white/70 hover:border-white/25 hover:text-white"
                   }`}
                 >
@@ -237,8 +295,15 @@ export default function SolucionesPanelReact({
             className="rounded-[28px] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:p-10 lg:p-12"
           >
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-12">
-              {/* Columna izquierda */}
-              <div>
+              {/* Columna izquierda (crossfade + slide direccional al cambiar). */}
+              <div
+                key={`txt-${idx}`}
+                className="sol-enter"
+                style={{
+                  ["--sol-dx" as any]: `${dir >= 0 ? PARAMS.slideX : -PARAMS.slideX}px`,
+                  ["--sol-ms" as any]: `${PARAMS.textMs}ms`,
+                }}
+              >
                 <h2
                   className="text-[28px] font-semibold leading-[1.1] text-white md:text-[42px]"
                   data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
@@ -266,7 +331,7 @@ export default function SolucionesPanelReact({
 
                 {/* Checklist de subservicios (2 columnas en lg+). */}
                 {subservicios.length > 0 && (
-                  <ul className="mt-7 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                  <ul className="sol-stagger mt-7 grid gap-x-8 gap-y-4 sm:grid-cols-2">
                     {subservicios.map((sub, i) => {
                       const label = tField(sub as any, "label", locale);
                       const href = sub?.url ? withBase(sub.url) : null;
@@ -282,7 +347,11 @@ export default function SolucionesPanelReact({
                         </span>
                       );
                       return (
-                        <li key={i}>
+                        <li
+                          key={i}
+                          className="sol-row"
+                          style={{ animationDelay: `${i * PARAMS.rowStaggerMs}ms` }}
+                        >
                           {href ? (
                             <a href={href} className="group block outline-none">
                               {inner}
@@ -307,13 +376,17 @@ export default function SolucionesPanelReact({
                 )}
               </div>
 
-              {/* Columna derecha: card visual */}
+              {/* Columna derecha: card visual (entra con escala + blur). */}
               <div className="relative">
                 <div
-                  className="relative flex aspect-[4/5] max-h-[520px] w-full flex-col justify-between overflow-hidden rounded-[24px] p-7 md:p-9"
+                  key={`card-${idx}`}
+                  className="sol-card relative flex aspect-[4/5] max-h-[520px] w-full flex-col justify-between overflow-hidden rounded-[24px] p-7 md:p-9"
                   style={{
                     background:
                       "linear-gradient(150deg, #96237A 0%, #650F50 45%, #3B0E30 100%)",
+                    ["--sol-card-ms" as any]: `${PARAMS.cardMs}ms`,
+                    ["--sol-card-scale" as any]: String(PARAMS.cardScaleFrom),
+                    ["--sol-card-blur" as any]: `${PARAMS.cardBlurPx}px`,
                   }}
                 >
                   {/* Capas de cuadrados rotados. */}
@@ -358,6 +431,38 @@ export default function SolucionesPanelReact({
           </div>
         </div>
       </div>
+
+      <style>{`
+        .sol-indicator {
+          transition-property: transform, width, opacity;
+          transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes sol-enter-in {
+          from { opacity: 0; transform: translate3d(var(--sol-dx, 30px), 0, 0); }
+          to   { opacity: 1; transform: none; }
+        }
+        .sol-enter {
+          animation: sol-enter-in var(--sol-ms, 520ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes sol-row-in {
+          from { opacity: 0; transform: translate3d(var(--sol-dx, 30px), 0, 0); }
+          to   { opacity: 1; transform: none; }
+        }
+        .sol-stagger .sol-row {
+          animation: sol-row-in 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes sol-card-in {
+          from {
+            opacity: 0;
+            transform: scale(var(--sol-card-scale, 0.94));
+            filter: blur(var(--sol-card-blur, 10px));
+          }
+          to { opacity: 1; transform: none; filter: none; }
+        }
+        .sol-card {
+          animation: sol-card-in var(--sol-card-ms, 640ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+      `}</style>
     </section>
   );
 }
