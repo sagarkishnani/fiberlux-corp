@@ -77,6 +77,10 @@ const PARAMS = {
   cardBlurPx: 10,
   /** Indicador deslizante de la píldora activa, en ms. */
   indicatorMs: 480,
+  /** Vida propia de la card visual: flotación y tilt 3D con el cursor. */
+  floatMs: 7000,
+  floatPx: 10,
+  tiltMaxDeg: 7,
 };
 
 export default function SolucionesPanelReact({
@@ -130,6 +134,15 @@ export default function SolucionesPanelReact({
      Se mide el tab activo (offsetLeft/offsetWidth relativos a la tira, que es
      `relative`) y se anima el pill de fondo. Se re-mide en resize y cuando
      cambian los items (fuentes/idioma). */
+  const [reduceMotion, setReduceMotion] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setReduceMotion(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const [indicator, setIndicator] = useState({ x: 0, w: 0, ready: false });
 
@@ -155,6 +168,34 @@ export default function SolucionesPanelReact({
     ro.observe(strip);
     return () => ro.disconnect();
   }, [activeIndex, N]);
+
+  /* ── Tilt 3D de la card visual (solo punteros finos) ──
+     Se escribe la transform directamente sobre el nodo (sin re-render) y se
+     resetea al salir. La flotación va por CSS sobre el wrapper, para que tilt y
+     flotación no se pisen. */
+  const tiltRef = useRef<HTMLDivElement | null>(null);
+  const finePointer = useRef(false);
+
+  useEffect(() => {
+    finePointer.current =
+      typeof window !== "undefined" && window.matchMedia("(pointer: fine)").matches;
+  }, []);
+
+  const onCardMove = (e: ReactPointerEvent) => {
+    if (!finePointer.current || reduceMotion) return;
+    const el = tiltRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5; // [-0.5, 0.5]
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    const ry = (px * PARAMS.tiltMaxDeg * 2).toFixed(2);
+    const rx = (-py * PARAMS.tiltMaxDeg * 2).toFixed(2);
+    el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+  };
+  const onCardLeave = () => {
+    const el = tiltRef.current;
+    if (el) el.style.transform = "";
+  };
 
   /* ── Arrastre horizontal ──
      Umbral por eje dominante: solo dispara si el gesto es más horizontal que
@@ -376,54 +417,62 @@ export default function SolucionesPanelReact({
                 )}
               </div>
 
-              {/* Columna derecha: card visual (entra con escala + blur). */}
-              <div className="relative">
-                <div
-                  key={`card-${idx}`}
-                  className="sol-card relative flex aspect-[4/5] max-h-[520px] w-full flex-col justify-between overflow-hidden rounded-[24px] p-7 md:p-9"
-                  style={{
-                    background:
-                      "linear-gradient(150deg, #96237A 0%, #650F50 45%, #3B0E30 100%)",
-                    ["--sol-card-ms" as any]: `${PARAMS.cardMs}ms`,
-                    ["--sol-card-scale" as any]: String(PARAMS.cardScaleFrom),
-                    ["--sol-card-blur" as any]: `${PARAMS.cardBlurPx}px`,
-                  }}
-                >
-                  {/* Capas de cuadrados rotados. */}
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                    {[0, 1, 2, 3].map((k) => (
-                      <div
-                        key={k}
-                        className="absolute left-1/2 top-1/2 rounded-[26%] border border-white/10 bg-white/[0.06]"
-                        style={{
-                          width: `${52 + k * 9}%`,
-                          aspectRatio: "1",
-                          transform: `translate(-50%, -50%) rotate(${k * 13 - 20}deg)`,
-                        }}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Ícono grande. */}
-                  <div className="relative flex flex-1 items-center justify-center">
-                    <div className="flex h-[104px] w-[104px] items-center justify-center rounded-[26px] bg-white/90 text-[42px] text-brand-purple-darkest shadow-[0_18px_50px_-12px_rgba(0,0,0,0.55)] md:h-[124px] md:w-[124px] md:text-[50px]">
-                      <ActiveIcon aria-hidden="true" />
+              {/* Columna derecha: card visual (entra con escala + blur, flota y
+                  hace tilt 3D con el cursor). */}
+              <div
+                className="sol-float relative"
+                style={{ ["--sol-float-ms" as any]: `${PARAMS.floatMs}ms`, ["--sol-float-px" as any]: `${PARAMS.floatPx}px` }}
+                onPointerMove={onCardMove}
+                onPointerLeave={onCardLeave}
+              >
+                <div ref={tiltRef} className="sol-tilt">
+                  <div
+                    key={`card-${idx}`}
+                    className="sol-card relative flex aspect-[4/5] max-h-[520px] w-full flex-col justify-between overflow-hidden rounded-[24px] p-7 md:p-9"
+                    style={{
+                      background:
+                        "linear-gradient(150deg, #96237A 0%, #650F50 45%, #3B0E30 100%)",
+                      ["--sol-card-ms" as any]: `${PARAMS.cardMs}ms`,
+                      ["--sol-card-scale" as any]: String(PARAMS.cardScaleFrom),
+                      ["--sol-card-blur" as any]: `${PARAMS.cardBlurPx}px`,
+                    }}
+                  >
+                    {/* Capas de cuadrados rotados. */}
+                    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+                      {[0, 1, 2, 3].map((k) => (
+                        <div
+                          key={k}
+                          className="absolute left-1/2 top-1/2 rounded-[26%] border border-white/10 bg-white/[0.06]"
+                          style={{
+                            width: `${52 + k * 9}%`,
+                            aspectRatio: "1",
+                            transform: `translate(-50%, -50%) rotate(${k * 13 - 20}deg)`,
+                          }}
+                        />
+                      ))}
                     </div>
-                  </div>
 
-                  {/* Pie: eyebrow mono + nombre. */}
-                  <div className="relative text-center">
-                    {active?.eyebrow && (
-                      <p
-                        className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 md:text-xs"
-                        data-tina-field={activeTina ? tinaField(activeTina, "eyebrow") : undefined}
-                      >
-                        {tField(active as any, "eyebrow", locale)}
+                    {/* Ícono grande. */}
+                    <div className="relative flex flex-1 items-center justify-center">
+                      <div className="flex h-[104px] w-[104px] items-center justify-center rounded-[26px] bg-white/90 text-[42px] text-brand-purple-darkest shadow-[0_18px_50px_-12px_rgba(0,0,0,0.55)] md:h-[124px] md:w-[124px] md:text-[50px]">
+                        <ActiveIcon aria-hidden="true" />
+                      </div>
+                    </div>
+
+                    {/* Pie: eyebrow mono + nombre. */}
+                    <div className="relative text-center">
+                      {active?.eyebrow && (
+                        <p
+                          className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/70 md:text-xs"
+                          data-tina-field={activeTina ? tinaField(activeTina, "eyebrow") : undefined}
+                        >
+                          {tField(active as any, "eyebrow", locale)}
+                        </p>
+                      )}
+                      <p className="mt-2 text-[22px] font-semibold text-white md:text-[26px]">
+                        {tField(active as any, "title", locale)}
                       </p>
-                    )}
-                    <p className="mt-2 text-[22px] font-semibold text-white md:text-[26px]">
-                      {tField(active as any, "title", locale)}
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -461,6 +510,19 @@ export default function SolucionesPanelReact({
         }
         .sol-card {
           animation: sol-card-in var(--sol-card-ms, 640ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @keyframes sol-float {
+          0%, 100% { transform: translate3d(0, calc(var(--sol-float-px, 10px) * -0.5), 0); }
+          50%      { transform: translate3d(0, calc(var(--sol-float-px, 10px) * 0.5), 0); }
+        }
+        .sol-float {
+          animation: sol-float var(--sol-float-ms, 7000ms) ease-in-out infinite;
+          will-change: transform;
+        }
+        .sol-tilt {
+          transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+          transform-style: preserve-3d;
+          will-change: transform;
         }
       `}</style>
     </section>
