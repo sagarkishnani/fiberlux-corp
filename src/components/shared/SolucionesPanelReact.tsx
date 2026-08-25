@@ -1,5 +1,8 @@
 import { useCallback, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent } from "react";
+import type {
+  KeyboardEvent as ReactKeyboardEvent,
+  PointerEvent as ReactPointerEvent,
+} from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import {
   FaBolt,
@@ -107,6 +110,30 @@ export default function SolucionesPanelReact({
     tabRefs.current[target]?.focus();
   };
 
+  /* ── Arrastre horizontal ──
+     Umbral por eje dominante: solo dispara si el gesto es más horizontal que
+     vertical, para no competir con el scroll de la página en táctil
+     (`touch-action: pan-y` deja el scroll vertical al navegador). */
+  const drag = useRef({ x: 0, y: 0, active: false, fired: false });
+  const DRAG_THRESHOLD = 60;
+
+  const onPointerDown = (e: ReactPointerEvent) => {
+    drag.current = { x: e.clientX, y: e.clientY, active: true, fired: false };
+  };
+  const onPointerMove = (e: ReactPointerEvent) => {
+    const d = drag.current;
+    if (!d.active || d.fired) return;
+    const dx = e.clientX - d.x;
+    const dy = e.clientY - d.y;
+    if (Math.abs(dx) < DRAG_THRESHOLD || Math.abs(dx) <= Math.abs(dy)) return;
+    d.fired = true;
+    if (dx < 0) goNext();
+    else goPrev();
+  };
+  const onPointerUp = () => {
+    drag.current.active = false;
+  };
+
   if (N === 0) return null;
 
   const idx = Math.min(activeIndex, N - 1);
@@ -202,6 +229,11 @@ export default function SolucionesPanelReact({
             id="sol-panel"
             role="tabpanel"
             aria-labelledby={`sol-tab-${idx}`}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+            style={{ touchAction: "pan-y" }}
             className="rounded-[28px] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:p-10 lg:p-12"
           >
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-12">
