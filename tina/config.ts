@@ -254,13 +254,13 @@ export default defineConfig({
                     label: "Ícono (SVG o imagen)",
                     type: "image",
                   },
-                  // SPEC 103 — panel de soluciones (tabs + card visual).
+                  // SPEC 103 — panel de soluciones (chips + card en stack).
                   {
                     name: "tabIcon",
                     label: "Ícono de categoría",
                     type: "string",
                     description:
-                      "Ícono de la píldora y de la card visual en el bloque de soluciones.",
+                      "Ícono del chip de categoría y de la card visual en el bloque de soluciones.",
                     options: [
                       { value: "rayo", label: "Rayo / Conectividad" },
                       { value: "escudo", label: "Escudo / Seguridad" },
@@ -275,28 +275,13 @@ export default defineConfig({
                     ],
                   },
                   {
-                    name: "body",
-                    label: "Descripción larga",
+                    name: "tabLabel",
+                    label: "Nombre corto (chip)",
                     type: "string",
-                    ui: { component: "textarea" },
+                    description:
+                      "Nombre corto para el chip de categoría. Si se deja vacío se usa el título.",
                   },
-                  {
-                    name: "body_en",
-                    label: "Descripción larga (EN)",
-                    type: "string",
-                    ui: { component: "textarea" },
-                  },
-                  {
-                    name: "eyebrow",
-                    label: "Etiqueta de la card (mono)",
-                    type: "string",
-                    description: "Texto corto monoespaciado, ej. RED · NOC 24/7.",
-                  },
-                  {
-                    name: "eyebrow_en",
-                    label: "Etiqueta de la card (mono) (EN)",
-                    type: "string",
-                  },
+                  { name: "tabLabel_en", label: "Nombre corto (chip) (EN)", type: "string" },
                   {
                     name: "bullets",
                     label: "Subservicios",

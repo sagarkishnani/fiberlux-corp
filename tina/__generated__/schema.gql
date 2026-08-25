@@ -199,10 +199,8 @@ type HomeServicesItems {
   description_en: String
   icon: String
   tabIcon: String
-  body: String
-  body_en: String
-  eyebrow: String
-  eyebrow_en: String
+  tabLabel: String
+  tabLabel_en: String
   bullets: [HomeServicesItemsBullets]
   url: String
 }
@@ -348,10 +346,8 @@ input HomeServicesItemsFilter {
   description_en: StringFilter
   icon: ImageFilter
   tabIcon: StringFilter
-  body: StringFilter
-  body_en: StringFilter
-  eyebrow: StringFilter
-  eyebrow_en: StringFilter
+  tabLabel: StringFilter
+  tabLabel_en: StringFilter
   bullets: HomeServicesItemsBulletsFilter
   url: StringFilter
 }
@@ -2651,10 +2647,8 @@ input HomeServicesItemsMutation {
   description_en: String
   icon: String
   tabIcon: String
-  body: String
-  body_en: String
-  eyebrow: String
-  eyebrow_en: String
+  tabLabel: String
+  tabLabel_en: String
   bullets: [HomeServicesItemsBulletsMutation]
   url: String
 }

@@ -238,12 +238,12 @@ var config_default = defineConfig({
                     label: "\xCDcono (SVG o imagen)",
                     type: "image"
                   },
-                  // SPEC 103 — panel de soluciones (tabs + card visual).
+                  // SPEC 103 — panel de soluciones (chips + card en stack).
                   {
                     name: "tabIcon",
                     label: "\xCDcono de categor\xEDa",
                     type: "string",
-                    description: "\xCDcono de la p\xEDldora y de la card visual en el bloque de soluciones.",
+                    description: "\xCDcono del chip de categor\xEDa y de la card visual en el bloque de soluciones.",
                     options: [
                       { value: "rayo", label: "Rayo / Conectividad" },
                       { value: "escudo", label: "Escudo / Seguridad" },
@@ -258,28 +258,12 @@ var config_default = defineConfig({
                     ]
                   },
                   {
-                    name: "body",
-                    label: "Descripci\xF3n larga",
+                    name: "tabLabel",
+                    label: "Nombre corto (chip)",
                     type: "string",
-                    ui: { component: "textarea" }
+                    description: "Nombre corto para el chip de categor\xEDa. Si se deja vac\xEDo se usa el t\xEDtulo."
                   },
-                  {
-                    name: "body_en",
-                    label: "Descripci\xF3n larga (EN)",
-                    type: "string",
-                    ui: { component: "textarea" }
-                  },
-                  {
-                    name: "eyebrow",
-                    label: "Etiqueta de la card (mono)",
-                    type: "string",
-                    description: "Texto corto monoespaciado, ej. RED \xB7 NOC 24/7."
-                  },
-                  {
-                    name: "eyebrow_en",
-                    label: "Etiqueta de la card (mono) (EN)",
-                    type: "string"
-                  },
+                  { name: "tabLabel_en", label: "Nombre corto (chip) (EN)", type: "string" },
                   {
                     name: "bullets",
                     label: "Subservicios",
