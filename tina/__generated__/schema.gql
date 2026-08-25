@@ -228,6 +228,9 @@ type HomeTestimonials {
   visible: Boolean
   sectionTitle: String
   sectionTitle_en: String
+  ctaLabel: String
+  ctaLabel_en: String
+  ctaUrl: String
   items: [HomeTestimonialsItems]
 }
 
@@ -239,10 +242,20 @@ type HomeStatsItems {
   description_en: String
 }
 
+type HomeStatsClientLogos {
+  name: String
+  image: String
+}
+
 type HomeStats {
   title: String
   title_en: String
   items: [HomeStatsItems]
+  clientsHighlight: String
+  clientsHighlight_en: String
+  clientsNote: String
+  clientsNote_en: String
+  clientLogos: [HomeStatsClientLogos]
 }
 
 type HomeBlogPreview {
@@ -380,6 +393,9 @@ input HomeTestimonialsFilter {
   visible: BooleanFilter
   sectionTitle: StringFilter
   sectionTitle_en: StringFilter
+  ctaLabel: StringFilter
+  ctaLabel_en: StringFilter
+  ctaUrl: StringFilter
   items: HomeTestimonialsItemsFilter
 }
 
@@ -391,10 +407,20 @@ input HomeStatsItemsFilter {
   description_en: StringFilter
 }
 
+input HomeStatsClientLogosFilter {
+  name: StringFilter
+  image: ImageFilter
+}
+
 input HomeStatsFilter {
   title: StringFilter
   title_en: StringFilter
   items: HomeStatsItemsFilter
+  clientsHighlight: StringFilter
+  clientsHighlight_en: StringFilter
+  clientsNote: StringFilter
+  clientsNote_en: StringFilter
+  clientLogos: HomeStatsClientLogosFilter
 }
 
 input HomeBlogPreviewFilter {
@@ -2784,6 +2810,9 @@ input HomeTestimonialsMutation {
   visible: Boolean
   sectionTitle: String
   sectionTitle_en: String
+  ctaLabel: String
+  ctaLabel_en: String
+  ctaUrl: String
   items: [HomeTestimonialsItemsMutation]
 }
 
@@ -2795,10 +2824,20 @@ input HomeStatsItemsMutation {
   description_en: String
 }
 
+input HomeStatsClientLogosMutation {
+  name: String
+  image: String
+}
+
 input HomeStatsMutation {
   title: String
   title_en: String
   items: [HomeStatsItemsMutation]
+  clientsHighlight: String
+  clientsHighlight_en: String
+  clientsNote: String
+  clientsNote_en: String
+  clientLogos: [HomeStatsClientLogosMutation]
 }
 
 input HomeBlogPreviewMutation {

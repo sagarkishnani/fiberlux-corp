@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
 import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
 import SolucionesPanel from "../../components/shared/SolucionesPanel.astro";
-import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
+import EmpresasRed from "../../components/home/EmpresasRed.astro";
 ---
 
 <BaseLayout
@@ -16,10 +16,11 @@ import TestimonialSlider from "../../components/shared/TestimonialSlider.astro";
       <CanalesSoporte />
     </div>
     <SolucionesPanel />
-    {/* Fondo negro detrás del panel claro de testimonios: sus esquinas superiores
-        redondeadas dejan ver este fondo (aquí el <main> no es oscuro como en home). */}
+    {/* Fondo negro detrás del panel claro de cifras + testimonios: sus esquinas
+        superiores redondeadas dejan ver este fondo (aquí el <main> no es oscuro
+        como en home). */}
     <div class="-mt-2 relative z-25 bg-greyscale-darkest" data-reveal="up">
-      <TestimonialSlider />
+      <EmpresasRed />
     </div>
   </main>
 </BaseLayout>

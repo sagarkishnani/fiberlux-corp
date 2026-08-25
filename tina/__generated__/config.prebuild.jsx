@@ -459,6 +459,19 @@ var config_default = defineConfig({
               },
               { name: "sectionTitle_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
+                name: "ctaLabel",
+                label: "Bot\xF3n \u2014 texto",
+                type: "string",
+                description: 'Bot\xF3n bajo el slider (ej. "Ver casos de \xE9xito"). Vac\xEDo = sin bot\xF3n.'
+              },
+              { name: "ctaLabel_en", label: "Bot\xF3n \u2014 texto (EN)", type: "string" },
+              {
+                name: "ctaUrl",
+                label: "Bot\xF3n \u2014 URL",
+                type: "string",
+                description: "Ruta interna (ej. /casos-de-exito) o URL completa."
+              },
+              {
                 name: "items",
                 label: "Testimonios",
                 type: "object",
@@ -511,6 +524,33 @@ var config_default = defineConfig({
                   { name: "label_en", label: "Etiqueta superior (EN)", type: "string" },
                   { name: "description", label: "Descripci\xF3n", type: "string" },
                   { name: "description_en", label: "Descripci\xF3n (EN)", type: "string" }
+                ]
+              },
+              // ── Franja de clientes (home): logos + copy bajo las cifras ──
+              {
+                name: "clientsHighlight",
+                label: "Franja de clientes \u2014 destacado",
+                type: "string",
+                description: 'Texto en magenta de la franja de logos (ej. "+5,500 empresas").'
+              },
+              { name: "clientsHighlight_en", label: "Franja de clientes \u2014 destacado (EN)", type: "string" },
+              {
+                name: "clientsNote",
+                label: "Franja de clientes \u2014 texto",
+                type: "string",
+                description: 'Segunda l\xEDnea de la franja de logos (ej. "conf\xEDan en la red de Fiberlux").'
+              },
+              { name: "clientsNote_en", label: "Franja de clientes \u2014 texto (EN)", type: "string" },
+              {
+                name: "clientLogos",
+                label: "Franja de clientes \u2014 logos",
+                type: "object",
+                list: true,
+                description: "Logos de empresas clientes que se muestran junto a las cifras. M\xEDnimo 3.",
+                ui: { itemProps: (item) => ({ label: item?.name || "Logo" }) },
+                fields: [
+                  { name: "name", label: "Empresa", type: "string" },
+                  { name: "image", label: "Logo", type: "image" }
                 ]
               }
             ]

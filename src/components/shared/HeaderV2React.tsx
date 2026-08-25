@@ -604,9 +604,10 @@ export default function HeaderV2React({
               )}
               {topBar?.negociosLabel && (
                 <a
-                  href={topBar.negociosUrl || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  // Navegación normal en la misma pestaña (sin `target="_blank"`).
+                  // `hx` deja intactos los externos y localiza los internos, por si
+                  // el CMS pasa a apuntar a una ruta del propio sitio.
+                  href={hx(topBar.negociosUrl || "#")}
                   className={`text-[13px] font-medium ${controlText} opacity-80 hover:opacity-100 transition-opacity`}
                   data-tina-field={tinaField(topBar as any, "negociosLabel")}
                 >

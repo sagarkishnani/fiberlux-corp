@@ -240,7 +240,6 @@ export default function CertificacionesSliderReact({
           secciones vecinas (integración entre bloques). */}
       <div
         aria-hidden="true"
-        data-parallax="0.12"
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
           WebkitMaskImage:
@@ -249,16 +248,21 @@ export default function CertificacionesSliderReact({
             "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
         }}
       >
-        <img
-          src={GLOW_PLANET}
-          alt=""
-          draggable={false}
-          className="absolute -top-[30%] left-1/2 -translate-x-[38%] w-[92vw] max-w-[1100px] select-none opacity-70"
-          style={{
-            WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-            maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-          }}
-        />
+        {/* `data-parallax` va en un nodo SIN `style` propio: el script de fx
+            escribe `transform` aquí, y si React hubiera renderizado un style en
+            este mismo nodo compararía ambos al hidratar y abortaría la isla. */}
+        <div data-parallax="0.12" className="absolute inset-0">
+          <img
+            src={GLOW_PLANET}
+            alt=""
+            draggable={false}
+            className="absolute -top-[30%] left-1/2 -translate-x-[38%] w-[92vw] max-w-[1100px] select-none opacity-70"
+            style={{
+              WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+              maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
+            }}
+          />
+        </div>
       </div>
 
       <div className="relative z-10 site-container lg:flex lg:items-center lg:gap-16">

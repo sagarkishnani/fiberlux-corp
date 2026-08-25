@@ -4,12 +4,12 @@ import { client } from "../../../../tina/__generated__/client";
 import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro";
 import Beneficios from "../../../components/servicios/Beneficios.astro";
 import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
-import Stats from "../../../components/Stats.astro";
+import EmpresasRed from "../../../components/home/EmpresasRed.astro";
 import ServiciosForm from "../../../components/servicios/ServiciosForm.astro";
 import BlogPreview from "../../../components/blog/BlogPreview.astro";
 import FaqSubservicio from "../../../components/servicios/FaqSubservicio.astro";
 import HtmlInjection from "../../../components/shared/HtmlInjection.astro";
-import { getLocale, tField } from "../../../utils/i18n";
+import { getLocale } from "../../../utils/i18n";
 import { isLocale } from "../../../i18n/config";
 
 /* ── Static paths from all sub-service documents ── */
@@ -73,7 +73,7 @@ const metaDescription =
       <CasosDeUso relativePath={relativePath} />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
-      <Stats title={tField(sub as any, "whyUsTitle", locale) || undefined} />
+      <EmpresasRed />
     </div>
     <div data-reveal="up">
       <ServiciosForm prefill={{ servicio: subservicio ?? "" }} />

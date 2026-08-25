@@ -8,14 +8,30 @@
     "heroBgOpacity": 60,
     "cinematic": {
       "floatingTokens": [
-        { "text": "1 Gbps" },
-        { "text": "99.9%" },
-        { "text": "12 ms" },
-        { "text": "FTTH" },
-        { "text": "IPv6" },
-        { "text": "24/7" },
-        { "text": "SLA" },
-        { "text": "10G" }
+        {
+          "text": "1 Gbps"
+        },
+        {
+          "text": "99.9%"
+        },
+        {
+          "text": "12 ms"
+        },
+        {
+          "text": "FTTH"
+        },
+        {
+          "text": "IPv6"
+        },
+        {
+          "text": "24/7"
+        },
+        {
+          "text": "SLA"
+        },
+        {
+          "text": "10G"
+        }
       ]
     },
     "morph": {
@@ -74,14 +90,46 @@
         "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          { "label": "Internet Corporativo", "label_en": "Corporate Internet", "url": "/soluciones/conectividad-empresarial/internet-corporativo" },
-          { "label": "Internet Corporativo de alta disponibilidad", "label_en": "High-Availability Corporate Internet", "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad" },
-          { "label": "Conectividad satelital", "label_en": "Satellite Connectivity", "url": "/soluciones/conectividad-empresarial/conectividad-satelital" },
-          { "label": "Radioenlaces empresariales", "label_en": "Enterprise Radio Links", "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales" },
-          { "label": "Transmisión de datos (Lan To Lan)", "label_en": "Data Transmission (Lan To Lan)", "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l" },
-          { "label": "SD-WAN", "label_en": "SD-WAN", "url": "/soluciones/conectividad-empresarial/sd-wan" },
-          { "label": "Fibra Oscura", "label_en": "Dark Fiber", "url": "/soluciones/conectividad-empresarial/fibra-oscura" },
-          { "label": "Balanceo de enlaces", "label_en": "Link Balancing", "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces" }
+          {
+            "label": "Internet Corporativo",
+            "label_en": "Corporate Internet",
+            "url": "/soluciones/conectividad-empresarial/internet-corporativo"
+          },
+          {
+            "label": "Internet Corporativo de alta disponibilidad",
+            "label_en": "High-Availability Corporate Internet",
+            "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad"
+          },
+          {
+            "label": "Conectividad satelital",
+            "label_en": "Satellite Connectivity",
+            "url": "/soluciones/conectividad-empresarial/conectividad-satelital"
+          },
+          {
+            "label": "Radioenlaces empresariales",
+            "label_en": "Enterprise Radio Links",
+            "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales"
+          },
+          {
+            "label": "Transmisión de datos (Lan To Lan)",
+            "label_en": "Data Transmission (Lan To Lan)",
+            "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l"
+          },
+          {
+            "label": "SD-WAN",
+            "label_en": "SD-WAN",
+            "url": "/soluciones/conectividad-empresarial/sd-wan"
+          },
+          {
+            "label": "Fibra Oscura",
+            "label_en": "Dark Fiber",
+            "url": "/soluciones/conectividad-empresarial/fibra-oscura"
+          },
+          {
+            "label": "Balanceo de enlaces",
+            "label_en": "Link Balancing",
+            "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces"
+          }
         ],
         "url": "/soluciones/conectividad-empresarial",
         "tabIcon": "rayo",
@@ -94,19 +142,71 @@
         "description": "Protege tu operación crítica con ciberseguridad.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          { "label": "NGFW y Seguridad Perimetral", "label_en": "NGFW & Perimeter Security", "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral" },
-          { "label": "EDR / XDR / MDR", "label_en": "EDR / XDR / MDR", "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr" },
-          { "label": "MFA y Control de Identidad", "label_en": "MFA & Identity Control", "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad" },
-          { "label": "ZTNA y Control de Acceso Seguro", "label_en": "ZTNA & Secure Access Control", "url": "/soluciones/ciberseguridad-gestionada/ztna" },
-          { "label": "WAF y Protección de Aplicaciones", "label_en": "WAF & Application Protection", "url": "/soluciones/ciberseguridad-gestionada/waf" },
-          { "label": "Cyber SOC 24/7 y Monitoreo", "label_en": "Cyber SOC 24/7 & Monitoring", "url": "/soluciones/ciberseguridad-gestionada/soc-24-7" },
-          { "label": "VPN Segura y Acceso Remoto Protegido", "label_en": "Secure VPN & Protected Remote Access", "url": "/soluciones/ciberseguridad-gestionada/vpn-segura" },
-          { "label": "Seguridad de Correo y Filtrado Web", "label_en": "Email Security & Web Filtering", "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web" },
-          { "label": "NAC", "label_en": "NAC", "url": "/soluciones/ciberseguridad-gestionada/nac" },
-          { "label": "Anti-DDoS", "label_en": "Anti-DDoS", "url": "/soluciones/ciberseguridad-gestionada/anti-ddos" },
-          { "label": "Concientización en Phishing", "label_en": "Phishing Awareness", "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing" },
-          { "label": "Correlación de Eventos (SIEM)", "label_en": "Event Correlation (SIEM)", "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos" },
-          { "label": "Pentesting", "label_en": "Pentesting", "url": "/soluciones/ciberseguridad-gestionada/pentesting" }
+          {
+            "label": "NGFW y Seguridad Perimetral",
+            "label_en": "NGFW & Perimeter Security",
+            "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
+          },
+          {
+            "label": "EDR / XDR / MDR",
+            "label_en": "EDR / XDR / MDR",
+            "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr"
+          },
+          {
+            "label": "MFA y Control de Identidad",
+            "label_en": "MFA & Identity Control",
+            "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad"
+          },
+          {
+            "label": "ZTNA y Control de Acceso Seguro",
+            "label_en": "ZTNA & Secure Access Control",
+            "url": "/soluciones/ciberseguridad-gestionada/ztna"
+          },
+          {
+            "label": "WAF y Protección de Aplicaciones",
+            "label_en": "WAF & Application Protection",
+            "url": "/soluciones/ciberseguridad-gestionada/waf"
+          },
+          {
+            "label": "Cyber SOC 24/7 y Monitoreo",
+            "label_en": "Cyber SOC 24/7 & Monitoring",
+            "url": "/soluciones/ciberseguridad-gestionada/soc-24-7"
+          },
+          {
+            "label": "VPN Segura y Acceso Remoto Protegido",
+            "label_en": "Secure VPN & Protected Remote Access",
+            "url": "/soluciones/ciberseguridad-gestionada/vpn-segura"
+          },
+          {
+            "label": "Seguridad de Correo y Filtrado Web",
+            "label_en": "Email Security & Web Filtering",
+            "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
+          },
+          {
+            "label": "NAC",
+            "label_en": "NAC",
+            "url": "/soluciones/ciberseguridad-gestionada/nac"
+          },
+          {
+            "label": "Anti-DDoS",
+            "label_en": "Anti-DDoS",
+            "url": "/soluciones/ciberseguridad-gestionada/anti-ddos"
+          },
+          {
+            "label": "Concientización en Phishing",
+            "label_en": "Phishing Awareness",
+            "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing"
+          },
+          {
+            "label": "Correlación de Eventos (SIEM)",
+            "label_en": "Event Correlation (SIEM)",
+            "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos"
+          },
+          {
+            "label": "Pentesting",
+            "label_en": "Pentesting",
+            "url": "/soluciones/ciberseguridad-gestionada/pentesting"
+          }
         ],
         "url": "/soluciones/ciberseguridad-gestionada",
         "tabIcon": "escudo",
@@ -119,12 +219,36 @@
         "description": "Infraestructura lista para crecer y recuperarse",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          { "label": "Housing y colocación", "label_en": "Housing & Colocation", "url": "/soluciones/data-center-cloud/housing-colocacion" },
-          { "label": "Nube Pública y Privada", "label_en": "Public & Private Cloud", "url": "/soluciones/data-center-cloud/nube-publica" },
-          { "label": "Backup as a Service (BaaS)", "label_en": "Backup as a Service (BaaS)", "url": "/soluciones/data-center-cloud/baas" },
-          { "label": "Disaster Recovery (DRaaS)", "label_en": "Disaster Recovery (DRaaS)", "url": "/soluciones/data-center-cloud/draas" },
-          { "label": "Storage y Cómputo Empresarial", "label_en": "Enterprise Storage & Compute", "url": "/soluciones/data-center-cloud/storage-computo" },
-          { "label": "Arquitectura basada en Microservicios", "label_en": "Microservices-based Architecture", "url": "/soluciones/data-center-cloud/microservicios" }
+          {
+            "label": "Housing y colocación",
+            "label_en": "Housing & Colocation",
+            "url": "/soluciones/data-center-cloud/housing-colocacion"
+          },
+          {
+            "label": "Nube Pública y Privada",
+            "label_en": "Public & Private Cloud",
+            "url": "/soluciones/data-center-cloud/nube-publica"
+          },
+          {
+            "label": "Backup as a Service (BaaS)",
+            "label_en": "Backup as a Service (BaaS)",
+            "url": "/soluciones/data-center-cloud/baas"
+          },
+          {
+            "label": "Disaster Recovery (DRaaS)",
+            "label_en": "Disaster Recovery (DRaaS)",
+            "url": "/soluciones/data-center-cloud/draas"
+          },
+          {
+            "label": "Storage y Cómputo Empresarial",
+            "label_en": "Enterprise Storage & Compute",
+            "url": "/soluciones/data-center-cloud/storage-computo"
+          },
+          {
+            "label": "Arquitectura basada en Microservicios",
+            "label_en": "Microservices-based Architecture",
+            "url": "/soluciones/data-center-cloud/microservicios"
+          }
         ],
         "url": "/soluciones/data-center-cloud",
         "tabIcon": "nube",
@@ -137,13 +261,41 @@
         "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
         "icon": "/images/soluciones/onda-magenta.svg",
         "bullets": [
-          { "label": "Mesa de ayuda", "label_en": "Help Desk", "url": "/soluciones/servicios-gestionados/mesa-de-ayuda" },
-          { "label": "Comunicaciones Unificadas", "label_en": "Unified Communications", "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas" },
-          { "label": "Gestión de Redes LAN", "label_en": "LAN Network Management", "url": "/soluciones/servicios-gestionados/gestion-redes-lan" },
-          { "label": "Wifi Gestionado", "label_en": "Managed WiFi", "url": "/soluciones/servicios-gestionados/wifi-gestionado" },
-          { "label": "Gestión de Endpoints", "label_en": "Endpoint Management", "url": "/soluciones/servicios-gestionados/gestion-endpoints" },
-          { "label": "Videovigilancia gestionada", "label_en": "Managed Video Surveillance", "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada" },
-          { "label": "Colaboración Empresarial", "label_en": "Enterprise Collaboration", "url": "/soluciones/servicios-gestionados/colaboracion-empresarial" }
+          {
+            "label": "Mesa de ayuda",
+            "label_en": "Help Desk",
+            "url": "/soluciones/servicios-gestionados/mesa-de-ayuda"
+          },
+          {
+            "label": "Comunicaciones Unificadas",
+            "label_en": "Unified Communications",
+            "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas"
+          },
+          {
+            "label": "Gestión de Redes LAN",
+            "label_en": "LAN Network Management",
+            "url": "/soluciones/servicios-gestionados/gestion-redes-lan"
+          },
+          {
+            "label": "Wifi Gestionado",
+            "label_en": "Managed WiFi",
+            "url": "/soluciones/servicios-gestionados/wifi-gestionado"
+          },
+          {
+            "label": "Gestión de Endpoints",
+            "label_en": "Endpoint Management",
+            "url": "/soluciones/servicios-gestionados/gestion-endpoints"
+          },
+          {
+            "label": "Videovigilancia gestionada",
+            "label_en": "Managed Video Surveillance",
+            "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada"
+          },
+          {
+            "label": "Colaboración Empresarial",
+            "label_en": "Enterprise Collaboration",
+            "url": "/soluciones/servicios-gestionados/colaboracion-empresarial"
+          }
         ],
         "url": "/soluciones/servicios-gestionados",
         "tabIcon": "personas",
@@ -194,7 +346,10 @@
         "description_en": "Response times improved notably, delivering efficiency between our headquarters and the Huachipa plant."
       }
     ],
-    "sectionTitle_en": "Companies that trust our network"
+    "sectionTitle_en": "Companies that trust our network",
+    "ctaLabel": "Ver casos de éxito",
+    "ctaLabel_en": "View success stories",
+    "ctaUrl": "/casos-de-exito"
   },
   "stats": {
     "title": "¿Por qué Fiberlux?",
@@ -228,7 +383,25 @@
         "description_en": "state-of-the-art private fiber-optic network"
       }
     ],
-    "title_en": "Why Fiberlux?"
+    "title_en": "Why Fiberlux?",
+    "clientsHighlight": "+5,500 empresas",
+    "clientsHighlight_en": "+5,500 companies",
+    "clientsNote": "confían en la red de Fiberlux",
+    "clientsNote_en": "trust the Fiberlux network",
+    "clientLogos": [
+      {
+        "name": "Boticas Hogar y Salud",
+        "image": "images/testimonials/logo-boticas-y-hogar-salud.png"
+      },
+      {
+        "name": "Cámara de Comercio e Industria de Arequipa",
+        "image": "images/testimonials/logo-camara-de-comercio-arequipa.png"
+      },
+      {
+        "name": "Grupo Gloria",
+        "image": "images/testimonials/logo-grupo-gloria.svg"
+      }
+    ]
   },
   "blogPreview": {
     "title": "Insights & Novedades",

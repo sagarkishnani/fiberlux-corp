@@ -68,6 +68,9 @@ fragment HomeParts on Home {
     visible
     sectionTitle
     sectionTitle_en
+    ctaLabel
+    ctaLabel_en
+    ctaUrl
     items {
       __typename
       quote
@@ -93,6 +96,15 @@ fragment HomeParts on Home {
       label_en
       description
       description_en
+    }
+    clientsHighlight
+    clientsHighlight_en
+    clientsNote
+    clientsNote_en
+    clientLogos {
+      __typename
+      name
+      image
     }
   }
   blogPreview {

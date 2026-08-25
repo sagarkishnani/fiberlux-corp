@@ -8,12 +8,13 @@
  * HTML; el parallax no se aplica).
  */
 import { animate, inView, scroll } from "motion";
+import { whenHydrated } from "./whenHydrated";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ── Count-up ── */
 function initCountUp() {
-  document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => {
+  document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => whenHydrated(el, (el) => {
     const raw = (el.textContent || "").trim();
     // prefijo (no dígito) + número (dígitos . ,) + sufijo (resto)
     const m = raw.match(/^([^\d-]*)(-?[\d.,]+)(.*)$/s);
@@ -47,19 +48,21 @@ function initCountUp() {
       },
       { amount: 0.4 }
     );
-  });
+  }));
 }
 
 /* ── Parallax ── */
 function initParallax() {
-  document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
-    const factor = Number(el.dataset.parallax || 0.15);
-    const r = factor * 100; // px de desplazamiento a cada lado
-    scroll(
-      animate(el, { y: [-r, r] } as any, { ease: "linear" }),
-      { target: el, offset: ["start end", "end start"] }
-    );
-  });
+  document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) =>
+    whenHydrated(el, (el) => {
+      const factor = Number(el.dataset.parallax || 0.15);
+      const r = factor * 100; // px de desplazamiento a cada lado
+      scroll(
+        animate(el, { y: [-r, r] } as any, { ease: "linear" }),
+        { target: el, offset: ["start end", "end start"] }
+      );
+    })
+  );
 }
 
 function init() {

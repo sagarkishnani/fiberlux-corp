@@ -1,0 +1,26 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import EmpresasRedReact from './EmpresasRedReact.tsx';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
+
+// Bloque unificado del home: cifras ("¿Por qué Fiberlux?") + testimonios.
+// Reusa la config de slider de `global.sliders.testimonios` (misma sección).
+const homeQuery = await client.queries.home({ relativePath: 'index.json' });
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+const cfg = (globalQuery.data?.global as any)?.sliders?.testimonios ?? {};
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+---
+
+<!-- effect="none": con 3 tarjetas a la vista, el fade por distancia al snap
+     apagaría las laterales. El destacado va por color, no por opacidad. -->
+<EmpresasRedReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+  locale={locale}
+  autoplay={cfg.autoplay ?? true}
+  intervalMs={cfg.intervalMs ?? 5000}
+  effect="none"
+/>

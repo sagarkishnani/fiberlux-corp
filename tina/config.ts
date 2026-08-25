@@ -501,6 +501,19 @@ export default defineConfig({
               },
               { name: "sectionTitle_en", label: "Título de sección (EN)", type: "string" },
               {
+                name: "ctaLabel",
+                label: "Botón — texto",
+                type: "string",
+                description: "Botón bajo el slider (ej. \"Ver casos de éxito\"). Vacío = sin botón.",
+              },
+              { name: "ctaLabel_en", label: "Botón — texto (EN)", type: "string" },
+              {
+                name: "ctaUrl",
+                label: "Botón — URL",
+                type: "string",
+                description: "Ruta interna (ej. /casos-de-exito) o URL completa.",
+              },
+              {
                 name: "items",
                 label: "Testimonios",
                 type: "object",
@@ -554,6 +567,34 @@ export default defineConfig({
                   { name: "label_en", label: "Etiqueta superior (EN)", type: "string" },
                   { name: "description", label: "Descripción", type: "string" },
                   { name: "description_en", label: "Descripción (EN)", type: "string" },
+                ],
+              },
+
+              // ── Franja de clientes (home): logos + copy bajo las cifras ──
+              {
+                name: "clientsHighlight",
+                label: "Franja de clientes — destacado",
+                type: "string",
+                description: "Texto en magenta de la franja de logos (ej. \"+5,500 empresas\").",
+              },
+              { name: "clientsHighlight_en", label: "Franja de clientes — destacado (EN)", type: "string" },
+              {
+                name: "clientsNote",
+                label: "Franja de clientes — texto",
+                type: "string",
+                description: "Segunda línea de la franja de logos (ej. \"confían en la red de Fiberlux\").",
+              },
+              { name: "clientsNote_en", label: "Franja de clientes — texto (EN)", type: "string" },
+              {
+                name: "clientLogos",
+                label: "Franja de clientes — logos",
+                type: "object",
+                list: true,
+                description: "Logos de empresas clientes que se muestran junto a las cifras. Mínimo 3.",
+                ui: { itemProps: (item) => ({ label: item?.name || "Logo" }) },
+                fields: [
+                  { name: "name", label: "Empresa", type: "string" },
+                  { name: "image", label: "Logo", type: "image" },
                 ],
               },
             ],

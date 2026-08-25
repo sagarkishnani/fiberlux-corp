@@ -344,7 +344,13 @@ export default function SolucionesPanelReact({
   const prevLabel = locale === "en" ? "Previous solution" : "Solución anterior";
   const nextLabel = locale === "en" ? "Next solution" : "Solución siguiente";
   const tooltipLabel = locale === "en" ? "See more" : "Ver más";
+  const moreLabel = locale === "en" ? "more" : "más";
 
+
+  /** Chips de subservicio visibles en mobile; el resto se resume en "+N más". */
+  const MOBILE_SUBS = 4;
+  const CHIP_CLASS =
+    "inline-flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-[#2A1024]/70 px-5 py-2.5 text-[14px] leading-[1.35] text-white/85 transition-colors";
 
   /* Una carta del mazo. `state` decide la animación: "in" (entra desde el mazo)
      o "out" (sale hacia el mazo); la saliente se pinta absoluta encima y sin
@@ -418,18 +424,19 @@ export default function SolucionesPanelReact({
                       {label}
                     </>
                   );
-                  const chipClass =
-                    "inline-flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-[#2A1024]/70 px-5 py-2.5 text-[14px] leading-[1.35] text-white/85 transition-colors";
                   return (
                     <li
                       key={k}
-                      className="sol-row"
+                      // En mobile sólo entran los primeros chips: con 13
+                      // subservicios la carta se volvía larguísima. El resto se
+                      // resume en el chip "+N más" de abajo.
+                      className={k >= MOBILE_SUBS ? "sol-row hidden md:block" : "sol-row"}
                       style={{ animationDelay: `${k * PARAMS.rowStaggerMs}ms` }}
                     >
                       {href && !leavingCard ? (
                         <a
                           href={href}
-                          className={`${chipClass} outline-none hover:border-brand-purple-light/40 hover:bg-[#3A1531]/80 hover:text-white focus-visible:border-brand-purple-light/60`}
+                          className={`${CHIP_CLASS} outline-none hover:border-brand-purple-light/40 hover:bg-[#3A1531]/80 hover:text-white focus-visible:border-brand-purple-light/60`}
                           onMouseEnter={handleTipEnter}
                           onMouseMove={handleTipMove}
                           onMouseLeave={handleTipLeave}
@@ -437,11 +444,30 @@ export default function SolucionesPanelReact({
                           {chip}
                         </a>
                       ) : (
-                        <span className={`${chipClass} cursor-default`}>{chip}</span>
+                        <span className={`${CHIP_CLASS} cursor-default`}>{chip}</span>
                       )}
                     </li>
                   );
                 })}
+
+                {/* Resumen de los subservicios ocultos en mobile → lleva a la
+                    página de la solución, donde están todos. */}
+                {subs.length > MOBILE_SUBS && (
+                  <li className="sol-row md:hidden" style={{ animationDelay: `${MOBILE_SUBS * PARAMS.rowStaggerMs}ms` }}>
+                    {it?.url && !leavingCard ? (
+                      <a
+                        href={withBase(it.url)}
+                        className={`${CHIP_CLASS} border-brand-purple-light/30 text-brand-purple-light hover:border-brand-purple-light/60 hover:text-white`}
+                      >
+                        {`+${subs.length - MOBILE_SUBS} ${moreLabel}`}
+                      </a>
+                    ) : (
+                      <span className={`${CHIP_CLASS} cursor-default text-brand-purple-light`}>
+                        {`+${subs.length - MOBILE_SUBS} ${moreLabel}`}
+                      </span>
+                    )}
+                  </li>
+                )}
               </ul>
             )}
 

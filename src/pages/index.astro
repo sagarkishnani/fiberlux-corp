@@ -1,13 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HeroHome from "../components/home/HeroHome.astro";
-import Stats from "../components/Stats.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
 // StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
 // por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
 // import StickyCards from "../components/shared/StickyCards.astro";
 import SolucionesPanel from "../components/shared/SolucionesPanel.astro";
-import TestimonialSlider from "../components/shared/TestimonialSlider.astro";
+import EmpresasRed from "../components/home/EmpresasRed.astro";
 import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
 import BannerApp from "../components/fiberlux-app/BannerApp.astro";
@@ -75,17 +74,14 @@ const prefetchScenes = [
       {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) */}
       <SolucionesPanel />
     </div>
-    {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos, y el
-        panel claro de Testimonios pegado a "Por qué Fiberlux" (Stats, magenta),
-        para no encajonar el rosa entre dos secciones oscuras. */}
+    {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos y
+        luego el panel claro. Cifras y testimonios van en un solo bloque
+        (`EmpresasRed`), antes eran dos secciones seguidas. */}
     <div class="relative z-20" data-reveal="up">
       <HomePartners />
     </div>
-    <div class="-mt-2 relative z-25" data-reveal="up">
-      <TestimonialSlider />
-    </div>
     <div class="-mt-2 relative z-30" data-reveal="up">
-      <Stats frameTheme="light" />
+      <EmpresasRed />
     </div>
     <div class="relative z-20" data-reveal="up">
       <CertificacionesSlider />

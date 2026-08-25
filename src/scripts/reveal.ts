@@ -16,6 +16,7 @@
  * Anti-FOUC: el estado oculto lo pone el CSS gated por `.reveal-js` (solo con JS).
  */
 import { animate, inView, scroll } from "motion";
+import { whenHydrated } from "./whenHydrated";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const DEFAULT_DURATION = 1;
@@ -91,7 +92,7 @@ function initScrub() {
   // chico), así el contenido está a plena opacidad casi todo el paso.
   const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
   const times = mobile ? [0, 0.12, 0.88, 1] : [0, 0.25, 0.65, 1];
-  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => {
+  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => whenHydrated(el, (el) => {
     if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
     // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
@@ -108,12 +109,12 @@ function initScrub() {
       animate(el, kf as any, { times, ease: "linear" }),
       { target: el, offset: ["start end", "end start"] }
     );
-  });
+  }));
 }
 
 function initReveal() {
   const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
-  document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+  document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => whenHydrated(el, (el) => {
     if (el.dataset.revealScrub != null) return; // lo maneja initScrub
     if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
@@ -147,11 +148,11 @@ function initReveal() {
       };
     };
     stop = inView(el, onEnter, { amount: 0.2 });
-  });
+  }));
 }
 
 function initSvgDraw() {
-  document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => {
+  document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => whenHydrated(svg, (svg) => {
     const dur = Number(svg.dataset.drawDuration || 1.2);
     const shapes: SVGGeometryElement[] = [];
     svg.querySelectorAll<SVGGeometryElement>("path, line, polyline, polygon, circle, ellipse, rect").forEach((s) => {
@@ -173,7 +174,7 @@ function initSvgDraw() {
       },
       { amount: 0.2 }
     );
-  });
+  }));
 }
 
 function init() {

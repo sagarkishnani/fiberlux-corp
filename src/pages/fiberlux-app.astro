@@ -4,9 +4,9 @@ import { client } from "../../tina/__generated__/client";
 import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
 import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
 import VideoShowcaseApp from "../components/fiberlux-app/VideoShowcaseApp.astro";
-import Stats from "../components/Stats.astro";
+import EmpresasRed from "../components/home/EmpresasRed.astro";
 import BlogPreview from "../components/blog/BlogPreview.astro";
-import { getLocale, tField } from "../utils/i18n";
+import { getLocale } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
@@ -41,7 +41,7 @@ const metaDescription =
       <VideoShowcaseApp />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
-      <Stats title={tField(app as any, "whyUsTitle", locale) || undefined} />
+      <EmpresasRed />
     </div>
     <div class="-mt-16 relative z-20" data-reveal="up">
       <BlogPreview />

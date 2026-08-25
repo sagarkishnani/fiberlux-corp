@@ -58,13 +58,22 @@ const RING_CHAR_ADV = RING_FONT * 0.6 + RING_TRACKING;
 const RING_PATH = `M 120,${120 - RING_R} a ${RING_R},${RING_R} 0 1,1 0,${RING_R * 2} a ${RING_R},${RING_R} 0 1,1 0,-${RING_R * 2}`;
 
 /** Los 12 ticks radiales, entre r=104 y r=110. */
+/**
+ * Coordenadas redondeadas a 3 decimales A PROPÓSITO: `Math.sin`/`Math.cos` no
+ * están obligados a devolver el mismo último bit en Node (SSR) y en el motor del
+ * navegador, así que el HTML del servidor traía `29.933358006418402` y el
+ * cliente calculaba `29.933358006418416` → React abortaba la hidratación de toda
+ * la isla. A 3 decimales sobre un `viewBox` de 240 el redondeo es invisible.
+ */
+const round3 = (n: number) => Math.round(n * 1000) / 1000;
+
 const TICKS = Array.from({ length: 12 }, (_, i) => {
   const a = ((i * 30 - 90) * Math.PI) / 180;
   return {
-    x1: 120 + 104 * Math.cos(a),
-    y1: 120 + 104 * Math.sin(a),
-    x2: 120 + 110 * Math.cos(a),
-    y2: 120 + 110 * Math.sin(a),
+    x1: round3(120 + 104 * Math.cos(a)),
+    y1: round3(120 + 104 * Math.sin(a)),
+    x2: round3(120 + 110 * Math.cos(a)),
+    y2: round3(120 + 110 * Math.sin(a)),
   };
 });
 

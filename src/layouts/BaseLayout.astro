@@ -115,7 +115,9 @@ const whatsappMessage = whatsappContext
   : whatsappBaseMessage;
 
 // ─── Burbuja de WhatsApp por página (home / contacto / solución) ───
-// Solo aparece en esas páginas; el visitante la puede cerrar (sessionStorage).
+// Solo aparece en esas páginas. El contexto viaja como `bubbleKey`: la memoria
+// de sesión del componente es por mensaje (y con tope de apariciones), así que
+// cerrarla en Home no silencia la de Contacto.
 const waPath = Astro.url.pathname;
 let bubbleCtx: "home" | "contacto" | "solucion" | null = null;
 if (isHome || /\/en\/?$/.test(waPath)) bubbleCtx = "home";
@@ -388,6 +390,7 @@ const whatsappBubbleMessage =
             phone={whatsappPhone}
             message={whatsappMessage}
             bubbleMessage={whatsappBubbleMessage}
+            bubbleKey={bubbleCtx ?? "global"}
           />
           <AccessibilityPanel client:idle locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina

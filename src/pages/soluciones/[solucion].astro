@@ -5,12 +5,12 @@ import HeroSolucion from "../../components/servicios/HeroSolucion.astro";
 import ValorSolucion from "../../components/servicios/ValorSolucion.astro";
 import ServicePartners from "../../components/shared/ServicePartners.astro";
 import CatalogoSoluciones from "../../components/servicios/CatalogoSoluciones.astro";
-import Stats from "../../components/Stats.astro";
+import EmpresasRed from "../../components/home/EmpresasRed.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 import BlogPreview from "../../components/blog/BlogPreview.astro";
 import FaqSolucion from "../../components/servicios/FaqSolucion.astro";
 import HtmlInjection from "../../components/shared/HtmlInjection.astro";
-import { getLocale, tField } from "../../utils/i18n";
+import { getLocale } from "../../utils/i18n";
 import { isLocale } from "../../i18n/config";
 
 /* ── Static paths from all solution documents ── */
@@ -70,7 +70,7 @@ const metaDescription =
     </div>
     <CatalogoSoluciones relativePath={relativePath} />
     <div class="-mt-16 relative z-20" data-reveal="up">
-      <Stats title={tField(service as any, "whyUsTitle", locale) || undefined} />
+      <EmpresasRed />
     </div>
     <div data-reveal="up">
       <ServiciosForm />
