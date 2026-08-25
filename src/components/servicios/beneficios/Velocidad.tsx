@@ -125,7 +125,9 @@ export default function Velocidad({ datos, activo, locale }: PropsIlustracion) {
                 width={CARTA.w}
                 height={CARTA.h}
                 rx="15"
-                fill={C.panel}
+                /* Opaco a propósito: la tarjeta de delante tiene que tapar a la
+                   de atrás, que es lo que hace legible la pila. */
+                fill={C.panelSolido}
                 stroke={C.panelBorde}
                 strokeWidth="1.2"
                 filter="url(#ben-vel-sombra)"

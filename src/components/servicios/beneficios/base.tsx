@@ -85,6 +85,10 @@ export const C = {
   panel: "rgba(255,255,255,0.06)",
   /** Borde de esas tarjetas. */
   panelBorde: "rgba(255,255,255,0.14)",
+  /** Relleno OPACO, para lo que tiene que tapar lo que hay detrás. `panel` es
+      translúcido: en una pila de tarjetas dejaba ver la de atrás a través de la
+      de delante y los dos textos se montaban. */
+  panelSolido: "#171317",
 };
 
 /**
