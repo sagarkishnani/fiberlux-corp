@@ -3,7 +3,7 @@
 > **Estado:** Implementado
 > **Depende de:** SPEC 101 (hero Nosotros con candado orbital, reemplazado), SPEC 102 (hero Soporte con hub de nodos, reemplazado), SPEC 80 (i18n `_en` + `tField`), SPEC 21 (contenedor global)
 > **Fecha:** 2026-08-25
-> **Objetivo:** Rehacer los heroes de `/nosotros` y `/soporte-tecnico` como fotografía a sangre con velo direccional y una malla de red en perspectiva 3D encima, distinta en cada página, legible en mobile y sin costo de rendimiento.
+> **Objetivo:** Rehacer los heroes de `/nosotros` y `/soporte-tecnico` como fotografía a sangre con velo direccional y una malla de red en perspectiva 3D encima, distinta en cada página, y llevar esa misma malla a los heroes de las 4 categorías de solución — todo legible en mobile y sin costo de rendimiento.
 
 ---
 
@@ -23,6 +23,7 @@ Sobre la animación, la primera tanda de propuestas (plexus 2D, hebras, radar, c
   - `constelacion` → réplica de la referencia del cliente: malla densa (300 nodos) **anclada a la derecha**, cámara prácticamente quieta, nodos que titilan, y una máscara que la disuelve hacia la izquierda para no pelear con el texto. **Va en Soporte técnico.**
   - `vuelo` → tramos encadenados en z por los que la cámara avanza. Implementada pero **sin montar**: fue la primera elección para Soporte y el cliente prefirió la constelación.
 - **Heroes reescritos:** `HeroNosotrosReact` y `HeroSoporteReact` pasan a componer `PhotoHero` + `NetworkDepth`.
+- **Categorías de solución:** `HeroSolucionReact` (modo imagen) suma la **misma** malla `constelacion` en las 4 categorías — conectividad, ciberseguridad, data center y servicios gestionados — entre la foto y los velos, con opacidad 0.7 (las fotos de categoría son más luminosas que las de los otros heroes).
 - **Campos nuevos en Tina:** `about.hero.image` y `soporteTecnico.heroImage` (imagen de fondo del hero), sembrados con `laptop-us.png` y `datacenter-support.png`.
 - **Rendimiento:** tres lienzos apilados con el desenfoque por CSS, capas de fondo rasterizadas a menor resolución, DPR capado a 2, menos nodos bajo 768px, pausa fuera del viewport y un solo frame estático con `prefers-reduced-motion`.
 
@@ -73,6 +74,7 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 - [x] Al salir el hero del viewport el bucle se detiene.
 - [x] Con `prefers-reduced-motion: reduce` se dibuja un solo frame y no queda `rAF` corriendo.
 - [x] `astro build` pasa en verde (116 páginas) y no hay errores de consola atribuibles a estos componentes.
+- [x] Las 4 páginas de categoría montan la malla y su hero mantiene el texto legible; en mobile la foto y el texto siguen sin cortes.
 - [x] `OrbitLock`, `LightHalo`, `NodeField` y `SupportHub` siguen en el repo.
 
 ---
@@ -96,5 +98,6 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 | La malla compite con el texto del hero | Vive entre la foto y el velo, así que el velo la atenúa justo sobre la columna de texto; además `opacity` es prop (0.85 y 0.8). |
 | Fotos nuevas cargadas en Tina con el sujeto a la izquierda | El campo lo documenta explícitamente; `focus`/`focusMobile` permiten recolocar el encuadre. |
 | El paralaje no se dispara porque la capa del overlay es `pointer-events-none` | El listener va en `window` y se calcula la posición contra el rect del contenedor. Fue un bug real de la primera versión: el hover no movía nada. |
+| La malla se pierde sobre fotos muy luminosas | En las categorías la opacidad sube a 0.7 (contra 0.6 y 0.4 de Nosotros y Soporte); es un prop por instancia. |
 | Costo del canvas en equipos modestos | DPR capado, capas de fondo a menor resolución, ~55% de nodos bajo 768px, pausa fuera del viewport. |
 | `filter` de CSS sobre canvas no soportado | Degrada a capas sin desenfoque: se pierde la profundidad de campo, no el dibujo. |
