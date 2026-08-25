@@ -6,18 +6,19 @@ import type {
 } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import {
-  FaBolt,
-  FaShieldHalved,
-  FaCloud,
-  FaGears,
-  FaNetworkWired,
-  FaServer,
-  FaGlobe,
-  FaHeadset,
-  FaDatabase,
-  FaWifi,
-  FaArrowRight,
-} from "react-icons/fa6";
+  LuZap,
+  LuShield,
+  LuCloud,
+  LuSettings,
+  LuUsersRound,
+  LuNetwork,
+  LuServer,
+  LuGlobe,
+  LuHeadset,
+  LuDatabase,
+  LuWifi,
+  LuArrowRight,
+} from "react-icons/lu";
 import type { IconType } from "react-icons";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
@@ -50,20 +51,22 @@ function withBase(path: string): string {
   return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/** Set cerrado de íconos de categoría (`tabIcon` en Tina). */
+/** Set cerrado de íconos de categoría (`tabIcon` en Tina). Trazo (outline),
+    como la referencia: se usa Lucide en vez de Font Awesome sólido. */
 const ICONS: Record<string, IconType> = {
-  rayo: FaBolt,
-  escudo: FaShieldHalved,
-  nube: FaCloud,
-  engranaje: FaGears,
-  red: FaNetworkWired,
-  servidor: FaServer,
-  globo: FaGlobe,
-  soporte: FaHeadset,
-  datos: FaDatabase,
-  wifi: FaWifi,
+  rayo: LuZap,
+  escudo: LuShield,
+  nube: LuCloud,
+  engranaje: LuSettings,
+  personas: LuUsersRound,
+  red: LuNetwork,
+  servidor: LuServer,
+  globo: LuGlobe,
+  soporte: LuHeadset,
+  datos: LuDatabase,
+  wifi: LuWifi,
 };
-const iconFor = (key?: string | null): IconType => ICONS[key || ""] || FaBolt;
+const iconFor = (key?: string | null): IconType => ICONS[key || ""] || LuZap;
 
 /** Palancas de animación del bloque (SPEC 103). */
 const PARAMS = {
@@ -390,15 +393,18 @@ export default function SolucionesPanelReact({
                     tabRefs.current[i] = el;
                   }}
                   onClick={() => goTo(i)}
-                  className={`relative z-10 inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-[13px] font-medium transition-colors md:text-[14px] ${
+                  className={`relative z-10 inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border px-5 py-3 text-[14px] font-medium transition-colors ${
                     isActive
                       ? "border-transparent text-white"
-                      : "border-white/[0.1] bg-white/[0.03] text-white/55 hover:border-white/20 hover:text-white/85"
+                      : "border-white/[0.09] bg-white/[0.02] text-white/60 hover:border-white/20 hover:text-white/90"
                   }`}
                 >
                   <Icon
                     aria-hidden="true"
-                    className={`text-[14px] ${isActive ? "text-brand-purple" : "text-white/40"}`}
+                    strokeWidth={2}
+                    className={`text-[17px] ${
+                      isActive ? "text-brand-purple-light" : "text-brand-purple/70"
+                    }`}
                   />
                   {chipLabel}
                 </button>
@@ -431,12 +437,12 @@ export default function SolucionesPanelReact({
             className="pointer-events-none absolute inset-y-0 left-1/2 right-0 hidden sm:block"
           >
             <div
-              className="absolute inset-y-[14px] left-16 right-[-44px] rounded-[22px] border border-white/[0.06]"
-              style={{ background: "linear-gradient(150deg, #4C1140 0%, #2E0B26 100%)" }}
+              className="absolute inset-y-[22px] left-16 right-[-58px] rounded-[22px] border border-white/[0.05]"
+              style={{ background: "linear-gradient(160deg, #4A1039 0%, #2A0A22 100%)" }}
             />
             <div
-              className="absolute inset-y-[7px] left-8 right-[-22px] rounded-[22px] border border-white/[0.09]"
-              style={{ background: "linear-gradient(150deg, #641654 0%, #370D2D 100%)" }}
+              className="absolute inset-y-[11px] left-8 right-[-30px] rounded-[22px] border border-white/[0.08]"
+              style={{ background: "linear-gradient(160deg, #6B1758 0%, #340C2A 100%)" }}
             />
           </div>
 
@@ -448,10 +454,13 @@ export default function SolucionesPanelReact({
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
-            style={{ touchAction: "pan-y" }}
-            className="relative z-10 overflow-hidden rounded-[22px] border border-white/[0.08] bg-[#130810] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
+            style={{
+              touchAction: "pan-y",
+              background: "linear-gradient(135deg, #24101F 0%, #180B15 55%, #120810 100%)",
+            }}
+            className="relative z-10 overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
           >
-            <div className="grid lg:min-h-[470px] lg:grid-cols-[1.16fr_0.84fr]">
+            <div className="grid lg:min-h-[620px] lg:grid-cols-[1.16fr_0.84fr]">
               {/* Columna izquierda (crossfade + slide direccional al cambiar). */}
               <div
                 key={`txt-${idx}`}
@@ -479,7 +488,7 @@ export default function SolucionesPanelReact({
 
                 {/* Subservicios como chips. */}
                 {subservicios.length > 0 && (
-                  <ul className="sol-stagger mt-6 flex flex-wrap gap-2">
+                  <ul className="sol-stagger mt-7 flex flex-wrap gap-3">
                     {subservicios.map((sub, i) => {
                       const label = tField(sub as any, "label", locale);
                       const href = sub?.url ? withBase(sub.url) : null;
@@ -487,13 +496,13 @@ export default function SolucionesPanelReact({
                         <>
                           <span
                             aria-hidden="true"
-                            className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-purple"
+                            className="h-[6px] w-[6px] shrink-0 rounded-full bg-brand-purple-light"
                           />
                           {label}
                         </>
                       );
                       const chipClass =
-                        "inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-3.5 py-[7px] text-[12.5px] leading-[1.35] text-white/75 transition-colors";
+                        "inline-flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-[#2A1024]/70 px-5 py-2.5 text-[14px] leading-[1.35] text-white/85 transition-colors";
                       return (
                         <li
                           key={i}
@@ -503,7 +512,7 @@ export default function SolucionesPanelReact({
                           {href ? (
                             <a
                               href={href}
-                              className={`${chipClass} outline-none hover:border-brand-purple hover:bg-brand-purple/10 hover:text-white focus-visible:border-brand-purple`}
+                              className={`${chipClass} outline-none hover:border-brand-purple-light/40 hover:bg-[#3A1531]/80 hover:text-white focus-visible:border-brand-purple-light/60`}
                               onMouseEnter={handleTipEnter}
                               onMouseMove={handleTipMove}
                               onMouseLeave={handleTipLeave}
@@ -523,11 +532,11 @@ export default function SolucionesPanelReact({
                 {active?.url && (
                   <a
                     href={withBase(active.url)}
-                    className="group mt-8 inline-flex items-center gap-2.5 text-[15px] font-medium text-white transition-colors hover:text-brand-purple-light"
+                    className="group mt-9 inline-flex items-center gap-2.5 text-[15px] font-medium text-brand-purple-light transition-colors hover:text-white"
                     data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
                   >
                     {ctaLabel}
-                    <FaArrowRight
+                    <LuArrowRight
                       aria-hidden="true"
                       className="text-[13px] transition-transform duration-300 group-hover:translate-x-1"
                     />
@@ -538,7 +547,7 @@ export default function SolucionesPanelReact({
               {/* Columna derecha: mitad a sangre con el ícono de la categoría. */}
               <div
                 key={`card-${idx}`}
-                className="sol-card relative order-1 min-h-[260px] overflow-hidden lg:order-2"
+                className="sol-card relative order-1 min-h-[280px] overflow-hidden border-t border-white/[0.07] lg:order-2 lg:border-l lg:border-t-0"
                 style={{
                   background:
                     "radial-gradient(125% 125% at 12% 0%, #A9258A 0%, #7A1A63 38%, #4A1039 68%, #320B29 100%)",
@@ -559,22 +568,23 @@ export default function SolucionesPanelReact({
                   <div ref={tiltRef} className="sol-tilt relative">
                     {/* Cuadrados rotados translúcidos detrás del ícono. */}
                     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                      {[0, 1, 2, 3].map((k) => (
+                      {[0, 1, 2].map((k) => (
                         <div
                           key={k}
-                          className="absolute left-1/2 top-1/2 rounded-[30%] border border-white/15 bg-white/[0.07]"
+                          className="absolute left-1/2 top-1/2 border border-white/[0.16] bg-white/[0.06]"
                           style={{
-                            width: `${150 + k * 26}px`,
-                            height: `${150 + k * 26}px`,
-                            transform: `translate(-50%, -50%) rotate(${k * 14 - 21}deg)`,
+                            width: `${196 + k * 26}px`,
+                            height: `${196 + k * 26}px`,
+                            borderRadius: "46px",
+                            transform: `translate(-50%, -50%) rotate(${k * 15 - 18}deg)`,
                           }}
                         />
                       ))}
                     </div>
 
                     {/* Tile del ícono. */}
-                    <div className="relative flex h-[108px] w-[108px] items-center justify-center rounded-[28px] bg-gradient-to-b from-white to-[#F3E4EF] text-[40px] text-brand-purple-darkest shadow-[0_18px_45px_-12px_rgba(0,0,0,0.5)] md:h-[124px] md:w-[124px] md:text-[46px]">
-                      <ActiveIcon aria-hidden="true" />
+                    <div className="relative flex h-[124px] w-[124px] items-center justify-center rounded-[34px] bg-gradient-to-b from-white to-[#EFD5E8] text-[46px] text-brand-purple-darkest shadow-[0_20px_50px_-14px_rgba(0,0,0,0.55)] md:h-[150px] md:w-[150px] md:rounded-[40px] md:text-[56px]">
+                      <ActiveIcon aria-hidden="true" strokeWidth={1.9} />
                     </div>
                   </div>
                 </div>

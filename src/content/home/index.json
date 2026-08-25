@@ -146,7 +146,7 @@
           { "label": "Colaboración Empresarial", "label_en": "Enterprise Collaboration", "url": "/soluciones/servicios-gestionados/colaboracion-empresarial" }
         ],
         "url": "/soluciones/servicios-gestionados",
-        "tabIcon": "engranaje",
+        "tabIcon": "personas",
         "title_en": "Managed Services",
         "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel."
       }

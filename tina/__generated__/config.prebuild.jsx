@@ -249,6 +249,7 @@ var config_default = defineConfig({
                       { value: "escudo", label: "Escudo / Seguridad" },
                       { value: "nube", label: "Nube / Cloud" },
                       { value: "engranaje", label: "Engranajes / Servicios gestionados" },
+                      { value: "personas", label: "Personas / Equipo gestionado" },
                       { value: "red", label: "Red / Nodos" },
                       { value: "servidor", label: "Servidor / Data Center" },
                       { value: "globo", label: "Globo / Cobertura" },
