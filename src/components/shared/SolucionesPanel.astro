@@ -1,0 +1,24 @@
+---
+/**
+ * Bloque de soluciones — SPEC 103.
+ *
+ * Reemplaza a `SolucionesScroll` (SPEC 89) en Home, /soluciones y
+ * /soporte-tecnico: sección de alto normal con tabs, flechas laterales y card
+ * visual, sin scroll-jack. Se alimenta de la misma query `home`.
+ */
+import { client } from "../../../tina/__generated__/client";
+import SolucionesPanelReact from "./SolucionesPanelReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+---
+
+<SolucionesPanelReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+  locale={locale}
+/>
