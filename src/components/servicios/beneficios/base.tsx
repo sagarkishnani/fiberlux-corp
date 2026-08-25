@@ -1,4 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { tField } from "../../../utils/i18n";
+import type { Locale } from "../../../i18n/config";
 
 /**
  * Piezas compartidas por las catorce plantillas de ilustración (SPEC 105).
@@ -84,6 +86,16 @@ export const C = {
   /** Borde de esas tarjetas. */
   panelBorde: "rgba(255,255,255,0.14)",
 };
+
+/**
+ * Etiqueta del CMS en el idioma activo, con fallback al español (SPEC 80).
+ *
+ * Las etiquetas se dibujan DENTRO del SVG, así que sin esto en /en quedarían
+ * en español en medio de una página traducida. `_en` vacío = se usa la ES.
+ */
+export function L(obj: any, key: string, locale?: string): string {
+  return tField(obj, key, (locale === "en" ? "en" : "es") as Locale);
+}
 
 /** Recorta un porcentaje del CMS al rango dibujable. */
 export function pct(valor: unknown, reserva: number): number {

@@ -1,4 +1,4 @@
-import { C, Lienzo, cajaEtiquetas, ret, VB, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, cajaEtiquetas, ret, VB, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Consola" (SPEC 18).
@@ -23,7 +23,7 @@ const CABLE_MIN = 34;
 /** Margen del lienzo por la derecha. */
 const MARGEN = 12;
 
-export default function Consola({ datos, activo }: PropsIlustracion) {
+export default function Consola({ datos, activo, locale }: PropsIlustracion) {
   const modulos = ((datos?.nodos ?? []).filter(Boolean).length ? datos.nodos : RESERVA)
     .filter(Boolean)
     .slice(0, 3);
@@ -31,7 +31,7 @@ export default function Consola({ datos, activo }: PropsIlustracion) {
   /* La caja se dimensiona con la etiqueta más larga y todas quedan iguales: una
      columna de anchos distintos se lee como un error, no como jerarquía. */
   const { ancho, cuerpo } = cajaEtiquetas(
-    modulos.map((m: any) => m?.label ?? ""),
+    modulos.map((m: any) => L(m, "label", locale)),
     {
       cuerpo: CUERPO,
       minimo: 96,
@@ -108,7 +108,7 @@ export default function Consola({ datos, activo }: PropsIlustracion) {
               />
               <circle cx={x + 15} cy={centro} r="4" fill={C.acentoClaro} />
               <text x={x + MOD.sangriaIzq} y={centro + 4} fill={C.texto} fontSize={cuerpo} fontWeight="600">
-                {mod?.label}
+                {L(mod, "label", locale)}
               </text>
             </g>
           </g>

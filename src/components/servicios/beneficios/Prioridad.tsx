@@ -1,4 +1,4 @@
-import { C, Lienzo, pct, ret, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, pct, ret, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Tráfico" (SPEC 105, imagen 43, fila 3 col 1).
@@ -27,7 +27,7 @@ const Y0 = 16;
 /** Caja de la barra. */
 const BARRA = { x: 44, w: 176, h: 5 };
 
-export default function Prioridad({ datos, activo }: PropsIlustracion) {
+export default function Prioridad({ datos, activo, locale }: PropsIlustracion) {
   const filas = ((datos?.filas ?? []).filter(Boolean).length ? datos.filas : RESERVA)
     .filter(Boolean)
     .slice(0, 3);
@@ -66,7 +66,7 @@ export default function Prioridad({ datos, activo }: PropsIlustracion) {
                 {i + 1}
               </text>
               <text x={BARRA.x} y={y + 16} fill={C.texto} fontSize="11" fontWeight="600">
-                {fila?.label}
+                {L(fila, "label", locale)}
               </text>
               <text
                 x="304"

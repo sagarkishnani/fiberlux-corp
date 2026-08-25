@@ -1,4 +1,4 @@
-import { C, Lienzo, VB, cajaEtiquetas, ret, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, VB, cajaEtiquetas, ret, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "MFA" (SPEC 105, imagen 43, fila 3 col 3).
@@ -27,7 +27,7 @@ const MARGEN = 12;
 /** Cuántos puntos tiene el código. */
 const PUNTOS = 4;
 
-export default function Mfa({ datos, activo }: PropsIlustracion) {
+export default function Mfa({ datos, activo, locale }: PropsIlustracion) {
   const chips = ((datos?.chips ?? []).filter(Boolean).length ? datos.chips : RESERVA)
     .filter(Boolean)
     .slice(0, 4);
@@ -36,7 +36,7 @@ export default function Mfa({ datos, activo }: PropsIlustracion) {
      columna se ancla a la derecha del lienzo. Si crece, avanza hacia el móvil
      sin llegar a tocarlo. */
   const { ancho: anchoChip, cuerpo } = cajaEtiquetas(
-    chips.map((c: any) => c?.label ?? ""),
+    chips.map((c: any) => L(c, "label", locale)),
     {
       cuerpo: CUERPO,
       minimo: CHIP.w,
@@ -162,7 +162,7 @@ export default function Mfa({ datos, activo }: PropsIlustracion) {
               fontSize={cuerpo}
               fontWeight="600"
             >
-              {chip?.label}
+              {L(chip, "label", locale)}
             </text>
           </g>
         );

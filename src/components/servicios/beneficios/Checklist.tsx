@@ -1,4 +1,4 @@
-import { C, Lienzo, ret, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, ret, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Checklist" (SPEC 18).
@@ -17,7 +17,7 @@ const RESERVA = [{ label: "Controles" }, { label: "Configuración" }, { label: "
 const FILA = { x: 40, w: 240, h: 34, hueco: 12 };
 const CAJA = 22;
 
-export default function Checklist({ datos, activo }: PropsIlustracion) {
+export default function Checklist({ datos, activo, locale }: PropsIlustracion) {
   const filas = ((datos?.chips ?? []).filter(Boolean).length ? datos.chips : RESERVA).slice(0, 4);
   const alto = filas.length * FILA.h + (filas.length - 1) * FILA.hueco;
   const y0 = (180 - alto) / 2;
@@ -70,7 +70,7 @@ export default function Checklist({ datos, activo }: PropsIlustracion) {
               fontSize="12"
               fontWeight="600"
             >
-              {fila?.label}
+              {L(fila, "label", locale)}
             </text>
           </g>
         );

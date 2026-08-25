@@ -1,4 +1,4 @@
-import { C, Lienzo, pct, ret, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, pct, ret, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Uptime" (SPEC 105, imagen 43, fila 2 col 3).
@@ -20,9 +20,9 @@ const R = 58;
 const GROSOR = 13;
 const VUELTA = 2 * Math.PI * R;
 
-export default function Uptime({ datos, activo }: PropsIlustracion) {
+export default function Uptime({ datos, activo, locale }: PropsIlustracion) {
   const valor = datos?.valor || "99,95";
-  const unidad = datos?.unidad || "% UPTIME";
+  const unidad = L(datos, "unidad", locale) || "% UPTIME";
   /* Sin porcentaje explícito se intenta leer la propia cifra: un SLA de 99,95
      dibuja un anillo casi cerrado sin que nadie tenga que repetir el dato. */
   const reserva = Number(String(valor).replace(",", "."));

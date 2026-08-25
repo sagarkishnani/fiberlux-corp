@@ -1,4 +1,4 @@
-import { C, Lienzo, anchoTexto, ret, useTurno, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, anchoTexto, ret, useTurno, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Conmutación" (SPEC 105, imagen 43, fila 3 col 2).
@@ -30,7 +30,7 @@ const CUERPO = 9;
 const TRACKING = 0.6;
 const SANGRIA = 22;
 
-export default function Conmutacion({ datos, activo }: PropsIlustracion) {
+export default function Conmutacion({ datos, activo, locale }: PropsIlustracion) {
   const rutas = ((datos?.rutas ?? []).filter(Boolean).length ? datos.rutas : RESERVA)
     .filter(Boolean)
     .slice(0, 4);
@@ -52,7 +52,7 @@ export default function Conmutacion({ datos, activo }: PropsIlustracion) {
         const activa = i === activaIdx;
         /* La píldora se ajusta a su etiqueta: con `width` fijo, un nombre largo
            se salía por los dos lados. Versalitas, así que el glifo es ancho. */
-        const pildora = Math.max(68, anchoTexto(ruta?.label, CUERPO, 0.62, TRACKING) + SANGRIA);
+        const pildora = Math.max(68, anchoTexto(L(ruta, "label", locale), CUERPO, 0.62, TRACKING) + SANGRIA);
         return (
           <g key={i}>
             {/* Dos trazos superpuestos que se cruzan en opacidad, en vez de un
@@ -111,7 +111,7 @@ export default function Conmutacion({ datos, activo }: PropsIlustracion) {
                 letterSpacing="0.6"
                 textAnchor="middle"
               >
-                {ruta?.label}
+                {L(ruta, "label", locale)}
               </text>
             </g>
           </g>

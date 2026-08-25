@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { C, Lienzo, pct, type PropsIlustracion } from "./base";
+import { C, L, Lienzo, pct, type PropsIlustracion } from "./base";
 
 /**
  * Plantilla "Velocidad" (SPEC 105, imagen 61, card 1).
@@ -55,7 +55,7 @@ function enDosLineas(texto: string) {
   return [palabras.slice(0, corte).join(" "), palabras.slice(corte).join(" ")];
 }
 
-export default function Velocidad({ datos, activo }: PropsIlustracion) {
+export default function Velocidad({ datos, activo, locale }: PropsIlustracion) {
   /* Compatibilidad con los campos sueltos de antes. */
   const desdeCms: any[] = (datos?.tarjetas ?? []).filter(Boolean);
   const tarjetas = desdeCms.length
@@ -111,7 +111,7 @@ export default function Velocidad({ datos, activo }: PropsIlustracion) {
           const porcentaje = pct(tarjeta?.porcentaje, 78);
           const largo = (VUELTA * porcentaje) / 100;
           const alFrente = profundidad === 0;
-          const [linea1, linea2] = enDosLineas(tarjeta?.etiqueta || "Velocidad sin caídas");
+          const [linea1, linea2] = enDosLineas(L(tarjeta, "etiqueta", locale) || "Velocidad sin caídas");
 
           return (
             <g
