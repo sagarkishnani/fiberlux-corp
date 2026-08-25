@@ -82,14 +82,19 @@ export default function TestimonialMiniCard({
         </p>
       )}
 
-      {/* Autor al pie, separado por una línea fina (mockup del cliente). */}
-      <div
-        className={`mt-auto border-t pt-4 ${active ? "border-white/25" : "border-brand-gray-light"}`}
-      >
-        <p className="text-body-md font-medium">{name}</p>
-        <p className={`text-body-sm ${active ? "text-white/70" : "text-brand-gray-dark"}`}>
-          {role}
-        </p>
+      {/* Autor al pie, separado por una línea fina (mockup del cliente).
+          El `pt-7` garantiza aire entre el texto y la línea: cuando el
+          testimonio llena la tarjeta, `mt-auto` no deja separación y la línea
+          quedaba pegada al último renglón. */}
+      <div className="mt-auto pt-7">
+        <div
+          className={`border-t pt-4 ${active ? "border-white/25" : "border-brand-gray-light"}`}
+        >
+          <p className="text-body-md font-medium">{name}</p>
+          <p className={`text-body-sm ${active ? "text-white/70" : "text-brand-gray-dark"}`}>
+            {role}
+          </p>
+        </div>
       </div>
     </article>
   );

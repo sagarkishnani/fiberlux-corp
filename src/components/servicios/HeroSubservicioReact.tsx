@@ -121,7 +121,7 @@ export default function HeroSubservicioReact({
           {/* ════ LEFT — content ════ */}
           <div className="max-w-[560px]">
             {/* Breadcrumb (3 niveles) */}
-            <nav className="flex flex-wrap items-center gap-2 text-caption-sm text-greyscale mb-6">
+            <nav className="flex flex-wrap items-center gap-2 text-body-md text-greyscale mb-6">
               <a
                 href={serviciosHref}
                 className="hover:text-greyscale-white transition-colors"

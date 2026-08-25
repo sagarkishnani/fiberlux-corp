@@ -1324,6 +1324,9 @@ export type AboutHero = {
   subtitle?: Maybe<Scalars['String']['output']>;
   subtitle_en?: Maybe<Scalars['String']['output']>;
   image?: Maybe<Scalars['String']['output']>;
+  ctaLabel?: Maybe<Scalars['String']['output']>;
+  ctaLabel_en?: Maybe<Scalars['String']['output']>;
+  ctaUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type AboutMission = {
@@ -1346,8 +1349,11 @@ export type AboutVision = {
 
 export type AboutValuesItems = {
   __typename?: 'AboutValuesItems';
+  icon?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   name_en?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type AboutValues = {
@@ -1442,6 +1448,9 @@ export type AboutHeroFilter = {
   subtitle?: InputMaybe<StringFilter>;
   subtitle_en?: InputMaybe<StringFilter>;
   image?: InputMaybe<ImageFilter>;
+  ctaLabel?: InputMaybe<StringFilter>;
+  ctaLabel_en?: InputMaybe<StringFilter>;
+  ctaUrl?: InputMaybe<StringFilter>;
 };
 
 export type AboutMissionFilter = {
@@ -1461,8 +1470,11 @@ export type AboutVisionFilter = {
 };
 
 export type AboutValuesItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   name_en?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
 };
 
 export type AboutValuesFilter = {
@@ -3857,6 +3869,9 @@ export type AboutHeroMutation = {
   subtitle?: InputMaybe<Scalars['String']['input']>;
   subtitle_en?: InputMaybe<Scalars['String']['input']>;
   image?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel?: InputMaybe<Scalars['String']['input']>;
+  ctaLabel_en?: InputMaybe<Scalars['String']['input']>;
+  ctaUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AboutMissionMutation = {
@@ -3876,8 +3891,11 @@ export type AboutVisionMutation = {
 };
 
 export type AboutValuesItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   name_en?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AboutValuesMutation = {
@@ -4596,7 +4614,7 @@ export type ServicePartsFragment = { __typename: 'Service', title: string, title
 
 export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, title_en?: string | null, slug: string, solucionSlug: string, solucionTitle?: string | null, solucionTitle_en?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, note?: string | null, note_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, plantilla?: string | null, image?: string | null, datos?: { __typename: 'SubservicioBeneficiosItemsDatos', etiqueta?: string | null, etiqueta_en?: string | null, valor?: string | null, unidad?: string | null, unidad_en?: string | null, porcentaje?: number | null, hilos?: number | null, barras?: number | null, tarjetas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosTarjetas', etiqueta?: string | null, etiqueta_en?: string | null, porcentaje?: number | null } | null> | null, filas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosFilas', label?: string | null, label_en?: string | null, nivel?: string | null, porcentaje?: number | null } | null> | null, rutas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosRutas', label?: string | null, label_en?: string | null, activa?: boolean | null } | null> | null, nodos?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosNodos', label?: string | null, label_en?: string | null } | null> | null, chips?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosChips', label?: string | null, label_en?: string | null } | null> | null } | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null, name_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
+export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
 export type PostPartsFragment = { __typename: 'Post', title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
@@ -4690,7 +4708,7 @@ export type AboutQueryVariables = Exact<{
 }>;
 
 
-export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null, name_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
+export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
 
 export type AboutConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4702,7 +4720,7 @@ export type AboutConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', name?: string | null, name_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
+export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
 
 export type PostQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5319,6 +5337,9 @@ export const AboutPartsFragmentDoc = gql`
     subtitle
     subtitle_en
     image
+    ctaLabel
+    ctaLabel_en
+    ctaUrl
   }
   missionVisionTitle
   missionVisionTitle_en
@@ -5347,8 +5368,11 @@ export const AboutPartsFragmentDoc = gql`
     subtitle_en
     items {
       __typename
+      icon
       name
       name_en
+      description
+      description_en
     }
   }
   timeline {

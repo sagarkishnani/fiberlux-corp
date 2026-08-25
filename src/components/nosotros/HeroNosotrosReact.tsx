@@ -1,9 +1,10 @@
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { AboutQuery, AboutQueryVariables } from "../../../tina/__generated__/types";
-import { tField } from "../../utils/i18n";
+import { tField, localizedPath } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import PhotoHero from "../shared/PhotoHero";
 import NetworkDepth from "../effects/NetworkDepth";
+import Button from "../shared/Button";
 
 /**
  * Hero de Nosotros — SPEC 104.
@@ -37,6 +38,17 @@ export default function HeroNosotrosReact({
   const title = tField(hero as any, "title", locale) || "";
   const subtitle = tField(hero as any, "subtitle", locale) || "";
 
+  /* CTA del hero (editable en el CMS; sin texto o sin enlace no se pinta).
+     Solo se localiza/prefija con BASE si es una ruta interna. */
+  const ctaLabel = tField(hero as any, "ctaLabel", locale);
+  const rawCtaUrl = (hero as any)?.ctaUrl || "";
+  const isExternalCta =
+    /^([a-z]+:)?\/\//i.test(rawCtaUrl) || /^(#|mailto:|tel:)/i.test(rawCtaUrl);
+  const ctaUrl =
+    rawCtaUrl && !isExternalCta && rawCtaUrl.startsWith("/")
+      ? localizedPath(rawCtaUrl, locale)
+      : rawCtaUrl;
+
   return (
     <PhotoHero
       image={hero?.image}
@@ -44,7 +56,7 @@ export default function HeroNosotrosReact({
       focusMobile="72% 38%"
       overlay={<NetworkDepth variant="malla" opacity={0.6} />}
       breadcrumb={
-        <ol className="flex items-center gap-2 text-sm">
+        <ol className="flex items-center gap-2 text-body-md">
           <li>
             <a href={`${BASE}/`} className="text-white/50 transition-colors hover:text-white">
               {locale === "en" ? "Home" : "Inicio"}
@@ -72,6 +84,18 @@ export default function HeroNosotrosReact({
           </p>
         ) : undefined
       }
-    />
+    >
+      {ctaLabel && ctaUrl ? (
+        <div className="mt-8 md:mt-9">
+          <Button
+            href={ctaUrl}
+            variant="primary"
+            data-tina-field={hero ? tinaField(hero, "ctaLabel") : undefined}
+          >
+            {ctaLabel}
+          </Button>
+        </div>
+      ) : null}
+    </PhotoHero>
   );
 }

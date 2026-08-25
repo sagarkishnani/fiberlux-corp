@@ -928,6 +928,9 @@ type AboutHero {
   subtitle: String
   subtitle_en: String
   image: String
+  ctaLabel: String
+  ctaLabel_en: String
+  ctaUrl: String
 }
 
 type AboutMission {
@@ -947,8 +950,11 @@ type AboutVision {
 }
 
 type AboutValuesItems {
+  icon: String
   name: String
   name_en: String
+  description: String
+  description_en: String
 }
 
 type AboutValues {
@@ -1033,6 +1039,9 @@ input AboutHeroFilter {
   subtitle: StringFilter
   subtitle_en: StringFilter
   image: ImageFilter
+  ctaLabel: StringFilter
+  ctaLabel_en: StringFilter
+  ctaUrl: StringFilter
 }
 
 input AboutMissionFilter {
@@ -1052,8 +1061,11 @@ input AboutVisionFilter {
 }
 
 input AboutValuesItemsFilter {
+  icon: StringFilter
   name: StringFilter
   name_en: StringFilter
+  description: StringFilter
+  description_en: StringFilter
 }
 
 input AboutValuesFilter {
@@ -3081,6 +3093,9 @@ input AboutHeroMutation {
   subtitle: String
   subtitle_en: String
   image: String
+  ctaLabel: String
+  ctaLabel_en: String
+  ctaUrl: String
 }
 
 input AboutMissionMutation {
@@ -3100,8 +3115,11 @@ input AboutVisionMutation {
 }
 
 input AboutValuesItemsMutation {
+  icon: String
   name: String
   name_en: String
+  description: String
+  description_en: String
 }
 
 input AboutValuesMutation {

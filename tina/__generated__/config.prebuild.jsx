@@ -1139,6 +1139,19 @@ var config_default = defineConfig({
                 label: "Imagen de fondo del hero",
                 type: "image",
                 description: "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto."
+              },
+              {
+                name: "ctaLabel",
+                label: "Texto del bot\xF3n",
+                type: "string",
+                description: "D\xE9jalo vac\xEDo para ocultar el bot\xF3n del hero."
+              },
+              { name: "ctaLabel_en", label: "Texto del bot\xF3n (EN)", type: "string" },
+              {
+                name: "ctaUrl",
+                label: "Enlace del bot\xF3n",
+                type: "string",
+                description: "Ruta interna (ej. /contacto) o URL completa."
               }
             ]
           },
@@ -1246,8 +1259,37 @@ var config_default = defineConfig({
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.name || "Valor" }) },
                 fields: [
+                  {
+                    name: "icon",
+                    label: "\xCDcono",
+                    type: "string",
+                    options: [
+                      { value: "eye", label: "Ojo (transparencia)" },
+                      { value: "shield", label: "Escudo (resiliencia)" },
+                      { value: "check", label: "Check (confiabilidad)" },
+                      { value: "pin", label: "Pin de mapa (impacto local)" },
+                      { value: "link", label: "Enlace (conectividad)" },
+                      { value: "bolt", label: "Rayo (innovaci\xF3n)" },
+                      { value: "network", label: "Red / nodos" },
+                      { value: "clock", label: "Reloj (24/7)" },
+                      { value: "users", label: "Personas (equipo)" },
+                      { value: "spark", label: "Destello (calidad)" }
+                    ]
+                  },
                   { name: "name", label: "Nombre", type: "string" },
-                  { name: "name_en", label: "Nombre (EN)", type: "string" }
+                  { name: "name_en", label: "Nombre (EN)", type: "string" },
+                  {
+                    name: "description",
+                    label: "Descripci\xF3n",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
+                  {
+                    name: "description_en",
+                    label: "Descripci\xF3n (EN)",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  }
                 ]
               }
             ]

@@ -4,7 +4,10 @@
     "subtitle": "Más de 15 años desarrollando infraestructura de conectividad de alta calidad para organizaciones que no pueden detenerse.",
     "title_en": "The network that powers Peru's businesses",
     "subtitle_en": "Over 15 years building high-quality connectivity infrastructure for organizations that can't afford to stop.",
-    "image": "/images/nosotros/laptop-us.png"
+    "image": "/images/nosotros/laptop-us.png",
+    "ctaLabel": "Contáctanos",
+    "ctaLabel_en": "Contact us",
+    "ctaUrl": "/contacto"
   },
   "missionVisionTitle": "Comprometidos con el desarrollo tecnológico del Perú",
   "mission": {
@@ -27,28 +30,46 @@
     "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",
     "items": [
       {
-        "name": "Conectividad con propósito",
-        "name_en": "Purpose-driven connectivity"
-      },
-      {
+        "icon": "eye",
         "name": "Transparencia",
-        "name_en": "Transparency"
+        "name_en": "Transparency",
+        "description": "Contratos claros, SLA medibles y reportes que puedes auditar en cualquier momento.",
+        "description_en": "Clear contracts, measurable SLAs and reports you can audit at any time."
       },
       {
-        "name": "Confiabilidad",
-        "name_en": "Reliability"
-      },
-      {
-        "name": "Impacto local",
-        "name_en": "Local impact"
-      },
-      {
-        "name": "Innovación",
-        "name_en": "Innovation"
-      },
-      {
+        "icon": "shield",
         "name": "Resiliencia",
-        "name_en": "Resilience"
+        "name_en": "Resilience",
+        "description": "Rutas redundantes y NOC 24/7: la red se recupera antes de que tu operación lo note.",
+        "description_en": "Redundant routes and a 24/7 NOC: the network recovers before your operation notices."
+      },
+      {
+        "icon": "check",
+        "name": "Confiabilidad",
+        "name_en": "Reliability",
+        "description": "Disponibilidad garantizada por infraestructura propia, no arrendada a terceros.",
+        "description_en": "Availability backed by our own infrastructure, not leased from third parties."
+      },
+      {
+        "icon": "pin",
+        "name": "Impacto local",
+        "name_en": "Local impact",
+        "description": "Equipos peruanos desplegando fibra en 92 ciudades, incluidas zonas donde nadie más llega.",
+        "description_en": "Peruvian teams deploying fiber across 92 cities, including areas no one else reaches."
+      },
+      {
+        "icon": "link",
+        "name": "Conectividad con propósito",
+        "name_en": "Purpose-driven connectivity",
+        "description": "Cada enlace responde a un objetivo del negocio, no a un catálogo de productos.",
+        "description_en": "Every link answers a business goal, not a product catalog."
+      },
+      {
+        "icon": "bolt",
+        "name": "Innovación",
+        "name_en": "Innovation",
+        "description": "Adoptamos SD-WAN, nube privada y Zero Trust antes de que sean requisito del mercado.",
+        "description_en": "We adopt SD-WAN, private cloud and Zero Trust before the market requires them."
       }
     ],
     "title_en": "Our values",

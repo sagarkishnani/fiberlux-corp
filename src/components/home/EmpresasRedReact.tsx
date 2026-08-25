@@ -6,7 +6,6 @@ import type { Locale } from "../../i18n/config";
 import { mediaUrl } from "../../utils/mediaUrl";
 import { parseStat, formatNumber, useCounter } from "../../hooks/useStatCounter";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
-import SliderArrows from "../shared/SliderArrows";
 import SliderSideArrows from "../shared/SliderSideArrows";
 import TestimonialMiniCard from "./TestimonialMiniCard";
 import { buttonClass } from "../shared/Button";
@@ -332,9 +331,11 @@ export default function EmpresasRedReact({
             </div>
           </div>
 
-          {/* Desktop: flechas laterales superpuestas (SPEC 94) */}
+          {/* Flechas laterales superpuestas (SPEC 94). En mobile van igual a los
+              costados pero tenues, en vez de la píldora bajo el carrusel. */}
           {enough && scrollable && (
             <SliderSideArrows
+              mobile
               canPrev={slider.canPrev}
               canNext={slider.canNext}
               onPrev={slider.prev}
@@ -344,20 +345,6 @@ export default function EmpresasRedReact({
             />
           )}
         </div>
-
-        {/* Mobile/tablet: píldora de flechas */}
-        {enough && scrollable && (
-          <div className="mt-6 flex justify-center lg:hidden">
-            <SliderArrows
-              canPrev={slider.canPrev}
-              canNext={slider.canNext}
-              onPrev={slider.prev}
-              onNext={slider.next}
-              labelPrev={t.prev}
-              labelNext={t.next}
-            />
-          </div>
-        )}
 
         {/* ── CTA a casos de éxito ── */}
         {!hideCta && ctaLabel && ctaUrl && (
