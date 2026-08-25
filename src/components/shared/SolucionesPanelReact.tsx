@@ -158,6 +158,16 @@ export default function SolucionesPanelReact({
     return () => window.removeEventListener("resize", measure);
   }, [activeIndex, N, locale]);
 
+  /* Trae el tab activo a la vista cuando la tira scrollea (mobile). */
+  useEffect(() => {
+    const el = tabRefs.current[Math.min(activeIndex, N - 1)];
+    el?.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [activeIndex, N, reduceMotion]);
+
   /* Re-mide cuando el scroll horizontal de la tira cambia el layout (mobile). */
   useEffect(() => {
     const strip = tabsRef.current;
@@ -323,14 +333,16 @@ export default function SolucionesPanelReact({
           </p>
         )}
 
-        {/* ── Tira de píldoras de categoría ── */}
-        <div className="mb-8 md:mb-10">
+        {/* ── Tira de píldoras de categoría ──
+            En mobile scrollea horizontalmente con máscara de degradado; el tab
+            activo se trae a la vista al cambiar de categoría. */}
+        <div className="sol-tabs-wrap -mx-4 mb-8 overflow-x-auto px-4 pb-1 md:mx-0 md:mb-10 md:px-0">
           <div
             ref={tabsRef}
             role="tablist"
             aria-label={sectionTitle || "Soluciones"}
             onKeyDown={onTabsKeyDown}
-            className="sol-tabs relative flex gap-2.5 md:gap-3"
+            className="sol-tabs relative flex w-max gap-2.5 md:w-auto md:flex-wrap md:gap-3"
           >
             {/* Pill de fondo que se desliza a la píldora activa. */}
             <div
@@ -437,7 +449,7 @@ export default function SolucionesPanelReact({
 
                 {/* Checklist de subservicios (2 columnas en lg+). */}
                 {subservicios.length > 0 && (
-                  <ul className="sol-stagger mt-7 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+                  <ul className="sol-stagger mt-7 grid gap-x-8 gap-y-4 lg:grid-cols-2">
                     {subservicios.map((sub, i) => {
                       const label = tField(sub as any, "label", locale);
                       const href = sub?.url ? withBase(sub.url) : null;
@@ -499,7 +511,7 @@ export default function SolucionesPanelReact({
                 <div ref={tiltRef} className="sol-tilt">
                   <div
                     key={`card-${idx}`}
-                    className="sol-card relative flex aspect-[4/5] max-h-[520px] w-full flex-col justify-between overflow-hidden rounded-[24px] p-7 md:p-9"
+                    className="sol-card relative mx-auto flex aspect-[4/3] w-full max-w-[420px] flex-col justify-between overflow-hidden rounded-[24px] p-7 sm:aspect-[4/5] md:p-9 lg:max-w-none"
                     style={{
                       background:
                         "linear-gradient(150deg, #96237A 0%, #650F50 45%, #3B0E30 100%)",
@@ -570,6 +582,17 @@ export default function SolucionesPanelReact({
       </div>
 
       <style>{`
+        .sol-tabs-wrap {
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .sol-tabs-wrap::-webkit-scrollbar { display: none; }
+        @media (max-width: 767px) {
+          .sol-tabs-wrap {
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+          }
+        }
         .sol-indicator {
           transition-property: transform, width, opacity;
           transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
@@ -619,7 +642,18 @@ export default function SolucionesPanelReact({
           .sol-float {
             animation: none !important;
           }
-          .sol-indicator { transition: none !important; }
+          .sol-tabs-wrap {
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+        .sol-tabs-wrap::-webkit-scrollbar { display: none; }
+        @media (max-width: 767px) {
+          .sol-tabs-wrap {
+            -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+          }
+        }
+        .sol-indicator { transition: none !important; }
           .sol-tilt {
             transition: none !important;
             transform: none !important;
