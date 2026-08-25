@@ -422,10 +422,22 @@ export default function SolucionesPanelReact({
             />
           )}
 
-          {/* Capas del stack (las siguientes soluciones asomando detrás). */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-            <div className="absolute inset-y-[9px] left-16 right-[-14px] rounded-[22px] border border-white/[0.08] bg-[#4A0F3C]" />
-            <div className="absolute inset-y-[18px] left-24 right-[-28px] rounded-[22px] border border-white/[0.05] bg-[#310A28]" />
+          {/* Capas del stack: las siguientes soluciones asomando detrás, como
+              tarjetas escalonadas a la derecha (la más lejana se pinta primero).
+              Arrancan pasada la mitad del panel para no meterse bajo la columna
+              de texto, y quedan casi tan altas como la tarjeta activa. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 left-1/2 right-0 hidden sm:block"
+          >
+            <div
+              className="absolute inset-y-[14px] left-16 right-[-44px] rounded-[22px] border border-white/[0.06]"
+              style={{ background: "linear-gradient(150deg, #4C1140 0%, #2E0B26 100%)" }}
+            />
+            <div
+              className="absolute inset-y-[7px] left-8 right-[-22px] rounded-[22px] border border-white/[0.09]"
+              style={{ background: "linear-gradient(150deg, #641654 0%, #370D2D 100%)" }}
+            />
           </div>
 
           <div
@@ -437,13 +449,13 @@ export default function SolucionesPanelReact({
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
             style={{ touchAction: "pan-y" }}
-            className="relative z-10 overflow-hidden rounded-[22px] border border-white/[0.08] bg-[#130810]"
+            className="relative z-10 overflow-hidden rounded-[22px] border border-white/[0.08] bg-[#130810] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
           >
-            <div className="grid lg:grid-cols-2">
+            <div className="grid lg:min-h-[470px] lg:grid-cols-[1.16fr_0.84fr]">
               {/* Columna izquierda (crossfade + slide direccional al cambiar). */}
               <div
                 key={`txt-${idx}`}
-                className="sol-enter order-2 p-7 md:p-10 lg:order-1 lg:p-12"
+                className="sol-enter order-2 flex flex-col justify-center p-7 md:p-10 lg:order-1 lg:p-12"
                 style={{
                   ["--sol-dx" as any]: `${dir >= 0 ? PARAMS.slideX : -PARAMS.slideX}px`,
                   ["--sol-ms" as any]: `${PARAMS.textMs}ms`,
@@ -467,7 +479,7 @@ export default function SolucionesPanelReact({
 
                 {/* Subservicios como chips. */}
                 {subservicios.length > 0 && (
-                  <ul className="sol-stagger mt-7 flex flex-wrap gap-2.5">
+                  <ul className="sol-stagger mt-6 flex flex-wrap gap-2">
                     {subservicios.map((sub, i) => {
                       const label = tField(sub as any, "label", locale);
                       const href = sub?.url ? withBase(sub.url) : null;
@@ -481,7 +493,7 @@ export default function SolucionesPanelReact({
                         </>
                       );
                       const chipClass =
-                        "inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.035] px-3.5 py-2 text-[13px] leading-none text-white/80 transition-colors";
+                        "inline-flex items-center gap-2 rounded-full border border-white/[0.07] bg-white/[0.03] px-3.5 py-[7px] text-[12.5px] leading-[1.35] text-white/75 transition-colors";
                       return (
                         <li
                           key={i}
@@ -526,9 +538,10 @@ export default function SolucionesPanelReact({
               {/* Columna derecha: mitad a sangre con el ícono de la categoría. */}
               <div
                 key={`card-${idx}`}
-                className="sol-card relative order-1 min-h-[260px] overflow-hidden lg:order-2 lg:min-h-[420px]"
+                className="sol-card relative order-1 min-h-[260px] overflow-hidden lg:order-2"
                 style={{
-                  background: "linear-gradient(150deg, #96237A 0%, #650F50 52%, #3B0E30 100%)",
+                  background:
+                    "radial-gradient(125% 125% at 12% 0%, #A9258A 0%, #7A1A63 38%, #4A1039 68%, #320B29 100%)",
                   ["--sol-card-ms" as any]: `${PARAMS.cardMs}ms`,
                   ["--sol-card-scale" as any]: String(PARAMS.cardScaleFrom),
                   ["--sol-card-blur" as any]: `${PARAMS.cardBlurPx}px`,
