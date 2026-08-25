@@ -4,6 +4,10 @@ import Gauge from "./Gauge";
 import Sedes from "./Sedes";
 import Dwdm from "./Dwdm";
 import Uptime from "./Uptime";
+import Prioridad from "./Prioridad";
+import Conmutacion from "./Conmutacion";
+import Escalera from "./Escalera";
+import Consola from "./Consola";
 import type { PropsIlustracion } from "./base";
 
 /**
@@ -23,6 +27,10 @@ const PLANTILLAS: Record<string, (p: PropsIlustracion) => React.ReactElement> = 
   sedes: Sedes,
   dwdm: Dwdm,
   uptime: Uptime,
+  prioridad: Prioridad,
+  conmutacion: Conmutacion,
+  escalera: Escalera,
+  consola: Consola,
 };
 
 interface Props extends PropsIlustracion {
