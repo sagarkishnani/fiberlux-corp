@@ -43,7 +43,7 @@ export default function HeroSoporteReact({
       image={page.heroImage}
       focus="78% 42%"
       focusMobile="74% 32%"
-      overlay={<NetworkDepth variant="constelacion" opacity={0.9} />}
+      overlay={<NetworkDepth variant="constelacion" opacity={0.4} />}
       breadcrumb={
         <ol className="flex items-center gap-2 text-sm">
           <li>

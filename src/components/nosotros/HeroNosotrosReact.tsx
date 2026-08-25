@@ -42,7 +42,7 @@ export default function HeroNosotrosReact({
       image={hero?.image}
       focus="76% 45%"
       focusMobile="72% 38%"
-      overlay={<NetworkDepth variant="malla" opacity={0.85} />}
+      overlay={<NetworkDepth variant="malla" opacity={0.6} />}
       breadcrumb={
         <ol className="flex items-center gap-2 text-sm">
           <li>
