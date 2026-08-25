@@ -3,11 +3,13 @@ import type { AboutQuery, AboutQueryVariables } from "../../../tina/__generated_
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import PhotoHero from "../shared/PhotoHero";
+import NetworkDepth from "../effects/NetworkDepth";
 
 /**
  * Hero de Nosotros — SPEC 104.
  *
- * Fotografía a sangre (sujeto a la derecha) con velo oscuro hacia el texto.
+ * Fotografía a sangre (sujeto a la derecha) con velo oscuro hacia el texto y la
+ * malla de red en profundidad (variante `malla`) entre la foto y el velo.
  * Reemplaza la escena WebGL de la SPEC 101 (candado orbital + plexus + halo);
  * esos componentes siguen en el repo, sin montar aquí.
  */
@@ -40,6 +42,7 @@ export default function HeroNosotrosReact({
       image={hero?.image}
       focus="76% 45%"
       focusMobile="72% 38%"
+      overlay={<NetworkDepth variant="malla" opacity={0.85} />}
       breadcrumb={
         <ol className="flex items-center gap-2 text-sm">
           <li>
