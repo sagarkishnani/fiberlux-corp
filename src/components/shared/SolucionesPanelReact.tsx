@@ -521,7 +521,7 @@ export default function SolucionesPanelReact({
                 <div ref={tiltRef} className="sol-tilt">
                   <div
                     key={`card-${idx}`}
-                    className="sol-card relative mx-auto flex aspect-[4/3] w-full max-w-[420px] flex-col justify-between overflow-hidden rounded-[24px] p-7 sm:aspect-[4/5] md:p-9 lg:max-w-none"
+                    className="sol-card relative mx-auto flex aspect-[4/3] max-h-[560px] w-full max-w-[420px] flex-col justify-between overflow-hidden rounded-[24px] p-7 sm:aspect-[4/5] md:p-9 lg:max-w-[460px]"
                     style={{
                       background:
                         "linear-gradient(150deg, #96237A 0%, #650F50 45%, #3B0E30 100%)",
