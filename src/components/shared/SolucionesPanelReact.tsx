@@ -81,7 +81,10 @@ const PARAMS = {
   /** Vida propia de la card visual: flotación y tilt 3D con el cursor. */
   floatMs: 7000,
   floatPx: 10,
-  tiltMaxDeg: 7,
+  /** Giro máximo del tilt por eje, en grados (sutil: solo insinúa el 3D). */
+  tiltMaxDeg: 2.5,
+  /** Perspectiva del tilt: a mayor distancia, menos deformación. */
+  tiltPerspectivePx: 1600,
 };
 
 export default function SolucionesPanelReact({
@@ -237,7 +240,7 @@ export default function SolucionesPanelReact({
     const py = (e.clientY - r.top) / r.height - 0.5;
     const ry = (px * PARAMS.tiltMaxDeg * 2).toFixed(2);
     const rx = (-py * PARAMS.tiltMaxDeg * 2).toFixed(2);
-    el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+    el.style.transform = `perspective(${PARAMS.tiltPerspectivePx}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
   };
   const onCardLeave = () => {
     const el = tiltRef.current;
