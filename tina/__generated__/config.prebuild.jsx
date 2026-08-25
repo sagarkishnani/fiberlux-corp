@@ -8,6 +8,162 @@ var BLOG_TAG_OPTIONS = [
   "Comunicaciones",
   "Continuidad de negocio"
 ];
+var PLANTILLA_BENEFICIO_OPTIONS = [
+  { value: "velocidad", label: "Velocidad \u2014 tarjetas apiladas con anillo" },
+  { value: "simetria", label: "Simetr\xEDa \u2014 curva de \xE1rea con columnas" },
+  { value: "gauge", label: "Prioridad \u2014 semic\xEDrculo de rayitas" },
+  { value: "sedes", label: "Sedes \u2014 nodos unidos en una LAN" },
+  { value: "dwdm", label: "DWDM \u2014 dos racks unidos por hilos" },
+  { value: "uptime", label: "Uptime \u2014 anillo grande con cifra" },
+  { value: "prioridad", label: "Tr\xE1fico \u2014 lista priorizada con barras" },
+  { value: "conmutacion", label: "Conmutaci\xF3n \u2014 rutas con failover" },
+  { value: "mfa", label: "MFA \u2014 m\xF3vil con OTP y factores" },
+  { value: "escudo", label: "Escudo \u2014 impactos que rebotan en el borde" },
+  { value: "reloj", label: "Reloj \u2014 esfera con aguja que barre" },
+  { value: "checklist", label: "Checklist \u2014 filas que se van marcando" },
+  { value: "escalera", label: "Escalera \u2014 barras que crecen por escalones" },
+  { value: "consola", label: "Consola \u2014 panel central con m\xF3dulos" }
+];
+var datosIlustracionField = () => ({
+  name: "datos",
+  label: "Datos de la ilustraci\xF3n",
+  type: "object",
+  description: "Solo aplican los campos de la plantilla elegida arriba. Vac\xEDo = la ilustraci\xF3n usa sus valores por defecto.",
+  fields: [
+    {
+      name: "etiqueta",
+      label: "Etiqueta",
+      type: "string",
+      description: "Plantilla Velocidad. Ej: Velocidad sin ca\xEDdas"
+    },
+    { name: "etiqueta_en", label: "Etiqueta (EN)", type: "string" },
+    {
+      name: "valor",
+      label: "Cifra",
+      type: "string",
+      description: "Plantilla Uptime. Ej: 99,95"
+    },
+    {
+      name: "unidad",
+      label: "Unidad de la cifra",
+      type: "string",
+      description: "Plantilla Uptime. Ej: % UPTIME"
+    },
+    { name: "unidad_en", label: "Unidad de la cifra (EN)", type: "string" },
+    {
+      name: "porcentaje",
+      label: "Porcentaje (0\u2013100)",
+      type: "number",
+      description: "Plantillas Velocidad, Prioridad (semic\xEDrculo) y Uptime: cu\xE1nto se llena. Simetr\xEDa: en qu\xE9 punto del gr\xE1fico cae la columna destacada. Escalera: cu\xE1ntos escalones est\xE1n ocupados."
+    },
+    {
+      name: "hilos",
+      label: "N\xFAmero de hilos (3\u20138)",
+      type: "number",
+      description: "Plantilla DWDM. Cu\xE1ntas fibras unen los dos racks."
+    },
+    {
+      name: "barras",
+      label: "N\xFAmero de columnas (5\u20139)",
+      type: "number",
+      description: "Plantilla Simetr\xEDa. Cu\xE1ntas columnas tiene el gr\xE1fico. La destacada la elige 'Porcentaje'."
+    },
+    {
+      name: "tarjetas",
+      label: "Tarjetas apiladas",
+      type: "object",
+      list: true,
+      description: "Plantilla Velocidad. M\xE1ximo 3. Se van turnando delante, as\xED que todas se ven.",
+      ui: {
+        max: 3,
+        itemProps: (item) => ({ label: item?.etiqueta || "Tarjeta" })
+      },
+      fields: [
+        { name: "etiqueta", label: "Texto", type: "string" },
+        { name: "etiqueta_en", label: "Texto (EN)", type: "string" },
+        { name: "porcentaje", label: "Relleno del anillo (0\u2013100)", type: "number" }
+      ]
+    },
+    {
+      name: "filas",
+      label: "Filas de tr\xE1fico",
+      type: "object",
+      list: true,
+      description: "Plantilla Tr\xE1fico. M\xE1ximo 4.",
+      ui: {
+        max: 4,
+        itemProps: (item) => ({ label: item?.label || "Fila" })
+      },
+      fields: [
+        { name: "label", label: "Servicio", type: "string" },
+        { name: "label_en", label: "Servicio (EN)", type: "string" },
+        {
+          name: "nivel",
+          label: "Prioridad",
+          type: "string",
+          options: [
+            { value: "CR\xCDTICO", label: "Cr\xEDtico" },
+            { value: "ALTA", label: "Alta" },
+            { value: "MEDIA", label: "Media" },
+            { value: "BAJA", label: "Baja" }
+          ]
+        },
+        { name: "porcentaje", label: "Ancho de la barra (0\u2013100)", type: "number" }
+      ]
+    },
+    {
+      name: "rutas",
+      label: "Rutas de conmutaci\xF3n",
+      type: "object",
+      list: true,
+      description: "Plantilla Conmutaci\xF3n. M\xE1ximo 4. Ej: FIBRA, LTE, SATELITAL.",
+      ui: {
+        max: 4,
+        itemProps: (item) => ({ label: item?.label || "Ruta" })
+      },
+      fields: [
+        { name: "label", label: "Nombre", type: "string" },
+        { name: "label_en", label: "Nombre (EN)", type: "string" },
+        {
+          name: "activa",
+          label: "Es la ruta activa",
+          type: "boolean",
+          description: "La que queda iluminada al final del ciclo."
+        }
+      ]
+    },
+    {
+      name: "nodos",
+      label: "Nodos de la LAN",
+      type: "object",
+      list: true,
+      description: "Plantillas Sedes y Consola. M\xE1ximo 4 (Consola usa 3).",
+      ui: {
+        max: 4,
+        itemProps: (item) => ({ label: item?.label || "Nodo" })
+      },
+      fields: [
+        { name: "label", label: "Etiqueta", type: "string" },
+        { name: "label_en", label: "Etiqueta (EN)", type: "string" }
+      ]
+    },
+    {
+      name: "chips",
+      label: "Factores / \xEDtems",
+      type: "object",
+      list: true,
+      description: "Plantillas MFA y Checklist. M\xE1ximo 4. Ej: Contrase\xF1a, Token / App, Biometr\xEDa.",
+      ui: {
+        max: 4,
+        itemProps: (item) => ({ label: item?.label || "Factor" })
+      },
+      fields: [
+        { name: "label", label: "Etiqueta", type: "string" },
+        { name: "label_en", label: "Etiqueta (EN)", type: "string" }
+      ]
+    }
+  ]
+});
 var config_default = defineConfig({
   branch: process.env.TINA_BRANCH || "main",
   clientId: process.env.TINA_CLIENT_ID || "",
@@ -803,25 +959,6 @@ var config_default = defineConfig({
                   itemProps: (item) => ({ label: item?.title || "Beneficio" })
                 },
                 fields: [
-                  {
-                    name: "icon",
-                    label: "\xCDcono",
-                    type: "string",
-                    options: [
-                      { value: "velocidad", label: "Velocidad / Rendimiento" },
-                      { value: "simetria", label: "Carga y descarga sim\xE9trica" },
-                      { value: "soporte", label: "Soporte / Atenci\xF3n" },
-                      { value: "escudo", label: "Seguridad / Escudo" },
-                      { value: "disponibilidad", label: "Alta disponibilidad" },
-                      { value: "nube", label: "Nube / Cloud" },
-                      { value: "reloj", label: "24/7 / Tiempo" },
-                      { value: "red", label: "Red / Conectividad" },
-                      { value: "ahorro", label: "Ahorro / Costo" },
-                      { value: "cobertura", label: "Cobertura / Alcance" },
-                      { value: "escalabilidad", label: "Escalabilidad" },
-                      { value: "generico", label: "Gen\xE9rico" }
-                    ]
-                  },
                   { name: "title", label: "T\xEDtulo", type: "string" },
                   { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
@@ -830,7 +967,21 @@ var config_default = defineConfig({
                     type: "string",
                     ui: { component: "textarea" }
                   },
-                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "plantilla",
+                    label: "Ilustraci\xF3n",
+                    type: "string",
+                    options: PLANTILLA_BENEFICIO_OPTIONS,
+                    description: "Vac\xEDo = card sin ilustraci\xF3n, s\xF3lo t\xEDtulo y texto."
+                  },
+                  datosIlustracionField(),
+                  {
+                    name: "image",
+                    label: "Gr\xE1fico ilustrativo",
+                    type: "image",
+                    description: "Imagen decorativa al pie de la card (opcional). Si la subes, manda sobre la ilustraci\xF3n."
+                  }
                 ]
               }
             ]

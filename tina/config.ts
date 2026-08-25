@@ -12,6 +12,184 @@ const BLOG_TAG_OPTIONS = [
   "Continuidad de negocio",
 ];
 
+/* SPEC 105: las catorce plantillas de ilustración de una card de "Beneficios",
+   en `src/components/servicios/beneficios/`. Con 35 sub-servicios y 3 a 4 cards
+   cada uno son más de cien gráficos: dibujarlos como imágenes significaría cien
+   archivos que alguien tendría que exportar de nuevo cada vez que cambiara un
+   dato, así que el editor elige una plantilla y la alimenta con `datos`. */
+const PLANTILLA_BENEFICIO_OPTIONS = [
+  { value: "velocidad", label: "Velocidad — tarjetas apiladas con anillo" },
+  { value: "simetria", label: "Simetría — curva de área con columnas" },
+  { value: "gauge", label: "Prioridad — semicírculo de rayitas" },
+  { value: "sedes", label: "Sedes — nodos unidos en una LAN" },
+  { value: "dwdm", label: "DWDM — dos racks unidos por hilos" },
+  { value: "uptime", label: "Uptime — anillo grande con cifra" },
+  { value: "prioridad", label: "Tráfico — lista priorizada con barras" },
+  { value: "conmutacion", label: "Conmutación — rutas con failover" },
+  { value: "mfa", label: "MFA — móvil con OTP y factores" },
+  { value: "escudo", label: "Escudo — impactos que rebotan en el borde" },
+  { value: "reloj", label: "Reloj — esfera con aguja que barre" },
+  { value: "checklist", label: "Checklist — filas que se van marcando" },
+  { value: "escalera", label: "Escalera — barras que crecen por escalones" },
+  { value: "consola", label: "Consola — panel central con módulos" },
+];
+
+/* SPEC 105: datos de la ilustración de una card de beneficio.
+
+   Es UN objeto con todos los campos opcionales, no un objeto por plantilla: así
+   la query de GraphQL y el componente se mantienen planos. Cada descripción
+   dice a qué plantilla pertenece su campo, que es como se orienta el editor
+   dentro del panel. Ninguno es obligatorio: cada ilustración trae valores de
+   reserva codificados.
+
+   Las etiquetas llevan su `_en` porque se dibujan dentro del SVG y en /en
+   quedarían en español (SPEC 80). Vacío = se usa la española. */
+const datosIlustracionField = () => ({
+  name: "datos",
+  label: "Datos de la ilustración",
+  type: "object" as const,
+  description:
+    "Solo aplican los campos de la plantilla elegida arriba. Vacío = la ilustración usa sus valores por defecto.",
+  fields: [
+    {
+      name: "etiqueta",
+      label: "Etiqueta",
+      type: "string" as const,
+      description: "Plantilla Velocidad. Ej: Velocidad sin caídas",
+    },
+    { name: "etiqueta_en", label: "Etiqueta (EN)", type: "string" as const },
+    {
+      name: "valor",
+      label: "Cifra",
+      type: "string" as const,
+      description: "Plantilla Uptime. Ej: 99,95",
+    },
+    {
+      name: "unidad",
+      label: "Unidad de la cifra",
+      type: "string" as const,
+      description: "Plantilla Uptime. Ej: % UPTIME",
+    },
+    { name: "unidad_en", label: "Unidad de la cifra (EN)", type: "string" as const },
+    {
+      name: "porcentaje",
+      label: "Porcentaje (0–100)",
+      type: "number" as const,
+      description:
+        "Plantillas Velocidad, Prioridad (semicírculo) y Uptime: cuánto se llena. Simetría: en qué punto del gráfico cae la columna destacada. Escalera: cuántos escalones están ocupados.",
+    },
+    {
+      name: "hilos",
+      label: "Número de hilos (3–8)",
+      type: "number" as const,
+      description: "Plantilla DWDM. Cuántas fibras unen los dos racks.",
+    },
+    {
+      name: "barras",
+      label: "Número de columnas (5–9)",
+      type: "number" as const,
+      description:
+        "Plantilla Simetría. Cuántas columnas tiene el gráfico. La destacada la elige 'Porcentaje'.",
+    },
+    {
+      name: "tarjetas",
+      label: "Tarjetas apiladas",
+      type: "object" as const,
+      list: true,
+      description:
+        "Plantilla Velocidad. Máximo 3. Se van turnando delante, así que todas se ven.",
+      ui: {
+        max: 3,
+        itemProps: (item: any) => ({ label: item?.etiqueta || "Tarjeta" }),
+      },
+      fields: [
+        { name: "etiqueta", label: "Texto", type: "string" as const },
+        { name: "etiqueta_en", label: "Texto (EN)", type: "string" as const },
+        { name: "porcentaje", label: "Relleno del anillo (0–100)", type: "number" as const },
+      ],
+    },
+    {
+      name: "filas",
+      label: "Filas de tráfico",
+      type: "object" as const,
+      list: true,
+      description: "Plantilla Tráfico. Máximo 4.",
+      ui: {
+        max: 4,
+        itemProps: (item: any) => ({ label: item?.label || "Fila" }),
+      },
+      fields: [
+        { name: "label", label: "Servicio", type: "string" as const },
+        { name: "label_en", label: "Servicio (EN)", type: "string" as const },
+        {
+          name: "nivel",
+          label: "Prioridad",
+          type: "string" as const,
+          options: [
+            { value: "CRÍTICO", label: "Crítico" },
+            { value: "ALTA", label: "Alta" },
+            { value: "MEDIA", label: "Media" },
+            { value: "BAJA", label: "Baja" },
+          ],
+        },
+        { name: "porcentaje", label: "Ancho de la barra (0–100)", type: "number" as const },
+      ],
+    },
+    {
+      name: "rutas",
+      label: "Rutas de conmutación",
+      type: "object" as const,
+      list: true,
+      description: "Plantilla Conmutación. Máximo 4. Ej: FIBRA, LTE, SATELITAL.",
+      ui: {
+        max: 4,
+        itemProps: (item: any) => ({ label: item?.label || "Ruta" }),
+      },
+      fields: [
+        { name: "label", label: "Nombre", type: "string" as const },
+        { name: "label_en", label: "Nombre (EN)", type: "string" as const },
+        {
+          name: "activa",
+          label: "Es la ruta activa",
+          type: "boolean" as const,
+          description: "La que queda iluminada al final del ciclo.",
+        },
+      ],
+    },
+    {
+      name: "nodos",
+      label: "Nodos de la LAN",
+      type: "object" as const,
+      list: true,
+      description: "Plantillas Sedes y Consola. Máximo 4 (Consola usa 3).",
+      ui: {
+        max: 4,
+        itemProps: (item: any) => ({ label: item?.label || "Nodo" }),
+      },
+      fields: [
+        { name: "label", label: "Etiqueta", type: "string" as const },
+        { name: "label_en", label: "Etiqueta (EN)", type: "string" as const },
+      ],
+    },
+    {
+      name: "chips",
+      label: "Factores / ítems",
+      type: "object" as const,
+      list: true,
+      description:
+        "Plantillas MFA y Checklist. Máximo 4. Ej: Contraseña, Token / App, Biometría.",
+      ui: {
+        max: 4,
+        itemProps: (item: any) => ({ label: item?.label || "Factor" }),
+      },
+      fields: [
+        { name: "label", label: "Etiqueta", type: "string" as const },
+        { name: "label_en", label: "Etiqueta (EN)", type: "string" as const },
+      ],
+    },
+  ],
+});
+
 export default defineConfig({
   branch: process.env.TINA_BRANCH || "main",
   clientId: process.env.TINA_CLIENT_ID || "",
@@ -852,25 +1030,6 @@ export default defineConfig({
                   itemProps: (item) => ({ label: item?.title || "Beneficio" }),
                 },
                 fields: [
-                  {
-                    name: "icon",
-                    label: "Ícono",
-                    type: "string",
-                    options: [
-                      { value: "velocidad", label: "Velocidad / Rendimiento" },
-                      { value: "simetria", label: "Carga y descarga simétrica" },
-                      { value: "soporte", label: "Soporte / Atención" },
-                      { value: "escudo", label: "Seguridad / Escudo" },
-                      { value: "disponibilidad", label: "Alta disponibilidad" },
-                      { value: "nube", label: "Nube / Cloud" },
-                      { value: "reloj", label: "24/7 / Tiempo" },
-                      { value: "red", label: "Red / Conectividad" },
-                      { value: "ahorro", label: "Ahorro / Costo" },
-                      { value: "cobertura", label: "Cobertura / Alcance" },
-                      { value: "escalabilidad", label: "Escalabilidad" },
-                      { value: "generico", label: "Genérico" },
-                    ],
-                  },
                   { name: "title", label: "Título", type: "string" },
                   { name: "title_en", label: "Título (EN)", type: "string" },
                   {
@@ -880,6 +1039,21 @@ export default defineConfig({
                     ui: { component: "textarea" },
                   },
                   { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "plantilla",
+                    label: "Ilustración",
+                    type: "string",
+                    options: PLANTILLA_BENEFICIO_OPTIONS,
+                    description: "Vacío = card sin ilustración, sólo título y texto.",
+                  },
+                  datosIlustracionField(),
+                  {
+                    name: "image",
+                    label: "Gráfico ilustrativo",
+                    type: "image",
+                    description:
+                      "Imagen decorativa al pie de la card (opcional). Si la subes, manda sobre la ilustración.",
+                  },
                 ],
               },
             ],

@@ -225,11 +225,52 @@ fragment SubservicioParts on Subservicio {
     title_en
     items {
       __typename
-      icon
       title
       title_en
       text
       text_en
+      plantilla
+      datos {
+        __typename
+        etiqueta
+        etiqueta_en
+        valor
+        unidad
+        unidad_en
+        porcentaje
+        hilos
+        barras
+        tarjetas {
+          __typename
+          etiqueta
+          etiqueta_en
+          porcentaje
+        }
+        filas {
+          __typename
+          label
+          label_en
+          nivel
+          porcentaje
+        }
+        rutas {
+          __typename
+          label
+          label_en
+          activa
+        }
+        nodos {
+          __typename
+          label
+          label_en
+        }
+        chips {
+          __typename
+          label
+          label_en
+        }
+      }
+      image
     }
   }
   casosDeUso {

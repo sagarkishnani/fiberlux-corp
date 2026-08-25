@@ -657,12 +657,59 @@ type SubservicioHero {
   heroImage: String
 }
 
+type SubservicioBeneficiosItemsDatosTarjetas {
+  etiqueta: String
+  etiqueta_en: String
+  porcentaje: Float
+}
+
+type SubservicioBeneficiosItemsDatosFilas {
+  label: String
+  label_en: String
+  nivel: String
+  porcentaje: Float
+}
+
+type SubservicioBeneficiosItemsDatosRutas {
+  label: String
+  label_en: String
+  activa: Boolean
+}
+
+type SubservicioBeneficiosItemsDatosNodos {
+  label: String
+  label_en: String
+}
+
+type SubservicioBeneficiosItemsDatosChips {
+  label: String
+  label_en: String
+}
+
+type SubservicioBeneficiosItemsDatos {
+  etiqueta: String
+  etiqueta_en: String
+  valor: String
+  unidad: String
+  unidad_en: String
+  porcentaje: Float
+  hilos: Float
+  barras: Float
+  tarjetas: [SubservicioBeneficiosItemsDatosTarjetas]
+  filas: [SubservicioBeneficiosItemsDatosFilas]
+  rutas: [SubservicioBeneficiosItemsDatosRutas]
+  nodos: [SubservicioBeneficiosItemsDatosNodos]
+  chips: [SubservicioBeneficiosItemsDatosChips]
+}
+
 type SubservicioBeneficiosItems {
-  icon: String
   title: String
   title_en: String
   text: String
   text_en: String
+  plantilla: String
+  datos: SubservicioBeneficiosItemsDatos
+  image: String
 }
 
 type SubservicioBeneficios {
@@ -733,12 +780,59 @@ input SubservicioHeroFilter {
   heroImage: ImageFilter
 }
 
+input SubservicioBeneficiosItemsDatosTarjetasFilter {
+  etiqueta: StringFilter
+  etiqueta_en: StringFilter
+  porcentaje: NumberFilter
+}
+
+input SubservicioBeneficiosItemsDatosFilasFilter {
+  label: StringFilter
+  label_en: StringFilter
+  nivel: StringFilter
+  porcentaje: NumberFilter
+}
+
+input SubservicioBeneficiosItemsDatosRutasFilter {
+  label: StringFilter
+  label_en: StringFilter
+  activa: BooleanFilter
+}
+
+input SubservicioBeneficiosItemsDatosNodosFilter {
+  label: StringFilter
+  label_en: StringFilter
+}
+
+input SubservicioBeneficiosItemsDatosChipsFilter {
+  label: StringFilter
+  label_en: StringFilter
+}
+
+input SubservicioBeneficiosItemsDatosFilter {
+  etiqueta: StringFilter
+  etiqueta_en: StringFilter
+  valor: StringFilter
+  unidad: StringFilter
+  unidad_en: StringFilter
+  porcentaje: NumberFilter
+  hilos: NumberFilter
+  barras: NumberFilter
+  tarjetas: SubservicioBeneficiosItemsDatosTarjetasFilter
+  filas: SubservicioBeneficiosItemsDatosFilasFilter
+  rutas: SubservicioBeneficiosItemsDatosRutasFilter
+  nodos: SubservicioBeneficiosItemsDatosNodosFilter
+  chips: SubservicioBeneficiosItemsDatosChipsFilter
+}
+
 input SubservicioBeneficiosItemsFilter {
-  icon: StringFilter
   title: StringFilter
   title_en: StringFilter
   text: StringFilter
   text_en: StringFilter
+  plantilla: StringFilter
+  datos: SubservicioBeneficiosItemsDatosFilter
+  image: ImageFilter
 }
 
 input SubservicioBeneficiosFilter {
@@ -2829,12 +2923,59 @@ input SubservicioHeroMutation {
   heroImage: String
 }
 
+input SubservicioBeneficiosItemsDatosTarjetasMutation {
+  etiqueta: String
+  etiqueta_en: String
+  porcentaje: Float
+}
+
+input SubservicioBeneficiosItemsDatosFilasMutation {
+  label: String
+  label_en: String
+  nivel: String
+  porcentaje: Float
+}
+
+input SubservicioBeneficiosItemsDatosRutasMutation {
+  label: String
+  label_en: String
+  activa: Boolean
+}
+
+input SubservicioBeneficiosItemsDatosNodosMutation {
+  label: String
+  label_en: String
+}
+
+input SubservicioBeneficiosItemsDatosChipsMutation {
+  label: String
+  label_en: String
+}
+
+input SubservicioBeneficiosItemsDatosMutation {
+  etiqueta: String
+  etiqueta_en: String
+  valor: String
+  unidad: String
+  unidad_en: String
+  porcentaje: Float
+  hilos: Float
+  barras: Float
+  tarjetas: [SubservicioBeneficiosItemsDatosTarjetasMutation]
+  filas: [SubservicioBeneficiosItemsDatosFilasMutation]
+  rutas: [SubservicioBeneficiosItemsDatosRutasMutation]
+  nodos: [SubservicioBeneficiosItemsDatosNodosMutation]
+  chips: [SubservicioBeneficiosItemsDatosChipsMutation]
+}
+
 input SubservicioBeneficiosItemsMutation {
-  icon: String
   title: String
   title_en: String
   text: String
   text_en: String
+  plantilla: String
+  datos: SubservicioBeneficiosItemsDatosMutation
+  image: String
 }
 
 input SubservicioBeneficiosMutation {
