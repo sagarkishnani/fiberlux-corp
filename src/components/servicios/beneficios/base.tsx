@@ -147,3 +147,178 @@ export function useTurno(total: number, activo: boolean, ms: number): number {
 
   return i;
 }
+
+/**
+ * Animaciones compartidas por las catorce plantillas (SPEC 105).
+ *
+ * Va como constante y no en `src/styles/global.css` porque en este repo ese
+ * archivo no se empaqueta: lo que se escriba ahí no llega al navegador. La
+ * inyecta `BeneficiosReact` desde su `<style>`.
+ *
+ * Las catorce comparten esta media docena de animaciones en vez de traer cada
+ * una las suyas: lo que cambia entre ellas es el dibujo, no la forma de entrar.
+ * Todas arrancan sólo cuando la card ya está en viewport —el componente añade
+ * `.fbx-ben-on` al SVG— y una sola vez: pasar el cursor no las rearranca, que
+ * en una fila de tres cards convertía el ratón en un interruptor de ruido.
+ *
+ * `transform-box: fill-box` no sobra en SVG: sin él, `transform-origin: center`
+ * se mide contra el lienzo entero y las escalas salen disparadas.
+ */
+export const CSS_BENEFICIOS = `
+/* Trazo que se dibuja. El componente pone \`--largo\` con la longitud del path. */
+.fbx-ben-traza {
+  stroke-dasharray: var(--largo, 400);
+  stroke-dashoffset: var(--largo, 400);
+}
+.fbx-ben-on .fbx-ben-traza {
+  animation: fbx-ben-traza 1.2s cubic-bezier(0.22, 1, 0.36, 1) var(--ret, 0s) both;
+}
+@keyframes fbx-ben-traza { to { stroke-dashoffset: 0; } }
+
+/* Aparición simple: la usan fondos, tarjetas y textos del dibujo. */
+.fbx-ben-aparece { opacity: 0; }
+.fbx-ben-on .fbx-ben-aparece {
+  animation: fbx-ben-aparece 0.5s ease-out var(--ret, 0s) both;
+}
+@keyframes fbx-ben-aparece {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Punto que aterriza. */
+.fbx-ben-punto {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.fbx-ben-on .fbx-ben-punto {
+  animation: fbx-ben-punto 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) var(--ret, 0s) both;
+}
+@keyframes fbx-ben-punto {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Giro continuo sobre el centro que fija el componente. La usa la aguja del
+   reloj: \`transform-origin\` viene en línea porque depende de su geometría. */
+.fbx-ben-on .fbx-ben-gira {
+  animation: fbx-ben-gira var(--ciclo, 6s) linear var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-gira { to { transform: rotate(360deg); } }
+
+/* Barra que crece desde su borde izquierdo. */
+.fbx-ben-barra {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.fbx-ben-on .fbx-ben-barra {
+  animation: fbx-ben-barra 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--ret, 0s) both;
+}
+@keyframes fbx-ben-barra { to { transform: scaleX(1); } }
+
+/* Relleno que sube desde su base. La usa el área bajo la curva. */
+.fbx-ben-sube {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  transform: scaleY(0);
+  opacity: 0;
+}
+.fbx-ben-on .fbx-ben-sube {
+  animation: fbx-ben-sube 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--ret, 0s) both;
+}
+@keyframes fbx-ben-sube { to { transform: scaleY(1); opacity: 1; } }
+
+/* Barajado de la pila de "Velocidad": la tarjeta se desplaza y escala hasta su
+   nueva posición en vez de saltar. La transición va sobre \`transform\` porque es
+   lo único animable aquí —los atributos \`x\`/\`y\`/\`width\` de SVG no
+   transicionan—, y por eso cada tarjeta se posiciona con \`translate\`/\`scale\` y
+   no con coordenadas propias. */
+.fbx-ben-carta { transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* ── Vida en bucle ──
+   Lo que se repite NO es el dibujo de entrada: repetirlo se nota forzado, que
+   es justo lo que hay que evitar. Lo que sigue vivo es el estado ya dibujado,
+   con movimientos largos, de poca amplitud y desfasados entre sí para que nada
+   lata al unísono.
+
+   Van sobre elementos que NO llevan clase de entrada: una animación por
+   elemento, así que entrada y bucle tienen que vivir en nodos distintos —lo
+   normal es la entrada en un \`<g>\` envoltorio y el bucle en la forma. */
+
+/* Guiones que viajan por un trazo: fibras, enlaces, rutas. */
+.fbx-ben-on .fbx-ben-flujo {
+  animation: fbx-ben-flujo var(--ciclo, 3s) linear var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-flujo { to { stroke-dashoffset: var(--flujo, -24); } }
+
+/* Respiración: la opacidad sube y baja poco, muy despacio. */
+.fbx-ben-on .fbx-ben-respira {
+  animation: fbx-ben-respira var(--ciclo, 5s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-respira {
+  0%, 100% { opacity: var(--o, 1); }
+  50% { opacity: calc(var(--o, 1) * 0.5); }
+}
+
+/* Destello: un realce breve y espaciado, como una luz que pasa. El grueso del
+   ciclo es reposo; sin esa pausa larga se lee como un parpadeo nervioso. */
+.fbx-ben-on .fbx-ben-destello {
+  animation: fbx-ben-destello var(--ciclo, 6s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-destello {
+  0%, 74%, 100% { opacity: var(--o, 0.35); }
+  84% { opacity: 1; }
+}
+
+/* Lo que cambia de sitio o de tamaño con el bucle lo hace con transición, no
+   con keyframes: el estado lo lleva React y así el salto entre dos valores es
+   suave sin tener que declarar la animación entera. */
+.fbx-ben-suave {
+  transition:
+    opacity 900ms ease-in-out,
+    fill 900ms ease-in-out,
+    stroke 900ms ease-in-out,
+    transform 900ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Latido suave en bucle, para lo que tiene que seguir vivo tras la entrada. */
+.fbx-ben-on .fbx-ben-late {
+  animation: fbx-ben-late var(--ciclo, 3s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-late {
+  0%, 100% { opacity: var(--o, 1); }
+  50% { opacity: calc(var(--o, 1) * 0.45); }
+}
+
+/* ── Movimiento reducido ──
+   Las catorce ilustraciones aparecen enteras y quietas: trazos cerrados,
+   barras a su ancho final, nada latiendo. */
+@media (prefers-reduced-motion: reduce) {
+  .fbx-ben-on .fbx-ben-traza,
+  .fbx-ben-on .fbx-ben-aparece,
+  .fbx-ben-on .fbx-ben-gira,
+  .fbx-ben-on .fbx-ben-punto,
+  .fbx-ben-on .fbx-ben-barra,
+  .fbx-ben-on .fbx-ben-sube,
+  .fbx-ben-on .fbx-ben-late,
+  .fbx-ben-on .fbx-ben-flujo,
+  .fbx-ben-on .fbx-ben-respira,
+  .fbx-ben-on .fbx-ben-destello {
+    animation: none !important;
+  }
+  .fbx-ben-suave { transition: none !important; }
+  /* Los estados de reposo se resetean sobre la clase desnuda: si el
+     observador no llegara a disparar, el dibujo tiene que verse igual. */
+  .fbx-ben-traza { stroke-dashoffset: 0 !important; }
+  .fbx-ben-aparece,
+  .fbx-ben-punto,
+  .fbx-ben-sube { opacity: 1 !important; }
+  .fbx-ben-punto,
+  .fbx-ben-barra,
+  .fbx-ben-sube { transform: none !important; }
+  /* El barajado se queda sin transición: la tarjeta elegida aparece ya puesta.
+     El turno automático no llega ni a arrancar, lo corta \`useTurno\`. */
+  .fbx-ben-carta { transition: none !important; }
+}
+`;
