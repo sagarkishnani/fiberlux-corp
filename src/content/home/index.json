@@ -84,6 +84,11 @@
           { "label": "Balanceo de enlaces", "label_en": "Link Balancing", "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces" }
         ],
         "url": "/soluciones/conectividad-empresarial",
+        "tabIcon": "rayo",
+        "body": "Asegura la disponibilidad, resiliencia y el rendimiento de tu infraestructura multisede con enlaces de alta capacidad respaldados por nuestro NOC 24/7.",
+        "body_en": "Ensure the availability, resilience and performance of your multi-site infrastructure with high-capacity links backed by our 24/7 NOC.",
+        "eyebrow": "RED · NOC 24/7",
+        "eyebrow_en": "NETWORK · NOC 24/7",
         "title_en": "Business Connectivity",
         "description_en": "Real fiber-optic connectivity for forward-thinking companies."
       },
@@ -108,6 +113,11 @@
           { "label": "Pentesting", "label_en": "Pentesting", "url": "/soluciones/ciberseguridad-gestionada/pentesting" }
         ],
         "url": "/soluciones/ciberseguridad-gestionada",
+        "tabIcon": "escudo",
+        "body": "Protección integral para infraestructuras digitales modernas, combinando seguridad perimetral, protección de endpoints, control de identidades y acceso, seguridad de aplicaciones, monitoreo continuo y respuesta ante incidentes.",
+        "body_en": "Comprehensive protection for modern digital infrastructures, combining perimeter security, endpoint protection, identity and access control, application security, continuous monitoring and incident response.",
+        "eyebrow": "SOC · MONITOREO 24/7",
+        "eyebrow_en": "SOC · 24/7 MONITORING",
         "title_en": "Managed Cybersecurity",
         "description_en": "Protect your critical operation with cybersecurity."
       },
@@ -125,6 +135,11 @@
           { "label": "Arquitectura basada en Microservicios", "label_en": "Microservices-based Architecture", "url": "/soluciones/data-center-cloud/microservicios" }
         ],
         "url": "/soluciones/data-center-cloud",
+        "tabIcon": "nube",
+        "body": "Aloja, protege y escala tus aplicaciones y datos sobre plataformas empresariales preparadas para acompañar el crecimiento y las exigencias de tu operación.",
+        "body_en": "Host, protect and scale your applications and data on enterprise platforms built to support your operation's growth and demands.",
+        "eyebrow": "CLOUD · DATA CENTER",
+        "eyebrow_en": "CLOUD · DATA CENTER",
         "title_en": "Data Center, Cloud & Business Continuity",
         "description_en": "Infrastructure ready to grow and recover."
       },
@@ -143,6 +158,11 @@
           { "label": "Colaboración Empresarial", "label_en": "Enterprise Collaboration", "url": "/soluciones/servicios-gestionados/colaboracion-empresarial" }
         ],
         "url": "/soluciones/servicios-gestionados",
+        "tabIcon": "engranaje",
+        "body": "Actuamos como una extensión de tu equipo de TI, gestionando redes, comunicaciones, endpoints y plataformas críticas para mantener la continuidad operativa.",
+        "body_en": "We act as an extension of your IT team, managing networks, communications, endpoints and critical platforms to keep your operation running.",
+        "eyebrow": "TI GESTIONADA · SLA",
+        "eyebrow_en": "MANAGED IT · SLA",
         "title_en": "Managed Services",
         "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel."
       }
