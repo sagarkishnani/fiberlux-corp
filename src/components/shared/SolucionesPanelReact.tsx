@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import {
   FaBolt,
@@ -72,7 +73,38 @@ export default function SolucionesPanelReact({
   >;
   const N = items.length;
 
-  const [activeIndex] = useState(0);
+  /* `dir` = dirección del último cambio (+1 adelante / -1 atrás): alimenta el
+     crossfade direccional del paso 7. */
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [dir, setDir] = useState(1);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  /* Cambia de categoría con wrap circular (la última vuelve a la primera). */
+  const goTo = useCallback(
+    (next: number, direction?: number) => {
+      if (N === 0) return;
+      const target = ((next % N) + N) % N;
+      setActiveIndex((prev) => {
+        if (prev === target) return prev;
+        setDir(direction ?? (target > prev ? 1 : -1));
+        return target;
+      });
+    },
+    [N],
+  );
+
+  const goPrev = useCallback(() => goTo(activeIndex - 1, -1), [goTo, activeIndex]);
+  const goNext = useCallback(() => goTo(activeIndex + 1, 1), [goTo, activeIndex]);
+
+  /* ←/→ sobre la tira de tabs: mueve la categoría y el foco (patrón WAI-ARIA). */
+  const onTabsKeyDown = (e: ReactKeyboardEvent) => {
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    const delta = e.key === "ArrowRight" ? 1 : -1;
+    const target = ((activeIndex + delta) % N + N) % N;
+    goTo(target, delta);
+    tabRefs.current[target]?.focus();
+  };
 
   if (N === 0) return null;
 
@@ -111,7 +143,12 @@ export default function SolucionesPanelReact({
 
         {/* ── Tira de píldoras de categoría ── */}
         <div className="mb-8 md:mb-10">
-          <div className="flex gap-2.5 md:gap-3">
+          <div
+            role="tablist"
+            aria-label={sectionTitle || "Soluciones"}
+            onKeyDown={onTabsKeyDown}
+            className="flex gap-2.5 md:gap-3"
+          >
             {items.map((it, i) => {
               const Icon = iconFor(it?.tabIcon);
               const isActive = i === idx;
@@ -119,10 +156,19 @@ export default function SolucionesPanelReact({
                 <button
                   key={i}
                   type="button"
+                  role="tab"
+                  id={`sol-tab-${i}`}
+                  aria-selected={isActive}
+                  aria-controls="sol-panel"
+                  tabIndex={isActive ? 0 : -1}
+                  ref={(el) => {
+                    tabRefs.current[i] = el;
+                  }}
+                  onClick={() => goTo(i)}
                   className={`inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border px-5 py-3 text-[14px] font-medium transition-colors md:text-[15px] ${
                     isActive
                       ? "border-brand-purple bg-brand-purple/20 text-white"
-                      : "border-white/[0.12] bg-white/[0.04] text-white/70"
+                      : "border-white/[0.12] bg-white/[0.04] text-white/70 hover:border-white/25 hover:text-white"
                   }`}
                 >
                   <Icon aria-hidden="true" className="text-[15px]" />
@@ -135,7 +181,12 @@ export default function SolucionesPanelReact({
 
         {/* ── Panel de detalle ── */}
         <div className="relative">
-          <div className="rounded-[28px] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:p-10 lg:p-12">
+          <div
+            id="sol-panel"
+            role="tabpanel"
+            aria-labelledby={`sol-tab-${idx}`}
+            className="rounded-[28px] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl md:p-10 lg:p-12"
+          >
             <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-12">
               {/* Columna izquierda */}
               <div>
