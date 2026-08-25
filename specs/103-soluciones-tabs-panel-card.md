@@ -22,8 +22,8 @@ El cliente trajo una referencia visual (captura adjunta al pedido): píldoras de
 - **Sección de alto normal:** se elimina el scroll-jack (track alto + panel `sticky`). La sección ocupa su alto natural y el scroll de la página nunca queda anclado.
 - **Tira de chips de categoría** (tabs) arriba del panel: ícono + nombre corto (`tabLabel`, con fallback al `title`), estado activo destacado con borde magenta e **indicador deslizante** entre chips. Scroll horizontal con máscara en mobile.
 - **Encabezado de sección:** eyebrow `[ SOLUCIONES ]` (string de UI, localizado) + título grande `h2` con `services.title` del CMS.
-- **Panel de detalle** presentado como **stack de tarjetas**: dos capas redondeadas, casi tan altas como la activa, escalonadas +22px y +44px a la derecha (la más lejana más apagada), asoman detrás del panel. Panel partido en dos mitades **56/44** en `lg+`, con alto mínimo (`min-h-[470px]`) y contenido centrado verticalmente para que el alto no salte entre categorías:
-  - **Izquierda:** título de la categoría (`title`), descripción corta (`description`), subservicios como **chips** (píldora con punto magenta) y CTA **tipo link** "Conoce más →" (no botón relleno) → `url` de la categoría.
+- **Panel de detalle** presentado como **stack de tarjetas**: dos capas redondeadas, casi tan altas como la activa, escalonadas +22px y +44px a la derecha (la más lejana más apagada), asoman detrás del panel. Panel partido en dos mitades **56/44** en `lg+`, con alto mínimo (`min-h-[620px]`, el de la categoría más larga) y contenido centrado verticalmente para que el alto no salte entre categorías:
+  - **Izquierda:** título de la categoría (`title`), descripción corta (`description`), subservicios como **chips** (píldora plum con punto rosado `brand-purple-light`) y CTA **tipo link rosado** "Conoce más →" (no botón relleno) → `url` de la categoría.
   - **Derecha:** mitad **a sangre** con degradado magenta, capas de cuadrados rotados translúcidos y el ícono de la categoría en un tile claro. Sin textos dentro de la card.
 - **Flechas circulares a los costados** de la card, centradas verticalmente y superpuestas sobre sus bordes, reusando `shared/SliderSideArrows.tsx` (SPEC 94). Con wrap (de la última vuelve a la primera).
 - **Arrastre horizontal** (pointer drag) sobre el panel para cambiar de categoría, además de tabs y flechas. Soporte de teclado: flechas ←/→ sobre la tira de tabs (`role="tablist"`).
@@ -78,6 +78,7 @@ Schema en `tina/config.ts` — se añaden dentro de `home.services.items[]`:
     { value: "escudo",    label: "Escudo / Seguridad" },
     { value: "nube",      label: "Nube / Cloud" },
     { value: "engranaje", label: "Engranajes / Servicios gestionados" },
+  { value: "personas", label: "Personas / Equipo gestionado" },
     { value: "red",       label: "Red / Nodos" },
     { value: "servidor",  label: "Servidor / Data Center" },
     { value: "globo",     label: "Globo / Cobertura" },
@@ -95,15 +96,15 @@ Schema en `tina/config.ts` — se añaden dentro de `home.services.items[]`:
 { name: "tabLabel_en", label: "Nombre corto (chip) (EN)", type: "string" },
 ```
 
-Mapa `tabIcon` → glifo, hardcodeado en el componente (patrón de `RubrosReact`, SPEC 90):
+Mapa `tabIcon` → glifo **de trazo (Lucide, `react-icons/lu`)**, hardcodeado en el componente (patrón de `RubrosReact`, SPEC 90). Se usa Lucide y no Font Awesome sólido porque la referencia dibuja los íconos en outline:
 
 ```ts
 const ICONS = {
-  rayo: FaBolt, escudo: FaShieldHalved, nube: FaCloud, engranaje: FaGears,
-  red: FaNetworkWired, servidor: FaServer, globo: FaGlobe,
-  soporte: FaHeadset, datos: FaDatabase, wifi: FaWifi,
+  rayo: LuZap, escudo: LuShield, nube: LuCloud, engranaje: LuSettings,
+  personas: LuUsersRound, red: LuNetwork, servidor: LuServer, globo: LuGlobe,
+  soporte: LuHeadset, datos: LuDatabase, wifi: LuWifi,
 } as const;
-// valor ausente o desconocido → FaBolt
+// valor ausente o desconocido → LuZap
 ```
 
 Contenido sembrado en `src/content/home/index.json` (4 categorías): solo `tabIcon` (`conectividad → rayo`, `ciberseguridad → escudo`, `cloud/data center → nube`, `servicios gestionados → engranaje`). **No se escribe ningún texto nuevo:** `tabLabel` queda vacío y el cliente decide el nombre corto en Tina.
@@ -159,7 +160,9 @@ Cada paso deja el sitio compilando y funcional.
 - [x] Los subservicios se muestran como **chips** (píldora con punto magenta) que fluyen en varias filas, y entran en stagger.
 - [x] El CTA "Conoce más" es un **link con flecha**, no un botón relleno.
 - [x] El panel se ve como un **stack**: dos capas redondeadas y casi tan altas como la activa asoman escalonadas por la derecha.
-- [x] El alto del panel no salta al cambiar de categoría (la de 8 y la de 13 subservicios miden lo mismo).
+- [x] El alto del panel no salta al cambiar de categoría: las 4 miden 622px en desktop.
+- [x] Los puntos de los chips y el CTA "Conoce más" usan el rosado de marca (`brand-purple-light`, `#D5A7CA`).
+- [x] Los íconos de categoría son de **trazo**, no sólidos.
 - [x] La mitad derecha va **a sangre** (sin padding) y **no** contiene textos.
 - [x] La mitad visual muestra el ícono de la categoría sobre el degradado; el cúmulo flota sutilmente y hace tilt 3D siguiendo al cursor en punteros finos.
 - [x] En táctil (`pointer: coarse`) no hay tilt ni tooltip.
@@ -191,6 +194,7 @@ Los 3 errores de consola en `/soluciones` son de Cloudflare Turnstile contra `lo
 - **Sí:** usar solo `title` + `description` del CMS en la columna izquierda. La primera versión añadía un párrafo `body` y un pie `eyebrow` en la card (`RED · NOC 24/7`) — texto inventado por el agente que la referencia no tiene; ambos campos se eliminaron del schema.
 - **Sí:** subservicios como **chips** y CTA **tipo link con flecha** (referencia), en vez del checklist con checks en dos columnas y el botón relleno de la primera versión.
 - **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding. Las capas se recortan a partir de la mitad del panel para no meterse bajo la columna de texto, y se ocultan bajo `sm` (no hay ancho para escalonarlas).
+- **Sí:** íconos **Lucide (outline)** en vez de Font Awesome sólido; el CLAUDE.md fija `react-icons/fa6` como set del sitio, pero la referencia de esta sección dibuja los íconos en trazo. Se mantiene `react-icons` como librería.
 - **Sí:** alto mínimo del panel + contenido centrado verticalmente. Sin eso el alto saltaba entre categorías (8 vs 13 subservicios) al navegar con las flechas.
 - **Sí:** `tabLabel` opcional para el nombre corto del chip, con fallback al título. Evita que el agente acorte por su cuenta los títulos del cliente.
 - **Sí:** `tabIcon` como **set cerrado de opciones** mapeado a `react-icons/fa6` (patrón de Rubros, SPEC 90), en vez de reusar `items[].icon` (hoy las 4 categorías apuntan al mismo `onda-magenta.svg`, se verían idénticas) y en vez de subir imágenes (el cliente tendría que producir 4 assets).
