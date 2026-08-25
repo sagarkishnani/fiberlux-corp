@@ -77,6 +77,46 @@ const TICKS = Array.from({ length: 12 }, (_, i) => {
   };
 });
 
+/* ── Etiqueta bajo el código: hasta 2 líneas ──────────────────────────────────
+   El SVG no reparte el texto solo, así que las etiquetas largas ("SEGURIDAD DE
+   LA INFORMACIÓN") se salían del sello. `useLabelLines` mide el ancho aproximado
+   y, si no entra, parte por palabras en DOS líneas equilibradas (se minimiza la
+   línea más ancha), nunca a mitad de palabra. */
+const LABEL_FONT = 10;
+const LABEL_TRACKING = 2;
+/** Avance aproximado de un carácter de Space Mono con el tracking aplicado. */
+const LABEL_CHAR_ADV = LABEL_FONT * 0.6 + LABEL_TRACKING;
+/** Ancho útil dentro del anillo a la altura de la etiqueta (unidades del viewBox). */
+const LABEL_MAX_W = 130;
+const LABEL_LINE_H = 12;
+
+function useLabelLines(label?: string | null) {
+  return useMemo(() => {
+    const texto = (label || "").trim();
+    if (!texto) return [] as string[];
+    const ancho = (s: string) => s.length * LABEL_CHAR_ADV;
+    if (ancho(texto) <= LABEL_MAX_W) return [texto];
+
+    const palabras = texto.split(/\s+/);
+    if (palabras.length < 2) return [texto]; // una sola palabra: no hay dónde cortar
+
+    // Corte que deja la línea más ancha lo más estrecha posible.
+    let mejor = 1;
+    let mejorMax = Infinity;
+    for (let i = 1; i < palabras.length; i++) {
+      const max = Math.max(
+        ancho(palabras.slice(0, i).join(" ")),
+        ancho(palabras.slice(i).join(" "))
+      );
+      if (max < mejorMax) {
+        mejorMax = max;
+        mejor = i;
+      }
+    }
+    return [palabras.slice(0, mejor).join(" "), palabras.slice(mejor).join(" ")];
+  }, [label]);
+}
+
 /**
  * Repite `ringText` con ` · ` el número ENTERO de veces que mejor se acerca a la
  * circunferencia. No se recorta nada: el ajuste fino lo hace `textLength` +
@@ -103,6 +143,7 @@ export default function CertSeal({
 }: CertSealProps) {
   const uid = useId().replace(/:/g, "");
   const label = tField(cert as any, "label", locale);
+  const labelLines = useLabelLines(label);
   const norm = tField(cert as any, "norm", locale);
   const scope = tField(cert as any, "scope", locale);
   const ringLoop = useRingLoop(tField(cert as any, "ringText", locale));
@@ -236,19 +277,25 @@ export default function CertSeal({
             >
               {cert.code}
             </text>
-            {label && (
+            {labelLines.length > 0 && (
               <text
                 x={120}
-                y={150}
+                /* Con dos líneas el bloque sube media interlínea para que siga
+                   centrado bajo el número en vez de bajar hacia el anillo. */
+                y={labelLines.length > 1 ? 147 : 150}
                 textAnchor="middle"
-                fontSize={10}
-                letterSpacing={2}
+                fontSize={LABEL_FONT}
+                letterSpacing={LABEL_TRACKING}
                 fill="#FFFFFF"
                 fillOpacity={0.45}
                 style={{ fontFamily: "'Space Mono', ui-monospace, monospace" }}
                 data-tina-field={tinaItem ? tinaField(tinaItem, "label") : undefined}
               >
-                {label}
+                {labelLines.map((linea, i) => (
+                  <tspan key={i} x={120} dy={i === 0 ? 0 : LABEL_LINE_H}>
+                    {linea}
+                  </tspan>
+                ))}
               </text>
             )}
           </g>

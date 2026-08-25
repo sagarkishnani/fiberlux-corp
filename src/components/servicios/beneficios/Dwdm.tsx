@@ -19,6 +19,8 @@ const MAX = 8;
 
 /** Caja de cada rack. */
 const RACK = { w: 34, h: 124, y: 28, izq: 30, der: 256 };
+/** Aire entre el borde de cada rack y el extremo pintado de los hilos (obs. cliente). */
+const AIRE = 4;
 
 export default function Dwdm({ datos, activo }: PropsIlustracion) {
   const pedidos = Number(datos?.hilos);
@@ -27,10 +29,13 @@ export default function Dwdm({ datos, activo }: PropsIlustracion) {
     : HILOS_RESERVA;
 
   /* Los hilos se reparten por el alto útil del rack, con margen arriba y abajo
-     para que no se peguen a las esquinas redondeadas. */
+     para que no se peguen a las esquinas redondeadas. El haz va CENTRADO
+     verticalmente respecto a los racks (obs. cliente): antes colgaba hacia
+     abajo por esquivar las luces del equipo, que quedan dentro del rack y no
+     estorban a unos hilos que arrancan fuera de él. */
   const alto = RACK.h - 46;
   const paso = alto / (hilos - 1);
-  const y0 = RACK.y + 34;
+  const y0 = RACK.y + (RACK.h - alto) / 2;
 
   return (
     <Lienzo activo={activo}>
@@ -69,6 +74,14 @@ export default function Dwdm({ datos, activo }: PropsIlustracion) {
         /* Uno de cada tres va a plena opacidad: sin ese contraste los hilos se
            leen como un rayado y no como fibras distintas. */
         const fuerte = i % 3 === 1;
+        const grosor = fuerte ? 4 : 3;
+        /* El extremo redondeado pinta medio grosor MÁS ALLÁ del punto final, así
+           que se descuenta: sin eso los hilos se montaban sobre los racks. Con
+           el descuento el aire visible es exactamente AIRE en ambos lados,
+           igual para hilos gruesos y finos. */
+        const x1 = RACK.izq + RACK.w + AIRE + grosor / 2;
+        const x2 = RACK.der - AIRE - grosor / 2;
+        const largo = x2 - x1;
         return (
           /* La entrada va en el grupo y el pulso en la línea de encima: una
              animación por elemento, así que no pueden compartir nodo. */
@@ -78,12 +91,12 @@ export default function Dwdm({ datos, activo }: PropsIlustracion) {
             style={{ "--ret": ret(0.3 + i * 0.09) } as React.CSSProperties}
           >
             <line
-              x1={RACK.izq + RACK.w}
+              x1={x1}
               y1={y}
-              x2={RACK.der}
+              x2={x2}
               y2={y}
               stroke={C.acentoClaro}
-              strokeWidth={fuerte ? 4 : 3}
+              strokeWidth={grosor}
               strokeLinecap="round"
               opacity={fuerte ? 0.9 : 0.4}
             />
@@ -94,17 +107,17 @@ export default function Dwdm({ datos, activo }: PropsIlustracion) {
                 {
                   "--ciclo": `${PULSO_S}s`,
                   "--ret": `${(i * 0.55).toFixed(2)}s`,
-                  "--flujo": -(RACK.der - RACK.izq - RACK.w + 30),
+                  "--flujo": -(largo + 30),
                 } as React.CSSProperties
               }
-              x1={RACK.izq + RACK.w}
+              x1={x1}
               y1={y}
-              x2={RACK.der}
+              x2={x2}
               y2={y}
               stroke="#F7DDEF"
-              strokeWidth={fuerte ? 4 : 3}
+              strokeWidth={grosor}
               strokeLinecap="round"
-              strokeDasharray={`16 ${RACK.der - RACK.izq - RACK.w + 14}`}
+              strokeDasharray={`16 ${largo + 14}`}
               opacity="0.9"
             />
           </g>

@@ -31,6 +31,8 @@ interface EmpresasRedProps {
   autoplay?: boolean;
   intervalMs?: number;
   effect?: SliderEffect;
+  /** Oculta el CTA a casos de éxito (en la propia página de casos sobra). */
+  hideCta?: boolean;
 }
 
 interface StatItem {
@@ -135,6 +137,7 @@ export default function EmpresasRedReact({
   autoplay = true,
   intervalMs = 5000,
   effect = "none",
+  hideCta = false,
 }: EmpresasRedProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -357,7 +360,7 @@ export default function EmpresasRedReact({
         )}
 
         {/* ── CTA a casos de éxito ── */}
-        {ctaLabel && ctaUrl && (
+        {!hideCta && ctaLabel && ctaUrl && (
           <div className="mt-10 flex justify-center md:mt-12">
             <a
               href={ctaUrl}
