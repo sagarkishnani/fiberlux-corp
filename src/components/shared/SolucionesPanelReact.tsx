@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type {
   KeyboardEvent as ReactKeyboardEvent,
+  MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
@@ -197,6 +198,59 @@ export default function SolucionesPanelReact({
     if (el) el.style.transform = "";
   };
 
+  /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89) ──
+     Solo en punteros finos: aparece tras un delay y persigue al cursor con un
+     lerp más lento que el puntero. */
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const tipTarget = useRef({ x: 0, y: 0 });
+  const tipPos = useRef({ x: 0, y: 0 });
+  const tipRaf = useRef<number | null>(null);
+  const tipDelay = useRef<number | null>(null);
+  const [tooltipOn, setTooltipOn] = useState(false);
+
+  useEffect(
+    () => () => {
+      if (tipRaf.current != null) cancelAnimationFrame(tipRaf.current);
+      if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    },
+    [],
+  );
+
+  const runTipLoop = () => {
+    const k = 0.06; // menor = más lag
+    tipPos.current.x += (tipTarget.current.x - tipPos.current.x) * k;
+    tipPos.current.y += (tipTarget.current.y - tipPos.current.y) * k;
+    const el = tooltipRef.current;
+    if (el) el.style.transform = `translate3d(${tipPos.current.x}px, ${tipPos.current.y}px, 0)`;
+    tipRaf.current = requestAnimationFrame(runTipLoop);
+  };
+
+  const handleTipEnter = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+    tipPos.current = { ...tipTarget.current };
+    if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    tipDelay.current = window.setTimeout(() => {
+      setTooltipOn(true);
+      if (tipRaf.current == null) tipRaf.current = requestAnimationFrame(runTipLoop);
+    }, 140);
+  };
+  const handleTipMove = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+  };
+  const handleTipLeave = () => {
+    if (tipDelay.current != null) {
+      clearTimeout(tipDelay.current);
+      tipDelay.current = null;
+    }
+    setTooltipOn(false);
+    if (tipRaf.current != null) {
+      cancelAnimationFrame(tipRaf.current);
+      tipRaf.current = null;
+    }
+  };
+
   /* ── Arrastre horizontal ──
      Umbral por eje dominante: solo dispara si el gesto es más horizontal que
      vertical, para no competir con el scroll de la página en táctil
@@ -231,6 +285,7 @@ export default function SolucionesPanelReact({
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
   const prevLabel = locale === "en" ? "Previous solution" : "Solución anterior";
   const nextLabel = locale === "en" ? "Next solution" : "Solución siguiente";
+  const tooltipLabel = locale === "en" ? "See more" : "Ver más";
 
   const subservicios = (active?.bullets || []).filter(Boolean) as {
     label?: string | null;
@@ -394,7 +449,13 @@ export default function SolucionesPanelReact({
                           style={{ animationDelay: `${i * PARAMS.rowStaggerMs}ms` }}
                         >
                           {href ? (
-                            <a href={href} className="group block outline-none">
+                            <a
+                              href={href}
+                              className="group block outline-none focus-visible:underline"
+                              onMouseEnter={handleTipEnter}
+                              onMouseMove={handleTipMove}
+                              onMouseLeave={handleTipLeave}
+                            >
                               {inner}
                             </a>
                           ) : (
@@ -478,6 +539,23 @@ export default function SolucionesPanelReact({
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Tooltip "Ver más" flotante (sigue al cursor con lag). */}
+      <div
+        ref={tooltipRef}
+        aria-hidden="true"
+        className="pointer-events-none fixed left-0 top-0 z-[90] will-change-transform"
+        style={{ transform: "translate3d(-200px, -200px, 0)" }}
+      >
+        <div
+          className={`-translate-x-1/2 -translate-y-1/2 rounded-[8px] bg-white/95 px-3.5 py-1.5 text-[13px] font-medium text-[#3B0E30] shadow-lg transition-opacity duration-200 ${
+            tooltipOn ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <span aria-hidden="true" className="mr-1">↵</span>
+          {tooltipLabel}
         </div>
       </div>
 
