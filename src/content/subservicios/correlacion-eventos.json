@@ -21,25 +21,38 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "red",
         "title": "Correlación inteligente",
         "title_en": "Intelligent correlation",
         "text": "Reduce falsas alarmas y evita la sobrecarga de los equipos de seguridad.",
-        "text_en": "Reduces false alarms and prevents security teams from being overwhelmed."
+        "text_en": "Reduces false alarms and prevents security teams from being overwhelmed.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Eventos"
+            },
+            {
+              "label": "Alertas"
+            },
+            {
+              "label": "Reglas"
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Detección temprana",
         "title_en": "Early detection",
         "text": "Identifica amenazas y comportamientos anómalos a tiempo.",
-        "text_en": "Identifies threats and anomalous behavior in time."
+        "text_en": "Identifies threats and anomalous behavior in time.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "reloj",
         "title": "Respuesta automatizada (SOAR)",
         "title_en": "Automated response (SOAR)",
         "text": "Acelera la contención con automatización, reduciendo tiempos de reacción.",
-        "text_en": "Speeds up containment with automation, reducing reaction times."
+        "text_en": "Speeds up containment with automation, reducing reaction times.",
+        "plantilla": "reloj"
       }
     ],
     "title_en": "Benefits"

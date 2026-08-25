@@ -21,25 +21,64 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "soporte",
         "title": "Control centralizado de acceso",
         "title_en": "Centralized access control",
         "text": "Administra desde un punto el acceso a la red corporativa.",
-        "text_en": "Manage access to the corporate network from a single point."
+        "text_en": "Manage access to the corporate network from a single point.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Usuarios"
+            },
+            {
+              "label": "Dispositivos"
+            },
+            {
+              "label": "Perfiles"
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Verificación previa",
         "title_en": "Pre-admission verification",
         "text": "Valida usuarios y dispositivos antes de otorgar conectividad.",
-        "text_en": "Validate users and devices before granting connectivity."
+        "text_en": "Validate users and devices before granting connectivity.",
+        "plantilla": "mfa",
+        "datos": {
+          "chips": [
+            {
+              "label": "Usuario"
+            },
+            {
+              "label": "Dispositivo"
+            },
+            {
+              "label": "Postura"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Segmentación automática",
         "title_en": "Automatic segmentation",
         "text": "Segmenta según perfiles, roles o niveles de confianza.",
-        "text_en": "Segment by profile, role or trust level."
+        "text_en": "Segment by profile, role or trust level.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Colaboradores"
+            },
+            {
+              "label": "Invitados"
+            },
+            {
+              "label": "Dispositivos IoT"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

@@ -21,25 +21,57 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Bloqueo de exploits",
         "title_en": "Exploit blocking",
         "text": "Detiene vulnerabilidades web antes de que toquen el servidor.",
-        "text_en": "Stops web vulnerabilities before they ever reach the server."
+        "text_en": "Stops web vulnerabilities before they ever reach the server.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "generico",
         "title": "Cumplimiento PCI-DSS",
         "title_en": "PCI-DSS compliance",
         "text": "Ayuda a cumplir normativas financieras de pago.",
-        "text_en": "Helps meet financial payment regulations."
+        "text_en": "Helps meet financial payment regulations.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Requisitos"
+            },
+            {
+              "label": "Controles"
+            },
+            {
+              "label": "Evidencias"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Protección OWASP Top 10",
         "title_en": "OWASP Top 10 protection",
         "text": "Mitiga las vulnerabilidades del estándar OWASP, reduciendo el riesgo de explotación.",
-        "text_en": "Mitigates OWASP standard vulnerabilities, reducing the risk of exploitation."
+        "text_en": "Mitigates OWASP standard vulnerabilities, reducing the risk of exploitation.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Inyección",
+              "nivel": "CRÍTICO",
+              "porcentaje": 90
+            },
+            {
+              "label": "XSS",
+              "nivel": "ALTA",
+              "porcentaje": 72
+            },
+            {
+              "label": "Config. insegura",
+              "nivel": "MEDIA",
+              "porcentaje": 48
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

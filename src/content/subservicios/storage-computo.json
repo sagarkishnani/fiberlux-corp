@@ -21,25 +21,47 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escalabilidad",
         "title": "Almacenamiento sin límites",
         "title_en": "Storage without limits",
         "text": "Crece sin invertir en cabinas de discos físicos.",
-        "text_en": "Scale up without investing in physical disk arrays."
+        "text_en": "Scale up without investing in physical disk arrays.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 78
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Optimización de costos",
         "title_en": "Cost optimization",
         "text": "Separa datos en uso de datos históricos con cold storage de bajo costo.",
-        "text_en": "Separate active data from historical data with low-cost cold storage."
+        "text_en": "Separate active data from historical data with low-cost cold storage.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Datos en uso",
+              "nivel": "ALTA",
+              "porcentaje": 82
+            },
+            {
+              "label": "Históricos",
+              "nivel": "MEDIA",
+              "porcentaje": 46
+            },
+            {
+              "label": "Cold storage",
+              "nivel": "BAJA",
+              "porcentaje": 22
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Acceso seguro y clasificado",
         "title_en": "Secure, classified access",
         "text": "Control sobre la información no estructurada de la empresa.",
-        "text_en": "Control over the company's unstructured information."
+        "text_en": "Control over the company's unstructured information.",
+        "plantilla": "escudo"
       }
     ],
     "title_en": "Benefits"

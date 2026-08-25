@@ -21,25 +21,38 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Recuperación garantizada",
         "title_en": "Guaranteed recovery",
         "text": "Recupera tus datos ante secuestros digitales o borrados accidentales.",
-        "text_en": "Recover your data after digital hijacking or accidental deletion."
+        "text_en": "Recover your data after digital hijacking or accidental deletion.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "disponibilidad",
         "title": "Respaldos inmutables",
         "title_en": "Immutable backups",
         "text": "Bloquea cualquier intento externo de modificación.",
-        "text_en": "Block any external attempt to alter your data."
+        "text_en": "Block any external attempt to alter your data.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Respaldo"
+            },
+            {
+              "label": "Verificación"
+            },
+            {
+              "label": "Bloqueo"
+            }
+          ]
+        }
       },
       {
-        "icon": "generico",
         "title": "Cumplimiento normativo",
         "title_en": "Regulatory compliance",
         "text": "Retención legal de la información corporativa.",
-        "text_en": "Legally compliant retention of corporate information."
+        "text_en": "Legally compliant retention of corporate information.",
+        "plantilla": "reloj"
       }
     ],
     "title_en": "Benefits"

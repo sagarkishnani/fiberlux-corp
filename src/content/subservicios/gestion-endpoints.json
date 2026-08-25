@@ -21,25 +21,51 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
         "title": "Actualizaciones masivas",
         "title_en": "Mass updates",
         "text": "Despliegues de software invisibles para toda la flota de equipos.",
-        "text_en": "Seamless software deployments across the entire device fleet."
+        "text_en": "Seamless software deployments across the entire device fleet.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Laptops"
+            },
+            {
+              "label": "Escritorios"
+            },
+            {
+              "label": "Móviles"
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Borrado remoto ante robo",
         "title_en": "Remote wipe on theft",
         "text": "Bloquea o borra una laptop corporativa al instante.",
-        "text_en": "Lock or wipe a corporate laptop instantly."
+        "text_en": "Lock or wipe a corporate laptop instantly.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "red",
         "title": "Ambiente estandarizado",
         "title_en": "Standardized environment",
         "text": "Alta estandarización del entorno de trabajo en toda la compañía.",
-        "text_en": "High standardization of the work environment across the entire company."
+        "text_en": "High standardization of the work environment across the entire company.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Sistema"
+            },
+            {
+              "label": "Aplicaciones"
+            },
+            {
+              "label": "Políticas"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

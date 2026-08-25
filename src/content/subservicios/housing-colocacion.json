@@ -21,25 +21,34 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "ahorro",
         "title": "Sin gastos de energía y clima",
         "title_en": "No power or cooling costs",
         "text": "Elimina la inversión propia en enfriamiento de precisión y energía ininterrumpida.",
-        "text_en": "Eliminates your own investment in precision cooling and uninterruptible power."
+        "text_en": "Eliminates your own investment in precision cooling and uninterruptible power.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 60
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Condiciones ambientales perfectas",
         "title_en": "Perfect environmental conditions",
         "text": "Maximiza la vida útil de tu hardware.",
-        "text_en": "Maximizes the lifespan of your hardware."
+        "text_en": "Maximizes the lifespan of your hardware.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 92
+        }
       },
       {
-        "icon": "red",
         "title": "Conectividad superior",
         "title_en": "Superior connectivity",
         "text": "Ubicado en el corazón de los principales ecosistemas digitales.",
-        "text_en": "Located at the heart of the main digital ecosystems."
+        "text_en": "Located at the heart of the main digital ecosystems.",
+        "plantilla": "dwdm",
+        "datos": {
+          "hilos": 6
+        }
       }
     ],
     "title_en": "Benefits"

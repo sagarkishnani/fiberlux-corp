@@ -21,32 +21,58 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Protección multicapa",
         "title_en": "Multi-layer protection",
         "text": "Antivirus empresarial con capacidades avanzadas de detección y respuesta.",
-        "text_en": "Enterprise antivirus with advanced detection and response capabilities."
+        "text_en": "Enterprise antivirus with advanced detection and response capabilities.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "disponibilidad",
         "title": "Aislamiento automático",
         "title_en": "Automatic isolation",
         "text": "Cualquier equipo infectado se aísla antes de que contagie toda la red.",
-        "text_en": "Any infected device is isolated before it can spread across the network."
+        "text_en": "Any infected device is isolated before it can spread across the network.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Equipo aislado"
+            },
+            {
+              "label": "Red interna"
+            },
+            {
+              "label": "Consola"
+            }
+          ]
+        }
       },
       {
-        "icon": "reloj",
         "title": "Análisis en tiempo real",
         "title_en": "Real-time analysis",
         "text": "Detecta comportamiento anómalo y bloquea amenazas sin firma conocida.",
-        "text_en": "Detects anomalous behavior and blocks threats with no known signature."
+        "text_en": "Detects anomalous behavior and blocks threats with no known signature.",
+        "plantilla": "reloj"
       },
       {
-        "icon": "generico",
         "title": "Trazabilidad forense",
         "title_en": "Forensic traceability",
         "text": "Entiende el origen exacto del ataque para prevenir futuros incidentes.",
-        "text_en": "Understand the exact origin of the attack to prevent future incidents."
+        "text_en": "Understand the exact origin of the attack to prevent future incidents.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Origen"
+            },
+            {
+              "label": "Vector"
+            },
+            {
+              "label": "Evidencias"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

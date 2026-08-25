@@ -21,25 +21,51 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Superficie de ataque mínima",
         "title_en": "Minimal attack surface",
         "text": "Reduce drásticamente la exposición de la red corporativa.",
-        "text_en": "Drastically reduces the exposure of the corporate network."
+        "text_en": "Drastically reduces the exposure of the corporate network.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "red",
         "title": "Colaboración hipersegura con terceros",
         "title_en": "Highly secure collaboration with third parties",
         "text": "Accesos controlados para desarrolladores y proveedores externos.",
-        "text_en": "Controlled access for developers and external providers."
+        "text_en": "Controlled access for developers and external providers.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Proveedor"
+            },
+            {
+              "label": "Aplicación"
+            },
+            {
+              "label": "Broker"
+            }
+          ]
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Validación continua",
         "title_en": "Continuous validation",
         "text": "Verifica la postura de seguridad del dispositivo externo en cada acceso.",
-        "text_en": "Verifies the security posture of the external device on every access."
+        "text_en": "Verifies the security posture of the external device on every access.",
+        "plantilla": "mfa",
+        "datos": {
+          "chips": [
+            {
+              "label": "Identidad"
+            },
+            {
+              "label": "Dispositivo"
+            },
+            {
+              "label": "Postura"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

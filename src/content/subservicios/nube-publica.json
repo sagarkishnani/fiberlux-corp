@@ -21,32 +21,54 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
         "title": "Aprovisionamiento en minutos",
         "title_en": "Provisioning in minutes",
         "text": "Despliega servidores virtuales casi al instante.",
-        "text_en": "Deploy virtual servers almost instantly."
+        "text_en": "Deploy virtual servers almost instantly.",
+        "plantilla": "velocidad",
+        "datos": {
+          "tarjetas": [
+            {
+              "etiqueta": "Despliegue en minutos",
+              "porcentaje": 88
+            },
+            {
+              "etiqueta": "Sin compra de hardware",
+              "porcentaje": 70
+            }
+          ]
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Pago por uso (OPEX)",
         "title_en": "Pay-as-you-go (OPEX)",
         "text": "Modelo flexible que optimiza tu inversión.",
-        "text_en": "A flexible model that optimizes your investment."
+        "text_en": "A flexible model that optimizes your investment.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 56
+        }
       },
       {
-        "icon": "escalabilidad",
         "title": "Escala y redimensiona",
         "title_en": "Scale and resize",
         "text": "Ajusta recursos según las cargas de trabajo.",
-        "text_en": "Adjust resources to match your workloads."
+        "text_en": "Adjust resources to match your workloads.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 78
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Replicación entre sitios",
         "title_en": "Cross-site replication",
         "text": "Fortalece la disponibilidad y protección de la información crítica.",
-        "text_en": "Strengthens the availability and protection of critical information."
+        "text_en": "Strengthens the availability and protection of critical information.",
+        "plantilla": "uptime",
+        "datos": {
+          "valor": "99,9",
+          "unidad": "% DISPONIBLE"
+        }
       }
     ],
     "title_en": "Benefits"

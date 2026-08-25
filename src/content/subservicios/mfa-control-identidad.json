@@ -21,25 +21,54 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Neutraliza el robo de contraseñas",
         "title_en": "Neutralizes password theft",
         "text": "El atacante no puede entrar sin el dispositivo físico del usuario.",
-        "text_en": "Attackers cannot get in without the user's physical device."
+        "text_en": "Attackers cannot get in without the user's physical device.",
+        "plantilla": "mfa",
+        "datos": {
+          "chips": [
+            {
+              "label": "Contraseña"
+            },
+            {
+              "label": "Token / App"
+            },
+            {
+              "label": "Biometría"
+            }
+          ]
+        }
       },
       {
-        "icon": "soporte",
         "title": "Auditoría clara",
         "title_en": "Clear auditing",
         "text": "Sabe quién aprueba accesos a plataformas críticas.",
-        "text_en": "Know who approves access to critical platforms."
+        "text_en": "Know who approves access to critical platforms.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Solicitud"
+            },
+            {
+              "label": "Aprobación"
+            },
+            {
+              "label": "Registro"
+            }
+          ]
+        }
       },
       {
-        "icon": "velocidad",
         "title": "Máxima seguridad, mínima fricción",
         "title_en": "Maximum security, minimal friction",
         "text": "Protección fuerte sin entorpecer al colaborador legítimo.",
-        "text_en": "Strong protection without getting in the way of legitimate employees."
+        "text_en": "Strong protection without getting in the way of legitimate employees.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 92
+        }
       }
     ],
     "title_en": "Benefits"

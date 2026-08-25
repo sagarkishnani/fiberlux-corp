@@ -21,25 +21,64 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "cobertura",
         "title": "Cobertura optimizada",
         "title_en": "Optimized coverage",
         "text": "WiFi diseñado para entornos empresariales exigentes.",
-        "text_en": "WiFi designed for demanding enterprise environments."
+        "text_en": "WiFi designed for demanding enterprise environments.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Piso 1"
+            },
+            {
+              "label": "Piso 2"
+            },
+            {
+              "label": "Almacén"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Acceso segmentado",
         "title_en": "Segmented access",
         "text": "Gestión de acceso para colaboradores, visitantes y dispositivos.",
-        "text_en": "Access management for employees, guests and devices."
+        "text_en": "Access management for employees, guests and devices.",
+        "plantilla": "mfa",
+        "datos": {
+          "chips": [
+            {
+              "label": "Colaboradores"
+            },
+            {
+              "label": "Visitantes"
+            },
+            {
+              "label": "Dispositivos"
+            }
+          ]
+        }
       },
       {
-        "icon": "soporte",
         "title": "Proyectos llave en mano",
         "title_en": "Turnkey projects",
         "text": "Diseño, arrendamiento de equipos, instalación, gestión y soporte.",
-        "text_en": "Design, equipment leasing, installation, management and support."
+        "text_en": "Design, equipment leasing, installation, management and support.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Diseño"
+            },
+            {
+              "label": "Instalación"
+            },
+            {
+              "label": "Soporte"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

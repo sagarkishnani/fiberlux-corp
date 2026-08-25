@@ -21,25 +21,38 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "reloj",
         "title": "Protección los 365 días",
         "title_en": "Protection 365 days a year",
         "text": "Vigilancia activa con tiempos de respuesta inmediatos.",
-        "text_en": "Active monitoring with immediate response times."
+        "text_en": "Active monitoring with immediate response times.",
+        "plantilla": "reloj"
       },
       {
-        "icon": "escudo",
         "title": "Inteligencia de amenazas actualizada",
         "title_en": "Up-to-date threat intelligence",
         "text": "Anticipa nuevos métodos de ataque.",
-        "text_en": "Stay ahead of new attack methods."
+        "text_en": "Stay ahead of new attack methods.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "disponibilidad",
         "title": "Detección y respuesta sin brechas",
         "title_en": "Seamless detection and response",
         "text": "Cierra la distancia entre detectar un incidente y neutralizarlo.",
-        "text_en": "Close the gap between detecting an incident and neutralizing it."
+        "text_en": "Close the gap between detecting an incident and neutralizing it.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Detección"
+            },
+            {
+              "label": "Análisis"
+            },
+            {
+              "label": "Respuesta"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

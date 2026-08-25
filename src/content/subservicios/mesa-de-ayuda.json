@@ -21,25 +21,50 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "soporte",
         "title": "Resolución remota y ágil",
         "title_en": "Fast remote resolution",
         "text": "Atiende incidencias diarias y eleva la satisfacción del colaborador.",
-        "text_en": "Handle daily incidents and boost employee satisfaction."
+        "text_en": "Handle daily incidents and boost employee satisfaction.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 92
+        }
       },
       {
-        "icon": "red",
         "title": "Trazabilidad analítica",
         "title_en": "Analytical traceability",
         "text": "Encuentra la causa raíz de los fallos ofimáticos repetitivos.",
-        "text_en": "Pinpoint the root cause of recurring office-software issues."
+        "text_en": "Pinpoint the root cause of recurring office-software issues.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Ofimática",
+              "nivel": "ALTA",
+              "porcentaje": 72
+            },
+            {
+              "label": "Conectividad",
+              "nivel": "MEDIA",
+              "porcentaje": 48
+            },
+            {
+              "label": "Hardware",
+              "nivel": "BAJA",
+              "porcentaje": 26
+            }
+          ]
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Menor costo operativo",
         "title_en": "Lower operating cost",
         "text": "Sin necesidad de un departamento de soporte interno masivo.",
-        "text_en": "No need for a large in-house support department."
+        "text_en": "No need for a large in-house support department.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 62
+        }
       }
     ],
     "title_en": "Benefits"

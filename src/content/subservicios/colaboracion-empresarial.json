@@ -21,25 +21,64 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "red",
         "title": "Documentación centralizada",
         "title_en": "Centralized documentation",
         "text": "Toda la información del proyecto en un solo lugar.",
-        "text_en": "All your project information in a single place."
+        "text_en": "All your project information in a single place.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Documentos"
+            },
+            {
+              "label": "Proyectos"
+            },
+            {
+              "label": "Equipos"
+            }
+          ]
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Control de versiones automático",
         "title_en": "Automatic version control",
         "text": "Evita la pérdida de trabajo intelectual.",
-        "text_en": "Prevents the loss of intellectual work."
+        "text_en": "Prevents the loss of intellectual work.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Versión anterior"
+            },
+            {
+              "label": "Cambios"
+            },
+            {
+              "label": "Versión actual"
+            }
+          ]
+        }
       },
       {
-        "icon": "soporte",
         "title": "Flujos de aprobación ágiles",
         "title_en": "Agile approval workflows",
         "text": "Coordina departamentos operativos sin fricción.",
-        "text_en": "Coordinate operational departments without friction."
+        "text_en": "Coordinate operational departments without friction.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Operaciones"
+            },
+            {
+              "label": "Finanzas"
+            },
+            {
+              "label": "Legal"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

@@ -21,25 +21,51 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "red",
         "title": "Movilidad sin riesgos",
         "title_en": "Risk-free mobility",
         "text": "El teletrabajo se vuelve tan seguro como estar en la oficina.",
-        "text_en": "Remote work becomes as secure as being in the office."
+        "text_en": "Remote work becomes as secure as being in the office.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Teletrabajo"
+            },
+            {
+              "label": "Oficina"
+            },
+            {
+              "label": "Data center"
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Confidencialidad garantizada",
         "title_en": "Guaranteed confidentiality",
         "text": "Algoritmos de cifrado avanzados que protegen cada conexión.",
-        "text_en": "Advanced encryption algorithms that protect every connection."
+        "text_en": "Advanced encryption algorithms that protect every connection.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "soporte",
         "title": "Control centralizado",
         "title_en": "Centralized control",
         "text": "Define quién y cuándo se conecta de forma remota.",
-        "text_en": "Define who connects remotely and when."
+        "text_en": "Define who connects remotely and when.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Usuarios"
+            },
+            {
+              "label": "Horarios"
+            },
+            {
+              "label": "Permisos"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

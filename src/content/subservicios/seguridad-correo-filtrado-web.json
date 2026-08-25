@@ -21,25 +21,57 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Menos phishing e ingeniería social",
         "title_en": "Less phishing and social engineering",
         "text": "Reducción drástica de infecciones por tácticas de phishing.",
-        "text_en": "A drastic reduction in infections from phishing tactics."
+        "text_en": "A drastic reduction in infections from phishing tactics.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "generico",
         "title": "Bandejas limpias",
         "title_en": "Clean inboxes",
         "text": "Correos corporativos libres de spam extorsivo.",
-        "text_en": "Corporate mailboxes free of extortion spam."
+        "text_en": "Corporate mailboxes free of extortion spam.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Spam"
+            },
+            {
+              "label": "Malware"
+            },
+            {
+              "label": "Suplantación"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Cumplimiento de políticas de uso",
         "title_en": "Acceptable-use policy compliance",
         "text": "Bloqueo de dominios de alto riesgo.",
-        "text_en": "Blocking of high-risk domains."
+        "text_en": "Blocking of high-risk domains.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Corporativo",
+              "nivel": "ALTA",
+              "porcentaje": 86
+            },
+            {
+              "label": "Restringido",
+              "nivel": "MEDIA",
+              "porcentaje": 44
+            },
+            {
+              "label": "Alto riesgo",
+              "nivel": "BAJA",
+              "porcentaje": 16
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

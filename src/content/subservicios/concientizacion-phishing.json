@@ -21,25 +21,51 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Colaboradores más alertas",
         "title_en": "More alert employees",
         "text": "Mayor capacidad para identificar correos y enlaces sospechosos.",
-        "text_en": "Greater ability to spot suspicious emails and links."
+        "text_en": "Greater ability to spot suspicious emails and links.",
+        "plantilla": "mfa",
+        "datos": {
+          "chips": [
+            {
+              "label": "Correo sospechoso"
+            },
+            {
+              "label": "Enlace dudoso"
+            },
+            {
+              "label": "Reporte del usuario"
+            }
+          ]
+        }
       },
       {
-        "icon": "generico",
         "title": "Menos robo de credenciales",
         "title_en": "Fewer credential thefts",
         "text": "Reduce el riesgo de fuga de información sensible.",
-        "text_en": "Reduces the risk of sensitive information leaks."
+        "text_en": "Reduces the risk of sensitive information leaks.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "soporte",
         "title": "Cultura de seguridad",
         "title_en": "Security culture",
         "text": "Fortalece la conciencia con campañas y simulaciones continuas.",
-        "text_en": "Strengthens awareness with ongoing campaigns and simulations."
+        "text_en": "Strengthens awareness with ongoing campaigns and simulations.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Campañas"
+            },
+            {
+              "label": "Simulaciones"
+            },
+            {
+              "label": "Evaluación"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

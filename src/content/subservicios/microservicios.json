@@ -21,32 +21,73 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escalabilidad",
         "title": "Escalabilidad dinámica",
         "title_en": "Dynamic scalability",
         "text": "Aplicaciones y servicios que crecen según la demanda.",
-        "text_en": "Applications and services that grow with demand."
+        "text_en": "Applications and services that grow with demand.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 72
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Mayor resiliencia",
         "title_en": "Greater resilience",
         "text": "Funciones distribuidas en componentes independientes.",
-        "text_en": "Functions distributed across independent components."
+        "text_en": "Functions distributed across independent components.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Servicio A"
+            },
+            {
+              "label": "Servicio B"
+            },
+            {
+              "label": "Servicio C"
+            }
+          ]
+        }
       },
       {
-        "icon": "velocidad",
         "title": "Despliegues más rápidos",
         "title_en": "Faster deployments",
         "text": "Entregas consistentes mediante contenedores Docker.",
-        "text_en": "Consistent releases through Docker containers."
+        "text_en": "Consistent releases through Docker containers.",
+        "plantilla": "velocidad",
+        "datos": {
+          "tarjetas": [
+            {
+              "etiqueta": "Build automático",
+              "porcentaje": 86
+            },
+            {
+              "etiqueta": "Despliegue continuo",
+              "porcentaje": 72
+            }
+          ]
+        }
       },
       {
-        "icon": "soporte",
         "title": "Gestión con Kubernetes",
         "title_en": "Kubernetes management",
         "text": "Orquestación centralizada y automatizada de cargas de trabajo.",
-        "text_en": "Centralized, automated orchestration of workloads."
+        "text_en": "Centralized, automated orchestration of workloads.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Contenedores"
+            },
+            {
+              "label": "Réplicas"
+            },
+            {
+              "label": "Recursos"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

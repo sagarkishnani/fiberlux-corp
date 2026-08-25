@@ -21,25 +21,54 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "soporte",
         "title": "Administración centralizada",
         "title_en": "Centralized management",
         "text": "Gestiona toda la infraestructura LAN desde un punto.",
-        "text_en": "Manage your entire LAN infrastructure from a single point."
+        "text_en": "Manage your entire LAN infrastructure from a single point.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Switches"
+            },
+            {
+              "label": "Access points"
+            },
+            {
+              "label": "VLANs"
+            }
+          ]
+        }
       },
       {
-        "icon": "escudo",
         "title": "Segmentación y control de accesos",
         "title_en": "Segmentation and access control",
         "text": "Aísla el tráfico y refuerza la seguridad interna.",
-        "text_en": "Isolates traffic and strengthens internal security."
+        "text_en": "Isolates traffic and strengthens internal security.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Corporativa"
+            },
+            {
+              "label": "Invitados"
+            },
+            {
+              "label": "Servidores"
+            }
+          ]
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Mayor rendimiento interno",
         "title_en": "Improved internal performance",
         "text": "Monitoreo y gestión proactiva de la red.",
-        "text_en": "Proactive network monitoring and management."
+        "text_en": "Proactive network monitoring and management.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 90
+        }
       }
     ],
     "title_en": "Benefits"

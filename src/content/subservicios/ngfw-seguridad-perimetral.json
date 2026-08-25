@@ -21,25 +21,47 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Bloqueo proactivo de intrusiones",
         "title_en": "Proactive intrusion blocking",
         "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red.",
-        "text_en": "Stops intrusions and hacking attempts before they reach your network."
+        "text_en": "Stops intrusions and hacking attempts before they reach your network.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "red",
         "title": "Visibilidad granular",
         "title_en": "Granular visibility",
         "text": "Identifica y bloquea aplicaciones específicas con control detallado del tráfico.",
-        "text_en": "Identify and block specific applications with detailed traffic control."
+        "text_en": "Identify and block specific applications with detailed traffic control.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "ERP",
+              "nivel": "CRÍTICO",
+              "porcentaje": 88
+            },
+            {
+              "label": "Navegación",
+              "nivel": "MEDIA",
+              "porcentaje": 52
+            },
+            {
+              "label": "Streaming",
+              "nivel": "BAJA",
+              "porcentaje": 20
+            }
+          ]
+        }
       },
       {
-        "icon": "velocidad",
         "title": "Protección sin sacrificar velocidad",
         "title_en": "Protection without sacrificing speed",
         "text": "Protege el perímetro principal de la empresa sin afectar el ancho de banda.",
-        "text_en": "Protects the company's main perimeter without impacting bandwidth."
+        "text_en": "Protects the company's main perimeter without impacting bandwidth.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 90
+        }
       }
     ],
     "title_en": "Benefits"

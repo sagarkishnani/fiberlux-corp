@@ -21,25 +21,40 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Privacidad y soberanía de datos",
         "title_en": "Data privacy and sovereignty",
         "text": "Control total sobre dónde y cómo residen tus datos.",
-        "text_en": "Full control over where and how your data resides."
+        "text_en": "Full control over where and how your data resides.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "velocidad",
         "title": "Rendimiento predecible",
         "title_en": "Predictable performance",
         "text": "Recursos dedicados que no compartes con terceros.",
-        "text_en": "Dedicated resources you don't share with third parties."
+        "text_en": "Dedicated resources you don't share with third parties.",
+        "plantilla": "velocidad",
+        "datos": {
+          "tarjetas": [
+            {
+              "etiqueta": "Recursos dedicados",
+              "porcentaje": 86
+            },
+            {
+              "etiqueta": "Sin vecinos ruidosos",
+              "porcentaje": 72
+            }
+          ]
+        }
       },
       {
-        "icon": "escalabilidad",
         "title": "Aprovisionamiento ágil",
         "title_en": "Agile provisioning",
         "text": "Servidores virtuales según la demanda, con control absoluto de la topología.",
-        "text_en": "Virtual servers on demand, with absolute control over the topology."
+        "text_en": "Virtual servers on demand, with absolute control over the topology.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 68
+        }
       }
     ],
     "title_en": "Benefits"

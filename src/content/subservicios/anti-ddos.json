@@ -21,25 +21,33 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "disponibilidad",
         "title": "Disponibilidad web 24/7",
         "title_en": "24/7 web availability",
         "text": "Mantén el sitio en línea incluso bajo ataques de saturación global.",
-        "text_en": "Keep your site online even under global saturation attacks."
+        "text_en": "Keep your site online even under global saturation attacks.",
+        "plantilla": "uptime",
+        "datos": {
+          "valor": "24/7",
+          "unidad": "EN LÍNEA",
+          "porcentaje": 97
+        }
       },
       {
-        "icon": "velocidad",
         "title": "Filtrado invisible",
         "title_en": "Invisible filtering",
         "text": "El cliente real sigue operando sin percibir lentitud.",
-        "text_en": "Legitimate users keep working without noticing any slowdown."
+        "text_en": "Legitimate users keep working without noticing any slowdown.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "ahorro",
         "title": "Protege tu facturación online",
         "title_en": "Protect your online revenue",
         "text": "Asegura las ventas en fechas comerciales vitales.",
-        "text_en": "Safeguard your sales during peak commercial dates."
+        "text_en": "Safeguard your sales during peak commercial dates.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 74
+        }
       }
     ],
     "title_en": "Benefits"

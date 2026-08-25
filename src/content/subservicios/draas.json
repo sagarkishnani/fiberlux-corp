@@ -21,25 +21,40 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "reloj",
         "title": "Recuperación casi instantánea",
         "title_en": "Near-instant recovery",
         "text": "RTO/RPO medidos en minutos.",
-        "text_en": "RTO/RPO measured in minutes."
+        "text_en": "RTO/RPO measured in minutes.",
+        "plantilla": "reloj"
       },
       {
-        "icon": "disponibilidad",
         "title": "Failover automático",
         "title_en": "Automatic failover",
         "text": "La operación salta al sitio alterno automáticamente.",
-        "text_en": "Operations switch to the alternate site automatically."
+        "text_en": "Operations switch to the alternate site automatically.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "SITIO PRINCIPAL",
+              "activa": false
+            },
+            {
+              "label": "SITIO ALTERNO",
+              "activa": true
+            }
+          ]
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Sin data center duplicado",
         "title_en": "No duplicate data center",
         "text": "Elimina el costo de construir un centro de datos físico espejo.",
-        "text_en": "Eliminates the cost of building a mirrored physical data center."
+        "text_en": "Eliminates the cost of building a mirrored physical data center.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 58
+        }
       }
     ],
     "title_en": "Benefits"

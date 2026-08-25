@@ -21,25 +21,51 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escudo",
         "title": "Control corporativo de la información",
         "title_en": "Corporate control of information",
         "text": "Gobierna el flujo de la información compartida.",
-        "text_en": "Govern the flow of shared information."
+        "text_en": "Govern the flow of shared information.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "velocidad",
         "title": "Productividad ágil",
         "title_en": "Agile productivity",
         "text": "Sepa al instante si un colega está disponible, ocupado o en reunión.",
-        "text_en": "Know instantly whether a colleague is available, busy or in a meeting."
+        "text_en": "Know instantly whether a colleague is available, busy or in a meeting.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Disponible"
+            },
+            {
+              "label": "Ocupado"
+            },
+            {
+              "label": "En reunión"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Todo en una plataforma",
         "title_en": "Everything on one platform",
         "text": "Portabilidad de números, equipos, licenciamiento e integración con Teams y WhatsApp.",
-        "text_en": "Number portability, devices, licensing and integration with Teams and WhatsApp."
+        "text_en": "Number portability, devices, licensing and integration with Teams and WhatsApp.",
+        "plantilla": "consola",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Telefonía"
+            },
+            {
+              "label": "Chat"
+            },
+            {
+              "label": "Video"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"
