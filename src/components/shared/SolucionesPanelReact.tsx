@@ -225,6 +225,12 @@ export default function SolucionesPanelReact({
     tipRaf.current = requestAnimationFrame(runTipLoop);
   };
 
+  /** Coloca el tooltip sin interpolar (usado con prefers-reduced-motion). */
+  const placeTip = () => {
+    const el = tooltipRef.current;
+    if (el) el.style.transform = `translate3d(${tipTarget.current.x}px, ${tipTarget.current.y}px, 0)`;
+  };
+
   const handleTipEnter = (e: ReactMouseEvent) => {
     if (!finePointer.current) return;
     tipTarget.current = { x: e.clientX, y: e.clientY };
@@ -232,12 +238,16 @@ export default function SolucionesPanelReact({
     if (tipDelay.current != null) clearTimeout(tipDelay.current);
     tipDelay.current = window.setTimeout(() => {
       setTooltipOn(true);
-      if (tipRaf.current == null) tipRaf.current = requestAnimationFrame(runTipLoop);
+      // Con reduced-motion no se abre el bucle de persecución: el tooltip se
+      // coloca directamente en el cursor.
+      if (reduceMotion) placeTip();
+      else if (tipRaf.current == null) tipRaf.current = requestAnimationFrame(runTipLoop);
     }, 140);
   };
   const handleTipMove = (e: ReactMouseEvent) => {
     if (!finePointer.current) return;
     tipTarget.current = { x: e.clientX, y: e.clientY };
+    if (reduceMotion && tooltipOn) placeTip();
   };
   const handleTipLeave = () => {
     if (tipDelay.current != null) {
@@ -601,6 +611,19 @@ export default function SolucionesPanelReact({
           transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
           transform-style: preserve-3d;
           will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .sol-enter,
+          .sol-stagger .sol-row,
+          .sol-card,
+          .sol-float {
+            animation: none !important;
+          }
+          .sol-indicator { transition: none !important; }
+          .sol-tilt {
+            transition: none !important;
+            transform: none !important;
+          }
         }
       `}</style>
     </section>
