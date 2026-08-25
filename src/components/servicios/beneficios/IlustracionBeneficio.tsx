@@ -1,3 +1,9 @@
+import Velocidad from "./Velocidad";
+import Simetria from "./Simetria";
+import Gauge from "./Gauge";
+import Sedes from "./Sedes";
+import Dwdm from "./Dwdm";
+import Uptime from "./Uptime";
 import type { PropsIlustracion } from "./base";
 
 /**
@@ -10,7 +16,14 @@ import type { PropsIlustracion } from "./base";
  *
  * Lo compartido entre ellas está en `base.tsx`; aquí sólo vive el mapa.
  */
-const PLANTILLAS: Record<string, (p: PropsIlustracion) => React.ReactElement> = {};
+const PLANTILLAS: Record<string, (p: PropsIlustracion) => React.ReactElement> = {
+  velocidad: Velocidad,
+  simetria: Simetria,
+  gauge: Gauge,
+  sedes: Sedes,
+  dwdm: Dwdm,
+  uptime: Uptime,
+};
 
 interface Props extends PropsIlustracion {
   /** Valor de `beneficios.items[].plantilla`. Vacío = card sin ilustración. */
