@@ -43,6 +43,39 @@ export function Lienzo({ activo, children }: { activo: boolean; children: ReactN
   );
 }
 
+/**
+ * Envoltorio HTML, la hermana de `Lienzo` (SPEC 107).
+ *
+ * Cinco de las plantillas son paneles con texto —filas de estado, bitácora,
+ * píldoras, chips con etiqueta del CMS— y en SVG eso obliga a medir cada cadena
+ * a mano para que su caja no quede corta. En HTML la caja se ajusta sola, así
+ * que esas escenas se dibujan con `div`s y sólo los trazos van en un `<svg>`
+ * por encima.
+ *
+ * Lo que sí hay que replicar de SVG es que TODO escale con la card, no sólo el
+ * ancho: la escena declara un contenedor de consulta y `--u` = una unidad del
+ * lienzo de 320. Con `u(12)` se escribe en las mismas unidades que las
+ * plantillas SVG y el dibujo se comporta igual en una card de 300 px que en una
+ * de 500.
+ *
+ * `--u` vive en el div interior, no en el exterior: `cqw` se mide contra el
+ * contenedor MÁS CERCANO, y en el propio elemento que lo declara ese contenedor
+ * sería el de fuera, no él mismo.
+ */
+export function Escena({ activo, children }: { activo: boolean; children: ReactNode }) {
+  return (
+    <div
+      className={`fbx-ben-escena mt-6 w-full${activo ? " fbx-ben-on" : ""}`}
+      aria-hidden="true"
+    >
+      <div className="fbx-ben-escena-in">{children}</div>
+    </div>
+  );
+}
+
+/** Una medida en unidades del lienzo (320×180), para las escenas HTML. */
+export const u = (n: number) => `calc(${n} * var(--u))`;
+
 /** Retraso de una animación, listo para meter en `--ret`. */
 export const ret = (segundos: number) => `${segundos.toFixed(2)}s`;
 
@@ -89,6 +122,24 @@ export const C = {
       translúcido: en una pila de tarjetas dejaba ver la de atrás a través de la
       de delante y los dos textos se montaban. */
   panelSolido: "#171317",
+
+  /* ── Escenas HTML (SPEC 107) ──
+     El magenta encendido y los tres grises opacos que usan los paneles, las
+     filas y los chips. Opacos a propósito: se apoyan encima de los cables del
+     SVG y tienen que taparlos, que es lo que permite trazar un cable hasta
+     DEBAJO de un chip cuyo ancho no se conoce. */
+  /** Magenta a plena luz: puntos vivos, halos y núcleos. */
+  acentoVivo: "#e262c4",
+  /** Fondo de una fila o un chip en reposo. */
+  escena: "#151315",
+  /** Su borde. */
+  escenaBorde: "#242024",
+  /** Fondo del mismo elemento cuando está encendido: negro con tinte morado. */
+  escenaActiva: "#1c1220",
+  /** Texto secundario dentro de las escenas. */
+  escenaTexto: "#b7aeb3",
+  /** Texto apagado (horas, unidades, pies). */
+  escenaApagado: "#7c7377",
 };
 
 /**
@@ -165,7 +216,32 @@ export function useTurno(total: number, activo: boolean, ms: number): number {
 }
 
 /**
- * Animaciones compartidas por las catorce plantillas (SPEC 105).
+ * ¿El sistema pide movimiento reducido?
+ *
+ * `useTurno` ya lo respeta por dentro, pero las escenas que se dibujan a partir
+ * de su índice necesitan SABERLO: sin ticks, el índice se queda en 0 y una
+ * bitácora que revela líneas una a una no revelaría ninguna. Con esto pintan su
+ * estado final —todo visible, quieto— que es el reposo correcto.
+ *
+ * Arranca en `false` a propósito: en el servidor no hay `matchMedia`, y si
+ * devolviera otra cosa el HTML del servidor y el del cliente no coincidirían.
+ */
+export function useReducido(): boolean {
+  const [reducido, setReducido] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducido(mq.matches);
+    const alCambiar = (e: MediaQueryListEvent) => setReducido(e.matches);
+    mq.addEventListener?.("change", alCambiar);
+    return () => mq.removeEventListener?.("change", alCambiar);
+  }, []);
+
+  return reducido;
+}
+
+/**
+ * Animaciones compartidas por las plantillas (SPEC 105 y 107).
  *
  * Va como constante y no en `src/styles/global.css` porque en este repo ese
  * archivo no se empaqueta: lo que se escriba ahí no llega al navegador. La
@@ -307,6 +383,117 @@ export const CSS_BENEFICIOS = `
   50% { opacity: calc(var(--o, 1) * 0.45); }
 }
 
+/* ══ Escenas HTML (SPEC 107) ══════════════════════════════════════════════════
+   Mismo trato que el lienzo SVG: la caja mantiene la proporción 320×180 del pie
+   de la card y \`--u\` traduce las unidades de ese lienzo a píxeles reales, así
+   que una escena HTML escala con la card igual que un SVG. */
+.fbx-ben-escena {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 320 / 180;
+  container-type: inline-size;
+}
+.fbx-ben-escena-in {
+  position: absolute;
+  inset: 0;
+  --u: calc(100cqw / 320);
+}
+/* Sin unidades de contenedor la escena se dibuja a tamaño nominal (320 px de
+   ancho) en vez de quedarse en nada. */
+@supports not (container-type: inline-size) {
+  .fbx-ben-escena-in { --u: 1px; }
+}
+
+/* Trazo que se dibuja, se sostiene y se borra, en bucle. A diferencia de
+   \`--traza\`, que es la entrada y ocurre una vez, esta es la vida del dibujo:
+   la ruta que se recorre una y otra vez. */
+.fbx-ben-dibuja { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.fbx-ben-on .fbx-ben-dibuja {
+  animation: fbx-ben-dibuja var(--ciclo, 6.4s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-dibuja {
+  0% { stroke-dashoffset: 1; }
+  55%, 88% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 1; }
+}
+
+/* Flotación mínima: un chip que sube y baja unos pocos píxeles. \`--dy\` decide
+   cuánto y hacia dónde, para que dos piezas vecinas no floten al unísono. */
+.fbx-ben-on .fbx-ben-flota {
+  animation: fbx-ben-flota var(--ciclo, 10s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-flota {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(var(--dy, -4px)); }
+}
+
+/* Halo que respira alrededor de un chip encendido. */
+.fbx-ben-on .fbx-ben-brilla {
+  animation: fbx-ben-brilla var(--ciclo, 7s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-brilla {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(198,95,172,0.20); }
+  50% { box-shadow: 0 0 0 1px rgba(198,95,172,0.50), 0 10px 28px rgba(198,95,172,0.16); }
+}
+
+/* Punto de estado: late en sitio, sin moverse. */
+.fbx-ben-on .fbx-ben-blip {
+  animation: fbx-ben-blip var(--ciclo, 3.4s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-blip {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.35); }
+}
+
+/* Barrido horizontal sobre una fila: la luz que recorre un panel en vivo. */
+.fbx-ben-on .fbx-ben-barrido {
+  animation: fbx-ben-barrido var(--ciclo, 7s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-barrido {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(220%); }
+}
+
+/* El mismo barrido, pero de arriba abajo sobre toda la escena. */
+.fbx-ben-on .fbx-ben-barrido-y {
+  animation: fbx-ben-barrido-y var(--ciclo, 9s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-barrido-y {
+  0% { transform: translateY(-20%); opacity: 0; }
+  20%, 80% { opacity: 0.7; }
+  100% { transform: translateY(320%); opacity: 0; }
+}
+
+/* Paquete que cruza un carril de extremo a extremo. En reposo se queda parado a
+   media pista: un carril vacío no contaría nada. */
+.fbx-ben-paquete { left: 34%; }
+.fbx-ben-on .fbx-ben-paquete {
+  animation: fbx-ben-paquete var(--ciclo, 6s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-paquete {
+  0% { left: 0%; transform: translateX(0); opacity: 0; }
+  12%, 88% { opacity: 1; }
+  100% { left: 100%; transform: translateX(-100%); opacity: 0; }
+}
+
+/* Anillo concéntrico que respira. */
+.fbx-ben-on .fbx-ben-anillo {
+  animation: fbx-ben-anillo var(--ciclo, 11s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-anillo {
+  0%, 100% { opacity: 0.5; transform: scale(0.98); }
+  50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+/* Halo que crece y se apaga detrás de una figura. */
+.fbx-ben-on .fbx-ben-pulso {
+  animation: fbx-ben-pulso var(--ciclo, 9s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-ben-pulso {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.62; transform: scale(1.16); }
+}
+
 /* ── Movimiento reducido ──
    Las catorce ilustraciones aparecen enteras y quietas: trazos cerrados,
    barras a su ancho final, nada latiendo. */
@@ -320,13 +507,26 @@ export const CSS_BENEFICIOS = `
   .fbx-ben-on .fbx-ben-late,
   .fbx-ben-on .fbx-ben-flujo,
   .fbx-ben-on .fbx-ben-respira,
-  .fbx-ben-on .fbx-ben-destello {
+  .fbx-ben-on .fbx-ben-destello,
+  .fbx-ben-on .fbx-ben-dibuja,
+  .fbx-ben-on .fbx-ben-flota,
+  .fbx-ben-on .fbx-ben-brilla,
+  .fbx-ben-on .fbx-ben-blip,
+  .fbx-ben-on .fbx-ben-barrido,
+  .fbx-ben-on .fbx-ben-barrido-y,
+  .fbx-ben-on .fbx-ben-paquete,
+  .fbx-ben-on .fbx-ben-anillo,
+  .fbx-ben-on .fbx-ben-pulso {
     animation: none !important;
   }
   .fbx-ben-suave { transition: none !important; }
   /* Los estados de reposo se resetean sobre la clase desnuda: si el
      observador no llegara a disparar, el dibujo tiene que verse igual. */
   .fbx-ben-traza { stroke-dashoffset: 0 !important; }
+  /* Las rutas en bucle se quedan dibujadas enteras, no a medio trazar. */
+  .fbx-ben-dibuja { stroke-dashoffset: 0 !important; }
+  /* Y lo que barre la escena, fuera: sin animación se quedaría plantado encima. */
+  .fbx-ben-barrido, .fbx-ben-barrido-y { opacity: 0 !important; }
   .fbx-ben-aparece,
   .fbx-ben-punto,
   .fbx-ben-sube { opacity: 1 !important; }

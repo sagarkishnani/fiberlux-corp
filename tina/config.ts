@@ -12,7 +12,7 @@ const BLOG_TAG_OPTIONS = [
   "Continuidad de negocio",
 ];
 
-/* SPEC 105: las catorce plantillas de ilustración de una card de "Beneficios",
+/* SPEC 105 (ampliado en el 107): las diecisiete plantillas de ilustración de una card de "Beneficios",
    en `src/components/servicios/beneficios/`. Con 35 sub-servicios y 3 a 4 cards
    cada uno son más de cien gráficos: dibujarlos como imágenes significaría cien
    archivos que alguien tendría que exportar de nuevo cada vez que cambiara un
@@ -21,17 +21,20 @@ const PLANTILLA_BENEFICIO_OPTIONS = [
   { value: "velocidad", label: "Velocidad — tarjetas apiladas con anillo" },
   { value: "simetria", label: "Simetría — curva de área con columnas" },
   { value: "gauge", label: "Prioridad — semicírculo de rayitas" },
-  { value: "sedes", label: "Sedes — nodos unidos en una LAN" },
+  { value: "sedes", label: "Sedes — nodos que confluyen en un hub" },
   { value: "dwdm", label: "DWDM — dos racks unidos por hilos" },
   { value: "uptime", label: "Uptime — anillo grande con cifra" },
-  { value: "prioridad", label: "Tráfico — lista priorizada con barras" },
-  { value: "conmutacion", label: "Conmutación — rutas con failover" },
+  { value: "prioridad", label: "Tráfico — lista priorizada con foco que recorre" },
+  { value: "conmutacion", label: "Conmutación — ruta principal y respaldo" },
   { value: "mfa", label: "MFA — móvil con OTP y factores" },
-  { value: "escudo", label: "Escudo — impactos que rebotan en el borde" },
+  { value: "escudo", label: "Escudo — perímetro que se traza y valida" },
   { value: "reloj", label: "Reloj — esfera con aguja que barre" },
   { value: "checklist", label: "Checklist — filas que se van marcando" },
   { value: "escalera", label: "Escalera — barras que crecen por escalones" },
-  { value: "consola", label: "Consola — panel central con módulos" },
+  { value: "consola", label: "Panel en vivo — filas de estado que laten" },
+  { value: "tunel", label: "Túnel cifrado — carriles con paquetes y candado" },
+  { value: "zerotrust", label: "Zero Trust — anillos concéntricos que respiran" },
+  { value: "bitacora", label: "Bitácora — eventos que aparecen uno a uno" },
 ];
 
 /* SPEC 105: datos de la ilustración de una card de beneficio.
@@ -55,14 +58,15 @@ const datosIlustracionField = () => ({
       name: "etiqueta",
       label: "Etiqueta",
       type: "string" as const,
-      description: "Plantilla Velocidad. Ej: Velocidad sin caídas",
+      description:
+        "Plantillas Velocidad, Panel en vivo (cabecera), Escudo (pie) y Túnel cifrado (pie). Ej: Velocidad sin caídas",
     },
     { name: "etiqueta_en", label: "Etiqueta (EN)", type: "string" as const },
     {
       name: "valor",
       label: "Cifra",
       type: "string" as const,
-      description: "Plantilla Uptime. Ej: 99,95",
+      description: "Plantillas Uptime y Panel en vivo (píldora). Ej: 99,95",
     },
     {
       name: "unidad",
@@ -82,7 +86,8 @@ const datosIlustracionField = () => ({
       name: "hilos",
       label: "Número de hilos (3–8)",
       type: "number" as const,
-      description: "Plantilla DWDM. Cuántas fibras unen los dos racks.",
+      description:
+        "Plantilla DWDM: cuántas fibras unen los dos racks. Túnel cifrado: cuántos carriles hay (3–5).",
     },
     {
       name: "barras",
@@ -113,7 +118,8 @@ const datosIlustracionField = () => ({
       label: "Filas de tráfico",
       type: "object" as const,
       list: true,
-      description: "Plantilla Tráfico. Máximo 4.",
+      description:
+        "Plantillas Tráfico y Bitácora. Máximo 4. En Bitácora, 'Servicio' es el evento y 'Prioridad' la etiqueta de la izquierda.",
       ui: {
         max: 4,
         itemProps: (item: any) => ({ label: item?.label || "Fila" }),
@@ -161,7 +167,8 @@ const datosIlustracionField = () => ({
       label: "Nodos de la LAN",
       type: "object" as const,
       list: true,
-      description: "Plantillas Sedes y Consola. Máximo 4 (Consola usa 3).",
+      description:
+        "Plantillas Sedes, Panel en vivo y Zero Trust. Máximo 4 (Panel usa 3; Zero Trust los nombra en su pie).",
       ui: {
         max: 4,
         itemProps: (item: any) => ({ label: item?.label || "Nodo" }),

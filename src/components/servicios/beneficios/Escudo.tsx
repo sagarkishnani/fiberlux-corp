@@ -1,92 +1,120 @@
-import { C, Lienzo, ret, type PropsIlustracion } from "./base";
+import { C, Escena, L, u, type PropsIlustracion } from "./base";
 
 /**
- * Plantilla "Escudo" (SPEC 18).
+ * Plantilla "Escudo" (SPEC 18, reescrita en el SPEC 107 sobre el canvas 8d).
  *
- * Un escudo que se traza y tres impactos que llegan desde fuera y rebotan en su
- * borde. Cuenta protección, bloqueo e inmutabilidad sin afirmar ninguna cifra:
- * lo que se ve es que algo llega y no entra.
+ * El perímetro se traza solo, se cierra y valida con un visto; detrás, un halo
+ * respira. Cuenta protección y verificación continua: no es un escudo quieto,
+ * es uno que se comprueba una y otra vez.
  *
- * Sin `datos`: el dibujo es siempre el mismo. Lo único que cambia entre cards es
- * el texto de la card, que ya lo pone el editor.
+ * `datos.etiqueta` cambia el pie; sin ella, el de reserva en el idioma activo.
  */
 
-/** Punta y hombros del escudo, en unidades del lienzo. */
-const CX = 160;
-const TOPE = 34;
-const ANCHO = 52;
-const HOMBRO = 74;
-const PUNTA = 152;
+/** Silueta y visto, en el sistema de coordenadas propio del escudo (200×200). */
+const SILUETA = "M100 22 34 48v52c0 40 27 74 66 88 39-14 66-48 66-88V48L100 22Z";
+const VISTO = "M72 100l20 21 38-40";
 
-/** Contorno del escudo: hombros rectos y base en punta. */
-const SILUETA = `M ${CX} ${TOPE}
-  L ${CX + ANCHO} ${TOPE + 16}
-  L ${CX + ANCHO} ${HOMBRO + 22}
-  Q ${CX + ANCHO} ${PUNTA - 26} ${CX} ${PUNTA}
-  Q ${CX - ANCHO} ${PUNTA - 26} ${CX - ANCHO} ${HOMBRO + 22}
-  L ${CX - ANCHO} ${TOPE + 16} Z`;
+/** Lado del escudo en unidades del lienzo (320×180). */
+const LADO = 130;
 
-/** Los tres impactos: de dónde vienen y dónde rebotan. */
-const IMPACTOS = [
-  { x: CX - ANCHO + 6, y: 66, desde: -46, ciclo: 3.4, ret: 0.0 },
-  { x: CX + ANCHO - 6, y: 92, desde: 46, ciclo: 3.9, ret: 0.5 },
-  { x: CX - ANCHO + 16, y: 118, desde: -46, ciclo: 4.3, ret: 1.0 },
-];
+const POR_DEFECTO = { es: "Perímetro verificado", en: "Perimeter verified" };
 
-export default function Escudo({ activo }: PropsIlustracion) {
+export default function Escudo({ datos, activo, locale }: PropsIlustracion) {
+  const etiqueta =
+    L(datos, "etiqueta", locale) || (locale === "en" ? POR_DEFECTO.en : POR_DEFECTO.es);
+
   return (
-    <Lienzo activo={activo}>
-      {/* Relleno: entra después del trazo, así el escudo se lee como que se
-          cierra sobre sí mismo antes de llenarse. */}
-      <path
-        className="fbx-ben-aparece"
-        style={{ "--ret": ret(0.5) } as React.CSSProperties}
-        d={SILUETA}
-        fill={C.tenue}
-      />
-      <path
-        className="fbx-ben-traza"
-        style={{ "--largo": 420, "--ret": ret(0.1) } as React.CSSProperties}
-        d={SILUETA}
-        fill="none"
-        stroke={C.acentoClaro}
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-
-      {/* Marca interior: dos trazos que forman el visto del escudo. */}
-      <path
-        className="fbx-ben-traza"
-        style={{ "--largo": 90, "--ret": ret(0.9) } as React.CSSProperties}
-        d={`M ${CX - 22} ${94} L ${CX - 5} ${112} L ${CX + 26} ${74}`}
-        fill="none"
-        stroke={C.acentoClaro}
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <Escena activo={activo}>
+      {/* Halo: nace detrás del escudo y respira muy despacio. */}
+      <div
+        className="fbx-ben-pulso"
+        style={
+          {
+            position: "absolute",
+            top: u(2),
+            left: "50%",
+            marginLeft: u(-85),
+            width: u(170),
+            height: u(170),
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(226,98,196,0.16), transparent 68%)",
+            pointerEvents: "none",
+            "--ciclo": "9s",
+          } as React.CSSProperties
+        }
       />
 
-      {/* Impactos: llegan, tocan el borde y se apagan. En bucle, desfasados,
-          para que nunca golpeen los tres a la vez. */}
-      {IMPACTOS.map((im, i) => (
-        <g
-          key={i}
-          className="fbx-ben-flujo"
-          style={{ "--ciclo": `${im.ciclo}s`, "--ret": ret(im.ret) } as React.CSSProperties}
-        >
-          <line
-            x1={im.x + im.desde}
-            y1={im.y}
-            x2={im.x + im.desde * 0.35}
-            y2={im.y}
-            stroke={C.textoTenue}
-            strokeWidth="3"
-            strokeLinecap="round"
-            opacity="0.45"
-          />
-          <circle cx={im.x + im.desde * 0.3} cy={im.y} r="4" fill={C.textoTenue} opacity="0.7" />
-        </g>
-      ))}
-    </Lienzo>
+      <svg
+        viewBox="0 0 200 200"
+        width={u(LADO)}
+        height={u(LADO)}
+        fill="none"
+        style={{ position: "absolute", top: u(3), left: "50%", marginLeft: u(-LADO / 2) }}
+      >
+        {/* Perímetro en reposo: la silueta existe siempre, aunque el trazo vivo
+            esté a medio camino. */}
+        <path d={SILUETA} stroke={C.tenue} strokeWidth="2.4" strokeLinejoin="round" />
+        <path
+          className="fbx-ben-dibuja"
+          style={{ "--ciclo": "7s" } as React.CSSProperties}
+          d={SILUETA}
+          stroke={C.acentoVivo}
+          strokeWidth="2.4"
+          strokeLinejoin="round"
+          pathLength={1}
+        />
+        {/* El visto entra detrás del perímetro: primero se cierra, luego valida. */}
+        <path
+          className="fbx-ben-dibuja"
+          style={{ "--ciclo": "7s", "--ret": "1.4s" } as React.CSSProperties}
+          d={VISTO}
+          stroke={C.acentoClaro}
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          pathLength={1}
+        />
+      </svg>
+
+      <div
+        style={{
+          position: "absolute",
+          bottom: u(8),
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: u(7),
+          maxWidth: "90%",
+          padding: `${u(7)} ${u(13)}`,
+          borderRadius: u(999),
+          background: "rgba(226,98,196,0.10)",
+          border: "1px solid rgba(226,98,196,0.28)",
+          color: C.acentoVivo,
+          fontFamily: "'Space Mono', ui-monospace, monospace",
+          fontSize: u(9),
+          letterSpacing: "0.12em",
+          lineHeight: 1,
+          textTransform: "uppercase",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+        }}
+      >
+        <span
+          className="fbx-ben-blip"
+          style={
+            {
+              flex: "none",
+              width: u(6),
+              height: u(6),
+              borderRadius: "50%",
+              background: C.acentoVivo,
+              "--ciclo": "4s",
+            } as React.CSSProperties
+          }
+        />
+        <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{etiqueta}</span>
+      </div>
+    </Escena>
   );
 }

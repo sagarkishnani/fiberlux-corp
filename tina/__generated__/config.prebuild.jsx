@@ -12,17 +12,20 @@ var PLANTILLA_BENEFICIO_OPTIONS = [
   { value: "velocidad", label: "Velocidad \u2014 tarjetas apiladas con anillo" },
   { value: "simetria", label: "Simetr\xEDa \u2014 curva de \xE1rea con columnas" },
   { value: "gauge", label: "Prioridad \u2014 semic\xEDrculo de rayitas" },
-  { value: "sedes", label: "Sedes \u2014 nodos unidos en una LAN" },
+  { value: "sedes", label: "Sedes \u2014 nodos que confluyen en un hub" },
   { value: "dwdm", label: "DWDM \u2014 dos racks unidos por hilos" },
   { value: "uptime", label: "Uptime \u2014 anillo grande con cifra" },
-  { value: "prioridad", label: "Tr\xE1fico \u2014 lista priorizada con barras" },
-  { value: "conmutacion", label: "Conmutaci\xF3n \u2014 rutas con failover" },
+  { value: "prioridad", label: "Tr\xE1fico \u2014 lista priorizada con foco que recorre" },
+  { value: "conmutacion", label: "Conmutaci\xF3n \u2014 ruta principal y respaldo" },
   { value: "mfa", label: "MFA \u2014 m\xF3vil con OTP y factores" },
-  { value: "escudo", label: "Escudo \u2014 impactos que rebotan en el borde" },
+  { value: "escudo", label: "Escudo \u2014 per\xEDmetro que se traza y valida" },
   { value: "reloj", label: "Reloj \u2014 esfera con aguja que barre" },
   { value: "checklist", label: "Checklist \u2014 filas que se van marcando" },
   { value: "escalera", label: "Escalera \u2014 barras que crecen por escalones" },
-  { value: "consola", label: "Consola \u2014 panel central con m\xF3dulos" }
+  { value: "consola", label: "Panel en vivo \u2014 filas de estado que laten" },
+  { value: "tunel", label: "T\xFAnel cifrado \u2014 carriles con paquetes y candado" },
+  { value: "zerotrust", label: "Zero Trust \u2014 anillos conc\xE9ntricos que respiran" },
+  { value: "bitacora", label: "Bit\xE1cora \u2014 eventos que aparecen uno a uno" }
 ];
 var datosIlustracionField = () => ({
   name: "datos",
@@ -34,14 +37,14 @@ var datosIlustracionField = () => ({
       name: "etiqueta",
       label: "Etiqueta",
       type: "string",
-      description: "Plantilla Velocidad. Ej: Velocidad sin ca\xEDdas"
+      description: "Plantillas Velocidad, Panel en vivo (cabecera), Escudo (pie) y T\xFAnel cifrado (pie). Ej: Velocidad sin ca\xEDdas"
     },
     { name: "etiqueta_en", label: "Etiqueta (EN)", type: "string" },
     {
       name: "valor",
       label: "Cifra",
       type: "string",
-      description: "Plantilla Uptime. Ej: 99,95"
+      description: "Plantillas Uptime y Panel en vivo (p\xEDldora). Ej: 99,95"
     },
     {
       name: "unidad",
@@ -60,7 +63,7 @@ var datosIlustracionField = () => ({
       name: "hilos",
       label: "N\xFAmero de hilos (3\u20138)",
       type: "number",
-      description: "Plantilla DWDM. Cu\xE1ntas fibras unen los dos racks."
+      description: "Plantilla DWDM: cu\xE1ntas fibras unen los dos racks. T\xFAnel cifrado: cu\xE1ntos carriles hay (3\u20135)."
     },
     {
       name: "barras",
@@ -89,7 +92,7 @@ var datosIlustracionField = () => ({
       label: "Filas de tr\xE1fico",
       type: "object",
       list: true,
-      description: "Plantilla Tr\xE1fico. M\xE1ximo 4.",
+      description: "Plantillas Tr\xE1fico y Bit\xE1cora. M\xE1ximo 4. En Bit\xE1cora, 'Servicio' es el evento y 'Prioridad' la etiqueta de la izquierda.",
       ui: {
         max: 4,
         itemProps: (item) => ({ label: item?.label || "Fila" })
@@ -137,7 +140,7 @@ var datosIlustracionField = () => ({
       label: "Nodos de la LAN",
       type: "object",
       list: true,
-      description: "Plantillas Sedes y Consola. M\xE1ximo 4 (Consola usa 3).",
+      description: "Plantillas Sedes, Panel en vivo y Zero Trust. M\xE1ximo 4 (Panel usa 3; Zero Trust los nombra en su pie).",
       ui: {
         max: 4,
         itemProps: (item) => ({ label: item?.label || "Nodo" })
