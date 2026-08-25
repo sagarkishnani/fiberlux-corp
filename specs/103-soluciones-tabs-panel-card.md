@@ -20,20 +20,21 @@ El cliente trajo una referencia visual (captura adjunta al pedido): píldoras de
 - **Componente nuevo** `src/components/shared/SolucionesPanel.astro` + `SolucionesPanelReact.tsx`, alimentado por la misma query `home` (`home.services`) y con la misma firma de props que `SolucionesScroll` (`query` / `variables` / `data` / `locale`).
 - **Montaje en las 3 pantallas** que hoy usan `SolucionesScroll`: `src/pages/index.astro`, `src/pages/soluciones/index.astro`, `src/pages/soporte-tecnico/index.astro`. Los wrappers `/en` heredan el cambio (reexportan la página ES).
 - **Sección de alto normal:** se elimina el scroll-jack (track alto + panel `sticky`). La sección ocupa su alto natural y el scroll de la página nunca queda anclado.
-- **Tira de píldoras de categoría** (tabs) arriba del panel: ícono + nombre de la categoría, estado activo destacado (magenta) con **indicador deslizante** entre píldoras. Scroll horizontal con máscara en mobile.
-- **Panel de detalle** (card oscura/glass, esquinas redondeadas grandes) en dos columnas en `lg+`:
-  - **Izquierda:** título de la categoría (`title`), tagline en magenta (`description`), párrafo (`body`, campo nuevo), checklist de subservicios en **dos columnas** con ícono de check, y botón "Conoce más" → `url` de la categoría.
-  - **Derecha:** card visual con degradado magenta, capas de cuadrados rotados de fondo, ícono grande de la categoría, eyebrow monoespaciado (`eyebrow`, campo nuevo) y nombre de la categoría.
+- **Tira de chips de categoría** (tabs) arriba del panel: ícono + nombre corto (`tabLabel`, con fallback al `title`), estado activo destacado con borde magenta e **indicador deslizante** entre chips. Scroll horizontal con máscara en mobile.
+- **Encabezado de sección:** eyebrow `[ SOLUCIONES ]` (string de UI, localizado) + título grande `h2` con `services.title` del CMS.
+- **Panel de detalle** presentado como **stack de tarjetas**: dos capas asoman por la derecha detrás del panel activo (las siguientes soluciones). Panel de esquinas redondeadas partido en dos mitades en `lg+`:
+  - **Izquierda:** título de la categoría (`title`), descripción corta (`description`), subservicios como **chips** (píldora con punto magenta) y CTA **tipo link** "Conoce más →" (no botón relleno) → `url` de la categoría.
+  - **Derecha:** mitad **a sangre** con degradado magenta, capas de cuadrados rotados translúcidos y el ícono de la categoría en un tile claro. Sin textos dentro de la card.
 - **Flechas circulares a los costados** de la card, centradas verticalmente y superpuestas sobre sus bordes, reusando `shared/SliderSideArrows.tsx` (SPEC 94). Con wrap (de la última vuelve a la primera).
 - **Arrastre horizontal** (pointer drag) sobre el panel para cambiar de categoría, además de tabs y flechas. Soporte de teclado: flechas ←/→ sobre la tira de tabs (`role="tablist"`).
 - **Animaciones de cambio de categoría (nivel completo, direccional):**
   - Indicador deslizante de la píldora activa.
   - Columna izquierda: crossfade + slide **según la dirección** del cambio (título, tagline, párrafo).
-  - Checklist: entrada en **stagger** de cada ítem.
-  - Card visual: entrada con escala + blur, **flotación** continua sutil y **tilt 3D** siguiendo al cursor (solo `pointer: fine`).
+  - Chips de subservicio: entrada en **stagger**.
+  - Mitad visual: entrada con escala + blur; el cúmulo de ícono + cuadrados **flota** de forma continua y hace **tilt 3D** siguiendo al cursor (solo `pointer: fine`).
   - Todo bajo `prefers-reduced-motion: reduce` → cambio instantáneo sin animación, sin flotación ni tilt.
-- **Enlaces del checklist:** cada ítem con `url` navega a la página del subservicio y conserva el **tooltip "Ver más" con delay que persigue al cursor** (SPEC 89, solo `pointer: fine`). Ítem sin `url` = texto plano no clicable, sin tooltip.
-- **Campos nuevos en Tina** (ver Modelo de datos): `items[].tabIcon`, `items[].body` / `body_en`, `items[].eyebrow` / `eyebrow_en`, con contenido sembrado para las 4 categorías.
+- **Enlaces de los chips:** cada chip con `url` navega a la página del subservicio y conserva el **tooltip "Ver más" con delay que persigue al cursor** (SPEC 89, solo `pointer: fine`). Chip sin `url` = chip no clicable, sin tooltip.
+- **Campos nuevos en Tina** (ver Modelo de datos): `items[].tabIcon` (sembrado para las 4 categorías) y `items[].tabLabel` / `tabLabel_en` (nombre corto del chip, opcional, lo rellena el cliente; vacío ⇒ título completo).
 - **i18n:** todo el texto se lee con `tField` (`_en` con fallback ES); los strings fijos de UI ("Conoce más", "Ver más", `aria-label` de las flechas) vía `t()` de `src/i18n/ui.ts` o el patrón local ya usado en el bloque actual.
 - **`SolucionesScroll.astro` / `SolucionesScrollReact.tsx` se conservan en el repo** (compilando, sin montar), igual que se hizo con `SolucionesSlider` en la SPEC 89.
 
@@ -58,13 +59,12 @@ Reasignación de roles (sin renombrar campos):
 | Campo | Rol en el bloque nuevo |
 | --- | --- |
 | `title` / `title_en` | Título grande de la categoría (izquierda) y nombre en la card visual |
-| `description` / `description_en` | **Tagline** magenta bajo el título (frase corta, ya lo es hoy) |
-| `body` / `body_en` (**nuevo**) | Párrafo descriptivo bajo el tagline |
-| `eyebrow` / `eyebrow_en` (**nuevo**) | Texto monoespaciado en la card visual (ej. `RED · NOC 24/7`) |
-| `tabIcon` (**nuevo**) | Ícono de la píldora y de la card visual (set fijo → `react-icons/fa6`) |
+| `description` / `description_en` | Descripción corta bajo el título |
+| `tabLabel` / `tabLabel_en` (**nuevo**) | Nombre corto del chip de categoría; vacío ⇒ se usa `title` |
+| `tabIcon` (**nuevo**) | Ícono del chip y de la mitad visual (set fijo → `react-icons/fa6`) |
 | `icon` | Sin uso en este bloque (se conserva para `SolucionesScroll`/`SolucionesSlider`) |
 | `number` | Sin uso visible en este bloque (se conserva) |
-| `bullets[]` | Checklist de subservicios (`label` / `label_en` / `url`) |
+| `bullets[]` | Chips de subservicio (`label` / `label_en` / `url`) |
 
 Schema en `tina/config.ts` — se añaden dentro de `home.services.items[]`:
 
@@ -86,10 +86,13 @@ Schema en `tina/config.ts` — se añaden dentro de `home.services.items[]`:
     { value: "wifi",      label: "Wi-Fi / Inalámbrico" },
   ],
 },
-{ name: "body",    label: "Descripción larga",      type: "string", ui: { component: "textarea" } },
-{ name: "body_en", label: "Descripción larga (EN)", type: "string", ui: { component: "textarea" } },
-{ name: "eyebrow",    label: "Etiqueta de la card (mono)",      type: "string" },
-{ name: "eyebrow_en", label: "Etiqueta de la card (mono) (EN)", type: "string" },
+{
+  name: "tabLabel",
+  label: "Nombre corto (chip)",
+  type: "string",
+  description: "Nombre corto para el chip de categoría. Si se deja vacío se usa el título.",
+},
+{ name: "tabLabel_en", label: "Nombre corto (chip) (EN)", type: "string" },
 ```
 
 Mapa `tabIcon` → glifo, hardcodeado en el componente (patrón de `RubrosReact`, SPEC 90):
@@ -103,11 +106,7 @@ const ICONS = {
 // valor ausente o desconocido → FaBolt
 ```
 
-Contenido sembrado en `src/content/home/index.json` (4 categorías):
-
-- `tabIcon`: `conectividad → rayo`, `ciberseguridad → escudo`, `cloud/data center → nube`, `servicios gestionados → engranaje`.
-- `body`: se siembra desde `src/content/services/<categoria>.json → hero.intro` (y `body_en` desde `hero.intro_en`, que ya existe traducido).
-- `eyebrow`: frase corta técnica por categoría (ej. `RED · NOC 24/7`); `eyebrow_en` se deja vacío (fallback ES) salvo que la traducción sea obvia.
+Contenido sembrado en `src/content/home/index.json` (4 categorías): solo `tabIcon` (`conectividad → rayo`, `ciberseguridad → escudo`, `cloud/data center → nube`, `servicios gestionados → engranaje`). **No se escribe ningún texto nuevo:** `tabLabel` queda vacío y el cliente decide el nombre corto en Tina.
 
 Convenciones que se mantienen de la SPEC 89: las `url` se prefijan con `BASE_URL` (`withBase`); el ítem sin `url` no es clicable; la lectura i18n es siempre por `tField`.
 
@@ -117,9 +116,9 @@ Convenciones que se mantienen de la SPEC 89: las `url` se prefijan con `BASE_URL
 
 Cada paso deja el sitio compilando y funcional.
 
-1. **Schema Tina.** Añadir `tabIcon`, `body`/`body_en` y `eyebrow`/`eyebrow_en` en `home.services.items[]` de `tina/config.ts`. Correr `npm run dev` una vez para regenerar `tina/__generated__/`. *Estado: admin muestra los campos nuevos; nada cambia en pantalla.*
+1. **Schema Tina.** Añadir `tabIcon` y `tabLabel`/`tabLabel_en` en `home.services.items[]` de `tina/config.ts`. Correr `npm run dev` una vez para regenerar `tina/__generated__/`. *Estado: admin muestra los campos nuevos; nada cambia en pantalla.*
 
-2. **Sembrar contenido.** Rellenar los tres campos en las 4 categorías de `src/content/home/index.json` según el Modelo de datos (`body` desde `services/*.json → hero.intro`). *Estado: contenido válido, aún sin consumidor.*
+2. **Sembrar contenido.** Rellenar `tabIcon` en las 4 categorías de `src/content/home/index.json`. *Estado: contenido válido, aún sin consumidor.*
 
 3. **Esqueleto del panel.** Crear `SolucionesPanel.astro` (resuelve la query `home` + `locale`, copia de `SolucionesScroll.astro`, `client:visible`) y `SolucionesPanelReact.tsx` que renderiza estático la **categoría 0**: tira de píldoras, card oscura con dos columnas (texto + checklist a la izquierda, card visual a la derecha) y botón "Conoce más". Sin navegación ni animación. *Estado: bloque correcto para una categoría, todavía no montado.*
 
@@ -150,23 +149,27 @@ Cada paso deja el sitio compilando y funcional.
 - [ ] `npm run build` pasa sin errores ni warnings de tipos de Tina. *(Pendiente: `tinacms build` hace cloud-check contra TinaCloud y falla hasta que el schema nuevo llegue a GitHub. Verificado el equivalente local, ver nota.)*
 - [x] Home, `/soluciones` y `/soporte-tecnico` (y sus `/en`) muestran el bloque nuevo; ninguna monta ya `SolucionesScroll`.
 - [x] Al hacer scroll sobre la sección, **el scroll nunca queda anclado**: la página atraviesa la sección de corrido.
-- [x] La tira de píldoras muestra las 4 categorías, cada una con su ícono según `tabIcon`, y la activa está destacada con un indicador que **se desliza** al cambiar.
+- [x] La tira de chips muestra las 4 categorías con su ícono según `tabIcon` y el nombre corto (`tabLabel`, con fallback al título), y la activa está destacada con un indicador que **se desliza** al cambiar.
 - [x] Click en una píldora cambia la categoría mostrada en el panel (título, tagline, párrafo, checklist, CTA y card visual).
 - [x] En `lg+` hay dos flechas circulares magenta superpuestas a los costados del panel, centradas verticalmente, que avanzan/retroceden con wrap (de la 4ª a la 1ª y viceversa).
 - [x] Las flechas no quedan recortadas ni generan scroll horizontal en pantallas anchas.
 - [x] Arrastrar horizontalmente el panel cambia de categoría; el arrastre no bloquea el scroll vertical en táctil.
 - [x] Con la tira de tabs enfocada, ←/→ cambian de categoría (`role="tablist"`, `aria-selected` correcto).
 - [x] El cambio de categoría es **direccional**: al ir hacia adelante el contenido entra desde el lado opuesto que al ir hacia atrás.
-- [x] Los ítems del checklist entran en stagger (no todos a la vez) y se muestran en dos columnas en `lg+`.
-- [x] La card visual muestra ícono grande, `eyebrow` en tipografía mono y el nombre de la categoría; flota sutilmente y hace tilt 3D siguiendo al cursor en punteros finos.
+- [x] Los subservicios se muestran como **chips** (píldora con punto magenta) que fluyen en varias filas, y entran en stagger.
+- [x] El CTA "Conoce más" es un **link con flecha**, no un botón relleno.
+- [x] El panel se ve como un **stack**: dos capas asoman por la derecha detrás de la tarjeta activa.
+- [x] La mitad derecha va **a sangre** (sin padding) y **no** contiene textos.
+- [x] La mitad visual muestra el ícono de la categoría sobre el degradado; el cúmulo flota sutilmente y hace tilt 3D siguiendo al cursor en punteros finos.
 - [x] En táctil (`pointer: coarse`) no hay tilt ni tooltip.
-- [x] Hover en un ítem del checklist con `url` muestra el tooltip "Ver más" tras un breve delay y persigue al cursor con retraso; click navega al subservicio (con `BASE_URL`).
-- [ ] Un ítem sin `url` se renderiza como texto plano no clicable y sin tooltip. *(Solo verificado en código: las 4 categorías tienen `url` en todos sus subservicios, no hay caso real que observar.)*
+- [x] Hover en un chip con `url` muestra el tooltip "Ver más" tras un breve delay y persigue al cursor con retraso; click navega al subservicio (con `BASE_URL`).
+- [ ] Un chip sin `url` se renderiza no clicable y sin tooltip. *(Solo verificado en código: las 4 categorías tienen `url` en todos sus subservicios, no hay caso real que observar.)*
 - [x] "Conoce más" navega a la `url` de la categoría activa.
 - [x] En `/en/...` todos los textos leen `_en` con fallback a ES; el tooltip dice "See more" y el CTA "Learn more".
 - [x] Con `prefers-reduced-motion: reduce` el cambio de categoría es instantáneo y no hay flotación, tilt ni `rAF` activos.
-- [x] En mobile el bloque es de una columna, las tabs scrollean horizontalmente y todo es legible sin cortes.
+- [x] En mobile el bloque es de una columna (mitad visual arriba, contenido debajo), los chips de categoría scrollean horizontalmente y todo es legible sin cortes.
 - [x] `SolucionesScroll(.astro/React)` y `SolucionesSlider(.astro/React)` siguen en el repo y compilan.
+- [x] No hay ningún texto escrito por el agente: todo sale del CMS o del diccionario de UI ("Conoce más", "Ver más", `[ SOLUCIONES ]`).
 
 **Verificación (25/08/2026).** Build local en verde con `npx tinacms dev -c "astro build"` (116 páginas, exit 0; los warnings de `glob-loader` son preexistentes). `npm run build` **no** se pudo correr: su `tinacms build` hace cloud-check contra TinaCloud y falla con "local GraphQL schema doesn't match remote" hasta que los campos nuevos llegan a GitHub — hay que verificarlo en el CI tras el push.
 
@@ -184,7 +187,10 @@ Los 3 errores de consola en `/soluciones` son de Cloudflare Turnstile contra `lo
 - **Sí:** reemplazar en las **3 pantallas** con un único componente compartido. Mantener dos bloques distintos de soluciones conviviendo duplicaría el mantenimiento.
 - **Sí:** **eliminar el scroll-jack**. Era el principal reclamo del bloque anterior (secuestra el scroll en tres pantallas) y la referencia no lo tiene.
 - **No:** autoplay por tiempo. La sección tiene mucho texto por categoría; rotar sola obliga a leer contrarreloj.
-- **Sí:** **reusar `description` como tagline** y añadir `body` para el párrafo, en vez de crear `tagline` + `body`. El `description` actual ya es una frase corta de una línea: encaja en el rol sin migrar contenido.
+- **Sí:** usar solo `title` + `description` del CMS en la columna izquierda. La primera versión añadía un párrafo `body` y un pie `eyebrow` en la card (`RED · NOC 24/7`) — texto inventado por el agente que la referencia no tiene; ambos campos se eliminaron del schema.
+- **Sí:** subservicios como **chips** y CTA **tipo link con flecha** (referencia), en vez del checklist con checks en dos columnas y el botón relleno de la primera versión.
+- **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding.
+- **Sí:** `tabLabel` opcional para el nombre corto del chip, con fallback al título. Evita que el agente acorte por su cuenta los títulos del cliente.
 - **Sí:** `tabIcon` como **set cerrado de opciones** mapeado a `react-icons/fa6` (patrón de Rubros, SPEC 90), en vez de reusar `items[].icon` (hoy las 4 categorías apuntan al mismo `onda-magenta.svg`, se verían idénticas) y en vez de subir imágenes (el cliente tendría que producir 4 assets).
 - **Sí:** adaptar a la **paleta de marca** (near-black + magenta, card glass) replicando el layout y las animaciones de la referencia, no su verde sobre fondo claro. Un bloque claro rompería la continuidad del Home.
 - **Sí:** conservar el **tooltip "Ver más"** de la SPEC 89. Es un patrón ya establecido en el sitio y el checklist sigue siendo navegable.
