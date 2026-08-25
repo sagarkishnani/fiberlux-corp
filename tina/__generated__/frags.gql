@@ -270,6 +270,7 @@ fragment AboutParts on About {
     title_en
     subtitle
     subtitle_en
+    image
   }
   missionVisionTitle
   missionVisionTitle_en
@@ -392,6 +393,7 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   heading_en
   intro
   intro_en
+  heroImage
   heroVideo
   heroVideoPoster
   sectionTitle
@@ -424,6 +426,7 @@ fragment ServiciosParts on Servicios {
   heading
   intro
   ctaLabel
+  heroImage
   heroVideo
   heroVideoPoster
   formTitle

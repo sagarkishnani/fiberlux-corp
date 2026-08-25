@@ -3,10 +3,18 @@ import type {
   SoporteTecnicoQuery,
   SoporteTecnicoQueryVariables,
 } from "../../../tina/__generated__/types";
-import SupportHub from "./SupportHub";
 import { tField } from "../../utils/i18n";
 import { t } from "../../i18n/ui";
 import type { Locale } from "../../i18n/config";
+import PhotoHero from "../shared/PhotoHero";
+
+/**
+ * Hero de Soporte técnico — SPEC 104.
+ *
+ * Fotografía a sangre (ingeniero en data center, a la derecha) con velo oscuro
+ * hacia el texto. Reemplaza el hub de nodos de la SPEC 102 (`SupportHub`), que
+ * sigue en el repo sin montar aquí.
+ */
 
 interface HeroSoporteProps {
   query: string;
@@ -14,6 +22,8 @@ interface HeroSoporteProps {
   data: SoporteTecnicoQuery;
   locale?: Locale;
 }
+
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 export default function HeroSoporteReact({
   query,
@@ -23,77 +33,46 @@ export default function HeroSoporteReact({
 }: HeroSoporteProps) {
   const { data } = useTina<SoporteTecnicoQuery>({ query, variables, data: initialData });
 
-  const page = data?.soporteTecnico;
+  const page = data?.soporteTecnico || initialData?.soporteTecnico;
   if (!page) return null;
 
-  const base = import.meta.env.BASE_URL || "/";
-
   return (
-    <section
-      className="relative overflow-hidden -mt-16"
-      style={{ background: "#0a0a0a" }}
-    >
-      {/* Ambient glow toward the right (where the 3D element will live) */}
-      <div className="absolute inset-0 z-0 soporte-hero-glow" />
-
-      <div className="relative site-container pt-28 pb-20 lg:pt-36 lg:pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* ════ LEFT — informational chrome ════ */}
-          <div className="max-w-[560px]" data-reveal="up">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-caption-sm text-greyscale mb-6">
-              <a href={base} className="hover:text-greyscale-white transition-colors">
-                {t("breadcrumb.home", locale)}
-              </a>
-              <span>/</span>
-              <span
-                className="text-greyscale-white"
-                data-tina-field={tinaField(page, "breadcrumb")}
-              >
-                {tField(page, "breadcrumb", locale)}
-              </span>
-            </nav>
-
-            <h1
-              className="text-[32px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white mb-6"
-              data-tina-field={tinaField(page, "heading")}
-            >
-              {tField(page, "heading", locale)}
-            </h1>
-
-            <p
-              className="text-body-md text-greyscale-light max-w-[460px]"
-              data-tina-field={tinaField(page, "intro")}
-            >
-              {tField(page, "intro", locale)}
-            </p>
-          </div>
-
-          {/* ════ RIGHT — hub de nodos animado (núcleo + canales, SPEC 102) ════ */}
-          <div className="relative w-full min-w-0 max-w-[460px] mx-auto" data-reveal="up">
-            <SupportHub />
-          </div>
-        </div>
-      </div>
-
-      <style>{`
-        .soporte-hero-glow {
-          background: radial-gradient(
-            55% 70% at 82% 35%,
-            rgba(150, 35, 122, 0.28) 0%,
-            rgba(150, 35, 122, 0) 60%
-          );
-        }
-        @media (max-width: 1023px) {
-          .soporte-hero-glow {
-            background: radial-gradient(
-              80% 50% at 80% 12%,
-              rgba(150, 35, 122, 0.22) 0%,
-              rgba(150, 35, 122, 0) 60%
-            );
-          }
-        }
-      `}</style>
-    </section>
+    <PhotoHero
+      image={page.heroImage}
+      focus="78% 42%"
+      focusMobile="74% 32%"
+      breadcrumb={
+        <ol className="flex items-center gap-2 text-sm">
+          <li>
+            <a href={`${BASE}/`} className="text-white/50 transition-colors hover:text-white">
+              {t("breadcrumb.home", locale)}
+            </a>
+          </li>
+          <li className="text-white/30">/</li>
+          <li
+            className="font-medium text-white"
+            data-tina-field={tinaField(page, "breadcrumb")}
+          >
+            {tField(page, "breadcrumb", locale)}
+          </li>
+        </ol>
+      }
+      title={
+        <h1
+          className="max-w-[16ch] text-[34px] font-semibold leading-[1.1] text-white md:text-[52px] lg:text-[58px]"
+          data-tina-field={tinaField(page, "heading")}
+        >
+          {tField(page, "heading", locale)}
+        </h1>
+      }
+      subtitle={
+        <p
+          className="mt-5 max-w-[48ch] text-[15px] leading-relaxed text-white/65 md:mt-6 md:text-base"
+          data-tina-field={tinaField(page, "intro")}
+        >
+          {tField(page, "intro", locale)}
+        </p>
+      }
+    />
   );
 }

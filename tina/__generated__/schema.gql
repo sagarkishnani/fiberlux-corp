@@ -807,6 +807,7 @@ type AboutHero {
   title_en: String
   subtitle: String
   subtitle_en: String
+  image: String
 }
 
 type AboutMission {
@@ -911,6 +912,7 @@ input AboutHeroFilter {
   title_en: StringFilter
   subtitle: StringFilter
   subtitle_en: StringFilter
+  image: ImageFilter
 }
 
 input AboutMissionFilter {
@@ -1144,6 +1146,7 @@ type SoporteTecnico implements Node & Document {
   heading_en: String
   intro: String
   intro_en: String
+  heroImage: String
   heroVideo: String
   heroVideoPoster: String
   sectionTitle: String
@@ -1182,6 +1185,7 @@ input SoporteTecnicoFilter {
   heading_en: StringFilter
   intro: StringFilter
   intro_en: StringFilter
+  heroImage: ImageFilter
   heroVideo: ImageFilter
   heroVideoPoster: ImageFilter
   sectionTitle: StringFilter
@@ -1207,6 +1211,7 @@ type Servicios implements Node & Document {
   heading: String
   intro: String
   ctaLabel: String
+  heroImage: String
   heroVideo: String
   heroVideoPoster: String
   formTitle: String
@@ -1223,6 +1228,7 @@ input ServiciosFilter {
   heading: StringFilter
   intro: StringFilter
   ctaLabel: StringFilter
+  heroImage: ImageFilter
   heroVideo: ImageFilter
   heroVideoPoster: ImageFilter
   formTitle: StringFilter
@@ -2886,6 +2892,7 @@ input AboutHeroMutation {
   title_en: String
   subtitle: String
   subtitle_en: String
+  image: String
 }
 
 input AboutMissionMutation {
@@ -3040,6 +3047,7 @@ input SoporteTecnicoMutation {
   heading_en: String
   intro: String
   intro_en: String
+  heroImage: String
   heroVideo: String
   heroVideoPoster: String
   sectionTitle: String
@@ -3054,6 +3062,7 @@ input ServiciosMutation {
   heading: String
   intro: String
   ctaLabel: String
+  heroImage: String
   heroVideo: String
   heroVideoPoster: String
   formTitle: String

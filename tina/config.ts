@@ -996,6 +996,13 @@ export default defineConfig({
                 ui: { component: "textarea" },
               },
               { name: "subtitle_en", label: "Subtítulo (EN)", type: "string", ui: { component: "textarea" } },
+              {
+                name: "image",
+                label: "Imagen de fondo del hero",
+                type: "image",
+                description:
+                  "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto.",
+              },
             ],
           },
 
@@ -1386,6 +1393,13 @@ export default defineConfig({
             ui: { component: "textarea" },
           },
           {
+            name: "heroImage",
+            label: "Imagen de fondo del hero",
+            type: "image",
+            description:
+              "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto.",
+          },
+          {
             name: "heroVideo",
             label: "Video del hero (loop)",
             type: "image",
@@ -1498,6 +1512,13 @@ export default defineConfig({
             ui: { component: "textarea" },
           },
           { name: "ctaLabel", label: "Texto del botón del hero", type: "string" },
+          {
+            name: "heroImage",
+            label: "Imagen de fondo del hero",
+            type: "image",
+            description:
+              "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto.",
+          },
           {
             name: "heroVideo",
             label: "Video del hero (loop)",

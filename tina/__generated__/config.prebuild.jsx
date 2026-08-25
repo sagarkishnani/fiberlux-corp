@@ -939,7 +939,13 @@ var config_default = defineConfig({
                 type: "string",
                 ui: { component: "textarea" }
               },
-              { name: "subtitle_en", label: "Subt\xEDtulo (EN)", type: "string", ui: { component: "textarea" } }
+              { name: "subtitle_en", label: "Subt\xEDtulo (EN)", type: "string", ui: { component: "textarea" } },
+              {
+                name: "image",
+                label: "Imagen de fondo del hero",
+                type: "image",
+                description: "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto."
+              }
             ]
           },
           // ── Misión y Visión ──
@@ -1319,6 +1325,12 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           {
+            name: "heroImage",
+            label: "Imagen de fondo del hero",
+            type: "image",
+            description: "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto."
+          },
+          {
             name: "heroVideo",
             label: "Video del hero (loop)",
             type: "image",
@@ -1427,6 +1439,12 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           { name: "ctaLabel", label: "Texto del bot\xF3n del hero", type: "string" },
+          {
+            name: "heroImage",
+            label: "Imagen de fondo del hero",
+            type: "image",
+            description: "Foto a sangre del hero. El sujeto debe quedar a la derecha: el degradado oscurece la izquierda para el texto."
+          },
           {
             name: "heroVideo",
             label: "Video del hero (loop)",
