@@ -158,14 +158,21 @@ export default function SolucionesPanelReact({
     return () => window.removeEventListener("resize", measure);
   }, [activeIndex, N, locale]);
 
-  /* Trae el tab activo a la vista cuando la tira scrollea (mobile). */
+  /* Trae el tab activo a la vista cuando la tira scrollea (mobile).
+     Se mueve el scroll horizontal de la tira a mano (no `scrollIntoView`, que
+     también movería el scroll vertical de la página). */
+  const stripWrapRef = useRef<HTMLDivElement | null>(null);
+  const firstTabRun = useRef(true);
   useEffect(() => {
+    if (firstTabRun.current) {
+      firstTabRun.current = false;
+      return;
+    }
+    const wrap = stripWrapRef.current;
     const el = tabRefs.current[Math.min(activeIndex, N - 1)];
-    el?.scrollIntoView({
-      behavior: reduceMotion ? "auto" : "smooth",
-      block: "nearest",
-      inline: "center",
-    });
+    if (!wrap || !el || wrap.scrollWidth <= wrap.clientWidth) return;
+    const left = el.offsetLeft - (wrap.clientWidth - el.offsetWidth) / 2;
+    wrap.scrollTo({ left: Math.max(0, left), behavior: reduceMotion ? "auto" : "smooth" });
   }, [activeIndex, N, reduceMotion]);
 
   /* Re-mide cuando el scroll horizontal de la tira cambia el layout (mobile). */
@@ -336,7 +343,10 @@ export default function SolucionesPanelReact({
         {/* ── Tira de píldoras de categoría ──
             En mobile scrollea horizontalmente con máscara de degradado; el tab
             activo se trae a la vista al cambiar de categoría. */}
-        <div className="sol-tabs-wrap -mx-4 mb-8 overflow-x-auto px-4 pb-1 md:mx-0 md:mb-10 md:px-0">
+        <div
+          ref={stripWrapRef}
+          className="sol-tabs-wrap -mx-4 mb-8 overflow-x-auto px-4 pb-1 md:mx-0 md:mb-10 md:px-0"
+        >
           <div
             ref={tabsRef}
             role="tablist"
