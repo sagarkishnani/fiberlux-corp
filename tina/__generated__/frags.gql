@@ -51,6 +51,11 @@ fragment HomeParts on Home {
       description
       description_en
       icon
+      tabIcon
+      body
+      body_en
+      eyebrow
+      eyebrow_en
       bullets {
         __typename
         label

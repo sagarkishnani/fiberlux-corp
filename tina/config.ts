@@ -254,6 +254,49 @@ export default defineConfig({
                     label: "Ícono (SVG o imagen)",
                     type: "image",
                   },
+                  // SPEC 103 — panel de soluciones (tabs + card visual).
+                  {
+                    name: "tabIcon",
+                    label: "Ícono de categoría",
+                    type: "string",
+                    description:
+                      "Ícono de la píldora y de la card visual en el bloque de soluciones.",
+                    options: [
+                      { value: "rayo", label: "Rayo / Conectividad" },
+                      { value: "escudo", label: "Escudo / Seguridad" },
+                      { value: "nube", label: "Nube / Cloud" },
+                      { value: "engranaje", label: "Engranajes / Servicios gestionados" },
+                      { value: "red", label: "Red / Nodos" },
+                      { value: "servidor", label: "Servidor / Data Center" },
+                      { value: "globo", label: "Globo / Cobertura" },
+                      { value: "soporte", label: "Soporte / NOC" },
+                      { value: "datos", label: "Datos / Base de datos" },
+                      { value: "wifi", label: "Wi-Fi / Inalámbrico" },
+                    ],
+                  },
+                  {
+                    name: "body",
+                    label: "Descripción larga",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  {
+                    name: "body_en",
+                    label: "Descripción larga (EN)",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  {
+                    name: "eyebrow",
+                    label: "Etiqueta de la card (mono)",
+                    type: "string",
+                    description: "Texto corto monoespaciado, ej. RED · NOC 24/7.",
+                  },
+                  {
+                    name: "eyebrow_en",
+                    label: "Etiqueta de la card (mono) (EN)",
+                    type: "string",
+                  },
                   {
                     name: "bullets",
                     label: "Subservicios",

@@ -198,6 +198,11 @@ type HomeServicesItems {
   description: String
   description_en: String
   icon: String
+  tabIcon: String
+  body: String
+  body_en: String
+  eyebrow: String
+  eyebrow_en: String
   bullets: [HomeServicesItemsBullets]
   url: String
 }
@@ -342,6 +347,11 @@ input HomeServicesItemsFilter {
   description: StringFilter
   description_en: StringFilter
   icon: ImageFilter
+  tabIcon: StringFilter
+  body: StringFilter
+  body_en: StringFilter
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
   bullets: HomeServicesItemsBulletsFilter
   url: StringFilter
 }
@@ -2640,6 +2650,11 @@ input HomeServicesItemsMutation {
   description: String
   description_en: String
   icon: String
+  tabIcon: String
+  body: String
+  body_en: String
+  eyebrow: String
+  eyebrow_en: String
   bullets: [HomeServicesItemsBulletsMutation]
   url: String
 }
