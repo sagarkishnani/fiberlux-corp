@@ -29,9 +29,9 @@ El cliente trajo una referencia visual (captura adjunta al pedido): píldoras de
 - **Arrastre horizontal** (pointer drag) sobre el panel para cambiar de categoría, además de tabs y flechas. Soporte de teclado: flechas ←/→ sobre la tira de tabs (`role="tablist"`).
 - **Animaciones de cambio de categoría (nivel completo, direccional):**
   - Indicador deslizante de la píldora activa.
-  - Columna izquierda: crossfade + slide **según la dirección** del cambio (título, tagline, párrafo).
+  - **Transición de baraja**: al cambiar de categoría la tarjeta activa se mantiene montada encima, opaca, y se desliza hacia el mazo (lateral según la dirección + leve rotación y escala) mientras la nueva ya está debajo, entrando desde la posición del mazo. Sin crossfade: nunca se ven los dos textos superpuestos.
   - Chips de subservicio: entrada en **stagger**.
-  - Mitad visual: entrada con escala + blur; el cúmulo de ícono + cuadrados **flota** de forma continua y hace **tilt 3D** siguiendo al cursor (solo `pointer: fine`).
+  - Mitad visual: **dos** cuadrados rotados translúcidos detrás del ícono (no más); el cúmulo **flota** de forma continua y hace **tilt 3D** siguiendo al cursor (solo `pointer: fine`).
   - Todo bajo `prefers-reduced-motion: reduce` → cambio instantáneo sin animación, sin flotación ni tilt.
 - **Enlaces de los chips:** cada chip con `url` navega a la página del subservicio y conserva el **tooltip "Ver más" con delay que persigue al cursor** (SPEC 89, solo `pointer: fine`). Chip sin `url` = chip no clicable, sin tooltip.
 - **Campos nuevos en Tina** (ver Modelo de datos): `items[].tabIcon` (sembrado para las 4 categorías) y `items[].tabLabel` / `tabLabel_en` (nombre corto del chip, opcional, lo rellena el cliente; vacío ⇒ título completo).
@@ -156,7 +156,9 @@ Cada paso deja el sitio compilando y funcional.
 - [x] Las flechas no quedan recortadas ni generan scroll horizontal en pantallas anchas.
 - [x] Arrastrar horizontalmente el panel cambia de categoría; el arrastre no bloquea el scroll vertical en táctil.
 - [x] Con la tira de tabs enfocada, ←/→ cambian de categoría (`role="tablist"`, `aria-selected` correcto).
-- [x] El cambio de categoría es **direccional**: al ir hacia adelante el contenido entra desde el lado opuesto que al ir hacia atrás.
+- [x] El cambio de categoría se ve como un **reparto de baraja**: la tarjeta anterior sale opaca hacia el mazo y la nueva queda debajo; la dirección de salida se invierte al ir hacia atrás.
+- [x] Durante la transición no se superponen los textos de dos categorías.
+- [x] Detrás del ícono hay exactamente **2** formas translúcidas.
 - [x] Los subservicios se muestran como **chips** (píldora con punto magenta) que fluyen en varias filas, y entran en stagger.
 - [x] El CTA "Conoce más" es un **link con flecha**, no un botón relleno.
 - [x] El panel se ve como un **stack**: dos capas redondeadas y casi tan altas como la activa asoman escalonadas por la derecha.
@@ -195,6 +197,7 @@ Los 3 errores de consola en `/soluciones` son de Cloudflare Turnstile contra `lo
 - **Sí:** subservicios como **chips** y CTA **tipo link con flecha** (referencia), en vez del checklist con checks en dos columnas y el botón relleno de la primera versión.
 - **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding. Las capas se recortan a partir de la mitad del panel para no meterse bajo la columna de texto, y se ocultan bajo `sm` (no hay ancho para escalonarlas).
 - **Sí:** íconos **Lucide (outline)** en vez de Font Awesome sólido; el CLAUDE.md fija `react-icons/fa6` como set del sitio, pero la referencia de esta sección dibuja los íconos en trazo. Se mantiene `react-icons` como librería.
+- **Sí:** transición de **baraja** (carta saliente montada encima, opaca, hasta terminar) en vez del crossfade direccional de la primera versión: con crossfade se leían los dos textos a la vez. Con `prefers-reduced-motion` la carta saliente no se monta y el cambio es instantáneo.
 - **Sí:** alto mínimo del panel + contenido centrado verticalmente. Sin eso el alto saltaba entre categorías (8 vs 13 subservicios) al navegar con las flechas.
 - **Sí:** `tabLabel` opcional para el nombre corto del chip, con fallback al título. Evita que el agente acorte por su cuenta los títulos del cliente.
 - **Sí:** `tabIcon` como **set cerrado de opciones** mapeado a `react-icons/fa6` (patrón de Rubros, SPEC 90), en vez de reusar `items[].icon` (hoy las 4 categorías apuntan al mismo `onda-magenta.svg`, se verían idénticas) y en vez de subir imágenes (el cliente tendría que producir 4 assets).
