@@ -13,7 +13,7 @@ import NetworkDepth from "../effects/NetworkDepth";
  * Hero de Soporte técnico — SPEC 104.
  *
  * Fotografía a sangre (ingeniero en data center, a la derecha) con la malla de red
- * en vuelo (variante `vuelo`) entre la foto y el velo, y velo oscuro
+ * (variante `constelacion`, la de la referencia del cliente) entre la foto y el velo, y velo oscuro
  * hacia el texto. Reemplaza el hub de nodos de la SPEC 102 (`SupportHub`), que
  * sigue en el repo sin montar aquí.
  */
@@ -43,7 +43,7 @@ export default function HeroSoporteReact({
       image={page.heroImage}
       focus="78% 42%"
       focusMobile="74% 32%"
-      overlay={<NetworkDepth variant="vuelo" opacity={0.8} />}
+      overlay={<NetworkDepth variant="constelacion" opacity={0.9} />}
       breadcrumb={
         <ol className="flex items-center gap-2 text-sm">
           <li>

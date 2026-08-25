@@ -9,15 +9,18 @@ import { useEffect, useRef } from "react";
  * es lo que da el brillo de la referencia.
  *
  * Dos variantes:
- *   - `malla`  → nube fija, cámara orbitando muy lento + paralaje con el cursor.
- *   - `vuelo`  → la cámara avanza dentro de la malla (tramos encadenados en z).
+ *   - `malla`        → nube fija, cámara orbitando muy lento + paralaje con el cursor.
+ *   - `vuelo`        → la cámara avanza dentro de la malla (tramos encadenados en z).
+ *   - `constelacion` → réplica de la referencia del cliente: malla densa anclada a
+ *                      la derecha, cámara quieta, nodos que titilan y se disuelve
+ *                      hacia la izquierda con una máscara (ahí va el texto).
  *
  * Rendimiento (requisito duro del cliente): canvas 2D, DPR capado a 2, pausa
  * fuera del viewport, menos nodos en pantallas chicas y un solo frame estático
  * con `prefers-reduced-motion`.
  */
 
-type Variant = "malla" | "vuelo";
+type Variant = "malla" | "vuelo" | "constelacion";
 
 interface NetworkDepthProps {
   variant?: Variant;
@@ -131,12 +134,17 @@ export default function NetworkDepth({
         };
       }
 
-      /* variante `malla` */
-      const N = Math.round(260 * scale), NEAR = 250, FAR = 1500;
+      /* variantes `malla` y `constelacion`: mismo motor, distinta cámara. */
+      const quieta = variant === "constelacion";
+      const N = Math.round((quieta ? 300 : 260) * scale), NEAR = 250, FAR = 1500;
+      /* La constelación se apiña hacia la derecha (como la referencia); la malla
+         se reparte parejo por todo el hero. */
+      const cxScene = quieta ? 0.66 : 0.5;
       const pts = Array.from({ length: N }, () => ({
-        x: rnd(-1, 1) * 780, y: rnd(-1, 1) * 430,
+        x: (quieta ? rnd(-0.55, 1) : rnd(-1, 1)) * 780,
+        y: rnd(-1, 1) * 430,
         z: NEAR + Math.pow(Math.random(), 0.65) * (FAR - NEAR),
-        r: rnd(1.1, 3.1), hub: Math.random() > 0.88,
+        r: rnd(1.1, 3.1), hub: Math.random() > (quieta ? 0.84 : 0.88),
         ph: rnd(0, 6.28), sp: rnd(0.3, 0.9),
       }));
       const edges: [number, number][] = [];
@@ -152,9 +160,14 @@ export default function NetworkDepth({
       });
 
       return (): { nodes: Node[]; edges: Edge[] } => {
-        state.t += 0.0016;
-        const yaw = Math.sin(state.t) * 0.16 + state.mx * 0.1;
-        const pitch = Math.cos(state.t * 0.7) * 0.06 + state.my * 0.06;
+        state.t += quieta ? 0.0007 : 0.0016;
+        /* Quieta: la cámara casi no se mueve, el paralaje del cursor manda. */
+        const yaw = quieta
+          ? Math.sin(state.t) * 0.03 + state.mx * 0.13
+          : Math.sin(state.t) * 0.16 + state.mx * 0.1;
+        const pitch = quieta
+          ? Math.cos(state.t * 0.7) * 0.015 + state.my * 0.07
+          : Math.cos(state.t * 0.7) * 0.06 + state.my * 0.06;
         const cos = Math.cos(yaw), sin = Math.sin(yaw);
         const proj = pts.map((p) => {
           const zc = p.z + Math.sin(state.t * 8 * p.sp + p.ph) * 6;
@@ -164,9 +177,12 @@ export default function NetworkDepth({
           const kk = FOCAL / z;
           const t = (z - NEAR) / (FAR - NEAR);
           return {
-            x: w * 0.5 + x0 * kk, y: h * 0.48 + y0 * kk, z, t,
+            x: w * cxScene + x0 * kk, y: h * 0.48 + y0 * kk, z, t,
             b: bucketFor(z, NEAR, FAR), r: p.r * kk * 0.9 + 0.5, hub: p.hub,
-            tw: 0.75 + 0.25 * Math.sin(state.t * 6 * p.sp + p.ph),
+            /* Titileo por nodo: más marcado en la constelación. */
+            tw: quieta
+              ? 0.62 + 0.38 * Math.sin(state.t * 26 * p.sp + p.ph)
+              : 0.75 + 0.25 * Math.sin(state.t * 6 * p.sp + p.ph),
           };
         });
         return {
@@ -299,8 +315,25 @@ export default function NetworkDepth({
     };
   }, [variant, density, opacity]);
 
+  /* La constelación se apaga hacia la izquierda para no pelear con el texto;
+     en mobile la máscara se retira (el texto vive abajo, no al costado). */
+  const maskStyle =
+    variant === "constelacion"
+      ? ({
+          WebkitMaskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 26%, #000 52%, #000 100%)",
+          maskImage:
+            "linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.35) 26%, #000 52%, #000 100%)",
+        } as const)
+      : undefined;
+
   return (
-    <div ref={wrapRef} aria-hidden="true" className={`relative h-full w-full ${className}`}>
+    <div
+      ref={wrapRef}
+      aria-hidden="true"
+      className={`network-depth relative h-full w-full ${className}`}
+      style={maskStyle}
+    >
       {LAYER_BLUR.map((blur, i) => (
         <canvas
           key={i}
@@ -309,6 +342,14 @@ export default function NetworkDepth({
           style={{ filter: blur === "none" ? undefined : blur }}
         />
       ))}
+      <style>{`
+        @media (max-width: 767px) {
+          .network-depth {
+            -webkit-mask-image: none !important;
+            mask-image: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

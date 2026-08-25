@@ -20,7 +20,8 @@ Sobre la animación, la primera tanda de propuestas (plexus 2D, hebras, radar, c
 - **`shared/PhotoHero.tsx` (nuevo):** layout de hero compartido — foto a sangre (`object-cover`, encuadre configurable por `focus`/`focusMobile`), capa `overlay` para la animación, velo direccional (horizontal en desktop, vertical en mobile) y bloque de contenido (breadcrumb, título, subtítulo). Alto `78svh`/`88svh` con mínimos y tope.
 - **`effects/NetworkDepth.tsx` (nuevo):** malla de nodos en un volumen 3D, proyectada en perspectiva y dibujada en capas de profundidad. Dos variantes:
   - `malla` → nube fija de 260 nodos, cámara orbitando muy lento, paralaje con el cursor. **Va en Nosotros.**
-  - `vuelo` → tramos encadenados en z por los que la cámara avanza; los nodos nacen chicos al fondo, crecen y pasan. **Va en Soporte técnico.**
+  - `constelacion` → réplica de la referencia del cliente: malla densa (300 nodos) **anclada a la derecha**, cámara prácticamente quieta, nodos que titilan, y una máscara que la disuelve hacia la izquierda para no pelear con el texto. **Va en Soporte técnico.**
+  - `vuelo` → tramos encadenados en z por los que la cámara avanza. Implementada pero **sin montar**: fue la primera elección para Soporte y el cliente prefirió la constelación.
 - **Heroes reescritos:** `HeroNosotrosReact` y `HeroSoporteReact` pasan a componer `PhotoHero` + `NetworkDepth`.
 - **Campos nuevos en Tina:** `about.hero.image` y `soporteTecnico.heroImage` (imagen de fondo del hero), sembrados con `laptop-us.png` y `datacenter-support.png`.
 - **Rendimiento:** tres lienzos apilados con el desenfoque por CSS, capas de fondo rasterizadas a menor resolución, DPR capado a 2, menos nodos bajo 768px, pausa fuera del viewport y un solo frame estático con `prefers-reduced-motion`.
@@ -64,7 +65,8 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 - [x] `/nosotros` y `/soporte-tecnico` muestran la foto a sangre con el sujeto a la derecha y el texto legible sobre el velo.
 - [x] En mobile el velo gira a vertical: la foto se lee arriba y el texto se apoya en la base, sin cortes ni scroll horizontal.
 - [x] La imagen del hero es editable en Tina en ambas páginas.
-- [x] Nosotros usa la variante `malla` y Soporte la variante `vuelo`: no se repite la animación.
+- [x] Nosotros usa la variante `malla` y Soporte la `constelacion`: no se repite la animación (una orbita y ocupa todo el hero; la otra está quieta, apiñada a la derecha y titila).
+- [x] En Soporte la malla se disuelve sobre la columna de texto en desktop; en mobile la máscara se retira (ahí el texto vive abajo).
 - [x] La malla tiene profundidad real: los nodos del fondo salen chicos, tenues y desenfocados; los del frente, nítidos y con halo.
 - [x] Con el cursor sobre el hero la escena responde con paralaje (solo en punteros finos).
 - [x] **60 fps o más** con el hero a la vista: medido 120 fps (tope del refresco) en desktop 1500px y en mobile 390px.
@@ -81,7 +83,8 @@ La foto debe tener el sujeto **a la derecha**: el velo oscurece la izquierda, qu
 - **Sí:** **tres lienzos apilados con `filter` por CSS**, uno por nivel de profundidad. La primera versión usaba `ctx.filter` y corría a **3 fps**: el filtro de canvas se aplica a *cada trazo* por separado. Moviendo el desenfoque al compositor pasó a **120 fps**. Las capas borrosas además se rasterizan a 0.5× y 0.75× de DPR.
 - **Sí:** composición **aditiva** (`lighter`): los cruces suman luz, que es lo que da el brillo de la referencia.
 - **Sí:** una sola componente con prop `variant` en vez de dos archivos: comparten motor, proyección y render.
-- **No:** implementar las cuatro variantes en el repo. Las dos descartadas viven solo en el prototipo.
+- **Sí:** para Soporte, `constelacion` en vez de `vuelo`. El cliente pidió seguir la referencia (Nextnet) también en ese hero; se diferencia de Nosotros por el anclaje a la derecha, la cámara quieta, el titileo marcado y la máscara lateral.
+- **No:** implementar las variantes `horizonte` y `globo` en el repo. Viven solo en el prototipo.
 - **Sí:** conservar las escenas anteriores (SPEC 101 y 102) sin montar, como se hizo con `SolucionesScroll` y `SolucionesSlider`.
 
 ---
