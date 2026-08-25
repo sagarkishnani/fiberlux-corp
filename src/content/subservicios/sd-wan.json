@@ -20,32 +20,91 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "velocidad",
         "title": "Prioriza el tráfico crítico",
         "title_en": "Prioritize critical traffic",
         "text": "ERP, VoIP y POS por encima de aplicaciones secundarias.",
-        "text_en": "ERP, VoIP and POS above secondary applications."
+        "text_en": "ERP, VoIP and POS above secondary applications.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "ERP",
+              "nivel": "CRÍTICO",
+              "porcentaje": 92
+            },
+            {
+              "label": "VoIP",
+              "nivel": "ALTA",
+              "porcentaje": 74
+            },
+            {
+              "label": "POS",
+              "nivel": "ALTA",
+              "porcentaje": 60
+            },
+            {
+              "label": "Navegación",
+              "nivel": "BAJA",
+              "porcentaje": 32
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Gestión centralizada",
         "title_en": "Centralized management",
         "text": "Múltiples sedes desde una única plataforma.",
-        "text_en": "Multiple sites from a single platform."
+        "text_en": "Multiple sites from a single platform.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Sede norte"
+            },
+            {
+              "label": "Sede sur"
+            },
+            {
+              "label": "Planta"
+            },
+            {
+              "label": "Nube"
+            }
+          ]
+        }
       },
       {
-        "icon": "nube",
         "title": "Acceso directo a internet",
         "title_en": "Direct internet access",
         "text": "Optimiza el rendimiento de aplicaciones cloud y SaaS.",
-        "text_en": "Optimizes the performance of cloud and SaaS applications."
+        "text_en": "Optimizes the performance of cloud and SaaS applications.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "MPLS",
+              "activa": false
+            },
+            {
+              "label": "INTERNET",
+              "activa": true
+            },
+            {
+              "label": "LTE",
+              "activa": false
+            }
+          ]
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Costos optimizados",
         "title_en": "Optimized costs",
         "text": "Aprovecha de forma inteligente todos los enlaces disponibles.",
-        "text_en": "Intelligently leverages every available link."
+        "text_en": "Intelligently leverages every available link.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 68
+        }
       }
     ],
     "title_en": "Benefits"

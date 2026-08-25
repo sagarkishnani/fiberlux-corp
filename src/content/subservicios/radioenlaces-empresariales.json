@@ -20,25 +20,41 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "cobertura",
         "title": "Instalación ágil",
         "title_en": "Fast installation",
         "text": "Supera barreras geográficas o la falta de infraestructura.",
-        "text_en": "Overcome geographic barriers or the lack of infrastructure."
+        "text_en": "Overcome geographic barriers or the lack of infrastructure.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Sede A"
+            },
+            {
+              "label": "Sede B"
+            },
+            {
+              "label": "Repetidor"
+            }
+          ]
+        }
       },
       {
-        "icon": "red",
         "title": "Sin cableado terrestre",
         "title_en": "No underground cabling",
         "text": "Evita cortes por vandalismo u obras públicas.",
-        "text_en": "Avoid outages caused by vandalism or public works."
+        "text_en": "Avoid outages caused by vandalism or public works.",
+        "plantilla": "escudo"
       },
       {
-        "icon": "escalabilidad",
         "title": "Ancho de banda escalable",
         "title_en": "Scalable bandwidth",
         "text": "Se ajusta según la demanda del proyecto.",
-        "text_en": "Adjusts to the demands of your project."
+        "text_en": "Adjusts to the demands of your project.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 66
+        }
       }
     ],
     "title_en": "Benefits"

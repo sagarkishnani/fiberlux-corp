@@ -20,32 +20,63 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "escalabilidad",
         "title": "Alta escalabilidad",
         "title_en": "High scalability",
         "text": "Amplía capacidad incorporando o actualizando equipos propios.",
-        "text_en": "Expand capacity by adding or upgrading your own equipment."
+        "text_en": "Expand capacity by adding or upgrading your own equipment.",
+        "plantilla": "dwdm",
+        "datos": {
+          "hilos": 6
+        }
       },
       {
-        "icon": "red",
         "title": "Control total de la red",
         "title_en": "Full network control",
         "text": "Sobre su arquitectura, gestión y seguridad.",
-        "text_en": "Over its architecture, management and security."
+        "text_en": "Over its architecture, management and security.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Sede propia"
+            },
+            {
+              "label": "Data center"
+            },
+            {
+              "label": "Nodo"
+            }
+          ]
+        }
       },
       {
-        "icon": "velocidad",
         "title": "Baja latencia",
         "title_en": "Low latency",
         "text": "Alto desempeño para aplicaciones críticas.",
-        "text_en": "High performance for critical applications."
+        "text_en": "High performance for critical applications.",
+        "plantilla": "velocidad",
+        "datos": {
+          "tarjetas": [
+            {
+              "etiqueta": "Baja latencia",
+              "porcentaje": 84
+            },
+            {
+              "etiqueta": "Alto desempeño",
+              "porcentaje": 70
+            }
+          ]
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Costos optimizados",
         "title_en": "Optimized costs",
         "text": "Para operaciones con alto volumen de tráfico.",
-        "text_en": "For operations with high traffic volumes."
+        "text_en": "For operations with high traffic volumes.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 62
+        }
       }
     ],
     "title_en": "Benefits"

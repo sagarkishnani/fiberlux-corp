@@ -20,25 +20,35 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "disponibilidad",
         "title": "Máximo uptime",
         "title_en": "Maximum uptime",
         "text": "Maximiza el tiempo de actividad de tus operaciones.",
-        "text_en": "Maximize the uptime of your operations."
+        "text_en": "Maximize the uptime of your operations.",
+        "plantilla": "uptime",
+        "datos": {
+          "valor": "99,95",
+          "unidad": "% UPTIME"
+        }
       },
       {
-        "icon": "escudo",
         "title": "SLA garantizado",
         "title_en": "Guaranteed SLA",
         "text": "Acuerdos de nivel de servicio rigurosos de hasta 99,95%.",
-        "text_en": "Rigorous service level agreements of up to 99.95%."
+        "text_en": "Rigorous service level agreements of up to 99.95%.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 95
+        }
       },
       {
-        "icon": "ahorro",
         "title": "Estabilidad financiera",
         "title_en": "Financial stability",
         "text": "Evita pérdidas económicas por desconexión.",
-        "text_en": "Avoid financial losses caused by downtime."
+        "text_en": "Avoid financial losses caused by downtime.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 70
+        }
       }
     ],
     "title_en": "Benefits"

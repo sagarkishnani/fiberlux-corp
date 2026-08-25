@@ -20,32 +20,72 @@
     "title": "Beneficios",
     "items": [
       {
-        "icon": "red",
         "title": "Balanceo inteligente",
         "title_en": "Intelligent balancing",
         "text": "Distribuye el tráfico entre múltiples enlaces para optimizar rendimiento y disponibilidad.",
-        "text_en": "Distributes traffic across multiple links to optimize performance and availability."
+        "text_en": "Distributes traffic across multiple links to optimize performance and availability.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Fibra",
+              "nivel": "CRÍTICO",
+              "porcentaje": 90
+            },
+            {
+              "label": "LTE",
+              "nivel": "ALTA",
+              "porcentaje": 58
+            },
+            {
+              "label": "Satelital",
+              "nivel": "MEDIA",
+              "porcentaje": 34
+            }
+          ]
+        }
       },
       {
-        "icon": "reloj",
         "title": "Conmutación automática",
         "title_en": "Automatic failover",
         "text": "Ante fallos del enlace principal, con detección y reconvergencia según la configuración.",
-        "text_en": "When the primary link fails, with detection and reconvergence based on your configuration."
+        "text_en": "When the primary link fails, with detection and reconvergence based on your configuration.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "FIBRA",
+              "activa": false
+            },
+            {
+              "label": "RESPALDO",
+              "activa": true
+            },
+            {
+              "label": "LTE",
+              "activa": false
+            }
+          ]
+        }
       },
       {
-        "icon": "disponibilidad",
         "title": "Continuidad 24/7",
         "title_en": "24/7 continuity",
         "text": "Reduce drásticamente el riesgo de downtime prolongado.",
-        "text_en": "Dramatically reduces the risk of prolonged downtime."
+        "text_en": "Dramatically reduces the risk of prolonged downtime.",
+        "plantilla": "uptime",
+        "datos": {
+          "valor": "24/7",
+          "unidad": "OPERACIÓN",
+          "porcentaje": 96
+        }
       },
       {
-        "icon": "escudo",
         "title": "Resiliencia simplificada",
         "title_en": "Simplified resilience",
         "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas.",
-        "text_en": "Automates path selection across physically diverse technologies."
+        "text_en": "Automates path selection across physically diverse technologies.",
+        "plantilla": "escudo"
       }
     ],
     "title_en": "Benefits"
