@@ -8,6 +8,10 @@ import Prioridad from "./Prioridad";
 import Conmutacion from "./Conmutacion";
 import Escalera from "./Escalera";
 import Consola from "./Consola";
+import Mfa from "./Mfa";
+import Escudo from "./Escudo";
+import Reloj from "./Reloj";
+import Checklist from "./Checklist";
 import type { PropsIlustracion } from "./base";
 
 /**
@@ -31,6 +35,10 @@ const PLANTILLAS: Record<string, (p: PropsIlustracion) => React.ReactElement> = 
   conmutacion: Conmutacion,
   escalera: Escalera,
   consola: Consola,
+  mfa: Mfa,
+  escudo: Escudo,
+  reloj: Reloj,
+  checklist: Checklist,
 };
 
 interface Props extends PropsIlustracion {
