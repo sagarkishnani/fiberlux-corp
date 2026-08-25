@@ -70,16 +70,14 @@ const iconFor = (key?: string | null): IconType => ICONS[key || ""] || LuZap;
 
 /** Palancas de animación del bloque (SPEC 103). */
 const PARAMS = {
-  /** Desplazamiento de entrada del texto, en px (signo = dirección del cambio). */
-  slideX: 30,
-  /** Duración del crossfade del texto y de la lista, en ms. */
-  textMs: 520,
+  /** Baraja: duración del reparto (sale una carta, entra la siguiente). */
+  dealMs: 560,
+  /** Desplazamiento lateral de la carta al salir/entrar del mazo, en px. */
+  dealX: 46,
+  /** Escala de la carta cuando está "en el mazo". */
+  dealScale: 0.955,
   /** Retardo acumulado por chip de subservicio, en ms. */
   rowStaggerMs: 45,
-  /** Entrada de la card visual: duración, escala inicial y blur inicial. */
-  cardMs: 640,
-  cardScaleFrom: 0.94,
-  cardBlurPx: 10,
   /** Indicador deslizante de la píldora activa, en ms. */
   indicatorMs: 480,
   /** Vida propia de la card visual: flotación y tilt 3D con el cursor. */
@@ -106,6 +104,10 @@ export default function SolucionesPanelReact({
      crossfade direccional del paso 7. */
   const [activeIndex, setActiveIndex] = useState(0);
   const [dir, setDir] = useState(1);
+  /* Carta que está saliendo del mazo: se mantiene montada encima mientras dura
+     la animación de baraja y luego se desmonta. */
+  const [leaving, setLeaving] = useState<{ idx: number; dir: number } | null>(null);
+  const leaveTimer = useRef<number | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   /* Cambia de categoría con wrap circular (la última vuelve a la primera). */
@@ -115,11 +117,23 @@ export default function SolucionesPanelReact({
       const target = ((next % N) + N) % N;
       setActiveIndex((prev) => {
         if (prev === target) return prev;
-        setDir(direction ?? (target > prev ? 1 : -1));
+        const d = direction ?? (target > prev ? 1 : -1);
+        setDir(d);
+        // La carta anterior se va al mazo mientras la nueva entra.
+        setLeaving({ idx: prev, dir: d });
+        if (leaveTimer.current != null) window.clearTimeout(leaveTimer.current);
+        leaveTimer.current = window.setTimeout(() => setLeaving(null), PARAMS.dealMs);
         return target;
       });
     },
     [N],
+  );
+
+  useEffect(
+    () => () => {
+      if (leaveTimer.current != null) window.clearTimeout(leaveTimer.current);
+    },
+    [],
   );
 
   const goPrev = useCallback(() => goTo(activeIndex - 1, -1), [goTo, activeIndex]);
@@ -309,8 +323,6 @@ export default function SolucionesPanelReact({
   if (N === 0) return null;
 
   const idx = Math.min(activeIndex, N - 1);
-  const active = items[idx];
-  const activeTina = services?.items?.[idx];
   const sectionTitle = (tField(services as any, "title", locale) || "").trim();
 
   const eyebrowLabel = locale === "en" ? "SOLUTIONS" : "SOLUCIONES";
@@ -319,12 +331,166 @@ export default function SolucionesPanelReact({
   const nextLabel = locale === "en" ? "Next solution" : "Solución siguiente";
   const tooltipLabel = locale === "en" ? "See more" : "Ver más";
 
-  const subservicios = (active?.bullets || []).filter(Boolean) as {
-    label?: string | null;
-    url?: string | null;
-  }[];
 
-  const ActiveIcon = iconFor(active?.tabIcon);
+  /* Una carta del mazo. `state` decide la animación: "in" (entra desde el mazo)
+     o "out" (sale hacia el mazo); la saliente se pinta absoluta encima y sin
+     interacción hasta que termina. */
+  const renderCard = (i: number, state: "in" | "out", d: number) => {
+    const it = items[i];
+    const itTina = services?.items?.[i];
+    const subs = (it?.bullets || []).filter(Boolean) as {
+      label?: string | null;
+      url?: string | null;
+    }[];
+    const Icon = iconFor(it?.tabIcon);
+    const leavingCard = state === "out";
+
+    return (
+      <div
+        key={`${state}-${i}`}
+        {...(leavingCard
+          ? { "aria-hidden": true as const }
+          : {
+              id: "sol-panel",
+              role: "tabpanel",
+              "aria-labelledby": `sol-tab-${i}`,
+              onPointerDown,
+              onPointerMove,
+              onPointerUp,
+              onPointerCancel: onPointerUp,
+            })}
+        style={{
+          touchAction: "pan-y",
+          background: "linear-gradient(135deg, #24101F 0%, #180B15 55%, #120810 100%)",
+          ["--sol-deal-ms" as any]: `${PARAMS.dealMs}ms`,
+          ["--sol-deal-x" as any]: `${d >= 0 ? PARAMS.dealX : -PARAMS.dealX}px`,
+          ["--sol-deal-scale" as any]: String(PARAMS.dealScale),
+        }}
+        className={`${leavingCard ? "sol-deal-out pointer-events-none absolute inset-0 z-20" : "sol-deal-in relative z-10"} overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]`}
+      >
+        <div className="grid lg:min-h-[620px] lg:grid-cols-[1.16fr_0.84fr]">
+          {/* Columna izquierda */}
+          <div className="order-2 flex flex-col justify-center p-7 md:p-10 lg:order-1 lg:p-12">
+            <h3
+              className="text-[24px] font-semibold leading-[1.15] text-white md:text-[32px]"
+              data-tina-field={itTina ? tinaField(itTina, "title") : undefined}
+            >
+              {tField(it as any, "title", locale)}
+            </h3>
+
+            {it?.description && (
+              <p
+                className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/55"
+                data-tina-field={itTina ? tinaField(itTina, "description") : undefined}
+              >
+                {tField(it as any, "description", locale)}
+              </p>
+            )}
+
+            {/* Subservicios como chips. */}
+            {subs.length > 0 && (
+              <ul className={`mt-7 flex flex-wrap gap-3 ${leavingCard ? "" : "sol-stagger"}`}>
+                {subs.map((sub, k) => {
+                  const label = tField(sub as any, "label", locale);
+                  const href = sub?.url ? withBase(sub.url) : null;
+                  const chip = (
+                    <>
+                      <span
+                        aria-hidden="true"
+                        className="h-[6px] w-[6px] shrink-0 rounded-full bg-brand-purple-light"
+                      />
+                      {label}
+                    </>
+                  );
+                  const chipClass =
+                    "inline-flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-[#2A1024]/70 px-5 py-2.5 text-[14px] leading-[1.35] text-white/85 transition-colors";
+                  return (
+                    <li
+                      key={k}
+                      className="sol-row"
+                      style={{ animationDelay: `${k * PARAMS.rowStaggerMs}ms` }}
+                    >
+                      {href && !leavingCard ? (
+                        <a
+                          href={href}
+                          className={`${chipClass} outline-none hover:border-brand-purple-light/40 hover:bg-[#3A1531]/80 hover:text-white focus-visible:border-brand-purple-light/60`}
+                          onMouseEnter={handleTipEnter}
+                          onMouseMove={handleTipMove}
+                          onMouseLeave={handleTipLeave}
+                        >
+                          {chip}
+                        </a>
+                      ) : (
+                        <span className={`${chipClass} cursor-default`}>{chip}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
+            {/* CTA tipo link con flecha. */}
+            {it?.url && (
+              <a
+                href={withBase(it.url)}
+                tabIndex={leavingCard ? -1 : undefined}
+                className="group mt-9 inline-flex items-center gap-2.5 self-start text-[15px] font-medium text-brand-purple-light transition-colors hover:text-white"
+                data-tina-field={itTina ? tinaField(itTina, "url") : undefined}
+              >
+                {ctaLabel}
+                <LuArrowRight
+                  aria-hidden="true"
+                  className="text-[13px] transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </a>
+            )}
+          </div>
+
+          {/* Columna derecha: mitad a sangre con el ícono de la categoría. */}
+          <div
+            className="relative order-1 min-h-[280px] overflow-hidden border-t border-white/[0.07] lg:order-2 lg:border-l lg:border-t-0"
+            style={{
+              background:
+                "radial-gradient(125% 125% at 12% 0%, #A9258A 0%, #7A1A63 38%, #4A1039 68%, #320B29 100%)",
+            }}
+          >
+            <div
+              className="sol-float absolute inset-0 flex items-center justify-center"
+              style={{
+                ["--sol-float-ms" as any]: `${PARAMS.floatMs}ms`,
+                ["--sol-float-px" as any]: `${PARAMS.floatPx}px`,
+              }}
+              onPointerMove={leavingCard ? undefined : onCardMove}
+              onPointerLeave={leavingCard ? undefined : onCardLeave}
+            >
+              <div ref={leavingCard ? undefined : tiltRef} className="sol-tilt relative">
+                {/* Dos cuadrados rotados translúcidos detrás del ícono. */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+                  {[0, 1].map((k) => (
+                    <div
+                      key={k}
+                      className="absolute left-1/2 top-1/2 border border-white/[0.16] bg-white/[0.06]"
+                      style={{
+                        width: `${200 + k * 30}px`,
+                        height: `${200 + k * 30}px`,
+                        borderRadius: "48px",
+                        transform: `translate(-50%, -50%) rotate(${k * 22 - 14}deg)`,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Tile del ícono. */}
+                <div className="relative flex h-[124px] w-[124px] items-center justify-center rounded-[34px] bg-gradient-to-b from-white to-[#EFD5E8] text-[46px] text-brand-purple-darkest shadow-[0_20px_50px_-14px_rgba(0,0,0,0.55)] md:h-[150px] md:w-[150px] md:rounded-[40px] md:text-[56px]">
+                  <Icon aria-hidden="true" strokeWidth={1.9} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <section id="soluciones-panel" className="relative overflow-hidden bg-greyscale-darkest">
@@ -446,150 +612,10 @@ export default function SolucionesPanelReact({
             />
           </div>
 
-          <div
-            id="sol-panel"
-            role="tabpanel"
-            aria-labelledby={`sol-tab-${idx}`}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-            style={{
-              touchAction: "pan-y",
-              background: "linear-gradient(135deg, #24101F 0%, #180B15 55%, #120810 100%)",
-            }}
-            className="relative z-10 overflow-hidden rounded-[22px] border border-white/[0.08] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85)]"
-          >
-            <div className="grid lg:min-h-[620px] lg:grid-cols-[1.16fr_0.84fr]">
-              {/* Columna izquierda (crossfade + slide direccional al cambiar). */}
-              <div
-                key={`txt-${idx}`}
-                className="sol-enter order-2 flex flex-col justify-center p-7 md:p-10 lg:order-1 lg:p-12"
-                style={{
-                  ["--sol-dx" as any]: `${dir >= 0 ? PARAMS.slideX : -PARAMS.slideX}px`,
-                  ["--sol-ms" as any]: `${PARAMS.textMs}ms`,
-                }}
-              >
-                <h3
-                  className="text-[24px] font-semibold leading-[1.15] text-white md:text-[32px]"
-                  data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
-                >
-                  {tField(active as any, "title", locale)}
-                </h3>
-
-                {active?.description && (
-                  <p
-                    className="mt-3 max-w-[44ch] text-[15px] leading-relaxed text-white/55"
-                    data-tina-field={activeTina ? tinaField(activeTina, "description") : undefined}
-                  >
-                    {tField(active as any, "description", locale)}
-                  </p>
-                )}
-
-                {/* Subservicios como chips. */}
-                {subservicios.length > 0 && (
-                  <ul className="sol-stagger mt-7 flex flex-wrap gap-3">
-                    {subservicios.map((sub, i) => {
-                      const label = tField(sub as any, "label", locale);
-                      const href = sub?.url ? withBase(sub.url) : null;
-                      const chip = (
-                        <>
-                          <span
-                            aria-hidden="true"
-                            className="h-[6px] w-[6px] shrink-0 rounded-full bg-brand-purple-light"
-                          />
-                          {label}
-                        </>
-                      );
-                      const chipClass =
-                        "inline-flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-[#2A1024]/70 px-5 py-2.5 text-[14px] leading-[1.35] text-white/85 transition-colors";
-                      return (
-                        <li
-                          key={i}
-                          className="sol-row"
-                          style={{ animationDelay: `${i * PARAMS.rowStaggerMs}ms` }}
-                        >
-                          {href ? (
-                            <a
-                              href={href}
-                              className={`${chipClass} outline-none hover:border-brand-purple-light/40 hover:bg-[#3A1531]/80 hover:text-white focus-visible:border-brand-purple-light/60`}
-                              onMouseEnter={handleTipEnter}
-                              onMouseMove={handleTipMove}
-                              onMouseLeave={handleTipLeave}
-                            >
-                              {chip}
-                            </a>
-                          ) : (
-                            <span className={`${chipClass} cursor-default`}>{chip}</span>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-
-                {/* CTA tipo link con flecha. */}
-                {active?.url && (
-                  <a
-                    href={withBase(active.url)}
-                    className="group mt-9 inline-flex items-center gap-2.5 text-[15px] font-medium text-brand-purple-light transition-colors hover:text-white"
-                    data-tina-field={activeTina ? tinaField(activeTina, "url") : undefined}
-                  >
-                    {ctaLabel}
-                    <LuArrowRight
-                      aria-hidden="true"
-                      className="text-[13px] transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </a>
-                )}
-              </div>
-
-              {/* Columna derecha: mitad a sangre con el ícono de la categoría. */}
-              <div
-                key={`card-${idx}`}
-                className="sol-card relative order-1 min-h-[280px] overflow-hidden border-t border-white/[0.07] lg:order-2 lg:border-l lg:border-t-0"
-                style={{
-                  background:
-                    "radial-gradient(125% 125% at 12% 0%, #A9258A 0%, #7A1A63 38%, #4A1039 68%, #320B29 100%)",
-                  ["--sol-card-ms" as any]: `${PARAMS.cardMs}ms`,
-                  ["--sol-card-scale" as any]: String(PARAMS.cardScaleFrom),
-                  ["--sol-card-blur" as any]: `${PARAMS.cardBlurPx}px`,
-                }}
-              >
-                <div
-                  className="sol-float absolute inset-0 flex items-center justify-center"
-                  style={{
-                    ["--sol-float-ms" as any]: `${PARAMS.floatMs}ms`,
-                    ["--sol-float-px" as any]: `${PARAMS.floatPx}px`,
-                  }}
-                  onPointerMove={onCardMove}
-                  onPointerLeave={onCardLeave}
-                >
-                  <div ref={tiltRef} className="sol-tilt relative">
-                    {/* Cuadrados rotados translúcidos detrás del ícono. */}
-                    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-                      {[0, 1, 2].map((k) => (
-                        <div
-                          key={k}
-                          className="absolute left-1/2 top-1/2 border border-white/[0.16] bg-white/[0.06]"
-                          style={{
-                            width: `${196 + k * 26}px`,
-                            height: `${196 + k * 26}px`,
-                            borderRadius: "46px",
-                            transform: `translate(-50%, -50%) rotate(${k * 15 - 18}deg)`,
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Tile del ícono. */}
-                    <div className="relative flex h-[124px] w-[124px] items-center justify-center rounded-[34px] bg-gradient-to-b from-white to-[#EFD5E8] text-[46px] text-brand-purple-darkest shadow-[0_20px_50px_-14px_rgba(0,0,0,0.55)] md:h-[150px] md:w-[150px] md:rounded-[40px] md:text-[56px]">
-                      <ActiveIcon aria-hidden="true" strokeWidth={1.9} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Mazo: la carta activa y, mientras dura el reparto, la que sale. */}
+          <div className="relative">
+            {renderCard(idx, "in", dir)}
+            {leaving && renderCard(leaving.idx, "out", leaving.dir)}
           </div>
         </div>
       </div>
@@ -627,30 +653,49 @@ export default function SolucionesPanelReact({
           transition-property: transform, width, opacity;
           transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @keyframes sol-enter-in {
-          from { opacity: 0; transform: translate3d(var(--sol-dx, 30px), 0, 0); }
-          to   { opacity: 1; transform: none; }
+        /* ── Baraja ──
+           La carta que sale se va hacia el mazo (lateral + atrás), la que entra
+           llega desde el mazo hasta el frente. El signo de --sol-deal-x da la
+           dirección del reparto. */
+        @keyframes sol-deal-out {
+          from { opacity: 1; transform: none; }
+          70% {
+            opacity: 1;
+            transform: translate3d(calc(var(--sol-deal-x, 46px) * 1.7), 16px, 0)
+                       scale(var(--sol-deal-scale, 0.955))
+                       rotate(1.4deg);
+          }
+          to {
+            opacity: 0;
+            transform: translate3d(calc(var(--sol-deal-x, 46px) * 2.2), 22px, 0)
+                       scale(calc(var(--sol-deal-scale, 0.955) - 0.02))
+                       rotate(1.8deg);
+          }
         }
-        .sol-enter {
-          animation: sol-enter-in var(--sol-ms, 520ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+        .sol-deal-out {
+          animation: sol-deal-out var(--sol-deal-ms, 560ms) cubic-bezier(0.4, 0, 0.2, 1) both;
+          transform-origin: 100% 50%;
+        }
+        @keyframes sol-deal-in {
+          from {
+            /* Opaca desde el arranque: queda debajo de la que sale, así no se
+               ven los dos textos superpuestos. */
+            opacity: 1;
+            transform: translate3d(calc(var(--sol-deal-x, 46px) * 0.6), 10px, 0)
+                       scale(var(--sol-deal-scale, 0.955));
+          }
+          to { opacity: 1; transform: none; }
+        }
+        .sol-deal-in {
+          animation: sol-deal-in var(--sol-deal-ms, 560ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+          transform-origin: 100% 50%;
         }
         @keyframes sol-row-in {
-          from { opacity: 0; transform: translate3d(var(--sol-dx, 30px), 0, 0); }
+          from { opacity: 0; transform: translate3d(14px, 0, 0); }
           to   { opacity: 1; transform: none; }
         }
         .sol-stagger .sol-row {
-          animation: sol-row-in 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-        @keyframes sol-card-in {
-          from {
-            opacity: 0;
-            transform: scale(var(--sol-card-scale, 0.94));
-            filter: blur(var(--sol-card-blur, 10px));
-          }
-          to { opacity: 1; transform: none; filter: none; }
-        }
-        .sol-card {
-          animation: sol-card-in var(--sol-card-ms, 640ms) cubic-bezier(0.16, 1, 0.3, 1) both;
+          animation: sol-row-in 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         @keyframes sol-float {
           0%, 100% { transform: translate3d(0, calc(var(--sol-float-px, 10px) * -0.5), 0); }
@@ -666,12 +711,13 @@ export default function SolucionesPanelReact({
           will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {
-          .sol-enter,
+          .sol-deal-in,
+          .sol-deal-out,
           .sol-stagger .sol-row,
-          .sol-card,
           .sol-float {
             animation: none !important;
           }
+          .sol-deal-out { display: none !important; }
           .sol-indicator { transition: none !important; }
           .sol-tilt {
             transition: none !important;
