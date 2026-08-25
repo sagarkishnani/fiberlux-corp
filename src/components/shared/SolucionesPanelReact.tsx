@@ -19,6 +19,7 @@ import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import { buttonClass } from "./Button";
+import SliderSideArrows from "./SliderSideArrows";
 
 /**
  * Panel de soluciones — SPEC 103.
@@ -114,6 +115,8 @@ export default function SolucionesPanelReact({
   const sectionTitle = (tField(services as any, "title", locale) || "").trim();
 
   const ctaLabel = locale === "en" ? "Learn more" : "Conoce más";
+  const prevLabel = locale === "en" ? "Previous solution" : "Solución anterior";
+  const nextLabel = locale === "en" ? "Next solution" : "Solución siguiente";
 
   const subservicios = (active?.bullets || []).filter(Boolean) as {
     label?: string | null;
@@ -180,7 +183,21 @@ export default function SolucionesPanelReact({
         </div>
 
         {/* ── Panel de detalle ── */}
+        {/* Wrapper `relative` HERMANO del panel: las flechas cuelgan de aquí para
+            que ningún `overflow-hidden` interno las recorte (SPEC 94). */}
         <div className="relative">
+          {/* Navegación circular: siempre habilitadas (de la última vuelve a la
+              primera), por eso `canPrev`/`canNext` son constantes. */}
+          {N > 1 && (
+            <SliderSideArrows
+              canPrev
+              canNext
+              onPrev={goPrev}
+              onNext={goNext}
+              labelPrev={prevLabel}
+              labelNext={nextLabel}
+            />
+          )}
           <div
             id="sol-panel"
             role="tabpanel"
