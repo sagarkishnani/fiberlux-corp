@@ -22,7 +22,7 @@ El cliente trajo una referencia visual (captura adjunta al pedido): píldoras de
 - **Sección de alto normal:** se elimina el scroll-jack (track alto + panel `sticky`). La sección ocupa su alto natural y el scroll de la página nunca queda anclado.
 - **Tira de chips de categoría** (tabs) arriba del panel: ícono + nombre corto (`tabLabel`, con fallback al `title`), estado activo destacado con borde magenta e **indicador deslizante** entre chips. Scroll horizontal con máscara en mobile.
 - **Encabezado de sección:** eyebrow `[ SOLUCIONES ]` (string de UI, localizado) + título grande `h2` con `services.title` del CMS.
-- **Panel de detalle** presentado como **stack de tarjetas**: dos capas asoman por la derecha detrás del panel activo (las siguientes soluciones). Panel de esquinas redondeadas partido en dos mitades en `lg+`:
+- **Panel de detalle** presentado como **stack de tarjetas**: dos capas redondeadas, casi tan altas como la activa, escalonadas +22px y +44px a la derecha (la más lejana más apagada), asoman detrás del panel. Panel partido en dos mitades **56/44** en `lg+`, con alto mínimo (`min-h-[470px]`) y contenido centrado verticalmente para que el alto no salte entre categorías:
   - **Izquierda:** título de la categoría (`title`), descripción corta (`description`), subservicios como **chips** (píldora con punto magenta) y CTA **tipo link** "Conoce más →" (no botón relleno) → `url` de la categoría.
   - **Derecha:** mitad **a sangre** con degradado magenta, capas de cuadrados rotados translúcidos y el ícono de la categoría en un tile claro. Sin textos dentro de la card.
 - **Flechas circulares a los costados** de la card, centradas verticalmente y superpuestas sobre sus bordes, reusando `shared/SliderSideArrows.tsx` (SPEC 94). Con wrap (de la última vuelve a la primera).
@@ -158,7 +158,8 @@ Cada paso deja el sitio compilando y funcional.
 - [x] El cambio de categoría es **direccional**: al ir hacia adelante el contenido entra desde el lado opuesto que al ir hacia atrás.
 - [x] Los subservicios se muestran como **chips** (píldora con punto magenta) que fluyen en varias filas, y entran en stagger.
 - [x] El CTA "Conoce más" es un **link con flecha**, no un botón relleno.
-- [x] El panel se ve como un **stack**: dos capas asoman por la derecha detrás de la tarjeta activa.
+- [x] El panel se ve como un **stack**: dos capas redondeadas y casi tan altas como la activa asoman escalonadas por la derecha.
+- [x] El alto del panel no salta al cambiar de categoría (la de 8 y la de 13 subservicios miden lo mismo).
 - [x] La mitad derecha va **a sangre** (sin padding) y **no** contiene textos.
 - [x] La mitad visual muestra el ícono de la categoría sobre el degradado; el cúmulo flota sutilmente y hace tilt 3D siguiendo al cursor en punteros finos.
 - [x] En táctil (`pointer: coarse`) no hay tilt ni tooltip.
@@ -189,7 +190,8 @@ Los 3 errores de consola en `/soluciones` son de Cloudflare Turnstile contra `lo
 - **No:** autoplay por tiempo. La sección tiene mucho texto por categoría; rotar sola obliga a leer contrarreloj.
 - **Sí:** usar solo `title` + `description` del CMS en la columna izquierda. La primera versión añadía un párrafo `body` y un pie `eyebrow` en la card (`RED · NOC 24/7`) — texto inventado por el agente que la referencia no tiene; ambos campos se eliminaron del schema.
 - **Sí:** subservicios como **chips** y CTA **tipo link con flecha** (referencia), en vez del checklist con checks en dos columnas y el botón relleno de la primera versión.
-- **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding.
+- **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding. Las capas se recortan a partir de la mitad del panel para no meterse bajo la columna de texto, y se ocultan bajo `sm` (no hay ancho para escalonarlas).
+- **Sí:** alto mínimo del panel + contenido centrado verticalmente. Sin eso el alto saltaba entre categorías (8 vs 13 subservicios) al navegar con las flechas.
 - **Sí:** `tabLabel` opcional para el nombre corto del chip, con fallback al título. Evita que el agente acorte por su cuenta los títulos del cliente.
 - **Sí:** `tabIcon` como **set cerrado de opciones** mapeado a `react-icons/fa6` (patrón de Rubros, SPEC 90), en vez de reusar `items[].icon` (hoy las 4 categorías apuntan al mismo `onda-magenta.svg`, se verían idénticas) y en vez de subir imágenes (el cliente tendría que producir 4 assets).
 - **Sí:** adaptar a la **paleta de marca** (near-black + magenta, card glass) replicando el layout y las animaciones de la referencia, no su verde sobre fondo claro. Un bloque claro rompería la continuidad del Home.
