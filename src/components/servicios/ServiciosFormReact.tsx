@@ -58,7 +58,7 @@ export default function ServiciosFormReact({
         {/* ════ Heading (editable from the servicios collection) ════ */}
         <div className="max-w-[720px] mx-auto text-center mb-10 lg:mb-14">
           <h2
-            className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-greyscale-white mb-4"
+            className="text-[28px] md:text-[40px] leading-[1.2] font-medium text-greyscale-white mb-4"
             data-tina-field={tinaField(page, "formTitle")}
           >
             {tField(page as any, "formTitle", locale)}

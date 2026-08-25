@@ -138,7 +138,7 @@ export default function ContactReact({
 
             {/* Heading — hidden on mobile per the Figma (form leads on small screens) */}
             <h1
-              className="hidden lg:block text-[32px] md:text-[40px] leading-[1.2] md:leading-[48px] font-semibold text-greyscale-white mb-6"
+              className="hidden lg:block text-[32px] md:text-[40px] leading-[1.2] md:leading-[48px] font-medium text-greyscale-white mb-6"
               data-tina-field={tinaField(contact, "heading")}
             >
               {tField(contact, "heading", locale)}

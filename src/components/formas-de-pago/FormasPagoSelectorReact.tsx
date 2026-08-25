@@ -48,7 +48,7 @@ function StepRow({ step, tinaId, locale }: { step: StepData; tinaId?: string; lo
   return (
     <div className="grid md:grid-cols-[1fr_minmax(0,420px)] gap-6 md:gap-10 items-center py-10 border-t border-white/10">
       <div>
-        <h3 className="text-[26px] md:text-[32px] leading-[1.2] font-semibold text-greyscale-white">
+        <h3 className="text-[26px] md:text-[32px] leading-[1.2] font-medium text-greyscale-white">
           {tField(step as any, "title", locale)}
         </h3>
         <div className="flex gap-3 mt-4">

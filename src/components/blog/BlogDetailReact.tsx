@@ -265,7 +265,7 @@ export default function BlogDetailReact({
             {/* Article content */}
             <article
               className="prose prose-lg max-w-none
-                prose-headings:text-[#0a0a0a] prose-headings:font-bold
+                prose-headings:text-[#0a0a0a] prose-headings:font-medium
                 prose-h2:text-[22px] prose-h2:leading-[30px] prose-h2:mt-10 prose-h2:mb-4
                 prose-h3:text-[18px] prose-h3:leading-[26px] prose-h3:mt-8 prose-h3:mb-3
                 prose-p:text-[#3f3f3f] prose-p:text-[15px] prose-p:leading-[26px] prose-p:mb-4
@@ -300,7 +300,7 @@ export default function BlogDetailReact({
       {relatedPosts.length > 0 && (
         <section className="py-12 md:py-16 bg-white">
           <div className="site-container">
-            <h2 className="text-[#0a0a0a] text-[32px] md:text-[40px] leading-[40px] md:leading-[48px] font-bold mb-10">
+            <h2 className="text-[#0a0a0a] text-[32px] md:text-[40px] leading-[40px] md:leading-[48px] font-medium mb-10">
               Publicaciones relacionadas
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

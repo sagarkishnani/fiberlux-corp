@@ -44,7 +44,7 @@ export default function LegalPageReact({
         {/* Title */}
         {title && (
           <h1
-            className="text-center text-[#0a0a0a] font-semibold text-[34px] md:text-[44px] leading-[1.15] mb-8"
+            className="text-center text-[#0a0a0a] font-medium text-[34px] md:text-[44px] leading-[1.15] mb-8"
             data-tina-field={legal ? tinaField(legal, "title") : undefined}
           >
             {title}
@@ -63,7 +63,7 @@ export default function LegalPageReact({
               prose-strong:text-[#0a0a0a]
               prose-ol:pl-1 marker:text-[#96237A] marker:font-semibold
               prose-li:text-[#3f3f3f] prose-li:my-1
-              prose-h3:text-[#96237A] prose-h3:text-[18px] prose-h3:font-semibold prose-h3:mb-3
+              prose-h3:text-[#96237A] prose-h3:text-[18px] prose-h3:font-medium prose-h3:mb-3
               prose-blockquote:border-l-4 prose-blockquote:border-[#96237A] prose-blockquote:bg-white
               prose-blockquote:not-italic prose-blockquote:text-[#3f3f3f] prose-blockquote:font-normal
               prose-blockquote:rounded-r-lg prose-blockquote:py-3 prose-blockquote:px-5"

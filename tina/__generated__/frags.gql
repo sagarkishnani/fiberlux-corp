@@ -512,15 +512,19 @@ fragment CertificacionesParts on Certificaciones {
   __typename
   sectionTitle
   sectionTitle_en
+  sectionDescription
+  sectionDescription_en
   items {
     __typename
-    year
-    icon
-    title
-    heading
-    heading_en
-    description
-    description_en
+    code
+    label
+    label_en
+    ringText
+    ringText_en
+    norm
+    norm_en
+    scope
+    scope_en
   }
 }
 

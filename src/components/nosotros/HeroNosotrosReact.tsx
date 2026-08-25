@@ -56,7 +56,7 @@ export default function HeroNosotrosReact({
       }
       title={
         <h1
-          className="max-w-[15ch] text-[34px] font-semibold leading-[1.1] text-white md:text-[52px] lg:text-[58px]"
+          className="max-w-[15ch] text-[34px] font-medium leading-[1.1] text-white md:text-[52px] lg:text-[58px]"
           data-tina-field={hero ? tinaField(hero, "title") : undefined}
         >
           {title}

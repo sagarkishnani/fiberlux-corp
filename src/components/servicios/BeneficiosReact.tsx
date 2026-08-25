@@ -95,7 +95,7 @@ export default function BeneficiosReact({
       <div className="max-w-[1264px] mx-auto px-6 md:px-16">
         {beneficios.title && (
           <h2
-            className="text-[28px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
+            className="text-[28px] md:text-[44px] leading-[1.15] font-medium text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(beneficios, "title")}
           >
             {tField(beneficios as any, "title", locale)}
@@ -133,7 +133,7 @@ export default function BeneficiosReact({
 
                 {item.title && (
                   <h3
-                    className="relative z-10 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
+                    className="relative z-10 text-[18px] lg:text-[20px] font-medium text-greyscale-white"
                     data-tina-field={tinaField(item as any, "title")}
                   >
                     {tField(item as any, "title", locale)}

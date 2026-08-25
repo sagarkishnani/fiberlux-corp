@@ -61,7 +61,7 @@ export default function BlogCard({
                 {tag}
               </span>
             )}
-            <h3 className="text-white text-xl md:text-2xl font-semibold leading-snug group-hover:text-brand-purple-light transition-colors">
+            <h3 className="text-white text-xl md:text-2xl font-medium leading-snug group-hover:text-brand-purple-light transition-colors">
               {title}
             </h3>
           </div>

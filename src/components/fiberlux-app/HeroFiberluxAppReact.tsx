@@ -97,7 +97,7 @@ export default function HeroFiberluxAppReact({
         <div className="max-w-[560px]">
           {hero?.heading && (
             <h1
-              className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
+              className="text-[32px] md:text-[48px] leading-[1.12] font-medium text-greyscale-white mb-6"
               data-tina-field={tinaField(hero, "heading")}
             >
               {hero.heading}

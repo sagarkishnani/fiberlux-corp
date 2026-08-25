@@ -79,7 +79,7 @@ export default function BeneficiosAppReact({
       <div className="max-w-[1264px] mx-auto px-6 md:px-16">
         {beneficios.title && (
           <h2
-            className="text-[28px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
+            className="text-[28px] md:text-[44px] leading-[1.15] font-medium text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(beneficios, "title")}
           >
             {tField(beneficios as any, "title", locale)}

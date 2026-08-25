@@ -8,13 +8,17 @@ export default {
     },
     fontSize: {
       /* Headings — clamp(min≈mobile, preferido, max=desktop); lineHeight unitless para que acompañe al clamp.
-         El extremo desktop se bajó ~13% (Poppins renderiza más grande que el font del sistema anterior); el mínimo mobile se mantiene. */
-      'heading-xxl': ['clamp(2.5rem, 5vw + 1rem, 4.25rem)',      { lineHeight: '1.1',  fontWeight: '700' }], // 40 → 68
-      'heading-xl':  ['clamp(2.25rem, 4.75vw + 0.75rem, 3.75rem)', { lineHeight: '1.1',  fontWeight: '700' }], // 36 → 60
-      'heading-lg':  ['clamp(2rem, 4.25vw + 0.5rem, 3.375rem)',  { lineHeight: '1.12', fontWeight: '700' }], // 32 → 54
-      'heading-md':  ['clamp(1.875rem, 3.5vw + 0.5rem, 3rem)',   { lineHeight: '1.14', fontWeight: '700' }], // 30 → 48
-      'heading-sm':  ['clamp(1.625rem, 3vw + 0.5rem, 2.5rem)',   { lineHeight: '1.16', fontWeight: '700' }], // 26 → 40
-      'heading-xs':  ['clamp(1.5rem, 2.25vw + 0.5rem, 2.125rem)', { lineHeight: '1.2',  fontWeight: '700' }], // 24 → 34
+         El extremo desktop se bajó ~13% (Poppins renderiza más grande que el font del sistema anterior); el mínimo mobile se mantiene.
+         Peso 500 (medium): los títulos del sitio dejaron de ser bold. Hoy la escala
+         sólo la referencia `global.css` (que no se bundlea) y los componentes usan
+         tamaños arbitrarios + `font-medium`; se alinea para que el token no
+         reintroduzca el 700 en cuanto alguien lo use. */
+      'heading-xxl': ['clamp(2.5rem, 5vw + 1rem, 4.25rem)',      { lineHeight: '1.1',  fontWeight: '500' }], // 40 → 68
+      'heading-xl':  ['clamp(2.25rem, 4.75vw + 0.75rem, 3.75rem)', { lineHeight: '1.1',  fontWeight: '500' }], // 36 → 60
+      'heading-lg':  ['clamp(2rem, 4.25vw + 0.5rem, 3.375rem)',  { lineHeight: '1.12', fontWeight: '500' }], // 32 → 54
+      'heading-md':  ['clamp(1.875rem, 3.5vw + 0.5rem, 3rem)',   { lineHeight: '1.14', fontWeight: '500' }], // 30 → 48
+      'heading-sm':  ['clamp(1.625rem, 3vw + 0.5rem, 2.5rem)',   { lineHeight: '1.16', fontWeight: '500' }], // 26 → 40
+      'heading-xs':  ['clamp(1.5rem, 2.25vw + 0.5rem, 2.125rem)', { lineHeight: '1.2',  fontWeight: '500' }], // 24 → 34
 
       /* Subtitles */
       'subtitle-xl': ['clamp(2rem, 3.25vw + 0.5rem, 2.875rem)',  { lineHeight: '1.05', fontWeight: '500' }], // 32 → 46

@@ -260,7 +260,7 @@ export default function SolucionesSliderReact({
             <div data-reveal="down">
               <h2
                 key={`t-${activeIndex}`}
-                className="sol-fade text-[30px] md:text-[52px] leading-[1.05] font-semibold text-white max-w-[14ch]"
+                className="sol-fade text-[30px] md:text-[52px] leading-[1.05] font-medium text-white max-w-[14ch]"
                 data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
               >
                 {tField(active as any, "title", locale)}

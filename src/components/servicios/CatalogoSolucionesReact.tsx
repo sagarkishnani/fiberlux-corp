@@ -144,7 +144,7 @@ export default function CatalogoSolucionesReact({
       <div className="site-container">
         {tField(catalogo as any, "title", locale) && (
           <h2
-            className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-greyscale-white text-center mb-10 md:mb-14"
+            className="text-[28px] md:text-[40px] leading-[1.2] font-medium text-greyscale-white text-center mb-10 md:mb-14"
             data-tina-field={tinaField(catalogo, "title")}
           >
             {tField(catalogo as any, "title", locale)}
@@ -216,7 +216,7 @@ export default function CatalogoSolucionesReact({
                 {featured ? (
                   <div className="relative z-10 mt-auto pt-10">
                     <h3
-                      className="text-[22px] lg:text-[28px] font-semibold text-greyscale-white mb-3"
+                      className="text-[22px] lg:text-[28px] font-medium text-greyscale-white mb-3"
                       data-tina-field={tinaField(item as any, "title")}
                     >
                       {iTitle}
@@ -226,7 +226,7 @@ export default function CatalogoSolucionesReact({
                 ) : (
                   <>
                     <h3
-                      className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-semibold text-greyscale-white"
+                      className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-medium text-greyscale-white"
                       data-tina-field={tinaField(item as any, "title")}
                     >
                       {iTitle}
@@ -267,7 +267,7 @@ export default function CatalogoSolucionesReact({
                           draggable={false}
                         >
                           <ItemIcon name={item.icon} />
-                          <h3 className="mt-4 text-[15px] font-semibold text-greyscale-white leading-snug">
+                          <h3 className="mt-4 text-[15px] font-medium text-greyscale-white leading-snug">
                             {tField(item as any, "title", locale)}
                           </h3>
                         </CardTag>

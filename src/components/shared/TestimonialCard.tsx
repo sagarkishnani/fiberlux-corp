@@ -77,7 +77,7 @@ export default function TestimonialCard({
           {/* Text content */}
           <div className="flex flex-col justify-between h-full">
             <div>
-              <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
+              <h3 className="text-greyscale-darkest text-subtitle-sm font-medium leading-snug mb-4">
                 {quote}
               </h3>
               {description && (
@@ -109,7 +109,7 @@ export default function TestimonialCard({
                 {company}
               </p>
             )}
-            <h3 className="text-greyscale-darkest text-subtitle-sm font-semibold leading-snug mb-4">
+            <h3 className="text-greyscale-darkest text-subtitle-sm font-medium leading-snug mb-4">
               &ldquo;{quote}&rdquo;
             </h3>
             {description && (
@@ -135,7 +135,7 @@ export default function TestimonialCard({
    sobre el fondo oscuro de la sección:
 
    // Desktop:
-   //   <h3 className="text-white text-subtitle-sm font-semibold leading-snug mb-4">{quote}</h3>
+   //   <h3 className="text-white text-subtitle-sm font-medium leading-snug mb-4">{quote}</h3>
    //   <p  className="text-white/60 text-body-md leading-relaxed">{description}</p>
    //   <div className="flex items-center justify-between mt-8">
    //     <div>

@@ -412,7 +412,7 @@ export default function SolucionesScrollReact({
             {/* Bloque con envelope (opacidad/slide continuos por scroll). */}
             <div ref={fgRef} className="will-change-transform">
               <h2
-                className="mt-3 md:mt-4 text-[24px] md:text-[44px] leading-[1.1] font-semibold text-white max-w-[14ch]"
+                className="mt-3 md:mt-4 text-[24px] md:text-[44px] leading-[1.1] font-medium text-white max-w-[14ch]"
                 data-tina-field={activeTina ? tinaField(activeTina, "title") : undefined}
               >
                 {tField(active as any, "title", locale)}

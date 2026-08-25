@@ -102,7 +102,7 @@ export default function HeroServiciosReact({
           </nav>
 
           <h1
-            className="mx-auto mb-6 max-w-[16ch] text-[34px] font-semibold leading-[1.12] text-greyscale-white md:text-[52px]"
+            className="mx-auto mb-6 max-w-[16ch] text-[34px] font-medium leading-[1.12] text-greyscale-white md:text-[52px]"
             style={{ textShadow: "0 0 28px rgba(150,35,122,0.5)" }}
             data-tina-field={tinaField(page, "heading")}
           >

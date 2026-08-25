@@ -88,7 +88,7 @@ export default function BlogGridCard({
 
           {/* Title */}
           <h3
-            className="text-[#0a0a0a] text-[17px] leading-[24px] font-semibold mb-auto"
+            className="text-[#0a0a0a] text-[17px] leading-[24px] font-medium mb-auto"
             style={{
               display: '-webkit-box',
               WebkitLineClamp: 4,

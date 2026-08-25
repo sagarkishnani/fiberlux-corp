@@ -139,7 +139,7 @@ export default function FooterReact({ query, variables, data: initialData, local
     return (
       <div key={key} className={wide ? 'sm:col-span-2 lg:col-span-3' : ''}>
         <h3
-          className="text-[18px] leading-[18px] font-semibold text-white mb-4"
+          className="text-[18px] leading-[18px] font-medium text-white mb-4"
           data-tina-field={tinaField(column, 'title')}
         >
           {tField(column as any, 'title', locale)}
@@ -236,7 +236,7 @@ export default function FooterReact({ query, variables, data: initialData, local
               cliente: en mobile el mensaje abre el footer, con las redes debajo). */}
           <div className="order-1 flex flex-col justify-between gap-8 lg:gap-10">
             <h2
-              className="text-[32px] leading-[36px] sm:text-[40px] xl:text-[56px] sm:leading-[60px] font-semibold text-white"
+              className="text-[32px] leading-[36px] sm:text-[40px] xl:text-[56px] sm:leading-[60px] font-medium text-white"
               data-tina-field={tinaField(footer, 'tagline')}
             >
               {tField(footer as any, 'tagline', locale)}

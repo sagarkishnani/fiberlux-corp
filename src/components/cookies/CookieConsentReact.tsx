@@ -175,7 +175,7 @@ export default function CookieConsentReact({
         <div className="p-5 md:p-7">
           {/* Header */}
           <div className="flex items-start justify-between gap-4 mb-3">
-            <h2 className="text-[#0a0a0a] text-[17px] md:text-[19px] font-semibold leading-snug">
+            <h2 className="text-[#0a0a0a] text-[17px] md:text-[19px] font-medium leading-snug">
               {title}
             </h2>
             <button

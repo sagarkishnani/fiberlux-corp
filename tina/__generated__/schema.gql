@@ -1423,18 +1423,22 @@ type CasosDeExitoConnection implements Connection {
 }
 
 type CertificacionesItems {
-  year: String
-  icon: String
-  title: String
-  heading: String
-  heading_en: String
-  description: String
-  description_en: String
+  code: String
+  label: String
+  label_en: String
+  ringText: String
+  ringText_en: String
+  norm: String
+  norm_en: String
+  scope: String
+  scope_en: String
 }
 
 type Certificaciones implements Node & Document {
   sectionTitle: String
   sectionTitle_en: String
+  sectionDescription: String
+  sectionDescription_en: String
   items: [CertificacionesItems]
   id: ID!
   _sys: SystemInfo!
@@ -1442,18 +1446,22 @@ type Certificaciones implements Node & Document {
 }
 
 input CertificacionesItemsFilter {
-  year: StringFilter
-  icon: StringFilter
-  title: StringFilter
-  heading: StringFilter
-  heading_en: StringFilter
-  description: StringFilter
-  description_en: StringFilter
+  code: StringFilter
+  label: StringFilter
+  label_en: StringFilter
+  ringText: StringFilter
+  ringText_en: StringFilter
+  norm: StringFilter
+  norm_en: StringFilter
+  scope: StringFilter
+  scope_en: StringFilter
 }
 
 input CertificacionesFilter {
   sectionTitle: StringFilter
   sectionTitle_en: StringFilter
+  sectionDescription: StringFilter
+  sectionDescription_en: StringFilter
   items: CertificacionesItemsFilter
 }
 
@@ -3246,18 +3254,22 @@ input CasosDeExitoMutation {
 }
 
 input CertificacionesItemsMutation {
-  year: String
-  icon: String
-  title: String
-  heading: String
-  heading_en: String
-  description: String
-  description_en: String
+  code: String
+  label: String
+  label_en: String
+  ringText: String
+  ringText_en: String
+  norm: String
+  norm_en: String
+  scope: String
+  scope_en: String
 }
 
 input CertificacionesMutation {
   sectionTitle: String
   sectionTitle_en: String
+  sectionDescription: String
+  sectionDescription_en: String
   items: [CertificacionesItemsMutation]
 }
 

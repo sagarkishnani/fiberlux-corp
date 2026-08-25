@@ -233,7 +233,7 @@ export default function ValorSolucionReact({
         {/* Section heading */}
         {valor.title && (
           <h2
-            className="valor-fade text-[28px] md:text-[44px] leading-[1.15] font-semibold text-greyscale-white text-center"
+            className="valor-fade text-[28px] md:text-[44px] leading-[1.15] font-medium text-greyscale-white text-center"
             style={{ ["--d" as any]: "0s" }}
             data-tina-field={tinaField(valor, "title")}
           >
@@ -326,7 +326,7 @@ export default function ValorSolucionReact({
               )}
               {challenge.heading && (
                 <h3
-                  className="relative z-10 text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-3"
+                  className="relative z-10 text-[22px] md:text-[26px] font-medium text-greyscale-white mb-3"
                   data-tina-field={tinaField(challenge as any, "heading")}
                 >
                   {tField(challenge as any, "heading", locale)}
@@ -379,7 +379,7 @@ export default function ValorSolucionReact({
             >
               {solution.heading && (
                 <h3
-                  className="text-[22px] md:text-[26px] font-semibold text-[#3B0E30] mb-3"
+                  className="text-[22px] md:text-[26px] font-medium text-[#3B0E30] mb-3"
                   data-tina-field={tinaField(solution as any, "heading")}
                 >
                   {tField(solution as any, "heading", locale)}
@@ -479,7 +479,7 @@ export default function ValorSolucionReact({
               <div className="relative z-10 max-w-[85%]">
                 {industries.heading && (
                   <h3
-                    className="text-[22px] md:text-[26px] font-semibold text-white mb-3"
+                    className="text-[22px] md:text-[26px] font-medium text-white mb-3"
                     data-tina-field={tinaField(industries as any, "heading")}
                   >
                     {tField(industries as any, "heading", locale)}

@@ -88,7 +88,7 @@ export default function BlogGrid({
       <div className="site-container">
         {/* Section title — italic bold, matching Figma */}
         <h2
-          className="text-[#0a0a0a] font-semibold mb-6"
+          className="text-[#0a0a0a] font-medium mb-6"
           style={{ fontSize: '48px', lineHeight: '56px' }}
         >
           {locale === "en" ? "Latest posts" : "Últimas publicaciones"}

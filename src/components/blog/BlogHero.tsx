@@ -87,7 +87,7 @@ export default function BlogHero({ posts = [], autoplay = true, intervalMs = 600
         </nav>
 
         {/* Title */}
-        <h1 className="text-[56px] md:text-[72px] leading-[64px] md:leading-[80px] font-semibold text-white mb-10">
+        <h1 className="text-[56px] md:text-[72px] leading-[64px] md:leading-[80px] font-medium text-white mb-10">
           Blog
         </h1>
       </div>

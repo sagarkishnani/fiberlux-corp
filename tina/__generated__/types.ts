@@ -1854,19 +1854,23 @@ export type CasosDeExitoConnection = Connection & {
 
 export type CertificacionesItems = {
   __typename?: 'CertificacionesItems';
-  year?: Maybe<Scalars['String']['output']>;
-  icon?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-  heading?: Maybe<Scalars['String']['output']>;
-  heading_en?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  description_en?: Maybe<Scalars['String']['output']>;
+  code?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  ringText?: Maybe<Scalars['String']['output']>;
+  ringText_en?: Maybe<Scalars['String']['output']>;
+  norm?: Maybe<Scalars['String']['output']>;
+  norm_en?: Maybe<Scalars['String']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  scope_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type Certificaciones = Node & Document & {
   __typename?: 'Certificaciones';
   sectionTitle?: Maybe<Scalars['String']['output']>;
   sectionTitle_en?: Maybe<Scalars['String']['output']>;
+  sectionDescription?: Maybe<Scalars['String']['output']>;
+  sectionDescription_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<CertificacionesItems>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -1874,18 +1878,22 @@ export type Certificaciones = Node & Document & {
 };
 
 export type CertificacionesItemsFilter = {
-  year?: InputMaybe<StringFilter>;
-  icon?: InputMaybe<StringFilter>;
-  title?: InputMaybe<StringFilter>;
-  heading?: InputMaybe<StringFilter>;
-  heading_en?: InputMaybe<StringFilter>;
-  description?: InputMaybe<StringFilter>;
-  description_en?: InputMaybe<StringFilter>;
+  code?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  ringText?: InputMaybe<StringFilter>;
+  ringText_en?: InputMaybe<StringFilter>;
+  norm?: InputMaybe<StringFilter>;
+  norm_en?: InputMaybe<StringFilter>;
+  scope?: InputMaybe<StringFilter>;
+  scope_en?: InputMaybe<StringFilter>;
 };
 
 export type CertificacionesFilter = {
   sectionTitle?: InputMaybe<StringFilter>;
   sectionTitle_en?: InputMaybe<StringFilter>;
+  sectionDescription?: InputMaybe<StringFilter>;
+  sectionDescription_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<CertificacionesItemsFilter>;
 };
 
@@ -4021,18 +4029,22 @@ export type CasosDeExitoMutation = {
 };
 
 export type CertificacionesItemsMutation = {
-  year?: InputMaybe<Scalars['String']['input']>;
-  icon?: InputMaybe<Scalars['String']['input']>;
-  title?: InputMaybe<Scalars['String']['input']>;
-  heading?: InputMaybe<Scalars['String']['input']>;
-  heading_en?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  description_en?: InputMaybe<Scalars['String']['input']>;
+  code?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  ringText?: InputMaybe<Scalars['String']['input']>;
+  ringText_en?: InputMaybe<Scalars['String']['input']>;
+  norm?: InputMaybe<Scalars['String']['input']>;
+  norm_en?: InputMaybe<Scalars['String']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  scope_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CertificacionesMutation = {
   sectionTitle?: InputMaybe<Scalars['String']['input']>;
   sectionTitle_en?: InputMaybe<Scalars['String']['input']>;
+  sectionDescription?: InputMaybe<Scalars['String']['input']>;
+  sectionDescription_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<CertificacionesItemsMutation>>>;
 };
 
@@ -4556,7 +4568,7 @@ export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: str
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, sectionTitle_en?: string | null, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, heading_en?: string | null, description?: string | null, description_en?: string | null } | null> | null };
+export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, sectionTitle_en?: string | null, sectionDescription?: string | null, sectionDescription_en?: string | null, items?: Array<{ __typename: 'CertificacionesItems', code?: string | null, label?: string | null, label_en?: string | null, ringText?: string | null, ringText_en?: string | null, norm?: string | null, norm_en?: string | null, scope?: string | null, scope_en?: string | null } | null> | null };
 
 export type FormasDePagoPartsFragment = { __typename: 'FormasDePago', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, bankSelectLabel?: string | null, bankSelectLabel_en?: string | null, methodSelectLabel?: string | null, methodSelectLabel_en?: string | null, banks?: Array<{ __typename: 'FormasDePagoBanks', name?: string | null, optionLabel?: string | null, optionLabel_en?: string | null, methods?: Array<{ __typename: 'FormasDePagoBanksMethods', label?: string | null, label_en?: string | null, steps?: Array<{ __typename: 'FormasDePagoBanksMethodsSteps', title?: string | null, title_en?: string | null, description?: any | null, description_en?: any | null, image?: string | null } | null> | null } | null> | null } | null> | null, seo?: { __typename: 'FormasDePagoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4752,7 +4764,7 @@ export type CertificacionesQueryVariables = Exact<{
 }>;
 
 
-export type CertificacionesQuery = { __typename?: 'Query', certificaciones: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, sectionTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, heading_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } };
+export type CertificacionesQuery = { __typename?: 'Query', certificaciones: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionDescription?: string | null, sectionDescription_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', code?: string | null, label?: string | null, label_en?: string | null, ringText?: string | null, ringText_en?: string | null, norm?: string | null, norm_en?: string | null, scope?: string | null, scope_en?: string | null } | null> | null } };
 
 export type CertificacionesConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4764,7 +4776,7 @@ export type CertificacionesConnectionQueryVariables = Exact<{
 }>;
 
 
-export type CertificacionesConnectionQuery = { __typename?: 'Query', certificacionesConnection: { __typename?: 'CertificacionesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CertificacionesConnectionEdges', cursor: string, node?: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, sectionTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', year?: string | null, icon?: string | null, title?: string | null, heading?: string | null, heading_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null } | null> | null } };
+export type CertificacionesConnectionQuery = { __typename?: 'Query', certificacionesConnection: { __typename?: 'CertificacionesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CertificacionesConnectionEdges', cursor: string, node?: { __typename: 'Certificaciones', id: string, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionDescription?: string | null, sectionDescription_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CertificacionesItems', code?: string | null, label?: string | null, label_en?: string | null, ringText?: string | null, ringText_en?: string | null, norm?: string | null, norm_en?: string | null, scope?: string | null, scope_en?: string | null } | null> | null } | null } | null> | null } };
 
 export type FormasDePagoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5461,15 +5473,19 @@ export const CertificacionesPartsFragmentDoc = gql`
   __typename
   sectionTitle
   sectionTitle_en
+  sectionDescription
+  sectionDescription_en
   items {
     __typename
-    year
-    icon
-    title
-    heading
-    heading_en
-    description
-    description_en
+    code
+    label
+    label_en
+    ringText
+    ringText_en
+    norm
+    norm_en
+    scope
+    scope_en
   }
 }
     `;

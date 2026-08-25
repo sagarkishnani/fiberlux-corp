@@ -388,7 +388,7 @@ export default function SolucionesPanelReact({
           {/* Columna izquierda */}
           <div className="order-2 flex flex-col justify-center p-7 md:p-10 lg:order-1 lg:p-12">
             <h3
-              className="text-[24px] font-semibold leading-[1.15] text-white md:text-[32px]"
+              className="text-[24px] font-medium leading-[1.15] text-white md:text-[32px]"
               data-tina-field={itTina ? tinaField(itTina, "title") : undefined}
             >
               {tField(it as any, "title", locale)}
@@ -527,7 +527,7 @@ export default function SolucionesPanelReact({
         </p>
         {sectionTitle && (
           <h2
-            className="mt-3 text-[30px] font-semibold leading-[1.12] text-white md:text-[44px]"
+            className="mt-3 text-[30px] font-medium leading-[1.12] text-white md:text-[44px]"
             data-tina-field={services ? tinaField(services, "title") : undefined}
           >
             {sectionTitle}

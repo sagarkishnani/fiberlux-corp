@@ -819,7 +819,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       return (
         <div data-tina-field={tinaField(formConfig, "fields", fieldIndex, "label")}>
           {isContact ? (
-            <h3 className={`text-body-md font-bold mt-4 mb-2 ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
+            <h3 className={`text-body-md font-medium mt-4 mb-2 ${isDark ? "text-greyscale-white" : "text-greyscale-darkest"}`}>
               {L(field, "label")}
             </h3>
           ) : (
@@ -1159,7 +1159,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
         <div className="mb-8">
           {L(formConfig, "formTitle") && (
             <h2
-              className={`text-subtitle-md font-bold! ${isDark ? "text-greyscale-white mb-2" : "text-greyscale-darkest"}`}
+              className={`text-subtitle-md font-medium! ${isDark ? "text-greyscale-white mb-2" : "text-greyscale-darkest"}`}
               data-tina-field={tinaField(formConfig, "formTitle")}
             >
               {L(formConfig, "formTitle")}

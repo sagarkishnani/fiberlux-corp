@@ -550,7 +550,7 @@
   "sliders": {
     "certificaciones": {
       "autoplay": true,
-      "intervalMs": 3500,
+      "intervalMs": 7000,
       "effect": "opacity"
     },
     "soluciones": {

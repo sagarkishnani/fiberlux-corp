@@ -113,7 +113,7 @@ export default function CanalesSoporte({
   const renderExpanded = (channel: Channel) => (
     <div className="p-8 lg:p-10 w-full max-w-full">
       <h3
-        className="text-[24px] lg:text-[28px] font-semibold text-greyscale-darkest mb-2 whitespace-nowrap"
+        className="text-[24px] lg:text-[28px] font-medium text-greyscale-darkest mb-2 whitespace-nowrap"
         data-tina-field={tinaField(channel, "title")}
       >
         {tField(channel as any, "title", locale)}
@@ -135,7 +135,7 @@ export default function CanalesSoporte({
       <div className="site-container">
         {/* Section header */}
         <h2
-          className="text-[34px] md:text-[48px] leading-[1.1] font-semibold text-brand-purple mb-4"
+          className="text-[34px] md:text-[48px] leading-[1.1] font-medium text-brand-purple mb-4"
           data-tina-field={tinaField(page, "sectionTitle")}
         >
           {tField(page as any, "sectionTitle", locale)}
@@ -237,7 +237,7 @@ export default function CanalesSoporte({
                       }`}
                     >
                       <h3
-                        className="text-[22px] font-semibold text-greyscale-darkest mb-2"
+                        className="text-[22px] font-medium text-greyscale-darkest mb-2"
                         data-tina-field={tinaField(channel, "title")}
                       >
                         {tField(channel as any, "title", locale)}

@@ -163,7 +163,7 @@ export default function HeroSolucionReact({
 
             {hero?.heading && (
               <h1
-                className="text-[32px] md:text-[48px] leading-[1.12] font-semibold text-greyscale-white mb-6"
+                className="text-[32px] md:text-[48px] leading-[1.12] font-medium text-greyscale-white mb-6"
                 data-tina-field={tinaField(hero, "heading")}
               >
                 {tField(hero as any, "heading", locale)}
@@ -198,7 +198,7 @@ export default function HeroSolucionReact({
             <div className="hidden lg:block w-full rounded-3xl bg-white/[0.08] border border-white/15 backdrop-blur-md p-6 md:p-8">
               {hero?.formTitle && (
                 <h2
-                  className="text-[22px] md:text-[26px] font-semibold text-greyscale-white mb-6"
+                  className="text-[22px] md:text-[26px] font-medium text-greyscale-white mb-6"
                   data-tina-field={tinaField(hero, "formTitle")}
                 >
                   {tField(hero as any, "formTitle", locale)}

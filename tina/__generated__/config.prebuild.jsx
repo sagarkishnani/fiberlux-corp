@@ -1750,42 +1750,76 @@ var config_default = defineConfig({
             ui: { component: "textarea" }
           },
           {
+            name: "sectionDescription",
+            label: "Descripci\xF3n de la secci\xF3n",
+            type: "string",
+            ui: { component: "textarea" },
+            description: "P\xE1rrafo bajo el t\xEDtulo, en la columna izquierda."
+          },
+          {
+            name: "sectionDescription_en",
+            label: "Descripci\xF3n de la secci\xF3n (EN)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
             name: "items",
             label: "Certificaciones",
             type: "object",
             list: true,
             ui: {
-              itemProps: (item) => ({ label: item?.title || "Certificaci\xF3n" })
+              itemProps: (item) => ({ label: item?.norm || item?.code || "Certificaci\xF3n" })
             },
             fields: [
-              { name: "year", label: "A\xF1o", type: "string" },
               {
-                name: "icon",
-                label: "\xCDcono",
+                name: "code",
+                label: "N\xFAmero del sello (ej. 37001)",
                 type: "string",
-                options: [
-                  { value: "antisoborno", label: "Antisoborno (escudo-check)" },
-                  { value: "seguridad", label: "Seguridad de la informaci\xF3n (candado)" },
-                  { value: "calidad", label: "Gesti\xF3n de calidad (medalla)" },
-                  { value: "ambiental", label: "Ambiental (hoja)" },
-                  { value: "seguridad_st", label: "Seguridad y salud (casco)" },
-                  { value: "procesos", label: "Procesos (engranaje)" },
-                  { value: "certificado", label: "Certificado (sello)" },
-                  { value: "cumplimiento", label: "Cumplimiento (balanza)" }
-                ]
+                description: "N\xFAmero grande en el centro del sello. Sin la palabra ISO."
               },
-              { name: "title", label: "C\xF3digo (ej. ISO 37001)", type: "string" },
-              { name: "heading", label: "Categor\xEDa (ej. Sistema Antisoborno)", type: "string" },
-              { name: "heading_en", label: "Categor\xEDa (EN)", type: "string" },
               {
-                name: "description",
-                label: "Descripci\xF3n",
+                name: "label",
+                label: "Etiqueta del sello (ej. ISO ANTISOBORNO)",
+                type: "string",
+                description: "Texto peque\xF1o bajo el n\xFAmero, dentro del sello."
+              },
+              { name: "label_en", label: "Etiqueta del sello (EN)", type: "string" },
+              {
+                name: "ringText",
+                label: "Texto curvo del anillo",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "Se repite alrededor del sello hasta cerrar la vuelta. Ej: CERTIFICACI\xD3N ISO 37001 \xB7 SISTEMA DE GESTI\xD3N ANTISOBORNO"
+              },
+              {
+                name: "ringText_en",
+                label: "Texto curvo del anillo (EN)",
                 type: "string",
                 ui: { component: "textarea" }
               },
               {
-                name: "description_en",
-                label: "Descripci\xF3n (EN)",
+                name: "norm",
+                label: "Norma completa",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "L\xEDnea bajo el sello. Ej: ISO 37001:2016 \u2014 Sistemas de gesti\xF3n antisoborno"
+              },
+              {
+                name: "norm_en",
+                label: "Norma completa (EN)",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "scope",
+                label: "Alcance / entidad certificadora",
+                type: "string",
+                ui: { component: "textarea" },
+                description: "\xDAltima l\xEDnea de la card. Ej: Alcance: toda la operaci\xF3n del Grupo Fiberlux."
+              },
+              {
+                name: "scope_en",
+                label: "Alcance / entidad certificadora (EN)",
                 type: "string",
                 ui: { component: "textarea" }
               }

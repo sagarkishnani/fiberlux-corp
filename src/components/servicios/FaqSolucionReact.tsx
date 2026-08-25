@@ -61,7 +61,7 @@ export default function FaqSolucionReact({
       <div className="max-w-[900px] mx-auto px-6">
         {faq.title && (
           <h2
-            className="text-[28px] md:text-[40px] leading-[1.2] font-semibold text-[#3B0E30] text-center mb-10 md:mb-14"
+            className="text-[28px] md:text-[40px] leading-[1.2] font-medium text-[#3B0E30] text-center mb-10 md:mb-14"
             data-tina-field={tinaField(faq, "title")}
           >
             {tField(faq as any, "title", locale)}
