@@ -29,7 +29,8 @@ El cliente trajo una referencia visual (captura adjunta al pedido): píldoras de
 - **Arrastre horizontal** (pointer drag) sobre el panel para cambiar de categoría, además de tabs y flechas. Soporte de teclado: flechas ←/→ sobre la tira de tabs (`role="tablist"`).
 - **Animaciones de cambio de categoría (nivel completo, direccional):**
   - Indicador deslizante de la píldora activa.
-  - **Transición de baraja**: al cambiar de categoría la tarjeta activa se mantiene montada encima, opaca, y se desliza hacia el mazo (lateral según la dirección + leve rotación y escala) mientras la nueva ya está debajo, entrando desde la posición del mazo. Sin crossfade: nunca se ven los dos textos superpuestos.
+  - **Barrido de luz (scan)**: al cambiar de categoría una línea de luz con glow magenta y estela cruza el panel; la tarjeta anterior se mantiene encima, opaca, y se **recorta** (`clip-path`) exactamente sobre el borde del barrido, revelando la nueva que ya está debajo, quieta. La dirección se invierte al retroceder. Sin crossfade: nunca se ven los dos textos superpuestos.
+  - **Pulso del ícono** cuando el barrido llega a la mitad visual.
   - Chips de subservicio: entrada en **stagger**.
   - Mitad visual: **dos** cuadrados rotados translúcidos detrás del ícono (no más); el cúmulo **flota** de forma continua y hace **tilt 3D** siguiendo al cursor (solo `pointer: fine`).
   - Todo bajo `prefers-reduced-motion: reduce` → cambio instantáneo sin animación, sin flotación ni tilt.
@@ -156,7 +157,7 @@ Cada paso deja el sitio compilando y funcional.
 - [x] Las flechas no quedan recortadas ni generan scroll horizontal en pantallas anchas.
 - [x] Arrastrar horizontalmente el panel cambia de categoría; el arrastre no bloquea el scroll vertical en táctil.
 - [x] Con la tira de tabs enfocada, ←/→ cambian de categoría (`role="tablist"`, `aria-selected` correcto).
-- [x] El cambio de categoría se ve como un **reparto de baraja**: la tarjeta anterior sale opaca hacia el mazo y la nueva queda debajo; la dirección de salida se invierte al ir hacia atrás.
+- [x] El cambio de categoría se ve como un **barrido de luz**: la línea cruza el panel y el recorte de la tarjeta anterior la sigue exactamente (a 120ms la línea va en 153px y el recorte en 11.8%; a 360ms, 1277px y 98.7%). La dirección se invierte al retroceder.
 - [x] Durante la transición no se superponen los textos de dos categorías.
 - [x] Detrás del ícono hay exactamente **2** formas translúcidas.
 - [x] Los subservicios se muestran como **chips** (píldora con punto magenta) que fluyen en varias filas, y entran en stagger.
@@ -197,7 +198,8 @@ Los 3 errores de consola en `/soluciones` son de Cloudflare Turnstile contra `lo
 - **Sí:** subservicios como **chips** y CTA **tipo link con flecha** (referencia), en vez del checklist con checks en dos columnas y el botón relleno de la primera versión.
 - **Sí:** panel como **stack de tarjetas** (dos capas asomando a la derecha) y mitad visual **a sangre**, en vez de una card inset con padding. Las capas se recortan a partir de la mitad del panel para no meterse bajo la columna de texto, y se ocultan bajo `sm` (no hay ancho para escalonarlas).
 - **Sí:** íconos **Lucide (outline)** en vez de Font Awesome sólido; el CLAUDE.md fija `react-icons/fa6` como set del sitio, pero la referencia de esta sección dibuja los íconos en trazo. Se mantiene `react-icons` como librería.
-- **Sí:** transición de **baraja** (carta saliente montada encima, opaca, hasta terminar) en vez del crossfade direccional de la primera versión: con crossfade se leían los dos textos a la vez. Con `prefers-reduced-motion` la carta saliente no se monta y el cambio es instantáneo.
+- **Sí:** transición de **barrido de luz** (scan). Se probaron antes un crossfade direccional (se leían los dos textos a la vez) y un reparto de baraja (descartado por el cliente: buscaba algo que transmitiera tecnología). El barrido reusa el lenguaje de luz que ya tiene el sitio (god-rays, plexus, waveform) y es CSS puro: `clip-path` sobre la tarjeta saliente + una línea con glow desplazada por `transform`. Descartados en la propuesta: glitch de bandas (se lee como error de render), slices con flip 3D (más mecánico que red) y disolución en píxeles (~120 nodos extra por cambio).
+- **Sí:** con `prefers-reduced-motion` no se montan ni la línea ni la tarjeta saliente (`display: none`) y el cambio es instantáneo.
 - **Sí:** alto mínimo del panel + contenido centrado verticalmente. Sin eso el alto saltaba entre categorías (8 vs 13 subservicios) al navegar con las flechas.
 - **Sí:** `tabLabel` opcional para el nombre corto del chip, con fallback al título. Evita que el agente acorte por su cuenta los títulos del cliente.
 - **Sí:** `tabIcon` como **set cerrado de opciones** mapeado a `react-icons/fa6` (patrón de Rubros, SPEC 90), en vez de reusar `items[].icon` (hoy las 4 categorías apuntan al mismo `onda-magenta.svg`, se verían idénticas) y en vez de subir imágenes (el cliente tendría que producir 4 assets).
