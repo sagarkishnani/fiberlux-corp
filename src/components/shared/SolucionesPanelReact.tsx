@@ -5,25 +5,12 @@ import type {
   PointerEvent as ReactPointerEvent,
 } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
-import {
-  LuZap,
-  LuShield,
-  LuCloud,
-  LuSettings,
-  LuUsersRound,
-  LuNetwork,
-  LuServer,
-  LuGlobe,
-  LuHeadset,
-  LuDatabase,
-  LuWifi,
-  LuArrowRight,
-} from "react-icons/lu";
-import type { IconType } from "react-icons";
+import { LuArrowRight } from "react-icons/lu";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import SliderSideArrows from "./SliderSideArrows";
+import { iconFor } from "./solucionesIcons";
 
 /**
  * Panel de soluciones — SPEC 103.
@@ -51,22 +38,6 @@ function withBase(path: string): string {
   return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/** Set cerrado de íconos de categoría (`tabIcon` en Tina). Trazo (outline),
-    como la referencia: se usa Lucide en vez de Font Awesome sólido. */
-const ICONS: Record<string, IconType> = {
-  rayo: LuZap,
-  escudo: LuShield,
-  nube: LuCloud,
-  engranaje: LuSettings,
-  personas: LuUsersRound,
-  red: LuNetwork,
-  servidor: LuServer,
-  globo: LuGlobe,
-  soporte: LuHeadset,
-  datos: LuDatabase,
-  wifi: LuWifi,
-};
-const iconFor = (key?: string | null): IconType => ICONS[key || ""] || LuZap;
 
 /** Palancas de animación del bloque (SPEC 103). */
 const PARAMS = {
