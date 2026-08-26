@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { LuArrowRight } from "react-icons/lu";
@@ -74,6 +74,7 @@ export default function SolucionesStackReact({
   /* Sin WebGL2 el fondo cae a un glow CSS: la sección se ve igual de oscura y
      morada, sólo que quieta. */
   const [sinWebgl, setSinWebgl] = useState(false);
+  const alFallarWebgl = useCallback(() => setSinWebgl(true), []);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
   /* Tira de categorías en mobile: hay que arrastrar el chip activo a la vista,
      y con `scrollIntoView` se movería también la página. */
@@ -243,44 +244,52 @@ export default function SolucionesStackReact({
   return (
     <section
       id="soluciones-stack"
-      className="relative overflow-hidden bg-greyscale-darkest scroll-mt-24"
+      className="relative bg-greyscale-darkest scroll-mt-24"
     >
-      {/* ── Fondo ── */}
+      {/* ── Fondo ──
+          La capa se queda pegada al viewport mientras la sección pasa, igual
+          que en la referencia: así el shader dibuja siempre sobre un lienzo del
+          tamaño de la pantalla (si se estirara a las cuatro cards, el patrón
+          saldría deformado y costaría cuatro veces más píxeles).
+          Ojo: nada de `overflow-hidden` en la sección — rompería tanto este
+          `sticky` como el del rail. */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-        {sinWebgl ? (
+        <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
+          {sinWebgl ? (
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(120% 90% at 8% 88%, rgba(150,35,122,0.42) 0%, rgba(101,15,80,0.16) 38%, transparent 68%)",
+              }}
+            />
+          ) : (
+            <AuroraRibbons onUnsupported={alFallarWebgl} />
+          )}
+          {/* Velo de legibilidad: el texto va sobre el fondo, no al revés. */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(120% 90% at 8% 88%, rgba(150,35,122,0.42) 0%, rgba(101,15,80,0.16) 38%, transparent 68%)",
+                "linear-gradient(180deg, rgba(10,10,10,0.86) 0%, rgba(10,10,10,0.55) 30%, rgba(10,10,10,0.55) 70%, rgba(10,10,10,0.88) 100%)",
             }}
           />
-        ) : (
-          <AuroraRibbons onUnsupported={() => setSinWebgl(true)} />
-        )}
-        {/* Velo de legibilidad: el texto va sobre el fondo, no al revés. */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.62) 22%, rgba(10,10,10,0.62) 78%, rgba(10,10,10,0.94) 100%)",
-          }}
-        />
-        {/* Grano. */}
-        <div
-          className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
-          style={{ backgroundImage: GRANO, backgroundSize: "160px 160px" }}
-        />
+          {/* Grano. */}
+          <div
+            className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
+            style={{ backgroundImage: GRANO, backgroundSize: "160px 160px" }}
+          />
+        </div>
       </div>
 
-      <div className="container-xl relative z-10 py-20 md:py-28 lg:py-32">
+      <div className="site-container relative z-10 py-20 md:py-28 lg:py-32">
         {/* Encabezado. */}
         <header data-reveal="up" data-reveal-stagger="0.1">
-          <p className="font-mono text-[12px] uppercase tracking-[0.35em] text-white/45">
+          <p className="font-mono text-xs uppercase tracking-[0.28em] text-white/45 md:text-sm">
             {t("sol.eyebrow", locale)}
           </p>
           <h2
-            className="mt-5 heading-xl text-white"
+            className="mt-4 text-[30px] font-medium leading-[1.12] text-white md:text-[44px]"
             data-tina-field={tinaField(services as any, "title")}
           >
             {sectionTitle}
@@ -289,10 +298,10 @@ export default function SolucionesStackReact({
 
         {/* Tira de categorías (mobile/tablet): pegada bajo el header, marca la
             card que está en pantalla. */}
-        <div className="sticky top-16 z-30 -mx-4 mt-8 bg-greyscale-darkest/85 py-3 backdrop-blur-md sm:-mx-6 md:-mx-10 lg:hidden">
+        <div className="sticky top-16 z-30 -mx-6 mt-8 bg-greyscale-darkest/85 py-3 backdrop-blur-md md:-mx-10 lg:hidden">
           <div
             ref={stripRef}
-            className="flex gap-2 overflow-x-auto px-4 sm:px-6 md:px-10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-2 overflow-x-auto px-6 md:px-10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             style={{
               maskImage:
                 "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%)",
@@ -334,7 +343,7 @@ export default function SolucionesStackReact({
         <div className="mt-8 lg:mt-16 lg:grid lg:grid-cols-[minmax(0,266px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
           {/* Rail de categorías (desktop). */}
           <nav className="hidden lg:block" aria-label={t("sol.rail.aria", locale)}>
-            <ul className="sticky top-28">
+            <ul className="sticky top-32">
               {items.map((it, i) => {
                 const Icon = iconFor(it?.tabIcon);
                 const on = i === activeIndex;

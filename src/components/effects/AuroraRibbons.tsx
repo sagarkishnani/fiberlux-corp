@@ -303,6 +303,14 @@ export default function AuroraRibbons({ className = "", onUnsupported }: Props) 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const failedRef = useRef(false);
 
+  /* El callback se guarda en una ref y el efecto NO depende de él: si dependiera,
+     un padre que pase una lambda inline lo re-ejecutaría en cada render, y cada
+     pasada crea un contexto WebGL nuevo. Chrome tumba los contextos viejos al
+     llegar a su tope y `getContext` empieza a devolver null: el fondo se caía
+     solo al fallback. */
+  const unsupportedRef = useRef(onUnsupported);
+  unsupportedRef.current = onUnsupported;
+
   useEffect(() => {
     const host = hostRef.current;
     const canvas = canvasRef.current;
@@ -312,7 +320,7 @@ export default function AuroraRibbons({ className = "", onUnsupported }: Props) 
       if (failedRef.current) return;
       failedRef.current = true;
       canvas.style.display = "none";
-      onUnsupported?.();
+      unsupportedRef.current?.();
     };
 
     const gl = canvas.getContext("webgl2", {
@@ -447,7 +455,7 @@ export default function AuroraRibbons({ className = "", onUnsupported }: Props) 
       gl.deleteVertexArray(vao);
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [onUnsupported]);
+  }, []);
 
   return (
     <div ref={hostRef} className={`absolute inset-0 ${className}`} aria-hidden="true">
