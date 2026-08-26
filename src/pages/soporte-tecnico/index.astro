@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
 import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
-import SolucionesPanel from "../../components/shared/SolucionesPanel.astro";
+import SolucionesStack from "../../components/shared/SolucionesStack.astro";
 import EmpresasRed from "../../components/home/EmpresasRed.astro";
 ---
 
@@ -15,7 +15,7 @@ import EmpresasRed from "../../components/home/EmpresasRed.astro";
     <div data-reveal="up">
       <CanalesSoporte />
     </div>
-    <SolucionesPanel />
+    <SolucionesStack />
     {/* Fondo negro detrás del panel claro de cifras + testimonios: sus esquinas
         superiores redondeadas dejan ver este fondo (aquí el <main> no es oscuro
         como en home). */}

@@ -5,7 +5,7 @@ import BlogPreview from "../components/blog/BlogPreview.astro";
 // StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
 // por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
 // import StickyCards from "../components/shared/StickyCards.astro";
-import SolucionesPanel from "../components/shared/SolucionesPanel.astro";
+import SolucionesStack from "../components/shared/SolucionesStack.astro";
 import EmpresasRed from "../components/home/EmpresasRed.astro";
 import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
@@ -71,8 +71,9 @@ const prefetchScenes = [
     </div>
     <HtmlInjection location="home-after-hero" />
     <div class="-mt-16 relative z-10">
-      {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) */}
-      <SolucionesPanel />
+      {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) →
+          SolucionesStack (SPEC 108) */}
+      <SolucionesStack />
     </div>
     {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos y
         luego el panel claro. Cifras y testimonios van en un solo bloque

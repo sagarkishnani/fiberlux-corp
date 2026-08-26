@@ -4,7 +4,7 @@ import HeroServicios from "../../components/servicios/HeroServicios.astro";
 // StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
 // por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
 // import StickyCards from "../../components/shared/StickyCards.astro";
-import SolucionesPanel from "../../components/shared/SolucionesPanel.astro";
+import SolucionesStack from "../../components/shared/SolucionesStack.astro";
 import HomePartners from "../../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
 import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
@@ -16,8 +16,9 @@ import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
 >
   <main>
     <HeroServicios />
-    {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) */}
-    <SolucionesPanel />
+    {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) →
+          SolucionesStack (SPEC 108) */}
+    <SolucionesStack />
     {/* Partners e ISO (certificaciones) reutilizados del home, debajo de las cards */}
     <div data-reveal="up">
       <HomePartners />
