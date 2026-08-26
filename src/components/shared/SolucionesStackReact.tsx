@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { LuArrowRight } from "react-icons/lu";
 import type { HomeQuery } from "../../../tina/__generated__/types";
@@ -37,6 +38,13 @@ function withBase(path: string): string {
 /** Ancla de cada card: la usa el rail para llevar hasta ella. */
 const cardId = (i: number) => `soluciones-cat-${i}`;
 
+/** Chips de subservicio por card. La referencia muestra cuatro; el listado
+    completo vive en la página de la categoría, detrás de "Conoce más". */
+const MAX_CHIPS = 4;
+
+const CHIP_CLASS =
+  "inline-flex items-center rounded-lg border border-white/[0.07] bg-[#151315] px-4 py-2.5 text-[14px] leading-[1.3] text-white/85 transition-colors";
+
 export default function SolucionesStackReact({
   query,
   variables,
@@ -53,6 +61,70 @@ export default function SolucionesStackReact({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+
+  /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89/103) ──
+     Solo en punteros finos: en táctil no hay hover que lo dispare y quedaría
+     colgado tras un tap. */
+  const finePointer = useRef(false);
+  const reduceMotion = useRef(false);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const tipTarget = useRef({ x: 0, y: 0 });
+  const tipPos = useRef({ x: 0, y: 0 });
+  const tipRaf = useRef<number | null>(null);
+  const tipDelay = useRef<number | null>(null);
+  const [tooltipOn, setTooltipOn] = useState(false);
+
+  useEffect(() => {
+    finePointer.current = window.matchMedia?.("(pointer: fine)").matches ?? false;
+    reduceMotion.current =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    return () => {
+      if (tipRaf.current != null) cancelAnimationFrame(tipRaf.current);
+      if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    };
+  }, []);
+
+  const placeTip = () => {
+    const el = tooltipRef.current;
+    if (el) el.style.transform = `translate3d(${tipTarget.current.x}px, ${tipTarget.current.y}px, 0)`;
+  };
+
+  const runTipLoop = () => {
+    const k = 0.06; // menor = más lag
+    tipPos.current.x += (tipTarget.current.x - tipPos.current.x) * k;
+    tipPos.current.y += (tipTarget.current.y - tipPos.current.y) * k;
+    const el = tooltipRef.current;
+    if (el) el.style.transform = `translate3d(${tipPos.current.x}px, ${tipPos.current.y}px, 0)`;
+    tipRaf.current = requestAnimationFrame(runTipLoop);
+  };
+
+  const handleTipEnter = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+    tipPos.current = { ...tipTarget.current };
+    if (tipDelay.current != null) clearTimeout(tipDelay.current);
+    tipDelay.current = window.setTimeout(() => {
+      setTooltipOn(true);
+      if (reduceMotion.current) placeTip();
+      else if (tipRaf.current == null) tipRaf.current = requestAnimationFrame(runTipLoop);
+    }, 140);
+  };
+  const handleTipMove = (e: ReactMouseEvent) => {
+    if (!finePointer.current) return;
+    tipTarget.current = { x: e.clientX, y: e.clientY };
+    if (reduceMotion.current && tooltipOn) placeTip();
+  };
+  const handleTipLeave = () => {
+    if (tipDelay.current != null) {
+      clearTimeout(tipDelay.current);
+      tipDelay.current = null;
+    }
+    setTooltipOn(false);
+    if (tipRaf.current != null) {
+      cancelAnimationFrame(tipRaf.current);
+      tipRaf.current = null;
+    }
+  };
 
   /* ── Categoría activa ──
      La card que ocupa la banda central del viewport manda: con el margen
@@ -179,6 +251,48 @@ export default function SolucionesStackReact({
                     >
                       {tField(it as any, "description", locale)}
                     </p>
+
+                    {/* Subservicios: los primeros cuatro. */}
+                    <ul className="mt-2 flex flex-wrap gap-2.5">
+                      {(it?.bullets || [])
+                        .filter(Boolean)
+                        .slice(0, MAX_CHIPS)
+                        .map((b: any, j: number) => {
+                          const label = tField(b, "label", locale);
+                          if (!label) return null;
+                          return (
+                            <li key={j}>
+                              {b?.url ? (
+                                <a
+                                  href={withBase(b.url)}
+                                  className={`${CHIP_CLASS} hover:border-brand-purple/60 hover:bg-[#1c1220]`}
+                                  onMouseEnter={handleTipEnter}
+                                  onMouseMove={handleTipMove}
+                                  onMouseLeave={handleTipLeave}
+                                >
+                                  {label}
+                                </a>
+                              ) : (
+                                <span className={`${CHIP_CLASS} cursor-default`}>{label}</span>
+                              )}
+                            </li>
+                          );
+                        })}
+                    </ul>
+
+                    {/* CTA a la página de la categoría. */}
+                    {it?.url ? (
+                      <a
+                        href={withBase(it.url)}
+                        className="group mt-3 inline-flex items-center gap-3 text-[15px] font-semibold text-brand-purple-light transition-colors hover:text-white"
+                      >
+                        {t("sol.cta", locale)}
+                        <LuArrowRight
+                          className="h-[18px] w-[18px] transition-transform duration-300 group-hover:translate-x-1.5"
+                          strokeWidth={2}
+                        />
+                      </a>
+                    ) : null}
                   </div>
 
                   {/* Escena (SPEC 108 · step 9). */}
@@ -188,6 +302,18 @@ export default function SolucionesStackReact({
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Tooltip "Ver más": sigue al cursor con retraso. */}
+      <div
+        ref={tooltipRef}
+        aria-hidden="true"
+        className={`pointer-events-none fixed left-0 top-0 z-[70] hidden select-none rounded-full border border-white/10 bg-[#1c1220]/90 px-4 py-1.5 text-[12px] text-white/90 backdrop-blur-sm transition-opacity duration-200 lg:block ${
+          tooltipOn ? "opacity-100" : "opacity-0"
+        }`}
+        style={{ marginLeft: 16, marginTop: 14 }}
+      >
+        {t("sol.vermas", locale)}
       </div>
     </section>
   );
