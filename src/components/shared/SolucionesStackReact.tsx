@@ -9,6 +9,7 @@ import { t } from "../../i18n/ui";
 import { iconFor } from "./solucionesIcons";
 import { escenaPara } from "./soluciones-escenas";
 import { CSS_SOLUCIONES } from "./soluciones-escenas/base";
+import AuroraRibbons from "../effects/AuroraRibbons";
 
 /**
  * Bloque de soluciones — SPEC 108.
@@ -44,6 +45,11 @@ const cardId = (i: number) => `soluciones-cat-${i}`;
     completo vive en la página de la categoría, detrás de "Conoce más". */
 const MAX_CHIPS = 4;
 
+/** Grano encima del fondo: rompe el banding del degradado y da la textura de
+    la referencia. Es un ruido SVG tileado, no una imagen que haya que cargar. */
+const GRANO =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E\")";
+
 const CHIP_CLASS =
   "inline-flex items-center rounded-lg border border-white/[0.07] bg-[#151315] px-4 py-2.5 text-[14px] leading-[1.3] text-white/85 transition-colors";
 
@@ -65,6 +71,9 @@ export default function SolucionesStackReact({
   /* Qué escenas están en pantalla: las de fuera quedan pausadas para no gastar
      CPU en cuatro animaciones que nadie ve. */
   const [enPantalla, setEnPantalla] = useState<boolean[]>([]);
+  /* Sin WebGL2 el fondo cae a un glow CSS: la sección se ve igual de oscura y
+     morada, sólo que quieta. */
+  const [sinWebgl, setSinWebgl] = useState(false);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
   /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89/103) ──
@@ -201,6 +210,34 @@ export default function SolucionesStackReact({
       id="soluciones-stack"
       className="relative overflow-hidden bg-greyscale-darkest scroll-mt-24"
     >
+      {/* ── Fondo ── */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+        {sinWebgl ? (
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(120% 90% at 8% 88%, rgba(150,35,122,0.42) 0%, rgba(101,15,80,0.16) 38%, transparent 68%)",
+            }}
+          />
+        ) : (
+          <AuroraRibbons onUnsupported={() => setSinWebgl(true)} />
+        )}
+        {/* Velo de legibilidad: el texto va sobre el fondo, no al revés. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.62) 22%, rgba(10,10,10,0.62) 78%, rgba(10,10,10,0.94) 100%)",
+          }}
+        />
+        {/* Grano. */}
+        <div
+          className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
+          style={{ backgroundImage: GRANO, backgroundSize: "160px 160px" }}
+        />
+      </div>
+
       <div className="container-xl relative z-10 py-20 md:py-28 lg:py-32">
         {/* Encabezado. */}
         <header data-reveal="up" data-reveal-stagger="0.1">
