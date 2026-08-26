@@ -1,6 +1,6 @@
 # SPEC 108 — Soluciones: cards apiladas con rail sticky y fondo aurora
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 103 (`SolucionesPanel` actual y campos `tabIcon`/`tabLabel` en `home.services.items[]`), SPEC 89 (modelo `bullets[] = {label, label_en, url}` y tooltip "Ver más"), SPEC 97/98 (patrón de fondo WebGL autocontenido: `CinematicBackground` / `CinematicRays`, pausa fuera de viewport y fallback), SPEC 105/107 (sistema de ilustraciones `Escena`/`Lienzo` con unidades `--u` en `servicios/beneficios/base.tsx`), SPEC 88 (radio de 8 px en botones/chips), SPEC 80 (i18n `_en` + `tField` + `t()`), SPEC 71/69 (`data-reveal`)
 > **Fecha:** 2026-08-26
 > **Objetivo:** Reemplazar el panel de soluciones por un bloque de cuatro cards apiladas con rail de categorías sticky, fondo aurora WebGL morado replicado de `agentflow.framer.ai` y un visual animado propio por categoría, en Home, `/soluciones` y `/soporte-tecnico`.
