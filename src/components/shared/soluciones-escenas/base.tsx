@@ -118,9 +118,9 @@ export const CSS_SOLUCIONES = `
 
 /* ── Bitácora (ciberseguridad) ── */
 /* El realce recorre las filas: cada una anima el mismo ciclo con su propio
-   `--ret`, así que la ventana encendida (≈1/6 del ciclo) baja fila por fila.
+   --ret, así que la ventana encendida (≈1/6 del ciclo) baja fila por fila.
    Se animan las propiedades reales —fondo, opacidad, glow del badge— y no una
-   custom property, que sin `@property` no es animable. */
+   custom property, que sin @property no es animable. */
 .fbx-sol-anim-filaBg {
   animation: fbx-sol-filaBg var(--ciclo, 8.4s) linear var(--ret, 0s) infinite;
 }
