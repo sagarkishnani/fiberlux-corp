@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Despliegue del sitio web en servidor propio — Fiberlux</title>
+<style>
+@page{ size:A4; }
+
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+body{
+  margin:0;
+  font-family:"Charter","Georgia",serif;
+  font-size:10.6pt; line-height:1.5; color:#191919;
+  orphans:3; widows:3;
+}
+h1,h2,h3,h4,th,.sans{ font-family:"Helvetica Neue","Helvetica",Arial,sans-serif; }
+code,pre,kbd{ font-family:"Menlo","Consolas",monospace; }
+
+/* ── portada / bloque de título ─────────────────────────── */
+.docmark{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:7.6pt; letter-spacing:.16em;
+  text-transform:uppercase; color:#7a7a7a; margin:0 0 14pt;
+}
+h1{
+  font-size:19pt; font-weight:600; line-height:1.18; letter-spacing:-.01em;
+  margin:0 0 6pt; color:#111;
+}
+.subtitle{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:11pt; font-weight:400;
+  color:#4a4a4a; margin:0 0 16pt;
+}
+.rule{ border:0; border-top:2pt solid #96237A; margin:0 0 18pt; }
+
+table.control{ width:100%; border-collapse:collapse; margin:0 0 24pt; font-size:9.4pt; }
+table.control td{
+  padding:5pt 0; border-bottom:.5pt solid #dcdcdc; vertical-align:top; line-height:1.4;
+}
+table.control td:first-child{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.2pt; letter-spacing:.06em;
+  text-transform:uppercase; color:#6d6d6d; width:34%; padding-right:12pt; white-space:nowrap;
+}
+
+/* ── índice ─────────────────────────────────────────────── */
+.toc{ margin:0 0 6pt; break-after:page; }
+.toc h2{ margin-top:0; }
+.toc ol{ list-style:none; margin:0; padding:0; font-size:10pt; }
+.toc li{ padding:3.5pt 0; border-bottom:.5pt dotted #d5d5d5; display:flex; gap:10pt; }
+.toc li span.n{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:9pt; color:#8a8a8a; width:26pt; flex:none; }
+
+/* ── jerarquía ──────────────────────────────────────────── */
+h2{
+  font-size:12.4pt; font-weight:600; color:#111; margin:26pt 0 9pt;
+  padding-top:8pt; border-top:.75pt solid #c9c9c9;
+  break-after:avoid; break-inside:avoid;
+}
+h2 .n{ color:#96237A; margin-right:9pt; font-weight:600; }
+h3{
+  font-size:10.6pt; font-weight:600; color:#1a1a1a; margin:16pt 0 6pt;
+  break-after:avoid; break-inside:avoid;
+}
+h3 .n{ color:#7a7a7a; margin-right:8pt; font-weight:500; }
+p{ margin:0 0 9pt; }
+p.lead{ font-size:11pt; color:#333; }
+strong{ font-weight:600; }
+em{ font-style:italic; }
+
+ul,ol{ margin:0 0 10pt; padding-left:16pt; }
+li{ margin:0 0 4.5pt; }
+ul.tight li, ol.tight li{ margin:0 0 3pt; }
+
+/* ── tablas ─────────────────────────────────────────────── */
+table.data{
+  width:100%; border-collapse:collapse; margin:4pt 0 14pt;
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.9pt; line-height:1.4;
+  break-inside:avoid;
+}
+table.data.long{ break-inside:auto; }
+table.data thead{ display:table-header-group; }
+table.data th{
+  text-align:left; font-size:7.6pt; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:#4a4a4a; padding:5pt 8pt 5pt 0; border-top:.75pt solid #444; border-bottom:.75pt solid #444;
+}
+table.data td{
+  padding:6pt 8pt 6pt 0; border-bottom:.5pt solid #dcdcdc; vertical-align:top; color:#242424;
+}
+table.data td:last-child, table.data th:last-child{ padding-right:0; }
+table.data td:first-child{ color:#111; font-weight:500; }
+table.data.qa td:first-child{ width:33%; }
+table.data.num td:first-child{ width:5%; color:#7a7a7a; font-weight:400; }
+table.data tr{ break-inside:avoid; }
+.owner{ font-size:8.2pt; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; color:#5a5a5a; }
+.owner.ti{ color:#96237A; font-weight:600; }
+
+/* ── código ─────────────────────────────────────────────── */
+pre{
+  margin:6pt 0 12pt; padding:8pt 10pt; background:#f5f4f5; border-left:2pt solid #b9b9b9;
+  font-size:8.5pt; line-height:1.55; white-space:pre-wrap; word-wrap:break-word;
+  break-inside:avoid; color:#1c1c1c;
+}
+pre .c{ color:#7d7d7d; }
+code{ font-size:8.8pt; background:#f2f1f2; padding:0 2pt; border-radius:1.5pt; }
+pre code{ background:none; padding:0; font-size:inherit; }
+table.data code{ font-size:8.2pt; }
+
+/* ── avisos ─────────────────────────────────────────────── */
+.aviso{
+  margin:10pt 0 14pt; padding:9pt 12pt; border:.5pt solid #c9c9c9; border-left:2pt solid #7a7a7a;
+  background:#fafafa; font-size:9.6pt; break-inside:avoid;
+}
+.aviso p{ margin:0 0 6pt; }
+.aviso p:last-child{ margin:0; }
+.aviso .et{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:7.6pt; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:#5a5a5a; display:block; margin-bottom:5pt;
+}
+.aviso.critico{ border-left-color:#96237A; border-color:#c9a7bf; background:#fbf5f9; }
+.aviso.critico .et{ color:#96237A; }
+
+/* ── procedimiento ──────────────────────────────────────── */
+.paso{ break-inside:avoid; margin:0 0 16pt; }
+.paso h3{ margin-top:14pt; }
+
+/* ── diagrama ───────────────────────────────────────────── */
+figure{ margin:10pt 0 16pt; break-inside:avoid; }
+figure svg{ width:100%; height:auto; display:block; }
+figcaption{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.2pt; color:#6a6a6a;
+  margin-top:7pt; padding-top:6pt; border-top:.5pt solid #dcdcdc; line-height:1.45;
+}
+.dz{ fill:none; stroke:#96237A; stroke-width:1; stroke-dasharray:4 3; }
+.db{ fill:#f5f4f5; stroke:#8d8d8d; stroke-width:.9; }
+.dl{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:12px; fill:#161616; font-weight:500; }
+.ds{ font-family:"Menlo",monospace; font-size:9.5px; fill:#5f5f5f; }
+.dk{ font-family:"Helvetica Neue",Arial,sans-serif; font-size:9.5px; fill:#96237A; letter-spacing:.09em; }
+.dn{ font-family:"Menlo",monospace; font-size:9.5px; fill:#6a6a6a; }
+.dline{ stroke:#8d8d8d; stroke-width:1.1; fill:none; }
+.dlinea{ stroke:#96237A; stroke-width:1.1; fill:none; }
+
+/* ── verificación ───────────────────────────────────────── */
+ul.verif{ list-style:none; margin:4pt 0 10pt; padding:0; font-size:9.8pt; }
+ul.verif li{ position:relative; padding:4.5pt 0 4.5pt 20pt; border-bottom:.5pt solid #e4e4e4; margin:0; break-inside:avoid; }
+ul.verif li::before{
+  content:""; position:absolute; left:0; top:7pt; width:8pt; height:8pt;
+  border:.75pt solid #8a8a8a; background:#fff;
+}
+</style>
+</head>
+<body>
+
+<p class="docmark">Documento técnico · Uso interno</p>
+<h1>Despliegue del sitio web corporativo en servidor propio</h1>
+<p class="subtitle">Instalación y operación del proceso automatizado de publicación</p>
+<hr class="rule">
+
+<table class="control">
+  <tr><td>Dirigido a</td><td>Área de Tecnología de la Información — Fiberlux</td></tr>
+  <tr><td>Preparado por</td><td>Twin Studios — proveedor de desarrollo del sitio web</td></tr>
+  <tr><td>Versión</td><td>1.0</td></tr>
+  <tr><td>Fecha</td><td>26 de agosto de 2026</td></tr>
+  <tr><td>Sitio</td><td>Sitio web corporativo de Fiberlux</td></tr>
+  <tr><td>Rama de publicación</td><td><code>main</code></td></tr>
+  <tr><td>Destino</td><td>Raíz del docroot del servidor de Fiberlux</td></tr>
+  <tr><td>Alcance</td><td>Comprende únicamente lo que se ejecuta dentro del servidor de Fiberlux. La administración del repositorio y del gestor de contenido corresponde al proveedor y no requiere intervención del área de TI.</td></tr>
+</table>
+
+<div class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li><span class="n">1</span><span>Objeto</span></li>
+    <li><span class="n">2</span><span>Modelo de despliegue</span></li>
+    <li><span class="n">3</span><span>Consideraciones de seguridad</span></li>
+    <li><span class="n">4</span><span>Requisitos del servidor</span></li>
+    <li><span class="n">5</span><span>Coordinación con el proveedor</span></li>
+    <li><span class="n">6</span><span>Procedimiento de instalación</span></li>
+    <li><span class="n">7</span><span>Descripción del proceso automatizado</span></li>
+    <li><span class="n">8</span><span>Monitoreo</span></li>
+    <li><span class="n">9</span><span>Operación y escalamiento</span></li>
+    <li><span class="n">10</span><span>Puntos críticos</span></li>
+    <li><span class="n">11</span><span>Lista de verificación de puesta en marcha</span></li>
+  </ol>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">1</span>Objeto</h2>
+
+<p class="lead">
+  Este documento describe la instalación y operación del mecanismo por el cual el servidor de Fiberlux
+  publica el sitio web corporativo de forma autónoma, sin recibir conexiones desde el exterior.
+</p>
+
+<p>
+  El esquema vigente delega la publicación en un servicio externo (GitHub Actions), que compila el sitio
+  fuera de la red y accede al servidor por SFTP para depositarlo. Ese modelo obliga a exponer el servidor
+  o a habilitar un túnel VPN, y a mantener credenciales de acceso al servidor almacenadas en un servicio
+  de terceros.
+</p>
+
+<p>
+  El modelo que aquí se describe invierte la dirección de la comunicación: es el servidor de Fiberlux
+  el que consulta el repositorio, compila el sitio con sus propios recursos y lo publica en su docroot.
+  El proveedor no requiere acceso al servidor en ningún momento, ni durante la instalación ni en operación.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">2</span>Modelo de despliegue</h2>
+
+<p>
+  Un proceso programado consulta el repositorio cada minuto. Cuando detecta que la rama de publicación
+  contiene cambios nuevos —originados en el trabajo de desarrollo del proveedor o en las ediciones de
+  contenido que realiza el personal de Fiberlux desde el gestor— sincroniza la copia local, compila el
+  sitio y actualiza el docroot.
+</p>
+
+<figure>
+  <svg viewBox="0 0 800 372" role="img" aria-label="Diagrama del flujo de publicación">
+    <defs>
+      <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8d8d8d"/></marker>
+      <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#96237A"/></marker>
+    </defs>
+
+    <rect class="db" x="6" y="22" width="186" height="46" rx="2"/>
+    <text class="dl" x="22" y="43">Cambios de desarrollo</text>
+    <text class="ds" x="22" y="59">proveedor</text>
+
+    <rect class="db" x="6" y="88" width="186" height="46" rx="2"/>
+    <text class="dl" x="22" y="109">Cambios de contenido</text>
+    <text class="ds" x="22" y="125">personal de Fiberlux</text>
+
+    <path class="dline" d="M192,45 H232 V86"/>
+    <path class="dline" d="M192,111 H232 V86"/>
+    <path class="dline" d="M232,86 H292" marker-end="url(#a1)"/>
+
+    <rect class="db" x="302" y="56" width="176" height="58" rx="2"/>
+    <text class="dl" x="320" y="81">Repositorio</text>
+    <text class="ds" x="320" y="98">rama main</text>
+
+    <rect class="dz" x="302" y="192" width="492" height="166" rx="3"/>
+    <text class="dk" x="318" y="215">RED DE FIBERLUX</text>
+
+    <rect class="db" x="322" y="232" width="190" height="104" rx="2"/>
+    <text class="dl" x="340" y="257">Servidor</text>
+    <text class="ds" x="340" y="277">git fetch</text>
+    <text class="ds" x="340" y="294">npm ci · npm run build</text>
+    <text class="ds" x="340" y="311">rsync</text>
+
+    <path class="dline" d="M528,284 H584" marker-end="url(#a1)"/>
+
+    <rect class="db" x="596" y="258" width="182" height="50" rx="2"/>
+    <text class="dl" x="614" y="281">Docroot</text>
+    <text class="ds" x="614" y="298">sitio publicado</text>
+
+    <path class="dlinea" d="M462,232 V124" marker-end="url(#a2)"/>
+    <text class="dn" x="476" y="164">consulta cada minuto</text>
+    <text class="dn" x="476" y="181">TCP 443 saliente</text>
+  </svg>
+  <figcaption>
+    Flujo de publicación. La consulta parte siempre del servidor de Fiberlux; ninguna conexión cruza el
+    perímetro de la red hacia adentro, ni siquiera a través de una VPN.
+  </figcaption>
+</figure>
+
+<p>
+  La rama de publicación es <code>main</code> y el sitio se sirve desde la raíz del docroot. Ambos valores
+  se configuran en los pasos 6.5 y 6.7.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">3</span>Consideraciones de seguridad</h2>
+
+<table class="data qa long">
+  <thead><tr><th>Aspecto</th><th>Descripción</th></tr></thead>
+  <tbody>
+    <tr><td>Procesos que se ejecutan</td><td><code>git fetch</code>, <code>npm ci</code>, <code>npm run build</code> y <code>rsync</code>, invocados por una tarea programada cada minuto.</td></tr>
+    <tr><td>Usuario de ejecución</td><td>Usuario dedicado sin privilegios (<code>deploy</code>). No requiere <code>sudo</code> durante la operación.</td></tr>
+    <tr><td>Puertos entrantes</td><td>Ninguno. La totalidad del tráfico es saliente sobre TCP 443.</td></tr>
+    <tr><td>VPN o exposición del servidor</td><td>No se requieren. Su eliminación es el objeto de este cambio.</td></tr>
+    <tr><td>Credenciales de Fiberlux fuera de la red</td><td>Ninguna. Las credenciales SFTP actualmente almacenadas en el servicio externo se eliminan al concluir la migración.</td></tr>
+    <tr><td>Credenciales alojadas en el servidor</td><td>Una llave de solo lectura del repositorio y dos tokens de lectura del gestor de contenido. Todos revocables de forma inmediata.</td></tr>
+    <tr><td>Acceso externo al servidor</td><td>Ninguno. El servidor únicamente lee del repositorio.</td></tr>
+    <tr><td>Escritura en disco</td><td>Limitada a <code>/opt/fiberlux/</code> y al docroot del sitio.</td></tr>
+    <tr><td>Comportamiento ante fallo de compilación</td><td>No se publica nada. La sincronización con el docroot es la última operación y el proceso aborta antes de alcanzarla: el sitio en línea permanece intacto y el error queda registrado en el log.</td></tr>
+    <tr><td>Detención del proceso</td><td>Retirando la tarea programada del usuario <code>deploy</code>. Efecto inmediato, sin coordinación con terceros.</td></tr>
+    <tr><td>Ejecución de código de terceros</td><td>El proceso instala las dependencias del proyecto, como toda compilación de software de este tipo. El riesgo se acota mediante <code>npm ci</code>, que instala exactamente el listado de versiones fijado en el repositorio sin resolver versiones nuevas, y mediante la ejecución con un usuario sin privilegios.</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">4</span>Requisitos del servidor</h2>
+
+<h3><span class="n">4.1</span>Recursos</h3>
+
+<table class="data">
+  <thead><tr><th>Requisito</th><th>Detalle</th></tr></thead>
+  <tbody>
+    <tr><td>Sistema operativo</td><td>Linux — Ubuntu 22.04 LTS, Rocky Linux 9 o equivalente.</td></tr>
+    <tr><td>Node.js</td><td>Versión 20 LTS. La compilación no está verificada en otras versiones.</td></tr>
+    <tr><td>Paquetes</td><td><code>git</code>, <code>rsync</code> y <code>cron</code> (o temporizadores de systemd).</td></tr>
+    <tr><td>Almacenamiento</td><td>8 GB libres como mínimo. Distribución medida: dependencias 3 GB, repositorio con historial 0,7 GB, sitio compilado 140 MB, más el caché de paquetes.</td></tr>
+    <tr><td>Memoria</td><td>4 GB recomendados. La compilación constituye el pico de consumo. Con 2 GB se requiere espacio de intercambio y fijar <code>NODE_OPTIONS=--max-old-space-size=3072</code>.</td></tr>
+    <tr><td>Docroot</td><td>Permiso de escritura sobre el directorio que sirve el sitio.</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="n">4.2</span>Salidas de red requeridas</h3>
+
+<p>Las tres sobre TCP 443. No se requiere ninguna regla de entrada.</p>
+
+<table class="data">
+  <thead><tr><th>Destino</th><th>Finalidad</th></tr></thead>
+  <tbody>
+    <tr><td><code>github.com</code>, <code>codeload.github.com</code></td><td>Clonado del repositorio y consulta de la rama.</td></tr>
+    <tr><td><code>registry.npmjs.org</code></td><td>Instalación de las dependencias del proyecto.</td></tr>
+    <tr><td><code>*.tinajs.io</code>, <code>*.tina.io</code></td><td>Descarga del contenido publicado desde el gestor de contenido.</td></tr>
+  </tbody>
+</table>
+
+<h3><span class="n">4.3</span>Restricciones de egreso</h3>
+
+<div class="aviso">
+  <p><strong>Puerto 22 saliente bloqueado.</strong> Comunicarlo al proveedor. En lugar de una llave SSH se
+  emite un token de solo lectura y el repositorio se clona por HTTPS. GitHub admite además SSH sobre el
+  puerto 443 a través de <code>ssh.github.com</code>.</p>
+  <p><strong>Sin acceso directo a <code>registry.npmjs.org</code>.</strong> Es admisible un repositorio
+  interno intermedio (Verdaccio, Nexus o Artifactory) declarado en <code>.npmrc</code>. La compilación no
+  puede, en cambio, prescindir de un origen de paquetes.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">5</span>Coordinación con el proveedor</h2>
+
+<p>
+  La puesta en marcha requiere tres intercambios entre ambas partes. Concluidos estos, el ciclo de
+  publicación es autónomo y no exige coordinación adicional.
+</p>
+
+<table class="data num">
+  <thead><tr><th>N.º</th><th>Momento</th><th>Área de TI</th><th>Proveedor</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Paso 6.3</td><td>Remite la clave pública SSH generada en el servidor.</td><td>La registra como llave de solo lectura del repositorio y confirma su alta.</td></tr>
+    <tr><td>2</td><td>Previo al paso 6.5</td><td>Recibe las variables de compilación.</td><td>Las entrega por canal seguro: gestor de contraseñas corporativo o enlace de un solo uso.</td></tr>
+    <tr><td>3</td><td>Paso 6.8</td><td>Comunica que la primera publicación se completó correctamente.</td><td>Retira el despliegue por SFTP y elimina del servicio externo las credenciales del servidor.</td></tr>
+  </tbody>
+</table>
+
+<p>
+  Las variables del segundo intercambio son cinco: <code>TINA_CLIENT_ID</code>, <code>TINA_TOKEN</code>,
+  <code>TINA_BRANCH</code>, <code>PUBLIC_TURNSTILE_SITE_KEY</code> y <code>DEPLOY_BASE</code>.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">6</span>Procedimiento de instalación</h2>
+
+<p>Los pasos se ejecutan una sola vez y en el orden indicado.</p>
+
+<div class="paso">
+<h3><span class="n">6.1</span>Usuario y estructura de directorios</h3>
+<pre><code>sudo useradd -m -s /bin/bash deploy
+sudo mkdir -p /opt/fiberlux
+sudo chown deploy:deploy /opt/fiberlux
+sudo -iu deploy</code></pre>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.2</span>Instalación de Node 20</h3>
+<pre><code>curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs git rsync
+node -v    <span class="c"># debe imprimir v20.x</span></code></pre>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.3</span>Generación de la llave de acceso al repositorio</h3>
+<pre><code>ssh-keygen -t ed25519 -C "deploy-fiberlux-server" -f ~/.ssh/id_ed25519 -N ""
+cat ~/.ssh/id_ed25519.pub</code></pre>
+<p>
+  Se remite al proveedor exclusivamente la salida del comando <code>cat</code>, que corresponde a la clave
+  pública. La clave privada permanece en el servidor. Debe esperarse la confirmación de alta antes de
+  proceder al clonado.
+</p>
+<p>
+  La llave registrada es de solo lectura y habilita el acceso a ese repositorio y a ningún otro. El área
+  de TI no requiere cuenta en la plataforma de alojamiento del código.
+</p>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.4</span>Clonado del repositorio</h3>
+<pre><code>git clone -b main git@github.com:sagarkishnani/fiberlux-corp.git /opt/fiberlux/app</code></pre>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.5</span>Variables de compilación</h3>
+<p>Se almacenan fuera del repositorio, con lectura restringida al usuario <code>deploy</code>.</p>
+<pre><code>cat &gt; /opt/fiberlux/deploy.env &lt;&lt;'EOF'
+TINA_CLIENT_ID=&lt;entregado por el proveedor&gt;
+TINA_TOKEN=&lt;entregado por el proveedor&gt;
+TINA_BRANCH=main
+PUBLIC_TURNSTILE_SITE_KEY=&lt;entregado por el proveedor&gt;
+DEPLOY_BASE=
+EOF
+chmod 600 /opt/fiberlux/deploy.env</code></pre>
+<p>
+  <code>DEPLOY_BASE</code> se deja vacío: el sitio se publica en la raíz del docroot. Solo toma valor si el
+  sitio colgara de un subdirectorio, supuesto en el cual el proveedor indicará el valor correspondiente.
+</p>
+<p>
+  Estas variables intervienen únicamente en la compilación. Las credenciales del servicio de correo se
+  tratan en el paso siguiente.
+</p>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.6</span>Credenciales del servicio de correo</h3>
+<p>
+  Los formularios del sitio —contacto, reclamos y libro de reclamaciones— son procesados por un componente
+  PHP que requiere credenciales SMTP y las del panel de consulta de registros. Residen en el archivo
+  <code>fiberlux-config.php</code>, ubicado dentro del docroot y nunca en el repositorio.
+</p>
+<p>
+  Si el docroot es de nueva creación y aún no lo contiene, se genera a partir de la plantilla
+  <code>public/config.example.php</code> incluida en el repositorio, completada con las credenciales de
+  Fiberlux. El proceso de publicación está configurado para no sobrescribir este archivo en ninguna
+  circunstancia.
+</p>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.7</span>Instalación del script de publicación</h3>
+<p>
+  El script se distribuye versionado dentro del repositorio. Se copia fuera del clon, dado que cada
+  publicación reescribe el árbol de trabajo.
+</p>
+<pre><code>cp /opt/fiberlux/app/scripts/server-deploy.sh /opt/fiberlux/deploy.sh
+chmod +x /opt/fiberlux/deploy.sh
+sudo touch /var/log/fiberlux-deploy.log
+sudo chown deploy:deploy /var/log/fiberlux-deploy.log</code></pre>
+<p>Deben ajustarse las tres rutas de la cabecera de <code>/opt/fiberlux/deploy.sh</code>:</p>
+<pre><code>BRANCH="main"                    <span class="c"># el valor por defecto del archivo es "staging"</span>
+REPO_DIR="/opt/fiberlux/app"
+DOCROOT="&lt;ruta real del docroot del sitio&gt;"</code></pre>
+
+<div class="aviso critico">
+  <span class="et">Verificación obligatoria antes de continuar</span>
+  <p>
+    <strong>El parámetro <code>DOCROOT</code> es el más delicado de la instalación.</strong> La publicación
+    se realiza mediante <code>rsync --delete</code>: todo archivo presente en ese directorio que no forme
+    parte del sitio compilado <strong>será eliminado</strong>, con tres únicas excepciones
+    (<code>data/</code>, <code>uploads/</code> y <code>fiberlux-config.php</code>).
+  </p>
+  <p>
+    El valor debe apuntar a un directorio que contenga exclusivamente este sitio. Si en él reside todavía
+    otro contenido —por ejemplo una instalación de WordPress— la primera ejecución lo eliminaría.
+  </p>
+</div>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.8</span>Primera ejecución manual</h3>
+<p>
+  Se realiza antes de programar la tarea. El parámetro <code>FORCE=1</code> es imprescindible: recién
+  clonado, el repositorio local ya se encuentra en el último cambio, de modo que sin forzar la ejecución
+  el script concluiría sin publicar y el docroot quedaría vacío.
+</p>
+<pre><code>sudo -iu deploy env FORCE=1 /opt/fiberlux/deploy.sh
+tail -30 /var/log/fiberlux-deploy.log</code></pre>
+<p>
+  Si la ejecución concluye con <code>publicado &lt;sha&gt;</code> y el sitio se visualiza correctamente,
+  debe comunicarse al proveedor. Dicha comunicación habilita el retiro del despliegue por SFTP.
+</p>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.9</span>Programación de la tarea</h3>
+<pre><code>sudo -iu deploy crontab -e</code></pre>
+<pre><code>* * * * * /usr/bin/flock -n /tmp/fiberlux-deploy.lock /opt/fiberlux/deploy.sh</code></pre>
+<p>
+  El uso de <code>flock -n</code> es obligatorio. Sin él, dos compilaciones simultáneas escribirían el
+  docroot a la vez. Con él, las ejecuciones que se solapen con una publicación en curso se descartan.
+</p>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.10</span>Rotación del registro</h3>
+<pre><code>sudo tee /etc/logrotate.d/fiberlux-deploy &lt;&lt;'EOF'
+/var/log/fiberlux-deploy.log {
+  weekly
+  rotate 8
+  compress
+  missingok
+  notifempty
+  copytruncate
+}
+EOF</code></pre>
+</div>
+
+<div class="paso">
+<h3><span class="n">6.11</span>Alertas</h3>
+<p>Conforme a lo indicado en el apartado 8.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">7</span>Descripción del proceso automatizado</h2>
+
+<h3><span class="n">7.1</span>Secuencia de ejecución</h3>
+
+<p>
+  El script <code>/opt/fiberlux/deploy.sh</code> se ejecuta bajo <code>set -euo pipefail</code>: el fallo de
+  cualquier etapa interrumpe las siguientes.
+</p>
+
+<ol>
+  <li><strong>Comparación.</strong> Ejecuta <code>git fetch</code> y contrasta la copia local con la rama remota. Si coinciden y no se ha forzado la ejecución, concluye sin operar. Es el resultado de la práctica totalidad de las ejecuciones, cuyo coste es de milisegundos.</li>
+  <li><strong>Sincronización.</strong> Aplica <code>git reset --hard</code> sobre la rama. No se emplea <code>pull</code>: la compilación escribe sobre archivos versionados y la operación fallaría por árbol de trabajo modificado.</li>
+  <li><strong>Carga de variables</strong> desde <code>/opt/fiberlux/deploy.env</code>.</li>
+  <li><strong>Instalación de dependencias.</strong> Ejecuta <code>npm ci</code> únicamente si varió el listado de dependencias o no existe el directorio <code>node_modules</code>. De ello depende que el ciclo habitual se resuelva en uno o dos minutos.</li>
+  <li><strong>Compilación.</strong> <code>npm run build</code> genera el sitio estático completo.</li>
+  <li><strong>Publicación.</strong> <code>rsync -a --delete</code> del sitio compilado al docroot.</li>
+</ol>
+
+<h3><span class="n">7.2</span>Rutas preservadas</h3>
+
+<table class="data">
+  <thead><tr><th>Ruta</th><th>Motivo de la preservación</th></tr></thead>
+  <tbody>
+    <tr><td><code>data/</code></td><td>Registros de los formularios enviados y contador de tickets.</td></tr>
+    <tr><td><code>uploads/</code></td><td>Archivos adjuntos remitidos por los usuarios del sitio.</td></tr>
+    <tr><td><code>fiberlux-config.php</code></td><td>Credenciales SMTP y del panel de consulta de registros.</td></tr>
+  </tbody>
+</table>
+
+<p>
+  Los archivos <code>.htaccess</code> de <code>data/</code> y <code>uploads/</code> sí se sincronizan: forman
+  parte del sitio compilado y son los que impiden el acceso web a dichos directorios.
+</p>
+
+<p>
+  Dado que la sincronización con el docroot es la última operación de la secuencia, una compilación
+  fallida no llega a publicarse en ningún caso: el sitio anterior continúa siendo servido y el error queda
+  registrado.
+</p>
+
+<h3><span class="n">7.3</span>Variante: servidor de compilación distinto del servidor web</h3>
+
+<p>
+  Es una configuración admisible y preferible cuando el servidor web es una máquina reforzada en la que no
+  se desea instalar Node ni habilitar salida a internet. Se sustituye la etapa de publicación del script
+  por una sincronización sobre SSH dentro de la red, conservando las mismas exclusiones:
+</p>
+
+<pre><code>rsync -a --delete -e ssh \
+  --include='/data/.htaccess'    --exclude='/data/**' \
+  --include='/uploads/.htaccess' --exclude='/uploads/**' \
+  --exclude='/fiberlux-config.php' \
+  ./dist/ deploy@servidor-web:&lt;ruta del docroot&gt;/</code></pre>
+
+<p>
+  Requiere una clave SSH del usuario <code>deploy</code> autorizada en el servidor web. Este último recibe
+  únicamente archivos estáticos: no precisa Node, ni <code>git</code>, ni salida a internet.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">8</span>Monitoreo</h2>
+
+<p>
+  El modo de fallo de este esquema no es la caída del servicio, sino la interrupción silenciosa de las
+  publicaciones. El sitio permanecería en línea con la última versión publicada y el personal continuaría
+  editando contenido sin advertir que no se difunde. Dos verificaciones sobre el registro son suficientes.
+</p>
+
+<h3><span class="n">8.1</span>Continuidad de la tarea programada</h3>
+
+<p>
+  El script escribe una línea en cada ejecución, haya cambios o no. Si el registro no se ha modificado en
+  diez minutos, el proceso se ha detenido.
+</p>
+
+<pre><code><span class="c"># alerta si el registro lleva más de 10 minutos sin escribirse</span>
+[ -z "$(find /var/log/fiberlux-deploy.log -mmin -10)" ] && echo "ALERTA: despliegue Fiberlux detenido"</code></pre>
+
+<h3><span class="n">8.2</span>Fallos de compilación</h3>
+
+<p>
+  Una publicación correcta se abre con <code>nuevo commit &lt;sha&gt;</code> y se cierra con
+  <code>publicado &lt;sha&gt;</code>. La presencia de la primera línea sin la segunda indica una compilación
+  fallida.
+</p>
+
+<pre><code>tail -100 /var/log/fiberlux-deploy.log | grep -c 'nuevo commit'   <span class="c"># comparar contra…</span>
+tail -100 /var/log/fiberlux-deploy.log | grep -c 'publicado'      <span class="c"># …este valor</span></code></pre>
+
+<p>
+  Ambas verificaciones son integrables en la plataforma de supervisión que Fiberlux tenga en uso.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">9</span>Operación y escalamiento</h2>
+
+<table class="data long">
+  <thead><tr><th>Situación</th><th>Responsable</th><th>Acción</th></tr></thead>
+  <tbody>
+    <tr><td>El registro muestra <code>publicado &lt;sha&gt;</code> y el sitio se visualiza correctamente</td><td class="owner">—</td><td>Operación normal.</td></tr>
+    <tr><td>El registro no se actualiza</td><td class="owner ti">Área de TI</td><td>Verificar la tarea programada, el usuario <code>deploy</code> y el espacio disponible en disco.</td></tr>
+    <tr><td>Fallo de <code>git fetch</code></td><td class="owner ti">Área de TI</td><td>Verificar la salida por TCP 443 y la llave SSH. Si la llave ha sido revocada, escalar al proveedor.</td></tr>
+    <tr><td>Fallo de <code>npm ci</code></td><td class="owner ti">Área de TI</td><td>Verificar la salida hacia <code>registry.npmjs.org</code> o hacia el repositorio interno intermedio.</td></tr>
+    <tr><td>Fallo de <code>npm run build</code></td><td class="owner">Proveedor</td><td>Remitir las últimas cuarenta líneas del registro. La incidencia reside en el código y no en el servidor; el sitio en línea no resulta afectado.</td></tr>
+    <tr><td>El sitio no refleja un cambio de contenido</td><td class="owner">Proveedor</td><td>Comprobar previamente que el registro no presente errores.</td></tr>
+    <tr><td>Necesidad de revertir a una versión anterior</td><td class="owner">Proveedor</td><td>La reversión se practica sobre el repositorio y el servidor la aplica por sí mismo. No debe intervenirse el servidor para revertir.</td></tr>
+    <tr><td>Mantenimiento o migración del servidor</td><td class="owner ti">Área de TI</td><td>Al restablecerse, la primera ejecución republica el estado vigente. No requiere aviso previo.</td></tr>
+    <tr><td>Rotación de la llave o de los tokens</td><td class="owner">Ambas partes</td><td>El área de TI genera la nueva llave; el proveedor la registra y revoca la anterior.</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">10</span>Puntos críticos</h2>
+
+<p>
+  <strong>Configuración de <code>DOCROOT</code>.</strong> Conforme a la advertencia del paso 6.7, un valor
+  incorrecto elimina el contenido preexistente del directorio. Constituye el único riesgo de pérdida de
+  datos del esquema y se circunscribe a la primera ejecución.
+</p>
+
+<p>
+  <strong>Edición del script dentro del clon.</strong> La tarea programada debe invocar
+  <code>/opt/fiberlux/deploy.sh</code>, esto es, la copia situada fuera del árbol de trabajo. La operación
+  <code>git reset --hard</code> reescribe el archivo del clon durante la ejecución, y el intérprete de
+  órdenes, que lee el script por fragmentos, se interrumpe a mitad de proceso.
+</p>
+
+<p>
+  <strong>Duración de la primera instalación de dependencias.</strong> La descarga inicial ronda los 3 GB y
+  puede prolongarse varios minutos en una conexión corporativa. Las ejecuciones posteriores omiten esta
+  etapa salvo que varíe el listado de dependencias.
+</p>
+
+<p>
+  <strong>Rama por defecto del script.</strong> La cabecera del archivo versionado establece
+  <code>BRANCH="${DEPLOY_BRANCH:-staging}"</code>. Debe fijarse en <code>main</code> (paso 6.7) y coincidir
+  con <code>TINA_BRANCH=main</code> del archivo de variables (paso 6.5). Si ambos valores difieren, el sitio
+  deja de recibir los cambios de contenido sin que se produzca ningún error visible.
+</p>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<h2><span class="n">11</span>Lista de verificación de puesta en marcha</h2>
+
+<ul class="verif">
+  <li>Servidor aprovisionado con Linux, Node 20, <code>git</code>, <code>rsync</code> y <code>cron</code>.</li>
+  <li>8 GB de almacenamiento libre y 4 GB de memoria, o espacio de intercambio configurado.</li>
+  <li>Salida TCP 443 habilitada hacia el repositorio, el registro de paquetes y el gestor de contenido.</li>
+  <li>Usuario <code>deploy</code> creado y <code>/opt/fiberlux</code> bajo su propiedad.</li>
+  <li>Clave pública SSH remitida al proveedor y alta confirmada.</li>
+  <li>Repositorio clonado en <code>/opt/fiberlux/app</code> sobre la rama <code>main</code>.</li>
+  <li>Archivo <code>deploy.env</code> creado con las cinco variables y permisos <code>600</code>.</li>
+  <li>Archivo <code>fiberlux-config.php</code> presente en el docroot.</li>
+  <li>Script copiado a <code>/opt/fiberlux/deploy.sh</code>, con <code>BRANCH="main"</code> y valor de <code>DOCROOT</code> verificado.</li>
+  <li>Primera ejecución con <code>FORCE=1</code> completada y sitio visible.</li>
+  <li>Comunicación cursada al proveedor.</li>
+  <li>Tarea programada activa con <code>flock</code>.</li>
+  <li>Rotación de registro configurada.</li>
+  <li>Alertas integradas en la plataforma de supervisión.</li>
+</ul>
+
+</body>
+</html>
