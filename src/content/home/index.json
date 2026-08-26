@@ -82,7 +82,7 @@
     "subtitle_en": "We power your business with high-quality services over a 100% private fiber-optic network."
   },
   "services": {
-    "title": "Nuestras soluciones",
+    "title": "Soluciones para tu negocio",
     "items": [
       {
         "number": "01",
@@ -134,7 +134,9 @@
         "url": "/soluciones/conectividad-empresarial",
         "tabIcon": "rayo",
         "title_en": "Business Connectivity",
-        "description_en": "Real fiber-optic connectivity for forward-thinking companies."
+        "description_en": "Real fiber-optic connectivity for forward-thinking companies.",
+        "tabLabel": "Conectividad empresarial",
+        "tabLabel_en": "Business connectivity"
       },
       {
         "number": "02",
@@ -211,7 +213,9 @@
         "url": "/soluciones/ciberseguridad-gestionada",
         "tabIcon": "escudo",
         "title_en": "Managed Cybersecurity",
-        "description_en": "Protect your critical operation with cybersecurity."
+        "description_en": "Protect your critical operation with cybersecurity.",
+        "tabLabel": "Ciberseguridad gestionada",
+        "tabLabel_en": "Managed cybersecurity"
       },
       {
         "number": "03",
@@ -253,7 +257,9 @@
         "url": "/soluciones/data-center-cloud",
         "tabIcon": "nube",
         "title_en": "Data Center, Cloud & Business Continuity",
-        "description_en": "Infrastructure ready to grow and recover."
+        "description_en": "Infrastructure ready to grow and recover.",
+        "tabLabel": "Data Center & Cloud",
+        "tabLabel_en": "Data Center & Cloud"
       },
       {
         "number": "04",
@@ -300,10 +306,12 @@
         "url": "/soluciones/servicios-gestionados",
         "tabIcon": "personas",
         "title_en": "Managed Services",
-        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel."
+        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
+        "tabLabel": "Servicios gestionados",
+        "tabLabel_en": "Managed services"
       }
     ],
-    "title_en": "Our solutions"
+    "title_en": "Solutions for your business"
   },
   "testimonials": {
     "visible": true,
