@@ -38,8 +38,43 @@ function withBase(path: string): string {
   return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/** Ancla de cada card: la usa el rail para llevar hasta ella. */
-const cardId = (i: number) => `soluciones-cat-${i}`;
+/** Texto → slug: sin tildes, en minúsculas y con guiones. */
+function slugify(texto: string): string {
+  return texto
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Anclas de las cards, en el orden en que llegan las categorías.
+ *
+ * Salen del último tramo de la URL de la categoría (`/soluciones/data-center-cloud`
+ * → `data-center-cloud`) para que el hash que queda en la barra al usar el rail
+ * se lea, en vez de un `#soluciones-cat-1`. Se calculan a partir de los campos
+ * SIN traducir: así la misma card tiene la misma ancla en ES y en EN, y un
+ * enlace compartido funciona en los dos idiomas.
+ *
+ * Si dos categorías cayeran en el mismo slug —o ninguna tuviera URL ni título—
+ * se numeran, que una página no puede tener dos ids iguales.
+ */
+function anclas(items: any[]): string[] {
+  const vistos = new Set<string>();
+  return items.map((it, i) => {
+    const desdeUrl = (it?.url || "")
+      .split(/[?#]/)[0]
+      .replace(/\/+$/, "")
+      .split("/")
+      .pop();
+    let id =
+      slugify(desdeUrl || "") || slugify(it?.tabLabel || it?.title || "") || `solucion-${i + 1}`;
+    if (vistos.has(id)) id = `${id}-${i + 1}`;
+    vistos.add(id);
+    return id;
+  });
+}
 
 /** Chips de subservicio por card. La referencia muestra cuatro; el listado
     completo vive en la página de la categoría, detrás de "Conoce más". */
@@ -200,6 +235,7 @@ export default function SolucionesStackReact({
 
   if (N === 0) return null;
 
+  const ids = anclas(items as any[]);
   const sectionTitle = (tField(services as any, "title", locale) || "").trim();
 
   /** CTA "Conoce más" de una categoría. Se pinta en dos sitios distintos: en
@@ -288,7 +324,7 @@ export default function SolucionesStackReact({
                 return (
                   <li key={i}>
                     <a
-                      href={`#${cardId(i)}`}
+                      href={`#${ids[i]}`}
                       onClick={goTo(i)}
                       aria-current={on ? "true" : undefined}
                       className="group flex items-center gap-3 py-4 transition-opacity duration-300"
@@ -321,7 +357,7 @@ export default function SolucionesStackReact({
             {items.map((it, i) => (
               <article
                 key={i}
-                id={cardId(i)}
+                id={ids[i]}
                 ref={(el) => {
                   cardRefs.current[i] = el;
                 }}

@@ -127,7 +127,7 @@ Viven en `src/components/shared/soluciones-escenas/`. Reusan de `servicios/benef
 
 6. **Esqueleto del bloque.** `SolucionesStack.astro` (resuelve `home` + `locale`, calcado de `SolucionesPanel.astro`) y `SolucionesStackReact.tsx` con encabezado, rail y las 4 cards apiladas, **estático**: sin sticky, sin escenas animadas. Estado: layout correcto en desktop.
 
-7. **Rail sticky + categoría activa.** `sticky` bajo el header; `IntersectionObserver` con `rootMargin: "-45% 0px -45% 0px"` sobre cada card para derivar el índice activo; click en un ítem → scroll suave con `window.__lenis.scrollTo(target, { offset: -80 })` y fallback a `scrollIntoView`. Estado: el rail acompaña el scroll y marca la card en pantalla.
+7. **Rail sticky + categoría activa.** Las anclas de las cards salen del último tramo de la `url` de cada categoría (`#ciberseguridad-gestionada`), calculadas sobre los campos sin traducir para que ES y EN compartan ancla; el hash que el rail deja en la barra tiene que leerse. `sticky` bajo el header; `IntersectionObserver` con `rootMargin: "-45% 0px -45% 0px"` sobre cada card para derivar el índice activo; click en un ítem → scroll suave con `window.__lenis.scrollTo(target, { offset: -80 })` y fallback a `scrollIntoView`. Estado: el rail acompaña el scroll y marca la card en pantalla.
 
 8. **Chips, tooltip y CTA.** Primeros 4 bullets como chips (radio 8 px, SPEC 88), enlace al subservicio, tooltip "Ver más" con delay + lag portado de `SolucionesPanelReact` (solo `pointer: fine`), y CTA "Conoce más →" con la flecha desplazándose en hover. Estado: la card es navegable.
 
