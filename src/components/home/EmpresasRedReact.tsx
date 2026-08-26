@@ -3,7 +3,6 @@ import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery, HomeQueryVariables } from "../../../tina/__generated__/types";
 import { tField, localizeHref } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
-import { mediaUrl } from "../../utils/mediaUrl";
 import { parseStat, formatNumber, useCounter } from "../../hooks/useStatCounter";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderSideArrows from "../shared/SliderSideArrows";
@@ -15,8 +14,14 @@ import { buttonClass } from "../shared/Button";
  *
  * Antes eran dos secciones seguidas (`Stats` con panel morado + `TestimonialSlider`
  * con panel claro). El cliente pidió fundirlas en un solo panel claro: título,
- * cifras, franja de logos de clientes, slider de testimonios (Embla, 3 tarjetas
- * en desktop con la central destacada) y CTA a casos de éxito.
+ * slider de testimonios (Embla, 3 tarjetas blancas iguales en desktop), cifras
+ * y CTA a casos de éxito.
+ *
+ * La referencia del cliente reordenó el bloque (testimonios ARRIBA de las
+ * cifras), descartó la tarjeta central destacada y quitó la franja de logos de
+ * clientes: su copy ("+5,500 empresas") repetía la primera cifra. Los campos
+ * `stats.clientLogos` / `clientsHighlight` / `clientsNote` siguen en el CMS por
+ * si se quiere recuperar.
  *
  * `Stats` y `TestimonialSlider` siguen existiendo sin cambios: los usan Nosotros,
  * Soluciones, Fiberlux App y Soporte.
@@ -103,31 +108,6 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
   );
 }
 
-/**
- * Cuántas tarjetas caben a la vez. Sirve para destacar la del CENTRO del grupo
- * visible: Embla sólo conoce el índice del primer slide del snap, así que el
- * desplazamiento (0 / 0 / 1) lo calculamos nosotros según el breakpoint.
- */
-function useVisibleCardCount(): number {
-  const [count, setCount] = useState(1);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const lg = window.matchMedia("(min-width: 1024px)");
-    const md = window.matchMedia("(min-width: 768px)");
-    const update = () => setCount(lg.matches ? 3 : md.matches ? 2 : 1);
-    update();
-    lg.addEventListener?.("change", update);
-    md.addEventListener?.("change", update);
-    return () => {
-      lg.removeEventListener?.("change", update);
-      md.removeEventListener?.("change", update);
-    };
-  }, []);
-
-  return count;
-}
-
 export default function EmpresasRedReact({
   query,
   variables,
@@ -148,11 +128,6 @@ export default function EmpresasRedReact({
     tField(testimonials as any, "sectionTitle", locale) || "Empresas que confían en nuestra red";
   const statItems = ((stats?.items || []) as StatItem[]).filter(Boolean);
   const items: Testimonial[] = testimonials?.items || [];
-  const clientLogos = ((stats?.clientLogos || []) as { name?: string | null; image?: string | null }[])
-    .filter((l) => l && l.image);
-
-  const clientsHighlight = tField(stats as any, "clientsHighlight", locale);
-  const clientsNote = tField(stats as any, "clientsNote", locale);
 
   const ctaLabel = tField(testimonials as any, "ctaLabel", locale);
   const ctaUrl = localizeHref(testimonials?.ctaUrl || "", locale);
@@ -161,7 +136,6 @@ export default function EmpresasRedReact({
   const enough = items.length > 1;
   const t = UI[locale] ?? UI.es;
 
-  const visible = useVisibleCardCount();
   const slider = useSlider({
     // Sin loop: al dar la vuelta, Embla reposiciona los slides clonados y el
     // salto se notaba. Se prefirió el recorrido finito.
@@ -172,11 +146,6 @@ export default function EmpresasRedReact({
     effect,
   });
 
-  // Tarjeta destacada = la central del grupo visible (en mobile, la primera).
-  const highlight = Math.min(
-    slider.activeIndex + Math.floor((visible - 1) / 2),
-    Math.max(items.length - 1, 0)
-  );
   // En desktop entran las 3 tarjetas y no hay nada que desplazar: se ocultan
   // las flechas en vez de dejarlas muertas (vuelven al sumar testimonios).
   const scrollable = slider.canPrev || slider.canNext;
@@ -185,7 +154,10 @@ export default function EmpresasRedReact({
   if (testimonials?.visible !== true) return null;
 
   // El ancho incluye la separación: cada slide lleva `px-3` y no hay `gap`.
-  const slideCls = "shrink-0 px-3 basis-[88%] sm:basis-[74%] md:basis-1/2 lg:basis-1/3";
+  // Mobile/tablet chico: una tarjeta ENTERA por vista (`basis-full` = ancho del
+  // viewport de Embla, que ya lleva los 24px de `-mx-3`, así que la tarjeta cae
+  // justo sobre los márgenes del contenedor, sin asomar la siguiente).
+  const slideCls = "shrink-0 px-3 basis-full md:basis-1/2 lg:basis-1/3";
 
   return (
     <section className="rounded-t-[32px] bg-brand-purple-lightest md:rounded-t-[56px] py-20 md:py-28 md:pb-32">
@@ -199,83 +171,6 @@ export default function EmpresasRedReact({
         >
           {sectionTitle}
         </h2>
-
-        {/* ── Cifras (antes sección "¿Por qué Fiberlux?") ── */}
-        {statItems.length > 0 && (
-          <div className="mt-14 grid grid-cols-2 gap-y-14 md:mt-20 xl:grid-cols-4">
-            {statItems.map((item, i) => (
-              <div
-                key={i}
-                className={[
-                  "flex justify-center border-brand-purple/20",
-                  // Separadores finos entre columnas: 2 columnas en mobile,
-                  // 4 en xl → la primera de cada fila nunca lleva línea.
-                  i % 2 !== 0 ? "border-l" : "",
-                  i !== 0 && i % 2 === 0 ? "xl:border-l" : "",
-                ].join(" ")}
-              >
-                <StatFigure item={item} index={i} locale={locale} />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* ── Franja de clientes: logos + copy ── */}
-        {(clientLogos.length > 0 || clientsHighlight) && (
-          <div className="mt-14 flex flex-col items-center justify-center gap-6 md:mt-20 md:flex-row md:gap-8">
-            {clientLogos.length > 0 && (
-              // Pila tipo "avatar stack": círculos blancos superpuestos, el
-              // primero arriba del todo (z-index descendente).
-              <div className="flex items-center">
-                {clientLogos.map((logo, i) => (
-                  <span
-                    key={i}
-                    style={{ zIndex: clientLogos.length - i }}
-                    className={[
-                      "relative inline-flex h-12 w-12 items-center justify-center overflow-hidden",
-                      "rounded-full bg-white ring-2 ring-brand-purple-lightest md:h-14 md:w-14",
-                      i > 0 ? "-ml-3" : "",
-                    ].join(" ")}
-                    title={logo.name || undefined}
-                  >
-                    <img
-                      src={mediaUrl(logo.image)}
-                      alt={logo.name || ""}
-                      className="max-h-6 max-w-[32px] object-contain md:max-h-7 md:max-w-[38px]"
-                      loading="lazy"
-                      draggable={false}
-                      data-tina-field={
-                        stats?.clientLogos?.[i]
-                          ? tinaField(stats.clientLogos[i], "image")
-                          : undefined
-                      }
-                    />
-                  </span>
-                ))}
-              </div>
-            )}
-            {(clientsHighlight || clientsNote) && (
-              <p className="text-center text-body-sm md:text-left">
-                {clientsHighlight && (
-                  <span
-                    className="block font-semibold text-brand-purple"
-                    data-tina-field={stats ? tinaField(stats, "clientsHighlight") : undefined}
-                  >
-                    {clientsHighlight}
-                  </span>
-                )}
-                {clientsNote && (
-                  <span
-                    className="block text-brand-gray-dark"
-                    data-tina-field={stats ? tinaField(stats, "clientsNote") : undefined}
-                  >
-                    {clientsNote}
-                  </span>
-                )}
-              </p>
-            )}
-          </div>
-        )}
 
         {/* ── Slider de testimonios (Embla) ── */}
         <div className="relative mt-14 md:mt-20">
@@ -297,9 +192,7 @@ export default function EmpresasRedReact({
                 ? items.map((item, i) => (
                     <div
                       key={i}
-                      className={`${slideCls} transition-all duration-300 ${
-                        i === highlight ? "" : "lg:my-4"
-                      }`}
+                      className={slideCls}
                       data-tina-field={
                         testimonials?.items?.[i]
                           ? tinaField(testimonials.items[i], "quote")
@@ -317,7 +210,6 @@ export default function EmpresasRedReact({
                         role={tField(item as any, "role", locale) || ""}
                         company={item.company || ""}
                         logo={item.logo}
-                        active={i === highlight}
                       />
                     </div>
                   ))
@@ -345,6 +237,26 @@ export default function EmpresasRedReact({
             />
           )}
         </div>
+
+        {/* ── Cifras (antes sección "¿Por qué Fiberlux?") ── */}
+        {statItems.length > 0 && (
+          <div className="mt-16 grid grid-cols-2 gap-y-14 md:mt-20 xl:grid-cols-4">
+            {statItems.map((item, i) => (
+              <div
+                key={i}
+                className={[
+                  "flex justify-center border-brand-purple/20",
+                  // Separadores finos entre columnas: 2 columnas en mobile,
+                  // 4 en xl → la primera de cada fila nunca lleva línea.
+                  i % 2 !== 0 ? "border-l" : "",
+                  i !== 0 && i % 2 === 0 ? "xl:border-l" : "",
+                ].join(" ")}
+              >
+                <StatFigure item={item} index={i} locale={locale} />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* ── CTA a casos de éxito ── */}
         {!hideCta && ctaLabel && ctaUrl && (

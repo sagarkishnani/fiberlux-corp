@@ -13,7 +13,7 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
 ---
 
 <!-- effect="none": con 3 tarjetas a la vista, el fade por distancia al snap
-     apagaría las laterales. El destacado va por color, no por opacidad. -->
+     apagaría las laterales; la fila se lee como un bloque parejo. -->
 <EmpresasRedReact
   client:visible
   query={homeQuery.query}

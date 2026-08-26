@@ -9,7 +9,6 @@ import TimelineReact from "../../components/nosotros/TimelineReact.tsx";
 import EmpresasRedReact from "../../components/home/EmpresasRedReact";
 import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
 import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
-import BannerApp from "../../components/fiberlux-app/BannerApp.astro";
 import { getLocale } from "../../utils/i18n";
 import { isLocale } from "../../i18n/config";
 
@@ -49,7 +48,7 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
       locale={locale}
     />
   </div>
-  <div class="-mt-16 relative z-20" data-reveal="up">
+  <div class="-mt-16 relative z-20" data-reveal="up" data-overlap-rise>
     <EmpresasRedReact
       client:visible
       query={homeQuery.query}
@@ -67,9 +66,6 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
       data={aboutQuery.data}
       locale={locale}
     />
-  </div>
-  <div data-reveal="up">
-    <BannerApp />
   </div>
   <div data-reveal="up">
     <CertificacionesSlider />

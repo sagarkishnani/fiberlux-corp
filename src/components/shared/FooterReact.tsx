@@ -94,6 +94,8 @@ export default function FooterReact({ query, variables, data: initialData, local
     | undefined;
 
   const mode = bg?.mode || 'purple';
+  // `brand-purple-dark` — el morado oscuro de marca (#650F50).
+  const FLAT_PURPLE = '#650F50';
   const baseColor = bg?.baseColor || '#0A0A0A';
   const glowColor = bg?.glowColor || '#96237A';
 
@@ -125,8 +127,10 @@ export default function FooterReact({ query, variables, data: initialData, local
       ['--fx-glow' as any]: glowColor,
     };
   } else {
-    // 'purple' (clásico) — fallback por defecto
-    footerBgClass = 'bg-brand-purple';
+    // 'purple' (clásico) — fallback por defecto. Color PLANO, sin degradados:
+    // el cliente pidió el morado oscuro de marca (`brand-purple-dark`) como
+    // fondo sólido. Se respeta `baseColor` si el CMS trae otro.
+    footerBgStyle = { backgroundColor: bg?.baseColor || FLAT_PURPLE };
   }
 
   const renderColumn = (column: ColumnItem, key: number) => {
@@ -217,17 +221,20 @@ export default function FooterReact({ query, variables, data: initialData, local
           }
         `}</style>
       )}
-      {/* Banda superior negra (SPEC 99 obs8): el footer arranca en negro y funde
-          hacia su color, en cualquier `mode`, para suavizar la transición desde
-          una sección negra anterior. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 md:h-40"
-        style={{
-          background:
-            'linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0) 100%)',
-        }}
-      />
+      {/* Banda superior negra (SPEC 99 obs8): funde desde negro hacia el color
+          del footer para suavizar la transición desde una sección negra.
+          Sólo en `dark-glow`: sobre un fondo plano volvería a meter el degradado
+          que el cliente pidió quitar. */}
+      {mode === 'dark-glow' && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 md:h-40"
+          style={{
+            background:
+              'linear-gradient(to bottom, #0A0A0A 0%, rgba(10,10,10,0.72) 34%, rgba(10,10,10,0) 100%)',
+          }}
+        />
+      )}
       {/* ═══ Main content ═══ */}
       <div className="site-container pt-16 sm:pt-20 pb-10 relative z-[2]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

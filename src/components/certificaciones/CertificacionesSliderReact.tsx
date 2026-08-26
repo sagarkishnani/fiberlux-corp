@@ -10,10 +10,6 @@ import SliderSideArrows from "../shared/SliderSideArrows";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
-/* Decorative background glow (static asset), same pattern as the soluciones slider. */
-const GLOW_PLANET = `${BASE}/images/soluciones/planet.svg`;
-
 interface CertSliderProps {
   query: string;
   variables: CertificacionesQueryVariables;
@@ -234,34 +230,48 @@ export default function CertificacionesSliderReact({
       ref={sectionRef}
       className="relative bg-greyscale-darkest pt-14 pb-20 md:pt-20 md:pb-28 overflow-hidden"
     >
-      {/* Decorative magenta glow (planet) so the background isn't just black.
-          El wrapper añade una máscara vertical que DESVANECE el glow hacia los bordes
-          superior/inferior de la sección, para que no se corte en seco contra las
-          secciones vecinas (integración entre bloques). */}
+      {/* ── Fondo: cintas de luz magenta (SPEC 108) ──────────────────────────
+          Antes era el blob `planet.svg` centrado, que se leía como una mancha
+          suelta detrás del título. Ahora son cintas diagonales muy suaves que
+          cruzan la sección por detrás de la card — el lenguaje de la referencia
+          del cliente (agentflow.framer.ai): negro con luz sedosa pasando por
+          detrás de los paneles, no un degradado decorativo encima.
+
+          Los degradados viven en el bloque <style> de abajo (`.cert-bg-*`)
+          porque cambian de sitio entre mobile (layout apilado: la luz baja hasta
+          la card) y desktop (dos columnas: la luz baña la mitad derecha). Son
+          `radial-gradient` elípticos en nodos rotados: el desvanecido es
+          intrínseco al degradado, sin `filter: blur()` (caro en móviles) ni
+          imágenes. Estático, sin animación, como pidió el cliente.
+
+          La máscara vertical funde las cintas contra las secciones vecinas para
+          que no se corten en seco arriba ni abajo. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, #000 9%, #000 82%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)",
         }}
       >
+        {/* Luz ambiental: el baño amplio sobre el que se apoya la card, para que
+            el glass tenga algo real que difuminar por detrás. */}
+        <div className="cert-bg-amb absolute inset-0" />
+
         {/* `data-parallax` va en un nodo SIN `style` propio: el script de fx
             escribe `transform` aquí, y si React hubiera renderizado un style en
             este mismo nodo compararía ambos al hidratar y abortaría la isla. */}
-        <div data-parallax="0.12" className="absolute inset-0">
-          <img
-            src={GLOW_PLANET}
-            alt=""
-            draggable={false}
-            className="absolute -top-[30%] left-1/2 -translate-x-[38%] w-[92vw] max-w-[1100px] select-none opacity-70"
-            style={{
-              WebkitMaskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-              maskImage: "radial-gradient(closest-side, #000 55%, transparent 100%)",
-            }}
-          />
+        <div data-parallax="0.08" className="absolute inset-0">
+          {/* Cinta principal, con el núcleo más claro y caída larga al negro. */}
+          <div className="cert-bg-r1 absolute" />
+          {/* Segunda cinta: otro ángulo y menos fuerza — da el volumen de
+              "seda" en vez de una sola banda plana. */}
+          <div className="cert-bg-r2 absolute" />
+          {/* Filamento fino: la línea de luz que define el borde de la cinta.
+              Es lo que hace que se lea como un haz y no como niebla. */}
+          <div className="cert-bg-r3 absolute" />
         </div>
       </div>
 
@@ -352,6 +362,66 @@ export default function CertificacionesSliderReact({
                                  to { transform: translateX(60%); } }
         @keyframes cs-up     { from { opacity: 0; transform: translateY(12px); }
                                  to { opacity: 1; transform: none; } }
+
+        /* ── Cintas de luz del fondo ──────────────────────────────────────
+           Mobile (layout apilado): el haz baja en diagonal hasta donde queda la
+           card, y el baño ambiental se centra bajo el texto. */
+        .cert-bg-amb {
+          background: radial-gradient(84% 46% at 50% 74%, rgba(150,35,122,0.28) 0%, rgba(120,28,98,0.13) 44%, rgba(10,10,10,0) 76%);
+        }
+        .cert-bg-r1 {
+          left: -30%; right: -30%; top: 24%; height: 46%;
+          transform: rotate(-20deg);
+          background: radial-gradient(closest-side, rgba(216,96,182,0.34) 0%, rgba(160,40,130,0.16) 38%, rgba(10,10,10,0) 76%);
+        }
+        .cert-bg-r2 {
+          left: -30%; right: -20%; top: 58%; height: 50%;
+          transform: rotate(12deg);
+          background: radial-gradient(closest-side, rgba(150,35,122,0.22) 0%, rgba(90,22,74,0.10) 42%, rgba(10,10,10,0) 78%);
+        }
+        .cert-bg-r3 {
+          left: -15%; right: -15%; top: 40%; height: 12%;
+          transform: rotate(-20deg);
+          background: radial-gradient(closest-side, rgba(240,160,214,0.26) 0%, rgba(216,96,182,0.09) 45%, rgba(10,10,10,0) 80%);
+        }
+
+        /* Desktop (dos columnas): la luz cruza de izquierda a derecha y termina
+           bañando la mitad derecha, donde vive la card. */
+        @media (min-width: 1024px) {
+          .cert-bg-amb {
+            background: radial-gradient(58% 62% at 74% 42%, rgba(150,35,122,0.30) 0%, rgba(120,28,98,0.14) 44%, rgba(10,10,10,0) 74%);
+          }
+          .cert-bg-r1 {
+            left: -20%; right: -20%; top: 6%; height: 46%;
+            transform: rotate(-14deg);
+            background: radial-gradient(closest-side, rgba(216,96,182,0.40) 0%, rgba(160,40,130,0.19) 38%, rgba(10,10,10,0) 76%);
+          }
+          .cert-bg-r2 {
+            left: -25%; right: -10%; top: 46%; height: 52%;
+            transform: rotate(9deg);
+            background: radial-gradient(closest-side, rgba(150,35,122,0.26) 0%, rgba(90,22,74,0.12) 42%, rgba(10,10,10,0) 78%);
+          }
+          .cert-bg-r3 {
+            left: -10%; right: -10%; top: 26%; height: 13%;
+            transform: rotate(-14deg);
+            background: radial-gradient(closest-side, rgba(240,160,214,0.30) 0%, rgba(216,96,182,0.10) 45%, rgba(10,10,10,0) 80%);
+          }
+        }
+
+        /* Borde de cristal de la card: hairline con degradado. La máscara xor
+           recorta el interior y deja sólo el contorno de 1px. */
+        .cs-edge {
+          padding: 1px;
+          background: linear-gradient(138deg,
+            rgba(255,255,255,0.30) 0%,
+            rgba(255,255,255,0.10) 22%,
+            rgba(255,255,255,0.03) 48%,
+            rgba(216,96,182,0.22) 100%);
+          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask-composite: exclude;
+        }
 
         /* Estado de reposo (sin data-stamp): el sello ya está estampado. */
         .cs-halo { opacity: 0; }

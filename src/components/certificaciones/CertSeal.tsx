@@ -155,19 +155,33 @@ export default function CertSeal({
   return (
     <div
       data-stamp={stamp ?? undefined}
-      className="cs-card relative flex h-full flex-col justify-center overflow-hidden rounded-[24px] border border-white/[0.12] px-8 py-9 text-center backdrop-blur-sm md:px-10 md:py-11"
+      /* Glass (SPEC 108). El anterior era casi opaco (`backdrop-blur-sm` sobre un
+         fondo negro plano): no había nada que difuminar, así que se leía como un
+         rectángulo gris con borde. Ahora el fondo de la sección tiene cintas de
+         luz reales, y la card las difumina de verdad: blur alto + saturación,
+         base casi negra translúcida y un sheen diagonal. */
+      className="cs-card group relative flex h-full flex-col justify-center overflow-hidden rounded-[24px] px-8 py-9 text-center backdrop-blur-2xl backdrop-saturate-150 md:px-10 md:py-11"
       style={
         {
-          // Mismo glass que las cards de soluciones: brillo blanco arriba y un
-          // magenta sutil por debajo, para que el contenedor se lea aun en bajo brillo.
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 14%, rgba(255,255,255,0) 24%), radial-gradient(120% 82% at 50% 126%, rgba(150,35,122,0.30) 0%, rgba(96,25,74,0.16) 40%, rgba(20,15,24,0) 72%), rgba(17,16,19,0.55)",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)",
+            // Sheen diagonal desde la esquina superior izquierda (la luz entra
+            // por ahí) + un rebote magenta abajo, que es el reflejo de la cinta
+            // de fondo. La base translúcida deja pasar el blur.
+            "linear-gradient(138deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.025) 26%, rgba(255,255,255,0) 52%), radial-gradient(120% 78% at 50% 128%, rgba(174,44,142,0.26) 0%, rgba(96,25,74,0.12) 44%, rgba(20,15,24,0) 74%), rgba(11,10,13,0.52)",
+          // Sombra profunda para despegar la card del fondo + hairline interior.
+          boxShadow:
+            "0 40px 90px -50px rgba(0,0,0,0.95), 0 2px 24px -12px rgba(216,96,182,0.25), inset 0 1px 0 rgba(255,255,255,0.09)",
           "--cs-base": `${base}s`,
           "--cs-after": `${base + 0.9}s`,
         } as React.CSSProperties
       }
     >
+      {/* Borde de cristal: hairline de 1px con degradado — claro arriba-izquierda
+          (donde pega la luz) y magenta tenue abajo-derecha, en vez del
+          `border-white/12` plano de antes. Se pinta con la técnica de máscara
+          `xor`: el relleno se recorta y sólo queda el contorno. */}
+      <div aria-hidden="true" className="cs-edge pointer-events-none absolute inset-0 rounded-[24px]" />
+
       {/* Barrido de luz: cruza el panel una vez, al cerrarse el trazo del anillo */}
       <div aria-hidden="true" className="cs-sweep pointer-events-none absolute inset-y-0" />
 

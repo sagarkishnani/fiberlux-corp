@@ -80,9 +80,9 @@ export default function PartnersMarquee({
 
   return (
     <section
-      className="bg-greyscale-darkest py-16 md:py-20 overflow-hidden"
+      className="bg-greyscale-darkest py-24 md:py-32 overflow-hidden"
     >
-      <div className="site-container text-center mb-10 md:mb-14">
+      <div className="site-container text-center mb-14 md:mb-20">
         {eyebrow && (
           <p
             className="font-mono text-xs md:text-sm tracking-[0.2em] text-white/50 uppercase mb-4"
@@ -102,7 +102,7 @@ export default function PartnersMarquee({
       </div>
 
       {/* Dos filas full-width en direcciones opuestas */}
-      <div className="flex flex-col gap-8 md:gap-12">
+      <div className="flex flex-col gap-10 md:gap-14">
         {rowLogos.map((row, rowIndex) => {
           // Copias suficientes para desbordar la pantalla, luego duplicadas para
           // que el bucle -50% → 0 sea continuo. El nº se adapta a la cantidad de
