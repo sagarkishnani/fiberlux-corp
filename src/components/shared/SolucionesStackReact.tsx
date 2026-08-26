@@ -7,6 +7,8 @@ import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
 import { iconFor } from "./solucionesIcons";
+import { escenaPara } from "./soluciones-escenas";
+import { CSS_SOLUCIONES } from "./soluciones-escenas/base";
 
 /**
  * Bloque de soluciones — SPEC 108.
@@ -60,6 +62,9 @@ export default function SolucionesStackReact({
   const N = items.length;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  /* Qué escenas están en pantalla: las de fuera quedan pausadas para no gastar
+     CPU en cuatro animaciones que nadie ve. */
+  const [enPantalla, setEnPantalla] = useState<boolean[]>([]);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
 
   /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89/103) ──
@@ -145,8 +150,32 @@ export default function SolucionesStackReact({
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
     );
-    nodes.forEach((n) => io.observe(n));
-    return () => io.disconnect();
+    /* Segundo observador, con margen generoso: enciende la escena un poco antes
+       de que la card entre y la apaga al salir. Va aparte del de la categoría
+       activa porque ese recorta el viewport al 45% y aquí hace falta lo
+       contrario. */
+    const ioEscenas = new IntersectionObserver(
+      (entries) => {
+        setEnPantalla((prev) => {
+          const next = [...prev];
+          entries.forEach((entry) => {
+            const i = nodes.indexOf(entry.target as HTMLElement);
+            if (i >= 0) next[i] = entry.isIntersecting;
+          });
+          return next;
+        });
+      },
+      { rootMargin: "200px 0px", threshold: 0 },
+    );
+
+    nodes.forEach((n) => {
+      io.observe(n);
+      ioEscenas.observe(n);
+    });
+    return () => {
+      io.disconnect();
+      ioEscenas.disconnect();
+    };
   }, [N]);
 
   /** Lleva a una card con el scroll suave del sitio (Lenis), si está. */
@@ -295,14 +324,27 @@ export default function SolucionesStackReact({
                     ) : null}
                   </div>
 
-                  {/* Escena (SPEC 108 · step 9). */}
-                  <div className="relative flex items-center justify-center border-white/[0.08] p-7 md:border-l md:p-10 lg:p-12" />
+                  {/* Escena animada de la categoría. */}
+                  <div className="relative flex items-center justify-center border-white/[0.08] p-7 md:border-l md:p-10 lg:p-12">
+                    {(() => {
+                      const Escena = escenaPara(it?.tabIcon, i);
+                      return (
+                        <div className="w-full max-w-[400px]">
+                          <Escena activo={!!enPantalla[i]} locale={locale} />
+                        </div>
+                      );
+                    })()}
+                  </div>
                 </div>
               </article>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Animaciones de las escenas: van aquí porque `global.css` no se
+          empaqueta en este repo (mismo motivo que en Beneficios). */}
+      <style dangerouslySetInnerHTML={{ __html: CSS_SOLUCIONES }} />
 
       {/* Tooltip "Ver más": sigue al cursor con retraso. */}
       <div
