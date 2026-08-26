@@ -1,0 +1,24 @@
+---
+/**
+ * Bloque de soluciones — SPEC 108.
+ *
+ * Reemplaza a `SolucionesPanel` (SPEC 103) en Home, /soluciones y
+ * /soporte-tecnico: rail de categorías sticky + cuatro cards apiladas con
+ * fondo aurora. Se alimenta de la misma query `home`.
+ */
+import { client } from "../../../tina/__generated__/client";
+import SolucionesStackReact from "./SolucionesStackReact.tsx";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+---
+
+<SolucionesStackReact
+  client:visible
+  query={homeQuery.query}
+  variables={homeQuery.variables}
+  data={homeQuery.data}
+  locale={locale}
+/>
