@@ -76,10 +76,6 @@ export default function SolucionesStackReact({
   const [sinWebgl, setSinWebgl] = useState(false);
   const alFallarWebgl = useCallback(() => setSinWebgl(true), []);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
-  /* Tira de categorías en mobile: hay que arrastrar el chip activo a la vista,
-     y con `scrollIntoView` se movería también la página. */
-  const stripRef = useRef<HTMLDivElement | null>(null);
-  const chipRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89/103) ──
      Solo en punteros finos: en táctil no hay hover que lo dispare y quedaría
@@ -192,20 +188,6 @@ export default function SolucionesStackReact({
     };
   }, [N]);
 
-  /* El chip activo se centra en la tira, sin tocar el scroll de la página. */
-  useEffect(() => {
-    const strip = stripRef.current;
-    const chip = chipRefs.current[activeIndex];
-    if (!strip || !chip) return;
-    const destino = chip.offsetLeft - (strip.clientWidth - chip.offsetWidth) / 2;
-    strip.scrollTo({
-      left: Math.max(0, destino),
-      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-    });
-  }, [activeIndex]);
-
   /** Lleva a una card con el scroll suave del sitio (Lenis), si está. */
   const goTo = (i: number) => (e: React.MouseEvent) => {
     const target = cardRefs.current[i];
@@ -296,51 +278,7 @@ export default function SolucionesStackReact({
           </h2>
         </header>
 
-        {/* Tira de categorías (mobile/tablet): pegada bajo el header, marca la
-            card que está en pantalla. */}
-        <div className="sticky top-16 z-30 -mx-6 mt-8 bg-greyscale-darkest/85 py-3 backdrop-blur-md md:-mx-10 lg:hidden">
-          <div
-            ref={stripRef}
-            className="flex gap-2 overflow-x-auto px-6 md:px-10 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            style={{
-              maskImage:
-                "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%)",
-              WebkitMaskImage:
-                "linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%)",
-            }}
-          >
-            {items.map((it, i) => {
-              const Icon = iconFor(it?.tabIcon);
-              const on = i === activeIndex;
-              return (
-                <a
-                  key={i}
-                  ref={(el) => {
-                    chipRefs.current[i] = el;
-                  }}
-                  href={`#${cardId(i)}`}
-                  onClick={goTo(i)}
-                  aria-current={on ? "true" : undefined}
-                  className="inline-flex shrink-0 items-center gap-2 rounded-lg border px-3.5 py-2 text-[13px] leading-none transition-colors"
-                  style={{
-                    borderColor: on ? "rgba(198,95,172,0.5)" : "rgba(255,255,255,0.08)",
-                    background: on ? "#1c1220" : "#151315",
-                    color: on ? "#fff" : "rgba(255,255,255,0.55)",
-                  }}
-                >
-                  <Icon
-                    className="h-4 w-4 shrink-0"
-                    style={{ color: on ? "#c65fac" : "#96237A" }}
-                    strokeWidth={2}
-                  />
-                  {shortLabel(it)}
-                </a>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="mt-8 lg:mt-16 lg:grid lg:grid-cols-[minmax(0,266px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
+        <div className="mt-10 lg:mt-16 lg:grid lg:grid-cols-[minmax(0,266px)_minmax(0,1fr)] lg:gap-14 xl:gap-20">
           {/* Rail de categorías (desktop). */}
           <nav className="hidden lg:block" aria-label={t("sol.rail.aria", locale)}>
             <ul className="sticky top-32">

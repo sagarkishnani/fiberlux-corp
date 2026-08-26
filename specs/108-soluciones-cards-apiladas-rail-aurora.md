@@ -29,7 +29,7 @@ La referencia se inspeccionó en vivo: el rail es `sticky` y marca la solución 
 - **Fondo aurora WebGL** de la sección: componente nuevo `src/components/effects/AuroraRibbons.tsx`, réplica del shader de la referencia **retintada a morado de marca**, sobre `greyscale-darkest`, con grano encima. Autocontenido y con las mismas garantías que los otros efectos del repo: cap de DPR, rAF pausado fuera de viewport, frame estático con `prefers-reduced-motion` y fallback CSS (glow radial morado + grano) si no hay WebGL2.
 - **Extracción del shader** de `agentflow.framer.ai` con el hook de `gl.shaderSource`/`uniform*` vía Playwright `addInitScript`; el GLSL crudo se archiva en `references/aurora-agentflow.frag.txt` como material de referencia y la versión retintada vive en el componente.
 - **Montaje en las 3 pantallas** que hoy usan `SolucionesPanel`: `src/pages/index.astro`, `src/pages/soluciones/index.astro`, `src/pages/soporte-tecnico/index.astro` (los wrappers `/en` heredan el cambio).
-- **Mobile:** el rail se convierte en una **tira horizontal de chips sticky** bajo el header, con máscara de scroll, que marca la categoría activa y arrastra el chip activo a la vista; las cards se apilan en una columna (título → descripción → chips → escena → CTA).
+- **Mobile:** **sin rail ni tira de categorías** (decisión del cliente durante la implementación); las cards se apilan en una columna (título → descripción → chips → escena → CTA) y el título de cada card hace de encabezado de la categoría.
 - **Chips de subservicio:** los **primeros 4 bullets** de cada categoría; cada chip con `url` navega a la página del subservicio y conserva el **tooltip "Ver más" con delay que persigue al cursor** (SPEC 89/103, solo `pointer: fine`).
 - **Contenido:** `services.title` pasa a "Soluciones para tu negocio" (`title_en`: "Solutions for your business") y se siembran los `tabLabel` / `tabLabel_en` cortos de las 4 categorías.
 - **i18n:** todo el texto del CMS con `tField`; los strings fijos (eyebrow, "Conoce más", "Ver más", textos dentro de las escenas, `aria-label`s) en `src/i18n/ui.ts` vía `t()`.
@@ -137,7 +137,7 @@ Viven en `src/components/shared/soluciones-escenas/`. Reusan de `servicios/benef
 
 11. **Contenido e i18n.** Actualizar `services.title` / `title_en`, sembrar `tabLabel` / `tabLabel_en` de las 4 categorías y añadir las claves `sol.*` a `src/i18n/ui.ts`. Estado: ES y EN completos.
 
-12. **Mobile.** Tira de chips sticky bajo el header con máscara y auto-scroll del chip activo; cards en una columna (título → descripción → chips → escena → CTA); alturas con `svh` para evitar saltos por la barra del navegador. Estado: el bloque funciona en móvil.
+12. **Mobile.** Cards en una columna (título → descripción → chips → escena → CTA); alturas con `svh` para evitar saltos por la barra del navegador. Se implementó primero con una tira de chips sticky y **se retiró a pedido del cliente**: en móvil el bloque va sin rail ni chips de categoría. Estado: el bloque funciona en móvil.
 
 13. **Montaje.** Sustituir `SolucionesPanel` por `SolucionesStack` en `src/pages/index.astro`, `src/pages/soluciones/index.astro` y `src/pages/soporte-tecnico/index.astro`, dejando el comentario de linaje (`… → SolucionesPanel (SPEC 103) → SolucionesStack (SPEC 108)`). Estado: las 3 pantallas muestran el bloque nuevo.
 
@@ -158,7 +158,7 @@ Viven en `src/components/shared/soluciones-escenas/`. Reusan de `servicios/benef
 - [ ] El fondo de la sección son cintas de luz **moradas** animadas sobre negro, con grano, sin barras negras ni recortes a 1280, 1440 y 1920 px de ancho.
 - [ ] Sin soporte WebGL2 la sección cae al fondo CSS (glow morado + grano) y todo lo demás sigue funcionando.
 - [ ] Con `prefers-reduced-motion: reduce` el fondo queda en un frame estático, las escenas congeladas y el rail cambia sin animación.
-- [ ] En móvil la tira de categorías queda pegada bajo el header, marca la activa y arrastra el chip activo a la vista; cada card se apila en una columna con su escena visible y sin scroll horizontal en la página.
+- [ ] En móvil no se muestra la tira de categorías; cada card se apila en una columna con su escena visible y sin scroll horizontal en la página.
 - [ ] Hover sobre un chip con `url` muestra el tooltip "Ver más" tras un breve delay siguiendo al cursor con lag; en táctil (`pointer: coarse`) no aparece.
 - [ ] En `/en/...` rail, títulos, descripciones, chips, CTA y textos dentro de las escenas leen `_en` con fallback a ES.
 - [ ] En Home, con el hero ya cargado, la sección no introduce jank perceptible al scrollear (60 fps en un portátil de gama media).
@@ -180,6 +180,7 @@ Viven en `src/components/shared/soluciones-escenas/`. Reusan de `servicios/benef
 | Rail y título de card usan `tabLabel` con fallback a `title` | Usar siempre `title` | El `title` de Data Center son tres líneas; el mockup pide el nombre corto en ambos sitios y el `title` largo se conserva para los otros componentes. |
 | Bucle continuo de las escenas | Animar una sola vez al entrar (SPEC 105) | La referencia se siente "viva"; se compensa pausando fuera de viewport y usando solo CSS. |
 | Reemplazar en las 3 pantallas | Solo en `/soluciones` | El cliente pidió la sección de soluciones completa, no una variante por página. |
+| Móvil sin rail ni tira de categorías | Tira de chips sticky bajo el header | Se construyó la tira y el cliente la mandó quitar al verla: en una columna el título de cada card ya dice de qué categoría se trata. |
 | Se conserva `SolucionesPanel` sin montar | Borrarlo | Misma convención que con `SolucionesScroll` y `SolucionesSlider`: el componente queda disponible por si se reutiliza. |
 
 ---
@@ -189,5 +190,5 @@ Viven en `src/components/shared/soluciones-escenas/`. Reusan de `servicios/benef
 - **Rendimiento en Home.** La página ya carga el globo COBE del hero; sumar un canvas WebGL2 más cuatro escenas en bucle puede costar frames en equipos ligeros —requisito duro del cliente—. Mitigación: una sola instancia del fondo por página, rAF pausado fuera de viewport, cap de DPR a 1.5, escenas resueltas solo con `transform`/`opacity` en CSS y `animation-play-state: paused` fuera de pantalla. Si aun así no rinde, la palanca es bajar densidad/velocidad en `PARAMS` o caer al fondo CSS en móvil.
 - **Origen del shader.** El GLSL proviene de una plantilla comercial de Framer. Se usa como referencia técnica y se reescribe/retinta con la paleta de marca; conviene que quede así registrado y no copiar el resto de assets del sitio. Si el cliente prefiere evitar la dependencia, el fallback CSS ya especificado es reemplazo directo.
 - **Sección larga en `/soporte-tecnico`.** Cuatro cards apiladas alargan bastante una página que no es la de soluciones. Se acepta por decisión del cliente; si molesta, la salida barata es montar ahí el `SolucionesPanel` conservado.
-- **Sticky bajo header en móvil.** La tira de categorías compite con el header fijo y con la barra del navegador; se usa `svh` y se verifica en iOS Safari real antes de dar por cerrado el spec.
+- **~~Sticky bajo header en móvil~~.** Dejó de aplicar: el cliente pidió quitar la tira de categorías en móvil, así que ya no hay nada pegado al viewport salvo el fondo (que usa `svh`).
 - **Escenas con texto del código en dos idiomas.** Los eventos de la bitácora cambian de largo entre ES y EN; las filas usan HTML (no SVG) justamente para que la caja se ajuste sola, pero hay que revisar el corte en la card angosta de móvil.
