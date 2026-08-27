@@ -415,7 +415,8 @@ var config_default = defineConfig({
                       { value: "globo", label: "Globo / Cobertura" },
                       { value: "soporte", label: "Soporte / NOC" },
                       { value: "datos", label: "Datos / Base de datos" },
-                      { value: "wifi", label: "Wi-Fi / Inal\xE1mbrico" }
+                      { value: "wifi", label: "Wi-Fi / Inal\xE1mbrico" },
+                      { value: "telefonia", label: "Telefon\xEDa / Comunicaciones" }
                     ]
                   },
                   {
