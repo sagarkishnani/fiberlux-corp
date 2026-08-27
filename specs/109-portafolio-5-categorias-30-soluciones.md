@@ -1,6 +1,6 @@
 # SPEC 109 — Reestructuración del portafolio: 5 categorías y 30 soluciones
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 89/103/108 (`home.services.items[]` y `SolucionesStack` con sus escenas), SPEC 93/95 (widgets de `ValorSolucion` por slug de categoría), SPEC 105/107 (plantillas de ilustración de `beneficios`), SPEC 80 (i18n `_en` + `tField`), SPEC 81 (índice de búsqueda), SPEC 63 (tags de blog compartidos)
 > **Fecha:** 2026-08-27
 > **Objetivo:** Reemplazar las 4 categorías y 35 subservicios actuales por las 5 categorías y 30 soluciones del portafolio nuevo (`Fiberlux_Portafolio_Servicios.xlsx`), con URLs renombradas, redirects desde las viejas y beneficios ilustrados con las plantillas existentes.
@@ -205,24 +205,24 @@ Cada paso deja el sitio compilando (`npm run build` verde) y navegable.
 
 ## Sección 5 — Criterios de aceptación
 
-- [ ] `npm run build` termina sin errores y sin warnings nuevos.
-- [ ] Existen exactamente 5 archivos en `src/content/services/` y 30 en `src/content/subservicios/`.
-- [ ] Las 5 páginas `/soluciones/{ciberseguridad,data-center,infraestructura,comunicaciones,conectividad}` cargan con su hero, su bloque de valor y su catálogo.
-- [ ] Cada una de las 30 páginas de solución carga en su URL nueva, con breadcrumb apuntando a su categoría correcta.
-- [ ] Cada página de categoría lista en su catálogo exactamente las soluciones que le asigna el Excel, en ese orden.
-- [ ] `/soluciones/ciberseguridad-gestionada` redirige a `/soluciones/ciberseguridad`, y lo mismo para las otras 2 categorías renombradas.
-- [ ] Las 16 URLs de subservicio renombradas redirigen a su URL nueva.
-- [ ] Los 15 subservicios eliminados devuelven 404 y no aparecen en el mega-menú, el catálogo ni el buscador.
-- [ ] Ninguna card de beneficio queda sin `plantilla`; todas dibujan su ilustración animada.
-- [ ] Cada subservicio tiene entre 3 y 5 cards de beneficio.
-- [ ] El bloque de Soluciones (Home, `/soluciones`, `/soporte-tecnico`) muestra 5 cards y el rail 5 entradas.
-- [ ] Comunicaciones Unificadas usa la escena `Telefonia` y ninguna categoría queda sin escena.
-- [ ] El overlay de búsqueda encuentra los 10 servicios nuevos y no devuelve ningún resultado de los 15 eliminados.
-- [ ] El mega-menú de Soluciones lista 5 categorías con 30 hijos y todos sus enlaces resuelven sin redirect.
-- [ ] En `/en`, las 5 categorías y las 30 soluciones muestran título, intro, beneficios y casos de uso en inglés.
-- [ ] Ninguna categoría muestra un logo de partner roto.
-- [ ] Las 30 páginas de solución muestran imagen de hero (propia o provisional); ninguna queda con hueco.
-- [ ] `grep -r "ciberseguridad-gestionada\|conectividad-empresarial\|data-center-cloud\|servicios-gestionados" src/` solo devuelve las entradas de `redirects` en `astro.config.mjs`.
+- [x] `npm run build` termina sin errores y sin warnings nuevos.
+- [x] Existen exactamente 5 archivos en `src/content/services/` y 30 en `src/content/subservicios/`.
+- [x] Las 5 páginas `/soluciones/{ciberseguridad,data-center,infraestructura,comunicaciones,conectividad}` cargan con su hero, su bloque de valor y su catálogo.
+- [x] Cada una de las 30 páginas de solución carga en su URL nueva, con breadcrumb apuntando a su categoría correcta.
+- [x] Cada página de categoría lista en su catálogo exactamente las soluciones que le asigna el Excel, en ese orden.
+- [x] `/soluciones/ciberseguridad-gestionada` redirige a `/soluciones/ciberseguridad`, y lo mismo para las otras 2 categorías renombradas.
+- [x] Las 16 URLs de subservicio renombradas redirigen a su URL nueva.
+- [x] Los 15 subservicios eliminados devuelven 404 y no aparecen en el mega-menú, el catálogo ni el buscador.
+- [x] Ninguna card de beneficio queda sin `plantilla`; todas dibujan su ilustración animada.
+- [x] Cada subservicio tiene entre 3 y 5 cards de beneficio.
+- [x] El bloque de Soluciones (Home, `/soluciones`, `/soporte-tecnico`) muestra 5 cards y el rail 5 entradas.
+- [x] Comunicaciones Unificadas usa la escena `Telefonia` y ninguna categoría queda sin escena.
+- [x] El overlay de búsqueda encuentra los 10 servicios nuevos y no devuelve ningún resultado de los 15 eliminados.
+- [x] El mega-menú de Soluciones lista 5 categorías con 30 hijos y todos sus enlaces resuelven sin redirect.
+- [x] En `/en`, las 5 categorías y las 30 soluciones muestran título, intro, beneficios y casos de uso en inglés.
+- [x] Ninguna categoría muestra un logo de partner roto.
+- [x] Las 30 páginas de solución muestran imagen de hero (propia o provisional); ninguna queda con hueco.
+- [x] `grep -r "ciberseguridad-gestionada\|conectividad-empresarial\|data-center-cloud\|servicios-gestionados" src/` solo devuelve las entradas de `redirects` en `astro.config.mjs`.
 
 ---
 
