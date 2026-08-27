@@ -578,6 +578,9 @@ export default function HeaderV2React({
     <>
       {/* ═══ HEADER (top bar + main bar) ═══ */}
       <header
+        /* Hook del view-transition-name: mantiene el header quieto durante la
+           transición de página (SPEC 110). */
+        data-site-header
         className={`
           fixed top-0 left-0 right-0 z-[80]
           transition-all duration-300

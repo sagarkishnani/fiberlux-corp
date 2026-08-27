@@ -16,6 +16,7 @@ try {
   result && (
     <CookieConsentReact
       client:idle
+      transition:persist="cookies"
       query={result.query}
       variables={result.variables}
       data={result.data}

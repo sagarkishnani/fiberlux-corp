@@ -19,6 +19,16 @@ export default defineConfig({
     locales: ['es', 'en'],
     routing: { prefixDefaultLocale: false },
   },
+  // Prefetch (SPEC 110): al pasar el cursor (o tocar/enfocar) un enlace interno
+  // se descarga su HTML, así la navegación con View Transitions es instantánea.
+  // `prefetchAll` lo activa en TODOS los enlaces sin tener que marcarlos uno a
+  // uno; se puede desactivar por enlace con `data-astro-prefetch="false"` o
+  // cambiar su estrategia con `data-astro-prefetch="viewport|load|tap"`.
+  // Astro respeta el ahorro de datos y las conexiones lentas (Save-Data / 2G).
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
   redirects: {
     '/servicios': '/soluciones',
     '/servicios/[solucion]': '/soluciones/[solucion]',

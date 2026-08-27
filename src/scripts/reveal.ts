@@ -17,6 +17,9 @@
  */
 import { animate, inView, scroll } from "motion";
 import { whenHydrated } from "./whenHydrated";
+import { onEachPage } from "./lifecycle";
+
+type Cleanup = (fn: () => void) => void;
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const DEFAULT_DURATION = 1;
@@ -85,14 +88,14 @@ function revealOut(el: HTMLElement, dir: string, dist: number, dur: number) {
 /* Scrub: fade + desplazamiento ligados al scroll. Entra (desde su lado) al
    aparecer y se desvanece al salir; simétrico al subir. Para bloques de 2
    columnas (ej. Misión/Visión). */
-function initScrub() {
+function initScrub(cleanup: Cleanup) {
   // En mobile el bloque ocupa casi toda la pantalla: con la ventana de desktop
   // (25%/65%) el texto pasaba demasiado tiempo desvanecido con el contenedor aún
   // visible. Ahí la entrada y la salida se hacen más cortas (y el recorrido más
   // chico), así el contenido está a plena opacidad casi todo el paso.
   const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
   const times = mobile ? [0, 0.12, 0.88, 1] : [0, 0.25, 0.65, 1];
-  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => whenHydrated(el, (el) => {
+  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => cleanup(whenHydrated(el, (el) => {
     if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
     // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
@@ -103,18 +106,22 @@ function initScrub() {
     const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
     if (enter.x || exit.x) kf.x = [enter.x, 0, 0, exit.x];
     if (enter.y || exit.y) kf.y = [enter.y, 0, 0, exit.y];
-    scroll(
-      // Desktop: 0–25% entra, 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
-      // Mobile: 0–12% / 12–88% / 88–100%.
-      animate(el, kf as any, { times, ease: "linear" }),
-      { target: el, offset: ["start end", "end start"] }
+    // `scroll()` engancha un listener global: se cancela antes del swap de la
+    // siguiente navegación (SPEC 110).
+    cleanup(
+      scroll(
+        // Desktop: 0–25% entra, 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
+        // Mobile: 0–12% / 12–88% / 88–100%.
+        animate(el, kf as any, { times, ease: "linear" }),
+        { target: el, offset: ["start end", "end start"] }
+      )
     );
-  }));
+  })));
 }
 
-function initReveal() {
+function initReveal(cleanup: Cleanup) {
   const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
-  document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => whenHydrated(el, (el) => {
+  document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => cleanup(whenHydrated(el, (el) => {
     if (el.dataset.revealScrub != null) return; // lo maneja initScrub
     if (skipForBreakpoint(el, mobile)) return;
     const dir = (el.dataset.reveal || "up").toLowerCase();
@@ -148,11 +155,12 @@ function initReveal() {
       };
     };
     stop = inView(el, onEnter, { amount: 0.2 });
-  }));
+    cleanup(() => stop?.());
+  })));
 }
 
-function initSvgDraw() {
-  document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => whenHydrated(svg, (svg) => {
+function initSvgDraw(cleanup: Cleanup) {
+  document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => cleanup(whenHydrated(svg, (svg) => {
     const dur = Number(svg.dataset.drawDuration || 1.2);
     const shapes: SVGGeometryElement[] = [];
     svg.querySelectorAll<SVGGeometryElement>("path, line, polyline, polygon, circle, ellipse, rect").forEach((s) => {
@@ -174,16 +182,14 @@ function initSvgDraw() {
       },
       { amount: 0.2 }
     );
-  }));
+    cleanup(() => stop?.());
+  })));
 }
 
-function init() {
+onEachPage((cleanup) => {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-  initReveal();
-  initScrub();
-  initSvgDraw();
-}
-
-if (document.readyState !== "loading") init();
-else document.addEventListener("DOMContentLoaded", init);
+  initReveal(cleanup);
+  initScrub(cleanup);
+  initSvgDraw(cleanup);
+});

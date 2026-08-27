@@ -22,10 +22,12 @@
  * inalcanzable.
  */
 
+import { onEachPage } from "./lifecycle";
+
 const DESKTOP = "(min-width: 1024px)";
 
 /** Secciones anteriores intervenidas, para poder revertirlas al salir de lg. */
-const pares: { panel: HTMLElement; prev: HTMLElement }[] = [];
+let pares: { panel: HTMLElement; prev: HTMLElement }[] = [];
 
 function medir() {
   const vh = window.innerHeight;
@@ -107,9 +109,13 @@ function cajaReal(desde: HTMLElement | null): HTMLElement | null {
   return null;
 }
 
-function init() {
+onEachPage((cleanup) => {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Con View Transitions el módulo no se reejecuta: los pares de la página
+  // anterior apuntan a nodos ya desechados y hay que empezar de cero (SPEC 110).
+  pares = [];
 
   document.querySelectorAll<HTMLElement>("[data-overlap-rise]").forEach((panel) => {
     const prev = cajaReal(panel.previousElementSibling as HTMLElement | null);
@@ -135,6 +141,11 @@ function init() {
   };
   sync();
   mq.addEventListener?.("change", sync);
+  cleanup(() => {
+    mq.removeEventListener?.("change", sync);
+    window.removeEventListener("scroll", seguir);
+    pares = [];
+  });
 
   // Las alturas cambian al hidratarse las islas (el carrusel, las cifras), no
   // sólo al redimensionar: se observa cada sección anterior.
@@ -143,11 +154,11 @@ function init() {
       if (mq.matches) medir();
     });
     pares.forEach(({ prev }) => ro.observe(prev));
+    cleanup(() => ro.disconnect());
   }
-  window.addEventListener("resize", () => {
+  const onResize = () => {
     if (mq.matches) medir();
-  });
-}
-
-if (document.readyState !== "loading") init();
-else document.addEventListener("DOMContentLoaded", init);
+  };
+  window.addEventListener("resize", onResize);
+  cleanup(() => window.removeEventListener("resize", onResize));
+});

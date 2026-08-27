@@ -9,6 +9,7 @@ import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
 import CursorTrail from "../components/shared/CursorTrail.tsx";
 import CursorShapes from "../components/shared/CursorShapes.tsx";
 import client from "../../tina/__generated__/client";
+import { ClientRouter } from "astro:transitions";
 import homeContent from "../content/home/index.json";
 import "../styles/site-container.css";
 import { getLocale, tField } from "../utils/i18n";
@@ -167,6 +168,11 @@ const whatsappBubbleMessage =
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
     </title>
+    {/* View Transitions (SPEC 110): navegación sin recargar el documento, con
+        transición animada entre páginas. Habilita además el prefetch en hover
+        configurado en astro.config.mjs. Los efectos viven en el <style> de
+        abajo (::view-transition-*). */}
+    <ClientRouter />
     {/* Reveal (SPEC 69): marca <html class="reveal-js"> ANTES del primer paint
         para ocultar los [data-reveal] solo cuando hay JS (anti-FOUC). */}
     <script is:inline>
@@ -264,10 +270,64 @@ const whatsappBubbleMessage =
           to { visibility: visible; }
         }
       }
+      /* ═══ View Transitions (SPEC 110) ═══
+         Efecto de navegación entre páginas. Se define aquí (y no con
+         `transition:animate` por componente) para que aplique a TODO el sitio
+         desde un único sitio: `root` es el snapshot de la página completa.
+
+         Duraciones cortas a propósito: durante la transición el navegador
+         congela ambas páginas en un bitmap, y en las páginas con WebGL/Spline
+         una transición larga se percibe como tirón.
+
+         Efecto actual: "fade + rise" — salida rápida de la página anterior y
+         entrada de la nueva subiendo unos píxeles.
+
+         Para cambiar el efecto basta con reemplazar estos dos keyframes. */
+      ::view-transition-old(root) {
+        animation: fbx-nav-out 180ms cubic-bezier(0.4, 0, 1, 1) both;
+      }
+      ::view-transition-new(root) {
+        animation: fbx-nav-in 340ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      }
+      @keyframes fbx-nav-out {
+        to { opacity: 0; }
+      }
+      @keyframes fbx-nav-in {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: none; }
+      }
+      /* El header es `fixed` y luce igual en todas las páginas: con su propio
+         view-transition-name sale del snapshot de `root` y no se desplaza con
+         el contenido (si no, se duplica en ambas capturas y "tiembla"). */
+      [data-site-header] {
+        view-transition-name: fbx-header;
+      }
+      ::view-transition-old(fbx-header),
+      ::view-transition-new(fbx-header) {
+        animation-duration: 180ms;
+      }
+      /* El preloader del Home es de bienvenida (primera carga de la sesión):
+         en una navegación interna no debe asomar ni un frame. `data-astro-navigated`
+         lo pone transitions.ts en astro:after-swap. */
+      html[data-astro-navigated] #site-preloader {
+        display: none !important;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        ::view-transition-old(root),
+        ::view-transition-new(root),
+        ::view-transition-old(fbx-header),
+        ::view-transition-new(fbx-header) {
+          animation: none !important;
+        }
+      }
     </style>
-    {/* Accessibility: apply saved preferences before first paint (no flash) */}
+    {/* Accessibility: apply saved preferences before first paint (no flash).
+        Se expone como window.__applyA11yPrefs porque el swap de View
+        Transitions borra TODOS los atributos del <html> (clases y custom
+        properties incluidas) y este script inline no se reejecuta: lo vuelve a
+        llamar src/scripts/transitions.ts en astro:after-swap. */}
     <script is:inline>
-      (function () {
+      window.__applyA11yPrefs = function () {
         try {
           var s = JSON.parse(
             localStorage.getItem("fiberlux-a11y-v1") || "{}"
@@ -302,7 +362,8 @@ const whatsappBubbleMessage =
           if (s.hideImages) r.classList.add("a11y-hide-images");
           if (s.dyslexia) r.classList.add("a11y-dyslexia");
         } catch (e) {}
-      })();
+      };
+      window.__applyA11yPrefs();
     </script>
     {/* Scripts globales editables en Tina (global.codeInjection.head).
         No se inyectan en modo mantenimiento. */}
@@ -387,18 +448,21 @@ const whatsappBubbleMessage =
           <CookieConsent />
           <WhatsAppButton
             client:idle
+            transition:persist="whatsapp"
             phone={whatsappPhone}
             message={whatsappMessage}
             bubbleMessage={whatsappBubbleMessage}
             bubbleKey={bubbleCtx ?? "global"}
           />
-          <AccessibilityPanel client:idle locale={locale} />
+          <AccessibilityPanel client:idle transition:persist="a11y" locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina
               (global.cursor). Estela por defecto; retícula/punto solo si se eligen.
               Todos solo desktop / puntero fino (los componentes se autodesactivan). */}
-          {cursorType === "trail" && <CursorTrail client:idle intensity={cursorGlow} />}
+          {cursorType === "trail" && (
+            <CursorTrail client:idle transition:persist="cursor" intensity={cursorGlow} />
+          )}
           {(cursorType === "reticle" || cursorType === "dot") && (
-            <CursorShapes client:idle shape={cursorType} />
+            <CursorShapes client:idle transition:persist="cursor" shape={cursorType} />
           )}
           {/* Scripts globales editables en Tina (global.codeInjection.bodyEnd). */}
           {injectBodyEnd && <Fragment set:html={injectBodyEnd} />}
@@ -407,6 +471,10 @@ const whatsappBubbleMessage =
     }
   </body>
 </html>
+
+{/* View Transitions (SPEC 110): reaplica el estado del <html> tras cada swap,
+    resincroniza Lenis y notifica a GTM. */}
+<script>import "../scripts/transitions.ts";</script>
 
 {/* Reveal (SPEC 69): animaciones de entrada por [data-reveal]. */}
 {!maintenanceMode && <script>import "../scripts/reveal.ts";</script>}

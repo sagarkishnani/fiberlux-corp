@@ -9,12 +9,15 @@
  */
 import { animate, inView, scroll } from "motion";
 import { whenHydrated } from "./whenHydrated";
+import { onEachPage } from "./lifecycle";
+
+type Cleanup = (fn: () => void) => void;
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 /* ── Count-up ── */
-function initCountUp() {
-  document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => whenHydrated(el, (el) => {
+function initCountUp(cleanup: Cleanup) {
+  document.querySelectorAll<HTMLElement>("[data-count-up]").forEach((el) => cleanup(whenHydrated(el, (el) => {
     const raw = (el.textContent || "").trim();
     // prefijo (no dígito) + número (dígitos . ,) + sufijo (resto)
     const m = raw.match(/^([^\d-]*)(-?[\d.,]+)(.*)$/s);
@@ -48,31 +51,32 @@ function initCountUp() {
       },
       { amount: 0.4 }
     );
-  }));
+    cleanup(() => stop?.());
+  })));
 }
 
 /* ── Parallax ── */
-function initParallax() {
+function initParallax(cleanup: Cleanup) {
   document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) =>
-    whenHydrated(el, (el) => {
+    cleanup(whenHydrated(el, (el) => {
       const factor = Number(el.dataset.parallax || 0.15);
       const r = factor * 100; // px de desplazamiento a cada lado
-      scroll(
-        animate(el, { y: [-r, r] } as any, { ease: "linear" }),
-        { target: el, offset: ["start end", "end start"] }
+      // `scroll()` engancha un listener global: hay que cancelarlo al navegar.
+      cleanup(
+        scroll(
+          animate(el, { y: [-r, r] } as any, { ease: "linear" }),
+          { target: el, offset: ["start end", "end start"] }
+        )
       );
-    })
+    }))
   );
 }
 
-function init() {
+onEachPage((cleanup) => {
   if (typeof window === "undefined") return;
   // Con reduced-motion no se anima nada: las cifras quedan en su valor final
   // (el del HTML) y no hay parallax.
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-  initCountUp();
-  initParallax();
-}
-
-if (document.readyState !== "loading") init();
-else document.addEventListener("DOMContentLoaded", init);
+  initCountUp(cleanup);
+  initParallax(cleanup);
+});

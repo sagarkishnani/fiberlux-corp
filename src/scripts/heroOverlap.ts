@@ -9,8 +9,9 @@
  * Respeta prefers-reduced-motion (no aplica efecto; el overlap sticky se mantiene).
  */
 import { scroll, animate } from "motion";
+import { onEachPage } from "./lifecycle";
 
-function init() {
+onEachPage((cleanup) => {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -25,12 +26,13 @@ function init() {
     const inner = (el.firstElementChild as HTMLElement) || el;
     // Progreso: desde que el contenedor sticky toca el borde superior del
     // viewport hasta que termina de pasar (≈ el hero quedó totalmente cubierto).
-    scroll(
-      animate(inner, { scale: [1, 0.96], opacity: [1, 0.85] }, { ease: "linear" }),
-      { target: el, offset: ["start start", "end start"] }
+    // `scroll()` deja un listener global vivo: se cancela antes del swap de la
+    // siguiente navegación (SPEC 110).
+    cleanup(
+      scroll(
+        animate(inner, { scale: [1, 0.96], opacity: [1, 0.85] }, { ease: "linear" }),
+        { target: el, offset: ["start start", "end start"] }
+      )
     );
   });
-}
-
-if (document.readyState !== "loading") init();
-else document.addEventListener("DOMContentLoaded", init);
+});
