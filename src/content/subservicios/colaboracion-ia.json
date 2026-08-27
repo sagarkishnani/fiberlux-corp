@@ -21,63 +21,58 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Documentación centralizada",
-        "title_en": "Centralized documentation",
-        "text": "Toda la información del proyecto en un solo lugar.",
-        "text_en": "All your project information in a single place.",
-        "plantilla": "consola",
-        "datos": {
-          "nodos": [
-            {
-              "label": "Documentos"
-            },
-            {
-              "label": "Proyectos"
-            },
-            {
-              "label": "Equipos"
-            }
-          ]
-        }
+        "title": "Resúmenes automáticos",
+        "text": "Transcripciones y resúmenes de cada reunión, sin que nadie tome notas.",
+        "plantilla": "reloj"
       },
       {
-        "title": "Control de versiones automático",
-        "title_en": "Automatic version control",
-        "text": "Evita la pérdida de trabajo intelectual.",
-        "text_en": "Prevents the loss of intellectual work.",
+        "title": "Acuerdos y tareas identificados",
+        "text": "La IA extrae los puntos clave y quién queda a cargo de qué.",
         "plantilla": "checklist",
         "datos": {
           "chips": [
             {
-              "label": "Versión anterior"
+              "label": "Acuerdos"
             },
             {
-              "label": "Cambios"
+              "label": "Tareas"
             },
             {
-              "label": "Versión actual"
+              "label": "Responsables"
+            },
+            {
+              "label": "Fechas"
             }
           ]
         }
       },
       {
-        "title": "Flujos de aprobación ágiles",
-        "title_en": "Agile approval workflows",
-        "text": "Coordina departamentos operativos sin fricción.",
-        "text_en": "Coordinate operational departments without friction.",
+        "title": "Copilot integrado",
+        "text": "Copilot conectado con Teams, la voz y los espacios de colaboración.",
         "plantilla": "sedes",
         "datos": {
           "nodos": [
             {
-              "label": "Operaciones"
+              "label": "Teams"
             },
             {
-              "label": "Finanzas"
+              "label": "Copilot"
             },
             {
-              "label": "Legal"
+              "label": "Voz"
+            },
+            {
+              "label": "Sala"
             }
           ]
+        }
+      },
+      {
+        "title": "Reuniones más productivas",
+        "text": "Presenciales, remotas o híbridas: todas dejan resultado por escrito.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 84
         }
       }
     ],

@@ -22,57 +22,75 @@
     "items": [
       {
         "title": "Protección multicapa",
-        "title_en": "Multi-layer protection",
-        "text": "Antivirus empresarial con capacidades avanzadas de detección y respuesta.",
-        "text_en": "Enterprise antivirus with advanced detection and response capabilities.",
-        "plantilla": "escudo"
-      },
-      {
-        "title": "Aislamiento automático",
-        "title_en": "Automatic isolation",
-        "text": "Cualquier equipo infectado se aísla antes de que contagie toda la red.",
-        "text_en": "Any infected device is isolated before it can spread across the network.",
-        "plantilla": "sedes",
+        "text": "Antivirus empresarial más capacidades avanzadas de detección y respuesta sobre el mismo equipo.",
+        "plantilla": "zerotrust",
         "datos": {
           "nodos": [
             {
-              "label": "Equipo aislado"
+              "label": "Antivirus"
             },
             {
-              "label": "Red interna"
+              "label": "EDR"
             },
             {
-              "label": "Consola"
+              "label": "XDR"
+            },
+            {
+              "label": "MDR"
             }
           ]
         }
       },
       {
-        "title": "Análisis en tiempo real",
-        "title_en": "Real-time analysis",
-        "text": "Detecta comportamiento anómalo y bloquea amenazas sin firma conocida.",
-        "text_en": "Detects anomalous behavior and blocks threats with no known signature.",
-        "plantilla": "reloj"
+        "title": "Aislamiento automático",
+        "text": "Saca de la red al equipo infectado antes de que contagie al resto.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "RED CORPORATIVA",
+              "activa": false
+            },
+            {
+              "label": "CUARENTENA",
+              "activa": true
+            }
+          ]
+        }
+      },
+      {
+        "title": "Comportamiento anómalo en tiempo real",
+        "text": "Bloquea amenazas sin firma conocida analizando cómo se comportan.",
+        "plantilla": "bitacora",
+        "datos": {
+          "filas": [
+            {
+              "label": "Proceso anómalo detenido",
+              "nivel": "CRÍTICO",
+              "porcentaje": 0
+            },
+            {
+              "label": "Ejecución sin firma bloqueada",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Script sospechoso aislado",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Equipo devuelto a la red",
+              "nivel": "MEDIA",
+              "porcentaje": 0
+            }
+          ]
+        }
       },
       {
         "title": "Trazabilidad forense",
-        "title_en": "Forensic traceability",
-        "text": "Entiende el origen exacto del ataque para prevenir futuros incidentes.",
-        "text_en": "Understand the exact origin of the attack to prevent future incidents.",
-        "plantilla": "checklist",
-        "datos": {
-          "chips": [
-            {
-              "label": "Origen"
-            },
-            {
-              "label": "Vector"
-            },
-            {
-              "label": "Evidencias"
-            }
-          ]
-        }
+        "text": "Reconstruye el origen exacto del ataque paso por paso.",
+        "plantilla": "reloj"
       }
     ],
     "title_en": "Benefits"

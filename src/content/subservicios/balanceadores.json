@@ -20,72 +20,67 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Balanceo inteligente",
-        "title_en": "Intelligent balancing",
-        "text": "Distribuye el tráfico entre múltiples enlaces para optimizar rendimiento y disponibilidad.",
-        "text_en": "Distributes traffic across multiple links to optimize performance and availability.",
+        "title": "Tráfico repartido con criterio",
+        "text": "La carga se distribuye entre los recursos disponibles en vez de saturar uno.",
         "plantilla": "prioridad",
         "datos": {
           "filas": [
             {
-              "label": "Fibra",
-              "nivel": "CRÍTICO",
-              "porcentaje": 90
-            },
-            {
-              "label": "LTE",
+              "label": "Nodo A",
               "nivel": "ALTA",
-              "porcentaje": 58
-            },
-            {
-              "label": "Satelital",
-              "nivel": "MEDIA",
               "porcentaje": 34
+            },
+            {
+              "label": "Nodo B",
+              "nivel": "ALTA",
+              "porcentaje": 33
+            },
+            {
+              "label": "Nodo C",
+              "nivel": "ALTA",
+              "porcentaje": 33
             }
           ]
         }
       },
       {
-        "title": "Conmutación automática",
-        "title_en": "Automatic failover",
-        "text": "Ante fallos del enlace principal, con detección y reconvergencia según la configuración.",
-        "text_en": "When the primary link fails, with detection and reconvergence based on your configuration.",
-        "plantilla": "conmutacion",
-        "datos": {
-          "rutas": [
-            {
-              "label": "FIBRA",
-              "activa": false
-            },
-            {
-              "label": "RESPALDO",
-              "activa": true
-            },
-            {
-              "label": "LTE",
-              "activa": false
-            }
-          ]
-        }
-      },
-      {
-        "title": "Continuidad 24/7",
-        "title_en": "24/7 continuity",
-        "text": "Reduce drásticamente el riesgo de downtime prolongado.",
-        "text_en": "Dramatically reduces the risk of prolonged downtime.",
+        "title": "Aplicaciones siempre disponibles",
+        "text": "Si un recurso cae, el servicio sigue de pie sobre los demás.",
         "plantilla": "uptime",
         "datos": {
-          "valor": "24/7",
-          "unidad": "OPERACIÓN",
-          "porcentaje": 96
+          "valor": "99,9",
+          "unidad": "% DISPONIBILIDAD",
+          "porcentaje": 99
         }
       },
       {
-        "title": "Resiliencia simplificada",
-        "title_en": "Simplified resilience",
-        "text": "Automatiza la selección de rutas entre tecnologías físicamente diversas.",
-        "text_en": "Automates path selection across physically diverse technologies.",
-        "plantilla": "escudo"
+        "title": "Recursos aprovechados",
+        "text": "Saca partido a toda la infraestructura ya instalada.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 85
+        }
+      },
+      {
+        "title": "Arquitectura y soporte",
+        "text": "Configuración ajustada a tu arquitectura, con soporte especializado.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Diseño"
+            },
+            {
+              "label": "Configuración"
+            },
+            {
+              "label": "Pruebas"
+            },
+            {
+              "label": "Soporte"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

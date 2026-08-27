@@ -21,49 +21,49 @@
     "items": [
       {
         "title": "Despliegue inmediato",
-        "title_en": "Immediate deployment",
-        "text": "En cualquier punto geográfico, sin depender de obras civiles.",
-        "text_en": "At any geographic location, without relying on civil works.",
+        "text": "Cobertura en cualquier punto geográfico sin depender de obras civiles.",
         "plantilla": "sedes",
         "datos": {
           "nodos": [
             {
-              "label": "Sede remota"
-            },
-            {
               "label": "Campamento"
             },
             {
-              "label": "Nube"
+              "label": "Planta remota"
+            },
+            {
+              "label": "Sede urbana"
+            },
+            {
+              "label": "NOC"
             }
           ]
         }
       },
       {
         "title": "Latencia baja",
-        "title_en": "Low latency",
-        "text": "Usa ERPs y VoIP desde lugares remotos.",
-        "text_en": "Use ERPs and VoIP from remote locations.",
-        "plantilla": "velocidad",
+        "text": "ERPs y VoIP utilizables desde lugares remotos.",
+        "plantilla": "gauge",
         "datos": {
-          "tarjetas": [
-            {
-              "etiqueta": "Latencia baja",
-              "porcentaje": 72
-            },
-            {
-              "etiqueta": "VoIP estable",
-              "porcentaje": 64
-            }
-          ]
+          "porcentaje": 88
         }
       },
       {
-        "title": "Contingencia reforzada",
-        "title_en": "Reinforced contingency",
-        "text": "Mayor nivel de respaldo para sedes urbanas críticas.",
-        "text_en": "A higher level of backup for critical urban sites.",
-        "plantilla": "escudo"
+        "title": "Contingencia urbana",
+        "text": "El máximo nivel de respaldo cuando se corta la fibra terrestre.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "FIBRA",
+              "activa": false
+            },
+            {
+              "label": "SATELITAL",
+              "activa": true
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

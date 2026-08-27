@@ -22,16 +22,15 @@
     "items": [
       {
         "title": "Bloqueo proactivo de intrusiones",
-        "title_en": "Proactive intrusion blocking",
         "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red.",
-        "text_en": "Stops intrusions and hacking attempts before they reach your network.",
-        "plantilla": "escudo"
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Perímetro validado"
+        }
       },
       {
         "title": "Visibilidad granular",
-        "title_en": "Granular visibility",
         "text": "Identifica y bloquea aplicaciones específicas con control detallado del tráfico.",
-        "text_en": "Identify and block specific applications with detailed traffic control.",
         "plantilla": "prioridad",
         "datos": {
           "filas": [
@@ -48,19 +47,28 @@
             {
               "label": "Streaming",
               "nivel": "BAJA",
-              "porcentaje": 20
+              "porcentaje": 24
             }
           ]
         }
       },
       {
-        "title": "Protección sin sacrificar velocidad",
-        "title_en": "Protection without sacrificing speed",
-        "text": "Protege el perímetro principal de la empresa sin afectar el ancho de banda.",
-        "text_en": "Protects the company's main perimeter without impacting bandwidth.",
-        "plantilla": "gauge",
+        "title": "Perímetro sin cuellos de botella",
+        "text": "Protege el perímetro principal de la empresa sin sacrificar el ancho de banda.",
+        "plantilla": "velocidad",
         "datos": {
-          "porcentaje": 90
+          "etiqueta": "Inspección sin frenar la red",
+          "porcentaje": 96,
+          "tarjetas": [
+            {
+              "etiqueta": "Inspección L7",
+              "porcentaje": 96
+            },
+            {
+              "etiqueta": "Ancho de banda",
+              "porcentaje": 94
+            }
+          ]
         }
       }
     ],

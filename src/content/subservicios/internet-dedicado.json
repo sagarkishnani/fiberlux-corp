@@ -22,43 +22,36 @@
     "items": [
       {
         "title": "Velocidad constante garantizada",
-        "title_en": "Guaranteed constant speed",
-        "text": "Ancho de banda dedicado en cualquier horario, sin caídas por saturación de red compartida.",
-        "text_en": "Dedicated bandwidth at any time, with no drops from shared-network congestion.",
+        "text": "La misma capacidad a cualquier hora, sin compartición con otros usuarios.",
         "plantilla": "velocidad",
         "datos": {
+          "etiqueta": "Velocidad sin caídas",
+          "porcentaje": 100,
           "tarjetas": [
             {
-              "etiqueta": "Velocidad sin caídas",
-              "porcentaje": 78
+              "etiqueta": "Hora punta",
+              "porcentaje": 100
             },
             {
-              "etiqueta": "Ancho garantizado",
-              "porcentaje": 54
+              "etiqueta": "Madrugada",
+              "porcentaje": 100
             }
           ]
         }
       },
       {
         "title": "Carga y descarga simétrica",
-        "title_en": "Symmetrical upload and download",
-        "text": "Ideal para videollamadas fluidas y subida de bases de datos, con el mismo ancho en ambas direcciones.",
-        "text_en": "Ideal for smooth video calls and database uploads, with the same bandwidth in both directions.",
+        "text": "Videollamadas fluidas y subida de bases de datos sin cuello de botella.",
         "plantilla": "simetria",
         "datos": {
-          "barras": 7,
-          "porcentaje": 78
+          "porcentaje": 60,
+          "barras": 7
         }
       },
       {
         "title": "Soporte de alta prioridad",
-        "title_en": "High-priority support",
-        "text": "Resolución inmediata ante incidencias con SLA dedicado y atención preferente 24/7.",
-        "text_en": "Immediate incident resolution with a dedicated SLA and priority 24/7 attention.",
-        "plantilla": "gauge",
-        "datos": {
-          "porcentaje": 88
-        }
+        "text": "Resolución inmediata ante incidencias, con atención preferente.",
+        "plantilla": "reloj"
       }
     ],
     "title_en": "Benefits"

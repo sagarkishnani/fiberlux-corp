@@ -20,62 +20,36 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Alta escalabilidad",
-        "title_en": "High scalability",
-        "text": "Amplía capacidad incorporando o actualizando equipos propios.",
-        "text_en": "Expand capacity by adding or upgrading your own equipment.",
+        "title": "Capacidad que escala contigo",
+        "text": "Sube el ancho de banda incorporando o actualizando tus propios equipos.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 75
+        }
+      },
+      {
+        "title": "Tu arquitectura, tus reglas",
+        "text": "Control sobre el diseño, la gestión y la seguridad de la red.",
         "plantilla": "dwdm",
         "datos": {
           "hilos": 6
         }
       },
       {
-        "title": "Control total de la red",
-        "title_en": "Full network control",
-        "text": "Sobre su arquitectura, gestión y seguridad.",
-        "text_en": "Over its architecture, management and security.",
-        "plantilla": "sedes",
+        "title": "Baja latencia y alto desempeño",
+        "text": "Rendimiento sostenido para las aplicaciones más exigentes.",
+        "plantilla": "gauge",
         "datos": {
-          "nodos": [
-            {
-              "label": "Sede propia"
-            },
-            {
-              "label": "Data center"
-            },
-            {
-              "label": "Nodo"
-            }
-          ]
+          "porcentaje": 95
         }
       },
       {
-        "title": "Baja latencia",
-        "title_en": "Low latency",
-        "text": "Alto desempeño para aplicaciones críticas.",
-        "text_en": "High performance for critical applications.",
-        "plantilla": "velocidad",
+        "title": "Costos optimizados a alto volumen",
+        "text": "A mayor tráfico, mejor economía frente a un servicio gestionado.",
+        "plantilla": "simetria",
         "datos": {
-          "tarjetas": [
-            {
-              "etiqueta": "Baja latencia",
-              "porcentaje": 84
-            },
-            {
-              "etiqueta": "Alto desempeño",
-              "porcentaje": 70
-            }
-          ]
-        }
-      },
-      {
-        "title": "Costos optimizados",
-        "title_en": "Optimized costs",
-        "text": "Para operaciones con alto volumen de tráfico.",
-        "text_en": "For operations with high traffic volumes.",
-        "plantilla": "escalera",
-        "datos": {
-          "porcentaje": 62
+          "porcentaje": 40,
+          "barras": 7
         }
       }
     ],

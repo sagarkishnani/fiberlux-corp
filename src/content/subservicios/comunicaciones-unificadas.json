@@ -21,20 +21,21 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Control corporativo de la información",
-        "title_en": "Corporate control of information",
-        "text": "Gobierna el flujo de la información compartida.",
-        "text_en": "Govern the flow of shared information.",
-        "plantilla": "escudo"
+        "title": "La información no se te escapa",
+        "text": "Control corporativo absoluto sobre lo que se comparte y por dónde.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Canal corporativo"
+        }
       },
       {
-        "title": "Productividad ágil",
-        "title_en": "Agile productivity",
-        "text": "Sepa al instante si un colega está disponible, ocupado o en reunión.",
-        "text_en": "Know instantly whether a colleague is available, busy or in a meeting.",
-        "plantilla": "checklist",
+        "title": "Sabes quién está disponible",
+        "text": "Al instante ves si un colega está libre, ocupado o en reunión.",
+        "plantilla": "consola",
         "datos": {
-          "chips": [
+          "etiqueta": "PRESENCIA",
+          "valor": "EN LÍNEA",
+          "nodos": [
             {
               "label": "Disponible"
             },
@@ -48,21 +49,43 @@
         }
       },
       {
-        "title": "Todo en una plataforma",
-        "title_en": "Everything on one platform",
-        "text": "Portabilidad de números, equipos, licenciamiento e integración con Teams y WhatsApp.",
-        "text_en": "Number portability, devices, licensing and integration with Teams and WhatsApp.",
-        "plantilla": "consola",
+        "title": "Una sola herramienta",
+        "text": "Menos software disperso para el colaborador.",
+        "plantilla": "checklist",
         "datos": {
-          "nodos": [
+          "chips": [
             {
-              "label": "Telefonía"
+              "label": "Voz"
             },
             {
               "label": "Chat"
             },
             {
               "label": "Video"
+            },
+            {
+              "label": "CRM"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Numeración, equipos e integraciones",
+        "text": "Portabilidad o asignación de números, arrendamiento de equipos e integración con Teams o WhatsApp.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Teams"
+            },
+            {
+              "label": "WhatsApp"
+            },
+            {
+              "label": "CRM"
+            },
+            {
+              "label": "Telefonía"
             }
           ]
         }

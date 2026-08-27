@@ -21,10 +21,8 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Cobertura optimizada",
-        "title_en": "Optimized coverage",
-        "text": "WiFi diseñado para entornos empresariales exigentes.",
-        "text_en": "WiFi designed for demanding enterprise environments.",
+        "title": "Cobertura pensada para empresas",
+        "text": "Diseño inalámbrico optimizado para la densidad real de usuarios y dispositivos.",
         "plantilla": "sedes",
         "datos": {
           "nodos": [
@@ -36,16 +34,17 @@
             },
             {
               "label": "Almacén"
+            },
+            {
+              "label": "Exteriores"
             }
           ]
         }
       },
       {
-        "title": "Acceso segmentado",
-        "title_en": "Segmented access",
-        "text": "Gestión de acceso para colaboradores, visitantes y dispositivos.",
-        "text_en": "Access management for employees, guests and devices.",
-        "plantilla": "mfa",
+        "title": "Accesos separados por perfil",
+        "text": "Colaboradores, visitantes y dispositivos, cada uno en su red.",
+        "plantilla": "checklist",
         "datos": {
           "chips": [
             {
@@ -56,20 +55,53 @@
             },
             {
               "label": "Dispositivos"
+            },
+            {
+              "label": "IoT"
             }
           ]
         }
       },
       {
-        "title": "Proyectos llave en mano",
-        "title_en": "Turnkey projects",
-        "text": "Diseño, arrendamiento de equipos, instalación, gestión y soporte.",
-        "text_en": "Design, equipment leasing, installation, management and support.",
+        "title": "Mapas de calor",
+        "text": "La cobertura se planifica antes de instalar, no después.",
+        "plantilla": "simetria",
+        "datos": {
+          "porcentaje": 75,
+          "barras": 7
+        }
+      },
+      {
+        "title": "Monitoreo continuo",
+        "text": "El rendimiento inalámbrico se vigila y se ajusta de forma permanente.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "RED INALÁMBRICA",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "APs"
+            },
+            {
+              "label": "Clientes"
+            },
+            {
+              "label": "Interferencia"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Proyecto llave en mano",
+        "text": "Del diseño al soporte, incluyendo arrendamiento de equipos e instalación física.",
         "plantilla": "checklist",
         "datos": {
           "chips": [
             {
               "label": "Diseño"
+            },
+            {
+              "label": "Arrendamiento"
             },
             {
               "label": "Instalación"

@@ -22,37 +22,41 @@
     "items": [
       {
         "title": "Recuperación garantizada",
-        "title_en": "Guaranteed recovery",
-        "text": "Recupera tus datos ante secuestros digitales o borrados accidentales.",
-        "text_en": "Recover your data after digital hijacking or accidental deletion.",
-        "plantilla": "escudo"
+        "text": "Recupera los datos tras un secuestro digital o un borrado accidental.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Backup verificado"
+        }
       },
       {
         "title": "Respaldos inmutables",
-        "title_en": "Immutable backups",
-        "text": "Bloquea cualquier intento externo de modificación.",
-        "text_en": "Block any external attempt to alter your data.",
-        "plantilla": "checklist",
+        "text": "Ningún intento externo puede modificar las copias.",
+        "plantilla": "tunel",
         "datos": {
-          "chips": [
-            {
-              "label": "Respaldo"
-            },
-            {
-              "label": "Verificación"
-            },
-            {
-              "label": "Bloqueo"
-            }
-          ]
+          "hilos": 4,
+          "etiqueta": "Copias cifradas e inmutables"
         }
       },
       {
         "title": "Cumplimiento normativo",
-        "title_en": "Regulatory compliance",
-        "text": "Retención legal de la información corporativa.",
-        "text_en": "Legally compliant retention of corporate information.",
-        "plantilla": "reloj"
+        "text": "Retención legal de la información corporativa según lo que exige el regulador.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Retención legal"
+            },
+            {
+              "label": "Registro de copias"
+            },
+            {
+              "label": "Cifrado"
+            },
+            {
+              "label": "Restauración probada"
+            }
+          ]
+        }
       }
     ],
     "title_en": "Benefits"

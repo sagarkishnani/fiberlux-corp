@@ -21,18 +21,18 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Monitoreo centralizado",
-        "title_en": "Centralized monitoring",
-        "text": "Supervisa cámaras y dispositivos desde un solo lugar.",
-        "text_en": "Oversee cameras and devices from a single place.",
+        "title": "Todas las cámaras en un panel",
+        "text": "Monitoreo centralizado de cámaras y dispositivos de videovigilancia.",
         "plantilla": "consola",
         "datos": {
+          "etiqueta": "VIDEOVIGILANCIA",
+          "valor": "EN LÍNEA",
           "nodos": [
             {
               "label": "Cámaras"
             },
             {
-              "label": "Grabaciones"
+              "label": "Grabación"
             },
             {
               "label": "Alertas"
@@ -41,30 +41,62 @@
         }
       },
       {
-        "title": "Mayor control y visibilidad",
-        "title_en": "Greater control and visibility",
-        "text": "Protege activos, instalaciones y operaciones.",
-        "text_en": "Protect assets, facilities and operations.",
-        "plantilla": "escudo"
-      },
-      {
-        "title": "Acceso remoto seguro",
-        "title_en": "Secure remote access",
-        "text": "Visualización en tiempo real y acceso a grabaciones desde cualquier lugar.",
-        "text_en": "Real-time viewing and access to recordings from anywhere.",
+        "title": "Más control sobre tus instalaciones",
+        "text": "Visibilidad permanente sobre sedes, activos y operaciones.",
         "plantilla": "sedes",
         "datos": {
           "nodos": [
             {
-              "label": "Sede"
+              "label": "Planta"
             },
             {
-              "label": "Nube"
+              "label": "Almacén"
             },
             {
-              "label": "Usuario remoto"
+              "label": "Oficinas"
+            },
+            {
+              "label": "Accesos"
             }
           ]
+        }
+      },
+      {
+        "title": "Gestión proactiva",
+        "text": "La plataforma y sus componentes se atienden antes de que fallen.",
+        "plantilla": "bitacora",
+        "datos": {
+          "filas": [
+            {
+              "label": "Cámara sin señal",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Disco de grabación al 80%",
+              "nivel": "MEDIA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Firmware actualizado",
+              "nivel": "BAJA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Acceso remoto verificado",
+              "nivel": "BAJA",
+              "porcentaje": 0
+            }
+          ]
+        }
+      },
+      {
+        "title": "Acceso remoto seguro",
+        "text": "Grabaciones y visualización en tiempo real desde donde estés.",
+        "plantilla": "tunel",
+        "datos": {
+          "hilos": 3,
+          "etiqueta": "Video cifrado"
         }
       }
     ],

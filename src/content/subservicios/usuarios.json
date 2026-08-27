@@ -21,10 +21,8 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Neutraliza el robo de contraseñas",
-        "title_en": "Neutralizes password theft",
-        "text": "El atacante no puede entrar sin el dispositivo físico del usuario.",
-        "text_en": "Attackers cannot get in without the user's physical device.",
+        "title": "Robo de contraseñas neutralizado",
+        "text": "Sin el dispositivo físico del usuario, la credencial robada no sirve.",
         "plantilla": "mfa",
         "datos": {
           "chips": [
@@ -41,33 +39,40 @@
         }
       },
       {
-        "title": "Auditoría clara",
-        "title_en": "Clear auditing",
-        "text": "Sabe quién aprueba accesos a plataformas críticas.",
-        "text_en": "Know who approves access to critical platforms.",
-        "plantilla": "checklist",
+        "title": "Auditoría clara de accesos",
+        "text": "Queda registrado quién aprueba la entrada a cada plataforma crítica.",
+        "plantilla": "bitacora",
         "datos": {
-          "chips": [
+          "filas": [
             {
-              "label": "Solicitud"
+              "label": "Acceso al ERP aprobado",
+              "nivel": "ALTA",
+              "porcentaje": 0
             },
             {
-              "label": "Aprobación"
+              "label": "Login administrativo verificado",
+              "nivel": "CRÍTICO",
+              "porcentaje": 0
             },
             {
-              "label": "Registro"
+              "label": "Intento sin segundo factor",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Sesión cerrada por inactividad",
+              "nivel": "BAJA",
+              "porcentaje": 0
             }
           ]
         }
       },
       {
-        "title": "Máxima seguridad, mínima fricción",
-        "title_en": "Maximum security, minimal friction",
-        "text": "Protección fuerte sin entorpecer al colaborador legítimo.",
-        "text_en": "Strong protection without getting in the way of legitimate employees.",
+        "title": "Seguridad sin fricción",
+        "text": "Máxima protección con el mínimo estorbo para el colaborador legítimo.",
         "plantilla": "gauge",
         "datos": {
-          "porcentaje": 92
+          "porcentaje": 95
         }
       }
     ],

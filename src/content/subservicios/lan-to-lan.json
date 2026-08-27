@@ -20,30 +20,26 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Máxima privacidad",
-        "title_en": "Maximum privacy",
-        "text": "Seguridad total para el intercambio de datos sensibles.",
-        "text_en": "Total security for the exchange of sensitive data.",
-        "plantilla": "escudo"
-      },
-      {
-        "title": "Latencia ultrabaja",
-        "title_en": "Ultra-low latency",
-        "text": "Entre oficinas, como si estuvieran en el mismo edificio.",
-        "text_en": "Between offices, as if they were in the same building.",
-        "plantilla": "simetria",
+        "title": "Datos que nunca tocan internet",
+        "text": "El intercambio entre sedes va por un transporte privado.",
+        "plantilla": "tunel",
         "datos": {
-          "barras": 7,
-          "porcentaje": 62
+          "hilos": 4,
+          "etiqueta": "Enlace privado cifrado"
         }
       },
       {
-        "title": "Control total",
-        "title_en": "Full control",
-        "text": "Sobre el tráfico interno de la organización.",
-        "text_en": "Over the organization's internal traffic.",
-        "plantilla": "sedes",
+        "title": "Latencia ultrabaja",
+        "text": "Las oficinas se comportan como si estuvieran en el mismo edificio.",
+        "plantilla": "reloj"
+      },
+      {
+        "title": "Control total del tráfico interno",
+        "text": "Tú decides qué circula entre tus sedes y con qué prioridad.",
+        "plantilla": "consola",
         "datos": {
+          "etiqueta": "ENLACE PRIVADO",
+          "valor": "OK",
           "nodos": [
             {
               "label": "Sede A"
@@ -52,7 +48,7 @@
               "label": "Sede B"
             },
             {
-              "label": "Data center"
+              "label": "Data Center"
             }
           ]
         }

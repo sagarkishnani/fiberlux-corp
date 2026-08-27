@@ -20,34 +20,38 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Máximo uptime",
-        "title_en": "Maximum uptime",
-        "text": "Maximiza el tiempo de actividad de tus operaciones.",
-        "text_en": "Maximize the uptime of your operations.",
+        "title": "Uptime maximizado",
+        "text": "El enlace de respaldo entra automáticamente cuando el principal falla.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "ENLACE PRINCIPAL",
+              "activa": false
+            },
+            {
+              "label": "ENLACE DE RESPALDO",
+              "activa": true
+            }
+          ]
+        }
+      },
+      {
+        "title": "SLA de hasta 99,95%",
+        "text": "Compromiso contractual de disponibilidad, no una promesa comercial.",
         "plantilla": "uptime",
         "datos": {
           "valor": "99,95",
-          "unidad": "% UPTIME"
+          "unidad": "% UPTIME",
+          "porcentaje": 99
         }
       },
       {
-        "title": "SLA garantizado",
-        "title_en": "Guaranteed SLA",
-        "text": "Acuerdos de nivel de servicio rigurosos de hasta 99,95%.",
-        "text_en": "Rigorous service level agreements of up to 99.95%.",
-        "plantilla": "gauge",
+        "title": "Sin pérdidas por desconexión",
+        "text": "La facturación y el punto de venta no se detienen.",
+        "plantilla": "escudo",
         "datos": {
-          "porcentaje": 95
-        }
-      },
-      {
-        "title": "Estabilidad financiera",
-        "title_en": "Financial stability",
-        "text": "Evita pérdidas económicas por desconexión.",
-        "text_en": "Avoid financial losses caused by downtime.",
-        "plantilla": "escalera",
-        "datos": {
-          "porcentaje": 70
+          "etiqueta": "Facturación protegida"
         }
       }
     ],

@@ -21,53 +21,54 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Aprovisionamiento en minutos",
-        "title_en": "Provisioning in minutes",
-        "text": "Despliega servidores virtuales casi al instante.",
-        "text_en": "Deploy virtual servers almost instantly.",
-        "plantilla": "velocidad",
-        "datos": {
-          "tarjetas": [
-            {
-              "etiqueta": "Despliegue en minutos",
-              "porcentaje": 88
-            },
-            {
-              "etiqueta": "Sin compra de hardware",
-              "porcentaje": 70
-            }
-          ]
-        }
+        "title": "Servidores en minutos",
+        "text": "Aprovisiona instancias virtuales sin esperar compras ni instalaciones.",
+        "plantilla": "reloj"
       },
       {
-        "title": "Pago por uso (OPEX)",
-        "title_en": "Pay-as-you-go (OPEX)",
-        "text": "Modelo flexible que optimiza tu inversión.",
-        "text_en": "A flexible model that optimizes your investment.",
+        "title": "Pago por uso",
+        "text": "Modelo OPEX flexible: pagas la capacidad que realmente consumes.",
         "plantilla": "escalera",
         "datos": {
-          "porcentaje": 56
+          "porcentaje": 60
         }
       },
       {
-        "title": "Escala y redimensiona",
-        "title_en": "Scale and resize",
-        "text": "Ajusta recursos según las cargas de trabajo.",
-        "text_en": "Adjust resources to match your workloads.",
-        "plantilla": "gauge",
+        "title": "Escala con tu carga",
+        "text": "Redimensiona los recursos según lo que exija cada carga de trabajo.",
+        "plantilla": "simetria",
         "datos": {
-          "porcentaje": 78
+          "porcentaje": 70,
+          "barras": 7
         }
       },
       {
         "title": "Replicación entre sitios",
-        "title_en": "Cross-site replication",
-        "text": "Fortalece la disponibilidad y protección de la información crítica.",
-        "text_en": "Strengthens the availability and protection of critical information.",
-        "plantilla": "uptime",
+        "text": "Copia la información crítica en más de una ubicación.",
+        "plantilla": "dwdm",
         "datos": {
-          "valor": "99,9",
-          "unidad": "% DISPONIBLE"
+          "hilos": 4
+        }
+      },
+      {
+        "title": "Portafolio As a Service",
+        "text": "Desplegamos Huawei Cloud y nubes públicas dejándote el control en tu propio panel.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Cómputo"
+            },
+            {
+              "label": "Almacenamiento"
+            },
+            {
+              "label": "Contenedores"
+            },
+            {
+              "label": "Redes"
+            }
+          ]
         }
       }
     ],

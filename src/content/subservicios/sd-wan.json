@@ -20,10 +20,8 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Prioriza el tráfico crítico",
-        "title_en": "Prioritize critical traffic",
-        "text": "ERP, VoIP y POS por encima de aplicaciones secundarias.",
-        "text_en": "ERP, VoIP and POS above secondary applications.",
+        "title": "El tráfico crítico va primero",
+        "text": "ERP, VoIP y POS pasan por delante de las aplicaciones secundarias.",
         "plantilla": "prioridad",
         "datos": {
           "filas": [
@@ -34,50 +32,46 @@
             },
             {
               "label": "VoIP",
-              "nivel": "ALTA",
-              "porcentaje": 74
+              "nivel": "CRÍTICO",
+              "porcentaje": 88
             },
             {
               "label": "POS",
               "nivel": "ALTA",
-              "porcentaje": 60
+              "porcentaje": 76
             },
             {
               "label": "Navegación",
               "nivel": "BAJA",
-              "porcentaje": 32
+              "porcentaje": 28
             }
           ]
         }
       },
       {
-        "title": "Gestión centralizada",
-        "title_en": "Centralized management",
-        "text": "Múltiples sedes desde una única plataforma.",
-        "text_en": "Multiple sites from a single platform.",
+        "title": "Todas las sedes desde un panel",
+        "text": "Gestión centralizada de la red completa, sede por sede.",
         "plantilla": "sedes",
         "datos": {
           "nodos": [
             {
-              "label": "Sede norte"
+              "label": "Lima"
             },
             {
-              "label": "Sede sur"
+              "label": "Arequipa"
             },
             {
-              "label": "Planta"
+              "label": "Trujillo"
             },
             {
-              "label": "Nube"
+              "label": "Piura"
             }
           ]
         }
       },
       {
-        "title": "Acceso directo a internet",
-        "title_en": "Direct internet access",
-        "text": "Optimiza el rendimiento de aplicaciones cloud y SaaS.",
-        "text_en": "Optimizes the performance of cloud and SaaS applications.",
+        "title": "Salida directa a internet",
+        "text": "Cada sede accede a la nube y al SaaS sin dar la vuelta por el data center.",
         "plantilla": "conmutacion",
         "datos": {
           "rutas": [
@@ -86,24 +80,38 @@
               "activa": false
             },
             {
-              "label": "INTERNET",
+              "label": "INTERNET DIRECTO",
               "activa": true
-            },
-            {
-              "label": "LTE",
-              "activa": false
             }
           ]
         }
       },
       {
         "title": "Costos optimizados",
-        "title_en": "Optimized costs",
-        "text": "Aprovecha de forma inteligente todos los enlaces disponibles.",
-        "text_en": "Intelligently leverages every available link.",
+        "text": "Aprovecha de forma inteligente todos los enlaces contratados.",
         "plantilla": "escalera",
         "datos": {
-          "porcentaje": 68
+          "porcentaje": 65
+        }
+      },
+      {
+        "title": "Un solo panel, varios proveedores",
+        "text": "Unifica la gestión aunque tengas operadores y medios de transmisión distintos.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "SD-WAN",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "Fibra"
+            },
+            {
+              "label": "LTE"
+            },
+            {
+              "label": "Satelital"
+            }
+          ]
         }
       }
     ],

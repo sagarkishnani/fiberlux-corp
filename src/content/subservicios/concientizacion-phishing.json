@@ -21,51 +21,59 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Colaboradores más alertas",
-        "title_en": "More alert employees",
-        "text": "Mayor capacidad para identificar correos y enlaces sospechosos.",
-        "text_en": "Greater ability to spot suspicious emails and links.",
-        "plantilla": "mfa",
+        "title": "Ojo entrenado para el fraude",
+        "text": "Los colaboradores identifican correos y enlaces sospechosos.",
+        "plantilla": "checklist",
         "datos": {
           "chips": [
             {
-              "label": "Correo sospechoso"
+              "label": "Remitente"
             },
             {
-              "label": "Enlace dudoso"
+              "label": "Enlace"
             },
             {
-              "label": "Reporte del usuario"
+              "label": "Adjunto"
+            },
+            {
+              "label": "Urgencia"
             }
           ]
         }
       },
       {
         "title": "Menos robo de credenciales",
-        "title_en": "Fewer credential thefts",
-        "text": "Reduce el riesgo de fuga de información sensible.",
-        "text_en": "Reduces the risk of sensitive information leaks.",
-        "plantilla": "escudo"
+        "text": "Baja el riesgo de que se filtre información sensible por un clic.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 78
+        }
       },
       {
         "title": "Cultura de seguridad",
-        "title_en": "Security culture",
-        "text": "Fortalece la conciencia con campañas y simulaciones continuas.",
-        "text_en": "Strengthens awareness with ongoing campaigns and simulations.",
-        "plantilla": "checklist",
+        "text": "La primera línea de defensa deja de ser el eslabón débil.",
+        "plantilla": "sedes",
         "datos": {
-          "chips": [
+          "nodos": [
             {
-              "label": "Campañas"
+              "label": "Comercial"
             },
             {
-              "label": "Simulaciones"
+              "label": "Finanzas"
             },
             {
-              "label": "Evaluación"
+              "label": "Operaciones"
+            },
+            {
+              "label": "TI"
             }
           ]
         }
+      },
+      {
+        "title": "Evaluación continua",
+        "text": "Campañas y simulaciones periódicas que miden el avance real.",
+        "plantilla": "reloj"
       }
     ],
     "title_en": "Benefits"

@@ -21,56 +21,61 @@
     "title": "Beneficios",
     "items": [
       {
-        "title": "Bloqueo de exploits",
-        "title_en": "Exploit blocking",
+        "title": "Exploits bloqueados en la puerta",
         "text": "Detiene vulnerabilidades web antes de que toquen el servidor.",
-        "text_en": "Stops web vulnerabilities before they ever reach the server.",
-        "plantilla": "escudo"
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Tráfico HTTP/S auditado"
+        }
       },
       {
-        "title": "Cumplimiento PCI-DSS",
-        "title_en": "PCI-DSS compliance",
-        "text": "Ayuda a cumplir normativas financieras de pago.",
-        "text_en": "Helps meet financial payment regulations.",
+        "title": "Cumplimiento de normativas de pago",
+        "text": "Asegura los requisitos financieros exigidos, como PCI-DSS.",
         "plantilla": "checklist",
         "datos": {
           "chips": [
             {
-              "label": "Requisitos"
+              "label": "PCI-DSS"
             },
             {
-              "label": "Controles"
+              "label": "Registro de eventos"
             },
             {
-              "label": "Evidencias"
+              "label": "Reglas gestionadas"
+            },
+            {
+              "label": "Reporte de incidentes"
             }
           ]
         }
       },
       {
-        "title": "Protección OWASP Top 10",
-        "title_en": "OWASP Top 10 protection",
-        "text": "Mitiga las vulnerabilidades del estándar OWASP, reduciendo el riesgo de explotación.",
-        "text_en": "Mitigates OWASP standard vulnerabilities, reducing the risk of exploitation.",
-        "plantilla": "prioridad",
+        "title": "Reputación de marca protegida",
+        "text": "Evita las fugas masivas de datos que se vuelven públicas.",
+        "plantilla": "zerotrust",
         "datos": {
-          "filas": [
+          "nodos": [
             {
-              "label": "Inyección",
-              "nivel": "CRÍTICO",
-              "porcentaje": 90
+              "label": "Formularios"
             },
             {
-              "label": "XSS",
-              "nivel": "ALTA",
-              "porcentaje": 72
+              "label": "API"
             },
             {
-              "label": "Config. insegura",
-              "nivel": "MEDIA",
-              "porcentaje": 48
+              "label": "Sesiones"
+            },
+            {
+              "label": "Base de datos"
             }
           ]
+        }
+      },
+      {
+        "title": "Blindaje OWASP Top 10",
+        "text": "Mitiga las vulnerabilidades del estándar y reduce el riesgo sobre datos y transacciones.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 90
         }
       }
     ],
