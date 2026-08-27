@@ -1,10 +1,10 @@
 {
-  "title": "Balanceo de enlaces",
-  "slug": "balanceo-de-enlaces",
-  "solucionSlug": "conectividad-empresarial",
-  "solucionTitle": "Conectividad Empresarial",
+  "title": "Balanceadores",
+  "slug": "balanceadores",
+  "solucionSlug": "infraestructura",
+  "solucionTitle": "Infraestructura",
   "hero": {
-    "heading": "Balanceo de enlaces",
+    "heading": "Balanceadores",
     "intro": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
     "note": "",
     "ctaLabel": "Conocer más",

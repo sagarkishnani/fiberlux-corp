@@ -1,10 +1,10 @@
 {
-  "title": "MFA y Control de Identidad",
-  "slug": "mfa-control-identidad",
-  "solucionSlug": "ciberseguridad-gestionada",
-  "solucionTitle": "Ciberseguridad Gestionada",
+  "title": "Usuarios",
+  "slug": "usuarios",
+  "solucionSlug": "ciberseguridad",
+  "solucionTitle": "Ciberseguridad",
   "hero": {
-    "heading": "MFA y Control de Identidad",
+    "heading": "Usuarios",
     "intro": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
     "note": "Ideal para proteger sistemas financieros y bases de datos contra el robo de credenciales y las contraseñas débiles en el mercado negro.",
     "ctaLabel": "Conocer más",

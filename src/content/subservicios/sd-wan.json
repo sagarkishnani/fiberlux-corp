@@ -1,8 +1,8 @@
 {
   "title": "SD-WAN",
   "slug": "sd-wan",
-  "solucionSlug": "conectividad-empresarial",
-  "solucionTitle": "Conectividad Empresarial",
+  "solucionSlug": "conectividad",
+  "solucionTitle": "Conectividad",
   "hero": {
     "heading": "SD-WAN",
     "intro": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",

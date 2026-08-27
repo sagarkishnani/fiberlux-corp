@@ -1,8 +1,8 @@
 {
   "title": "Backup as a Service (BaaS)",
   "slug": "baas",
-  "solucionSlug": "data-center-cloud",
-  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "solucionSlug": "data-center",
+  "solucionTitle": "Data Center",
   "hero": {
     "heading": "Backup as a Service (BaaS)",
     "intro": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",

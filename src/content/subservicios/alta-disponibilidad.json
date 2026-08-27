@@ -1,10 +1,10 @@
 {
-  "title": "Internet Corporativo de Alta Disponibilidad",
-  "slug": "internet-alta-disponibilidad",
-  "solucionSlug": "conectividad-empresarial",
-  "solucionTitle": "Conectividad Empresarial",
+  "title": "Alta Disponibilidad",
+  "slug": "alta-disponibilidad",
+  "solucionSlug": "conectividad",
+  "solucionTitle": "Conectividad",
   "hero": {
-    "heading": "Internet Corporativo de Alta Disponibilidad",
+    "heading": "Alta Disponibilidad",
     "intro": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
     "note": "",
     "ctaLabel": "Conocer más",

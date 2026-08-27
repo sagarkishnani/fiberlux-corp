@@ -1,10 +1,10 @@
 {
-  "title": "Internet Corporativo",
-  "slug": "internet-corporativo",
-  "solucionSlug": "conectividad-empresarial",
-  "solucionTitle": "Conectividad Empresarial",
+  "title": "Internet Dedicado",
+  "slug": "internet-dedicado",
+  "solucionSlug": "conectividad",
+  "solucionTitle": "Conectividad",
   "hero": {
-    "heading": "Internet Corporativo",
+    "heading": "Internet Dedicado",
     "intro": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
     "note": "Ideal si tu red compartida colapsa en horas pico, asfixiando tus sistemas de gestión y subida de archivos a la nube.",
     "ctaLabel": "Conocer más",

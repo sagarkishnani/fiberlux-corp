@@ -1,10 +1,10 @@
 {
-  "title": "Seguridad de Correo y Filtrado Web",
-  "slug": "seguridad-correo-filtrado-web",
-  "solucionSlug": "ciberseguridad-gestionada",
-  "solucionTitle": "Ciberseguridad Gestionada",
+  "title": "Correo",
+  "slug": "correo",
+  "solucionSlug": "ciberseguridad",
+  "solucionTitle": "Ciberseguridad",
   "hero": {
-    "heading": "Seguridad de Correo y Filtrado Web",
+    "heading": "Correo",
     "intro": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
     "note": "Ideal para mitigar el riesgo del eslabón más débil (el error humano), evitando que un colaborador comprometa la infraestructura con un simple clic.",
     "ctaLabel": "Conocer más",

@@ -1,10 +1,10 @@
 {
-  "title": "WAF",
-  "slug": "waf",
-  "solucionSlug": "ciberseguridad-gestionada",
-  "solucionTitle": "Ciberseguridad Gestionada",
+  "title": "Aplicaciones",
+  "slug": "aplicaciones",
+  "solucionSlug": "ciberseguridad",
+  "solucionTitle": "Ciberseguridad",
   "hero": {
-    "heading": "WAF",
+    "heading": "Aplicaciones",
     "intro": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
     "note": "Ideal para plataformas web y ecommerces expuestos a ataques cibernéticos.",
     "ctaLabel": "Conocer más",

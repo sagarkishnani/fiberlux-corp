@@ -1,8 +1,8 @@
 {
   "title": "Disaster Recovery (DRaaS)",
   "slug": "draas",
-  "solucionSlug": "data-center-cloud",
-  "solucionTitle": "Data Center, Cloud y Continuidad de Negocio",
+  "solucionSlug": "data-center",
+  "solucionTitle": "Data Center",
   "hero": {
     "heading": "Disaster Recovery (DRaaS)",
     "intro": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
