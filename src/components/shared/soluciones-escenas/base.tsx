@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useCallback, useRef, type ReactNode } from "react";
 
 /**
  * Piezas compartidas por las cuatro escenas de la sección de soluciones
@@ -54,6 +54,69 @@ export function EscenaSol({
   );
 }
 
+/** Grados máximos de giro en cada eje. Contenido pero legible: se tiene que
+ *  notar que la escena se inclina, sin que llegue a leerse como una tarjeta
+ *  que se voltea. */
+const TILT_MAX = 10;
+
+/**
+ * Inclinación suave de la escena al pasar el cursor.
+ *
+ * Envuelve el dibujo en un plano con perspectiva y lo gira unos pocos grados
+ * siguiendo al puntero, con una caída larga al soltarlo. La amplitud se regula
+ * desde `TILT_MAX` y el acercamiento del `scale` de abajo: subirlos endurece el
+ * gesto rápido, así que conviene moverlos juntos y de a poco.
+ *
+ * Notas de implementación:
+ * - El `transform` se escribe por ref y no por estado: un `mousemove` que
+ *   re-renderizara React en cada píxel tiraría el frame rate de una sección
+ *   que ya tiene cuatro escenas animadas en bucle.
+ * - Sólo responde a punteros finos (`pointerType === "mouse"`), así que en
+ *   táctil no pasa nada. Y `prefers-reduced-motion` lo apaga por CSS, no aquí:
+ *   la regla de abajo neutraliza la transición y el giro.
+ * - La perspectiva vive en el nodo de fuera y el giro en el de dentro, porque
+ *   `perspective` en el mismo elemento que rota no produce fuga real.
+ */
+export function TiltEscena({ children }: { children: ReactNode }) {
+  const planoRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<number | null>(null);
+
+  /** Último giro pedido, aplicado en el siguiente frame. */
+  const pedir = useCallback((transform: string) => {
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = null;
+      if (planoRef.current) planoRef.current.style.transform = transform;
+    });
+  }, []);
+
+  const alMover = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (e.pointerType !== "mouse") return;
+      const caja = e.currentTarget.getBoundingClientRect();
+      if (!caja.width || !caja.height) return;
+      // -1..1 desde el centro de la escena.
+      const x = (e.clientX - caja.left) / caja.width - 0.5;
+      const y = (e.clientY - caja.top) / caja.height - 0.5;
+      pedir(
+        `rotateX(${(-y * 2 * TILT_MAX).toFixed(2)}deg) ` +
+          `rotateY(${(x * 2 * TILT_MAX).toFixed(2)}deg) scale(1.035)`
+      );
+    },
+    [pedir]
+  );
+
+  const alSalir = useCallback(() => pedir(""), [pedir]);
+
+  return (
+    <div className="fbx-sol-tilt" onPointerMove={alMover} onPointerLeave={alSalir}>
+      <div className="fbx-sol-tilt-plano" ref={planoRef}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /**
  * Animaciones de las cuatro escenas (SPEC 108).
  *
@@ -82,6 +145,24 @@ export const CSS_SOLUCIONES = `
 }
 @supports not (container-type: inline-size) {
   .fbx-sol-escena-in { --u: 1px; }
+}
+
+/* ── Inclinación al hover ──
+   El plano de perspectiva envuelve la escena entera. La vuelta al reposo es
+   más lenta que la ida (el transform durante el movimiento se pisa cada frame,
+   así que la transición sólo se percibe al soltar), que es lo que hace que el
+   gesto se sienta blando en vez de elástico. */
+.fbx-sol-tilt { perspective: 800px; }
+.fbx-sol-tilt-plano {
+  transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+}
+/* Sin puntero fino (táctil) no hay hover que seguir: nada que preparar. */
+@media (hover: none), (pointer: coarse) {
+  .fbx-sol-tilt-plano { will-change: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fbx-sol-tilt-plano { transition: none; transform: none !important; }
 }
 
 /* Interruptor común: todo lo que anime dentro de una escena arranca pausado y

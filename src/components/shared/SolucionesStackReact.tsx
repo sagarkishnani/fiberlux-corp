@@ -8,7 +8,7 @@ import type { Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
 import { iconFor } from "./solucionesIcons";
 import { escenaPara } from "./soluciones-escenas";
-import { CSS_SOLUCIONES } from "./soluciones-escenas/base";
+import { CSS_SOLUCIONES, TiltEscena } from "./soluciones-escenas/base";
 import AuroraRibbons from "../effects/AuroraRibbons";
 
 /**
@@ -362,7 +362,7 @@ export default function SolucionesStackReact({
                   cardRefs.current[i] = el;
                 }}
                 data-reveal="up"
-                className="scroll-mt-28 border border-white/[0.08] bg-black/25"
+                className="scroll-mt-28 rounded-xl border border-white/[0.08] bg-black/25"
               >
                 <div className="flex flex-col md:grid md:grid-cols-2">
                   {/* Texto. */}
@@ -418,7 +418,9 @@ export default function SolucionesStackReact({
                       const Escena = escenaPara(it?.tabIcon, i);
                       return (
                         <div className="w-full max-w-[400px]">
-                          <Escena activo={!!enPantalla[i]} locale={locale} />
+                          <TiltEscena>
+                            <Escena activo={!!enPantalla[i]} locale={locale} />
+                          </TiltEscena>
                         </div>
                       );
                     })()}

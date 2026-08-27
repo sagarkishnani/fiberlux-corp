@@ -250,6 +250,11 @@ export default function CertificacionesSliderReact({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
         style={{
+          /* Fuerza global de las cintas. Un único dial sobre toda la capa en
+             vez de retocar el alfa de cada degradado: sube o baja este número
+             para aclarar u oscurecer el fondo sin desbalancear las cintas
+             entre sí (1 = la intensidad original del SPEC 108). */
+          opacity: 0.5,
           WebkitMaskImage:
             "linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)",
           maskImage:

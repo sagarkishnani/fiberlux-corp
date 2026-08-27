@@ -181,10 +181,17 @@ export default function EmpresasRedReact({
               desfasa el cálculo del loop y termina recortando un slide entero.
               En su lugar la separación vive DENTRO del slide (`px-3`, sin `gap`)
               y el viewport se saca 12px con `-mx-3`: las tarjetas quedan
-              alineadas al contenedor y el recorte pasa 12px por fuera de ellas. */}
+              alineadas al contenedor y el recorte pasa 12px por fuera de ellas.
+
+              Abajo pasaba lo mismo pero peor: la sombra cae hacia abajo, y con
+              `pb-8` el recorte la cortaba todavía encendida — se leía como una
+              franja recta cruzando la sección. El aire vertical SÍ puede ser
+              padding (Embla sólo mide el eje horizontal), así que el viewport
+              lleva 80px y los devuelve con `-mb-12`: el recorte queda lejos de
+              la sombra sin mover ni un píxel de lo que viene debajo. */}
           <div
             ref={slider.viewportRef}
-            className="empresas-red-carousel -mx-3 select-none overflow-hidden pb-8"
+            className="empresas-red-carousel -mx-3 -mb-12 select-none overflow-hidden pb-20"
             style={{ cursor: "grab" }}
           >
             <div className="flex items-stretch">
@@ -277,6 +284,17 @@ export default function EmpresasRedReact({
           scrollbar-width: none;
           -ms-overflow-style: none;
           -webkit-overflow-scrolling: touch;
+
+          /* A los lados el recorte tampoco puede alejarse de la sombra: los
+             12px de \`-mx-3\` son todo el aire que hay, y crecer implicaría
+             abrir el hueco entre tarjetas. Así que en vez de correr el borde,
+             se difumina: la máscara apaga esos mismos 12px, con lo que la
+             sombra muere sola antes de llegar al corte. Sólo toca la franja
+             exterior —las tarjetas empiezan justo donde la máscara ya es
+             opaca—, y de paso el slide que entra al arrastrar aparece con un
+             borde suave en lugar de un canto duro. */
+          -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
         }
         .empresas-red-carousel::-webkit-scrollbar { display: none; }
       `}</style>
