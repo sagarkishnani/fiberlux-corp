@@ -339,6 +339,15 @@ function getSubjectPrefix(string $type): string {
 
 function h(string $val): string { return htmlspecialchars(trim($val), ENT_QUOTES, 'UTF-8'); }
 
+// Checkbox opcional -> etiqueta legible. El front manda "true"/"false" (string);
+// si el campo no vino, devuelve '' y buildEmailBody omite la fila.
+function boolLabel($val): string {
+    $v = is_string($val) ? strtolower(trim($val)) : '';
+    if ($v === 'true' || $v === '1' || $v === 'on') return 'Sí';
+    if ($v === 'false' || $v === '0') return 'No';
+    return '';
+}
+
 function buildEmailBody(string $type, array $data, string $correlativo, array $files, string $assetBase = ''): string {
     $rows = getFieldRows($type, $data);
     $fileRows = '';
@@ -365,8 +374,8 @@ function buildPlainText(string $type, array $data, string $correlativo): string 
 
 function getFieldRows(string $type, array $data): array {
     switch ($type) {
-        case 'contacto': return ['Nombre'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Mensaje'=>$data['comentario']??''];
-        case 'servicios': return ['Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Nombre'=>trim(($data['nombre']??'').' '.($data['apellidos']??'')),'Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??''];
+        case 'contacto': return ['Nombre'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Mensaje'=>$data['comentario']??'','Acepta info. comercial'=>boolLabel($data['infoComercial']??'')];
+        case 'servicios': return ['Empresa'=>$data['empresa']??'','RUC'=>$data['ruc']??'','Nombre'=>trim(($data['nombre']??'').' '.($data['apellidos']??'')),'Servicio'=>$data['servicio']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Acepta info. comercial'=>boolLabel($data['infoComercial']??'')];
         case 'reclamo': return ['Nombre / Razón Social'=>trim(($data['nombre']??'').' '.($data['apellido']??'')),'Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>trim(($data['servicioSelec']??'').' '.($data['otroServicio']??'')),'Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Ciudad'=>$data['ciudad']??'','Nombre de contacto'=>$data['contactNombre']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Materia reclamable'=>$data['materiaReclamo']??'','Monto'=>$data['montoReclamo']??'','Observaciones'=>$data['observaciones']??''];
         case 'apelacion': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','N° de abonado'=>$data['numAbonado']??'','Servicio'=>$data['servicio']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Provincia'=>$data['provincia']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Resolución N°'=>$data['resolucionNum']??'','Fecha resolución'=>($data['resDia']??'').'/'.($data['resMes']??'').'/'.($data['resAnio']??''),'Fecha notificación'=>($data['notifDia']??'').'/'.($data['notifMes']??'').'/'.($data['notifAnio']??''),'Mensaje'=>$data['mensaje']??''];
         case 'queja': return ['Nombre / Razón Social'=>$data['nombre']??'','Tipo de documento'=>$data['tipoDoc']??'','Nro. de documento'=>$data['numDoc']??'','Teléfono'=>$data['telefono']??'','Email'=>$data['correo']??'','Servicio'=>$data['servicioSelec']??'','N° de abonado'=>$data['numAbonado']??'','Dirección'=>$data['direccion']??'','Distrito'=>$data['distrito']??'','Ciudad'=>$data['ciudad']??'','Nombre rep.'=>trim(($data['repNombre']??'').' '.($data['repApellido']??'')),'Doc. rep.'=>trim(($data['repTipoDoc']??'').' '.($data['repNumDoc']??'')),'Motivo de queja'=>$data['motivoQueja']??'','Mensaje'=>$data['mensaje']??''];

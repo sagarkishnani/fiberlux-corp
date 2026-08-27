@@ -87,13 +87,15 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv' && !empty($_SESSION['pan
     header('Content-Disposition: attachment; filename="leads-' . date('Y-m-d') . ($type ? "-$type" : '') . '.csv"');
     $out = fopen('php://output', 'w');
     fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
-    fputcsv($out, ['Correlativo','Tipo','Fecha','Nombre','Email/Celular','Empresa','RUC','Distrito','Servicio','Mensaje']);
+    fputcsv($out, ['Correlativo','Tipo','Fecha','Nombre','Email/Celular','Empresa','RUC','Distrito','Servicio','Mensaje','Acepta info. comercial']);
     foreach ($submissions as $s) {
         $d = $s['data'] ?? [];
         $name = trim(($d['nombre'] ?? $d['nombreCompleto'] ?? '') . ' ' . ($d['apellido'] ?? ''));
         fputcsv($out, [$s['correlativo']??'',$s['formType']??'',$s['date']??'',
             $name,$d['email']??$d['correo']??$d['celular']??'',$d['empresa']??'',$d['ruc']??'',
-            $d['distrito']??'',$d['servicio']??'',$d['mensaje']??'']);
+            $d['distrito']??'',$d['servicio']??'',$d['mensaje']??'',
+            // Opt-in comercial: el front lo manda como "true"/"false".
+            (($d['infoComercial'] ?? '') === 'true' ? 'Sí' : ((($d['infoComercial'] ?? '') === 'false') ? 'No' : ''))]);
     }
     fclose($out); exit;
 }

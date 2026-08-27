@@ -762,7 +762,7 @@ var config_default = defineConfig({
                   { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   {
                     name: "description",
-                    label: "Descripci\xF3n (se revela en hover)",
+                    label: "Descripci\xF3n breve",
                     type: "string",
                     ui: { component: "textarea" }
                   },
@@ -772,27 +772,10 @@ var config_default = defineConfig({
                     type: "string",
                     ui: { component: "textarea" }
                   },
-                  { name: "buttonLabel", label: "Texto del bot\xF3n", type: "string" },
-                  { name: "buttonLabel_en", label: "Texto del bot\xF3n (EN)", type: "string" },
                   {
                     name: "url",
                     label: "URL (placeholder \u2192 nivel-2)",
                     type: "string"
-                  },
-                  {
-                    name: "colSpan",
-                    label: "Columnas que ocupa (desktop)",
-                    type: "string",
-                    options: [
-                      { value: "1", label: "1 columna" },
-                      { value: "2", label: "2 columnas" },
-                      { value: "3", label: "3 columnas (ancho completo)" }
-                    ]
-                  },
-                  {
-                    name: "featured",
-                    label: "Destacado (fondo magenta + descripci\xF3n visible)",
-                    type: "boolean"
                   }
                 ]
               }
@@ -1273,7 +1256,8 @@ var config_default = defineConfig({
                       { value: "network", label: "Red / nodos" },
                       { value: "clock", label: "Reloj (24/7)" },
                       { value: "users", label: "Personas (equipo)" },
-                      { value: "spark", label: "Destello (calidad)" }
+                      { value: "spark", label: "Destello (calidad)" },
+                      { value: "star", label: "Estrella (calidad)" }
                     ]
                   },
                   { name: "name", label: "Nombre", type: "string" },

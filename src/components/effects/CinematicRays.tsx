@@ -54,6 +54,16 @@ const PARAMS = {
   introMs: 1800,
   fov: 50,
   cameraZ: 6,
+  // ── Profundidad de campo de los tiles ──
+  // Cerca del centro (donde vive el titular) el tile va desenfocado y más
+  // transparente, y se va enfocando conforme se aleja hacia las esquinas. Así
+  // simula profundidad y deja de competir con el texto.
+  tileBlurPx: 9, // radio del desenfoque de la copia "fuera de foco" (canvas 256px)
+  tileCenterOpacity: 0.3, // opacidad relativa del tile en el centro (1 = sin atenuar)
+  tileFadeNear: 0.1, // recorrido hasta el que se mantiene la transparencia máxima
+  tileFadeFar: 0.72, // recorrido a partir del cual recupera toda su opacidad
+  tileFocusNear: 0.1, // recorrido en el que aún está totalmente desenfocado
+  tileFocusFar: 0.62, // recorrido a partir del cual está totalmente nítido
 } as const;
 
 const ICONS: Record<string, IconType> = {
@@ -284,12 +294,20 @@ const STREAM_FRAG = /* glsl */ `
   }
 `;
 
-// Textura "glass" del tile: rect redondeado translúcido + brillo + ícono.
+/**
+ * Texturas "glass" del tile: rect redondeado translúcido + brillo + ícono.
+ *
+ * Devuelve DOS texturas del mismo dibujo, una nítida y otra desenfocada. El
+ * desenfoque real no se puede pedir por instancia en WebGL con un material
+ * compartido, así que se hornea en un segundo canvas (`ctx.filter`) y el bucle
+ * cruza la opacidad entre ambas copias según la distancia al centro. El icono
+ * se dibuja de forma asíncrona, por eso el blur se re-sincroniza cuando llega.
+ */
 function makeGlassTexture(
   key: string,
   color: readonly number[],
   light: readonly number[]
-): THREE.CanvasTexture {
+): { sharp: THREE.CanvasTexture; soft: THREE.CanvasTexture } {
   const S = 256;
   const c = document.createElement("canvas");
   c.width = S;
@@ -330,6 +348,22 @@ function makeGlassTexture(
   g.stroke();
 
   const tex = new THREE.CanvasTexture(c);
+
+  // Copia fuera de foco. Se redibuja entera cada vez que el original cambia.
+  const cSoft = document.createElement("canvas");
+  cSoft.width = S;
+  cSoft.height = S;
+  const gSoft = cSoft.getContext("2d")!;
+  const texSoft = new THREE.CanvasTexture(cSoft);
+  const syncSoft = () => {
+    gSoft.clearRect(0, 0, S, S);
+    gSoft.filter = `blur(${PARAMS.tileBlurPx}px)`;
+    gSoft.drawImage(c, 0, 0);
+    gSoft.filter = "none";
+    texSoft.needsUpdate = true;
+  };
+  syncSoft();
+
   const Icon = ICONS[key] || FaServer;
   try {
     const svg = renderToStaticMarkup(
@@ -346,17 +380,20 @@ function makeGlassTexture(
       g.drawImage(img, (S - sz) / 2, (S - sz) / 2, sz, sz);
       g.restore();
       tex.needsUpdate = true;
+      syncSoft();
     };
     img.src = url;
   } catch {
     /* si falla, queda el tile glass sin ícono */
   }
-  return tex;
+  return { sharp: tex, soft: texSoft };
 }
 
 interface Card {
   mesh: THREE.Mesh;
   mat: THREE.MeshBasicMaterial;
+  /** Copia desenfocada; cuelga de `mesh`, así hereda su transformación. */
+  matSoft: THREE.MeshBasicMaterial;
   dirX: number; // dirección de salida desde el centro
   dirY: number;
   speed: number; // velocidad del recorrido (loop)
@@ -467,7 +504,10 @@ export default function CinematicRays({
     const halfH = () => Math.tan((PARAMS.fov * Math.PI) / 360) * PARAMS.cameraZ;
     const halfW = () => halfH() * camera.aspect;
     const cardGeo = new THREE.PlaneGeometry(1, 1);
-    const texCache = new Map<string, THREE.CanvasTexture>();
+    const texCache = new Map<
+      string,
+      { sharp: THREE.CanvasTexture; soft: THREE.CanvasTexture }
+    >();
     const getTex = (k: string) => {
       let x = texCache.get(k);
       if (!x) {
@@ -489,17 +529,26 @@ export default function CinematicRays({
     const cards: Card[] = [];
     for (let i = 0; i < cardN; i++) {
       const key = pool[i % pool.length];
-      const mat = new THREE.MeshBasicMaterial({
-        map: getTex(key),
+      const tex = getTex(key);
+      const matOpts = {
         transparent: true,
         depthWrite: false,
         depthTest: false,
         blending: THREE.NormalBlending,
         opacity: 0,
-      });
+      };
+      const mat = new THREE.MeshBasicMaterial({ ...matOpts, map: tex.sharp });
+      const matSoft = new THREE.MeshBasicMaterial({ ...matOpts, map: tex.soft });
       const mesh = new THREE.Mesh(cardGeo, mat);
       mesh.position.z = rand(-4.0, -2.0);
       mesh.renderOrder = -1;
+      // La copia borrosa cuelga del tile nítido: hereda posición, escala y
+      // rotación, así que el bucle solo mueve una malla. El z local mínimo
+      // evita el z-fighting (aunque con depthTest off es cosmético).
+      const meshSoft = new THREE.Mesh(cardGeo, matSoft);
+      meshSoft.position.z = 0.001;
+      meshSoft.renderOrder = -1;
+      mesh.add(meshSoft);
       scene.add(mesh);
       // Dirección de salida desde el centro: hacia izquierda/derecha, abriéndose
       // a las esquinas (±~40°).
@@ -508,6 +557,7 @@ export default function CinematicRays({
       cards.push({
         mesh,
         mat,
+        matSoft,
         dirX: side * Math.cos(ang),
         dirY: Math.sin(ang),
         speed: rand(0.05, 0.1),
@@ -696,6 +746,7 @@ export default function CinematicRays({
         // color de marca al alejarse hacia la esquina. `.color` multiplica la textura.
         const bright = 0.3 + 0.7 * smooth(0.05, 0.5, travel);
         cd.mat.color.setScalar(bright);
+        cd.matSoft.color.setScalar(bright);
 
         m.rotation.x = Math.sin(t * cd.tiltSpeed + cd.tiltPhase) * cd.tiltAmpX;
         m.rotation.y =
@@ -703,13 +754,26 @@ export default function CinematicRays({
         m.rotation.z = Math.sin(t * cd.tiltSpeed * 0.5) * 0.05;
 
         // Fade-in al salir del centro, fade-out al llegar a la esquina → sin pop.
+        // El factor `depth` es el pedido del cliente: cerca del centro (donde
+        // está el titular) el tile queda bastante más transparente y recupera
+        // su opacidad al alejarse.
+        const depth =
+          PARAMS.tileCenterOpacity +
+          (1 - PARAMS.tileCenterOpacity) *
+            smooth(PARAMS.tileFadeNear, PARAMS.tileFadeFar, travel);
         const op =
           cd.baseOpacity *
-          smooth(0.0, 0.18, travel) *
+          depth *
+          smooth(0.0, 0.12, travel) *
           smooth(1.0, 0.72, travel) *
           introE *
           fadeS;
-        cd.mat.opacity = op;
+
+        // Foco: cruce de opacidad entre la copia nítida y la desenfocada. En el
+        // centro manda la borrosa; hacia la esquina, la nítida.
+        const focus = smooth(PARAMS.tileFocusNear, PARAMS.tileFocusFar, travel);
+        cd.mat.opacity = op * focus;
+        cd.matSoft.opacity = op * (1 - focus);
       }
     }
 
@@ -773,8 +837,14 @@ export default function CinematicRays({
       stGeo.dispose();
       streamMat.dispose();
       cardGeo.dispose();
-      cards.forEach((c) => c.mat.dispose());
-      texCache.forEach((t) => t.dispose());
+      cards.forEach((c) => {
+        c.mat.dispose();
+        c.matSoft.dispose();
+      });
+      texCache.forEach((t) => {
+        t.sharp.dispose();
+        t.soft.dispose();
+      });
       renderer.dispose();
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
     };

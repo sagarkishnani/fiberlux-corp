@@ -350,6 +350,18 @@
       "linkText": "tratamiento de datos personales",
       "linkText_en": "processing of personal data",
       "linkUrl": "/legales/tratamiento-datos"
+    },
+    {
+      "fieldType": "checkbox",
+      "name": "infoComercial",
+      "label": "Acepto el envío de información comercial sobre servicios, promociones, ofertas, actividades y eventos, conforme a la política de privacidad.",
+      "label_en": "I agree to receive commercial information about services, promotions, offers, activities and events, in accordance with the privacy policy.",
+      "required": false,
+      "width": "full",
+      "order": 9,
+      "linkText": "política de privacidad",
+      "linkText_en": "privacy policy",
+      "linkUrl": "/legales/politica-privacidad.pdf"
     }
   ]
 }

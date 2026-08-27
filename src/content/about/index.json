@@ -24,52 +24,38 @@
     "title_en": "Vision",
     "text_en": "To be the most trusted and respected technology company in Peru, becoming the benchmark in high-quality enterprise connectivity."
   },
-  "missionImage": "/images/nosotros/ux-design.avif",
+  "missionImage": "/images/nosotros/comprometidos-mision-vision.webp",
   "values": {
     "title": "Nuestros valores",
     "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",
     "items": [
       {
-        "icon": "eye",
-        "name": "Transparencia",
-        "name_en": "Transparency",
-        "description": "Contratos claros, SLA medibles y reportes que puedes auditar en cualquier momento.",
-        "description_en": "Clear contracts, measurable SLAs and reports you can audit at any time."
-      },
-      {
         "icon": "shield",
-        "name": "Resiliencia",
-        "name_en": "Resilience",
-        "description": "Rutas redundantes y NOC 24/7: la red se recupera antes de que tu operación lo note.",
-        "description_en": "Redundant routes and a 24/7 NOC: the network recovers before your operation notices."
+        "name": "Integridad",
+        "name_en": "Integrity",
+        "description": "Actuamos con honestidad y ética, generando confianza y respeto con clientes, socios y proveedores.",
+        "description_en": "We act with honesty and ethics, building trust and respect with clients, partners and suppliers."
       },
       {
-        "icon": "check",
-        "name": "Confiabilidad",
-        "name_en": "Reliability",
-        "description": "Disponibilidad garantizada por infraestructura propia, no arrendada a terceros.",
-        "description_en": "Availability backed by our own infrastructure, not leased from third parties."
-      },
-      {
-        "icon": "pin",
-        "name": "Impacto local",
-        "name_en": "Local impact",
-        "description": "Equipos peruanos desplegando fibra en 92 ciudades, incluidas zonas donde nadie más llega.",
-        "description_en": "Peruvian teams deploying fiber across 92 cities, including areas no one else reaches."
-      },
-      {
-        "icon": "link",
-        "name": "Conectividad con propósito",
-        "name_en": "Purpose-driven connectivity",
-        "description": "Cada enlace responde a un objetivo del negocio, no a un catálogo de productos.",
-        "description_en": "Every link answers a business goal, not a product catalog."
+        "icon": "users",
+        "name": "Respeto",
+        "name_en": "Respect",
+        "description": "Valoramos a las personas, cumplimos las normas y actuamos con consideración hacia los demás y la competencia.",
+        "description_en": "We value people, comply with the rules and act with consideration towards others and the competition."
       },
       {
         "icon": "bolt",
         "name": "Innovación",
         "name_en": "Innovation",
-        "description": "Adoptamos SD-WAN, nube privada y Zero Trust antes de que sean requisito del mercado.",
-        "description_en": "We adopt SD-WAN, private cloud and Zero Trust before the market requires them."
+        "description": "Impulsamos ideas diferentes y fomentamos la creatividad para innovar continuamente.",
+        "description_en": "We drive different ideas and foster creativity to innovate continuously."
+      },
+      {
+        "icon": "star",
+        "name": "Calidad",
+        "name_en": "Quality",
+        "description": "Brindamos un servicio de excelencia, siendo aliados estratégicos de nuestros clientes.",
+        "description_en": "We deliver a service of excellence, acting as strategic allies to our clients."
       }
     ],
     "title_en": "Our values",

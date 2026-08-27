@@ -68,6 +68,29 @@ const metaDescription =
     <div data-reveal="up">
       <ServicePartners relativePath={relativePath} />
     </div>
+    {/* Separador partners → catálogo: los dos bloques comparten el mismo negro
+        y sin una línea de por medio se leen como una sola sección corrida.
+        Hairline al ancho del contenedor, con el núcleo en morado de marca y
+        caída a transparente en los extremos — el mismo lenguaje que la regla
+        de la grilla de valores en Nosotros. */}
+    <div class="bg-greyscale-darkest" aria-hidden="true" data-reveal="up">
+      <div class="site-container">
+        <div class="relative">
+          <div
+            class="h-px"
+            style="background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.10) 16%, rgba(216,96,182,0.85) 50%, rgba(255,255,255,0.10) 84%, transparent 100%);"
+          >
+          </div>
+          {/* Halo bajo la línea: sin él, 1px de morado sobre negro casi no se
+              ve y el separador no cumple su función. */}
+          <div
+            class="pointer-events-none absolute left-1/2 top-1/2 h-16 w-[52%] -translate-x-1/2 -translate-y-1/2"
+            style="background: radial-gradient(closest-side, rgba(150,35,122,0.30) 0%, rgba(150,35,122,0.10) 45%, transparent 78%);"
+          >
+          </div>
+        </div>
+      </div>
+    </div>
     <CatalogoSoluciones relativePath={relativePath} />
     <div class="-mt-16 relative z-20" data-reveal="up" data-overlap-rise>
       <EmpresasRed />

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import type { IconType } from "react-icons";
@@ -31,7 +32,6 @@ import {
   FaEthernet,
   FaLaptop,
   FaLayerGroup,
-  FaArrowRight,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa6";
@@ -56,17 +56,8 @@ interface Item {
   icon?: string | null;
   title?: string | null;
   description?: string | null;
-  buttonLabel?: string | null;
   url?: string | null;
-  colSpan?: string | null;
-  featured?: boolean | null;
 }
-
-const SPAN_CLASS: Record<string, string> = {
-  "1": "lg:col-span-1",
-  "2": "lg:col-span-2",
-  "3": "lg:col-span-3",
-};
 
 const ICONS: Record<string, IconType> = {
   internet: FaGlobe,
@@ -102,11 +93,28 @@ const ICONS: Record<string, IconType> = {
 
 const PER_PAGE = 4;
 
+/**
+ * Ícono de la tarjeta. Son DOS copias apiladas dentro de una caja con
+ * `overflow: hidden`: al hacer hover la pila sube exactamente el alto de una
+ * casilla, así el ícono sale por arriba mientras su gemelo entra por abajo.
+ * Es un relevo, no un parpadeo — de ahí que se lea limpio.
+ */
 function ItemIcon({ name }: { name?: string | null }) {
   const Icon = (name && ICONS[name]) || FaLayerGroup;
-  return (
-    <span className="relative z-10 inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#96237A]/15 text-[#c65fac]">
+  const slot = (
+    <span className="flex h-11 w-11 shrink-0 items-center justify-center">
       <Icon size={20} />
+    </span>
+  );
+  return (
+    <span
+      aria-hidden="true"
+      className="catalog-icon relative z-10 inline-flex h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-[#96237A]/15 text-[#c65fac]"
+    >
+      <span className="catalog-icon__stack flex flex-col">
+        {slot}
+        {slot}
+      </span>
     </span>
   );
 }
@@ -137,10 +145,56 @@ export default function CatalogoSolucionesReact({
     effect,
   });
 
+  /* ── Luz que sigue al mouse ──
+     Un solo listener delegado en la grilla en vez de uno por tarjeta, y las
+     coordenadas se escriben como custom properties dentro de un rAF: el
+     degradado es puro CSS, aquí no hay estado de React ni un render por
+     movimiento del puntero. */
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid || typeof window === "undefined" || !window.matchMedia) return;
+    // Sin puntero fino no hay hover: en táctil la luz se quedaría pegada.
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let pending: { el: HTMLElement; x: number; y: number } | null = null;
+
+    const flush = () => {
+      raf = 0;
+      if (!pending) return;
+      pending.el.style.setProperty("--mx", `${pending.x}px`);
+      pending.el.style.setProperty("--my", `${pending.y}px`);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const card = (e.target as HTMLElement | null)?.closest<HTMLElement>(".catalog-card");
+      if (!card) return;
+      const r = card.getBoundingClientRect();
+      pending = { el: card, x: e.clientX - r.left, y: e.clientY - r.top };
+      if (!raf) raf = requestAnimationFrame(flush);
+    };
+
+    grid.addEventListener("pointermove", onMove);
+    return () => {
+      grid.removeEventListener("pointermove", onMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   if (!catalogo || items.length === 0) return null;
 
   return (
-    <section id="catalogo" className="bg-greyscale-darkest pt-16 pb-32 md:py-24 scroll-mt-24 mb-4">
+    /* El padding inferior es generoso a propósito: esta sección se queda fija
+       mientras el panel de testimonios sube y la tapa (SPEC 109), así que ese
+       aire es lo único que separa la última fila de tarjetas del borde de la
+       pantalla mientras está pinneada. */
+    <section
+      id="catalogo"
+      className="bg-greyscale-darkest pt-16 pb-36 md:pt-24 md:pb-40 scroll-mt-24 mb-4"
+    >
       <div className="site-container">
         {tField(catalogo as any, "title", locale) && (
           <h2
@@ -151,98 +205,61 @@ export default function CatalogoSolucionesReact({
           </h2>
         )}
 
-        {/* ════ DESKTOP — configurable-span grid ════ */}
-        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5" data-reveal="up" data-reveal-stagger="0.06">
+        {/* ════ DESKTOP — grilla uniforme ════
+            Todas las tarjetas miden lo mismo: `auto-rows-fr` iguala la altura
+            de cada fila y `h-full` estira la tarjeta dentro de su celda. Ya no
+            hay tarjeta destacada ni ancho configurable por item. */}
+        <div
+          ref={gridRef}
+          className="hidden md:grid grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4 lg:gap-5"
+          data-reveal="up"
+          data-reveal-stagger="0.06"
+        >
           {items.map((item, i) => {
             const CardTag = item.url ? "a" : "div";
-            const span = SPAN_CLASS[item.colSpan || "1"] || "lg:col-span-1";
-            const featured = !!item.featured;
-            const number = String(i + 1).padStart(2, "0");
             const iTitle = tField(item as any, "title", locale);
             const iDesc = tField(item as any, "description", locale);
-            const iBtn = tField(item as any, "buttonLabel", locale);
-
-            const content = (
-              <>
-                {iDesc && (
-                  <p
-                    className={`text-body-sm ${featured ? "text-white/75 max-w-[440px]" : "text-greyscale-light"}`}
-                    data-tina-field={tinaField(item as any, "description")}
-                  >
-                    {iDesc}
-                  </p>
-                )}
-                {iBtn && iDesc && (
-                  <span
-                    className={`mt-4 inline-flex items-center gap-2 text-sm font-medium rounded-[8px] px-4 py-2 transition-colors ${
-                      featured
-                        ? "bg-white text-[#3B0E30] hover:bg-white/90"
-                        : "bg-[#96237A] text-white hover:bg-[#650F50]"
-                    }`}
-                    data-tina-field={tinaField(item as any, "buttonLabel")}
-                  >
-                    {iBtn}
-                    <FaArrowRight size={12} />
-                  </span>
-                )}
-              </>
-            );
 
             return (
               <CardTag
                 key={i}
                 {...(item.url ? { href: item.url } : {})}
-                className={`catalog-card group relative flex h-full flex-col overflow-hidden rounded-2xl border p-6 lg:p-7 transition-colors duration-300 ${span} ${
-                  featured
-                    ? "border-[#96237A]/40 bg-[radial-gradient(120%_120%_at_85%_0%,#5a1a4a_0%,#2a0a24_48%,#160512_100%)] min-h-[300px] justify-start"
-                    : "border-white/10 bg-white/[0.03] hover:border-[#96237A]/60 hover:bg-white/[0.06]"
-                }`}
+                className="catalog-card group relative flex h-full min-h-[268px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-[#96237A]/60 hover:bg-white/[0.05] lg:min-h-[300px] lg:p-8"
               >
-                {/* Circular gradient blur glow — reveals on hover (non-featured) */}
-                {!featured && (
-                  <span
-                    aria-hidden="true"
-                    className="catalog-glow pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100 group-focus-within:opacity-100"
-                  />
-                )}
+                {/* Luz que sigue al cursor; su posición llega por --mx/--my. */}
+                <span aria-hidden="true" className="catalog-spot" />
 
-                {/* Number badge */}
-                <span className="absolute top-6 right-6 z-10 font-mono text-xs text-white/35 tabular-nums">
-                  {number}
-                </span>
+                {/* Cabecera: título a la izquierda, ícono a la derecha. */}
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <h3
+                    className="text-[18px] font-medium leading-snug text-greyscale-white lg:text-[20px]"
+                    data-tina-field={tinaField(item as any, "title")}
+                  >
+                    {iTitle}
+                  </h3>
+                  <ItemIcon name={item.icon} />
+                </div>
 
-                <ItemIcon name={item.icon} />
-
-                {featured ? (
-                  <div className="relative z-10 mt-auto pt-10">
-                    <h3
-                      className="text-[22px] lg:text-[28px] font-medium text-greyscale-white mb-3"
-                      data-tina-field={tinaField(item as any, "title")}
-                    >
-                      {iTitle}
-                    </h3>
-                    {content}
-                  </div>
-                ) : (
-                  <>
-                    <h3
-                      className="relative z-10 mt-5 text-[18px] lg:text-[20px] font-medium text-greyscale-white"
-                      data-tina-field={tinaField(item as any, "title")}
-                    >
-                      {iTitle}
-                    </h3>
-                    {/* Reveal on hover / focus — smooth height + fade */}
-                    <div className="catalog-reveal relative z-10 grid grid-rows-[0fr] opacity-0 transition-all duration-500 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
-                      <div className="overflow-hidden pt-3">{content}</div>
-                    </div>
-                  </>
+                {/* La descripción va anclada abajo (`mt-auto`): con títulos de
+                    una o tres líneas, todas las descripciones siguen alineadas
+                    entre sí a lo largo de la fila. */}
+                {iDesc && (
+                  <p
+                    className="relative z-10 mt-auto pt-8 text-[15px] leading-[1.6] text-white/55"
+                    data-tina-field={tinaField(item as any, "description")}
+                  >
+                    {iDesc}
+                  </p>
                 )}
               </CardTag>
             );
           })}
         </div>
 
-        {/* ════ MOBILE — icon + title only, draggable pages of 4 ════ */}
+        {/* ════ MOBILE — mismo chrome, en páginas de 4 arrastrables ════
+            Aquí no hay hover (ni luz ni relevo de ícono) y en dos columnas la
+            descripción quedaría cortada a media frase, así que la tarjeta se
+            queda en ícono + título. */}
         <div className="md:hidden">
           <div
             ref={slider.viewportRef}
@@ -263,11 +280,11 @@ export default function CatalogoSolucionesReact({
                         <CardTag
                           key={i}
                           {...(item.url ? { href: item.url } : {})}
-                          className="flex h-full flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5 min-h-[140px]"
+                          className="catalog-card flex h-full min-h-[150px] flex-col items-start rounded-2xl border border-white/10 bg-white/[0.03] p-5"
                           draggable={false}
                         >
                           <ItemIcon name={item.icon} />
-                          <h3 className="mt-4 text-[15px] font-medium text-greyscale-white leading-snug">
+                          <h3 className="relative z-10 mt-4 text-[15px] font-medium leading-snug text-greyscale-white">
                             {tField(item as any, "title", locale)}
                           </h3>
                         </CardTag>
@@ -322,17 +339,50 @@ export default function CatalogoSolucionesReact({
           -webkit-overflow-scrolling: touch;
         }
         .catalogo-scroll::-webkit-scrollbar { display: none; }
-        .catalog-glow {
+        /* Luz que sigue al cursor dentro de la tarjeta. El degradado se
+           recoloca solo: --mx/--my las escribe el listener de la grilla, y el
+           50% por defecto deja la luz centrada antes del primer movimiento. */
+        .catalog-spot {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          opacity: 0;
+          transition: opacity .4s ease-out;
           background: radial-gradient(
-            circle at 32% 24%,
-            rgba(150, 35, 122, 0.55) 0%,
-            rgba(150, 35, 122, 0.18) 32%,
-            rgba(150, 35, 122, 0) 62%
+            340px circle at var(--mx, 50%) var(--my, 50%),
+            rgba(210, 70, 172, 0.50) 0%,
+            rgba(160, 40, 130, 0.26) 32%,
+            rgba(150, 35, 122, 0.08) 55%,
+            rgba(150, 35, 122, 0) 75%
           );
-          filter: blur(28px);
         }
+        .catalog-card:hover .catalog-spot,
+        .catalog-card:focus-visible .catalog-spot { opacity: 1; }
+
+        /* Relevo del ícono: la pila sube el alto exacto de una casilla (44px),
+           así el segundo ícono queda encuadrado igual que el primero. */
+        .catalog-icon__stack {
+          transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+        }
+        .catalog-card:hover .catalog-icon__stack,
+        .catalog-card:focus-visible .catalog-icon__stack {
+          transform: translateY(-44px);
+        }
+        .catalog-icon {
+          transition: background-color .4s ease-out, color .4s ease-out;
+        }
+        .catalog-card:hover .catalog-icon {
+          background-color: rgba(150, 35, 122, 0.28);
+          color: #e78fd0;
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          .catalog-card, .catalog-reveal, .catalog-glow { transition-duration: 0.01ms !important; }
+          .catalog-card,
+          .catalog-spot,
+          .catalog-icon,
+          .catalog-icon__stack { transition-duration: 0.01ms !important; }
+          .catalog-card:hover .catalog-icon__stack { transform: none; }
+          .catalog-spot { display: none; }
         }
       `}</style>
     </section>

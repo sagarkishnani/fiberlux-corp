@@ -487,11 +487,7 @@ type ServiceCatalogoItems {
   title_en: String
   description: String
   description_en: String
-  buttonLabel: String
-  buttonLabel_en: String
   url: String
-  colSpan: String
-  featured: Boolean
 }
 
 type ServiceCatalogo {
@@ -589,11 +585,7 @@ input ServiceCatalogoItemsFilter {
   title_en: StringFilter
   description: StringFilter
   description_en: StringFilter
-  buttonLabel: StringFilter
-  buttonLabel_en: StringFilter
   url: StringFilter
-  colSpan: StringFilter
-  featured: BooleanFilter
 }
 
 input ServiceCatalogoFilter {
@@ -2905,11 +2897,7 @@ input ServiceCatalogoItemsMutation {
   title_en: String
   description: String
   description_en: String
-  buttonLabel: String
-  buttonLabel_en: String
   url: String
-  colSpan: String
-  featured: Boolean
 }
 
 input ServiceCatalogoMutation {

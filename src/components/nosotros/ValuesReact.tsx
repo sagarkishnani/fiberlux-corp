@@ -33,6 +33,7 @@ const ICON_PATHS: Record<string, string> = {
   clock: 'M12 3.4a8.6 8.6 0 1 0 0 17.2 8.6 8.6 0 0 0 0-17.2Zm0 4v5l3.4 2',
   users: 'M9 11.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Zm-6 8.6c0-3.3 2.7-5.4 6-5.4s6 2.1 6 5.4M16 5.2a3.4 3.4 0 0 1 0 6.6m1.6 2.9c2.1.6 3.4 2.2 3.4 4.3',
   spark: 'M12 3.2 13.9 9l5.9 1.9-5.9 1.9L12 18.8l-1.9-6L4.2 11 10.1 9 12 3.2ZM19 3.4v3M17.5 4.9h3',
+  star: 'M12 3.6l2.6 5.3 5.8.85-4.2 4.1 1 5.75L12 16.9l-5.2 2.7 1-5.75-4.2-4.1 5.8-.85L12 3.6Z',
 };
 
 const FALLBACK_ICON = 'spark';
@@ -87,6 +88,9 @@ export default function ValuesReact({ query, variables, data: initialData, local
   const valuesRef = tinaValues || fallbackValues;
 
   const isMobile = useIsMobile();
+  // Hasta 4 valores caben en una sola fila; a partir de 5 volvemos a 3 columnas.
+  const cols = items.length <= 4 ? items.length : 3;
+  const lastRowStart = items.length - (items.length % cols || cols);
   const slides = chunk(items, 2);
   const slider = useSlider({ loop: false, align: 'center', active: isMobile && slides.length > 1 });
 
@@ -124,7 +128,8 @@ export default function ValuesReact({ query, variables, data: initialData, local
           }}
         />
         <div
-          className="max-w-[1220px] mx-auto grid grid-cols-3 auto-rows-fr"
+          className="max-w-[1220px] mx-auto grid auto-rows-fr"
+          style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
           data-reveal="up"
           data-reveal-stagger="0.07"
           data-reveal-distance="28"
@@ -134,8 +139,8 @@ export default function ValuesReact({ query, variables, data: initialData, local
               key={`d-${i}`}
               className="px-[34px] pt-[46px] pb-[52px] box-border"
               style={{
-                borderRight: i % 3 !== 2 ? `1px solid ${C.hairline}` : 'none',
-                borderBottom: i < items.length - (items.length % 3 || 3) ? `1px solid ${C.hairline}` : 'none',
+                borderRight: i % cols !== cols - 1 ? `1px solid ${C.hairline}` : 'none',
+                borderBottom: i < lastRowStart ? `1px solid ${C.hairline}` : 'none',
               }}
             >
               <ValueCard item={item} index={i} locale={locale} />
@@ -195,12 +200,31 @@ export default function ValuesReact({ query, variables, data: initialData, local
           82%  { stroke-dashoffset: 0; }
           100% { stroke-dashoffset: 1; }
         }
+        /* Hover sutil: la tarjeta escala apenas y el icono acompaña. */
+        .values-section .vl-cell {
+          transition: transform .4s cubic-bezier(.22, .61, .36, 1);
+        }
+        .values-section .vl-icon {
+          transition: transform .4s cubic-bezier(.22, .61, .36, 1),
+                      box-shadow .4s cubic-bezier(.22, .61, .36, 1);
+        }
+        @media (hover: hover) {
+          .values-section .vl-cell:hover { transform: scale(1.022); }
+          .values-section .vl-cell:hover .vl-icon {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(59, 14, 48, .10);
+          }
+        }
         .values-section .vl-ghost { opacity: .16; }
         .values-section .vl-trace {
           stroke-dasharray: 1;
           animation: vlDraw 4.2s cubic-bezier(.45, 0, .25, 1) infinite;
         }
         @media (prefers-reduced-motion: reduce) {
+          .values-section .vl-cell,
+          .values-section .vl-cell:hover,
+          .values-section .vl-icon,
+          .values-section .vl-cell:hover .vl-icon { transform: none; transition: none; }
           .values-section .vl-ghost { display: none; }
           .values-section .vl-trace { animation: none; stroke-dasharray: none; }
         }
@@ -219,7 +243,7 @@ function ValueCard({ item, index, locale }: { item: ValueItem; index: number; lo
     <div className="vl-cell h-full flex flex-col justify-center rounded-[18px] px-5 py-6 md:block md:px-[18px] md:pt-[22px] md:pb-[26px] text-center box-border">
       <div className="relative flex items-center justify-center h-[64px] md:h-[74px]">
         <div
-          className="relative flex items-center justify-center w-[52px] h-[52px] md:w-14 md:h-14 rounded-[16px]"
+          className="vl-icon relative flex items-center justify-center w-[52px] h-[52px] md:w-14 md:h-14 rounded-[16px]"
           style={{
             background: '#FFFFFF',
             border: '1px solid #EFE3EB',

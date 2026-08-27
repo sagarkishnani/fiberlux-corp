@@ -164,11 +164,7 @@ fragment ServiceParts on Service {
       title_en
       description
       description_en
-      buttonLabel
-      buttonLabel_en
       url
-      colSpan
-      featured
     }
   }
   partners {

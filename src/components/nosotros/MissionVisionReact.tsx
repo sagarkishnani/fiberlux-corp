@@ -11,7 +11,7 @@ interface MissionVisionProps {
   locale?: Locale;
 }
 
-const DEFAULT_IMAGE = '/images/nosotros/ux-design.avif';
+const DEFAULT_IMAGE = '/images/nosotros/comprometidos-mision-vision.webp';
 
 export default function MissionVisionReact({ query, variables, data: initialData, locale = "es" }: MissionVisionProps) {
   const { data } = useTina<AboutQuery>({ query, variables, data: initialData });

@@ -10,8 +10,11 @@ const appQuery = await client.queries.fiberluxApp({
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
+{/* rootMargin: la isla hidrata ~400px antes de entrar en pantalla, para que
+    el título pueda blanquearse ANTES de que el usuario lo vea y la máquina de
+    escribir arranque desde vacío en vez de parpadear. */}
 <VideoShowcaseAppReact
-  client:visible
+  client:visible={{ rootMargin: "400px" }}
   query={appQuery.query}
   variables={appQuery.variables}
   data={appQuery.data}

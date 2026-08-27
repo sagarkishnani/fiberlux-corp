@@ -938,7 +938,7 @@ export default function HeaderV2React({
 
                   {/* Menú secundario (Formas de pago, Fiberlux App, …) bajo un
                       divisor, separado del nav principal. */}
-                  {secondaryNav.length > 0 && (
+                  {(secondaryNav.length > 0 || topBar?.abonadosLabel) && (
                     <div className="mt-8 pt-6 border-t border-white/20">
                       <nav
                         className="flex flex-col gap-1"
@@ -957,6 +957,21 @@ export default function HeaderV2React({
                             {tx(item)}
                           </a>
                         ))}
+
+                        {/* "Información a abonados y usuarios" cierra la lista.
+                            En desktop vive en la topbar, pero ahí está oculto en
+                            mobile, así que este era el único menú donde no había
+                            forma de llegar. Mismo campo del CMS, no un duplicado. */}
+                        {topBar?.abonadosLabel && (
+                          <a
+                            href={hx(topBar.abonadosUrl)}
+                            onClick={closeMenu}
+                            className="text-white text-lg py-2.5 hover:text-white/80 transition-colors"
+                            data-tina-field={tinaField(topBar as any, "abonadosLabel")}
+                          >
+                            {tField(topBar as any, "abonadosLabel", locale)}
+                          </a>
+                        )}
                       </nav>
                     </div>
                   )}
