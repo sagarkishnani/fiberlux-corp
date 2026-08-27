@@ -11,12 +11,20 @@ import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
 import BannerApp from "../components/fiberlux-app/BannerApp.astro";
 import HtmlInjection from "../components/shared/HtmlInjection.astro";
-import SitePreloader from "../components/shared/SitePreloader";
+// SitePreloader: pantalla de bienvenida que tapaba la carga de la escena Spline
+// del hero (modo `heroBackground: "3d"`). Desactivado: hoy el hero va en modo
+// "cinematic", cuyo fondo WebGL avisa que está listo a los ~0.25 s, así que el
+// loader sólo añadía ~1.8 s de espera (mínimo visible + wipe) sobre algo ya
+// pintado, y duplicaba la intro FLX→FIBERLUX, que ya es la entrada de marca.
+// El componente se conserva por si se vuelve al hero 3D.
+// import SitePreloader from "../components/shared/SitePreloader";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
 
 // URLs .splinecode de las otras páginas con 3D. Se precargan en idle para
-// calentar la caché HTTP (el sitio es MPA: cada navegación recarga).
+// calentar la caché HTTP: aunque las navegaciones ya no recargan el documento
+// (View Transitions, SPEC 110), la isla de esas páginas descarga su escena al
+// montarse, y con la caché caliente aparece de inmediato.
 const prefetchScenes = [
   serviciosContent.splineSceneUrl,
   soporteContent.splineSceneUrl,
@@ -24,19 +32,6 @@ const prefetchScenes = [
 ---
 
 <BaseLayout title="Inicio">
-  {/* Pre-paint: si el preloader ya se mostró esta sesión, ocúltalo antes de
-      pintar para evitar el flash del overlay en recargas. */}
-  <script is:inline>
-    try {
-      if (sessionStorage.getItem("fbx:preloaderShown") === "1") {
-        var s = document.createElement("style");
-        s.textContent = "#site-preloader{display:none !important}";
-        document.head.appendChild(s);
-      }
-    } catch (e) {}
-  </script>
-  <SitePreloader client:load />
-
   {/* Prefetch en idle de las escenas de Servicios/Soporte, tras cargar la de
       Home, para que esas páginas abran con la caché HTTP caliente. */}
   <script is:inline define:vars={{ prefetchScenes }}>

@@ -306,9 +306,10 @@ const whatsappBubbleMessage =
       ::view-transition-new(fbx-header) {
         animation-duration: 180ms;
       }
-      /* El preloader del Home es de bienvenida (primera carga de la sesión):
-         en una navegación interna no debe asomar ni un frame. `data-astro-navigated`
-         lo pone transitions.ts en astro:after-swap. */
+      /* El preloader del Home (hoy DESACTIVADO en index.astro) era de bienvenida
+         —primera carga de la sesión— y en una navegación interna no debía asomar
+         ni un frame. La regla queda por si se reactiva junto al hero 3D;
+         `data-astro-navigated` lo pone transitions.ts en astro:after-swap. */
       html[data-astro-navigated] #site-preloader {
         display: none !important;
       }
