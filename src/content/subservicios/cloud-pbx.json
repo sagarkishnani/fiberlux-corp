@@ -1,0 +1,109 @@
+{
+  "title": "Cloud PBX",
+  "slug": "cloud-pbx",
+  "solucionSlug": "comunicaciones",
+  "solucionTitle": "Comunicaciones Unificadas",
+  "hero": {
+    "heading": "Cloud PBX",
+    "intro": "Central telefónica virtual alojada en la nube que permite administrar extensiones, llamadas y usuarios sin depender de una central física instalada en la empresa.",
+    "note": "Ideal para organizaciones que buscan modernizar su telefonía, conectar múltiples sedes y habilitar comunicaciones desde diferentes ubicaciones.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/comunicaciones2.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Extensiones desde un panel",
+        "text": "Administra extensiones, llamadas y usuarios sin central física.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "CENTRAL VIRTUAL",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "Extensiones"
+            },
+            {
+              "label": "Colas"
+            },
+            {
+              "label": "Grabación"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Crece sin comprar hardware",
+        "text": "Sumar usuarios no implica ampliar infraestructura.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 70
+        }
+      },
+      {
+        "title": "Telefonía en todas tus sedes",
+        "text": "La misma central atiende oficinas, sucursales y trabajo remoto.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Sede central"
+            },
+            {
+              "label": "Sucursal norte"
+            },
+            {
+              "label": "Sucursal sur"
+            },
+            {
+              "label": "Home office"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Menos operación y mantenimiento",
+        "text": "La central deja de ser un equipo que hay que cuidar.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 88
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Empresas multisede, trabajo híbrido, áreas comerciales, atención al cliente y organizaciones que buscan **migrar su telefonía tradicional a la nube**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Cloud PBX | Fiberlux Corp",
+    "metaDescription": "Central telefónica virtual alojada en la nube que permite administrar extensiones, llamadas y usuarios sin depender de una central física instalada en la…",
+    "ogImage": ""
+  }
+}

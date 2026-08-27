@@ -1,0 +1,110 @@
+{
+  "title": "Servidores",
+  "slug": "servidores",
+  "solucionSlug": "infraestructura",
+  "solucionTitle": "Infraestructura",
+  "hero": {
+    "heading": "Servidores",
+    "intro": "Diseño, dimensionamiento e implementación de infraestructura de servidores adaptada a las cargas de trabajo, aplicaciones y necesidades de crecimiento de cada organización.",
+    "note": "Ideal para empresas que requieren ejecutar aplicaciones, bases de datos o plataformas críticas sobre infraestructura propia.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Dimensionado a tu carga",
+        "text": "Procesamiento, memoria y almacenamiento calculados sobre tu operación real.",
+        "plantilla": "simetria",
+        "datos": {
+          "porcentaje": 65,
+          "barras": 7
+        }
+      },
+      {
+        "title": "Listo para virtualización",
+        "text": "Infraestructura preparada para cargas empresariales y entornos virtualizados.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "HIPERVISOR",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "vCPU"
+            },
+            {
+              "label": "Memoria"
+            },
+            {
+              "label": "Almacenamiento"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Crece con tu operación",
+        "text": "Amplía capacidad conforme el negocio lo exige.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 60
+        }
+      },
+      {
+        "title": "Implementación y soporte",
+        "text": "Del dimensionamiento a la puesta en marcha, con soporte especializado.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Dimensionamiento"
+            },
+            {
+              "label": "Instalación"
+            },
+            {
+              "label": "Configuración"
+            },
+            {
+              "label": "Soporte"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "ERP, bases de datos, virtualización, aplicaciones empresariales y **plataformas alojadas on-premise**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Servidores | Fiberlux Corp",
+    "metaDescription": "Diseño, dimensionamiento e implementación de infraestructura de servidores adaptada a las cargas de trabajo, aplicaciones y necesidades de crecimiento de…",
+    "ogImage": ""
+  }
+}

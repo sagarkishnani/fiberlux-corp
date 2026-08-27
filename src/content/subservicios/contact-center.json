@@ -1,0 +1,146 @@
+{
+  "title": "Contact Center Multicanal",
+  "slug": "contact-center",
+  "solucionSlug": "comunicaciones",
+  "solucionTitle": "Comunicaciones Unificadas",
+  "hero": {
+    "heading": "Contact Center Multicanal",
+    "intro": "Centraliza la atención de clientes a través de distintos canales de comunicación en una plataforma integrada para facilitar la gestión y seguimiento de las interacciones.",
+    "note": "Ideal para organizaciones que necesitan administrar de forma eficiente grandes volúmenes de consultas y atención a través de diferentes canales.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Todos los canales en una bandeja",
+        "text": "Voz, chat, correo y mensajería centralizados en una sola plataforma.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Voz"
+            },
+            {
+              "label": "WhatsApp"
+            },
+            {
+              "label": "Correo"
+            },
+            {
+              "label": "Chat"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Trazabilidad de cada interacción",
+        "text": "El historial completo del cliente, sin importar por dónde escribió.",
+        "plantilla": "bitacora",
+        "datos": {
+          "filas": [
+            {
+              "label": "Contacto recibido",
+              "nivel": "MEDIA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Asignado a agente",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Respuesta enviada",
+              "nivel": "ALTA",
+              "porcentaje": 0
+            },
+            {
+              "label": "Caso cerrado",
+              "nivel": "BAJA",
+              "porcentaje": 0
+            }
+          ]
+        }
+      },
+      {
+        "title": "Contactos repartidos con criterio",
+        "text": "La distribución entre agentes sigue reglas, no el azar.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "Soporte",
+              "nivel": "CRÍTICO",
+              "porcentaje": 90
+            },
+            {
+              "label": "Ventas",
+              "nivel": "ALTA",
+              "porcentaje": 70
+            },
+            {
+              "label": "Post-venta",
+              "nivel": "MEDIA",
+              "porcentaje": 45
+            }
+          ]
+        }
+      },
+      {
+        "title": "Supervisión en vivo",
+        "text": "Colas, tiempos y atención bajo seguimiento permanente.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "ATENCIÓN",
+          "valor": "EN VIVO",
+          "nodos": [
+            {
+              "label": "En cola"
+            },
+            {
+              "label": "En atención"
+            },
+            {
+              "label": "Resueltos"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Atención al cliente, soporte, ventas, mesas de atención y Contact Centers con **múltiples canales de comunicación**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Contact Center Multicanal | Fiberlux Corp",
+    "metaDescription": "Centraliza la atención de clientes a través de distintos canales de comunicación en una plataforma integrada para facilitar la gestión y seguimiento de las…",
+    "ogImage": ""
+  }
+}

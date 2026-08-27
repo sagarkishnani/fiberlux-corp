@@ -1,0 +1,106 @@
+{
+  "title": "Energía",
+  "slug": "energia",
+  "solucionSlug": "infraestructura",
+  "solucionTitle": "Infraestructura",
+  "hero": {
+    "heading": "Energía",
+    "intro": "Diseño e implementación de soluciones de respaldo y protección eléctrica para mantener la infraestructura tecnológica protegida frente a variaciones o interrupciones del suministro.",
+    "note": "Ideal para organizaciones que requieren asegurar la disponibilidad y protección de servidores, redes y equipos tecnológicos críticos.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/housing.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Blindaje ante fallas eléctricas",
+        "text": "Protege la infraestructura frente a variaciones e interrupciones del suministro.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Suministro protegido"
+        }
+      },
+      {
+        "title": "Respaldo con UPS y baterías",
+        "text": "Cuando cae la red eléctrica, el respaldo entra sin que nadie lo note.",
+        "plantilla": "conmutacion",
+        "datos": {
+          "rutas": [
+            {
+              "label": "RED ELÉCTRICA",
+              "activa": false
+            },
+            {
+              "label": "UPS / BATERÍAS",
+              "activa": true
+            }
+          ]
+        }
+      },
+      {
+        "title": "Autonomía dimensionada",
+        "text": "El respaldo se calcula sobre la carga y el tiempo que tu operación necesita.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 80
+        }
+      },
+      {
+        "title": "Instalación especializada",
+        "text": "Pensada para infraestructura tecnológica crítica, no para uso general.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Cálculo de carga"
+            },
+            {
+              "label": "Instalación"
+            },
+            {
+              "label": "Puesta en marcha"
+            },
+            {
+              "label": "Mantenimiento"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Data Centers, salas técnicas, **racks de comunicaciones**, servidores y equipamiento de red."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Energía | Fiberlux Corp",
+    "metaDescription": "Diseño e implementación de soluciones de respaldo y protección eléctrica para mantener la infraestructura tecnológica protegida frente a variaciones o…",
+    "ogImage": ""
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "title": "Switches",
+  "slug": "switches",
+  "solucionSlug": "infraestructura",
+  "solucionTitle": "Infraestructura",
+  "hero": {
+    "heading": "Switches",
+    "intro": "Diseño, implementación y configuración de infraestructura de switching para conectar y administrar de forma eficiente los dispositivos y servicios de la red empresarial.",
+    "note": "Ideal para organizaciones que requieren ampliar, renovar o modernizar su red interna para soportar más usuarios, dispositivos y aplicaciones críticas.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/gestion-lan.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Red diseñada a tu medida",
+        "text": "El dimensionamiento parte de la capacidad y las necesidades de tu operación.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Core"
+            },
+            {
+              "label": "Distribución"
+            },
+            {
+              "label": "Acceso"
+            },
+            {
+              "label": "Borde"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Tráfico segmentado",
+        "text": "Cada tipo de tráfico circula por donde debe y con la prioridad que le toca.",
+        "plantilla": "prioridad",
+        "datos": {
+          "filas": [
+            {
+              "label": "VLAN Voz",
+              "nivel": "CRÍTICO",
+              "porcentaje": 92
+            },
+            {
+              "label": "VLAN Datos",
+              "nivel": "ALTA",
+              "porcentaje": 80
+            },
+            {
+              "label": "VLAN Invitados",
+              "nivel": "BAJA",
+              "porcentaje": 30
+            }
+          ]
+        }
+      },
+      {
+        "title": "Escalable",
+        "text": "Incorpora dispositivos y servicios nuevos sin rehacer la red.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 60
+        }
+      },
+      {
+        "title": "Implementación y soporte",
+        "text": "Configuración, puesta en marcha y acompañamiento especializado.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Diseño"
+            },
+            {
+              "label": "Configuración"
+            },
+            {
+              "label": "Puesta en marcha"
+            },
+            {
+              "label": "Soporte"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Oficinas corporativas, campus, plantas, centros logísticos y organizaciones con **redes de alta densidad**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Switches | Fiberlux Corp",
+    "metaDescription": "Diseño, implementación y configuración de infraestructura de switching para conectar y administrar de forma eficiente los dispositivos y servicios de la red…",
+    "ogImage": ""
+  }
+}

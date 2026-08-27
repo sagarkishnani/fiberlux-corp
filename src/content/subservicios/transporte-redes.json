@@ -1,0 +1,122 @@
+{
+  "title": "Transporte (redes)",
+  "slug": "transporte-redes",
+  "solucionSlug": "ciberseguridad",
+  "solucionTitle": "Ciberseguridad",
+  "hero": {
+    "heading": "Transporte (redes)",
+    "intro": "Solución de seguridad que segmenta la red y controla las comunicaciones entre usuarios, dispositivos, aplicaciones y cargas de trabajo mediante políticas de acceso específicas.",
+    "note": "Ideal para organizaciones que buscan limitar el movimiento lateral de amenazas y proteger recursos críticos.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/gestion-lan.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Superficie de ataque reducida",
+        "text": "La segmentación granular deja a la vista solo lo que cada quien necesita.",
+        "plantilla": "zerotrust",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Usuarios"
+            },
+            {
+              "label": "Dispositivos"
+            },
+            {
+              "label": "Aplicaciones"
+            },
+            {
+              "label": "Cargas de trabajo"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Sin movimiento lateral",
+        "text": "Una amenaza que entra a un sistema no se propaga al resto.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Segmento aislado"
+        }
+      },
+      {
+        "title": "Políticas por identidad",
+        "text": "El acceso se decide según usuario, dispositivo o carga de trabajo.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Por usuario"
+            },
+            {
+              "label": "Por dispositivo"
+            },
+            {
+              "label": "Por aplicación"
+            },
+            {
+              "label": "Por carga"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Visibilidad del tráfico interno",
+        "text": "Ves y controlas lo que se mueve dentro de la red, no solo en el borde.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "TRÁFICO INTERNO",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "Este–Oeste"
+            },
+            {
+              "label": "Norte–Sur"
+            },
+            {
+              "label": "Cargas"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Data Centers, **entornos cloud e híbridos**, organizaciones con aplicaciones críticas y redes con múltiples sistemas o cargas de trabajo."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Transporte (redes) | Fiberlux Corp",
+    "metaDescription": "Solución de seguridad que segmenta la red y controla las comunicaciones entre usuarios, dispositivos, aplicaciones y cargas de trabajo mediante políticas de…",
+    "ogImage": ""
+  }
+}

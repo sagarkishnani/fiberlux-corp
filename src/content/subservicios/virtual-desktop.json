@@ -1,0 +1,94 @@
+{
+  "title": "Virtual Desktop",
+  "slug": "virtual-desktop",
+  "solucionSlug": "data-center",
+  "solucionTitle": "Data Center",
+  "hero": {
+    "heading": "Virtual Desktop",
+    "intro": "Escritorios virtuales centralizados que permiten acceder de forma segura a aplicaciones, archivos y entornos de trabajo desde distintos dispositivos.",
+    "note": "Ideal para organizaciones que requieren habilitar trabajo remoto, administrar usuarios de forma centralizada y simplificar el acceso a aplicaciones corporativas.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/nube-publica.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Escritorios administrados desde un punto",
+        "text": "Aplicaciones, perfiles y sesiones se gestionan de forma centralizada.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "ESCRITORIOS",
+          "valor": "ACTIVOS",
+          "nodos": [
+            {
+              "label": "Sesiones"
+            },
+            {
+              "label": "Apps"
+            },
+            {
+              "label": "Perfiles"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Acceso seguro desde cualquier dispositivo",
+        "text": "El entorno de trabajo viaja con el usuario, no con el equipo.",
+        "plantilla": "tunel",
+        "datos": {
+          "hilos": 3,
+          "etiqueta": "Sesión cifrada"
+        }
+      },
+      {
+        "title": "La información no sale del centro",
+        "text": "Los datos corporativos se quedan donde deben estar.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Datos centralizados"
+        }
+      },
+      {
+        "title": "Altas de usuario en minutos",
+        "text": "Un colaborador nuevo entra a producir el mismo día.",
+        "plantilla": "reloj"
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "**Trabajo remoto e híbrido**, Contact Centers, personal temporal, proveedores y equipos distribuidos."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Virtual Desktop | Fiberlux Corp",
+    "metaDescription": "Escritorios virtuales centralizados que permiten acceder de forma segura a aplicaciones, archivos y entornos de trabajo desde distintos dispositivos.",
+    "ogImage": ""
+  }
+}

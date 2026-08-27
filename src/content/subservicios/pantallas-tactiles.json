@@ -1,0 +1,122 @@
+{
+  "title": "Pantallas táctiles",
+  "slug": "pantallas-tactiles",
+  "solucionSlug": "comunicaciones",
+  "solucionTitle": "Comunicaciones Unificadas",
+  "hero": {
+    "heading": "Pantallas táctiles",
+    "intro": "Pantallas interactivas diseñadas para reuniones, presentaciones y trabajo colaborativo, permitiendo visualizar, compartir y manipular contenido directamente desde la pantalla.",
+    "note": "Ideal para organizaciones que buscan modernizar salas de reuniones, aulas o espacios colaborativos con una experiencia más dinámica e integrada.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/colaboracion-empresarial.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Contenido que se manipula con la mano",
+        "text": "Presentaciones y documentos se visualizan y editan desde la pantalla.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Presentaciones"
+            },
+            {
+              "label": "Documentos"
+            },
+            {
+              "label": "Anotaciones"
+            },
+            {
+              "label": "Compartir"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Pizarra digital",
+        "text": "Sesiones colaborativas que quedan guardadas al terminar.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "PIZARRA",
+          "valor": "ACTIVA",
+          "nodos": [
+            {
+              "label": "Trazos"
+            },
+            {
+              "label": "Notas"
+            },
+            {
+              "label": "Exportar"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Integrada a tus videoconferencias",
+        "text": "Se conecta con las plataformas de colaboración que ya usas.",
+        "plantilla": "sedes",
+        "datos": {
+          "nodos": [
+            {
+              "label": "Teams"
+            },
+            {
+              "label": "Zoom"
+            },
+            {
+              "label": "Meet"
+            },
+            {
+              "label": "Sala"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Más participación",
+        "text": "Las reuniones presenciales e híbridas dejan de ser un monólogo.",
+        "plantilla": "gauge",
+        "datos": {
+          "porcentaje": 82
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Salas de reuniones, directorios, centros de capacitación, aulas, salas de innovación y **espacios de trabajo colaborativo**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Pantallas táctiles | Fiberlux Corp",
+    "metaDescription": "Pantallas interactivas diseñadas para reuniones, presentaciones y trabajo colaborativo, permitiendo visualizar, compartir y manipular contenido directamente…",
+    "ogImage": ""
+  }
+}

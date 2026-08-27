@@ -1,0 +1,96 @@
+{
+  "title": "Autocontenido (on premise)",
+  "slug": "autocontenido",
+  "solucionSlug": "data-center",
+  "solucionTitle": "Data Center",
+  "hero": {
+    "heading": "Autocontenido (on premise)",
+    "intro": "Centro de datos compacto instalado en las instalaciones del cliente, que integra infraestructura, energía, climatización y monitoreo en una solución modular.",
+    "note": "Ideal para organizaciones que requieren mantener su infraestructura tecnológica dentro de sus propias instalaciones sin implementar un Data Center tradicional completo.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/housing.webp"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Data Center en un espacio reducido",
+        "text": "Infraestructura, energía, climatización y monitoreo integrados en un módulo.",
+        "plantilla": "dwdm",
+        "datos": {
+          "hilos": 3
+        }
+      },
+      {
+        "title": "Control local de tus equipos críticos",
+        "text": "Los servidores se quedan dentro de tus instalaciones.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "On premise"
+        }
+      },
+      {
+        "title": "Modular y escalable",
+        "text": "Crece por módulos, sin rehacer la instalación.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 55
+        }
+      },
+      {
+        "title": "Condiciones operativas vigiladas",
+        "text": "Energía, clima y acceso bajo gestión centralizada.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "SALA TÉCNICA",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "Energía"
+            },
+            {
+              "label": "Clima"
+            },
+            {
+              "label": "Acceso"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Sedes principales o remotas, plantas, campus, procesamiento local y organizaciones que requieren **infraestructura crítica on-premise**."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Autocontenido (on premise) | Fiberlux Corp",
+    "metaDescription": "Centro de datos compacto instalado en las instalaciones del cliente, que integra infraestructura, energía, climatización y monitoreo en una solución modular.",
+    "ogImage": ""
+  }
+}
