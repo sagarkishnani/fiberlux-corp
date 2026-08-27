@@ -14,8 +14,8 @@
     "heading_en": "Email Security & Web Filtering",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "A preventive cloud shield that intercepts malicious emails, infected attachments and restricts access to fraudulent websites.",
-    "note_en": "Ideal to mitigate the risk of the weakest link (human error), preventing an employee from compromising the infrastructure with a single click."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -78,9 +78,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Corporaciones con alto volumen de **personal administrativo y atención al cliente**.",
+    "statement": "Corporaciones con **alto volumen de personal administrativo** y atención al cliente.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Corporations with a high volume of **administrative and customer-service staff**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -111,7 +111,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Seguridad de Correo y Filtrado Web | Fiberlux Corp",
+    "metaTitle": "Correo | Fiberlux Corp",
     "metaDescription": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
     "ogImage": ""
   },

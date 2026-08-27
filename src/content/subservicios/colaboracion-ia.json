@@ -5,8 +5,8 @@
   "solucionTitle": "Comunicaciones Unificadas",
   "hero": {
     "heading": "Colaboración IA",
-    "intro": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
-    "note": "Ideal para erradicar las cadenas de correos infinitas con versiones 'final.pdf' que causan confusión, sobreescrituras y demoras.",
+    "intro": "Soluciones de colaboración potenciadas con inteligencia artificial que integran voz, Microsoft Teams, Copilot y tecnología de sala para optimizar reuniones y trabajo en equipo.",
+    "note": "Ideal para organizaciones que buscan automatizar tareas, generar resúmenes, identificar acuerdos y facilitar el seguimiento de reuniones mediante herramientas de IA.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "Enterprise Collaboration",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Synchronized virtual workspaces on Microsoft 365 and Google Workspace: document co-creation, shared files and integration with Teams, SharePoint and OneDrive.",
-    "note_en": "Ideal to eliminate endless email chains with 'final.pdf' versions that cause confusion, overwrites and delays."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -85,9 +85,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Agencias creativas, estudios de arquitectura y despachos de **planeamiento estratégico e ingeniería**.",
+    "statement": "Reuniones ejecutivas, equipos híbridos, coordinación multisede, seguimiento de acuerdos y organizaciones que buscan **incorporar IA a sus procesos colaborativos**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Creative agencies, architecture studios and **strategic planning and engineering** firms."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -118,8 +118,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Colaboración Empresarial | Fiberlux Corp",
-    "metaDescription": "Espacios virtuales de trabajo sincronizado sobre Microsoft 365 y Google Workspace: co-creación de documentos, archivos compartidos e integración con Teams, SharePoint y OneDrive.",
+    "metaTitle": "Colaboración IA | Fiberlux Corp",
+    "metaDescription": "Soluciones de colaboración potenciadas con inteligencia artificial que integran voz, Microsoft Teams, Copilot y tecnología de sala para optimizar reuniones…",
     "ogImage": ""
   },
   "title_en": "Enterprise Collaboration",

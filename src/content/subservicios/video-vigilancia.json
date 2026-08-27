@@ -5,8 +5,8 @@
   "solucionTitle": "Infraestructura",
   "hero": {
     "heading": "Video Vigilancia",
-    "intro": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
-    "note": "Ideal para organizaciones que requieren visibilidad permanente de sus instalaciones sin asumir la complejidad de administrar la infraestructura internamente.",
+    "intro": "Servicio integral de monitoreo y administración de sistemas de videovigilancia que permite supervisar instalaciones, proteger activos y mejorar la seguridad operativa mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para el reconocimiento de patrones (como identificación de rostros, trackeo vehicular e invasión de perímetros, etc.).",
+    "note": "Ideal para organizaciones que requieren visibilidad permanente sobre sus instalaciones sin asumir la complejidad técnica de administrar la infraestructura de videovigilancia internamente.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "Managed Video Surveillance",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "A comprehensive video surveillance monitoring and management service using IP cameras, management platforms, centralized remote access and AI for pattern recognition.",
-    "note_en": "Ideal for organizations that need permanent visibility of their facilities without taking on the complexity of managing the infrastructure in-house."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -72,9 +72,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Oficinas corporativas, centros logísticos, plantas industriales, instituciones educativas, salud, retail y organizaciones con **múltiples sedes**.",
+    "statement": "Oficinas corporativas, centros logísticos, plantas industriales, instituciones educativas, establecimientos de salud, retail y **organizaciones con múltiples sedes**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Corporate offices, logistics centers, industrial plants, educational institutions, healthcare, retail and organizations with **multiple sites**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -105,8 +105,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Videovigilancia Gestionada | Fiberlux Corp",
-    "metaDescription": "Servicio integral de monitoreo y administración de videovigilancia mediante cámaras IP, plataformas de gestión, acceso remoto centralizado e inteligencia artificial para reconocimiento de patrones.",
+    "metaTitle": "Video Vigilancia | Fiberlux Corp",
+    "metaDescription": "Servicio integral de monitoreo y administración de sistemas de videovigilancia que permite supervisar instalaciones, proteger activos y mejorar la seguridad…",
     "ogImage": ""
   },
   "title_en": "Managed Video Surveillance",

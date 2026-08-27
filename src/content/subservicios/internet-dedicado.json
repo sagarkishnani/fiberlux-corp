@@ -14,8 +14,8 @@
     "heading_en": "Corporate Internet",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "A 100% symmetrical fiber-optic link, exclusive and unshared with other users, with guaranteed bandwidth.",
-    "note_en": "Ideal if your shared network collapses at peak hours, choking your management systems and cloud file uploads."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -67,7 +67,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cualquier empresa (desde oficinas en crecimiento hasta grandes industrias) donde **cada minuto de desconexión** signifique pérdida de dinero, caídas en la atención al cliente o lentitud en la subida de información crítica.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Any business (from growing offices to large industries) where **every minute of downtime** means lost money, disruptions in customer service or delays in uploading critical information."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -108,8 +108,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Internet Corporativo | Fiberlux Corp",
-    "metaDescription": "Fibra óptica 100% simétrica, dedicada y sin compartición, con ancho de banda garantizado y soporte 24/7.",
+    "metaTitle": "Internet Dedicado | Fiberlux Corp",
+    "metaDescription": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
     "ogImage": ""
   },
   "title_en": "Corporate Internet",

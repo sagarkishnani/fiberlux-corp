@@ -5,8 +5,8 @@
   "solucionTitle": "Data Center",
   "hero": {
     "heading": "Disaster Recovery (DRaaS)",
-    "intro": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
-    "note": "Ideal para empresas donde el downtime es inadmisible y restaurar desde un backup tradicional tomaría días de inactividad.",
+    "intro": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva lista para encenderse si tus servicios productivos colapsan.",
+    "note": "Ideal para empresas donde el downtime es inadmisible y restaurar sistemas desde un backup tradicional tomaría días de inactividad.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "Disaster Recovery (DRaaS)",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Disaster Recovery as a Service. A dormant replica of your production infrastructure, ready to spin up if your services collapse.",
-    "note_en": "Ideal for companies where downtime is unacceptable and restoring from a traditional backup would take days of inactivity."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -61,8 +61,8 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Operaciones mission-critical como **entidades financieras**, logística portuaria y portales de transacciones.",
-    "statement_en": "Mission-critical operations such as **financial institutions**, port logistics and transaction portals.",
+    "statement": "**Operaciones mission-critical** como entidades financieras, logística portuaria y portales de transacciones.",
+    "statement_en": "",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -95,7 +95,7 @@
   },
   "seo": {
     "metaTitle": "Disaster Recovery (DRaaS) | Fiberlux Corp",
-    "metaDescription": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva, lista para encenderse si tus servicios colapsan.",
+    "metaDescription": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva lista para encenderse si tus servicios productivos colapsan.",
     "ogImage": ""
   },
   "title_en": "Disaster Recovery (DRaaS)",

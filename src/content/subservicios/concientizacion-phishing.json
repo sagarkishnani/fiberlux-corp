@@ -5,7 +5,7 @@
   "solucionTitle": "Ciberseguridad",
   "hero": {
     "heading": "Concientización en Phishing",
-    "intro": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
+    "intro": "Programas de capacitación y simulación diseñados para ayudar a los colaboradores a identificar correos fraudulentos, intentos de suplantación de identidad (phishing) y otras técnicas de ingeniería social utilizadas para obtener acceso a información sensible.",
     "note": "Ideal para reducir el riesgo de incidentes originados por errores humanos y fortalecer la primera línea de defensa.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
@@ -14,8 +14,8 @@
     "heading_en": "Phishing Awareness",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Training and simulation programs that help employees identify fraudulent emails, phishing and other social engineering techniques.",
-    "note_en": "Ideal to reduce the risk of human-error incidents and strengthen your first line of defense."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -72,9 +72,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Empresas con trabajo híbrido o remoto, entidades financieras, instituciones educativas y organizaciones que manejan **información confidencial**.",
+    "statement": "Empresas con trabajo híbrido o remoto, entidades financieras, instituciones educativas y organizaciones que **manejan información confidencial**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Companies with hybrid or remote work, financial institutions, educational institutions and organizations that handle **confidential information**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -106,7 +106,7 @@
   },
   "seo": {
     "metaTitle": "Concientización en Phishing | Fiberlux Corp",
-    "metaDescription": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
+    "metaDescription": "Programas de capacitación y simulación diseñados para ayudar a los colaboradores a identificar correos fraudulentos, intentos de suplantación de identidad…",
     "ogImage": ""
   },
   "title_en": "Phishing Awareness",

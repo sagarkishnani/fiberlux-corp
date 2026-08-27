@@ -6,7 +6,7 @@
   "hero": {
     "heading": "Fibra Oscura",
     "intro": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
-    "note": "",
+    "note": "Ideal para organizaciones con capacidad técnica propia y necesidades avanzadas de control, baja latencia o crecimiento escalable del ancho de banda, donde los servicios gestionados de operadores tradicionales resultan limitantes o más costosos a largo plazo.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,7 +14,7 @@
     "heading_en": "Dark Fiber",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Dedicated, unlit optical fiber so you manage your own capacity and infrastructure."
+    "intro_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -83,8 +83,8 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, operadores mayoristas (Carriers), empresas con múltiples sedes y organizaciones con **altos requerimientos de capacidad y crecimiento**.",
-    "statement_en": "Universities and corporate campuses, banking, government entities, wholesale operators (Carriers), companies with multiple sites and organizations with **high capacity and growth requirements**.",
+    "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, **operadores mayoristas (Carriers)**, empresas con múltiples sedes y organizaciones con altos requerimientos de capacidad y crecimiento.",
+    "statement_en": "",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",

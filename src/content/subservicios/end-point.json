@@ -5,8 +5,8 @@
   "solucionTitle": "Ciberseguridad",
   "hero": {
     "heading": "End Point",
-    "intro": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
-    "note": "Ideal para frenar el ransomware hiperavanzado que evade los antivirus tradicionales y se ejecuta directamente en las laptops de directivos y colaboradores.",
+    "intro": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan Antivirus Empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
+    "note": "Ideal para frenar el ransomware hiperavanzado que evade los antivirus tradicionales y se ejecuta directamente en las laptops de los directivos y colaboradores.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "EDR / XDR / MDR",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Protection, detection and response solutions for corporate devices, combining enterprise antivirus, EDR, XDR and MDR to protect laptops, servers and workstations from advanced threats.",
-    "note_en": "Ideal to stop hyper-advanced ransomware that evades traditional antivirus and runs directly on executives' and employees' laptops."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -80,7 +80,7 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Clínicas protegiendo historiales médicos, despachos legales, instituciones financieras y organizaciones con **equipos distribuidos o trabajo híbrido**.",
-    "statement_en": "Clinics protecting medical records, law firms, financial institutions and organizations with **distributed teams or hybrid work**.",
+    "statement_en": "",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -112,8 +112,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "EDR / XDR / MDR | Fiberlux Corp",
-    "metaDescription": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
+    "metaTitle": "End Point | Fiberlux Corp",
+    "metaDescription": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan Antivirus Empresarial, EDR, XDR y MDR para proteger laptops,…",
     "ogImage": ""
   },
   "title_en": "EDR / XDR / MDR",

@@ -14,8 +14,8 @@
     "heading_en": "NGFW / Seguridad Perimetral",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Next-Generation Firewall. A layer-7 security barrier that deeply inspects web traffic, applications and users.",
-    "note_en": "Ideal against obsolete firewalls that are blind to modern malware hidden in legitimate applications or encrypted traffic."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -70,7 +70,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Para cualquier empresa mediana o grande que necesite **proteger el perímetro de su red** y controlar a qué sitios web pueden acceder sus colaboradores.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "For any medium or large business that needs to **protect its network perimeter** and control which websites its employees can access."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -101,7 +101,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "NGFW / Seguridad Perimetral | Fiberlux Corp",
+    "metaTitle": "Perimetral | Fiberlux Corp",
     "metaDescription": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
     "ogImage": ""
   },

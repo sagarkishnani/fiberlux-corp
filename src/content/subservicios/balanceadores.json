@@ -5,8 +5,8 @@
   "solucionTitle": "Infraestructura",
   "hero": {
     "heading": "Balanceadores",
-    "intro": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
-    "note": "",
+    "intro": "Diseño e implementación de soluciones de balanceo que distribuyen el tráfico entre diferentes recursos o enlaces para mejorar el rendimiento y disponibilidad de los servicios.",
+    "note": "Ideal para organizaciones que requieren optimizar el uso de su infraestructura y reducir el impacto de saturaciones o fallas.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,7 +14,7 @@
     "heading_en": "Link Load Balancing",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Intelligent traffic distribution across multiple links to maximize availability and performance."
+    "intro_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -92,9 +92,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Hospitales, centrales de emergencia, centros de control, entidades financieras, operaciones industriales y organizaciones 24/7 donde **el downtime es inaceptable**.",
+    "statement": "Plataformas críticas, servicios digitales, **aplicaciones de alta demanda** e infraestructuras que requieren redundancia.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Hospitals, emergency dispatch centers, control rooms, financial institutions, industrial operations and 24/7 organizations where **downtime is unacceptable**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -125,8 +125,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Balanceo de enlaces | Fiberlux Corp",
-    "metaDescription": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
+    "metaTitle": "Balanceadores | Fiberlux Corp",
+    "metaDescription": "Diseño e implementación de soluciones de balanceo que distribuyen el tráfico entre diferentes recursos o enlaces para mejorar el rendimiento y…",
     "ogImage": ""
   },
   "title_en": "Link Load Balancing",

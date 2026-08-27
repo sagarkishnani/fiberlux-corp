@@ -6,7 +6,7 @@
   "hero": {
     "heading": "Alta Disponibilidad",
     "intro": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
-    "note": "",
+    "note": "Ideal para sucursales que pierden ventas por cortes que impiden procesar pagos, afectando directamente la facturación.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,7 +14,7 @@
     "heading_en": "High-Availability Corporate Internet",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Redundant connectivity with automatic backup links to guarantee total continuity of your operation."
+    "intro_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -55,9 +55,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Cadenas de retail (**facturación y POS**), clínicas, centros logísticos, entidades financieras y plantas industriales.",
+    "statement": "**Cadenas de retail (facturación y POS)**, clínicas, centros logísticos, entidades financieras y plantas industriales.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Retail chains (**billing and POS**), clinics, logistics centers, financial institutions and industrial plants."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -88,7 +88,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Internet Corporativo de Alta Disponibilidad | Fiberlux Corp",
+    "metaTitle": "Alta Disponibilidad | Fiberlux Corp",
     "metaDescription": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
     "ogImage": ""
   },

@@ -6,7 +6,7 @@
   "hero": {
     "heading": "Virtual Server",
     "intro": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
-    "note": "Ideal para empresas que buscan acelerar proyectos, optimizar costos y aprovechar la escalabilidad de la nube pública con un socio especializado.",
+    "note": "Ideal para empresas que buscan acelerar proyectos, optimizar costos y aprovechar la escalabilidad de la nube pública con el acompañamiento de un socio especializado.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "Public Cloud",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystem, as official partners.",
-    "note_en": "Ideal for companies looking to accelerate projects, optimize costs and leverage the scalability of the public cloud with a specialized partner."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -75,9 +75,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Startups en hipercrecimiento, plataformas de e-commerce, entornos de desarrollo, sistemas ERP y **organizaciones multisede** con picos de demanda.",
+    "statement": "**Startups en hipercrecimiento**, plataformas de e-commerce, entornos de desarrollo y pruebas, sistemas ERP, organizaciones multisede y centros educativos con picos de demanda.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Hypergrowth startups, e-commerce platforms, development environments, ERP systems and **multi-site organizations** with demand spikes."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -108,7 +108,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Nube Pública | Fiberlux Corp",
+    "metaTitle": "Virtual Server | Fiberlux Corp",
     "metaDescription": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
     "ogImage": ""
   },

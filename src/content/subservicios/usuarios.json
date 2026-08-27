@@ -6,7 +6,7 @@
   "hero": {
     "heading": "Usuarios",
     "intro": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
-    "note": "Ideal para proteger sistemas financieros y bases de datos contra el robo de credenciales y las contraseñas débiles en el mercado negro.",
+    "note": "Ideal para proteger los sistemas financieros y bases de datos contra ataques de robo de credenciales y contraseñas débiles en el mercado negro.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "MFA & Identity Control",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Multi-Factor Authentication and Identity Management. A system that requires a dynamic second verification (token, app or biometrics) to log in.",
-    "note_en": "Ideal to protect financial systems and databases against credential theft and weak passwords on the black market."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -75,9 +75,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Accesos administrativos de TI, **portales bancarios** y entrada al ERP central.",
+    "statement": "**Accesos administrativos de TI**, portales bancarios y entrada al ERP central.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "IT administrative access, **banking portals** and login to the central ERP."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -108,7 +108,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "MFA y Control de Identidad | Fiberlux Corp",
+    "metaTitle": "Usuarios | Fiberlux Corp",
     "metaDescription": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
     "ogImage": ""
   },

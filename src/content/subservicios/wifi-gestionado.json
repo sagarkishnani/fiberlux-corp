@@ -5,8 +5,8 @@
   "solucionTitle": "Infraestructura",
   "hero": {
     "heading": "WiFi Gestionado",
-    "intro": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
-    "note": "Ideal para espacios de alta concurrencia donde la calidad de la conectividad inalámbrica es clave para la operación y la experiencia de usuario.",
+    "intro": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando la cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
+    "note": "Ideal para espacios de alta concurrencia donde la calidad de la conectividad inalámbrica es clave para la operación y la experiencia de usuarios.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "Managed WiFi",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Design, implementation and management of enterprise wireless networks, optimizing coverage, capacity and the connection experience for users and devices.",
-    "note_en": "Ideal for high-traffic spaces where the quality of wireless connectivity is key to operations and user experience."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -85,9 +85,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Campus universitarios, hoteles, centros comerciales, hospitales y **oficinas corporativas de gran escala**.",
+    "statement": "**Campus universitarios**, hoteles, centros comerciales, hospitales, almacenes logísticos y oficinas corporativas de gran escala.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "University campuses, hotels, shopping malls, hospitals and **large-scale corporate offices**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -119,7 +119,7 @@
   },
   "seo": {
     "metaTitle": "WiFi Gestionado | Fiberlux Corp",
-    "metaDescription": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando cobertura, capacidad y experiencia de conexión de usuarios y dispositivos.",
+    "metaDescription": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando la cobertura, capacidad y experiencia de conexión de usuarios y…",
     "ogImage": ""
   },
   "title_en": "Managed WiFi",

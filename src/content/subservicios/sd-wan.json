@@ -6,7 +6,7 @@
   "hero": {
     "heading": "SD-WAN",
     "intro": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
-    "note": "",
+    "note": "Ideal para empresas con múltiples sucursales que buscan optimizar el rendimiento de sus aplicaciones, simplificar la administración de la red y garantizar la continuidad operativa.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,7 +14,7 @@
     "heading_en": "SD-WAN",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Software-defined network that optimizes and prioritizes traffic across multiple links and sites."
+    "intro_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -113,7 +113,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cadenas de retail, instituciones educativas, entidades financieras y empresas multisede que requieren conectar sucursales, acceder a aplicaciones en la nube y mantener un **rendimiento consistente de sus servicios críticos**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Retail chains, educational institutions, financial entities and multi-site businesses that need to connect branches, access cloud applications and maintain **consistent performance of their critical services**."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {

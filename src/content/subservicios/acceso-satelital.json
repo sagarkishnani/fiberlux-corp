@@ -6,7 +6,7 @@
   "hero": {
     "heading": "Acceso Satelital",
     "intro": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
-    "note": "",
+    "note": "Ideal para operaciones alejadas que sufren de aislamiento digital y sedes urbanas que quedan vulnerables ante cortes de fibra terrestre.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,7 +14,7 @@
     "heading_en": "Satellite Connectivity",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Coverage in remote areas without fiber infrastructure, with high-availability satellite links."
+    "intro_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -72,7 +72,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "Mining camps, agribusinesses and remote sites; or as the **highest level of backup (failover)** in urban areas."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -103,7 +103,7 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Conectividad satelital | Fiberlux Corp",
+    "metaTitle": "Acceso Satelital | Fiberlux Corp",
     "metaDescription": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
     "ogImage": ""
   },

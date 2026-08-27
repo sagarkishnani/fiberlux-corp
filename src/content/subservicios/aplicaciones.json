@@ -5,8 +5,8 @@
   "solucionTitle": "Ciberseguridad",
   "hero": {
     "heading": "Aplicaciones",
-    "intro": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
-    "note": "Ideal para plataformas web y ecommerces expuestos a ataques cibernéticos.",
+    "intro": "La Web Application Firewall es una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
+    "note": "Ideal para plataformas web y ecommerces que pueden sufrir de algún ataque cibernético.",
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
@@ -14,8 +14,8 @@
     "heading_en": "WAF",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "Web Application Firewall: a specialized barrier that audits HTTP/HTTPS traffic between the internet and your web application in real time.",
-    "note_en": "Ideal for web platforms and e-commerce sites exposed to cyberattacks."
+    "intro_en": "",
+    "note_en": ""
   },
   "beneficios": {
     "title": "Beneficios",
@@ -78,9 +78,9 @@
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Tiendas de **e-commerce**, pasarelas de pago y portales de trámites ciudadanos.",
+    "statement": "Tiendas de e-commerce, **pasarelas de pago** y portales de trámites ciudadanos.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": "**E-commerce** stores, payment gateways and citizen service portals."
+    "statement_en": ""
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -111,8 +111,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "WAF | Fiberlux Corp",
-    "metaDescription": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
+    "metaTitle": "Aplicaciones | Fiberlux Corp",
+    "metaDescription": "La Web Application Firewall es una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
     "ogImage": ""
   },
   "title_en": "WAF",
