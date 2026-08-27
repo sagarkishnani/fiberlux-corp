@@ -52,8 +52,8 @@ export default function HeroNosotrosReact({
   return (
     <PhotoHero
       image={hero?.image}
-      focus="76% 45%"
-      focusMobile="72% 38%"
+      focus="78% 100%"
+      focusMobile="74% 50%"
       overlay={<NetworkDepth variant="malla" opacity={0.6} />}
       breadcrumb={
         <ol className="flex items-center gap-2 text-body-md">

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField, localizeHref } from "../../utils/i18n";
@@ -10,10 +10,11 @@ import WaveformEffect from "../effects/WaveformEffect";
 import NodeField from "../effects/NodeField";
 import CinematicBackground from "../effects/CinematicBackground";
 import HeroLogoIntro from "./HeroLogoIntro";
-import MorphSolutions, {
-  type MorphNode,
-  type MorphHandle,
-} from "../effects/MorphSolutions";
+// MorphSolutions arrastra Three.js (~508 KB sin comprimir). El hero sólo lo usa
+// en `heroBackground: "morph"`, así que se carga en diferido: con cualquier otro
+// modo (hoy el home va en "cinematic") Three no llega ni a descargarse.
+const MorphSolutions = lazy(() => import("../effects/MorphSolutions"));
+import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 
 // Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
 // morph del wordmark FLX→FIBERLUX (~1.4s: hold 420ms + morph 1000ms) y el
@@ -397,6 +398,7 @@ export default function HeroHomeReact({
           bajo el contenido z-10 (que se desvanece durante el morph). */}
       {mode === "morph" && (
         <div className="absolute inset-0 z-[2]">
+          <Suspense fallback={null}>
           <MorphSolutions
             ref={morphRef}
             className="h-full w-full"
@@ -413,6 +415,7 @@ export default function HeroHomeReact({
                 );
             }}
           />
+          </Suspense>
         </div>
       )}
 

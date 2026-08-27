@@ -83,6 +83,10 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
                 alt="Fiberlux App"
                 className="block w-full h-auto"
                 draggable={false}
+                /* Va bajo el pliegue y la variante de escritorio pesa medio
+                   mega: sin `lazy` competía con el hero por el ancho de banda. */
+                loading="lazy"
+                decoding="async"
               />
             </picture>
           </a>
@@ -208,6 +212,8 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <img
             src={mockup}
             alt="Fiberlux App"
+            loading="lazy"
+            decoding="async"
             data-reveal="right"
             data-reveal-scrub
             className="pointer-events-none absolute z-0 right-[-14%] top-[-10%] h-[124%] w-auto max-w-none select-none hidden min-[1200px]:block"
@@ -251,6 +257,8 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
             <img
               src={mockup}
               alt="Fiberlux App"
+              loading="lazy"
+              decoding="async"
               className="pointer-events-none mt-6 self-end select-none w-[104%] -mr-[58%] -mb-[30%] max-w-none md:w-[360px] md:-mr-[196px] md:-mb-[104px]"
               draggable={false}
             />

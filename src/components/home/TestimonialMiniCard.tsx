@@ -40,6 +40,8 @@ export default function TestimonialMiniCard({
             src={logoSrc}
             alt={company}
             className="h-7 w-auto max-w-[160px] object-contain"
+            loading="lazy"
+            decoding="async"
             draggable={false}
           />
         ) : (
