@@ -1,0 +1,143 @@
+{
+  "title": "Comunicaciones Unificadas",
+  "slug": "comunicaciones",
+  "hero": {
+    "heading": "Comunicaciones empresariales que conectan a tu organización",
+    "intro": "Moderniza la comunicación de voz con soluciones de telefonía diseñadas para conectar usuarios, áreas y sedes de forma eficiente y escalable.",
+    "ctaLabel": "Ver soluciones",
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/imagenes/comunicaciones.webp"
+  },
+  "valor": {
+    "title": "Una comunicación preparada para evolucionar",
+    "subtitle": "Voz, colaboración y tecnología integradas en una sola experiencia.",
+    "cards": [
+      {
+        "heading": "El desafío",
+        "text": "Las soluciones telefónicas tradicionales pueden limitar la movilidad, dificultar la administración y generar mayor complejidad a medida que crecen los usuarios y sedes.",
+        "image": "/images/soluciones/valor-desafio.svg"
+      },
+      {
+        "heading": "Nuestra solución",
+        "text": "Implementamos soluciones de telefonía IP y centrales telefónicas adaptadas a cada operación, integrando numeración, equipamiento y capacidades de administración para simplificar y modernizar las comunicaciones.",
+        "tags": [
+          "Comunicaciones Unificadas",
+          "Cloud PBX",
+          "Colaboración IA",
+          "Pantallas táctiles",
+          "Contact Center"
+        ],
+        "image": ""
+      },
+      {
+        "heading": "Industrias destacadas",
+        "text": "Servicios, Retail, Salud, Educación, Banca, Contact Centers y organizaciones con múltiples sedes o alta interacción con clientes.",
+        "image": ""
+      }
+    ]
+  },
+  "catalogo": {
+    "title": "Catálogo de soluciones",
+    "items": []
+  },
+  "partners": {
+    "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "title": "Trabajamos con los líderes de la industria",
+    "logos": [
+      {
+        "image": "/images/partners/yealink.svg",
+        "alt": "Yealink",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/yeastar.svg",
+        "alt": "Yeastar",
+        "url": ""
+      }
+    ]
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Puedo conservar mi numeración actual?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Qué diferencia hay entre Cloud PBX y Comunicaciones Unificadas?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Se integra con Microsoft Teams y WhatsApp?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Se pueden arrendar los equipos telefónicos?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Comunicaciones Unificadas y telefonía IP | Fiberlux Corp",
+    "metaDescription": "Telefonía IP, Cloud PBX, colaboración con IA, pantallas táctiles y contact center multicanal para conectar usuarios, áreas y sedes.",
+    "ogImage": ""
+  },
+  "blogTags": [
+    "Comunicaciones"
+  ]
+}

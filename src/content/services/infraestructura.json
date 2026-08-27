@@ -1,0 +1,168 @@
+{
+  "title": "Infraestructura",
+  "slug": "infraestructura",
+  "hero": {
+    "heading": "Tecnología preparada para soportar una operación cada vez más exigente",
+    "intro": "Diseñamos e implementamos infraestructura tecnológica escalable para conectar, administrar y fortalecer los entornos donde operan tus usuarios, dispositivos y aplicaciones.",
+    "ctaLabel": "Ver soluciones",
+    "formTitle": "¿Conversamos?",
+    "heroMode": "image",
+    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp"
+  },
+  "valor": {
+    "title": "Una infraestructura preparada para evolucionar",
+    "subtitle": "Tecnología escalable y preparada para las necesidades de tu operación.",
+    "cards": [
+      {
+        "heading": "El desafío",
+        "text": "El crecimiento de usuarios, dispositivos y aplicaciones aumenta la complejidad tecnológica y exige infraestructuras capaces de mantener rendimiento, disponibilidad y control.",
+        "image": "/images/soluciones/valor-desafio.svg"
+      },
+      {
+        "heading": "Nuestra solución",
+        "text": "Integramos soluciones de infraestructura adaptadas a cada entorno, desde el diseño y la implementación hasta su administración y soporte, permitiendo escalar capacidades y responder a nuevas necesidades operativas.",
+        "tags": [
+          "WiFi Gestionado",
+          "Switches",
+          "Balanceadores",
+          "Servidores",
+          "Video Vigilancia"
+        ],
+        "image": ""
+      },
+      {
+        "heading": "Industrias destacadas",
+        "text": "Aplicable a organizaciones de todos los sectores que requieren modernizar, ampliar o administrar su infraestructura tecnológica.",
+        "image": ""
+      }
+    ]
+  },
+  "catalogo": {
+    "title": "Catálogo de soluciones",
+    "items": []
+  },
+  "partners": {
+    "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
+    "title": "Trabajamos con los líderes de la industria",
+    "logos": [
+      {
+        "image": "/images/partners/aruba.svg",
+        "alt": "Aruba HPE",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/huawei.svg",
+        "alt": "Huawei",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/hikvision.svg",
+        "alt": "Hikvision",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/h3c.svg",
+        "alt": "H3C",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/fortinet.svg",
+        "alt": "Fortinet",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/peplink.svg",
+        "alt": "Peplink",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/ubiquiti.svg",
+        "alt": "Ubiquiti",
+        "url": ""
+      }
+    ]
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye un proyecto de infraestructura llave en mano?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Pueden administrar la infraestructura después de implementarla?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Trabajan con equipamiento propio o del cliente?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "question": "¿Cómo se dimensiona la solución para mi operación?",
+        "answer": {
+          "type": "root",
+          "children": [
+            {
+              "type": "p",
+              "children": [
+                {
+                  "type": "text",
+                  "text": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "seo": {
+    "metaTitle": "Infraestructura tecnológica empresarial | Fiberlux Corp",
+    "metaDescription": "WiFi gestionado, switches, balanceadores, servidores, videovigilancia y respaldo eléctrico: diseño, implementación, administración y soporte de tu infraestructura.",
+    "ogImage": ""
+  },
+  "blogTags": [
+    "Infraestructura"
+  ]
+}
