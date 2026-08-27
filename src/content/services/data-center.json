@@ -1,8 +1,8 @@
 {
-  "title": "Data Center, Cloud y Continuidad de Negocio",
-  "slug": "data-center-cloud",
+  "title": "Data Center",
+  "slug": "data-center",
   "hero": {
-    "heading": "Infraestructura de clase mundial para el corazón de tu negocio",
+    "heading": "Infraestructura especializada para tus sistemas más críticos",
     "intro": "Aloja, protege y escala tus aplicaciones y datos sobre plataformas empresariales preparadas para acompañar el crecimiento y las exigencias de tu operación.",
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
@@ -28,11 +28,11 @@
         "heading": "Nuestra solución",
         "text": "Llevamos tus cargas de trabajo a entornos de nube pública, nube privada o infraestructura dedicada con la disponibilidad, seguridad y continuidad que tu operación requiere.",
         "tags": [
-          "Colocación",
-          "Nube privada",
-          "Nube pública",
-          "Backup",
-          "DRaaS"
+          "Virtual Server",
+          "BaaS",
+          "DRaaS",
+          "Virtual Desktop",
+          "NAS"
         ],
         "image": "",
         "heading_en": "Our solution",
@@ -59,7 +59,7 @@
         "title_en": "Housing & Colocation",
         "description": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center.",
         "description_en": "Rental of specialized space (full racks or fractions) in our Data Center.",
-        "url": "/soluciones/data-center-cloud/housing-colocacion"
+        "url": "/soluciones/data-center/housing-colocacion"
       },
       {
         "icon": "cloud",
@@ -67,7 +67,7 @@
         "title_en": "Private Cloud",
         "description": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
         "description_en": "An exclusive cloud environment with virtual servers, storage and networks physically dedicated to your company, hosted in our Data Centers.",
-        "url": "/soluciones/data-center-cloud/nube-privada"
+        "url": "/soluciones/data-center/nube-privada"
       },
       {
         "icon": "cloud",
@@ -75,7 +75,7 @@
         "title_en": "Public Cloud",
         "description": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
         "description_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystem, as official distributors.",
-        "url": "/soluciones/data-center-cloud/nube-publica"
+        "url": "/soluciones/data-center/nube-publica"
       },
       {
         "icon": "backup",
@@ -83,7 +83,7 @@
         "title_en": "Backup as a Service (BaaS)",
         "description": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
         "description_en": "Automated cloud-hosted backup service, protected with encryption and strict retention policies.",
-        "url": "/soluciones/data-center-cloud/baas"
+        "url": "/soluciones/data-center/baas"
       },
       {
         "icon": "backup",
@@ -91,7 +91,7 @@
         "title_en": "Disaster Recovery (DRaaS)",
         "description": "Recuperación ante Desastres como Servicio.",
         "description_en": "Disaster Recovery as a Service.",
-        "url": "/soluciones/data-center-cloud/draas"
+        "url": "/soluciones/data-center/draas"
       },
       {
         "icon": "storage",
@@ -99,7 +99,7 @@
         "title_en": "Storage & Compute",
         "description": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
         "description_en": "Elastic cloud storage repositories (block, file or object) optimized for high performance or long-term archiving.",
-        "url": "/soluciones/data-center-cloud/storage-computo"
+        "url": "/soluciones/data-center/storage-computo"
       },
       {
         "icon": "generico",
@@ -107,7 +107,7 @@
         "title_en": "Microservices",
         "description": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
         "description_en": "Design and implementation of modern platforms based on Docker containers and Kubernetes orchestration, to deploy scalable, resilient applications.",
-        "url": "/soluciones/data-center-cloud/microservicios"
+        "url": "/soluciones/data-center/microservicios"
       }
     ]
   },
@@ -130,16 +130,6 @@
       {
         "image": "/images/partners/aws.svg",
         "alt": "AWS",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/azure.svg",
-        "alt": "Azure",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/veeam.svg",
-        "alt": "Veeam",
         "url": ""
       }
     ]
@@ -225,8 +215,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Data Center, Cloud y Continuidad de Negocio",
-    "metaDescription": "Colocación, nube privada y pública, BaaS y DRaaS con los más altos estándares de disponibilidad y continuidad de negocio.",
+    "metaTitle": "Data Center y Cloud para empresas | Fiberlux Corp",
+    "metaDescription": "Servidores virtuales, backup, disaster recovery, escritorios virtuales y almacenamiento on premise con la disponibilidad y continuidad que tu operación requiere.",
     "ogImage": ""
   },
   "blogTags": [

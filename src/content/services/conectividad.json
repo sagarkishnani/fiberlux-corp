@@ -1,6 +1,6 @@
 {
-  "title": "Conectividad Empresarial",
-  "slug": "conectividad-empresarial",
+  "title": "Conectividad",
+  "slug": "conectividad",
   "hero": {
     "heading": "Conectividad diseñada para operaciones que no pueden detenerse",
     "intro": "Asegura la disponibilidad, resiliencia y el rendimiento de tu infraestructura multisede con enlaces de alta capacidad respaldados por nuestro NOC 24/7.",
@@ -14,7 +14,7 @@
     "intro_en": "Ensure the availability, resilience and performance of your multi-site infrastructure with high-capacity links backed by our 24/7 NOC."
   },
   "valor": {
-    "title": "El valor de la resiliencia",
+    "title": "El valor de la Resiliencia",
     "subtitle": "La resiliencia moderna no se improvisa: se diseña en cada enlace.",
     "cards": [
       {
@@ -28,10 +28,10 @@
         "heading": "Nuestra solución",
         "text": "Integramos internet empresarial, transmisión de datos multisede, fibra oscura y SD-WAN respaldados por fibra óptica, enlaces satelitales, microondas o LTE — con monitoreo y atención proactiva desde nuestro NOC 24/7.",
         "tags": [
-          "Fibra óptica",
-          "Satelital",
-          "Microondas",
-          "LTE",
+          "Internet Dedicado",
+          "Alta Disponibilidad",
+          "LAN to LAN",
+          "Fibra Oscura",
           "SD-WAN"
         ],
         "image": "",
@@ -59,7 +59,7 @@
         "title_en": "Corporate Internet",
         "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición, con ancho de banda garantizado.",
         "description_en": "100% symmetrical, dedicated and uncontended fiber optic link, with guaranteed bandwidth.",
-        "url": "/soluciones/conectividad-empresarial/internet-corporativo"
+        "url": "/soluciones/conectividad/internet-corporativo"
       },
       {
         "icon": "disponibilidad",
@@ -67,7 +67,7 @@
         "title_en": "High-Availability Corporate Internet",
         "description": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
         "description_en": "Redundant connectivity with automatic backup links to ensure total continuity of your operation.",
-        "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad"
+        "url": "/soluciones/conectividad/internet-alta-disponibilidad"
       },
       {
         "icon": "satelital",
@@ -75,7 +75,7 @@
         "title_en": "Satellite Connectivity",
         "description": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
         "description_en": "Coverage in remote areas without fiber infrastructure, using high-availability satellite links.",
-        "url": "/soluciones/conectividad-empresarial/conectividad-satelital"
+        "url": "/soluciones/conectividad/conectividad-satelital"
       },
       {
         "icon": "radioenlace",
@@ -83,7 +83,7 @@
         "title_en": "Enterprise Radio Links",
         "description": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
         "description_en": "High-capacity point-to-point wireless links to connect sites where fiber doesn't reach.",
-        "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales"
+        "url": "/soluciones/conectividad/radioenlaces-empresariales"
       },
       {
         "icon": "transmision",
@@ -91,7 +91,7 @@
         "title_en": "Data Transmission (LAN-to-LAN – L2L)",
         "description": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
         "description_en": "Private interconnection between your sites with secure, low-latency data transport.",
-        "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l"
+        "url": "/soluciones/conectividad/transmision-de-datos-l2l"
       },
       {
         "icon": "fibra-oscura",
@@ -99,7 +99,7 @@
         "title_en": "Dark Fiber",
         "description": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
         "description_en": "Dedicated, unlit fiber optic so you can manage your own capacity and infrastructure.",
-        "url": "/soluciones/conectividad-empresarial/fibra-oscura"
+        "url": "/soluciones/conectividad/fibra-oscura"
       },
       {
         "icon": "sd-wan",
@@ -107,7 +107,7 @@
         "title_en": "SD-WAN",
         "description": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
         "description_en": "Software-defined network that optimizes and prioritizes traffic across multiple links and sites.",
-        "url": "/soluciones/conectividad-empresarial/sd-wan"
+        "url": "/soluciones/conectividad/sd-wan"
       },
       {
         "icon": "balanceo",
@@ -115,7 +115,7 @@
         "title_en": "Link Balancing",
         "description": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
         "description_en": "Intelligent traffic distribution across multiple links to maximize availability and performance.",
-        "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces"
+        "url": "/soluciones/conectividad/balanceo-de-enlaces"
       }
     ]
   },
@@ -126,38 +126,8 @@
     "title_en": "We work with industry leaders",
     "logos": [
       {
-        "image": "/images/partners/huawei.svg",
-        "alt": "Huawei",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/aruba.svg",
-        "alt": "Aruba HPE",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/hikvision.svg",
-        "alt": "Hikvision",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/h3c.svg",
-        "alt": "H3C",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/fortinet.svg",
-        "alt": "Fortinet",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/peplink.svg",
-        "alt": "Peplink",
-        "url": ""
-      },
-      {
-        "image": "/images/partners/ubiquiti.svg",
-        "alt": "Ubiquiti",
+        "image": "/images/partners/cisco.svg",
+        "alt": "Cisco",
         "url": ""
       },
       {
@@ -166,8 +136,18 @@
         "url": ""
       },
       {
-        "image": "/images/partners/cisco.svg",
-        "alt": "Cisco",
+        "image": "/images/partners/tplink.svg",
+        "alt": "TP-Link",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/huawei.svg",
+        "alt": "Huawei",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/peplink.svg",
+        "alt": "Peplink",
         "url": ""
       }
     ]
@@ -289,8 +269,8 @@
     "title_en": "Frequently asked questions"
   },
   "seo": {
-    "metaTitle": "Conectividad Empresarial para tu empresa",
-    "metaDescription": "Internet dedicado, SD-WAN, fibra oscura y enlaces satelitales respaldados por el NOC 24/7 de Fiberlux. Conectividad resiliente para operaciones críticas.",
+    "metaTitle": "Conectividad empresarial | Fiberlux Corp",
+    "metaDescription": "Internet dedicado, alta disponibilidad, acceso satelital, LAN to LAN, fibra oscura y SD-WAN respaldados por el NOC 24/7 de Fiberlux.",
     "ogImage": ""
   },
   "blogTags": [

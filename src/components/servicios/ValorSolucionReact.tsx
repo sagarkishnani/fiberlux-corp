@@ -38,15 +38,18 @@ export interface WidgetConfig {
 // tooltip/click sólo reaparece con valor.desafioClickable = true, y sólo tiene
 // efecto en los widgets con estado binario real (hint definido → shield-switch).
 const WIDGETS: Record<string, WidgetConfig> = {
-  "data-center-cloud": { type: "cloud-beam" },
-  "conectividad-empresarial": { type: "multisede" },
-  "ciberseguridad-gestionada": {
+  "data-center": { type: "cloud-beam" },
+  conectividad: { type: "multisede" },
+  ciberseguridad: {
     type: "shield-switch",
     onLabel: "PROTEGIDO",
     offLabel: "EXPUESTO",
     hint: "Proteger",
   },
-  "servicios-gestionados": { type: "noc", uptime: "99.98%" },
+  /* SPEC 109: Infraestructura hereda el panel NOC que era de Servicios
+     Gestionados y Comunicaciones estrena `fiber`, que existía sin uso. */
+  infraestructura: { type: "noc", uptime: "99.98%" },
+  comunicaciones: { type: "fiber" },
 };
 
 export default function ValorSolucionReact({
