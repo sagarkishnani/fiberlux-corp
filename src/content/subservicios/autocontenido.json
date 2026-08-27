@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/housing.webp"
+    "heroImage": "images/soluciones/imagenes/housing.webp",
+    "heading_en": "Self-contained (on premise)",
+    "intro_en": "A compact data center installed at the client's premises, integrating infrastructure, power, cooling and monitoring into a modular solution.",
+    "note_en": "Ideal for organizations that need to keep their technology infrastructure inside their own facilities without building a full traditional data center.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -21,15 +26,20 @@
         "plantilla": "dwdm",
         "datos": {
           "hilos": 3
-        }
+        },
+        "title_en": "A data center in a small footprint",
+        "text_en": "Infrastructure, power, cooling and monitoring integrated into one module."
       },
       {
         "title": "Control local de tus equipos críticos",
         "text": "Los servidores se quedan dentro de tus instalaciones.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "On premise"
-        }
+          "etiqueta": "On premise",
+          "etiqueta_en": "On premise"
+        },
+        "title_en": "Local control of your critical equipment",
+        "text_en": "Servers stay inside your own facilities."
       },
       {
         "title": "Modular y escalable",
@@ -37,7 +47,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 55
-        }
+        },
+        "title_en": "Modular and scalable",
+        "text_en": "Grows module by module, without redoing the installation."
       },
       {
         "title": "Condiciones operativas vigiladas",
@@ -48,22 +60,31 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Energía"
+              "label": "Energía",
+              "label_en": "Power"
             },
             {
-              "label": "Clima"
+              "label": "Clima",
+              "label_en": "Cooling"
             },
             {
-              "label": "Acceso"
+              "label": "Acceso",
+              "label_en": "Access"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "TECHNICAL ROOM"
+        },
+        "title_en": "Operating conditions under watch",
+        "text_en": "Power, climate and access under centralized management."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Sedes principales o remotas, plantas, campus, procesamiento local y organizaciones que requieren **infraestructura crítica on-premise**."
+    "statement": "Sedes principales o remotas, plantas, campus, procesamiento local y organizaciones que requieren **infraestructura crítica on-premise**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Headquarters or remote sites, plants, campuses, local processing and organizations that require **on-premise critical infrastructure**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -86,11 +107,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Autocontenido (on premise) | Fiberlux Corp",
     "metaDescription": "Centro de datos compacto instalado en las instalaciones del cliente, que integra infraestructura, energía, climatización y monitoreo en una solución modular.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Self-contained (on premise)",
+  "solucionTitle_en": "Data Center",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

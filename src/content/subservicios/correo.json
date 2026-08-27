@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/seguridad-de-correo.webp",
-    "heading_en": "Email Security & Web Filtering",
+    "heading_en": "Email",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "A preventive cloud shield that intercepts malicious emails and infected attachments, and restricts access to fraudulent websites.",
+    "note_en": "Ideal for mitigating the risk of the weakest link — human error — so a single click doesn't compromise your infrastructure."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,8 +25,11 @@
         "text": "Reduce drásticamente las infecciones que entran por correo.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Correo filtrado"
-        }
+          "etiqueta": "Correo filtrado",
+          "etiqueta_en": "Email filtered"
+        },
+        "title_en": "Less phishing and social engineering",
+        "text_en": "Drastically reduces the infections that arrive by email."
       },
       {
         "title": "Bandeja de entrada limpia",
@@ -35,19 +38,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Spam"
+              "label": "Spam",
+              "label_en": "Spam"
             },
             {
-              "label": "Suplantación"
+              "label": "Suplantación",
+              "label_en": "Impersonation"
             },
             {
-              "label": "Adjuntos infectados"
+              "label": "Adjuntos infectados",
+              "label_en": "Infected attachments"
             },
             {
-              "label": "Enlaces fraudulentos"
+              "label": "Enlaces fraudulentos",
+              "label_en": "Fraudulent links"
             }
           ]
-        }
+        },
+        "title_en": "A clean inbox",
+        "text_en": "Corporate mailboxes free of extortion spam."
       },
       {
         "title": "Políticas de uso que se cumplen",
@@ -55,7 +64,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 92
-        }
+        },
+        "title_en": "Usage policies that hold",
+        "text_en": "Blocks high-risk domains according to company policy."
       }
     ],
     "title_en": "Benefits"
@@ -64,7 +75,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Corporaciones con **alto volumen de personal administrativo** y atención al cliente.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Corporations with a **high volume of administrative and customer-facing staff**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -99,7 +110,7 @@
     "metaDescription": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
     "ogImage": ""
   },
-  "title_en": "Email Security & Web Filtering",
+  "title_en": "Email",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

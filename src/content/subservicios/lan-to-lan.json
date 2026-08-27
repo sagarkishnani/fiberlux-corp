@@ -11,10 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/transmision-de-datos.webp",
-    "heading_en": "Data Transmission (Lan To Lan – L2L)",
+    "heading_en": "LAN to LAN",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "A private interconnection between your sites with secure, low-latency data transport.",
+    "note_en": "Ideal if the information your company transmits is confidential and shouldn't travel over the public internet, exposed to interception and delays."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,13 +26,18 @@
         "plantilla": "tunel",
         "datos": {
           "hilos": 4,
-          "etiqueta": "Enlace privado cifrado"
-        }
+          "etiqueta": "Enlace privado cifrado",
+          "etiqueta_en": "Encrypted private link"
+        },
+        "title_en": "Data that never touches the internet",
+        "text_en": "Exchange between sites travels over private transport."
       },
       {
         "title": "Latencia ultrabaja",
         "text": "Las oficinas se comportan como si estuvieran en el mismo edificio.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "Ultra-low latency",
+        "text_en": "Offices behave as if they were in the same building."
       },
       {
         "title": "Control total del tráfico interno",
@@ -42,16 +48,22 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Sede A"
+              "label": "Sede A",
+              "label_en": "Site A"
             },
             {
-              "label": "Sede B"
+              "label": "Sede B",
+              "label_en": "Site B"
             },
             {
-              "label": "Data Center"
+              "label": "Data Center",
+              "label_en": ""
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "PRIVATE LINK"
+        },
+        "title_en": "Full control of internal traffic",
+        "text_en": "You decide what moves between your sites and with what priority."
       }
     ],
     "title_en": "Benefits"
@@ -60,7 +72,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Comunicación directa y de **latencia ultrabaja** entre un centro de distribución, oficinas corporativas y un data center propio.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Direct, **ultra-low latency** communication between a distribution center, corporate offices and your own data center."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -95,7 +107,7 @@
     "metaDescription": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
     "ogImage": ""
   },
-  "title_en": "Data Transmission (Lan To Lan – L2L)",
+  "title_en": "LAN to LAN",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Connectivity"
 }

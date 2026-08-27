@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/ngfw.webp",
-    "heading_en": "NGFW / Seguridad Perimetral",
+    "heading_en": "Perimeter",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Next-Generation Firewall. A layer 7 security barrier that deeply inspects web traffic, applications and users.",
+    "note_en": "Ideal against obsolete firewalls that are blind to modern malware hiding inside legitimate applications or encrypted traffic."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,8 +25,11 @@
         "text": "Detiene intrusiones e intentos de hackeo antes de que alcancen tu red.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Perímetro validado"
-        }
+          "etiqueta": "Perímetro validado",
+          "etiqueta_en": "Perimeter validated"
+        },
+        "title_en": "Proactive intrusion blocking",
+        "text_en": "Stops intrusions and hacking attempts before they reach your network."
       },
       {
         "title": "Visibilidad granular",
@@ -37,20 +40,25 @@
             {
               "label": "ERP",
               "nivel": "CRÍTICO",
-              "porcentaje": 88
+              "porcentaje": 88,
+              "label_en": ""
             },
             {
               "label": "Navegación",
               "nivel": "MEDIA",
-              "porcentaje": 52
+              "porcentaje": 52,
+              "label_en": "Browsing"
             },
             {
               "label": "Streaming",
               "nivel": "BAJA",
-              "porcentaje": 24
+              "porcentaje": 24,
+              "label_en": "Streaming"
             }
           ]
-        }
+        },
+        "title_en": "Granular visibility",
+        "text_en": "Identifies and blocks specific applications with detailed traffic control."
       },
       {
         "title": "Perímetro sin cuellos de botella",
@@ -62,14 +70,19 @@
           "tarjetas": [
             {
               "etiqueta": "Inspección L7",
-              "porcentaje": 96
+              "porcentaje": 96,
+              "etiqueta_en": "L7 inspection"
             },
             {
               "etiqueta": "Ancho de banda",
-              "porcentaje": 94
+              "porcentaje": 94,
+              "etiqueta_en": "Bandwidth"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "Inspection that doesn't slow the network"
+        },
+        "title_en": "A perimeter without bottlenecks",
+        "text_en": "Protects the company's main perimeter without sacrificing bandwidth."
       }
     ],
     "title_en": "Benefits"
@@ -78,7 +91,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Para cualquier empresa mediana o grande que necesite **proteger el perímetro de su red** y controlar a qué sitios web pueden acceder sus colaboradores.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "For any mid-sized or large company that needs to **protect its network perimeter** and control which websites its staff can reach."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -113,7 +126,7 @@
     "metaDescription": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
     "ogImage": ""
   },
-  "title_en": "NGFW / Seguridad Perimetral",
+  "title_en": "Perimeter",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

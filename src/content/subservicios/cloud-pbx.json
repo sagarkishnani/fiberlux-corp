@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/comunicaciones2.webp"
+    "heroImage": "images/soluciones/imagenes/comunicaciones2.webp",
+    "heading_en": "Cloud PBX",
+    "intro_en": "A virtual phone system hosted in the cloud that lets you manage extensions, calls and users without a physical PBX installed on site.",
+    "note_en": "Ideal for organizations looking to modernize their telephony, connect multiple sites and enable communication from different locations.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -24,16 +29,22 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Extensiones"
+              "label": "Extensiones",
+              "label_en": "Extensions"
             },
             {
-              "label": "Colas"
+              "label": "Colas",
+              "label_en": "Queues"
             },
             {
-              "label": "Grabación"
+              "label": "Grabación",
+              "label_en": "Recording"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "VIRTUAL PBX"
+        },
+        "title_en": "Extensions from one panel",
+        "text_en": "Manage extensions, calls and users with no physical PBX."
       },
       {
         "title": "Crece sin comprar hardware",
@@ -41,7 +52,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 70
-        }
+        },
+        "title_en": "Grows without buying hardware",
+        "text_en": "Adding users doesn't mean expanding infrastructure."
       },
       {
         "title": "Telefonía en todas tus sedes",
@@ -50,19 +63,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Sede central"
+              "label": "Sede central",
+              "label_en": "Headquarters"
             },
             {
-              "label": "Sucursal norte"
+              "label": "Sucursal norte",
+              "label_en": "North branch"
             },
             {
-              "label": "Sucursal sur"
+              "label": "Sucursal sur",
+              "label_en": "South branch"
             },
             {
-              "label": "Home office"
+              "label": "Home office",
+              "label_en": "Home office"
             }
           ]
-        }
+        },
+        "title_en": "Telephony across all your sites",
+        "text_en": "One system serves offices, branches and remote work."
       },
       {
         "title": "Menos operación y mantenimiento",
@@ -70,13 +89,18 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 88
-        }
+        },
+        "title_en": "Less operation and maintenance",
+        "text_en": "The phone system stops being equipment you have to look after."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Empresas multisede, trabajo híbrido, áreas comerciales, atención al cliente y organizaciones que buscan **migrar su telefonía tradicional a la nube**."
+    "statement": "Empresas multisede, trabajo híbrido, áreas comerciales, atención al cliente y organizaciones que buscan **migrar su telefonía tradicional a la nube**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Multi-site companies, hybrid work, sales teams, customer service and organizations looking to **migrate their traditional telephony to the cloud**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -99,11 +123,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Cloud PBX | Fiberlux Corp",
     "metaDescription": "Central telefónica virtual alojada en la nube que permite administrar extensiones, llamadas y usuarios sin depender de una central física instalada en la…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Cloud PBX",
+  "solucionTitle_en": "Unified Communications",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

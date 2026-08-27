@@ -11,10 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/conectividad-satelital.webp",
-    "heading_en": "Satellite Connectivity",
+    "heading_en": "Satellite Access",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "Coverage in remote areas with no fiber infrastructure, using high-availability satellite links.",
+    "note_en": "Ideal for remote operations suffering digital isolation, and for urban sites left vulnerable by terrestrial fiber cuts."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -26,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Campamento"
+              "label": "Campamento",
+              "label_en": "Camp"
             },
             {
-              "label": "Planta remota"
+              "label": "Planta remota",
+              "label_en": "Remote plant"
             },
             {
-              "label": "Sede urbana"
+              "label": "Sede urbana",
+              "label_en": "Urban site"
             },
             {
-              "label": "NOC"
+              "label": "NOC",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "Immediate deployment",
+        "text_en": "Coverage anywhere geographically, with no civil works involved."
       },
       {
         "title": "Latencia baja",
@@ -46,7 +53,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 88
-        }
+        },
+        "title_en": "Low latency",
+        "text_en": "ERPs and VoIP usable from remote locations."
       },
       {
         "title": "Contingencia urbana",
@@ -56,14 +65,18 @@
           "rutas": [
             {
               "label": "FIBRA",
-              "activa": false
+              "activa": false,
+              "label_en": "FIBER"
             },
             {
               "label": "SATELITAL",
-              "activa": true
+              "activa": true,
+              "label_en": "SATELLITE"
             }
           ]
-        }
+        },
+        "title_en": "Urban failover",
+        "text_en": "The highest level of backup when terrestrial fiber is cut."
       }
     ],
     "title_en": "Benefits"
@@ -72,7 +85,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Campamentos mineros, agroindustrias y sedes remotas; o como el **máximo nivel de respaldo (failover)** en zonas urbanas.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Mining camps, agribusiness and remote sites; or as the **top level of failover** in urban areas."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -107,7 +120,7 @@
     "metaDescription": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
     "ogImage": ""
   },
-  "title_en": "Satellite Connectivity",
+  "title_en": "Satellite Access",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Connectivity"
 }

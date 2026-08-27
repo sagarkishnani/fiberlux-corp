@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp"
+    "heroImage": "images/soluciones/imagenes/mesa-ayuda.webp",
+    "heading_en": "Multichannel Contact Center",
+    "intro_en": "Centralizes customer service across different communication channels in a single integrated platform, making interactions easier to manage and follow up.",
+    "note_en": "Ideal for organizations that need to efficiently handle large volumes of enquiries and service across different channels.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Voz"
+              "label": "Voz",
+              "label_en": "Voice"
             },
             {
-              "label": "WhatsApp"
+              "label": "WhatsApp",
+              "label_en": ""
             },
             {
-              "label": "Correo"
+              "label": "Correo",
+              "label_en": "Email"
             },
             {
-              "label": "Chat"
+              "label": "Chat",
+              "label_en": "Chat"
             }
           ]
-        }
+        },
+        "title_en": "Every channel in one inbox",
+        "text_en": "Voice, chat, email and messaging centralized on a single platform."
       },
       {
         "title": "Trazabilidad de cada interacción",
@@ -45,25 +56,31 @@
             {
               "label": "Contacto recibido",
               "nivel": "MEDIA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Contact received"
             },
             {
               "label": "Asignado a agente",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Assigned to agent"
             },
             {
               "label": "Respuesta enviada",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Reply sent"
             },
             {
               "label": "Caso cerrado",
               "nivel": "BAJA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Case closed"
             }
           ]
-        }
+        },
+        "title_en": "Traceability of every interaction",
+        "text_en": "The customer's full history, no matter which channel they wrote through."
       },
       {
         "title": "Contactos repartidos con criterio",
@@ -74,20 +91,25 @@
             {
               "label": "Soporte",
               "nivel": "CRÍTICO",
-              "porcentaje": 90
+              "porcentaje": 90,
+              "label_en": "Support"
             },
             {
               "label": "Ventas",
               "nivel": "ALTA",
-              "porcentaje": 70
+              "porcentaje": 70,
+              "label_en": "Sales"
             },
             {
               "label": "Post-venta",
               "nivel": "MEDIA",
-              "porcentaje": 45
+              "porcentaje": 45,
+              "label_en": "After-sales"
             }
           ]
-        }
+        },
+        "title_en": "Contacts shared with criteria",
+        "text_en": "Distribution across agents follows rules, not chance."
       },
       {
         "title": "Supervisión en vivo",
@@ -98,22 +120,31 @@
           "valor": "EN VIVO",
           "nodos": [
             {
-              "label": "En cola"
+              "label": "En cola",
+              "label_en": "Queued"
             },
             {
-              "label": "En atención"
+              "label": "En atención",
+              "label_en": "In progress"
             },
             {
-              "label": "Resueltos"
+              "label": "Resueltos",
+              "label_en": "Resolved"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "SERVICE"
+        },
+        "title_en": "Live supervision",
+        "text_en": "Queues, times and service under permanent follow-up."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Atención al cliente, soporte, ventas, mesas de atención y Contact Centers con **múltiples canales de comunicación**."
+    "statement": "Atención al cliente, soporte, ventas, mesas de atención y Contact Centers con **múltiples canales de comunicación**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Customer service, support, sales, service desks and contact centers with **multiple communication channels**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -136,11 +167,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Contact Center Multicanal | Fiberlux Corp",
     "metaDescription": "Centraliza la atención de clientes a través de distintos canales de comunicación en una plataforma integrada para facilitar la gestión y seguimiento de las…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Multichannel Contact Center",
+  "solucionTitle_en": "Unified Communications",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

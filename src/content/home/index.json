@@ -101,29 +101,38 @@
         "bullets": [
           {
             "label": "Internet Dedicado",
-            "url": "/soluciones/conectividad/internet-dedicado"
+            "url": "/soluciones/conectividad/internet-dedicado",
+            "label_en": "Dedicated Internet"
           },
           {
             "label": "Alta Disponibilidad",
-            "url": "/soluciones/conectividad/alta-disponibilidad"
+            "url": "/soluciones/conectividad/alta-disponibilidad",
+            "label_en": "High Availability"
           },
           {
             "label": "Acceso Satelital",
-            "url": "/soluciones/conectividad/acceso-satelital"
+            "url": "/soluciones/conectividad/acceso-satelital",
+            "label_en": "Satellite Access"
           },
           {
             "label": "LAN to LAN",
-            "url": "/soluciones/conectividad/lan-to-lan"
+            "url": "/soluciones/conectividad/lan-to-lan",
+            "label_en": "LAN to LAN"
           },
           {
             "label": "Fibra Oscura",
-            "url": "/soluciones/conectividad/fibra-oscura"
+            "url": "/soluciones/conectividad/fibra-oscura",
+            "label_en": "Dark Fiber"
           },
           {
             "label": "SD-WAN",
-            "url": "/soluciones/conectividad/sd-wan"
+            "url": "/soluciones/conectividad/sd-wan",
+            "label_en": "SD-WAN"
           }
-        ]
+        ],
+        "title_en": "Connectivity",
+        "description_en": "High-capacity links and 24/7 monitoring for operations that can't stop.",
+        "tabLabel_en": "Connectivity"
       },
       {
         "number": "02",
@@ -136,33 +145,43 @@
         "bullets": [
           {
             "label": "Perimetral",
-            "url": "/soluciones/ciberseguridad/perimetral"
+            "url": "/soluciones/ciberseguridad/perimetral",
+            "label_en": "Perimeter"
           },
           {
             "label": "End Point",
-            "url": "/soluciones/ciberseguridad/end-point"
+            "url": "/soluciones/ciberseguridad/end-point",
+            "label_en": "End Point"
           },
           {
             "label": "Correo",
-            "url": "/soluciones/ciberseguridad/correo"
+            "url": "/soluciones/ciberseguridad/correo",
+            "label_en": "Email"
           },
           {
             "label": "Usuarios",
-            "url": "/soluciones/ciberseguridad/usuarios"
+            "url": "/soluciones/ciberseguridad/usuarios",
+            "label_en": "Users"
           },
           {
             "label": "Aplicaciones",
-            "url": "/soluciones/ciberseguridad/aplicaciones"
+            "url": "/soluciones/ciberseguridad/aplicaciones",
+            "label_en": "Applications"
           },
           {
             "label": "Concientización en Phishing",
-            "url": "/soluciones/ciberseguridad/concientizacion-phishing"
+            "url": "/soluciones/ciberseguridad/concientizacion-phishing",
+            "label_en": "Phishing Awareness"
           },
           {
             "label": "Transporte (redes)",
-            "url": "/soluciones/ciberseguridad/transporte-redes"
+            "url": "/soluciones/ciberseguridad/transporte-redes",
+            "label_en": "Transport (networks)"
           }
-        ]
+        ],
+        "title_en": "Cybersecurity",
+        "description_en": "Active security for networks, users and applications, managed end to end.",
+        "tabLabel_en": "Cybersecurity"
       },
       {
         "number": "03",
@@ -175,29 +194,38 @@
         "bullets": [
           {
             "label": "Virtual Server",
-            "url": "/soluciones/data-center/virtual-server"
+            "url": "/soluciones/data-center/virtual-server",
+            "label_en": "Virtual Server"
           },
           {
             "label": "Backup as a Service (BaaS)",
-            "url": "/soluciones/data-center/baas"
+            "url": "/soluciones/data-center/baas",
+            "label_en": "Backup as a Service (BaaS)"
           },
           {
             "label": "Disaster Recovery (DRaaS)",
-            "url": "/soluciones/data-center/draas"
+            "url": "/soluciones/data-center/draas",
+            "label_en": "Disaster Recovery (DRaaS)"
           },
           {
             "label": "Virtual Desktop",
-            "url": "/soluciones/data-center/virtual-desktop"
+            "url": "/soluciones/data-center/virtual-desktop",
+            "label_en": "Virtual Desktop"
           },
           {
             "label": "Autocontenido (on premise)",
-            "url": "/soluciones/data-center/autocontenido"
+            "url": "/soluciones/data-center/autocontenido",
+            "label_en": "Self-contained (on premise)"
           },
           {
             "label": "NAS (on premise)",
-            "url": "/soluciones/data-center/nas"
+            "url": "/soluciones/data-center/nas",
+            "label_en": "NAS (on premise)"
           }
-        ]
+        ],
+        "title_en": "Data Center",
+        "description_en": "Specialized infrastructure to host, protect and scale your most critical systems.",
+        "tabLabel_en": "Data Center"
       },
       {
         "number": "04",
@@ -210,29 +238,38 @@
         "bullets": [
           {
             "label": "WiFi Gestionado",
-            "url": "/soluciones/infraestructura/wifi-gestionado"
+            "url": "/soluciones/infraestructura/wifi-gestionado",
+            "label_en": "Managed WiFi"
           },
           {
             "label": "Switches",
-            "url": "/soluciones/infraestructura/switches"
+            "url": "/soluciones/infraestructura/switches",
+            "label_en": "Switches"
           },
           {
             "label": "Balanceadores",
-            "url": "/soluciones/infraestructura/balanceadores"
+            "url": "/soluciones/infraestructura/balanceadores",
+            "label_en": "Load Balancers"
           },
           {
             "label": "Servidores",
-            "url": "/soluciones/infraestructura/servidores"
+            "url": "/soluciones/infraestructura/servidores",
+            "label_en": "Servers"
           },
           {
             "label": "Video Vigilancia",
-            "url": "/soluciones/infraestructura/video-vigilancia"
+            "url": "/soluciones/infraestructura/video-vigilancia",
+            "label_en": "Video Surveillance"
           },
           {
             "label": "Energía",
-            "url": "/soluciones/infraestructura/energia"
+            "url": "/soluciones/infraestructura/energia",
+            "label_en": "Power"
           }
-        ]
+        ],
+        "title_en": "Infrastructure",
+        "description_en": "Technology ready to support an increasingly demanding operation.",
+        "tabLabel_en": "Infrastructure"
       },
       {
         "number": "05",
@@ -245,25 +282,33 @@
         "bullets": [
           {
             "label": "Comunicaciones Unificadas",
-            "url": "/soluciones/comunicaciones/comunicaciones-unificadas"
+            "url": "/soluciones/comunicaciones/comunicaciones-unificadas",
+            "label_en": "Unified Communications"
           },
           {
             "label": "Cloud PBX",
-            "url": "/soluciones/comunicaciones/cloud-pbx"
+            "url": "/soluciones/comunicaciones/cloud-pbx",
+            "label_en": "Cloud PBX"
           },
           {
             "label": "Colaboración IA",
-            "url": "/soluciones/comunicaciones/colaboracion-ia"
+            "url": "/soluciones/comunicaciones/colaboracion-ia",
+            "label_en": "AI Collaboration"
           },
           {
             "label": "Pantallas táctiles",
-            "url": "/soluciones/comunicaciones/pantallas-tactiles"
+            "url": "/soluciones/comunicaciones/pantallas-tactiles",
+            "label_en": "Touch screens"
           },
           {
             "label": "Contact Center Multicanal",
-            "url": "/soluciones/comunicaciones/contact-center"
+            "url": "/soluciones/comunicaciones/contact-center",
+            "label_en": "Multichannel Contact Center"
           }
-        ]
+        ],
+        "title_en": "Unified Communications",
+        "description_en": "Voice, collaboration and customer service integrated into a single experience.",
+        "tabLabel_en": "Communications"
       }
     ],
     "title_en": "Solutions for your business"

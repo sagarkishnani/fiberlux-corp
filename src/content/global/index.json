@@ -80,29 +80,36 @@
             "children": [
               {
                 "text": "Internet Dedicado",
-                "url": "/soluciones/conectividad/internet-dedicado"
+                "url": "/soluciones/conectividad/internet-dedicado",
+                "text_en": "Dedicated Internet"
               },
               {
                 "text": "Alta Disponibilidad",
-                "url": "/soluciones/conectividad/alta-disponibilidad"
+                "url": "/soluciones/conectividad/alta-disponibilidad",
+                "text_en": "High Availability"
               },
               {
                 "text": "Acceso Satelital",
-                "url": "/soluciones/conectividad/acceso-satelital"
+                "url": "/soluciones/conectividad/acceso-satelital",
+                "text_en": "Satellite Access"
               },
               {
                 "text": "LAN to LAN",
-                "url": "/soluciones/conectividad/lan-to-lan"
+                "url": "/soluciones/conectividad/lan-to-lan",
+                "text_en": "LAN to LAN"
               },
               {
                 "text": "Fibra Oscura",
-                "url": "/soluciones/conectividad/fibra-oscura"
+                "url": "/soluciones/conectividad/fibra-oscura",
+                "text_en": "Dark Fiber"
               },
               {
                 "text": "SD-WAN",
-                "url": "/soluciones/conectividad/sd-wan"
+                "url": "/soluciones/conectividad/sd-wan",
+                "text_en": "SD-WAN"
               }
-            ]
+            ],
+            "text_en": "Connectivity"
           },
           {
             "text": "Ciberseguridad",
@@ -110,33 +117,41 @@
             "children": [
               {
                 "text": "Perimetral",
-                "url": "/soluciones/ciberseguridad/perimetral"
+                "url": "/soluciones/ciberseguridad/perimetral",
+                "text_en": "Perimeter"
               },
               {
                 "text": "End Point",
-                "url": "/soluciones/ciberseguridad/end-point"
+                "url": "/soluciones/ciberseguridad/end-point",
+                "text_en": "End Point"
               },
               {
                 "text": "Correo",
-                "url": "/soluciones/ciberseguridad/correo"
+                "url": "/soluciones/ciberseguridad/correo",
+                "text_en": "Email"
               },
               {
                 "text": "Usuarios",
-                "url": "/soluciones/ciberseguridad/usuarios"
+                "url": "/soluciones/ciberseguridad/usuarios",
+                "text_en": "Users"
               },
               {
                 "text": "Aplicaciones",
-                "url": "/soluciones/ciberseguridad/aplicaciones"
+                "url": "/soluciones/ciberseguridad/aplicaciones",
+                "text_en": "Applications"
               },
               {
                 "text": "Concientización en Phishing",
-                "url": "/soluciones/ciberseguridad/concientizacion-phishing"
+                "url": "/soluciones/ciberseguridad/concientizacion-phishing",
+                "text_en": "Phishing Awareness"
               },
               {
                 "text": "Transporte (redes)",
-                "url": "/soluciones/ciberseguridad/transporte-redes"
+                "url": "/soluciones/ciberseguridad/transporte-redes",
+                "text_en": "Transport (networks)"
               }
-            ]
+            ],
+            "text_en": "Cybersecurity"
           },
           {
             "text": "Data Center",
@@ -144,29 +159,36 @@
             "children": [
               {
                 "text": "Virtual Server",
-                "url": "/soluciones/data-center/virtual-server"
+                "url": "/soluciones/data-center/virtual-server",
+                "text_en": "Virtual Server"
               },
               {
                 "text": "Backup as a Service (BaaS)",
-                "url": "/soluciones/data-center/baas"
+                "url": "/soluciones/data-center/baas",
+                "text_en": "Backup as a Service (BaaS)"
               },
               {
                 "text": "Disaster Recovery (DRaaS)",
-                "url": "/soluciones/data-center/draas"
+                "url": "/soluciones/data-center/draas",
+                "text_en": "Disaster Recovery (DRaaS)"
               },
               {
                 "text": "Virtual Desktop",
-                "url": "/soluciones/data-center/virtual-desktop"
+                "url": "/soluciones/data-center/virtual-desktop",
+                "text_en": "Virtual Desktop"
               },
               {
                 "text": "Autocontenido (on premise)",
-                "url": "/soluciones/data-center/autocontenido"
+                "url": "/soluciones/data-center/autocontenido",
+                "text_en": "Self-contained (on premise)"
               },
               {
                 "text": "NAS (on premise)",
-                "url": "/soluciones/data-center/nas"
+                "url": "/soluciones/data-center/nas",
+                "text_en": "NAS (on premise)"
               }
-            ]
+            ],
+            "text_en": "Data Center"
           },
           {
             "text": "Infraestructura",
@@ -174,29 +196,36 @@
             "children": [
               {
                 "text": "WiFi Gestionado",
-                "url": "/soluciones/infraestructura/wifi-gestionado"
+                "url": "/soluciones/infraestructura/wifi-gestionado",
+                "text_en": "Managed WiFi"
               },
               {
                 "text": "Switches",
-                "url": "/soluciones/infraestructura/switches"
+                "url": "/soluciones/infraestructura/switches",
+                "text_en": "Switches"
               },
               {
                 "text": "Balanceadores",
-                "url": "/soluciones/infraestructura/balanceadores"
+                "url": "/soluciones/infraestructura/balanceadores",
+                "text_en": "Load Balancers"
               },
               {
                 "text": "Servidores",
-                "url": "/soluciones/infraestructura/servidores"
+                "url": "/soluciones/infraestructura/servidores",
+                "text_en": "Servers"
               },
               {
                 "text": "Video Vigilancia",
-                "url": "/soluciones/infraestructura/video-vigilancia"
+                "url": "/soluciones/infraestructura/video-vigilancia",
+                "text_en": "Video Surveillance"
               },
               {
                 "text": "Energía",
-                "url": "/soluciones/infraestructura/energia"
+                "url": "/soluciones/infraestructura/energia",
+                "text_en": "Power"
               }
-            ]
+            ],
+            "text_en": "Infrastructure"
           },
           {
             "text": "Comunicaciones Unificadas",
@@ -204,25 +233,31 @@
             "children": [
               {
                 "text": "Comunicaciones Unificadas",
-                "url": "/soluciones/comunicaciones/comunicaciones-unificadas"
+                "url": "/soluciones/comunicaciones/comunicaciones-unificadas",
+                "text_en": "Unified Communications"
               },
               {
                 "text": "Cloud PBX",
-                "url": "/soluciones/comunicaciones/cloud-pbx"
+                "url": "/soluciones/comunicaciones/cloud-pbx",
+                "text_en": "Cloud PBX"
               },
               {
                 "text": "Colaboración IA",
-                "url": "/soluciones/comunicaciones/colaboracion-ia"
+                "url": "/soluciones/comunicaciones/colaboracion-ia",
+                "text_en": "AI Collaboration"
               },
               {
                 "text": "Pantallas táctiles",
-                "url": "/soluciones/comunicaciones/pantallas-tactiles"
+                "url": "/soluciones/comunicaciones/pantallas-tactiles",
+                "text_en": "Touch screens"
               },
               {
                 "text": "Contact Center Multicanal",
-                "url": "/soluciones/comunicaciones/contact-center"
+                "url": "/soluciones/comunicaciones/contact-center",
+                "text_en": "Multichannel Contact Center"
               }
-            ]
+            ],
+            "text_en": "Unified Communications"
           }
         ],
         "text_en": "Solutions"

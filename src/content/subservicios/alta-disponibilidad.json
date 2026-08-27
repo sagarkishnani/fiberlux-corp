@@ -11,10 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/inter-corpo-alta-dispo.webp",
-    "heading_en": "High-Availability Corporate Internet",
+    "heading_en": "High Availability",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "Redundant connectivity with automatic backup links to guarantee full continuity of your operation.",
+    "note_en": "Ideal for branches losing sales to outages that block payment processing and hit invoicing directly."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -27,14 +28,18 @@
           "rutas": [
             {
               "label": "ENLACE PRINCIPAL",
-              "activa": false
+              "activa": false,
+              "label_en": "PRIMARY LINK"
             },
             {
               "label": "ENLACE DE RESPALDO",
-              "activa": true
+              "activa": true,
+              "label_en": "BACKUP LINK"
             }
           ]
-        }
+        },
+        "title_en": "Maximized uptime",
+        "text_en": "The backup link takes over automatically when the primary fails."
       },
       {
         "title": "SLA de hasta 99,95%",
@@ -43,16 +48,22 @@
         "datos": {
           "valor": "99,95",
           "unidad": "% UPTIME",
-          "porcentaje": 99
-        }
+          "porcentaje": 99,
+          "unidad_en": "% UPTIME"
+        },
+        "title_en": "SLA of up to 99.95%",
+        "text_en": "A contractual availability commitment, not a sales promise."
       },
       {
         "title": "Sin pérdidas por desconexión",
         "text": "La facturación y el punto de venta no se detienen.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Facturación protegida"
-        }
+          "etiqueta": "Facturación protegida",
+          "etiqueta_en": "Invoicing protected"
+        },
+        "title_en": "No losses from downtime",
+        "text_en": "Invoicing and the point of sale don't stop."
       }
     ],
     "title_en": "Benefits"
@@ -61,7 +72,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "**Cadenas de retail (facturación y POS)**, clínicas, centros logísticos, entidades financieras y plantas industriales.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "**Retail chains (invoicing and POS)**, clinics, logistics centers, financial institutions and industrial plants."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -96,7 +107,7 @@
     "metaDescription": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
     "ogImage": ""
   },
-  "title_en": "High-Availability Corporate Internet",
+  "title_en": "High Availability",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Connectivity"
 }

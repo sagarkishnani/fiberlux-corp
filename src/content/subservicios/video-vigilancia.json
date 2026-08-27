@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/videovigilancia-gestionada.webp",
-    "heading_en": "Managed Video Surveillance",
+    "heading_en": "Video Surveillance",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "A comprehensive monitoring and management service for video surveillance systems that lets you oversee facilities, protect assets and improve operational security through IP cameras, management platforms, centralized remote access and AI for pattern recognition (face identification, vehicle tracking, perimeter intrusion and more).",
+    "note_en": "Ideal for organizations that need permanent visibility over their facilities without taking on the technical complexity of running the surveillance infrastructure in-house."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -29,16 +29,22 @@
           "valor": "EN LÍNEA",
           "nodos": [
             {
-              "label": "Cámaras"
+              "label": "Cámaras",
+              "label_en": "Cameras"
             },
             {
-              "label": "Grabación"
+              "label": "Grabación",
+              "label_en": "Recording"
             },
             {
-              "label": "Alertas"
+              "label": "Alertas",
+              "label_en": "Alerts"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "VIDEO SURVEILLANCE"
+        },
+        "title_en": "Every camera on one panel",
+        "text_en": "Centralized monitoring of cameras and surveillance devices."
       },
       {
         "title": "Más control sobre tus instalaciones",
@@ -47,19 +53,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Planta"
+              "label": "Planta",
+              "label_en": "Plant"
             },
             {
-              "label": "Almacén"
+              "label": "Almacén",
+              "label_en": "Warehouse"
             },
             {
-              "label": "Oficinas"
+              "label": "Oficinas",
+              "label_en": "Offices"
             },
             {
-              "label": "Accesos"
+              "label": "Accesos",
+              "label_en": "Entrances"
             }
           ]
-        }
+        },
+        "title_en": "More control over your facilities",
+        "text_en": "Permanent visibility over sites, assets and operations."
       },
       {
         "title": "Gestión proactiva",
@@ -70,25 +82,31 @@
             {
               "label": "Cámara sin señal",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Camera offline"
             },
             {
               "label": "Disco de grabación al 80%",
               "nivel": "MEDIA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Recording disk at 80%"
             },
             {
               "label": "Firmware actualizado",
               "nivel": "BAJA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Firmware updated"
             },
             {
               "label": "Acceso remoto verificado",
               "nivel": "BAJA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Remote access verified"
             }
           ]
-        }
+        },
+        "title_en": "Proactive management",
+        "text_en": "The platform and its components are attended to before they fail."
       },
       {
         "title": "Acceso remoto seguro",
@@ -96,8 +114,11 @@
         "plantilla": "tunel",
         "datos": {
           "hilos": 3,
-          "etiqueta": "Video cifrado"
-        }
+          "etiqueta": "Video cifrado",
+          "etiqueta_en": "Encrypted video"
+        },
+        "title_en": "Secure remote access",
+        "text_en": "Recordings and live viewing from wherever you are."
       }
     ],
     "title_en": "Benefits"
@@ -106,7 +127,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Oficinas corporativas, centros logísticos, plantas industriales, instituciones educativas, establecimientos de salud, retail y **organizaciones con múltiples sedes**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Corporate offices, logistics centers, industrial plants, educational institutions, healthcare facilities, retail and **organizations with multiple sites**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -141,7 +162,7 @@
     "metaDescription": "Servicio integral de monitoreo y administración de sistemas de videovigilancia que permite supervisar instalaciones, proteger activos y mejorar la seguridad…",
     "ogImage": ""
   },
-  "title_en": "Managed Video Surveillance",
+  "title_en": "Video Surveillance",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Services"
+  "solucionTitle_en": "Infrastructure"
 }

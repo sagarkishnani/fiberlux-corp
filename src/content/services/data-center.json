@@ -10,8 +10,8 @@
     "heroImage": "images/soluciones/categoriadatacentercloud1.webp",
     "ctaLabel_en": "View solutions",
     "formTitle_en": "Let's talk?",
-    "heading_en": "World-class infrastructure at the heart of your business",
-    "intro_en": "Host, protect and scale your applications and data on enterprise platforms built to support your operation's growth and demands."
+    "heading_en": "Specialized infrastructure for your most critical systems",
+    "intro_en": "Host, protect and scale your applications and data on enterprise platforms built to keep up with your growth and the demands of your operation."
   },
   "valor": {
     "title": "Tus operaciones no pueden parar",
@@ -22,7 +22,7 @@
         "text": "Las organizaciones dependen de aplicaciones y datos críticos que deben mantenerse disponibles y protegidos frente a incidentes e interrupciones.",
         "image": "/images/soluciones/valor-desafio.svg",
         "heading_en": "The challenge",
-        "text_en": "Organizations rely on critical applications and data that must stay available and protected against failures."
+        "text_en": "Organizations depend on critical applications and data that must stay available and protected against incidents and outages."
       },
       {
         "heading": "Nuestra solución",
@@ -36,14 +36,14 @@
         ],
         "image": "",
         "heading_en": "Our solution",
-        "text_en": "We move your workloads to public cloud, private cloud or dedicated infrastructure with the availability your operation demands."
+        "text_en": "We move your workloads to public cloud, private cloud or dedicated infrastructure with the availability, security and continuity your operation requires."
       },
       {
         "heading": "Industrias destacadas",
         "text": "E-commerce/Retail, Salud (Historias Clínicas), Startups, Logística, Educación.",
         "image": "",
         "heading_en": "Featured industries",
-        "text_en": "E-commerce/Retail, Healthcare (Medical Records), Startups, Logistics, Education."
+        "text_en": "E-commerce/Retail, Healthcare (medical records), Startups, Logistics, Education."
       }
     ],
     "title_en": "Your operations can't stop",
@@ -57,37 +57,49 @@
         "icon": "cloud",
         "title": "Virtual Server",
         "description": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
-        "url": "/soluciones/data-center/virtual-server"
+        "url": "/soluciones/data-center/virtual-server",
+        "title_en": "Virtual Server",
+        "description_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystems as official distributors."
       },
       {
         "icon": "backup",
         "title": "Backup as a Service (BaaS)",
         "description": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
-        "url": "/soluciones/data-center/baas"
+        "url": "/soluciones/data-center/baas",
+        "title_en": "Backup as a Service (BaaS)",
+        "description_en": "An automated backup service hosted in the cloud, protected with encryption and strict retention policies."
       },
       {
         "icon": "disponibilidad",
         "title": "Disaster Recovery (DRaaS)",
         "description": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva lista para encenderse si tus servicios productivos…",
-        "url": "/soluciones/data-center/draas"
+        "url": "/soluciones/data-center/draas",
+        "title_en": "Disaster Recovery (DRaaS)",
+        "description_en": "Disaster Recovery as a Service. A dormant replica of your production infrastructure, ready to spin up if your production services collapse."
       },
       {
         "icon": "escritorio-virtual",
         "title": "Virtual Desktop",
         "description": "Escritorios virtuales centralizados que permiten acceder de forma segura a aplicaciones, archivos y entornos de trabajo desde distintos dispositivos.",
-        "url": "/soluciones/data-center/virtual-desktop"
+        "url": "/soluciones/data-center/virtual-desktop",
+        "title_en": "Virtual Desktop",
+        "description_en": "Centralized virtual desktops that provide secure access to applications, files and work environments from different devices."
       },
       {
         "icon": "autocontenido",
         "title": "Autocontenido (on premise)",
         "description": "Centro de datos compacto instalado en las instalaciones del cliente, que integra infraestructura, energía, climatización y monitoreo en una solución…",
-        "url": "/soluciones/data-center/autocontenido"
+        "url": "/soluciones/data-center/autocontenido",
+        "title_en": "Self-contained (on premise)",
+        "description_en": "A compact data center installed at the client's premises, integrating infrastructure, power, cooling and monitoring into a modular solution."
       },
       {
         "icon": "nas",
         "title": "NAS (on premise)",
         "description": "Solución de almacenamiento conectada a la red que centraliza archivos y datos para que múltiples usuarios y sistemas puedan acceder a ellos de forma…",
-        "url": "/soluciones/data-center/nas"
+        "url": "/soluciones/data-center/nas",
+        "title_en": "NAS (on premise)",
+        "description_en": "A network-attached storage solution that centralizes files and data so multiple users and systems can access them securely."
       }
     ]
   },
@@ -205,5 +217,5 @@
     "Continuidad de negocio"
   ],
   "whyUsTitle_en": "Why Fiberlux?",
-  "title_en": "Data Center, Cloud & Business Continuity"
+  "title_en": "Data Center"
 }

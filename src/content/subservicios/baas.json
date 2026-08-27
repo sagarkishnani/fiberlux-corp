@@ -14,8 +14,8 @@
     "heading_en": "Backup as a Service (BaaS)",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "An automated backup service hosted in the cloud, protected with encryption and strict retention policies.",
+    "note_en": "Ideal for avoiding catastrophic data loss from ransomware, where manual backups on local disks end up encrypted too."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,8 +25,11 @@
         "text": "Recupera los datos tras un secuestro digital o un borrado accidental.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Backup verificado"
-        }
+          "etiqueta": "Backup verificado",
+          "etiqueta_en": "Backup verified"
+        },
+        "title_en": "Guaranteed recovery",
+        "text_en": "Recover data after a ransomware attack or an accidental deletion."
       },
       {
         "title": "Respaldos inmutables",
@@ -34,8 +37,11 @@
         "plantilla": "tunel",
         "datos": {
           "hilos": 4,
-          "etiqueta": "Copias cifradas e inmutables"
-        }
+          "etiqueta": "Copias cifradas e inmutables",
+          "etiqueta_en": "Encrypted, immutable copies"
+        },
+        "title_en": "Immutable backups",
+        "text_en": "No external attempt can alter the copies."
       },
       {
         "title": "Cumplimiento normativo",
@@ -44,19 +50,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Retención legal"
+              "label": "Retención legal",
+              "label_en": "Legal retention"
             },
             {
-              "label": "Registro de copias"
+              "label": "Registro de copias",
+              "label_en": "Backup log"
             },
             {
-              "label": "Cifrado"
+              "label": "Cifrado",
+              "label_en": "Encryption"
             },
             {
-              "label": "Restauración probada"
+              "label": "Restauración probada",
+              "label_en": "Tested restore"
             }
           ]
-        }
+        },
+        "title_en": "Regulatory compliance",
+        "text_en": "Legal retention of corporate information as the regulator requires."
       }
     ],
     "title_en": "Benefits"
@@ -65,7 +77,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Estudios contables, despachos legales, repositorios de facturación electrónica y organizaciones que requieren **proteger información crítica** y cumplir exigencias regulatorias.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Accounting firms, law firms, electronic invoicing repositories and organizations that need to **protect critical information** and meet regulatory requirements."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -102,5 +114,5 @@
   },
   "title_en": "Backup as a Service (BaaS)",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Data Center, Cloud & Business Continuity"
+  "solucionTitle_en": "Data Center"
 }

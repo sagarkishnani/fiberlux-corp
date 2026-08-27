@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/housing.webp"
+    "heroImage": "images/soluciones/imagenes/housing.webp",
+    "heading_en": "Power",
+    "intro_en": "Design and deployment of electrical backup and protection solutions to keep technology infrastructure safe from power fluctuations or outages.",
+    "note_en": "Ideal for organizations that need to ensure the availability and protection of critical servers, networks and technology equipment.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -20,8 +25,11 @@
         "text": "Protege la infraestructura frente a variaciones e interrupciones del suministro.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Suministro protegido"
-        }
+          "etiqueta": "Suministro protegido",
+          "etiqueta_en": "Supply protected"
+        },
+        "title_en": "Shielded against power failures",
+        "text_en": "Protects infrastructure from supply fluctuations and outages."
       },
       {
         "title": "Respaldo con UPS y baterías",
@@ -31,14 +39,18 @@
           "rutas": [
             {
               "label": "RED ELÉCTRICA",
-              "activa": false
+              "activa": false,
+              "label_en": "MAINS POWER"
             },
             {
               "label": "UPS / BATERÍAS",
-              "activa": true
+              "activa": true,
+              "label_en": "UPS / BATTERIES"
             }
           ]
-        }
+        },
+        "title_en": "Backup with UPS and batteries",
+        "text_en": "When the grid drops, the backup takes over unnoticed."
       },
       {
         "title": "Autonomía dimensionada",
@@ -46,7 +58,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 80
-        }
+        },
+        "title_en": "Sized autonomy",
+        "text_en": "Backup is calculated on the load and runtime your operation needs."
       },
       {
         "title": "Instalación especializada",
@@ -55,25 +69,34 @@
         "datos": {
           "chips": [
             {
-              "label": "Cálculo de carga"
+              "label": "Cálculo de carga",
+              "label_en": "Load calculation"
             },
             {
-              "label": "Instalación"
+              "label": "Instalación",
+              "label_en": "Installation"
             },
             {
-              "label": "Puesta en marcha"
+              "label": "Puesta en marcha",
+              "label_en": "Commissioning"
             },
             {
-              "label": "Mantenimiento"
+              "label": "Mantenimiento",
+              "label_en": "Maintenance"
             }
           ]
-        }
+        },
+        "title_en": "Specialized installation",
+        "text_en": "Built for critical technology infrastructure, not general use."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Data Centers, salas técnicas, **racks de comunicaciones**, servidores y equipamiento de red."
+    "statement": "Data Centers, salas técnicas, **racks de comunicaciones**, servidores y equipamiento de red.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Data Centers, technical rooms, **communications racks**, servers and network equipment."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -96,11 +119,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Energía | Fiberlux Corp",
     "metaDescription": "Diseño e implementación de soluciones de respaldo y protección eléctrica para mantener la infraestructura tecnológica protegida frente a variaciones o…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Power",
+  "solucionTitle_en": "Infrastructure",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

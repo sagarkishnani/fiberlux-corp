@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/gestion-lan.webp"
+    "heroImage": "images/soluciones/imagenes/gestion-lan.webp",
+    "heading_en": "Switches",
+    "intro_en": "Design, deployment and configuration of switching infrastructure to efficiently connect and manage the devices and services on your enterprise network.",
+    "note_en": "Ideal for organizations that need to expand, renew or modernize their internal network to support more users, devices and critical applications.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Core"
+              "label": "Core",
+              "label_en": ""
             },
             {
-              "label": "Distribución"
+              "label": "Distribución",
+              "label_en": "Distribution"
             },
             {
-              "label": "Acceso"
+              "label": "Acceso",
+              "label_en": "Access"
             },
             {
-              "label": "Borde"
+              "label": "Borde",
+              "label_en": "Edge"
             }
           ]
-        }
+        },
+        "title_en": "A network designed around you",
+        "text_en": "Sizing starts from your operation's capacity and needs."
       },
       {
         "title": "Tráfico segmentado",
@@ -45,20 +56,25 @@
             {
               "label": "VLAN Voz",
               "nivel": "CRÍTICO",
-              "porcentaje": 92
+              "porcentaje": 92,
+              "label_en": "Voice VLAN"
             },
             {
               "label": "VLAN Datos",
               "nivel": "ALTA",
-              "porcentaje": 80
+              "porcentaje": 80,
+              "label_en": "Data VLAN"
             },
             {
               "label": "VLAN Invitados",
               "nivel": "BAJA",
-              "porcentaje": 30
+              "porcentaje": 30,
+              "label_en": "Guest VLAN"
             }
           ]
-        }
+        },
+        "title_en": "Segmented traffic",
+        "text_en": "Each type of traffic moves where it should, with the priority it deserves."
       },
       {
         "title": "Escalable",
@@ -66,7 +82,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 60
-        }
+        },
+        "title_en": "Scalable",
+        "text_en": "Adds new devices and services without redoing the network."
       },
       {
         "title": "Implementación y soporte",
@@ -75,25 +93,34 @@
         "datos": {
           "chips": [
             {
-              "label": "Diseño"
+              "label": "Diseño",
+              "label_en": "Design"
             },
             {
-              "label": "Configuración"
+              "label": "Configuración",
+              "label_en": "Configuration"
             },
             {
-              "label": "Puesta en marcha"
+              "label": "Puesta en marcha",
+              "label_en": "Commissioning"
             },
             {
-              "label": "Soporte"
+              "label": "Soporte",
+              "label_en": "Support"
             }
           ]
-        }
+        },
+        "title_en": "Deployment and support",
+        "text_en": "Configuration, rollout and specialized guidance."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Oficinas corporativas, campus, plantas, centros logísticos y organizaciones con **redes de alta densidad**."
+    "statement": "Oficinas corporativas, campus, plantas, centros logísticos y organizaciones con **redes de alta densidad**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Corporate offices, campuses, plants, logistics centers and organizations with **high-density networks**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -116,11 +143,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Switches | Fiberlux Corp",
     "metaDescription": "Diseño, implementación y configuración de infraestructura de switching para conectar y administrar de forma eficiente los dispositivos y servicios de la red…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Switches",
+  "solucionTitle_en": "Infrastructure",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

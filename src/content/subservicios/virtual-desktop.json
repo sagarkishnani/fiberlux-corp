@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/nube-publica.webp"
+    "heroImage": "images/soluciones/imagenes/nube-publica.webp",
+    "heading_en": "Virtual Desktop",
+    "intro_en": "Centralized virtual desktops that provide secure access to applications, files and work environments from different devices.",
+    "note_en": "Ideal for organizations that need to enable remote work, manage users centrally and simplify access to corporate applications.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -24,16 +29,22 @@
           "valor": "ACTIVOS",
           "nodos": [
             {
-              "label": "Sesiones"
+              "label": "Sesiones",
+              "label_en": "Sessions"
             },
             {
-              "label": "Apps"
+              "label": "Apps",
+              "label_en": "Apps"
             },
             {
-              "label": "Perfiles"
+              "label": "Perfiles",
+              "label_en": "Profiles"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "DESKTOPS"
+        },
+        "title_en": "Desktops managed from one place",
+        "text_en": "Applications, profiles and sessions are managed centrally."
       },
       {
         "title": "Acceso seguro desde cualquier dispositivo",
@@ -41,27 +52,38 @@
         "plantilla": "tunel",
         "datos": {
           "hilos": 3,
-          "etiqueta": "Sesión cifrada"
-        }
+          "etiqueta": "Sesión cifrada",
+          "etiqueta_en": "Encrypted session"
+        },
+        "title_en": "Secure access from any device",
+        "text_en": "The work environment travels with the user, not with the machine."
       },
       {
         "title": "La información no sale del centro",
         "text": "Los datos corporativos se quedan donde deben estar.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Datos centralizados"
-        }
+          "etiqueta": "Datos centralizados",
+          "etiqueta_en": "Data centralized"
+        },
+        "title_en": "Information stays in the center",
+        "text_en": "Corporate data stays where it belongs."
       },
       {
         "title": "Altas de usuario en minutos",
         "text": "Un colaborador nuevo entra a producir el mismo día.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "New users onboarded in minutes",
+        "text_en": "A new employee is productive the same day."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "**Trabajo remoto e híbrido**, Contact Centers, personal temporal, proveedores y equipos distribuidos."
+    "statement": "**Trabajo remoto e híbrido**, Contact Centers, personal temporal, proveedores y equipos distribuidos.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "**Remote and hybrid work**, contact centers, temporary staff, contractors and distributed teams."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -84,11 +106,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Virtual Desktop | Fiberlux Corp",
     "metaDescription": "Escritorios virtuales centralizados que permiten acceder de forma segura a aplicaciones, archivos y entornos de trabajo desde distintos dispositivos.",
     "ogImage": ""
-  }
+  },
+  "title_en": "Virtual Desktop",
+  "solucionTitle_en": "Data Center",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

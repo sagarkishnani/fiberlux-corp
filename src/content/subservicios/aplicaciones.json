@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/waf.webp",
-    "heading_en": "WAF",
+    "heading_en": "Applications",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "The Web Application Firewall is a specialized barrier that audits HTTP/HTTPS traffic between the internet and your web application in real time.",
+    "note_en": "Ideal for web platforms and e-commerce sites exposed to cyberattacks."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,8 +25,11 @@
         "text": "Detiene vulnerabilidades web antes de que toquen el servidor.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Tráfico HTTP/S auditado"
-        }
+          "etiqueta": "Tráfico HTTP/S auditado",
+          "etiqueta_en": "HTTP/S traffic audited"
+        },
+        "title_en": "Exploits blocked at the door",
+        "text_en": "Stops web vulnerabilities before they reach the server."
       },
       {
         "title": "Cumplimiento de normativas de pago",
@@ -35,19 +38,25 @@
         "datos": {
           "chips": [
             {
-              "label": "PCI-DSS"
+              "label": "PCI-DSS",
+              "label_en": ""
             },
             {
-              "label": "Registro de eventos"
+              "label": "Registro de eventos",
+              "label_en": "Event logging"
             },
             {
-              "label": "Reglas gestionadas"
+              "label": "Reglas gestionadas",
+              "label_en": "Managed rules"
             },
             {
-              "label": "Reporte de incidentes"
+              "label": "Reporte de incidentes",
+              "label_en": "Incident reporting"
             }
           ]
-        }
+        },
+        "title_en": "Payment regulation compliance",
+        "text_en": "Meets the financial requirements demanded, such as PCI-DSS."
       },
       {
         "title": "Reputación de marca protegida",
@@ -56,19 +65,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Formularios"
+              "label": "Formularios",
+              "label_en": "Forms"
             },
             {
-              "label": "API"
+              "label": "API",
+              "label_en": ""
             },
             {
-              "label": "Sesiones"
+              "label": "Sesiones",
+              "label_en": "Sessions"
             },
             {
-              "label": "Base de datos"
+              "label": "Base de datos",
+              "label_en": "Database"
             }
           ]
-        }
+        },
+        "title_en": "Brand reputation protected",
+        "text_en": "Prevents the mass data leaks that end up public."
       },
       {
         "title": "Blindaje OWASP Top 10",
@@ -76,7 +91,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 90
-        }
+        },
+        "title_en": "OWASP Top 10 shielding",
+        "text_en": "Mitigates the standard's vulnerabilities and lowers the risk to data and transactions."
       }
     ],
     "title_en": "Benefits"
@@ -85,7 +102,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Tiendas de e-commerce, **pasarelas de pago** y portales de trámites ciudadanos.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "E-commerce stores, **payment gateways** and citizen service portals."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -120,7 +137,7 @@
     "metaDescription": "La Web Application Firewall es una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
     "ogImage": ""
   },
-  "title_en": "WAF",
+  "title_en": "Applications",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

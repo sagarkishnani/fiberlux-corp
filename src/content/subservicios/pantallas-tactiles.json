@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/colaboracion-empresarial.webp"
+    "heroImage": "images/soluciones/imagenes/colaboracion-empresarial.webp",
+    "heading_en": "Touch screens",
+    "intro_en": "Interactive displays designed for meetings, presentations and collaborative work, letting you view, share and manipulate content straight from the screen.",
+    "note_en": "Ideal for organizations looking to modernize meeting rooms, classrooms or collaborative spaces with a more dynamic, integrated experience.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,19 +27,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Presentaciones"
+              "label": "Presentaciones",
+              "label_en": "Presentations"
             },
             {
-              "label": "Documentos"
+              "label": "Documentos",
+              "label_en": "Documents"
             },
             {
-              "label": "Anotaciones"
+              "label": "Anotaciones",
+              "label_en": "Annotations"
             },
             {
-              "label": "Compartir"
+              "label": "Compartir",
+              "label_en": "Share"
             }
           ]
-        }
+        },
+        "title_en": "Content you handle with your hands",
+        "text_en": "Presentations and documents viewed and edited straight from the screen."
       },
       {
         "title": "Pizarra digital",
@@ -45,16 +56,22 @@
           "valor": "ACTIVA",
           "nodos": [
             {
-              "label": "Trazos"
+              "label": "Trazos",
+              "label_en": "Strokes"
             },
             {
-              "label": "Notas"
+              "label": "Notas",
+              "label_en": "Notes"
             },
             {
-              "label": "Exportar"
+              "label": "Exportar",
+              "label_en": "Export"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "WHITEBOARD"
+        },
+        "title_en": "Digital whiteboard",
+        "text_en": "Collaborative sessions that stay saved when you're done."
       },
       {
         "title": "Integrada a tus videoconferencias",
@@ -63,19 +80,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Teams"
+              "label": "Teams",
+              "label_en": ""
             },
             {
-              "label": "Zoom"
+              "label": "Zoom",
+              "label_en": ""
             },
             {
-              "label": "Meet"
+              "label": "Meet",
+              "label_en": ""
             },
             {
-              "label": "Sala"
+              "label": "Sala",
+              "label_en": "Room"
             }
           ]
-        }
+        },
+        "title_en": "Integrated with your video calls",
+        "text_en": "Connects with the collaboration platforms you already use."
       },
       {
         "title": "Más participación",
@@ -83,13 +106,18 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 82
-        }
+        },
+        "title_en": "More participation",
+        "text_en": "In-person and hybrid meetings stop being a monologue."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Salas de reuniones, directorios, centros de capacitación, aulas, salas de innovación y **espacios de trabajo colaborativo**."
+    "statement": "Salas de reuniones, directorios, centros de capacitación, aulas, salas de innovación y **espacios de trabajo colaborativo**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Meeting rooms, boardrooms, training centers, classrooms, innovation labs and **collaborative workspaces**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -112,11 +140,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Pantallas táctiles | Fiberlux Corp",
     "metaDescription": "Pantallas interactivas diseñadas para reuniones, presentaciones y trabajo colaborativo, permitiendo visualizar, compartir y manipular contenido directamente…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Touch screens",
+  "solucionTitle_en": "Unified Communications",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

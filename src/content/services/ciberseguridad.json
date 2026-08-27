@@ -10,7 +10,7 @@
     "heroImage": "images/soluciones/categoriaciberseguridad1.webp",
     "ctaLabel_en": "View solutions",
     "formTitle_en": "Let's talk?",
-    "heading_en": "Managed cybersecurity to protect your critical operation",
+    "heading_en": "Active security for networks, users and applications",
     "intro_en": "Comprehensive protection for modern digital infrastructures, combining perimeter security, endpoint protection, identity and access control, application security, continuous monitoring and incident response."
   },
   "valor": {
@@ -36,14 +36,14 @@
         ],
         "image": "",
         "heading_en": "Our solution",
-        "text_en": "Perimeter, endpoint and identity security managed end to end, with proactive detection and response."
+        "text_en": "Perimeter, endpoint and identity security managed end to end, with proactive detection and response from our 24/7 SOC."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Banca y seguros, gobierno, salud, retail, educación, infraestructura crítica y organizaciones con múltiples sedes o esquemas de trabajo híbrido.",
         "image": "",
         "heading_en": "Featured industries",
-        "text_en": "Banking and insurance, government, healthcare, retail, education, critical infrastructure and multi-site organizations."
+        "text_en": "Banking and insurance, government, healthcare, retail, education, critical infrastructure and organizations with multiple sites or hybrid work models."
       }
     ],
     "title_en": "Zero Trust-based cybersecurity",
@@ -57,43 +57,57 @@
         "icon": "firewall",
         "title": "Perimetral",
         "description": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
-        "url": "/soluciones/ciberseguridad/perimetral"
+        "url": "/soluciones/ciberseguridad/perimetral",
+        "title_en": "Perimeter",
+        "description_en": "Next-Generation Firewall. A layer 7 security barrier that deeply inspects web traffic, applications and users."
       },
       {
         "icon": "edr",
         "title": "End Point",
         "description": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan Antivirus Empresarial, EDR, XDR y MDR para proteger…",
-        "url": "/soluciones/ciberseguridad/end-point"
+        "url": "/soluciones/ciberseguridad/end-point",
+        "title_en": "End Point",
+        "description_en": "Protection, detection and response solutions for corporate devices, combining enterprise antivirus, EDR, XDR and MDR to protect laptops, servers and workstations against advanced threats."
       },
       {
         "icon": "correo",
         "title": "Correo",
         "description": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
-        "url": "/soluciones/ciberseguridad/correo"
+        "url": "/soluciones/ciberseguridad/correo",
+        "title_en": "Email",
+        "description_en": "A preventive cloud shield that intercepts malicious emails and infected attachments, and restricts access to fraudulent websites."
       },
       {
         "icon": "mfa",
         "title": "Usuarios",
         "description": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
-        "url": "/soluciones/ciberseguridad/usuarios"
+        "url": "/soluciones/ciberseguridad/usuarios",
+        "title_en": "Users",
+        "description_en": "Multi-Factor Authentication and Identity Management. A system that requires a dynamic second verification (token, app or biometrics) to sign in."
       },
       {
         "icon": "waf",
         "title": "Aplicaciones",
         "description": "La Web Application Firewall es una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
-        "url": "/soluciones/ciberseguridad/aplicaciones"
+        "url": "/soluciones/ciberseguridad/aplicaciones",
+        "title_en": "Applications",
+        "description_en": "The Web Application Firewall is a specialized barrier that audits HTTP/HTTPS traffic between the internet and your web application in real time."
       },
       {
         "icon": "soc",
         "title": "Concientización en Phishing",
         "description": "Programas de capacitación y simulación diseñados para ayudar a los colaboradores a identificar correos fraudulentos, intentos de suplantación de…",
-        "url": "/soluciones/ciberseguridad/concientizacion-phishing"
+        "url": "/soluciones/ciberseguridad/concientizacion-phishing",
+        "title_en": "Phishing Awareness",
+        "description_en": "Training and simulation programs that help staff identify fraudulent emails, impersonation attempts (phishing) and other social engineering techniques used to gain access to sensitive information."
       },
       {
         "icon": "segmentacion",
         "title": "Transporte (redes)",
         "description": "Solución de seguridad que segmenta la red y controla las comunicaciones entre usuarios, dispositivos, aplicaciones y cargas de trabajo mediante…",
-        "url": "/soluciones/ciberseguridad/transporte-redes"
+        "url": "/soluciones/ciberseguridad/transporte-redes",
+        "title_en": "Transport (networks)",
+        "description_en": "A security solution that segments the network and controls communication between users, devices, applications and workloads through specific access policies."
       }
     ]
   },
@@ -219,5 +233,5 @@
     "Ciberseguridad"
   ],
   "whyUsTitle_en": "Why Fiberlux?",
-  "title_en": "Managed Cybersecurity"
+  "title_en": "Cybersecurity"
 }

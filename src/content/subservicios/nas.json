@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp"
+    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp",
+    "heading_en": "NAS (on premise)",
+    "intro_en": "A network-attached storage solution that centralizes files and data so multiple users and systems can access them securely.",
+    "note_en": "Ideal for organizations that need to consolidate large volumes of information and share it across their local network.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Contabilidad"
+              "label": "Contabilidad",
+              "label_en": "Accounting"
             },
             {
-              "label": "Legal"
+              "label": "Legal",
+              "label_en": "Legal"
             },
             {
-              "label": "Operaciones"
+              "label": "Operaciones",
+              "label_en": "Operations"
             },
             {
-              "label": "Marketing"
+              "label": "Marketing",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "The whole archive in one place",
+        "text_en": "Centralizes files and data for the entire organization."
       },
       {
         "title": "Acceso compartido y controlado",
@@ -43,19 +54,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Permisos por carpeta"
+              "label": "Permisos por carpeta",
+              "label_en": "Folder permissions"
             },
             {
-              "label": "Grupos de usuarios"
+              "label": "Grupos de usuarios",
+              "label_en": "User groups"
             },
             {
-              "label": "Registro de accesos"
+              "label": "Registro de accesos",
+              "label_en": "Access log"
             },
             {
-              "label": "Cuotas"
+              "label": "Cuotas",
+              "label_en": "Quotas"
             }
           ]
-        }
+        },
+        "title_en": "Shared, controlled access",
+        "text_en": "Each user sees exactly what belongs to them."
       },
       {
         "title": "Crece con tu información",
@@ -63,7 +80,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 65
-        }
+        },
+        "title_en": "Grows with your information",
+        "text_en": "Expands capacity as the data volume increases."
       },
       {
         "title": "Administración y respaldo simples",
@@ -74,22 +93,31 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Volúmenes"
+              "label": "Volúmenes",
+              "label_en": "Volumes"
             },
             {
-              "label": "Snapshots"
+              "label": "Snapshots",
+              "label_en": ""
             },
             {
-              "label": "Réplicas"
+              "label": "Réplicas",
+              "label_en": "Replicas"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "STORAGE"
+        },
+        "title_en": "Simple administration and backup",
+        "text_en": "A single console for volumes, snapshots and replicas."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Repositorios documentales, **archivos compartidos**, respaldos locales, contenido multimedia y almacenamiento de información histórica."
+    "statement": "Repositorios documentales, **archivos compartidos**, respaldos locales, contenido multimedia y almacenamiento de información histórica.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Document repositories, **shared files**, local backups, multimedia content and historical data storage."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -112,11 +140,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "NAS (on premise) | Fiberlux Corp",
     "metaDescription": "Solución de almacenamiento conectada a la red que centraliza archivos y datos para que múltiples usuarios y sistemas puedan acceder a ellos de forma segura.",
     "ogImage": ""
-  }
+  },
+  "title_en": "NAS (on premise)",
+  "solucionTitle_en": "Data Center",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

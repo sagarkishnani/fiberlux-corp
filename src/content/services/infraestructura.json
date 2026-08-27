@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp"
+    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp",
+    "heading_en": "Technology ready to support an increasingly demanding operation",
+    "intro_en": "We design and deploy scalable technology infrastructure to connect, manage and strengthen the environments where your users, devices and applications run.",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?"
   },
   "valor": {
     "title": "Una infraestructura preparada para evolucionar",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "El crecimiento de usuarios, dispositivos y aplicaciones aumenta la complejidad tecnológica y exige infraestructuras capaces de mantener rendimiento, disponibilidad y control.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "Growth in users, devices and applications increases technical complexity and demands infrastructure able to sustain performance, availability and control."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "Servidores",
           "Video Vigilancia"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "We integrate infrastructure solutions tailored to each environment — from design and deployment to management and support — so you can scale capacity and respond to new operational needs."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Aplicable a organizaciones de todos los sectores que requieren modernizar, ampliar o administrar su infraestructura tecnológica.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "Applicable to organizations in every sector that need to modernize, expand or manage their technology infrastructure."
       }
-    ]
+    ],
+    "title_en": "Infrastructure ready to evolve",
+    "subtitle_en": "Scalable technology, ready for what your operation needs."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -44,39 +56,52 @@
         "icon": "wifi",
         "title": "WiFi Gestionado",
         "description": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando la cobertura, capacidad y experiencia de conexión de…",
-        "url": "/soluciones/infraestructura/wifi-gestionado"
+        "url": "/soluciones/infraestructura/wifi-gestionado",
+        "title_en": "Managed WiFi",
+        "description_en": "Design, deployment and management of enterprise wireless networks, optimizing coverage, capacity and the connection experience for users and devices."
       },
       {
         "icon": "switch",
         "title": "Switches",
         "description": "Diseño, implementación y configuración de infraestructura de switching para conectar y administrar de forma eficiente los dispositivos y servicios de…",
-        "url": "/soluciones/infraestructura/switches"
+        "url": "/soluciones/infraestructura/switches",
+        "title_en": "Switches",
+        "description_en": "Design, deployment and configuration of switching infrastructure to efficiently connect and manage the devices and services on your enterprise network."
       },
       {
         "icon": "balanceo",
         "title": "Balanceadores",
         "description": "Diseño e implementación de soluciones de balanceo que distribuyen el tráfico entre diferentes recursos o enlaces para mejorar el rendimiento y…",
-        "url": "/soluciones/infraestructura/balanceadores"
+        "url": "/soluciones/infraestructura/balanceadores",
+        "title_en": "Load Balancers",
+        "description_en": "Design and deployment of balancing solutions that distribute traffic across different resources or links to improve service performance and availability."
       },
       {
         "icon": "servidor",
         "title": "Servidores",
         "description": "Diseño, dimensionamiento e implementación de infraestructura de servidores adaptada a las cargas de trabajo, aplicaciones y necesidades de…",
-        "url": "/soluciones/infraestructura/servidores"
+        "url": "/soluciones/infraestructura/servidores",
+        "title_en": "Servers",
+        "description_en": "Design, sizing and deployment of server infrastructure tailored to each organization's workloads, applications and growth needs."
       },
       {
         "icon": "videovigilancia",
         "title": "Video Vigilancia",
         "description": "Servicio integral de monitoreo y administración de sistemas de videovigilancia que permite supervisar instalaciones, proteger activos y mejorar la…",
-        "url": "/soluciones/infraestructura/video-vigilancia"
+        "url": "/soluciones/infraestructura/video-vigilancia",
+        "title_en": "Video Surveillance",
+        "description_en": "A comprehensive monitoring and management service for video surveillance systems that lets you oversee facilities, protect assets and improve operational security through IP cameras, management platforms, centralized remote access and AI for pattern recognition (face identification, vehicle tracking, perimeter intrusion and more)."
       },
       {
         "icon": "energia",
         "title": "Energía",
         "description": "Diseño e implementación de soluciones de respaldo y protección eléctrica para mantener la infraestructura tecnológica protegida frente a variaciones…",
-        "url": "/soluciones/infraestructura/energia"
+        "url": "/soluciones/infraestructura/energia",
+        "title_en": "Power",
+        "description_en": "Design and deployment of electrical backup and protection solutions to keep technology infrastructure safe from power fluctuations or outages."
       }
-    ]
+    ],
+    "title_en": "Solutions catalog"
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
@@ -117,7 +142,9 @@
         "alt": "Ubiquiti",
         "url": ""
       }
-    ]
+    ],
+    "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
+    "title_en": "We work with industry leaders"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -192,7 +219,8 @@
           ]
         }
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Infraestructura tecnológica empresarial | Fiberlux Corp",
@@ -201,5 +229,7 @@
   },
   "blogTags": [
     "Infraestructura"
-  ]
+  ],
+  "title_en": "Infrastructure",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

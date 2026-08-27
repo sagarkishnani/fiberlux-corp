@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/mfa.webp",
-    "heading_en": "MFA & Identity Control",
+    "heading_en": "Users",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Multi-Factor Authentication and Identity Management. A system that requires a dynamic second verification (token, app or biometrics) to sign in.",
+    "note_en": "Ideal for protecting financial systems and databases against credential theft and weak passwords traded on the black market."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -27,16 +27,21 @@
         "datos": {
           "chips": [
             {
-              "label": "Contraseña"
+              "label": "Contraseña",
+              "label_en": "Password"
             },
             {
-              "label": "Token / App"
+              "label": "Token / App",
+              "label_en": "Token / App"
             },
             {
-              "label": "Biometría"
+              "label": "Biometría",
+              "label_en": "Biometrics"
             }
           ]
-        }
+        },
+        "title_en": "Password theft neutralized",
+        "text_en": "Without the user's physical device, a stolen credential is useless."
       },
       {
         "title": "Auditoría clara de accesos",
@@ -47,25 +52,31 @@
             {
               "label": "Acceso al ERP aprobado",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "ERP access approved"
             },
             {
               "label": "Login administrativo verificado",
               "nivel": "CRÍTICO",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Admin login verified"
             },
             {
               "label": "Intento sin segundo factor",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Attempt without second factor"
             },
             {
               "label": "Sesión cerrada por inactividad",
               "nivel": "BAJA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Session closed for inactivity"
             }
           ]
-        }
+        },
+        "title_en": "Clear access auditing",
+        "text_en": "It's on record who approves entry to each critical platform."
       },
       {
         "title": "Seguridad sin fricción",
@@ -73,7 +84,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 95
-        }
+        },
+        "title_en": "Security without friction",
+        "text_en": "Maximum protection with minimal hassle for the legitimate employee."
       }
     ],
     "title_en": "Benefits"
@@ -82,7 +95,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "**Accesos administrativos de TI**, portales bancarios y entrada al ERP central.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "**IT administrative access**, banking portals and entry to the core ERP."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -117,7 +130,7 @@
     "metaDescription": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
     "ogImage": ""
   },
-  "title_en": "MFA & Identity Control",
+  "title_en": "Users",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

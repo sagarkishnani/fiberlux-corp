@@ -11,10 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/balanceo-de-enlaces.webp",
-    "heading_en": "Link Load Balancing",
+    "heading_en": "Load Balancers",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "Design and deployment of balancing solutions that distribute traffic across different resources or links to improve service performance and availability.",
+    "note_en": "Ideal for organizations that need to optimize the use of their infrastructure and reduce the impact of saturation or failures."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -28,20 +29,25 @@
             {
               "label": "Nodo A",
               "nivel": "ALTA",
-              "porcentaje": 34
+              "porcentaje": 34,
+              "label_en": "Node A"
             },
             {
               "label": "Nodo B",
               "nivel": "ALTA",
-              "porcentaje": 33
+              "porcentaje": 33,
+              "label_en": "Node B"
             },
             {
               "label": "Nodo C",
               "nivel": "ALTA",
-              "porcentaje": 33
+              "porcentaje": 33,
+              "label_en": "Node C"
             }
           ]
-        }
+        },
+        "title_en": "Traffic shared with criteria",
+        "text_en": "Load is distributed across available resources instead of saturating one."
       },
       {
         "title": "Aplicaciones siempre disponibles",
@@ -50,8 +56,11 @@
         "datos": {
           "valor": "99,9",
           "unidad": "% DISPONIBILIDAD",
-          "porcentaje": 99
-        }
+          "porcentaje": 99,
+          "unidad_en": "% AVAILABILITY"
+        },
+        "title_en": "Applications always available",
+        "text_en": "If one resource drops, the service stays up on the others."
       },
       {
         "title": "Recursos aprovechados",
@@ -59,7 +68,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 85
-        }
+        },
+        "title_en": "Resources put to work",
+        "text_en": "Makes the most of the infrastructure already installed."
       },
       {
         "title": "Arquitectura y soporte",
@@ -68,19 +79,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Diseño"
+              "label": "Diseño",
+              "label_en": "Design"
             },
             {
-              "label": "Configuración"
+              "label": "Configuración",
+              "label_en": "Configuration"
             },
             {
-              "label": "Pruebas"
+              "label": "Pruebas",
+              "label_en": "Testing"
             },
             {
-              "label": "Soporte"
+              "label": "Soporte",
+              "label_en": "Support"
             }
           ]
-        }
+        },
+        "title_en": "Architecture and support",
+        "text_en": "Configuration matched to your architecture, with specialized support."
       }
     ],
     "title_en": "Benefits"
@@ -89,7 +106,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Plataformas críticas, servicios digitales, **aplicaciones de alta demanda** e infraestructuras que requieren redundancia.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Critical platforms, digital services, **high-demand applications** and infrastructures that require redundancy."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -124,7 +141,7 @@
     "metaDescription": "Diseño e implementación de soluciones de balanceo que distribuyen el tráfico entre diferentes recursos o enlaces para mejorar el rendimiento y…",
     "ogImage": ""
   },
-  "title_en": "Link Load Balancing",
+  "title_en": "Load Balancers",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Infrastructure"
 }

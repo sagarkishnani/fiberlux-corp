@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/gestion-lan.webp"
+    "heroImage": "images/soluciones/imagenes/gestion-lan.webp",
+    "heading_en": "Transport (networks)",
+    "intro_en": "A security solution that segments the network and controls communication between users, devices, applications and workloads through specific access policies.",
+    "note_en": "Ideal for organizations looking to limit the lateral movement of threats and protect critical resources.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,27 +27,36 @@
         "datos": {
           "nodos": [
             {
-              "label": "Usuarios"
+              "label": "Usuarios",
+              "label_en": "Users"
             },
             {
-              "label": "Dispositivos"
+              "label": "Dispositivos",
+              "label_en": "Devices"
             },
             {
-              "label": "Aplicaciones"
+              "label": "Aplicaciones",
+              "label_en": "Applications"
             },
             {
-              "label": "Cargas de trabajo"
+              "label": "Cargas de trabajo",
+              "label_en": "Workloads"
             }
           ]
-        }
+        },
+        "title_en": "Reduced attack surface",
+        "text_en": "Granular segmentation exposes only what each party actually needs."
       },
       {
         "title": "Sin movimiento lateral",
         "text": "Una amenaza que entra a un sistema no se propaga al resto.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Segmento aislado"
-        }
+          "etiqueta": "Segmento aislado",
+          "etiqueta_en": "Segment isolated"
+        },
+        "title_en": "No lateral movement",
+        "text_en": "A threat that reaches one system doesn't spread to the rest."
       },
       {
         "title": "Políticas por identidad",
@@ -51,19 +65,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Por usuario"
+              "label": "Por usuario",
+              "label_en": "By user"
             },
             {
-              "label": "Por dispositivo"
+              "label": "Por dispositivo",
+              "label_en": "By device"
             },
             {
-              "label": "Por aplicación"
+              "label": "Por aplicación",
+              "label_en": "By application"
             },
             {
-              "label": "Por carga"
+              "label": "Por carga",
+              "label_en": "By workload"
             }
           ]
-        }
+        },
+        "title_en": "Identity-based policies",
+        "text_en": "Access is decided by user, device or workload."
       },
       {
         "title": "Visibilidad del tráfico interno",
@@ -74,22 +94,31 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Este–Oeste"
+              "label": "Este–Oeste",
+              "label_en": "East–West"
             },
             {
-              "label": "Norte–Sur"
+              "label": "Norte–Sur",
+              "label_en": "North–South"
             },
             {
-              "label": "Cargas"
+              "label": "Cargas",
+              "label_en": "Workloads"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "INTERNAL TRAFFIC"
+        },
+        "title_en": "Internal traffic visibility",
+        "text_en": "You see and control what moves inside the network, not just at the edge."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "Data Centers, **entornos cloud e híbridos**, organizaciones con aplicaciones críticas y redes con múltiples sistemas o cargas de trabajo."
+    "statement": "Data Centers, **entornos cloud e híbridos**, organizaciones con aplicaciones críticas y redes con múltiples sistemas o cargas de trabajo.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Data Centers, **cloud and hybrid environments**, organizations with critical applications and networks with multiple systems or workloads."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -112,11 +141,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Transporte (redes) | Fiberlux Corp",
     "metaDescription": "Solución de seguridad que segmenta la red y controla las comunicaciones entre usuarios, dispositivos, aplicaciones y cargas de trabajo mediante políticas de…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Transport (networks)",
+  "solucionTitle_en": "Cybersecurity",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

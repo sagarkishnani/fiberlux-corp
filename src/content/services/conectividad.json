@@ -22,7 +22,7 @@
         "text": "Un corte de internet paraliza la facturación, detiene operaciones industriales y bloquea transacciones.",
         "image": "/images/soluciones/valor-desafio.svg",
         "heading_en": "The challenge",
-        "text_en": "An internet outage halts billing, stops industrial operations and blocks transactions."
+        "text_en": "An internet outage stops invoicing, halts industrial operations and blocks transactions."
       },
       {
         "heading": "Nuestra solución",
@@ -36,18 +36,18 @@
         ],
         "image": "",
         "heading_en": "Our solution",
-        "text_en": "We integrate enterprise internet, multi-site data transmission, dark fiber and SD-WAN backed by our own fiber and 24/7 NOC."
+        "text_en": "We integrate business internet, multi-site data transmission, dark fiber and SD-WAN backed by optical fiber, satellite, microwave or LTE links — with monitoring and proactive attention from our 24/7 NOC."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Aplicable a empresas de todos los tamaños que requieren conectividad confiable para soportar operaciones críticas, múltiples sedes o servicios digitales.",
         "image": "",
         "heading_en": "Featured industries",
-        "text_en": "Applicable to companies of all sizes that need reliable connectivity to support critical operations."
+        "text_en": "Applicable to companies of any size that need reliable connectivity to support critical operations, multiple sites or digital services."
       }
     ],
     "title_en": "The value of resilience",
-    "subtitle_en": "Modern resilience isn't improvised: it's engineered into every link."
+    "subtitle_en": "Modern resilience isn't improvised: it's designed into every link."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -57,37 +57,49 @@
         "icon": "internet",
         "title": "Internet Dedicado",
         "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
-        "url": "/soluciones/conectividad/internet-dedicado"
+        "url": "/soluciones/conectividad/internet-dedicado",
+        "title_en": "Dedicated Internet",
+        "description_en": "A 100% symmetrical fiber optic link, exclusive and unshared with other users, with guaranteed bandwidth."
       },
       {
         "icon": "disponibilidad",
         "title": "Alta Disponibilidad",
         "description": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
-        "url": "/soluciones/conectividad/alta-disponibilidad"
+        "url": "/soluciones/conectividad/alta-disponibilidad",
+        "title_en": "High Availability",
+        "description_en": "Redundant connectivity with automatic backup links to guarantee full continuity of your operation."
       },
       {
         "icon": "satelital",
         "title": "Acceso Satelital",
         "description": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
-        "url": "/soluciones/conectividad/acceso-satelital"
+        "url": "/soluciones/conectividad/acceso-satelital",
+        "title_en": "Satellite Access",
+        "description_en": "Coverage in remote areas with no fiber infrastructure, using high-availability satellite links."
       },
       {
         "icon": "transmision",
         "title": "LAN to LAN",
         "description": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
-        "url": "/soluciones/conectividad/lan-to-lan"
+        "url": "/soluciones/conectividad/lan-to-lan",
+        "title_en": "LAN to LAN",
+        "description_en": "A private interconnection between your sites with secure, low-latency data transport."
       },
       {
         "icon": "fibra-oscura",
         "title": "Fibra Oscura",
         "description": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
-        "url": "/soluciones/conectividad/fibra-oscura"
+        "url": "/soluciones/conectividad/fibra-oscura",
+        "title_en": "Dark Fiber",
+        "description_en": "Dedicated, unlit optical fiber so you manage your own capacity and infrastructure."
       },
       {
         "icon": "sd-wan",
         "title": "SD-WAN",
         "description": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
-        "url": "/soluciones/conectividad/sd-wan"
+        "url": "/soluciones/conectividad/sd-wan",
+        "title_en": "SD-WAN",
+        "description_en": "A software-defined network that optimizes and prioritizes traffic across multiple links and sites."
       }
     ]
   },
@@ -249,5 +261,5 @@
     "Conectividad"
   ],
   "whyUsTitle_en": "Why Fiberlux?",
-  "title_en": "Business Connectivity"
+  "title_en": "Connectivity"
 }

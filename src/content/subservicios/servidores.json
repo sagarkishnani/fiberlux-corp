@@ -10,7 +10,12 @@
     "ctaLabel": "Conocer más",
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
-    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp"
+    "heroImage": "images/soluciones/imagenes/storage-empresarial.webp",
+    "heading_en": "Servers",
+    "intro_en": "Design, sizing and deployment of server infrastructure tailored to each organization's workloads, applications and growth needs.",
+    "note_en": "Ideal for companies that need to run applications, databases or critical platforms on their own infrastructure.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
   },
   "beneficios": {
     "title": "Beneficios",
@@ -22,7 +27,9 @@
         "datos": {
           "porcentaje": 65,
           "barras": 7
-        }
+        },
+        "title_en": "Sized to your workload",
+        "text_en": "Processing, memory and storage calculated on your real operation."
       },
       {
         "title": "Listo para virtualización",
@@ -33,16 +40,22 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "vCPU"
+              "label": "vCPU",
+              "label_en": ""
             },
             {
-              "label": "Memoria"
+              "label": "Memoria",
+              "label_en": "Memory"
             },
             {
-              "label": "Almacenamiento"
+              "label": "Almacenamiento",
+              "label_en": "Storage"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "HYPERVISOR"
+        },
+        "title_en": "Ready for virtualization",
+        "text_en": "Infrastructure prepared for enterprise workloads and virtualized environments."
       },
       {
         "title": "Crece con tu operación",
@@ -50,7 +63,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 60
-        }
+        },
+        "title_en": "Grows with your operation",
+        "text_en": "Expands capacity as the business demands."
       },
       {
         "title": "Implementación y soporte",
@@ -59,25 +74,34 @@
         "datos": {
           "chips": [
             {
-              "label": "Dimensionamiento"
+              "label": "Dimensionamiento",
+              "label_en": "Sizing"
             },
             {
-              "label": "Instalación"
+              "label": "Instalación",
+              "label_en": "Installation"
             },
             {
-              "label": "Configuración"
+              "label": "Configuración",
+              "label_en": "Configuration"
             },
             {
-              "label": "Soporte"
+              "label": "Soporte",
+              "label_en": "Support"
             }
           ]
-        }
+        },
+        "title_en": "Deployment and support",
+        "text_en": "From sizing to rollout, with specialized support."
       }
-    ]
+    ],
+    "title_en": "Benefits"
   },
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
-    "statement": "ERP, bases de datos, virtualización, aplicaciones empresariales y **plataformas alojadas on-premise**."
+    "statement": "ERP, bases de datos, virtualización, aplicaciones empresariales y **plataformas alojadas on-premise**.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "ERP, databases, virtualization, business applications and **on-premise hosted platforms**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -100,11 +124,15 @@
         "question": "¿Cómo verifico la cobertura para mi empresa?",
         "answer": ""
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Servidores | Fiberlux Corp",
     "metaDescription": "Diseño, dimensionamiento e implementación de infraestructura de servidores adaptada a las cargas de trabajo, aplicaciones y necesidades de crecimiento de…",
     "ogImage": ""
-  }
+  },
+  "title_en": "Servers",
+  "solucionTitle_en": "Infrastructure",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

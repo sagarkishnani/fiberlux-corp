@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/edr-xdr.webp",
-    "heading_en": "EDR / XDR / MDR",
+    "heading_en": "End Point",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Protection, detection and response solutions for corporate devices, combining enterprise antivirus, EDR, XDR and MDR to protect laptops, servers and workstations against advanced threats.",
+    "note_en": "Ideal for stopping hyper-advanced ransomware that evades traditional antivirus and runs straight on the laptops of executives and staff."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -27,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Antivirus"
+              "label": "Antivirus",
+              "label_en": "Antivirus"
             },
             {
-              "label": "EDR"
+              "label": "EDR",
+              "label_en": ""
             },
             {
-              "label": "XDR"
+              "label": "XDR",
+              "label_en": ""
             },
             {
-              "label": "MDR"
+              "label": "MDR",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "Multi-layer protection",
+        "text_en": "Enterprise antivirus plus advanced detection and response capabilities on the same device."
       },
       {
         "title": "Aislamiento automático",
@@ -49,14 +55,18 @@
           "rutas": [
             {
               "label": "RED CORPORATIVA",
-              "activa": false
+              "activa": false,
+              "label_en": "CORPORATE NETWORK"
             },
             {
               "label": "CUARENTENA",
-              "activa": true
+              "activa": true,
+              "label_en": "QUARANTINE"
             }
           ]
-        }
+        },
+        "title_en": "Automatic isolation",
+        "text_en": "Pulls the infected machine off the network before it spreads to the rest."
       },
       {
         "title": "Comportamiento anómalo en tiempo real",
@@ -67,30 +77,38 @@
             {
               "label": "Proceso anómalo detenido",
               "nivel": "CRÍTICO",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Anomalous process stopped"
             },
             {
               "label": "Ejecución sin firma bloqueada",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Unsigned execution blocked"
             },
             {
               "label": "Script sospechoso aislado",
               "nivel": "ALTA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Suspicious script isolated"
             },
             {
               "label": "Equipo devuelto a la red",
               "nivel": "MEDIA",
-              "porcentaje": 0
+              "porcentaje": 0,
+              "label_en": "Device returned to the network"
             }
           ]
-        }
+        },
+        "title_en": "Anomalous behavior in real time",
+        "text_en": "Blocks threats with no known signature by analyzing how they behave."
       },
       {
         "title": "Trazabilidad forense",
         "text": "Reconstruye el origen exacto del ataque paso por paso.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "Forensic traceability",
+        "text_en": "Reconstructs the exact origin of the attack step by step."
       }
     ],
     "title_en": "Benefits"
@@ -98,7 +116,7 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Clínicas protegiendo historiales médicos, despachos legales, instituciones financieras y organizaciones con **equipos distribuidos o trabajo híbrido**.",
-    "statement_en": "",
+    "statement_en": "Clinics protecting medical records, law firms, financial institutions and organizations with **distributed teams or hybrid work**.",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -134,7 +152,7 @@
     "metaDescription": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan Antivirus Empresarial, EDR, XDR y MDR para proteger laptops,…",
     "ogImage": ""
   },
-  "title_en": "EDR / XDR / MDR",
+  "title_en": "End Point",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

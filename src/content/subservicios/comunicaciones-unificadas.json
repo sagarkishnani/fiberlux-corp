@@ -14,8 +14,8 @@
     "heading_en": "Unified Communications",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "The evolution of IP telephony: it turns the classic phone system into a Unified Communications platform (UCaaS) with business applications such as Microsoft Teams, WhatsApp and CRM integrations, all in a single communications platform.",
+    "note_en": "Ideal for companies where personal WhatsApp and scattered tools cause loss of control over information and fragment teams."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,8 +25,11 @@
         "text": "Control corporativo absoluto sobre lo que se comparte y por dónde.",
         "plantilla": "escudo",
         "datos": {
-          "etiqueta": "Canal corporativo"
-        }
+          "etiqueta": "Canal corporativo",
+          "etiqueta_en": "Corporate channel"
+        },
+        "title_en": "Information doesn't slip away",
+        "text_en": "Full corporate control over what is shared and through which channel."
       },
       {
         "title": "Sabes quién está disponible",
@@ -37,16 +40,22 @@
           "valor": "EN LÍNEA",
           "nodos": [
             {
-              "label": "Disponible"
+              "label": "Disponible",
+              "label_en": "Available"
             },
             {
-              "label": "Ocupado"
+              "label": "Ocupado",
+              "label_en": "Busy"
             },
             {
-              "label": "En reunión"
+              "label": "En reunión",
+              "label_en": "In a meeting"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "PRESENCE"
+        },
+        "title_en": "You know who's available",
+        "text_en": "You instantly see whether a colleague is free, busy or in a meeting."
       },
       {
         "title": "Una sola herramienta",
@@ -55,19 +64,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Voz"
+              "label": "Voz",
+              "label_en": "Voice"
             },
             {
-              "label": "Chat"
+              "label": "Chat",
+              "label_en": "Chat"
             },
             {
-              "label": "Video"
+              "label": "Video",
+              "label_en": "Video"
             },
             {
-              "label": "CRM"
+              "label": "CRM",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "A single tool",
+        "text_en": "Less scattered software for the employee."
       },
       {
         "title": "Numeración, equipos e integraciones",
@@ -76,19 +91,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Teams"
+              "label": "Teams",
+              "label_en": ""
             },
             {
-              "label": "WhatsApp"
+              "label": "WhatsApp",
+              "label_en": ""
             },
             {
-              "label": "CRM"
+              "label": "CRM",
+              "label_en": ""
             },
             {
-              "label": "Telefonía"
+              "label": "Telefonía",
+              "label_en": "Telephony"
             }
           ]
-        }
+        },
+        "title_en": "Numbering, equipment and integrations",
+        "text_en": "Number portability or assignment, equipment leasing and integration with Teams or WhatsApp."
       }
     ],
     "title_en": "Benefits"
@@ -97,7 +118,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Corporaciones con modelos de trabajo híbrido y **Contact Centers con enfoque omnicanal**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Corporations with hybrid work models and **contact centers with an omnichannel approach**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -134,5 +155,5 @@
   },
   "title_en": "Unified Communications",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Services"
+  "solucionTitle_en": "Unified Communications"
 }

@@ -14,8 +14,8 @@
     "heading_en": "Disaster Recovery (DRaaS)",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Disaster Recovery as a Service. A dormant replica of your production infrastructure, ready to spin up if your production services collapse.",
+    "note_en": "Ideal for companies where downtime is unacceptable and restoring systems from a traditional backup would take days of inactivity."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -23,7 +23,9 @@
       {
         "title": "RTO/RPO en minutos",
         "text": "La recuperación se mide en minutos, no en días.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "RTO/RPO in minutes",
+        "text_en": "Recovery is measured in minutes, not days."
       },
       {
         "title": "Salto automático al sitio alterno",
@@ -33,14 +35,18 @@
           "rutas": [
             {
               "label": "SITIO PRINCIPAL",
-              "activa": false
+              "activa": false,
+              "label_en": "PRIMARY SITE"
             },
             {
               "label": "SITIO ALTERNO",
-              "activa": true
+              "activa": true,
+              "label_en": "ALTERNATE SITE"
             }
           ]
-        }
+        },
+        "title_en": "Automatic failover to the alternate site",
+        "text_en": "The operation continues on the replica with no manual intervention."
       },
       {
         "title": "Sin data center duplicado",
@@ -48,7 +54,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 45
-        }
+        },
+        "title_en": "No duplicate data center",
+        "text_en": "Removes the cost of building and maintaining a mirror physical data center."
       }
     ],
     "title_en": "Benefits"
@@ -56,7 +64,7 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "**Operaciones mission-critical** como entidades financieras, logística portuaria y portales de transacciones.",
-    "statement_en": "",
+    "statement_en": "**Mission-critical operations** such as financial institutions, port logistics and transaction portals.",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -94,5 +102,5 @@
   },
   "title_en": "Disaster Recovery (DRaaS)",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Data Center, Cloud & Business Continuity"
+  "solucionTitle_en": "Data Center"
 }

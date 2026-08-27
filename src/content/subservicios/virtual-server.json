@@ -11,11 +11,11 @@
     "formTitle": "¿Conversamos?",
     "heroBackground": "imagen",
     "heroImage": "images/soluciones/imagenes/nube-publica.webp",
-    "heading_en": "Public Cloud",
+    "heading_en": "Virtual Server",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystems as official distributors.",
+    "note_en": "Ideal for companies looking to accelerate projects, optimize costs and take advantage of public cloud scalability with a specialized partner alongside."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -23,7 +23,9 @@
       {
         "title": "Servidores en minutos",
         "text": "Aprovisiona instancias virtuales sin esperar compras ni instalaciones.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "Servers in minutes",
+        "text_en": "Provision virtual instances without waiting on purchases or installations."
       },
       {
         "title": "Pago por uso",
@@ -31,7 +33,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 60
-        }
+        },
+        "title_en": "Pay as you go",
+        "text_en": "A flexible OPEX model: you pay for the capacity you actually consume."
       },
       {
         "title": "Escala con tu carga",
@@ -40,7 +44,9 @@
         "datos": {
           "porcentaje": 70,
           "barras": 7
-        }
+        },
+        "title_en": "Scales with your workload",
+        "text_en": "Resize resources according to what each workload demands."
       },
       {
         "title": "Replicación entre sitios",
@@ -48,7 +54,9 @@
         "plantilla": "dwdm",
         "datos": {
           "hilos": 4
-        }
+        },
+        "title_en": "Cross-site replication",
+        "text_en": "Copies critical information across more than one location."
       },
       {
         "title": "Portafolio As a Service",
@@ -57,19 +65,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Cómputo"
+              "label": "Cómputo",
+              "label_en": "Compute"
             },
             {
-              "label": "Almacenamiento"
+              "label": "Almacenamiento",
+              "label_en": "Storage"
             },
             {
-              "label": "Contenedores"
+              "label": "Contenedores",
+              "label_en": "Containers"
             },
             {
-              "label": "Redes"
+              "label": "Redes",
+              "label_en": "Networking"
             }
           ]
-        }
+        },
+        "title_en": "As a Service portfolio",
+        "text_en": "We deploy Huawei Cloud and public clouds while leaving control in your own panel."
       }
     ],
     "title_en": "Benefits"
@@ -78,7 +92,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "**Startups en hipercrecimiento**, plataformas de e-commerce, entornos de desarrollo y pruebas, sistemas ERP, organizaciones multisede y centros educativos con picos de demanda.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "**Hypergrowth startups**, e-commerce platforms, development and testing environments, ERP systems, multi-site organizations and educational institutions with demand peaks."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -113,7 +127,7 @@
     "metaDescription": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
     "ogImage": ""
   },
-  "title_en": "Public Cloud",
+  "title_en": "Virtual Server",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Data Center, Cloud & Business Continuity"
+  "solucionTitle_en": "Data Center"
 }

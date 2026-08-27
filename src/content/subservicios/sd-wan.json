@@ -14,7 +14,8 @@
     "heading_en": "SD-WAN",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "A software-defined network that optimizes and prioritizes traffic across multiple links and sites.",
+    "note_en": "Ideal for companies with multiple branches looking to optimize application performance, simplify network management and guarantee operational continuity."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -28,25 +29,31 @@
             {
               "label": "ERP",
               "nivel": "CRÍTICO",
-              "porcentaje": 92
+              "porcentaje": 92,
+              "label_en": ""
             },
             {
               "label": "VoIP",
               "nivel": "CRÍTICO",
-              "porcentaje": 88
+              "porcentaje": 88,
+              "label_en": ""
             },
             {
               "label": "POS",
               "nivel": "ALTA",
-              "porcentaje": 76
+              "porcentaje": 76,
+              "label_en": ""
             },
             {
               "label": "Navegación",
               "nivel": "BAJA",
-              "porcentaje": 28
+              "porcentaje": 28,
+              "label_en": "Browsing"
             }
           ]
-        }
+        },
+        "title_en": "Critical traffic goes first",
+        "text_en": "ERP, VoIP and POS take precedence over secondary applications."
       },
       {
         "title": "Todas las sedes desde un panel",
@@ -55,19 +62,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Lima"
+              "label": "Lima",
+              "label_en": ""
             },
             {
-              "label": "Arequipa"
+              "label": "Arequipa",
+              "label_en": ""
             },
             {
-              "label": "Trujillo"
+              "label": "Trujillo",
+              "label_en": ""
             },
             {
-              "label": "Piura"
+              "label": "Piura",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "Every site from one panel",
+        "text_en": "Centralized management of the whole network, site by site."
       },
       {
         "title": "Salida directa a internet",
@@ -77,14 +90,18 @@
           "rutas": [
             {
               "label": "MPLS",
-              "activa": false
+              "activa": false,
+              "label_en": ""
             },
             {
               "label": "INTERNET DIRECTO",
-              "activa": true
+              "activa": true,
+              "label_en": "DIRECT INTERNET"
             }
           ]
-        }
+        },
+        "title_en": "Direct internet breakout",
+        "text_en": "Each site reaches cloud and SaaS without detouring through the data center."
       },
       {
         "title": "Costos optimizados",
@@ -92,7 +109,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 65
-        }
+        },
+        "title_en": "Optimized costs",
+        "text_en": "Makes intelligent use of every link you pay for."
       },
       {
         "title": "Un solo panel, varios proveedores",
@@ -103,16 +122,22 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "Fibra"
+              "label": "Fibra",
+              "label_en": "Fiber"
             },
             {
-              "label": "LTE"
+              "label": "LTE",
+              "label_en": ""
             },
             {
-              "label": "Satelital"
+              "label": "Satelital",
+              "label_en": ""
             }
-          ]
-        }
+          ],
+          "etiqueta_en": ""
+        },
+        "title_en": "One panel, several providers",
+        "text_en": "Unifies management even with different carriers and transmission media."
       }
     ],
     "title_en": "Benefits"
@@ -121,7 +146,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Cadenas de retail, instituciones educativas, entidades financieras y empresas multisede que requieren conectar sucursales, acceder a aplicaciones en la nube y mantener un **rendimiento consistente de sus servicios críticos**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Retail chains, educational institutions, financial institutions and multi-site companies that need to connect branches, reach cloud applications and maintain **consistent performance of their critical services**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -158,5 +183,5 @@
   },
   "title_en": "SD-WAN",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Connectivity"
 }

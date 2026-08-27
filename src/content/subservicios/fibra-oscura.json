@@ -14,7 +14,8 @@
     "heading_en": "Dark Fiber",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": ""
+    "intro_en": "Dedicated, unlit optical fiber so you manage your own capacity and infrastructure.",
+    "note_en": "Ideal for organizations with in-house technical capability and advanced needs for control, low latency or scalable bandwidth growth, where managed services from traditional carriers become limiting or more expensive over time."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -25,7 +26,9 @@
         "plantilla": "escalera",
         "datos": {
           "porcentaje": 75
-        }
+        },
+        "title_en": "Capacity that scales with you",
+        "text_en": "Raise bandwidth by adding or upgrading your own equipment."
       },
       {
         "title": "Tu arquitectura, tus reglas",
@@ -33,7 +36,9 @@
         "plantilla": "dwdm",
         "datos": {
           "hilos": 6
-        }
+        },
+        "title_en": "Your architecture, your rules",
+        "text_en": "Control over the network's design, management and security."
       },
       {
         "title": "Baja latencia y alto desempeño",
@@ -41,7 +46,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 95
-        }
+        },
+        "title_en": "Low latency, high performance",
+        "text_en": "Sustained performance for the most demanding applications."
       },
       {
         "title": "Costos optimizados a alto volumen",
@@ -50,7 +57,9 @@
         "datos": {
           "porcentaje": 40,
           "barras": 7
-        }
+        },
+        "title_en": "Costs optimized at high volume",
+        "text_en": "The more traffic, the better the economics against a managed service."
       }
     ],
     "title_en": "Benefits"
@@ -58,7 +67,7 @@
   "casosDeUso": {
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Universidades y campus corporativos, banca, entidades gubernamentales, **operadores mayoristas (Carriers)**, empresas con múltiples sedes y organizaciones con altos requerimientos de capacidad y crecimiento.",
-    "statement_en": "",
+    "statement_en": "Universities and corporate campuses, banking, government bodies, **wholesale carriers**, multi-site companies and organizations with high capacity and growth requirements.",
     "eyebrow_en": "[ USE CASES ]"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
@@ -96,5 +105,5 @@
   },
   "title_en": "Dark Fiber",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Business Connectivity"
+  "solucionTitle_en": "Connectivity"
 }

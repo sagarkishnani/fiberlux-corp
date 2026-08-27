@@ -14,8 +14,8 @@
     "heading_en": "Phishing Awareness",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Training and simulation programs that help staff identify fraudulent emails, impersonation attempts (phishing) and other social engineering techniques used to gain access to sensitive information.",
+    "note_en": "Ideal for reducing incidents caused by human error and strengthening the first line of defense."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -27,19 +27,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Remitente"
+              "label": "Remitente",
+              "label_en": "Sender"
             },
             {
-              "label": "Enlace"
+              "label": "Enlace",
+              "label_en": "Link"
             },
             {
-              "label": "Adjunto"
+              "label": "Adjunto",
+              "label_en": "Attachment"
             },
             {
-              "label": "Urgencia"
+              "label": "Urgencia",
+              "label_en": "Urgency"
             }
           ]
-        }
+        },
+        "title_en": "A trained eye for fraud",
+        "text_en": "Staff identify suspicious emails and links."
       },
       {
         "title": "Menos robo de credenciales",
@@ -47,7 +53,9 @@
         "plantilla": "gauge",
         "datos": {
           "porcentaje": 78
-        }
+        },
+        "title_en": "Less credential theft",
+        "text_en": "Lowers the risk of sensitive information leaking through a single click."
       },
       {
         "title": "Cultura de seguridad",
@@ -56,24 +64,32 @@
         "datos": {
           "nodos": [
             {
-              "label": "Comercial"
+              "label": "Comercial",
+              "label_en": "Sales"
             },
             {
-              "label": "Finanzas"
+              "label": "Finanzas",
+              "label_en": "Finance"
             },
             {
-              "label": "Operaciones"
+              "label": "Operaciones",
+              "label_en": "Operations"
             },
             {
-              "label": "TI"
+              "label": "TI",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "A security culture",
+        "text_en": "The first line of defense stops being the weak link."
       },
       {
         "title": "Evaluación continua",
         "text": "Campañas y simulaciones periódicas que miden el avance real.",
-        "plantilla": "reloj"
+        "plantilla": "reloj",
+        "title_en": "Continuous assessment",
+        "text_en": "Periodic campaigns and simulations that measure real progress."
       }
     ],
     "title_en": "Benefits"
@@ -82,7 +98,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "Empresas con trabajo híbrido o remoto, entidades financieras, instituciones educativas y organizaciones que **manejan información confidencial**.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "Companies with hybrid or remote work, financial institutions, educational institutions and organizations that **handle confidential information**."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -119,5 +135,5 @@
   },
   "title_en": "Phishing Awareness",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Cybersecurity"
+  "solucionTitle_en": "Cybersecurity"
 }

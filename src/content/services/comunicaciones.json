@@ -7,7 +7,11 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/imagenes/comunicaciones.webp"
+    "heroImage": "images/soluciones/imagenes/comunicaciones.webp",
+    "heading_en": "Business communications that connect your organization",
+    "intro_en": "Modernize voice communication with telephony solutions designed to connect users, departments and sites efficiently and at scale.",
+    "ctaLabel_en": "View solutions",
+    "formTitle_en": "Let's talk?"
   },
   "valor": {
     "title": "Una comunicación preparada para evolucionar",
@@ -16,7 +20,9 @@
       {
         "heading": "El desafío",
         "text": "Las soluciones telefónicas tradicionales pueden limitar la movilidad, dificultar la administración y generar mayor complejidad a medida que crecen los usuarios y sedes.",
-        "image": "/images/soluciones/valor-desafio.svg"
+        "image": "/images/soluciones/valor-desafio.svg",
+        "heading_en": "The challenge",
+        "text_en": "Traditional phone systems can limit mobility, complicate administration and add complexity as users and sites grow."
       },
       {
         "heading": "Nuestra solución",
@@ -28,14 +34,20 @@
           "Pantallas táctiles",
           "Contact Center"
         ],
-        "image": ""
+        "image": "",
+        "heading_en": "Our solution",
+        "text_en": "We deploy IP telephony and phone systems tailored to each operation, integrating numbering, equipment and management capabilities to simplify and modernize communications."
       },
       {
         "heading": "Industrias destacadas",
         "text": "Servicios, Retail, Salud, Educación, Banca, Contact Centers y organizaciones con múltiples sedes o alta interacción con clientes.",
-        "image": ""
+        "image": "",
+        "heading_en": "Featured industries",
+        "text_en": "Services, Retail, Healthcare, Education, Banking, Contact Centers and organizations with multiple sites or heavy customer interaction."
       }
-    ]
+    ],
+    "title_en": "Communication ready to evolve",
+    "subtitle_en": "Voice, collaboration and technology integrated into a single experience."
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
@@ -44,33 +56,44 @@
         "icon": "comunicaciones",
         "title": "Comunicaciones Unificadas",
         "description": "Es la evolución de la Telefonía IP, permitiendo unificar la clásica Central Telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con…",
-        "url": "/soluciones/comunicaciones/comunicaciones-unificadas"
+        "url": "/soluciones/comunicaciones/comunicaciones-unificadas",
+        "title_en": "Unified Communications",
+        "description_en": "The evolution of IP telephony: it turns the classic phone system into a Unified Communications platform (UCaaS) with business applications such as Microsoft Teams, WhatsApp and CRM integrations, all in a single communications platform."
       },
       {
         "icon": "pbx",
         "title": "Cloud PBX",
         "description": "Central telefónica virtual alojada en la nube que permite administrar extensiones, llamadas y usuarios sin depender de una central física instalada…",
-        "url": "/soluciones/comunicaciones/cloud-pbx"
+        "url": "/soluciones/comunicaciones/cloud-pbx",
+        "title_en": "Cloud PBX",
+        "description_en": "A virtual phone system hosted in the cloud that lets you manage extensions, calls and users without a physical PBX installed on site."
       },
       {
         "icon": "colaboracion",
         "title": "Colaboración IA",
         "description": "Soluciones de colaboración potenciadas con inteligencia artificial que integran voz, Microsoft Teams, Copilot y tecnología de sala para optimizar…",
-        "url": "/soluciones/comunicaciones/colaboracion-ia"
+        "url": "/soluciones/comunicaciones/colaboracion-ia",
+        "title_en": "AI Collaboration",
+        "description_en": "AI-powered collaboration solutions that bring together voice, Microsoft Teams, Copilot and room technology to improve meetings and teamwork."
       },
       {
         "icon": "pantalla",
         "title": "Pantallas táctiles",
         "description": "Pantallas interactivas diseñadas para reuniones, presentaciones y trabajo colaborativo, permitiendo visualizar, compartir y manipular contenido…",
-        "url": "/soluciones/comunicaciones/pantallas-tactiles"
+        "url": "/soluciones/comunicaciones/pantallas-tactiles",
+        "title_en": "Touch screens",
+        "description_en": "Interactive displays designed for meetings, presentations and collaborative work, letting you view, share and manipulate content straight from the screen."
       },
       {
         "icon": "contact-center",
         "title": "Contact Center Multicanal",
         "description": "Centraliza la atención de clientes a través de distintos canales de comunicación en una plataforma integrada para facilitar la gestión y seguimiento…",
-        "url": "/soluciones/comunicaciones/contact-center"
+        "url": "/soluciones/comunicaciones/contact-center",
+        "title_en": "Multichannel Contact Center",
+        "description_en": "Centralizes customer service across different communication channels in a single integrated platform, making interactions easier to manage and follow up."
       }
-    ]
+    ],
+    "title_en": "Solutions catalog"
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
@@ -86,7 +109,9 @@
         "alt": "Yeastar",
         "url": ""
       }
-    ]
+    ],
+    "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
+    "title_en": "We work with industry leaders"
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -161,7 +186,8 @@
           ]
         }
       }
-    ]
+    ],
+    "title_en": "Frequently asked questions"
   },
   "seo": {
     "metaTitle": "Comunicaciones Unificadas y telefonía IP | Fiberlux Corp",
@@ -170,5 +196,7 @@
   },
   "blogTags": [
     "Comunicaciones"
-  ]
+  ],
+  "title_en": "Unified Communications",
+  "whyUsTitle_en": "Why Fiberlux?"
 }

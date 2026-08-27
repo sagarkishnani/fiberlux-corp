@@ -14,8 +14,8 @@
     "heading_en": "Managed WiFi",
     "ctaLabel_en": "Learn more",
     "formTitle_en": "Let's talk?",
-    "intro_en": "",
-    "note_en": ""
+    "intro_en": "Design, deployment and management of enterprise wireless networks, optimizing coverage, capacity and the connection experience for users and devices.",
+    "note_en": "Ideal for high-density spaces where wireless quality is critical to the operation and to the user experience."
   },
   "beneficios": {
     "title": "Beneficios",
@@ -27,19 +27,25 @@
         "datos": {
           "nodos": [
             {
-              "label": "Piso 1"
+              "label": "Piso 1",
+              "label_en": "Floor 1"
             },
             {
-              "label": "Piso 2"
+              "label": "Piso 2",
+              "label_en": "Floor 2"
             },
             {
-              "label": "Almacén"
+              "label": "Almacén",
+              "label_en": "Warehouse"
             },
             {
-              "label": "Exteriores"
+              "label": "Exteriores",
+              "label_en": "Outdoors"
             }
           ]
-        }
+        },
+        "title_en": "Coverage built for business",
+        "text_en": "Wireless design optimized for the real density of users and devices."
       },
       {
         "title": "Accesos separados por perfil",
@@ -48,19 +54,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Colaboradores"
+              "label": "Colaboradores",
+              "label_en": "Staff"
             },
             {
-              "label": "Visitantes"
+              "label": "Visitantes",
+              "label_en": "Guests"
             },
             {
-              "label": "Dispositivos"
+              "label": "Dispositivos",
+              "label_en": "Devices"
             },
             {
-              "label": "IoT"
+              "label": "IoT",
+              "label_en": ""
             }
           ]
-        }
+        },
+        "title_en": "Access separated by profile",
+        "text_en": "Staff, guests and devices, each on their own network."
       },
       {
         "title": "Mapas de calor",
@@ -69,7 +81,9 @@
         "datos": {
           "porcentaje": 75,
           "barras": 7
-        }
+        },
+        "title_en": "Heat maps",
+        "text_en": "Coverage is planned before installing, not after."
       },
       {
         "title": "Monitoreo continuo",
@@ -80,16 +94,22 @@
           "valor": "OK",
           "nodos": [
             {
-              "label": "APs"
+              "label": "APs",
+              "label_en": ""
             },
             {
-              "label": "Clientes"
+              "label": "Clientes",
+              "label_en": "Clients"
             },
             {
-              "label": "Interferencia"
+              "label": "Interferencia",
+              "label_en": "Interference"
             }
-          ]
-        }
+          ],
+          "etiqueta_en": "WIRELESS NETWORK"
+        },
+        "title_en": "Continuous monitoring",
+        "text_en": "Wireless performance is watched and tuned permanently."
       },
       {
         "title": "Proyecto llave en mano",
@@ -98,19 +118,25 @@
         "datos": {
           "chips": [
             {
-              "label": "Diseño"
+              "label": "Diseño",
+              "label_en": "Design"
             },
             {
-              "label": "Arrendamiento"
+              "label": "Arrendamiento",
+              "label_en": "Leasing"
             },
             {
-              "label": "Instalación"
+              "label": "Instalación",
+              "label_en": "Installation"
             },
             {
-              "label": "Soporte"
+              "label": "Soporte",
+              "label_en": "Support"
             }
           ]
-        }
+        },
+        "title_en": "Turnkey project",
+        "text_en": "From design to support, including equipment leasing and physical installation."
       }
     ],
     "title_en": "Benefits"
@@ -119,7 +145,7 @@
     "eyebrow": "[ CASOS DE USO ]",
     "statement": "**Campus universitarios**, hoteles, centros comerciales, hospitales, almacenes logísticos y oficinas corporativas de gran escala.",
     "eyebrow_en": "[ USE CASES ]",
-    "statement_en": ""
+    "statement_en": "**University campuses**, hotels, shopping centers, hospitals, logistics warehouses and large-scale corporate offices."
   },
   "whyUsTitle": "¿Por qué Fiberlux?",
   "faq": {
@@ -156,5 +182,5 @@
   },
   "title_en": "Managed WiFi",
   "whyUsTitle_en": "Why Fiberlux?",
-  "solucionTitle_en": "Managed Services"
+  "solucionTitle_en": "Infrastructure"
 }
