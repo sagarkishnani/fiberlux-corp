@@ -26,6 +26,11 @@ const WHITE: [number, number, number] = [1, 1, 1]; // continentes (puntos)
 
 const BASE_THETA = 0.22;
 
+// NOTA: la atenuación de los puntos/arcos por detrás del texto (para que no
+// compitan con la tipografía) NO se hace aquí: es el velo radial que HeroHomeReact
+// pinta en z-[1], sobre este fondo y bajo el contenido. Enmascarar el canvas WebGL
+// resultaba ~2.5 ms/frame más caro y el resultado sobre negro es el mismo.
+
 // Hubs (lat, lng), con Lima (Perú) como centro de la red.
 const LIMA: [number, number] = [-12.05, -77.04];
 const NY: [number, number] = [40.71, -74.0];
@@ -130,13 +135,20 @@ interface Props {
   onUnsupported?: () => void;
 }
 
+// Estrella: la posición base (x,y) deriva con velocidad CONSTANTE y envuelve por
+// los bordes, así que el campo se mantiene uniforme para siempre. La reacción al
+// cursor vive en un desplazamiento aparte (ox,oy) con muelle de vuelta a 0: por eso
+// el cursor ya no puede "arrastrar" estrellas de forma permanente hacia un costado
+// (bug: tras un rato la escena acababa con los puntos apelmazados en los bordes).
 interface Star {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  bvx: number;
-  bvy: number;
+  ox: number;
+  oy: number;
+  ovx: number;
+  ovy: number;
 }
 
 export default function CinematicBackground({
@@ -188,6 +200,44 @@ export default function CinematicBackground({
       sctx.fillStyle = g;
       sctx.fillRect(0, 0, SP_SZ, SP_SZ);
     }
+    // ── Sprite del HALO del limbo. Referencia del cliente: una línea de luz fina
+    // y muy brillante sobre el borde del planeta (núcleo casi blanco) que se
+    // difumina hacia afuera en morado hasta morir en negro, con el interior
+    // oscuro. Al ser un gradiente radial estático se pinta UNA vez en un canvas
+    // pequeño y cada frame sólo se estira con drawImage: un blit barato en vez de
+    // reevaluar el gradiente sobre millones de píxeles (el hero debe seguir
+    // corriendo en equipos ligeros).
+    const HALO_SZ = 1024;
+    const HALO_INNER = 0.9; // radio interior, en fracción del radio de puntos
+    const HALO_OUTER = 1.42; // radio exterior (bloom hacia el espacio)
+    const haloSprite = document.createElement("canvas");
+    haloSprite.width = haloSprite.height = HALO_SZ;
+    {
+      const hctx = haloSprite.getContext("2d");
+      if (hctx) {
+        const c = HALO_SZ / 2;
+        const g = hctx.createRadialGradient(
+          c,
+          c,
+          c * (HALO_INNER / HALO_OUTER),
+          c,
+          c,
+          c
+        );
+        g.addColorStop(0, "rgba(150,35,122,0)");
+        g.addColorStop(0.1, "rgba(160,40,132,0.22)"); // apenas sobre los puntos
+        g.addColorStop(0.17, "rgba(214,110,190,0.62)");
+        g.addColorStop(0.2, "rgba(255,214,246,0.8)"); // núcleo fino: el limbo
+        g.addColorStop(0.24, "rgba(216,92,186,0.66)");
+        g.addColorStop(0.34, "rgba(168,45,138,0.4)");
+        g.addColorStop(0.55, "rgba(126,30,102,0.18)");
+        g.addColorStop(0.78, "rgba(101,15,80,0.06)");
+        g.addColorStop(1, "rgba(101,15,80,0)");
+        hctx.fillStyle = g;
+        hctx.fillRect(0, 0, HALO_SZ, HALO_SZ);
+      }
+    }
+
     const drawSoft = (x: number, y: number, rad: number, alpha: number) => {
       if (!octx || alpha <= 0.01) return;
       octx.globalAlpha = alpha;
@@ -205,21 +255,31 @@ export default function CinematicBackground({
     const seedStars = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
+      // Si ya hay campo (resize / aparición del scrollbar) sólo se reencuadra:
+      // volver a sembrar haría "parpadear" las estrellas a otra posición.
+      if (stars.length) {
+        for (let i = 0; i < stars.length; i++) {
+          const p = stars[i];
+          p.x = ((p.x % w) + w) % w;
+          p.y = ((p.y % h) + h) % h;
+        }
+        return;
+      }
       const n = Math.round(
         Math.min(120, Math.max(40, 72 * ((w * h) / (1280 * 720))))
       );
       stars = new Array(n);
       for (let i = 0; i < n; i++) {
         const ang = Math.random() * Math.PI * 2;
-        const bvx = Math.cos(ang) * 0.12; // deriva lenta
-        const bvy = Math.sin(ang) * 0.12;
         stars[i] = {
           x: Math.random() * w,
           y: Math.random() * h,
-          vx: bvx,
-          vy: bvy,
-          bvx,
-          bvy,
+          vx: Math.cos(ang) * 0.12, // deriva lenta (constante)
+          vy: Math.sin(ang) * 0.12,
+          ox: 0,
+          oy: 0,
+          ovx: 0,
+          ovy: 0,
         };
       }
     };
@@ -227,8 +287,11 @@ export default function CinematicBackground({
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      // SPEC 99 obs10: globo más grande → se ve ~50% (antes ~60%, fracción ≈ h/sizePx).
-      sizePx = Math.min(w * 1.15, h * 2.0);
+      // Globo más grande = limbo MÁS PLANO: el arco de luz cruza el hero por fuera
+      // del ancho del titular en vez de atravesarlo (pedido del cliente: que el
+      // planeta no choque con el texto). `topPx` ancla el ápice del limbo a
+      // h*0.16 sea cual sea el tamaño (gTop + sizePx*0.1, con radio de puntos 0.4).
+      sizePx = Math.min(w * 1.32, h * 2.2);
       const topPx = h * 0.16 - sizePx * 0.1;
       gLeft = w / 2 - sizePx / 2;
       gTop = topPx;
@@ -279,7 +342,7 @@ export default function CinematicBackground({
         dark: 1,
         diffuse: 2.2, // volumen (luz/sombra) → no plano
         mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 1.0, // SPEC 99 obs10: planeta más oscuro (legibilidad del texto)
+        mapBrightness: 0.85, // planeta oscuro: los puntos no compiten con el texto
         mapBaseBrightness: 0.008, // océano casi negro
         baseColor: WHITE, // continentes blancos
         glowColor: BRAND_N, // atmósfera en morado de marca
@@ -297,12 +360,28 @@ export default function CinematicBackground({
       globe?.update({ width: sizePx * dpr, height: sizePx * dpr });
     };
     window.addEventListener("resize", onResize);
+    // El ancho del hero también cambia sin evento `resize` (al aparecer el
+    // scrollbar tras montar, por ejemplo): sin esto el canvas se quedaba con la
+    // geometría del primer frame y desfasado respecto al layout real.
+    let lastW = root.clientWidth;
+    let lastH = root.clientHeight;
+    const ro = new ResizeObserver(() => {
+      const w = root.clientWidth;
+      const h = root.clientHeight;
+      if (w === lastW && h === lastH) return;
+      lastW = w;
+      lastH = h;
+      onResize();
+    });
+    ro.observe(root);
 
     // ── Cursor: atracción MUY suave de las estrellas (mucho más leve que antes).
     const cursor = { x: 0, y: 0, active: false };
     const CURSOR_R = 170;
     const FORCE = 0.018; // suave (referencia previa era ~0.09)
-    const RELAX = 0.02;
+    const SPRING = 0.006; // devuelve el desplazamiento por cursor a 0
+    const DAMP = 0.93;
+    const MAX_OFF = 90; // tope del desplazamiento por cursor (px)
     const onPointerMove = (e: PointerEvent) => {
       const r = root.getBoundingClientRect();
       const x = e.clientX - r.left;
@@ -333,24 +412,32 @@ export default function CinematicBackground({
     const stepStars = (w: number, h: number) => {
       for (let i = 0; i < stars.length; i++) {
         const p = stars[i];
+        // Deriva base: velocidad constante + envolvente por los bordes → el campo
+        // NUNCA se desbalancea, por muy larga que sea la sesión.
+        p.x += p.vx;
+        p.y += p.vy;
+        p.x = ((p.x % w) + w) % w;
+        p.y = ((p.y % h) + h) % h;
+
+        // Reacción al cursor: sólo mueve el offset, que vuelve solo a cero.
         if (cursor.active) {
-          const dx = cursor.x - p.x;
-          const dy = cursor.y - p.y;
+          const dx = cursor.x - (p.x + p.ox);
+          const dy = cursor.y - (p.y + p.oy);
           const d = Math.hypot(dx, dy);
           if (d > 0.001 && d < CURSOR_R) {
             const f = FORCE * (1 - d / CURSOR_R);
-            p.vx += (dx / d) * f;
-            p.vy += (dy / d) * f;
+            p.ovx += (dx / d) * f;
+            p.ovy += (dy / d) * f;
           }
         }
-        p.vx += (p.bvx - p.vx) * RELAX;
-        p.vy += (p.bvy - p.vy) * RELAX;
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x += w;
-        else if (p.x > w) p.x -= w;
-        if (p.y < 0) p.y += h;
-        else if (p.y > h) p.y -= h;
+        p.ovx = (p.ovx - p.ox * SPRING) * DAMP;
+        p.ovy = (p.ovy - p.oy * SPRING) * DAMP;
+        p.ox += p.ovx;
+        p.oy += p.ovy;
+        if (p.ox > MAX_OFF) p.ox = MAX_OFF;
+        else if (p.ox < -MAX_OFF) p.ox = -MAX_OFF;
+        if (p.oy > MAX_OFF) p.oy = MAX_OFF;
+        else if (p.oy < -MAX_OFF) p.oy = -MAX_OFF;
       }
     };
 
@@ -360,35 +447,30 @@ export default function CinematicBackground({
       if (!octx || !overlay) return;
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      octx.clearRect(0, 0, w, h);
+      // Se limpia TODO el buffer, no sólo el área CSS: si el canvas quedó más
+      // ancho que el root (p.ej. el scrollbar aparece después del montaje), la
+      // franja sobrante nunca se borraba y acumulaba una costra de puntos pegada
+      // al borde derecho que crecía con el tiempo.
+      octx.clearRect(0, 0, overlay.width, overlay.height);
       if (op <= 0.01) return;
 
-      // Halo/atmósfera del planeta (SPEC 99 obs10): gradiente radial ADITIVO
-      // centrado exactamente en la esfera. El brillo cae SOBRE el limbo (rim) del
-      // globo — donde los puntos de COBE se acaban y quedaba una banda oscura (el
-      // "espacio")— y también un poco hacia afuera (glow). Se desvanece bien antes
-      // del centro para no afectar la legibilidad del texto. Modo "lighter" (luz).
+      // Halo/atmósfera del planeta: blit del sprite precomputado, anclado al
+      // borde REAL de los puntos (radio 0.4·sizePx, porque la proyección de COBE
+      // usa GLOBE_R = 0.8), para que la línea de luz quede PEGADA al planeta.
       {
         const gcx = gLeft + sizePx / 2;
         const gcy = gTop + sizePx / 2;
-        // El borde REAL de los puntos del globo está a ~0.4·sizePx del centro
-        // (la proyección usa GLOBE_R=0.8 → radio 0.4), NO en sizePx/2. El pico del
-        // halo se ancla ahí para quedar PEGADO al planeta (sin negro entremedio).
-        const dotsR = sizePx * 0.4;
-        const rInner = dotsR * 0.72; // arranca sobre los puntos exteriores
-        const rOuter = dotsR * 1.28; // poco alcance hacia afuera (halo ceñido)
-        const halo = octx.createRadialGradient(gcx, gcy, rInner, gcx, gcy, rOuter);
-        // Glow en morado de marca profundo (no rosa claro), manteniendo intensidad.
-        halo.addColorStop(0, "rgba(150,35,122,0)");
-        halo.addColorStop(0.4, `rgba(150,35,122,${(0.5 * op).toFixed(3)})`); // sobre los puntos
-        halo.addColorStop(0.5, `rgba(168,45,138,${(0.95 * op).toFixed(3)})`); // pico en el borde de puntos
-        halo.addColorStop(0.68, `rgba(120,28,98,${(0.45 * op).toFixed(3)})`); // apenas afuera
-        halo.addColorStop(1, "rgba(101,15,80,0)");
+        const rOuter = sizePx * 0.4 * HALO_OUTER;
         octx.globalCompositeOperation = "lighter";
-        octx.fillStyle = halo;
-        octx.beginPath();
-        octx.arc(gcx, gcy, rOuter, 0, Math.PI * 2);
-        octx.fill();
+        octx.globalAlpha = op;
+        octx.drawImage(
+          haloSprite,
+          gcx - rOuter,
+          gcy - rOuter,
+          rOuter * 2,
+          rOuter * 2
+        );
+        octx.globalAlpha = 1;
         octx.globalCompositeOperation = "source-over";
       }
 
@@ -397,11 +479,13 @@ export default function CinematicBackground({
       const half = w * 0.5;
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
+        const sx = s.x + s.ox;
+        const sy = s.y + s.oy;
         const edge = Math.min(
           1,
-          Math.max(0, (Math.abs(s.x - cx) / half - 0.2) / 0.45)
+          Math.max(0, (Math.abs(sx - cx) / half - 0.2) / 0.45)
         );
-        drawSoft(s.x, s.y, 2.6, edge * 0.9 * op);
+        drawSoft(sx, sy, 2.6, edge * 0.9 * op);
       }
 
       // Arcos de fibra (línea fina + halo), recortados al hemisferio frontal.
@@ -494,6 +578,7 @@ export default function CinematicBackground({
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
+      ro.disconnect();
       io.disconnect();
       globe?.destroy();
     };
@@ -506,14 +591,16 @@ export default function CinematicBackground({
       className={className}
       style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
     >
-      {/* Resplandor de base (morado de marca) detrás del globo. */}
+      {/* Resplandor de base (morado de marca) detrás del globo. Más bajo y más
+          contenido que antes: el "espacio" alrededor del planeta debe quedar casi
+          negro para que el limbo brille por contraste (referencia del cliente). */}
       <div
         aria-hidden="true"
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(115% 78% at 50% 74%, rgba(150,35,122,0.4) 0%, rgba(101,15,80,0.22) 38%, rgba(59,14,48,0.08) 60%, rgba(0,0,0,0) 76%)",
+            "radial-gradient(96% 62% at 50% 86%, rgba(150,35,122,0.26) 0%, rgba(101,15,80,0.13) 40%, rgba(59,14,48,0.05) 62%, rgba(0,0,0,0) 78%)",
           pointerEvents: "none",
         }}
       />

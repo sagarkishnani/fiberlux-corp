@@ -457,7 +457,7 @@ export default function HeroHomeReact({
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              "radial-gradient(56% 52% at 50% 46%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.55) 44%, rgba(10,10,10,0.2) 68%, rgba(10,10,10,0) 80%)",
+              "radial-gradient(52% 42% at 50% 56%, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.6) 46%, rgba(10,10,10,0.24) 72%, rgba(10,10,10,0) 90%)",
           }}
         />
       )}
@@ -553,7 +553,9 @@ export default function HeroHomeReact({
 
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div
-        className="pointer-events-none relative z-10 site-container pt-28 lg:pt-40 pb-16 lg:pb-32"
+        className={`pointer-events-none relative z-10 site-container pt-28 pb-16 lg:pb-32 ${
+          mode === "cinematic" ? "lg:pt-[13rem]" : "lg:pt-40"
+        }`}
       >
         <div
           ref={contentRef}
@@ -562,8 +564,9 @@ export default function HeroHomeReact({
               ? "flex flex-col items-center text-center lg:items-start lg:text-left justify-start md:justify-center max-w-[760px] lg:max-w-[540px] mx-auto lg:mx-0 min-h-0 lg:min-h-[640px]"
               : mode === "cinematic"
               ? // Mobile: llena el hero (100svh − padding) y centra el contenido
-                // verticalmente. Desktop: comportamiento normal.
-                "mx-auto flex flex-col items-center text-center justify-center max-w-[760px] min-h-[calc(100svh-11rem)] lg:min-h-[640px]"
+                // verticalmente. Desktop: se baja un poco (pt mayor + min-h menor)
+                // para despegar el titular del arco de luz del planeta.
+                "mx-auto flex flex-col items-center text-center justify-center max-w-[760px] min-h-[calc(100svh-11rem)] lg:min-h-[600px]"
               : "mx-auto flex flex-col items-center text-center justify-start md:justify-center max-w-[760px] min-h-0 lg:min-h-[640px]"
           }
           style={
