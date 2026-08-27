@@ -25,9 +25,15 @@ interface HeroServiciosProps {
   locale?: Locale;
 }
 
-/* Claves de icono (mapeadas en CinematicRays) de las 4 categorías de solución.
+/* Claves de icono (mapeadas en CinematicRays) de las 5 categorías de solución.
    El efecto las mezcla con iconos extra para dar variedad a los tiles. */
-const ICON_KEYS = ["conectividad", "ciberseguridad", "datacenter", "gestionados"];
+const ICON_KEYS = [
+  "conectividad",
+  "ciberseguridad",
+  "datacenter",
+  "infraestructura",
+  "comunicaciones",
+];
 
 export default function HeroServiciosReact({
   query,

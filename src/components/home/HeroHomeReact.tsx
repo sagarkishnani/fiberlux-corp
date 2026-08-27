@@ -22,12 +22,14 @@ import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 // los elementos de arriba terminen de animarse.
 const INTRO_SCROLL_LOCK_MS = 1700;
 
-// Nodos-solución por defecto (si el CMS no los define): las 4 soluciones.
+// Nodos-solución por defecto (si el CMS no los define): las 5 soluciones
+// del portafolio (SPEC 109).
 const DEFAULT_MORPH_NODES = [
-  { label: "Data Center & Cloud", url: "/soluciones/data-center-cloud", icon: "datacenter" },
-  { label: "Conectividad Empresarial", url: "/soluciones/conectividad-empresarial", icon: "conectividad" },
-  { label: "Ciberseguridad Gestionada", url: "/soluciones/ciberseguridad-gestionada", icon: "ciberseguridad" },
-  { label: "Servicios Gestionados", url: "/soluciones/servicios-gestionados", icon: "gestionados" },
+  { label: "Conectividad", url: "/soluciones/conectividad", icon: "conectividad" },
+  { label: "Ciberseguridad", url: "/soluciones/ciberseguridad", icon: "ciberseguridad" },
+  { label: "Data Center", url: "/soluciones/data-center", icon: "datacenter" },
+  { label: "Infraestructura", url: "/soluciones/infraestructura", icon: "infraestructura" },
+  { label: "Comunicaciones Unificadas", url: "/soluciones/comunicaciones", icon: "comunicaciones" },
 ];
 
 interface HeroHomeProps {

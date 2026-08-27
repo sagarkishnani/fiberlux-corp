@@ -39,28 +39,34 @@
       "triggerLabel_en": "Explore our solutions",
       "solutionNodes": [
         {
-          "label": "Data Center & Cloud",
-          "label_en": "Data Center & Cloud",
-          "url": "/soluciones/data-center-cloud",
-          "icon": "datacenter"
-        },
-        {
-          "label": "Conectividad Empresarial",
-          "label_en": "Enterprise Connectivity",
-          "url": "/soluciones/conectividad-empresarial",
+          "label": "Conectividad",
+          "label_en": "Connectivity",
+          "url": "/soluciones/conectividad",
           "icon": "conectividad"
         },
         {
-          "label": "Ciberseguridad Gestionada",
-          "label_en": "Managed Cybersecurity",
-          "url": "/soluciones/ciberseguridad-gestionada",
+          "label": "Ciberseguridad",
+          "label_en": "Cybersecurity",
+          "url": "/soluciones/ciberseguridad",
           "icon": "ciberseguridad"
         },
         {
-          "label": "Servicios Gestionados",
-          "label_en": "Managed Services",
-          "url": "/soluciones/servicios-gestionados",
-          "icon": "gestionados"
+          "label": "Data Center",
+          "label_en": "Data Center",
+          "url": "/soluciones/data-center",
+          "icon": "datacenter"
+        },
+        {
+          "label": "Infraestructura",
+          "label_en": "Infrastructure",
+          "url": "/soluciones/infraestructura",
+          "icon": "infraestructura"
+        },
+        {
+          "label": "Comunicaciones Unificadas",
+          "label_en": "Unified Communications",
+          "url": "/soluciones/comunicaciones",
+          "icon": "comunicaciones"
         }
       ]
     },
@@ -86,229 +92,178 @@
     "items": [
       {
         "number": "01",
-        "title": "Conectividad empresarial",
-        "description": "Conectividad de Fibra Óptica Real para Empresas con Visión.",
+        "title": "Conectividad",
+        "description": "Enlaces de alta capacidad y monitoreo 24/7 para operaciones que no pueden detenerse.",
         "icon": "/images/soluciones/onda-magenta.svg",
+        "url": "/soluciones/conectividad",
+        "tabIcon": "rayo",
+        "tabLabel": "Conectividad",
         "bullets": [
           {
-            "label": "Internet Corporativo",
-            "label_en": "Corporate Internet",
-            "url": "/soluciones/conectividad-empresarial/internet-corporativo"
+            "label": "Internet Dedicado",
+            "url": "/soluciones/conectividad/internet-dedicado"
           },
           {
-            "label": "Internet Corporativo de alta disponibilidad",
-            "label_en": "High-Availability Corporate Internet",
-            "url": "/soluciones/conectividad-empresarial/internet-alta-disponibilidad"
+            "label": "Alta Disponibilidad",
+            "url": "/soluciones/conectividad/alta-disponibilidad"
           },
           {
-            "label": "Conectividad satelital",
-            "label_en": "Satellite Connectivity",
-            "url": "/soluciones/conectividad-empresarial/conectividad-satelital"
+            "label": "Acceso Satelital",
+            "url": "/soluciones/conectividad/acceso-satelital"
           },
           {
-            "label": "Radioenlaces empresariales",
-            "label_en": "Enterprise Radio Links",
-            "url": "/soluciones/conectividad-empresarial/radioenlaces-empresariales"
-          },
-          {
-            "label": "Transmisión de datos (Lan To Lan)",
-            "label_en": "Data Transmission (Lan To Lan)",
-            "url": "/soluciones/conectividad-empresarial/transmision-de-datos-l2l"
-          },
-          {
-            "label": "SD-WAN",
-            "label_en": "SD-WAN",
-            "url": "/soluciones/conectividad-empresarial/sd-wan"
+            "label": "LAN to LAN",
+            "url": "/soluciones/conectividad/lan-to-lan"
           },
           {
             "label": "Fibra Oscura",
-            "label_en": "Dark Fiber",
-            "url": "/soluciones/conectividad-empresarial/fibra-oscura"
+            "url": "/soluciones/conectividad/fibra-oscura"
           },
           {
-            "label": "Balanceo de enlaces",
-            "label_en": "Link Balancing",
-            "url": "/soluciones/conectividad-empresarial/balanceo-de-enlaces"
+            "label": "SD-WAN",
+            "url": "/soluciones/conectividad/sd-wan"
           }
-        ],
-        "url": "/soluciones/conectividad-empresarial",
-        "tabIcon": "rayo",
-        "title_en": "Business Connectivity",
-        "description_en": "Real fiber-optic connectivity for forward-thinking companies.",
-        "tabLabel": "Conectividad empresarial",
-        "tabLabel_en": "Business connectivity"
+        ]
       },
       {
         "number": "02",
-        "title": "Ciberseguridad Gestionada",
-        "description": "Protege tu operación crítica con ciberseguridad.",
+        "title": "Ciberseguridad",
+        "description": "Seguridad activa para redes, usuarios y aplicaciones, gestionada de extremo a extremo.",
         "icon": "/images/soluciones/onda-magenta.svg",
+        "url": "/soluciones/ciberseguridad",
+        "tabIcon": "escudo",
+        "tabLabel": "Ciberseguridad",
         "bullets": [
           {
-            "label": "NGFW y Seguridad Perimetral",
-            "label_en": "NGFW & Perimeter Security",
-            "url": "/soluciones/ciberseguridad-gestionada/ngfw-seguridad-perimetral"
+            "label": "Perimetral",
+            "url": "/soluciones/ciberseguridad/perimetral"
           },
           {
-            "label": "EDR / XDR / MDR",
-            "label_en": "EDR / XDR / MDR",
-            "url": "/soluciones/ciberseguridad-gestionada/edr-xdr-mdr"
+            "label": "End Point",
+            "url": "/soluciones/ciberseguridad/end-point"
           },
           {
-            "label": "MFA y Control de Identidad",
-            "label_en": "MFA & Identity Control",
-            "url": "/soluciones/ciberseguridad-gestionada/mfa-control-identidad"
+            "label": "Correo",
+            "url": "/soluciones/ciberseguridad/correo"
           },
           {
-            "label": "ZTNA y Control de Acceso Seguro",
-            "label_en": "ZTNA & Secure Access Control",
-            "url": "/soluciones/ciberseguridad-gestionada/ztna"
+            "label": "Usuarios",
+            "url": "/soluciones/ciberseguridad/usuarios"
           },
           {
-            "label": "WAF y Protección de Aplicaciones",
-            "label_en": "WAF & Application Protection",
-            "url": "/soluciones/ciberseguridad-gestionada/waf"
-          },
-          {
-            "label": "Cyber SOC 24/7 y Monitoreo",
-            "label_en": "Cyber SOC 24/7 & Monitoring",
-            "url": "/soluciones/ciberseguridad-gestionada/soc-24-7"
-          },
-          {
-            "label": "VPN Segura y Acceso Remoto Protegido",
-            "label_en": "Secure VPN & Protected Remote Access",
-            "url": "/soluciones/ciberseguridad-gestionada/vpn-segura"
-          },
-          {
-            "label": "Seguridad de Correo y Filtrado Web",
-            "label_en": "Email Security & Web Filtering",
-            "url": "/soluciones/ciberseguridad-gestionada/seguridad-correo-filtrado-web"
-          },
-          {
-            "label": "NAC",
-            "label_en": "NAC",
-            "url": "/soluciones/ciberseguridad-gestionada/nac"
-          },
-          {
-            "label": "Anti-DDoS",
-            "label_en": "Anti-DDoS",
-            "url": "/soluciones/ciberseguridad-gestionada/anti-ddos"
+            "label": "Aplicaciones",
+            "url": "/soluciones/ciberseguridad/aplicaciones"
           },
           {
             "label": "Concientización en Phishing",
-            "label_en": "Phishing Awareness",
-            "url": "/soluciones/ciberseguridad-gestionada/concientizacion-phishing"
+            "url": "/soluciones/ciberseguridad/concientizacion-phishing"
           },
           {
-            "label": "Correlación de Eventos (SIEM)",
-            "label_en": "Event Correlation (SIEM)",
-            "url": "/soluciones/ciberseguridad-gestionada/correlacion-eventos"
-          },
-          {
-            "label": "Pentesting",
-            "label_en": "Pentesting",
-            "url": "/soluciones/ciberseguridad-gestionada/pentesting"
+            "label": "Transporte (redes)",
+            "url": "/soluciones/ciberseguridad/transporte-redes"
           }
-        ],
-        "url": "/soluciones/ciberseguridad-gestionada",
-        "tabIcon": "escudo",
-        "title_en": "Managed Cybersecurity",
-        "description_en": "Protect your critical operation with cybersecurity.",
-        "tabLabel": "Ciberseguridad gestionada",
-        "tabLabel_en": "Managed cybersecurity"
+        ]
       },
       {
         "number": "03",
-        "title": "Data Center, Cloud y Continuidad de Negocio",
-        "description": "Infraestructura lista para crecer y recuperarse",
+        "title": "Data Center",
+        "description": "Infraestructura especializada para alojar, proteger y escalar tus sistemas más críticos.",
         "icon": "/images/soluciones/onda-magenta.svg",
+        "url": "/soluciones/data-center",
+        "tabIcon": "nube",
+        "tabLabel": "Data Center",
         "bullets": [
           {
-            "label": "Housing y colocación",
-            "label_en": "Housing & Colocation",
-            "url": "/soluciones/data-center-cloud/housing-colocacion"
-          },
-          {
-            "label": "Nube Pública y Privada",
-            "label_en": "Public & Private Cloud",
-            "url": "/soluciones/data-center-cloud/nube-publica"
+            "label": "Virtual Server",
+            "url": "/soluciones/data-center/virtual-server"
           },
           {
             "label": "Backup as a Service (BaaS)",
-            "label_en": "Backup as a Service (BaaS)",
-            "url": "/soluciones/data-center-cloud/baas"
+            "url": "/soluciones/data-center/baas"
           },
           {
             "label": "Disaster Recovery (DRaaS)",
-            "label_en": "Disaster Recovery (DRaaS)",
-            "url": "/soluciones/data-center-cloud/draas"
+            "url": "/soluciones/data-center/draas"
           },
           {
-            "label": "Storage y Cómputo Empresarial",
-            "label_en": "Enterprise Storage & Compute",
-            "url": "/soluciones/data-center-cloud/storage-computo"
+            "label": "Virtual Desktop",
+            "url": "/soluciones/data-center/virtual-desktop"
           },
           {
-            "label": "Arquitectura basada en Microservicios",
-            "label_en": "Microservices-based Architecture",
-            "url": "/soluciones/data-center-cloud/microservicios"
+            "label": "Autocontenido (on premise)",
+            "url": "/soluciones/data-center/autocontenido"
+          },
+          {
+            "label": "NAS (on premise)",
+            "url": "/soluciones/data-center/nas"
           }
-        ],
-        "url": "/soluciones/data-center-cloud",
-        "tabIcon": "nube",
-        "title_en": "Data Center, Cloud & Business Continuity",
-        "description_en": "Infrastructure ready to grow and recover.",
-        "tabLabel": "Data Center & Cloud",
-        "tabLabel_en": "Data Center & Cloud"
+        ]
       },
       {
         "number": "04",
-        "title": "Servicios gestionados",
-        "description": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
+        "title": "Infraestructura",
+        "description": "Tecnología preparada para soportar una operación cada vez más exigente.",
         "icon": "/images/soluciones/onda-magenta.svg",
+        "url": "/soluciones/infraestructura",
+        "tabIcon": "engranaje",
+        "tabLabel": "Infraestructura",
         "bullets": [
           {
-            "label": "Mesa de ayuda",
-            "label_en": "Help Desk",
-            "url": "/soluciones/servicios-gestionados/mesa-de-ayuda"
+            "label": "WiFi Gestionado",
+            "url": "/soluciones/infraestructura/wifi-gestionado"
           },
+          {
+            "label": "Switches",
+            "url": "/soluciones/infraestructura/switches"
+          },
+          {
+            "label": "Balanceadores",
+            "url": "/soluciones/infraestructura/balanceadores"
+          },
+          {
+            "label": "Servidores",
+            "url": "/soluciones/infraestructura/servidores"
+          },
+          {
+            "label": "Video Vigilancia",
+            "url": "/soluciones/infraestructura/video-vigilancia"
+          },
+          {
+            "label": "Energía",
+            "url": "/soluciones/infraestructura/energia"
+          }
+        ]
+      },
+      {
+        "number": "05",
+        "title": "Comunicaciones Unificadas",
+        "description": "Voz, colaboración y atención al cliente integradas en una sola experiencia.",
+        "icon": "/images/soluciones/onda-magenta.svg",
+        "url": "/soluciones/comunicaciones",
+        "tabIcon": "telefonia",
+        "tabLabel": "Comunicaciones",
+        "bullets": [
           {
             "label": "Comunicaciones Unificadas",
-            "label_en": "Unified Communications",
-            "url": "/soluciones/servicios-gestionados/comunicaciones-unificadas"
+            "url": "/soluciones/comunicaciones/comunicaciones-unificadas"
           },
           {
-            "label": "Gestión de Redes LAN",
-            "label_en": "LAN Network Management",
-            "url": "/soluciones/servicios-gestionados/gestion-redes-lan"
+            "label": "Cloud PBX",
+            "url": "/soluciones/comunicaciones/cloud-pbx"
           },
           {
-            "label": "Wifi Gestionado",
-            "label_en": "Managed WiFi",
-            "url": "/soluciones/servicios-gestionados/wifi-gestionado"
+            "label": "Colaboración IA",
+            "url": "/soluciones/comunicaciones/colaboracion-ia"
           },
           {
-            "label": "Gestión de Endpoints",
-            "label_en": "Endpoint Management",
-            "url": "/soluciones/servicios-gestionados/gestion-endpoints"
+            "label": "Pantallas táctiles",
+            "url": "/soluciones/comunicaciones/pantallas-tactiles"
           },
           {
-            "label": "Videovigilancia gestionada",
-            "label_en": "Managed Video Surveillance",
-            "url": "/soluciones/servicios-gestionados/videovigilancia-gestionada"
-          },
-          {
-            "label": "Colaboración Empresarial",
-            "label_en": "Enterprise Collaboration",
-            "url": "/soluciones/servicios-gestionados/colaboracion-empresarial"
+            "label": "Contact Center Multicanal",
+            "url": "/soluciones/comunicaciones/contact-center"
           }
-        ],
-        "url": "/soluciones/servicios-gestionados",
-        "tabIcon": "personas",
-        "title_en": "Managed Services",
-        "description_en": "Soluciones de Infraestructura Tecnológica para Empresas de Alto Nivel.",
-        "tabLabel": "Servicios gestionados",
-        "tabLabel_en": "Managed services"
+        ]
       }
     ],
     "title_en": "Solutions for your business"

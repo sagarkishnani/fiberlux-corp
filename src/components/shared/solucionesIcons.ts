@@ -10,6 +10,7 @@ import {
   LuHeadset,
   LuDatabase,
   LuWifi,
+  LuPhoneCall,
 } from "react-icons/lu";
 import type { IconType } from "react-icons";
 
@@ -32,6 +33,8 @@ export const ICONS: Record<string, IconType> = {
   soporte: LuHeadset,
   datos: LuDatabase,
   wifi: LuWifi,
+  /* SPEC 109: categoría Comunicaciones Unificadas. */
+  telefonia: LuPhoneCall,
 };
 
 /** Ícono de una categoría; valor ausente o desconocido → el rayo. */

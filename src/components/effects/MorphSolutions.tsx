@@ -7,7 +7,14 @@ import {
 import * as THREE from "three";
 import type { IconType } from "react-icons";
 // Íconos outline (Lucide), mismo lenguaje gráfico que el resto del sitio.
-import { LuServer, LuNetwork, LuShieldCheck, LuActivity } from "react-icons/lu";
+import {
+  LuServer,
+  LuNetwork,
+  LuShieldCheck,
+  LuActivity,
+  LuRouter,
+  LuPhone,
+} from "react-icons/lu";
 
 /**
  * MorphSolutions — globo de partículas de conectividad (Three.js) que, al
@@ -87,6 +94,9 @@ const ICONS: Record<string, IconType> = {
   conectividad: LuNetwork,
   ciberseguridad: LuShieldCheck,
   gestionados: LuActivity,
+  /* SPEC 109: las dos categorías nuevas del portafolio. */
+  infraestructura: LuRouter,
+  comunicaciones: LuPhone,
 };
 
 const easeInOutCubic = (t: number) =>

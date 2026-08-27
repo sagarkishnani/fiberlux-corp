@@ -459,6 +459,7 @@ export default defineConfig({
                       { value: "soporte", label: "Soporte / NOC" },
                       { value: "datos", label: "Datos / Base de datos" },
                       { value: "wifi", label: "Wi-Fi / Inalámbrico" },
+                      { value: "telefonia", label: "Telefonía / Comunicaciones" },
                     ],
                   },
                   {

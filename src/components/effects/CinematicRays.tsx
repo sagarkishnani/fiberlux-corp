@@ -6,6 +6,8 @@ import {
   FaNetworkWired,
   FaShieldHalved,
   FaGears,
+  FaEthernet,
+  FaPhoneVolume,
   FaCloud,
   FaWifi,
   FaDatabase,
@@ -71,6 +73,8 @@ const ICONS: Record<string, IconType> = {
   conectividad: FaNetworkWired,
   ciberseguridad: FaShieldHalved,
   gestionados: FaGears,
+  infraestructura: FaEthernet,
+  comunicaciones: FaPhoneVolume,
   cloud: FaCloud,
   wifi: FaWifi,
   database: FaDatabase,
@@ -87,7 +91,8 @@ const DEFAULT_ICON_KEYS = [
   "datacenter",
   "conectividad",
   "ciberseguridad",
-  "gestionados",
+  "infraestructura",
+  "comunicaciones",
 ];
 // Íconos extra (subservicios/tech) para dar variedad a los tiles y que no se
 // repitan tanto. Se mezclan con los íconos de solución del CMS.
