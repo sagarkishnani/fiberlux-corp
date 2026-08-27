@@ -6,7 +6,8 @@ var BLOG_TAG_OPTIONS = [
   "Cloud",
   "Data Center",
   "Comunicaciones",
-  "Continuidad de negocio"
+  "Continuidad de negocio",
+  "Infraestructura"
 ];
 var PLANTILLA_BENEFICIO_OPTIONS = [
   { value: "velocidad", label: "Velocidad \u2014 tarjetas apiladas con anillo" },
@@ -755,6 +756,16 @@ var config_default = defineConfig({
                       { value: "colaboracion", label: "Colaboraci\xF3n empresarial" },
                       { value: "redes-lan", label: "Redes LAN" },
                       { value: "endpoints", label: "Endpoints" },
+                      { value: "segmentacion", label: "Segmentaci\xF3n de red" },
+                      { value: "escritorio-virtual", label: "Escritorio virtual" },
+                      { value: "autocontenido", label: "Data Center autocontenido" },
+                      { value: "nas", label: "NAS / Almacenamiento en red" },
+                      { value: "switch", label: "Switches" },
+                      { value: "servidor", label: "Servidores" },
+                      { value: "energia", label: "Energ\xEDa / UPS" },
+                      { value: "pbx", label: "Cloud PBX" },
+                      { value: "pantalla", label: "Pantallas t\xE1ctiles" },
+                      { value: "contact-center", label: "Contact Center" },
                       { value: "generico", label: "Gen\xE9rico" }
                     ]
                   },
@@ -891,10 +902,11 @@ var config_default = defineConfig({
             type: "string",
             required: true,
             options: [
-              { value: "conectividad-empresarial", label: "Conectividad Empresarial" },
-              { value: "ciberseguridad-gestionada", label: "Ciberseguridad Gestionada" },
-              { value: "data-center-cloud", label: "Data Center, Cloud y Continuidad" },
-              { value: "servicios-gestionados", label: "Servicios Gestionados" }
+              { value: "conectividad", label: "Conectividad" },
+              { value: "ciberseguridad", label: "Ciberseguridad" },
+              { value: "data-center", label: "Data Center" },
+              { value: "infraestructura", label: "Infraestructura" },
+              { value: "comunicaciones", label: "Comunicaciones Unificadas" }
             ]
           },
           {
