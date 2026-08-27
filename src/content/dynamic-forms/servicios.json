@@ -71,249 +71,214 @@
       "order": 5,
       "options": [
         {
-          "value": "internet-corporativo",
-          "label": "Internet Corporativo",
-          "label_en": "Corporate Internet",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "value": "internet-dedicado",
+          "label": "Internet Dedicado",
+          "label_en": "Dedicated Internet",
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
-          "value": "internet-alta-disponibilidad",
-          "label": "Internet Corporativo de Alta Disponibilidad",
-          "label_en": "High-Availability Corporate Internet",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "value": "alta-disponibilidad",
+          "label": "Alta Disponibilidad",
+          "label_en": "High Availability",
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
-          "value": "conectividad-satelital",
-          "label": "Conectividad satelital",
-          "label_en": "Satellite Connectivity",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "value": "acceso-satelital",
+          "label": "Acceso Satelital",
+          "label_en": "Satellite Access",
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
-          "value": "radioenlaces-empresariales",
-          "label": "Radioenlaces Empresariales",
-          "label_en": "Enterprise Radio Links",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
-        },
-        {
-          "value": "transmision-de-datos-l2l",
-          "label": "Transmisión de datos (L2L)",
-          "label_en": "Data Transmission (L2L)",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "value": "lan-to-lan",
+          "label": "LAN to LAN",
+          "label_en": "LAN to LAN",
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
           "value": "fibra-oscura",
           "label": "Fibra Oscura",
           "label_en": "Dark Fiber",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
           "value": "sd-wan",
           "label": "SD-WAN",
           "label_en": "SD-WAN",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "group": "Conectividad",
+          "group_en": "Connectivity"
         },
         {
-          "value": "balanceo-de-enlaces",
-          "label": "Balanceo de enlaces",
-          "label_en": "Link Balancing",
-          "group": "Conectividad empresarial",
-          "group_en": "Business Connectivity"
+          "value": "perimetral",
+          "label": "Perimetral",
+          "label_en": "Perimeter",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "ngfw-seguridad-perimetral",
-          "label": "NGFW y Seguridad Perimetral",
-          "label_en": "NGFW & Perimeter Security",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "value": "end-point",
+          "label": "End Point",
+          "label_en": "End Point",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "vpn-segura",
-          "label": "VPN Segura y Acceso Remoto Protegido",
-          "label_en": "Secure VPN & Protected Remote Access",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "value": "correo",
+          "label": "Correo",
+          "label_en": "Email",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "edr-xdr-mdr",
-          "label": "EDR / XDR / MDR",
-          "label_en": "EDR / XDR / MDR",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "value": "usuarios",
+          "label": "Usuarios",
+          "label_en": "Users",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "seguridad-correo-filtrado-web",
-          "label": "Seguridad de correo y filtrado web",
-          "label_en": "Email Security & Web Filtering",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "mfa-control-identidad",
-          "label": "MFA y Control de Identidad",
-          "label_en": "MFA & Identity Control",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "ztna",
-          "label": "ZTNA y Control de Acceso Seguro",
-          "label_en": "ZTNA & Secure Access Control",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "nac",
-          "label": "NAC (Network Access Control)",
-          "label_en": "NAC (Network Access Control)",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "waf",
-          "label": "WAF y Protección de Aplicaciones",
-          "label_en": "WAF & Application Protection",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "anti-ddos",
-          "label": "Anti-DDoS",
-          "label_en": "Anti-DDoS",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "value": "aplicaciones",
+          "label": "Aplicaciones",
+          "label_en": "Applications",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
           "value": "concientizacion-phishing",
           "label": "Concientización en Phishing",
           "label_en": "Phishing Awareness",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "soc-24-7",
-          "label": "CYBER SOC 24/7 y Monitoreo",
-          "label_en": "CYBER SOC 24/7 & Monitoring",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
+          "value": "transporte-redes",
+          "label": "Transporte (redes)",
+          "label_en": "Transport (networks)",
+          "group": "Ciberseguridad",
+          "group_en": "Cybersecurity"
         },
         {
-          "value": "correlacion-eventos",
-          "label": "Correlación de eventos",
-          "label_en": "Event Correlation",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "pentesting",
-          "label": "Pentesting y Evaluación de Vulnerabilidades",
-          "label_en": "Pentesting & Vulnerability Assessment",
-          "group": "Ciberseguridad gestionada",
-          "group_en": "Managed Cybersecurity"
-        },
-        {
-          "value": "housing-colocacion",
-          "label": "Housing y Colocación",
-          "label_en": "Housing & Colocation",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
-        },
-        {
-          "value": "nube-privada",
-          "label": "Nube Privada",
-          "label_en": "Private Cloud",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
-        },
-        {
-          "value": "nube-publica",
-          "label": "Nube Pública",
-          "label_en": "Public Cloud",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
+          "value": "virtual-server",
+          "label": "Virtual Server",
+          "label_en": "Virtual Server",
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
           "value": "baas",
           "label": "Backup as a Service (BaaS)",
           "label_en": "Backup as a Service (BaaS)",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
           "value": "draas",
           "label": "Disaster Recovery (DRaaS)",
           "label_en": "Disaster Recovery (DRaaS)",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
-          "value": "storage-computo",
-          "label": "Storage y Cómputo Empresarial",
-          "label_en": "Enterprise Storage & Compute",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
+          "value": "virtual-desktop",
+          "label": "Virtual Desktop",
+          "label_en": "Virtual Desktop",
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
-          "value": "microservicios",
-          "label": "Arquitectura basada en Microservicios",
-          "label_en": "Microservices-based Architecture",
-          "group": "Data Center, Cloud y Continuidad de Negocio",
-          "group_en": "Data Center, Cloud & Business Continuity"
+          "value": "autocontenido",
+          "label": "Autocontenido (on premise)",
+          "label_en": "Self-contained (on premise)",
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
-          "value": "mesa-de-ayuda",
-          "label": "Mesa de Ayuda",
-          "label_en": "Help Desk",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
-        },
-        {
-          "value": "comunicaciones-unificadas",
-          "label": "Comunicaciones Unificadas",
-          "label_en": "Unified Communications",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
-        },
-        {
-          "value": "colaboracion-empresarial",
-          "label": "Colaboración Empresarial",
-          "label_en": "Enterprise Collaboration",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
-        },
-        {
-          "value": "gestion-redes-lan",
-          "label": "Gestión de Redes LAN",
-          "label_en": "LAN Network Management",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
+          "value": "nas",
+          "label": "NAS (on premise)",
+          "label_en": "NAS (on premise)",
+          "group": "Data Center",
+          "group_en": "Data Center"
         },
         {
           "value": "wifi-gestionado",
           "label": "WiFi Gestionado",
           "label_en": "Managed WiFi",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
         },
         {
-          "value": "gestion-endpoints",
-          "label": "Gestión de Endpoints",
-          "label_en": "Endpoint Management",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
+          "value": "switches",
+          "label": "Switches",
+          "label_en": "Switches",
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
         },
         {
-          "value": "videovigilancia-gestionada",
-          "label": "Videovigilancia gestionada",
-          "label_en": "Managed Video Surveillance",
-          "group": "Servicios gestionados",
-          "group_en": "Managed Services"
+          "value": "balanceadores",
+          "label": "Balanceadores",
+          "label_en": "Load Balancers",
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
+        },
+        {
+          "value": "servidores",
+          "label": "Servidores",
+          "label_en": "Servers",
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
+        },
+        {
+          "value": "video-vigilancia",
+          "label": "Video Vigilancia",
+          "label_en": "Video Surveillance",
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
+        },
+        {
+          "value": "energia",
+          "label": "Energía",
+          "label_en": "Power",
+          "group": "Infraestructura",
+          "group_en": "Infrastructure"
+        },
+        {
+          "value": "comunicaciones-unificadas",
+          "label": "Comunicaciones Unificadas",
+          "label_en": "Unified Communications",
+          "group": "Comunicaciones Unificadas",
+          "group_en": "Unified Communications"
+        },
+        {
+          "value": "cloud-pbx",
+          "label": "Cloud PBX",
+          "label_en": "Cloud PBX",
+          "group": "Comunicaciones Unificadas",
+          "group_en": "Unified Communications"
+        },
+        {
+          "value": "colaboracion-ia",
+          "label": "Colaboración IA",
+          "label_en": "AI Collaboration",
+          "group": "Comunicaciones Unificadas",
+          "group_en": "Unified Communications"
+        },
+        {
+          "value": "pantallas-tactiles",
+          "label": "Pantallas táctiles",
+          "label_en": "Touch screens",
+          "group": "Comunicaciones Unificadas",
+          "group_en": "Unified Communications"
+        },
+        {
+          "value": "contact-center",
+          "label": "Contact Center Multicanal",
+          "label_en": "Multichannel Contact Center",
+          "group": "Comunicaciones Unificadas",
+          "group_en": "Unified Communications"
         }
       ]
     },

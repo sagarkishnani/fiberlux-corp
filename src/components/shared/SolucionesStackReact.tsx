@@ -51,8 +51,8 @@ function slugify(texto: string): string {
 /**
  * Anclas de las cards, en el orden en que llegan las categorías.
  *
- * Salen del último tramo de la URL de la categoría (`/soluciones/data-center-cloud`
- * → `data-center-cloud`) para que el hash que queda en la barra al usar el rail
+ * Salen del último tramo de la URL de la categoría (`/soluciones/data-center`
+ * → `data-center`) para que el hash que queda en la barra al usar el rail
  * se lea, en vez de un `#soluciones-cat-1`. Se calculan a partir de los campos
  * SIN traducir: así la misma card tiene la misma ancla en ES y en EN, y un
  * enlace compartido funciona en los dos idiomas.
