@@ -4,6 +4,7 @@ import Orbita from "./Orbita";
 import Bitacora from "./Bitacora";
 import Nube from "./Nube";
 import Waveform from "./Waveform";
+import Telefonia from "./Telefonia";
 
 /**
  * Qué escena le toca a cada categoría (SPEC 108).
@@ -27,12 +28,14 @@ const POR_ICONO: Record<string, Escena> = {
   personas: Waveform,
   engranaje: Waveform,
   soporte: Waveform,
+  /* SPEC 109: la quinta categoría, Comunicaciones Unificadas. */
+  telefonia: Telefonia,
 };
 
-const POR_ORDEN: Escena[] = [Orbita, Bitacora, Nube, Waveform];
+const POR_ORDEN: Escena[] = [Orbita, Bitacora, Nube, Waveform, Telefonia];
 
 export function escenaPara(tabIcon: string | null | undefined, indice: number): Escena {
   return POR_ICONO[tabIcon || ""] || POR_ORDEN[indice % POR_ORDEN.length];
 }
 
-export { Orbita, Bitacora, Nube, Waveform };
+export { Orbita, Bitacora, Nube, Waveform, Telefonia };
