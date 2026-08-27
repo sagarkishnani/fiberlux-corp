@@ -275,24 +275,29 @@
         "title": "Soluciones",
         "links": [
           {
-            "text": "Conectividad empresarial",
-            "url": "/soluciones/conectividad-empresarial",
-            "text_en": "Business connectivity"
+            "text": "Conectividad",
+            "url": "/soluciones/conectividad",
+            "text_en": "Connectivity"
           },
           {
-            "text": "Ciberseguridad gestionada",
-            "url": "/soluciones/ciberseguridad-gestionada",
-            "text_en": "Managed cybersecurity"
+            "text": "Ciberseguridad",
+            "url": "/soluciones/ciberseguridad",
+            "text_en": "Cybersecurity"
           },
           {
-            "text": "Data Center, Cloud y Continuidad de Negocio",
-            "url": "/soluciones/data-center-cloud",
-            "text_en": "Data Center, Cloud & Business Continuity"
+            "text": "Data Center",
+            "url": "/soluciones/data-center",
+            "text_en": "Data Center"
           },
           {
-            "text": "Servicios gestionados",
-            "url": "/soluciones/servicios-gestionados",
-            "text_en": "Managed services"
+            "text": "Infraestructura",
+            "url": "/soluciones/infraestructura",
+            "text_en": "Infrastructure"
+          },
+          {
+            "text": "Comunicaciones Unificadas",
+            "url": "/soluciones/comunicaciones",
+            "text_en": "Unified Communications"
           }
         ],
         "title_en": "Solutions"
