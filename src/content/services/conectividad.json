@@ -55,67 +55,39 @@
     "items": [
       {
         "icon": "internet",
-        "title": "Internet Corporativo",
-        "title_en": "Corporate Internet",
-        "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición, con ancho de banda garantizado.",
-        "description_en": "100% symmetrical, dedicated and uncontended fiber optic link, with guaranteed bandwidth.",
-        "url": "/soluciones/conectividad/internet-corporativo"
+        "title": "Internet Dedicado",
+        "description": "Enlace de fibra óptica 100% simétrico, exclusivo y sin compartición con otros usuarios, con ancho de banda garantizado.",
+        "url": "/soluciones/conectividad/internet-dedicado"
       },
       {
         "icon": "disponibilidad",
-        "title": "Internet Corporativo de Alta Disponibilidad",
-        "title_en": "High-Availability Corporate Internet",
+        "title": "Alta Disponibilidad",
         "description": "Conectividad redundante con enlaces de respaldo automáticos para garantizar continuidad total de tu operación.",
-        "description_en": "Redundant connectivity with automatic backup links to ensure total continuity of your operation.",
-        "url": "/soluciones/conectividad/internet-alta-disponibilidad"
+        "url": "/soluciones/conectividad/alta-disponibilidad"
       },
       {
         "icon": "satelital",
-        "title": "Conectividad satelital",
-        "title_en": "Satellite Connectivity",
+        "title": "Acceso Satelital",
         "description": "Cobertura en zonas remotas sin infraestructura de fibra, con enlaces satelitales de alta disponibilidad.",
-        "description_en": "Coverage in remote areas without fiber infrastructure, using high-availability satellite links.",
-        "url": "/soluciones/conectividad/conectividad-satelital"
-      },
-      {
-        "icon": "radioenlace",
-        "title": "Radioenlaces Empresariales",
-        "title_en": "Enterprise Radio Links",
-        "description": "Enlaces inalámbricos punto a punto de alta capacidad para conectar sedes donde la fibra no llega.",
-        "description_en": "High-capacity point-to-point wireless links to connect sites where fiber doesn't reach.",
-        "url": "/soluciones/conectividad/radioenlaces-empresariales"
+        "url": "/soluciones/conectividad/acceso-satelital"
       },
       {
         "icon": "transmision",
-        "title": "Transmisión de datos (Lan To Lan – L2L)",
-        "title_en": "Data Transmission (LAN-to-LAN – L2L)",
+        "title": "LAN to LAN",
         "description": "Interconexión privada entre tus sedes con transporte de datos seguro y de baja latencia.",
-        "description_en": "Private interconnection between your sites with secure, low-latency data transport.",
-        "url": "/soluciones/conectividad/transmision-de-datos-l2l"
+        "url": "/soluciones/conectividad/lan-to-lan"
       },
       {
         "icon": "fibra-oscura",
         "title": "Fibra Oscura",
-        "title_en": "Dark Fiber",
         "description": "Fibra óptica dedicada y sin iluminar para que gestiones tu propia capacidad e infraestructura.",
-        "description_en": "Dedicated, unlit fiber optic so you can manage your own capacity and infrastructure.",
         "url": "/soluciones/conectividad/fibra-oscura"
       },
       {
         "icon": "sd-wan",
         "title": "SD-WAN",
-        "title_en": "SD-WAN",
         "description": "Red definida por software que optimiza y prioriza el tráfico entre múltiples enlaces y sedes.",
-        "description_en": "Software-defined network that optimizes and prioritizes traffic across multiple links and sites.",
         "url": "/soluciones/conectividad/sd-wan"
-      },
-      {
-        "icon": "balanceo",
-        "title": "Balanceo de enlaces",
-        "title_en": "Link Balancing",
-        "description": "Distribución inteligente del tráfico entre varios enlaces para maximizar disponibilidad y rendimiento.",
-        "description_en": "Intelligent traffic distribution across multiple links to maximize availability and performance.",
-        "url": "/soluciones/conectividad/balanceo-de-enlaces"
       }
     ]
   },

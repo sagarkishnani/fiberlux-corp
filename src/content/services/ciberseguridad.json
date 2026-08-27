@@ -55,107 +55,45 @@
     "items": [
       {
         "icon": "firewall",
-        "title": "NGFW / Seguridad Perimetral",
-        "title_en": "NGFW & Perimeter Security",
-        "description": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y",
-        "description_en": "Next-Generation Firewall. A layer 7 security barrier that deeply inspects web traffic, applications and",
-        "url": "/soluciones/ciberseguridad/ngfw-seguridad-perimetral"
-      },
-      {
-        "icon": "vpn",
-        "title": "VPN Segura y Accesso Remoto Protegido",
-        "title_en": "Secure VPN & Protected Remote Access",
-        "description": "Red Privada Virtual de grado corporativo.",
-        "description_en": "Corporate-grade Virtual Private Network.",
-        "url": "/soluciones/ciberseguridad/vpn-segura"
+        "title": "Perimetral",
+        "description": "Next-Generation Firewall. Una barrera de seguridad de capa 7 que inspecciona a fondo el tráfico web, aplicaciones y usuarios.",
+        "url": "/soluciones/ciberseguridad/perimetral"
       },
       {
         "icon": "edr",
-        "title": "EDR / XDR / MDR",
-        "title_en": "EDR / XDR / MDR",
-        "description": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan antivirus empresarial, EDR, XDR y MDR para proteger laptops, servidores y estaciones de trabajo frente a amenazas avanzadas.",
-        "description_en": "Protection, detection and response solutions for corporate devices, combining enterprise antivirus, EDR, XDR and MDR to protect laptops, servers and workstations against advanced threats.",
-        "url": "/soluciones/ciberseguridad/edr-xdr-mdr"
+        "title": "End Point",
+        "description": "Soluciones de protección, detección y respuesta para dispositivos corporativos, que combinan Antivirus Empresarial, EDR, XDR y MDR para proteger…",
+        "url": "/soluciones/ciberseguridad/end-point"
       },
       {
         "icon": "correo",
-        "title": "Seguridad de Correo y Filtrado Web",
-        "title_en": "Email Security & Web Filtering",
+        "title": "Correo",
         "description": "Escudo preventivo en la nube que intercepta correos maliciosos, archivos adjuntos infectados y restringe el acceso a sitios web fraudulentos.",
-        "description_en": "A preventive cloud shield that intercepts malicious emails and infected attachments, and restricts access to fraudulent websites.",
-        "url": "/soluciones/ciberseguridad/seguridad-correo-filtrado-web"
+        "url": "/soluciones/ciberseguridad/correo"
       },
       {
         "icon": "mfa",
-        "title": "MFA y Control de Identidad",
-        "title_en": "MFA & Identity Control",
-        "description": "Autenticación Multifactor y Gestión de Identidad.",
-        "description_en": "Multi-Factor Authentication and Identity Management.",
-        "url": "/soluciones/ciberseguridad/mfa-control-identidad"
-      },
-      {
-        "icon": "ztna",
-        "title": "ZTNA",
-        "title_en": "ZTNA",
-        "description": "Arquitectura Zero Trust Network Access (Confianza Cero) que otorga acceso granular solo a una aplicación específica, manteniendo el resto de la red invisible.",
-        "description_en": "Zero Trust Network Access architecture that grants granular access only to a specific application, keeping the rest of the network invisible.",
-        "url": "/soluciones/ciberseguridad/ztna"
-      },
-      {
-        "icon": "generico",
-        "title": "NAC",
-        "title_en": "NAC",
-        "description": "Control de acceso a la red que verifica la identidad, estado y cumplimiento de seguridad de usuarios y dispositivos antes de permitir su conexión a los recursos corporativos.",
-        "description_en": "Network access control that verifies the identity, posture and security compliance of users and devices before allowing them to connect to corporate resources.",
-        "url": "/soluciones/ciberseguridad/nac"
+        "title": "Usuarios",
+        "description": "Autenticación Multifactor y Gestión de Identidad. Un sistema que exige una segunda verificación dinámica (token, app o biometría) para iniciar sesión.",
+        "url": "/soluciones/ciberseguridad/usuarios"
       },
       {
         "icon": "waf",
-        "title": "WAF",
-        "title_en": "WAF",
-        "description": "Web Application Firewall: una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
-        "description_en": "Web Application Firewall: a specialized barrier that audits HTTP/HTTPS traffic between the internet and your web application in real time.",
-        "url": "/soluciones/ciberseguridad/waf"
+        "title": "Aplicaciones",
+        "description": "La Web Application Firewall es una barrera especializada que audita en tiempo real el tráfico HTTP/HTTPS entre internet y tu aplicación web.",
+        "url": "/soluciones/ciberseguridad/aplicaciones"
       },
       {
-        "icon": "ddos",
-        "title": "Anti-DDoS",
-        "title_en": "Anti-DDoS",
-        "description": "Sistema de mitigación volumétrica inteligente que detecta picos anómalos, desvía el tráfico malicioso y lo depura en la nube.",
-        "description_en": "Intelligent volumetric mitigation system that detects anomalous spikes, diverts malicious traffic and scrubs it in the cloud.",
-        "url": "/soluciones/ciberseguridad/anti-ddos"
-      },
-      {
-        "icon": "generico",
+        "icon": "soc",
         "title": "Concientización en Phishing",
-        "title_en": "Phishing Awareness",
-        "description": "Programas de capacitación y simulación que ayudan a los colaboradores a identificar correos fraudulentos, suplantación de identidad (phishing) y otras técnicas de ingeniería social.",
-        "description_en": "Training and simulation programs that help employees identify fraudulent emails, phishing and other social engineering techniques.",
+        "description": "Programas de capacitación y simulación diseñados para ayudar a los colaboradores a identificar correos fraudulentos, intentos de suplantación de…",
         "url": "/soluciones/ciberseguridad/concientizacion-phishing"
       },
       {
-        "icon": "soc",
-        "title": "SOC 24/7",
-        "title_en": "SOC 24/7",
-        "description": "Un equipo de ingenieros expertos que vigila, correlaciona eventos y responde a amenazas de forma ininterrumpida.",
-        "description_en": "A team of expert engineers that monitors, correlates events and responds to threats around the clock.",
-        "url": "/soluciones/ciberseguridad/soc-24-7"
-      },
-      {
-        "icon": "soc",
-        "title": "Correlación de Eventos (SIEM)",
-        "title_en": "Event Correlation (SIEM)",
-        "description": "Servicio que centraliza y correlaciona eventos de seguridad de múltiples fuentes mediante SIEM, complementado con capacidades SOAR para automatizar la respuesta ante incidentes.",
-        "description_en": "A service that centralizes and correlates security events from multiple sources through SIEM, complemented by SOAR capabilities to automate incident response.",
-        "url": "/soluciones/ciberseguridad/correlacion-eventos"
-      },
-      {
-        "icon": "pentesting",
-        "title": "Pentesting",
-        "title_en": "Pentesting",
-        "description": "Ataques simulados realizados por expertos para descubrir brechas en la red, aplicaciones o procesos corporativos.",
-        "description_en": "Simulated attacks performed by experts to uncover gaps in the network, applications or corporate processes.",
-        "url": "/soluciones/ciberseguridad/pentesting"
+        "icon": "segmentacion",
+        "title": "Transporte (redes)",
+        "description": "Solución de seguridad que segmenta la red y controla las comunicaciones entre usuarios, dispositivos, aplicaciones y cargas de trabajo mediante…",
+        "url": "/soluciones/ciberseguridad/transporte-redes"
       }
     ]
   },

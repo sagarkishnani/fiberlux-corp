@@ -39,7 +39,44 @@
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
-    "items": []
+    "items": [
+      {
+        "icon": "wifi",
+        "title": "WiFi Gestionado",
+        "description": "Diseño, implementación y administración de redes inalámbricas empresariales, optimizando la cobertura, capacidad y experiencia de conexión de…",
+        "url": "/soluciones/infraestructura/wifi-gestionado"
+      },
+      {
+        "icon": "switch",
+        "title": "Switches",
+        "description": "Diseño, implementación y configuración de infraestructura de switching para conectar y administrar de forma eficiente los dispositivos y servicios de…",
+        "url": "/soluciones/infraestructura/switches"
+      },
+      {
+        "icon": "balanceo",
+        "title": "Balanceadores",
+        "description": "Diseño e implementación de soluciones de balanceo que distribuyen el tráfico entre diferentes recursos o enlaces para mejorar el rendimiento y…",
+        "url": "/soluciones/infraestructura/balanceadores"
+      },
+      {
+        "icon": "servidor",
+        "title": "Servidores",
+        "description": "Diseño, dimensionamiento e implementación de infraestructura de servidores adaptada a las cargas de trabajo, aplicaciones y necesidades de…",
+        "url": "/soluciones/infraestructura/servidores"
+      },
+      {
+        "icon": "videovigilancia",
+        "title": "Video Vigilancia",
+        "description": "Servicio integral de monitoreo y administración de sistemas de videovigilancia que permite supervisar instalaciones, proteger activos y mejorar la…",
+        "url": "/soluciones/infraestructura/video-vigilancia"
+      },
+      {
+        "icon": "energia",
+        "title": "Energía",
+        "description": "Diseño e implementación de soluciones de respaldo y protección eléctrica para mantener la infraestructura tecnológica protegida frente a variaciones…",
+        "url": "/soluciones/infraestructura/energia"
+      }
+    ]
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",

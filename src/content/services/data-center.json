@@ -54,60 +54,40 @@
     "title_en": "Solutions catalog",
     "items": [
       {
-        "icon": "storage",
-        "title": "Housing / Colocación",
-        "title_en": "Housing & Colocation",
-        "description": "Alquiler de espacio especializado (racks completos o fracciones) en nuestro Data Center.",
-        "description_en": "Rental of specialized space (full racks or fractions) in our Data Center.",
-        "url": "/soluciones/data-center/housing-colocacion"
-      },
-      {
         "icon": "cloud",
-        "title": "Nube Privada",
-        "title_en": "Private Cloud",
-        "description": "Un entorno cloud exclusivo con servidores virtuales, almacenamiento y redes dedicadas físicamente a tu empresa, alojados en nuestros Data Centers.",
-        "description_en": "An exclusive cloud environment with virtual servers, storage and networks physically dedicated to your company, hosted in our Data Centers.",
-        "url": "/soluciones/data-center/nube-privada"
-      },
-      {
-        "icon": "cloud",
-        "title": "Nube Pública",
-        "title_en": "Public Cloud",
+        "title": "Virtual Server",
         "description": "Diseñamos, gestionamos, migramos y optimizamos tus recursos en el ecosistema de Huawei Cloud, AWS y Azure, como distribuidores oficiales.",
-        "description_en": "We design, manage, migrate and optimize your resources across the Huawei Cloud, AWS and Azure ecosystem, as official distributors.",
-        "url": "/soluciones/data-center/nube-publica"
+        "url": "/soluciones/data-center/virtual-server"
       },
       {
         "icon": "backup",
         "title": "Backup as a Service (BaaS)",
-        "title_en": "Backup as a Service (BaaS)",
         "description": "Servicio automatizado de copias de seguridad alojadas en la nube, protegido con cifrado y políticas estrictas de retención.",
-        "description_en": "Automated cloud-hosted backup service, protected with encryption and strict retention policies.",
         "url": "/soluciones/data-center/baas"
       },
       {
-        "icon": "backup",
+        "icon": "disponibilidad",
         "title": "Disaster Recovery (DRaaS)",
-        "title_en": "Disaster Recovery (DRaaS)",
-        "description": "Recuperación ante Desastres como Servicio.",
-        "description_en": "Disaster Recovery as a Service.",
+        "description": "Recuperación ante Desastres como Servicio. Una réplica latente de tu infraestructura productiva lista para encenderse si tus servicios productivos…",
         "url": "/soluciones/data-center/draas"
       },
       {
-        "icon": "storage",
-        "title": "Storage y Cómputo",
-        "title_en": "Storage & Compute",
-        "description": "Repositorios de almacenamiento elástico en la nube (bloques, archivos u objetos) optimizados para alto rendimiento o para archivado a largo plazo.",
-        "description_en": "Elastic cloud storage repositories (block, file or object) optimized for high performance or long-term archiving.",
-        "url": "/soluciones/data-center/storage-computo"
+        "icon": "escritorio-virtual",
+        "title": "Virtual Desktop",
+        "description": "Escritorios virtuales centralizados que permiten acceder de forma segura a aplicaciones, archivos y entornos de trabajo desde distintos dispositivos.",
+        "url": "/soluciones/data-center/virtual-desktop"
       },
       {
-        "icon": "generico",
-        "title": "Microservicios",
-        "title_en": "Microservices",
-        "description": "Diseño e implementación de plataformas modernas basadas en contenedores Docker y orquestación Kubernetes, para desplegar aplicaciones escalables y resilientes.",
-        "description_en": "Design and implementation of modern platforms based on Docker containers and Kubernetes orchestration, to deploy scalable, resilient applications.",
-        "url": "/soluciones/data-center/microservicios"
+        "icon": "autocontenido",
+        "title": "Autocontenido (on premise)",
+        "description": "Centro de datos compacto instalado en las instalaciones del cliente, que integra infraestructura, energía, climatización y monitoreo en una solución…",
+        "url": "/soluciones/data-center/autocontenido"
+      },
+      {
+        "icon": "nas",
+        "title": "NAS (on premise)",
+        "description": "Solución de almacenamiento conectada a la red que centraliza archivos y datos para que múltiples usuarios y sistemas puedan acceder a ellos de forma…",
+        "url": "/soluciones/data-center/nas"
       }
     ]
   },

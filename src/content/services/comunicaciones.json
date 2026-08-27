@@ -39,7 +39,38 @@
   },
   "catalogo": {
     "title": "Catálogo de soluciones",
-    "items": []
+    "items": [
+      {
+        "icon": "comunicaciones",
+        "title": "Comunicaciones Unificadas",
+        "description": "Es la evolución de la Telefonía IP, permitiendo unificar la clásica Central Telefónica en una plataforma de Comunicaciones Unificadas (UCaaS) con…",
+        "url": "/soluciones/comunicaciones/comunicaciones-unificadas"
+      },
+      {
+        "icon": "pbx",
+        "title": "Cloud PBX",
+        "description": "Central telefónica virtual alojada en la nube que permite administrar extensiones, llamadas y usuarios sin depender de una central física instalada…",
+        "url": "/soluciones/comunicaciones/cloud-pbx"
+      },
+      {
+        "icon": "colaboracion",
+        "title": "Colaboración IA",
+        "description": "Soluciones de colaboración potenciadas con inteligencia artificial que integran voz, Microsoft Teams, Copilot y tecnología de sala para optimizar…",
+        "url": "/soluciones/comunicaciones/colaboracion-ia"
+      },
+      {
+        "icon": "pantalla",
+        "title": "Pantallas táctiles",
+        "description": "Pantallas interactivas diseñadas para reuniones, presentaciones y trabajo colaborativo, permitiendo visualizar, compartir y manipular contenido…",
+        "url": "/soluciones/comunicaciones/pantallas-tactiles"
+      },
+      {
+        "icon": "contact-center",
+        "title": "Contact Center Multicanal",
+        "description": "Centraliza la atención de clientes a través de distintos canales de comunicación en una plataforma integrada para facilitar la gestión y seguimiento…",
+        "url": "/soluciones/comunicaciones/contact-center"
+      }
+    ]
   },
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
