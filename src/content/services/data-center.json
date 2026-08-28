@@ -123,6 +123,16 @@
         "image": "/images/partners/aws.svg",
         "alt": "AWS",
         "url": ""
+      },
+      {
+        "image": "/images/partners/qnap.svg",
+        "alt": "QNAP",
+        "url": ""
+      },
+      {
+        "image": "/images/partners/gigas.svg",
+        "alt": "Gigas",
+        "url": ""
       }
     ]
   },

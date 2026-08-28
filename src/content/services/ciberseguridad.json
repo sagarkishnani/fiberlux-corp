@@ -141,6 +141,11 @@
         "image": "/images/partners/paloalto.svg",
         "alt": "Palo Alto",
         "url": ""
+      },
+      {
+        "image": "/images/partners/sophos.svg",
+        "alt": "Sophos",
+        "url": ""
       }
     ]
   },

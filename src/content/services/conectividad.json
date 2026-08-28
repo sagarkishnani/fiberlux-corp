@@ -133,6 +133,11 @@
         "image": "/images/partners/peplink.svg",
         "alt": "Peplink",
         "url": ""
+      },
+      {
+        "image": "/images/partners/starlink.svg",
+        "alt": "Starlink",
+        "url": ""
       }
     ]
   },

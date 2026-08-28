@@ -108,6 +108,11 @@
         "image": "/images/partners/yeastar.svg",
         "alt": "Yeastar",
         "url": ""
+      },
+      {
+        "image": "/images/partners/microsoft.svg",
+        "alt": "Microsoft",
+        "url": ""
       }
     ],
     "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",

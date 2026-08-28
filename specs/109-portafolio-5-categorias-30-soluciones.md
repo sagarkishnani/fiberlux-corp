@@ -176,7 +176,7 @@ Los 12 destinos sin arte propio reusan la imagen existente más cercana hasta qu
 
 Del Excel, usando solo lo que existe hoy en `public/images/partners/`:
 
-| Categoría | Logos disponibles | Faltantes (pendiente de entrega) |
+| Categoría | Logos disponibles | Faltantes — **entregados y agregados el 2026-08-28** |
 | --- | --- | --- |
 | Ciberseguridad | Fortinet, SonicWall, Illumio, WithSecure, Palo Alto | Sophos |
 | Data Center | Huawei, Acronis, AWS | Qnap, Gigas |
