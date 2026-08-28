@@ -22,7 +22,7 @@ import createGlobe from "cobe";
 const BRAND = "150,35,122"; // #96237A
 const BRAND_LIT = "205,85,170"; // marca aclarada (núcleos de línea / nodos)
 const BRAND_N: [number, number, number] = [150 / 255, 35 / 255, 122 / 255]; // glow COBE
-const WHITE: [number, number, number] = [1, 1, 1]; // continentes (puntos)
+const LAND: [number, number, number] = [0.93, 0.87, 0.98]; // continentes (puntos), lila muy claro
 
 const BASE_THETA = 0.22;
 
@@ -178,7 +178,11 @@ export default function CinematicBackground({
     const mobile = window.matchMedia?.("(max-width: 1023px)").matches ?? false;
     const finePointer =
       window.matchMedia?.("(pointer: fine)").matches ?? false;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5); // cap por rendimiento
+    // Cap de DPR por rendimiento. En mobile el planeta pasó a ocupar toda la
+    // pantalla (antes era un globo pequeño al centro), así que el canvas cubre
+    // ~5× más píxeles: se baja el cap para que el coste por frame no suba en
+    // equipos ligeros (los puntos no necesitan retina, sólo la tipografía).
+    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.15 : 1.5);
 
     // ── Sprite radial suave (glow) precomputado → drawImage barato por frame.
     const SP_SZ = 48;
@@ -208,8 +212,8 @@ export default function CinematicBackground({
     // reevaluar el gradiente sobre millones de píxeles (el hero debe seguir
     // corriendo en equipos ligeros).
     const HALO_SZ = 1024;
-    const HALO_INNER = 0.9; // radio interior, en fracción del radio de puntos
-    const HALO_OUTER = 1.42; // radio exterior (bloom hacia el espacio)
+    const HALO_INNER = 0.5; // radio interior, en fracción del radio de puntos
+    const HALO_OUTER = 1.6; // radio exterior (bloom hacia el espacio)
     const haloSprite = document.createElement("canvas");
     haloSprite.width = haloSprite.height = HALO_SZ;
     {
@@ -224,14 +228,17 @@ export default function CinematicBackground({
           c,
           c
         );
-        g.addColorStop(0, "rgba(150,35,122,0)");
-        g.addColorStop(0.1, "rgba(160,40,132,0.22)"); // apenas sobre los puntos
-        g.addColorStop(0.17, "rgba(214,110,190,0.62)");
-        g.addColorStop(0.2, "rgba(255,214,246,0.8)"); // núcleo fino: el limbo
-        g.addColorStop(0.24, "rgba(216,92,186,0.66)");
-        g.addColorStop(0.34, "rgba(168,45,138,0.4)");
-        g.addColorStop(0.55, "rgba(126,30,102,0.18)");
-        g.addColorStop(0.78, "rgba(101,15,80,0.06)");
+        // El limbo cae en t = (1 - HALO_INNER) / (HALO_OUTER - HALO_INNER)
+        // ≈ 0.455. Alrededor de ese punto la luz es ANCHA y suave (atmósfera),
+        // no un filo blanco: es lo que hacía que el planeta se leyera como un
+        // "arco de neón" en vez de como un mundo (obs. cliente).
+        g.addColorStop(0, "rgba(120,28,98,0)");
+        g.addColorStop(0.3, "rgba(140,34,114,0.05)"); // interior casi limpio
+        g.addColorStop(0.4, "rgba(178,60,146,0.2)");
+        g.addColorStop(0.455, "rgba(228,155,210,0.5)"); // limbo (banda ancha)
+        g.addColorStop(0.5, "rgba(190,80,160,0.34)");
+        g.addColorStop(0.6, "rgba(150,38,124,0.16)");
+        g.addColorStop(0.78, "rgba(115,24,94,0.06)");
         g.addColorStop(1, "rgba(101,15,80,0)");
         hctx.fillStyle = g;
         hctx.fillRect(0, 0, HALO_SZ, HALO_SZ);
@@ -249,6 +256,7 @@ export default function CinematicBackground({
     let sizePx = 0;
     let gLeft = 0;
     let gTop = 0;
+    let narrowView = false; // viewport angosto → geometría/halo de mobile
 
     // ── Estrellas laterales (mismo canvas/loop → sin canvas ni rAF extra).
     let stars: Star[] = [];
@@ -287,12 +295,24 @@ export default function CinematicBackground({
     const computeSize = () => {
       const w = root.clientWidth || 1;
       const h = root.clientHeight || 1;
-      // Globo más grande = limbo MÁS PLANO: el arco de luz cruza el hero por fuera
-      // del ancho del titular en vez de atravesarlo (pedido del cliente: que el
-      // planeta no choque con el texto). `topPx` ancla el ápice del limbo a
-      // h*0.16 sea cual sea el tamaño (gTop + sizePx*0.1, con radio de puntos 0.4).
-      sizePx = Math.min(w * 1.32, h * 2.2);
-      const topPx = h * 0.16 - sizePx * 0.1;
+      // Geometría del planeta (obs. cliente: "se ve como un arco de neón más que
+      // un mundo"). Se razona sobre el DIÁMETRO REAL de los puntos —COBE dibuja
+      // el planeta con radio 0.4·sizePx— y no sobre el lienzo:
+      //  · Desktop: diámetro ~0.9·ancho ⇒ los costados de la esfera caen DENTRO
+      //    del viewport, así que se percibe la curvatura de un globo (antes era
+      //    1.06·ancho y el limbo cruzaba plano de borde a borde = arco).
+      //  · Mobile: el globo es mucho mayor que antes (llenaba sólo el centro
+      //    como un anillo completo) y se recorta por abajo con el hero, para que
+      //    se vea "medio mundo" igual que en desktop.
+      const narrow = w < 768;
+      narrowView = narrow;
+      const diameter = narrow
+        ? Math.max(w * 1.45, Math.min(h * 0.88, w * 2.4))
+        : Math.min(w * 0.9, h * 1.34);
+      sizePx = diameter / 0.8;
+      // Ápice del limbo (borde superior de los puntos) anclado a una fracción
+      // del alto del hero; el resto del planeta baja y se recorta abajo.
+      const topPx = h * (narrow ? 0.13 : 0.11) - sizePx * 0.1;
       gLeft = w / 2 - sizePx / 2;
       gTop = topPx;
 
@@ -339,12 +359,15 @@ export default function CinematicBackground({
         height: sizePx * dpr,
         phi: 0,
         theta: BASE_THETA,
-        dark: 1,
-        diffuse: 2.2, // volumen (luz/sombra) → no plano
-        mapSamples: mobile ? 7000 : 14000,
-        mapBrightness: 0.85, // planeta oscuro: los puntos no compiten con el texto
-        mapBaseBrightness: 0.008, // océano casi negro
-        baseColor: WHITE, // continentes blancos
+        dark: 1.05,
+        diffuse: 1.5, // volumen (luz/sombra) → no plano, sin quemar el terminador
+        mapSamples: mobile ? 11000 : 20000,
+        // Continentes VISIBLES (obs. cliente: debe leerse como un mundo). La
+        // legibilidad del titular la resuelven los velos radiales de
+        // HeroHomeReact (z-[1]), no el apagado de los puntos.
+        mapBrightness: 3.2,
+        mapBaseBrightness: 0.055, // océano: silueta oscura pero perceptible
+        baseColor: LAND, // continentes en blanco lila
         glowColor: BRAND_N, // atmósfera en morado de marca
         opacity: reduce ? 1 : 0,
         scale: 1,
@@ -462,7 +485,9 @@ export default function CinematicBackground({
         const gcy = gTop + sizePx / 2;
         const rOuter = sizePx * 0.4 * HALO_OUTER;
         octx.globalCompositeOperation = "lighter";
-        octx.globalAlpha = op;
+        // En mobile el planeta ocupa toda la pantalla y sobre él va un velo
+        // oscuro (HeroHomeReact): sin este refuerzo el limbo queda casi apagado.
+        octx.globalAlpha = Math.min(1, op * (narrowView ? 1.45 : 1));
         octx.drawImage(
           haloSprite,
           gcx - rOuter,
@@ -471,6 +496,19 @@ export default function CinematicBackground({
           rOuter * 2
         );
         octx.globalAlpha = 1;
+
+        // Luz DIRECCIONAL: la atmósfera es más intensa arriba (de donde viene la
+        // luz) y se apaga hacia abajo, como en las referencias. Sin esto el halo
+        // rodea la esfera con la misma intensidad y vuelve a leerse como un aro
+        // de neón. Se aplica antes de pintar estrellas/arcos para no borrarlos.
+        const fade = octx.createLinearGradient(0, gcy - rOuter, 0, gcy + rOuter);
+        fade.addColorStop(0, "rgba(0,0,0,0)");
+        fade.addColorStop(0.42, "rgba(0,0,0,0)");
+        fade.addColorStop(0.72, `rgba(0,0,0,${narrowView ? 0.3 : 0.42})`);
+        fade.addColorStop(1, `rgba(0,0,0,${narrowView ? 0.55 : 0.72})`);
+        octx.globalCompositeOperation = "destination-out";
+        octx.fillStyle = fade;
+        octx.fillRect(0, 0, overlay.width, overlay.height);
         octx.globalCompositeOperation = "source-over";
       }
 
@@ -600,7 +638,7 @@ export default function CinematicBackground({
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(96% 62% at 50% 86%, rgba(150,35,122,0.26) 0%, rgba(101,15,80,0.13) 40%, rgba(59,14,48,0.05) 62%, rgba(0,0,0,0) 78%)",
+            "radial-gradient(96% 62% at 50% 86%, rgba(150,35,122,0.16) 0%, rgba(101,15,80,0.08) 40%, rgba(59,14,48,0.03) 62%, rgba(0,0,0,0) 78%)",
           pointerEvents: "none",
         }}
       />

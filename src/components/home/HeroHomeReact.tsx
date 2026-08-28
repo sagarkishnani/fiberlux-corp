@@ -446,7 +446,7 @@ export default function HeroHomeReact({
           className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              "radial-gradient(120% 90% at 50% 42%, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.5) 45%, rgba(10,10,10,0.32) 100%)",
+              "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.6) 48%, rgba(10,10,10,0.3) 100%)",
           }}
         />
       )}
@@ -459,7 +459,7 @@ export default function HeroHomeReact({
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
             background:
-              "radial-gradient(52% 42% at 50% 56%, rgba(10,10,10,0.78) 0%, rgba(10,10,10,0.6) 46%, rgba(10,10,10,0.24) 72%, rgba(10,10,10,0) 90%)",
+              "radial-gradient(58% 48% at 50% 56%, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.78) 46%, rgba(10,10,10,0.42) 72%, rgba(10,10,10,0) 92%)",
           }}
         />
       )}
