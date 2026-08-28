@@ -266,4 +266,44 @@ export const CSS_SOLUCIONES = `
   66%, 92%  { transform: translateX(var(--p2, 0)); }
   100%      { transform: translateX(var(--p0, 0)); }
 }
+
+/* ── Switching (infraestructura) ── */
+/* Parpadeo suelto de cada puerto: ciclos distintos para que las luces nunca
+   vayan a compás, como en un switch de verdad. */
+.fbx-sol-anim-puerto {
+  animation: fbx-sol-puerto var(--ciclo, 3.6s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-sol-puerto {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 1; }
+}
+/* Recorrido del color: cada puerto enciende su capa en el turno que le marca
+   su --ret y la apaga hasta la vuelta siguiente. Un mismo ciclo para los
+   cuatro grupos, desfasados un cuarto cada uno. */
+.fbx-sol-anim-puertoOn {
+  animation: fbx-sol-puertoOn var(--ciclo, 3.6s) linear var(--ret, 0s) infinite;
+}
+@keyframes fbx-sol-puertoOn {
+  0%, 1%    { opacity: 0; }
+  5%, 24%   { opacity: 1; }
+  28%, 100% { opacity: 0; }
+}
+/* Trazo que se dibuja y se retira. Los paths declaran pathLength="1", así que
+   el dash mide 1 sea cual sea la longitud real del cable. */
+.fbx-sol-anim-traza {
+  animation: fbx-sol-traza var(--ciclo, 7s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-sol-traza {
+  0%        { stroke-dashoffset: 1; }
+  55%, 88%  { stroke-dashoffset: 0; }
+  100%      { stroke-dashoffset: 1; }
+}
+/* Respiración larga de los equipos del borde. */
+.fbx-sol-anim-late {
+  animation: fbx-sol-late var(--ciclo, 9s) ease-in-out var(--ret, 0s) infinite;
+}
+@keyframes fbx-sol-late {
+  0%, 100% { opacity: 0.28; transform: scale(0.98); }
+  50%      { opacity: 0.58; transform: scale(1.03); }
+}
 `;

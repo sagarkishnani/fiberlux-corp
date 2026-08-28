@@ -1,6 +1,7 @@
 import { useTina, tinaField } from 'tinacms/dist/react';
+import { TinaMarkdown } from 'tinacms/dist/rich-text';
 import type { AboutQuery, AboutQueryVariables } from '../../../tina/__generated__/types';
-import { tField } from '../../utils/i18n';
+import { tField, richField } from '../../utils/i18n';
 import type { Locale } from '../../i18n/config';
 
 /* ── Types ── */
@@ -25,6 +26,14 @@ export default function MissionVisionReact({ query, variables, data: initialData
 
   // Section title from a dedicated field or fallback
   const sectionTitle = tField(about as any, "missionVisionTitle", locale) || 'Comprometidos con el desarrollo tecnológico del Perú';
+
+  /* Bloque Política SGSI (ISO 27001). Los números 01, 02… no se editan:
+     salen del orden de la lista `sgsi.items` en Tina. */
+  const sgsi = (about as any).sgsi;
+  const sgsiBadge = sgsi ? tField(sgsi, "badge", locale) : '';
+  const sgsiTitle = sgsi ? tField(sgsi, "title", locale) : '';
+  const sgsiIntro = sgsi ? richField(sgsi, "intro", locale) : null;
+  const sgsiItems: any[] = (sgsi?.items ?? []).filter(Boolean);
 
   return (
     <section
@@ -137,6 +146,81 @@ export default function MissionVisionReact({ query, variables, data: initialData
             )}
           </div>
         </div>
+
+        {/* ── Política del SGSI (ISO 27001) ── */}
+        {sgsi && (sgsiTitle || sgsiItems.length > 0) && (
+          <div className="relative mt-14 md:mt-20 pt-12 md:pt-16">
+            {/* Separador: línea de 1px que se intensifica al centro y se
+                desvanece hacia los bordes (sin halo, pedido del cliente). */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-px"
+              style={{
+                background:
+                  'linear-gradient(90deg, rgba(150,35,122,0) 0%, rgba(150,35,122,0.18) 15%, rgba(150,35,122,0.85) 50%, rgba(150,35,122,0.18) 85%, rgba(150,35,122,0) 100%)',
+              }}
+            />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-24">
+
+              {/* Columna izquierda: certificación + título + intro */}
+              <div data-reveal="up">
+                {sgsiBadge && (
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="w-11 h-11 rounded-xl bg-white flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 text-brand-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 3l7 3v5.5c0 4.2-2.9 8.1-7 9.5-4.1-1.4-7-5.3-7-9.5V6l7-3z" />
+                        <path d="M9.2 12.2l1.9 1.9 3.7-3.9" />
+                      </svg>
+                    </span>
+                    <span
+                      className="font-mono text-xs md:text-sm tracking-[0.2em] text-brand-purple-darkest"
+                      data-tina-field={tinaField(sgsi, 'badge')}
+                    >
+                      {sgsiBadge}
+                    </span>
+                  </div>
+                )}
+
+                {sgsiTitle && (
+                  <h3
+                    className="text-[26px] leading-[32px] md:text-[36px] md:leading-[44px] font-medium text-brand-purple-darkest mb-6"
+                    data-tina-field={tinaField(sgsi, 'title')}
+                  >
+                    {sgsiTitle}
+                  </h3>
+                )}
+
+                {sgsiIntro && (
+                  <div
+                    className="text-brand-purple-darkest/70 text-sm md:text-base leading-relaxed [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_strong]:text-brand-purple-darkest"
+                    data-tina-field={tinaField(sgsi, 'intro')}
+                  >
+                    <TinaMarkdown content={sgsiIntro} />
+                  </div>
+                )}
+              </div>
+
+              {/* Columna derecha: compromisos numerados (01, 02…) */}
+              {sgsiItems.length > 0 && (
+                <ol className="flex flex-col gap-8 md:gap-10" data-reveal="up" data-reveal-stagger="0.08">
+                  {sgsiItems.map((item, i) => (
+                    <li key={i} className="flex gap-4 md:gap-6">
+                      <span className="font-mono text-xs md:text-sm text-brand-purple/70 pt-1 w-6 md:w-7 shrink-0">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <p
+                        className="text-brand-purple-darkest/80 text-sm md:text-base leading-relaxed"
+                        data-tina-field={tinaField(item, 'text')}
+                      >
+                        {tField(item, 'text', locale)}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

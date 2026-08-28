@@ -25,6 +25,32 @@
     "text_en": "To be the most trusted and respected technology company in Peru, becoming the benchmark in high-quality enterprise connectivity."
   },
   "missionImage": "/images/nosotros/comprometidos-mision-vision.webp",
+  "sgsi": {
+    "badge": "ISO 27001",
+    "badge_en": "ISO 27001",
+    "title": "Política del Sistema de Gestión de Seguridad de la Información",
+    "title_en": "Information Security Management System Policy",
+    "intro": "**FIBERLUX TECH SAC** es una empresa de Telecomunicaciones, donde la tecnología de información y los sistemas de información son de vital importancia como activos, que alineados a nuestro propósito y tomando en consideración el contexto, riesgos y oportunidades, nos comprometemos a:",
+    "intro_en": "**FIBERLUX TECH SAC** is a telecommunications company where information technology and information systems are vital assets. Aligned with our purpose, and taking into account our context, risks and opportunities, we commit to:",
+    "items": [
+      {
+        "text": "Asegurar la protección de los activos de información relevantes, requeridos por los diferentes grupos de interés, a fin de garantizar la confidencialidad, integridad y disponibilidad de la información.",
+        "text_en": "Ensure the protection of relevant information assets required by our different stakeholders, in order to guarantee the confidentiality, integrity and availability of information."
+      },
+      {
+        "text": "Cumplir con los requisitos legales, contractuales, regulatorios y otros requisitos aplicables al SGSI.",
+        "text_en": "Comply with the legal, contractual, regulatory and other requirements applicable to the ISMS."
+      },
+      {
+        "text": "Gestionar el riesgo operacional y tecnológico mediante la gestión de políticas y controles de sus sistemas de información.",
+        "text_en": "Manage operational and technological risk through the governance of policies and controls over its information systems."
+      },
+      {
+        "text": "Promover la formación y la toma de conciencia del personal con el fin de incentivar la mejora continua del SGSI.",
+        "text_en": "Promote staff training and awareness in order to encourage the continual improvement of the ISMS."
+      }
+    ]
+  },
   "values": {
     "title": "Nuestros valores",
     "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",

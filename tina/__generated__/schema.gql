@@ -941,6 +941,21 @@ type AboutVision {
   text_en: String
 }
 
+type AboutSgsiItems {
+  text: String
+  text_en: String
+}
+
+type AboutSgsi {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  intro: JSON
+  intro_en: JSON
+  items: [AboutSgsiItems]
+}
+
 type AboutValuesItems {
   icon: String
   name: String
@@ -1015,6 +1030,7 @@ type About implements Node & Document {
   mission: AboutMission
   vision: AboutVision
   missionImage: String
+  sgsi: AboutSgsi
   values: AboutValues
   timeline: AboutTimeline
   rubros: AboutRubros
@@ -1050,6 +1066,21 @@ input AboutVisionFilter {
   title_en: StringFilter
   text: StringFilter
   text_en: StringFilter
+}
+
+input AboutSgsiItemsFilter {
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input AboutSgsiFilter {
+  badge: StringFilter
+  badge_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  intro: RichTextFilter
+  intro_en: RichTextFilter
+  items: AboutSgsiItemsFilter
 }
 
 input AboutValuesItemsFilter {
@@ -1126,6 +1157,7 @@ input AboutFilter {
   mission: AboutMissionFilter
   vision: AboutVisionFilter
   missionImage: ImageFilter
+  sgsi: AboutSgsiFilter
   values: AboutValuesFilter
   timeline: AboutTimelineFilter
   rubros: AboutRubrosFilter
@@ -3102,6 +3134,21 @@ input AboutVisionMutation {
   text_en: String
 }
 
+input AboutSgsiItemsMutation {
+  text: String
+  text_en: String
+}
+
+input AboutSgsiMutation {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  intro: JSON
+  intro_en: JSON
+  items: [AboutSgsiItemsMutation]
+}
+
 input AboutValuesItemsMutation {
   icon: String
   name: String
@@ -3176,6 +3223,7 @@ input AboutMutation {
   mission: AboutMissionMutation
   vision: AboutVisionMutation
   missionImage: String
+  sgsi: AboutSgsiMutation
   values: AboutValuesMutation
   timeline: AboutTimelineMutation
   rubros: AboutRubrosMutation

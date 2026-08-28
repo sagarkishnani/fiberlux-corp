@@ -1233,6 +1233,57 @@ var config_default = defineConfig({
             label: "Imagen secci\xF3n misi\xF3n/visi\xF3n",
             type: "image"
           },
+          // ── Política SGSI (ISO 27001) ──
+          {
+            name: "sgsi",
+            label: "Pol\xEDtica SGSI (ISO 27001)",
+            description: "Bloque bajo Misi\xF3n/Visi\xF3n: certificaci\xF3n, t\xEDtulo, introducci\xF3n y compromisos numerados.",
+            type: "object",
+            fields: [
+              {
+                name: "badge",
+                label: "Etiqueta de certificaci\xF3n",
+                type: "string",
+                description: "Texto del chip superior (ej. ISO 27001). Vac\xEDo = se oculta el chip."
+              },
+              { name: "badge_en", label: "Etiqueta de certificaci\xF3n (EN)", type: "string" },
+              { name: "title", label: "T\xEDtulo", type: "string" },
+              { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+              {
+                name: "intro",
+                label: "Introducci\xF3n",
+                type: "rich-text",
+                description: "P\xE1rrafo introductorio. Usa negrita para resaltar la raz\xF3n social."
+              },
+              { name: "intro_en", label: "Introducci\xF3n (EN)", type: "rich-text" },
+              {
+                name: "items",
+                label: "Compromisos",
+                type: "object",
+                list: true,
+                description: "La numeraci\xF3n (01, 02, 03\u2026) se genera autom\xE1ticamente seg\xFAn el orden.",
+                ui: {
+                  itemProps: (item) => ({
+                    label: item?.text ? String(item.text).slice(0, 60) : "Compromiso"
+                  })
+                },
+                fields: [
+                  {
+                    name: "text",
+                    label: "Texto",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  },
+                  {
+                    name: "text_en",
+                    label: "Texto (EN)",
+                    type: "string",
+                    ui: { component: "textarea" }
+                  }
+                ]
+              }
+            ]
+          },
           // ── Valores ──
           {
             name: "values",

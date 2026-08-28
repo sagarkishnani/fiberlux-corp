@@ -343,6 +343,20 @@ fragment AboutParts on About {
     text_en
   }
   missionImage
+  sgsi {
+    __typename
+    badge
+    badge_en
+    title
+    title_en
+    intro
+    intro_en
+    items {
+      __typename
+      text
+      text_en
+    }
+  }
   values {
     __typename
     title

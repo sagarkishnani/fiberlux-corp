@@ -1,5 +1,11 @@
 # SPEC 109 — Reestructuración del portafolio: 5 categorías y 30 soluciones
 
+> **Nota posterior (cambio pedido por el cliente).** La escena `Telefonia` se
+> eliminó: Comunicaciones Unificadas pasó a usar `Waveform` (la que ilustraba
+> Infraestructura) e Infraestructura estrena `Switching`, réplica del artboard
+> "9m · Switching" del documento de animaciones. Lo de abajo describe el estado
+> al cerrar la SPEC 109.
+
 > **Estado:** Implementado
 > **Depende de:** SPEC 89/103/108 (`home.services.items[]` y `SolucionesStack` con sus escenas), SPEC 93/95 (widgets de `ValorSolucion` por slug de categoría), SPEC 105/107 (plantillas de ilustración de `beneficios`), SPEC 80 (i18n `_en` + `tField`), SPEC 81 (índice de búsqueda), SPEC 63 (tags de blog compartidos)
 > **Fecha:** 2026-08-27

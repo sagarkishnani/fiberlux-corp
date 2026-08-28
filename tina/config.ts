@@ -1320,6 +1320,59 @@ export default defineConfig({
             type: "image",
           },
 
+          // ── Política SGSI (ISO 27001) ──
+          {
+            name: "sgsi",
+            label: "Política SGSI (ISO 27001)",
+            description:
+              "Bloque bajo Misión/Visión: certificación, título, introducción y compromisos numerados.",
+            type: "object",
+            fields: [
+              {
+                name: "badge",
+                label: "Etiqueta de certificación",
+                type: "string",
+                description: "Texto del chip superior (ej. ISO 27001). Vacío = se oculta el chip.",
+              },
+              { name: "badge_en", label: "Etiqueta de certificación (EN)", type: "string" },
+              { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
+              {
+                name: "intro",
+                label: "Introducción",
+                type: "rich-text",
+                description: "Párrafo introductorio. Usa negrita para resaltar la razón social.",
+              },
+              { name: "intro_en", label: "Introducción (EN)", type: "rich-text" },
+              {
+                name: "items",
+                label: "Compromisos",
+                type: "object",
+                list: true,
+                description: "La numeración (01, 02, 03…) se genera automáticamente según el orden.",
+                ui: {
+                  itemProps: (item: any) => ({
+                    label: item?.text ? String(item.text).slice(0, 60) : "Compromiso",
+                  }),
+                },
+                fields: [
+                  {
+                    name: "text",
+                    label: "Texto",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                  {
+                    name: "text_en",
+                    label: "Texto (EN)",
+                    type: "string",
+                    ui: { component: "textarea" },
+                  },
+                ],
+              },
+            ],
+          },
+
           // ── Valores ──
           {
             name: "values",

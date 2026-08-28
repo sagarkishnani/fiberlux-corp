@@ -1,11 +1,14 @@
 import { C, u, ret, EscenaSol, type PropsEscena } from "./base";
 
 /**
- * Escena de Servicios gestionados (SPEC 108).
+ * Escena de Comunicaciones Unificadas (SPEC 108).
  *
- * El ecualizador del NOC y el turno del equipo: las barras laten con su propio
- * ritmo —cada una con duración y retraso distintos, para que no respiren todas
+ * El ecualizador y el turno del equipo: las barras laten con su propio ritmo
+ * —cada una con duración y retraso distintos, para que no respiren todas
  * juntas— y debajo un anillo de foco va rotando entre los tres avatares.
+ *
+ * Nació ilustrando Infraestructura; el cliente la movió a Comunicaciones y esa
+ * categoría pasó a `Switching`.
  *
  * Las alturas son una tabla fija y no valores al azar: con `Math.random()` el
  * HTML del servidor y el del cliente no coincidirían.

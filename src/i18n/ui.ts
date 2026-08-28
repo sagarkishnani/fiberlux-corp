@@ -29,10 +29,6 @@ export const UI: Record<Locale, Record<string, string>> = {
     "sol.esc.ciber.r4": "Sesión revalidada · sede Lima",
     "sol.esc.ciber.r5": "Tráfico depurado en el borde",
     "sol.esc.ciber.r6": "Sin incidentes abiertos",
-    // SPEC 109: canales de la escena de Comunicaciones Unificadas.
-    "sol.esc.voz.c1": "Voz",
-    "sol.esc.voz.c2": "Teams",
-    "sol.esc.voz.c3": "WhatsApp",
   },
   en: {
     "nav.audience.empresas": "Companies",
@@ -55,9 +51,6 @@ export const UI: Record<Locale, Record<string, string>> = {
     "sol.esc.ciber.r4": "Session revalidated · Lima site",
     "sol.esc.ciber.r5": "Traffic scrubbed at the edge",
     "sol.esc.ciber.r6": "No open incidents",
-    "sol.esc.voz.c1": "Voice",
-    "sol.esc.voz.c2": "Teams",
-    "sol.esc.voz.c3": "WhatsApp",
   },
 };
 
