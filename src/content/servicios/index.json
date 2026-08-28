@@ -1,6 +1,28 @@
 {
   "breadcrumb": "Soluciones",
   "heading": "Conoce nuestras soluciones",
+  "headingPrefix": "Soluciones para",
+  "headingPrefix_en": "Solutions to",
+  "headingWords": [
+    {
+      "word": "conectar",
+      "word_en": "connect"
+    },
+    {
+      "word": "proteger",
+      "word_en": "protect"
+    },
+    {
+      "word": "escalar",
+      "word_en": "scale"
+    },
+    {
+      "word": "operar",
+      "word_en": "run"
+    }
+  ],
+  "headingSuffix": "tu empresa",
+  "headingSuffix_en": "your business",
   "intro": "Soluciones tecnológicas diseñadas para conectar, proteger y escalar tu operación. Respaldadas por nuestra red privada 100% fibra óptica.",
   "ctaLabel": "Conoce más",
   "heroVideo": "/videos/cubos-soluciones.mp4",

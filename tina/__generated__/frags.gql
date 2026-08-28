@@ -492,7 +492,18 @@ fragment SoporteTecnicoParts on SoporteTecnico {
 fragment ServiciosParts on Servicios {
   __typename
   breadcrumb
+  eyebrow
+  eyebrow_en
   heading
+  headingPrefix
+  headingPrefix_en
+  headingWords {
+    __typename
+    word
+    word_en
+  }
+  headingSuffix
+  headingSuffix_en
   intro
   ctaLabel
   heroImage

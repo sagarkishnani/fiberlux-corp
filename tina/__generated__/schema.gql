@@ -1362,9 +1362,21 @@ type SoporteTecnicoConnection implements Connection {
   edges: [SoporteTecnicoConnectionEdges]
 }
 
+type ServiciosHeadingWords {
+  word: String!
+  word_en: String
+}
+
 type Servicios implements Node & Document {
   breadcrumb: String
+  eyebrow: String
+  eyebrow_en: String
   heading: String
+  headingPrefix: String
+  headingPrefix_en: String
+  headingWords: [ServiciosHeadingWords]
+  headingSuffix: String
+  headingSuffix_en: String
   intro: String
   ctaLabel: String
   heroImage: String
@@ -1379,9 +1391,21 @@ type Servicios implements Node & Document {
   _values: JSON!
 }
 
+input ServiciosHeadingWordsFilter {
+  word: StringFilter
+  word_en: StringFilter
+}
+
 input ServiciosFilter {
   breadcrumb: StringFilter
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
   heading: StringFilter
+  headingPrefix: StringFilter
+  headingPrefix_en: StringFilter
+  headingWords: ServiciosHeadingWordsFilter
+  headingSuffix: StringFilter
+  headingSuffix_en: StringFilter
   intro: StringFilter
   ctaLabel: StringFilter
   heroImage: ImageFilter
@@ -3299,9 +3323,21 @@ input SoporteTecnicoMutation {
   channels: [SoporteTecnicoChannelsMutation]
 }
 
+input ServiciosHeadingWordsMutation {
+  word: String
+  word_en: String
+}
+
 input ServiciosMutation {
   breadcrumb: String
+  eyebrow: String
+  eyebrow_en: String
   heading: String
+  headingPrefix: String
+  headingPrefix_en: String
+  headingWords: [ServiciosHeadingWordsMutation]
+  headingSuffix: String
+  headingSuffix_en: String
   intro: String
   ctaLabel: String
   heroImage: String

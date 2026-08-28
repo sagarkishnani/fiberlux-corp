@@ -1787,10 +1787,23 @@ export type SoporteTecnicoConnection = Connection & {
   edges?: Maybe<Array<Maybe<SoporteTecnicoConnectionEdges>>>;
 };
 
+export type ServiciosHeadingWords = {
+  __typename?: 'ServiciosHeadingWords';
+  word: Scalars['String']['output'];
+  word_en?: Maybe<Scalars['String']['output']>;
+};
+
 export type Servicios = Node & Document & {
   __typename?: 'Servicios';
   breadcrumb?: Maybe<Scalars['String']['output']>;
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   heading?: Maybe<Scalars['String']['output']>;
+  headingPrefix?: Maybe<Scalars['String']['output']>;
+  headingPrefix_en?: Maybe<Scalars['String']['output']>;
+  headingWords?: Maybe<Array<Maybe<ServiciosHeadingWords>>>;
+  headingSuffix?: Maybe<Scalars['String']['output']>;
+  headingSuffix_en?: Maybe<Scalars['String']['output']>;
   intro?: Maybe<Scalars['String']['output']>;
   ctaLabel?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
@@ -1805,9 +1818,21 @@ export type Servicios = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
+export type ServiciosHeadingWordsFilter = {
+  word?: InputMaybe<StringFilter>;
+  word_en?: InputMaybe<StringFilter>;
+};
+
 export type ServiciosFilter = {
   breadcrumb?: InputMaybe<StringFilter>;
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   heading?: InputMaybe<StringFilter>;
+  headingPrefix?: InputMaybe<StringFilter>;
+  headingPrefix_en?: InputMaybe<StringFilter>;
+  headingWords?: InputMaybe<ServiciosHeadingWordsFilter>;
+  headingSuffix?: InputMaybe<StringFilter>;
+  headingSuffix_en?: InputMaybe<StringFilter>;
   intro?: InputMaybe<StringFilter>;
   ctaLabel?: InputMaybe<StringFilter>;
   heroImage?: InputMaybe<ImageFilter>;
@@ -4077,9 +4102,21 @@ export type SoporteTecnicoMutation = {
   channels?: InputMaybe<Array<InputMaybe<SoporteTecnicoChannelsMutation>>>;
 };
 
+export type ServiciosHeadingWordsMutation = {
+  word?: InputMaybe<Scalars['String']['input']>;
+  word_en?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ServiciosMutation = {
   breadcrumb?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   heading?: InputMaybe<Scalars['String']['input']>;
+  headingPrefix?: InputMaybe<Scalars['String']['input']>;
+  headingPrefix_en?: InputMaybe<Scalars['String']['input']>;
+  headingWords?: InputMaybe<Array<InputMaybe<ServiciosHeadingWordsMutation>>>;
+  headingSuffix?: InputMaybe<Scalars['String']['input']>;
+  headingSuffix_en?: InputMaybe<Scalars['String']['input']>;
   intro?: InputMaybe<Scalars['String']['input']>;
   ctaLabel?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
@@ -4660,7 +4697,7 @@ export type ContactPartsFragment = { __typename: 'Contact', breadcrumb?: string 
 
 export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, sectionSubtitle?: string | null, sectionSubtitle_en?: string | null, channels?: Array<{ __typename: 'SoporteTecnicoChannels', type?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, defaultOpen?: boolean | null, rows?: Array<{ __typename: 'SoporteTecnicoChannelsRows', label?: string | null, value?: string | null, optionLabel?: string | null, message?: string | null } | null> | null } | null> | null };
 
-export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null };
+export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, heading?: string | null, headingPrefix?: string | null, headingPrefix_en?: string | null, headingSuffix?: string | null, headingSuffix_en?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, headingWords?: Array<{ __typename: 'ServiciosHeadingWords', word: string, word_en?: string | null } | null> | null };
 
 export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4822,7 +4859,7 @@ export type ServiciosQueryVariables = Exact<{
 }>;
 
 
-export type ServiciosQuery = { __typename?: 'Query', servicios: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type ServiciosQuery = { __typename?: 'Query', servicios: { __typename: 'Servicios', id: string, breadcrumb?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, heading?: string | null, headingPrefix?: string | null, headingPrefix_en?: string | null, headingSuffix?: string | null, headingSuffix_en?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, headingWords?: Array<{ __typename: 'ServiciosHeadingWords', word: string, word_en?: string | null } | null> | null } };
 
 export type ServiciosConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4834,7 +4871,7 @@ export type ServiciosConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiciosConnectionQuery = { __typename?: 'Query', serviciosConnection: { __typename?: 'ServiciosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiciosConnectionEdges', cursor: string, node?: { __typename: 'Servicios', id: string, breadcrumb?: string | null, heading?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type ServiciosConnectionQuery = { __typename?: 'Query', serviciosConnection: { __typename?: 'ServiciosConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiciosConnectionEdges', cursor: string, node?: { __typename: 'Servicios', id: string, breadcrumb?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, heading?: string | null, headingPrefix?: string | null, headingPrefix_en?: string | null, headingSuffix?: string | null, headingSuffix_en?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, headingWords?: Array<{ __typename: 'ServiciosHeadingWords', word: string, word_en?: string | null } | null> | null } | null } | null> | null } };
 
 export type CasosDeExitoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5547,7 +5584,18 @@ export const ServiciosPartsFragmentDoc = gql`
     fragment ServiciosParts on Servicios {
   __typename
   breadcrumb
+  eyebrow
+  eyebrow_en
   heading
+  headingPrefix
+  headingPrefix_en
+  headingWords {
+    __typename
+    word
+    word_en
+  }
+  headingSuffix
+  headingSuffix_en
   intro
   ctaLabel
   heroImage

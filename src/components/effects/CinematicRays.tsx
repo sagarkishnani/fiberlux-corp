@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, createElement } from "react";
+import {
+  createElement,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import * as THREE from "three";
 import {
@@ -115,6 +122,16 @@ interface Props {
   iconKeys?: string[];
   signalReady?: boolean;
   onUnsupported?: () => void;
+}
+
+/**
+ * API imperativa del efecto (SPEC 110): permite al consumidor disparar la misma
+ * onda de luz que produce el click, desde otro elemento (p. ej. al pasar el
+ * mouse por un tile de categoría del hero). `u`/`v` van normalizados [0..1]
+ * sobre la caja del efecto, con el origen arriba-izquierda.
+ */
+export interface CinematicRaysHandle {
+  pulse: (u: number, v: number) => void;
 }
 
 const rand = (min: number, max: number) => min + Math.random() * (max - min);
@@ -411,14 +428,23 @@ interface Card {
   baseOpacity: number;
 }
 
-export default function CinematicRays({
-  className,
-  iconKeys,
-  signalReady,
-  onUnsupported,
-}: Props) {
+const CinematicRays = forwardRef<CinematicRaysHandle, Props>(function CinematicRays(
+  { className, iconKeys, signalReady, onUnsupported },
+  ref
+) {
   const rootRef = useRef<HTMLDivElement>(null);
   const glMountRef = useRef<HTMLDivElement>(null);
+  /* Disparador de la onda de luz, cableado dentro del efecto WebGL. Queda en un
+     ref porque el handle imperativo se crea antes de que exista la escena. */
+  const pulseRef = useRef<((u: number, v: number) => void) | null>(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      pulse: (u: number, v: number) => pulseRef.current?.(u, v),
+    }),
+    []
+  );
 
   const keys = useMemo(() => {
     const k = (iconKeys || []).filter((s) => s && ICONS[s]);
@@ -707,17 +733,22 @@ export default function CinematicRays({
       }
     }
 
-    // Onda de luz al click (shockwave).
+    // Onda de luz al click (shockwave) — y, vía `pulse()`, desde el consumidor.
     let rippleIdx = 0;
-    const onDown = (e: PointerEvent) => {
+    function emitRipple(u: number, v: number) {
       if (reduce) return;
-      const rect = root!.getBoundingClientRect();
-      const u = (e.clientX - rect.left) / Math.max(1, rect.width);
-      const v = (e.clientY - rect.top) / Math.max(1, rect.height);
       rippleUniforms.uRipplePos.value[rippleIdx].set(u, 1 - v);
       rippleUniforms.uRippleStart.value[rippleIdx] = rayUniforms.uTime.value;
       rippleIdx = (rippleIdx + 1) % 3;
       if (!raf && visible) raf = requestAnimationFrame(frame);
+    }
+    pulseRef.current = emitRipple;
+    const onDown = (e: PointerEvent) => {
+      const rect = root!.getBoundingClientRect();
+      emitRipple(
+        (e.clientX - rect.left) / Math.max(1, rect.width),
+        (e.clientY - rect.top) / Math.max(1, rect.height)
+      );
     };
     root.addEventListener("pointerdown", onDown, { passive: true });
     root.style.pointerEvents = "auto";
@@ -831,6 +862,7 @@ export default function CinematicRays({
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      pulseRef.current = null;
       window.removeEventListener("pointermove", onPointerMove);
       root.removeEventListener("pointerdown", onDown);
       root.style.pointerEvents = "";
@@ -869,4 +901,6 @@ export default function CinematicRays({
       />
     </div>
   );
-}
+});
+
+export default CinematicRays;

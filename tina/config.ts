@@ -1818,7 +1818,50 @@ export default defineConfig({
         fields: [
           // ── Hero ──
           { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          {
+            name: "eyebrow",
+            label: "Antetítulo del hero",
+            type: "string",
+            description:
+              "Línea corta en tipografía técnica sobre el título (ej. \"5 CATEGORÍAS · RED 100% FIBRA\"). Vacío = no se muestra.",
+          },
+          { name: "eyebrow_en", label: "Antetítulo del hero (EN)", type: "string" },
           { name: "heading", label: "Título principal (H1)", type: "string", ui: { component: "textarea" } },
+
+          /* Titular cinético (SPEC 110): si hay al menos una palabra en
+             `headingWords`, el H1 se arma como
+             `headingPrefix` + palabra que rota + `headingSuffix`.
+             Si la lista está vacía se usa `heading` tal cual. */
+          {
+            name: "headingPrefix",
+            label: "Titular cinético · primera línea",
+            type: "string",
+            description:
+              "Arranque del titular, antes de la palabra que rota (ej. \"Soluciones para\"). Solo se usa si hay palabras en la lista de abajo.",
+          },
+          { name: "headingPrefix_en", label: "Titular cinético · primera línea (EN)", type: "string" },
+          {
+            name: "headingWords",
+            label: "Titular cinético · palabras que rotan",
+            type: "object",
+            list: true,
+            description:
+              "Verbos que se van alternando en el titular (ej. conectar, proteger, escalar). Vacío = titular fijo.",
+            ui: {
+              itemProps: (item) => ({ label: item?.word || "Palabra" }),
+            },
+            fields: [
+              { name: "word", label: "Palabra", type: "string", isTitle: true, required: true },
+              { name: "word_en", label: "Palabra (EN)", type: "string" },
+            ],
+          },
+          {
+            name: "headingSuffix",
+            label: "Titular cinético · última línea",
+            type: "string",
+            description: "Cierre del titular, después de la palabra que rota (ej. \"tu empresa\").",
+          },
+          { name: "headingSuffix_en", label: "Titular cinético · última línea (EN)", type: "string" },
           {
             name: "intro",
             label: "Párrafo introductorio",

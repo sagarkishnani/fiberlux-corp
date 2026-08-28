@@ -1715,7 +1715,46 @@ var config_default = defineConfig({
         fields: [
           // ── Hero ──
           { name: "breadcrumb", label: "Migaja de pan (breadcrumb)", type: "string" },
+          {
+            name: "eyebrow",
+            label: "Antet\xEDtulo del hero",
+            type: "string",
+            description: 'L\xEDnea corta en tipograf\xEDa t\xE9cnica sobre el t\xEDtulo (ej. "5 CATEGOR\xCDAS \xB7 RED 100% FIBRA"). Vac\xEDo = no se muestra.'
+          },
+          { name: "eyebrow_en", label: "Antet\xEDtulo del hero (EN)", type: "string" },
           { name: "heading", label: "T\xEDtulo principal (H1)", type: "string", ui: { component: "textarea" } },
+          /* Titular cinético (SPEC 110): si hay al menos una palabra en
+             `headingWords`, el H1 se arma como
+             `headingPrefix` + palabra que rota + `headingSuffix`.
+             Si la lista está vacía se usa `heading` tal cual. */
+          {
+            name: "headingPrefix",
+            label: "Titular cin\xE9tico \xB7 primera l\xEDnea",
+            type: "string",
+            description: 'Arranque del titular, antes de la palabra que rota (ej. "Soluciones para"). Solo se usa si hay palabras en la lista de abajo.'
+          },
+          { name: "headingPrefix_en", label: "Titular cin\xE9tico \xB7 primera l\xEDnea (EN)", type: "string" },
+          {
+            name: "headingWords",
+            label: "Titular cin\xE9tico \xB7 palabras que rotan",
+            type: "object",
+            list: true,
+            description: "Verbos que se van alternando en el titular (ej. conectar, proteger, escalar). Vac\xEDo = titular fijo.",
+            ui: {
+              itemProps: (item) => ({ label: item?.word || "Palabra" })
+            },
+            fields: [
+              { name: "word", label: "Palabra", type: "string", isTitle: true, required: true },
+              { name: "word_en", label: "Palabra (EN)", type: "string" }
+            ]
+          },
+          {
+            name: "headingSuffix",
+            label: "Titular cin\xE9tico \xB7 \xFAltima l\xEDnea",
+            type: "string",
+            description: 'Cierre del titular, despu\xE9s de la palabra que rota (ej. "tu empresa").'
+          },
+          { name: "headingSuffix_en", label: "Titular cin\xE9tico \xB7 \xFAltima l\xEDnea (EN)", type: "string" },
           {
             name: "intro",
             label: "P\xE1rrafo introductorio",
