@@ -250,10 +250,12 @@ export default function CatalogoSolucionesReact({
                 {/* Luz que sigue al cursor; su posición llega por --mx/--my. */}
                 <span aria-hidden="true" className="catalog-spot" />
 
-                {/* Cabecera: título a la izquierda, ícono a la derecha. */}
+                {/* Cabecera: título a la izquierda, ícono a la derecha.
+                    El título se topa en ~16ch para que los nombres largos
+                    quiebren solos y no lleguen a rozar el ícono. */}
                 <div className="relative z-10 flex items-start justify-between gap-4">
                   <h3
-                    className="text-[18px] font-medium leading-snug text-greyscale-white lg:text-[20px]"
+                    className="max-w-[15ch] text-[18px] font-medium leading-snug text-greyscale-white lg:max-w-[17ch] lg:text-[20px]"
                     data-tina-field={tinaField(item as any, "title")}
                   >
                     {iTitle}

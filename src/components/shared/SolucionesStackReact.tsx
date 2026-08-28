@@ -111,6 +111,23 @@ export default function SolucionesStackReact({
   const [sinWebgl, setSinWebgl] = useState(false);
   const alFallarWebgl = useCallback(() => setSinWebgl(true), []);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  /* Riel de avance compacto (mobile): la barra se rellena desde CSS leyendo
+     `--sol-p`, así el bucle de scroll no dispara renders de React. */
+  const barraRef = useRef<HTMLDivElement | null>(null);
+  const [pillIndex, setPillIndex] = useState(0);
+  /* El bucle sólo corre donde se usa: por debajo de `lg` no hay rail lateral y
+     es donde vive el indicador. */
+  const [compacto, setCompacto] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia?.("(max-width: 1023.98px)");
+    if (!mq) return;
+    const sync = () => setCompacto(mq.matches);
+    sync();
+    mq.addEventListener?.("change", sync);
+    return () => mq.removeEventListener?.("change", sync);
+  }, []);
 
   /* ── Tooltip "Ver más" con delay + lag (portado de SPEC 89/103) ──
      Solo en punteros finos: en táctil no hay hover que lo dispare y quedaría
@@ -223,6 +240,97 @@ export default function SolucionesStackReact({
     };
   }, [N]);
 
+  /* ── Avance continuo con el scroll (mobile) ──
+     En vez de saltar de card en card, se mide dónde cae el centro del viewport
+     entre los centros de las cards: sale un índice con decimales (2.37 = a un
+     tercio de camino entre la tercera y la cuarta). Ese valor se suaviza con un
+     lerp por frame — de ahí la sensación de arrastre, tipo scroll jack — y se
+     publica como custom property: la barra crece sola y cada card se enciende
+     según lo cerca que esté del centro. Nada de esto pasa por el estado de
+     React salvo el índice redondeado que rotula la píldora. */
+  useEffect(() => {
+    if (N === 0 || !compacto) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    let raf = 0;
+    let suave = -1; // -1 = aún sin primer valor: engancha sin animar desde 0
+
+    /** Índice fraccional de la card que ocupa el centro del viewport. */
+    const objetivo = () => {
+      const nodes = cardRefs.current.filter(Boolean) as HTMLElement[];
+      if (nodes.length === 0) return 0;
+      const centro = window.innerHeight / 2;
+      const centros = nodes.map((n) => {
+        const r = n.getBoundingClientRect();
+        return r.top + r.height / 2;
+      });
+      if (centro <= centros[0]) return 0;
+      const ultimo = centros.length - 1;
+      if (centro >= centros[ultimo]) return ultimo;
+      for (let i = 0; i < ultimo; i++) {
+        if (centro >= centros[i] && centro <= centros[i + 1]) {
+          const tramo = Math.max(1, centros[i + 1] - centros[i]);
+          return i + (centro - centros[i]) / tramo;
+        }
+      }
+      return 0;
+    };
+
+    const frame = () => {
+      const t = objetivo();
+      if (suave < 0 || reduce) suave = t;
+      else {
+        suave += (t - suave) * 0.14;
+        if (Math.abs(t - suave) < 0.001) suave = t;
+      }
+
+      // Barra: la primera card ya deja un tramo encendido, la última la llena.
+      barraRef.current?.style.setProperty(
+        "--sol-p",
+        String(N > 1 ? Math.min(1, (suave + 1) / N) : 1),
+      );
+
+      // Cercanía de cada card al centro (1 = centrada, 0 = lejos).
+      const vh = window.innerHeight;
+      (cardRefs.current.filter(Boolean) as HTMLElement[]).forEach((n) => {
+        const r = n.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - vh / 2);
+        const cerca = Math.max(0, Math.min(1, 1 - d / (vh * 0.6)));
+        n.style.setProperty("--sol-cerca", cerca.toFixed(3));
+      });
+
+      setPillIndex((prev) => {
+        const idx = Math.min(N - 1, Math.max(0, Math.round(suave)));
+        return prev === idx ? prev : idx;
+      });
+
+      raf = requestAnimationFrame(frame);
+    };
+
+    /* Fuera de pantalla no hay nada que animar: el bucle se apaga. */
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !raf) raf = requestAnimationFrame(frame);
+        else if (!entry.isIntersecting && raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "150px 0px" },
+    );
+    io.observe(section);
+
+    return () => {
+      io.disconnect();
+      if (raf) cancelAnimationFrame(raf);
+      (cardRefs.current.filter(Boolean) as HTMLElement[]).forEach((n) =>
+        n.style.removeProperty("--sol-cerca"),
+      );
+    };
+  }, [N, compacto]);
+
   /** Lleva a una card con el scroll suave del sitio (Lenis), si está. */
   const goTo = (i: number) => (e: React.MouseEvent) => {
     const target = cardRefs.current[i];
@@ -262,6 +370,7 @@ export default function SolucionesStackReact({
   return (
     <section
       id="soluciones-stack"
+      ref={sectionRef}
       className="relative bg-greyscale-darkest scroll-mt-24"
     >
       {/* ── Fondo ──
@@ -354,6 +463,69 @@ export default function SolucionesStackReact({
 
           {/* Cards apiladas. */}
           <div className="flex flex-col gap-8 md:gap-12 lg:gap-16">
+            {/* ── Indicador de avance (mobile/tablet) ──
+                En pantallas chicas el rail de categorías está oculto y las
+                cuatro cards se leían como un scroll plano, sin saber por dónde
+                se va. Esta píldora se queda pegada arriba mientras la sección
+                pasa: nombre de la categoría en curso, contador y una barra de
+                cuatro tramos que se van encendiendo. Cada tramo es además un
+                atajo para saltar a esa card. */}
+            <div className="sticky top-4 z-20 -mb-2 lg:hidden">
+              <div className="rounded-2xl border border-white/10 bg-[#0d0b0d]/85 px-4 py-3 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.95)] backdrop-blur-md">
+                <div className="flex items-center gap-2.5">
+                  {(() => {
+                    const ActivoIcon = iconFor(items[pillIndex]?.tabIcon);
+                    return (
+                      <ActivoIcon
+                        key={`ico-${pillIndex}`}
+                        className="sol-pill-in h-4 w-4 shrink-0 text-[#c65fac]"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      />
+                    );
+                  })()}
+                  <span
+                    key={`tit-${pillIndex}`}
+                    className="sol-pill-in min-w-0 flex-1 truncate text-[13px] leading-none text-white/90"
+                  >
+                    {shortLabel(items[pillIndex])}
+                  </span>
+                  <span className="font-mono text-[11px] leading-none tabular-nums text-white/45">
+                    {String(pillIndex + 1).padStart(2, "0")}/{String(N).padStart(2, "0")}
+                  </span>
+                </div>
+
+                {/* Barra: una sola pista continua. El relleno lo gobierna
+                    `--sol-p` (frame a frame, con lerp) y las marcas sólo
+                    separan visualmente una categoría de la siguiente. */}
+                <div ref={barraRef} className="relative mt-3 h-1 w-full rounded-full bg-white/[0.12]">
+                  <span aria-hidden="true" className="sol-barra-fill absolute inset-y-0 left-0 rounded-full" />
+                  {Array.from({ length: Math.max(0, N - 1) }).map((_, i) => (
+                    <span
+                      key={i}
+                      aria-hidden="true"
+                      className="absolute inset-y-0 w-[2px] bg-[#0d0b0d]"
+                      style={{ left: `calc(${((i + 1) / N) * 100}% - 1px)` }}
+                    />
+                  ))}
+                  {/* Atajos: cada tramo salta a su card. El `before` estira el
+                      área de toque más allá de los 4px de la barra. */}
+                  <div className="absolute inset-0 flex">
+                    {items.map((it2, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={goTo(i)}
+                        aria-label={shortLabel(it2)}
+                        aria-current={i === pillIndex ? "true" : undefined}
+                        className="relative h-full flex-1 before:absolute before:inset-x-0 before:-inset-y-3 before:content-['']"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {items.map((it, i) => (
               <article
                 key={i}
@@ -362,7 +534,7 @@ export default function SolucionesStackReact({
                   cardRefs.current[i] = el;
                 }}
                 data-reveal="up"
-                className="scroll-mt-28 rounded-xl border border-white/[0.08] bg-black/25"
+                className="sol-card scroll-mt-28 rounded-xl border border-white/[0.08] bg-black/25"
               >
                 <div className="flex flex-col md:grid md:grid-cols-2">
                   {/* Texto. */}
@@ -440,6 +612,52 @@ export default function SolucionesStackReact({
       {/* Animaciones de las escenas: van aquí porque `global.css` no se
           empaqueta en este repo (mismo motivo que en Beneficios). */}
       <style dangerouslySetInnerHTML={{ __html: CSS_SOLUCIONES }} />
+
+      {/* Chrome de las cards en mobile/tablet. Doble clase (`.sol-card.sol-card`)
+          para ganarle en especificidad a las utilidades de Tailwind sin recurrir
+          a `!important`. Desktop se queda como estaba: allí el rail lateral ya
+          dice dónde estás y el borde tenue es parte del diseño. */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+@media (max-width: 1023.98px) {
+  /* Sobre el fondo casi negro un borde al 8% desaparecía y la card se leía
+     como texto suelto: sube el borde, el relleno pasa a degradado y una
+     sombra baja la despega del fondo. */
+  .sol-card.sol-card {
+    border-color: rgba(255,255,255,0.14);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.012) 100%),
+      rgba(10,10,10,0.55);
+    /* --sol-cerca (0→1) lo escribe el bucle de scroll: la card se enciende
+       de forma continua conforme se acerca al centro del viewport, en vez de
+       saltar entre estados. */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,calc(0.06 + 0.04 * var(--sol-cerca, 0))),
+      0 0 0 1px rgba(198,95,172, calc(0.42 * var(--sol-cerca, 0))),
+      0 26px 60px -32px rgba(150,35,122, calc(0.55 * var(--sol-cerca, 0))),
+      0 18px 44px -30px rgba(0,0,0,0.95);
+  }
+}
+/* Relleno de la barra. Sin transición CSS a propósito: la suavidad ya viene
+   del lerp por frame; encadenar las dos lo dejaría flotando por detrás. */
+.sol-barra-fill {
+  width: calc(var(--sol-p, 0) * 100%);
+  background: linear-gradient(90deg, #96237A 0%, #d246ac 100%);
+  box-shadow: 0 0 12px rgba(210,70,172,0.45);
+}
+/* Rótulo de la píldora: entra con un fundido corto al cambiar de categoría. */
+.sol-pill-in { animation: solPillIn .38s cubic-bezier(.22,.61,.36,1) both; }
+@keyframes solPillIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sol-pill-in { animation: none; }
+}
+`,
+        }}
+      />
 
       {/* Tooltip "Ver más": sigue al cursor con retraso. */}
       <div
