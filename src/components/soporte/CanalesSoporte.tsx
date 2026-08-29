@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { ComponentType } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { FaPlus, FaWhatsapp, FaEnvelope, FaPhone } from "react-icons/fa6";
@@ -39,6 +39,9 @@ function rowHref(type: string | null | undefined, value: string, message?: strin
 const TRANSITION =
   "flex-grow 450ms cubic-bezier(0.4,0,0.2,1), flex-basis 450ms cubic-bezier(0.4,0,0.2,1)";
 
+/** Alto mínimo del acordeón de escritorio: por debajo el bloque se ve raquítico. */
+const ALTO_MIN = 560;
+
 export default function CanalesSoporte({
   query,
   variables,
@@ -56,6 +59,32 @@ export default function CanalesSoporte({
     return idx >= 0 ? idx : 0;
   })();
   const [openIndex, setOpenIndex] = useState(initialOpen);
+
+  /* ── Alto del acordeón de escritorio ──────────────────────────────────────
+     Antes era fijo (560px): el contenido que no entraba se recortaba en
+     silencio, así que agregar filas desde el CMS reventaba el panel. Ahora lo
+     dicta el contenido — se mide el panel abierto y ese alto se aplica al
+     contenedor, que es quien debe ser alto para que las pestañas verticales
+     lleguen hasta abajo. Va animado para que al cambiar de canal el bloque
+     crezca o se encoja en vez de saltar, y ALTO_MIN conserva la proporción del
+     diseño cuando el contenido es corto.
+
+     El ResizeObserver es lo que lo hace robusto de verdad: recalcula también
+     cuando cambia el ancho de la ventana (una fila que pasa a dos líneas) o
+     cuando terminan de cargar las tipografías. */
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const [altoPanel, setAltoPanel] = useState<number | null>(null);
+
+  useEffect(() => {
+    const el = panelRef.current;
+    if (!el) return;
+    const medir = () => setAltoPanel(el.offsetHeight);
+    medir();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(medir);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [openIndex, locale, page]);
 
   if (!page || channels.length === 0) return null;
 
@@ -111,7 +140,7 @@ export default function CanalesSoporte({
 
   /* ── Desktop expanded panel content ── */
   const renderExpanded = (channel: Channel) => (
-    <div className="p-8 lg:p-10 w-full max-w-full">
+    <div ref={panelRef} className="p-8 lg:p-10 w-full max-w-full">
       <h3
         className="text-[24px] lg:text-[28px] font-medium text-greyscale-darkest mb-2 whitespace-nowrap"
         data-tina-field={tinaField(channel, "title")}
@@ -150,7 +179,10 @@ export default function CanalesSoporte({
         {/* ════ Desktop — horizontal accordion (effortel-style width animation) ════ */}
         <div
           className="hidden lg:flex overflow-hidden rounded-[24px] bg-[#FCF4F9] border border-brand-purple/[0.08]"
-          style={{ height: 560 }}
+          style={{
+            height: Math.max(ALTO_MIN, altoPanel ?? 0),
+            transition: "height 450ms cubic-bezier(0.4,0,0.2,1)",
+          }}
         >
           {channels.map((channel, i) => {
             const isOpen = i === openIndex;

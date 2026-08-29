@@ -38,13 +38,34 @@ const SALIDA_MS = 340;
    mientras la palabra subía (el corte se notaba aunque en reposo la letra
    entrara justa). Sin máscara no hay borde que recorte; el recorrido es corto y
    la opacidad hace el trabajo, que además es lo que pidió el cliente: más suave.
-   El relevo va ESCALONADO (la que entra arranca con retardo, ya casi apagada la
-   que sale): si se cruzan a media opacidad se leen las dos encimadas. */
+
+   Dos cosas que el cliente veía como "un salto de margen o padding" al cambiar
+   de palabra, y que aquí se corrigen:
+
+   1) La caja de .fbx-verbo mide lo que mide la palabra, así que al relevar
+      pasaba de golpe de un ancho a otro. Ahora el ancho se mide de antemano
+      (ver `useAnchosPalabras`) y se anima: la caja se ensancha o se encoge
+      acompañando al relevo en vez de saltar.
+   2) La palabra que sale es `position:absolute` y estaba anclada con `left:0`
+      SOBRE LA CAJA NUEVA, que ya tenía el ancho de la palabra entrante: al
+      arrancar la animación se desplazaba lateralmente decenas de píxeles (el
+      "tirón"). Ahora se centra sobre la caja, que es donde estaba, y sólo se
+      desvanece hacia arriba.
+
+   El desplazamiento vertical va en la propiedad `translate` — no en
+   `transform` — para poder combinarlo con el `translateX(-50%)` que centra la
+   palabra saliente sin que uno pise al otro.
+
+   Los tiempos también se solapan más que antes: con el escalonado anterior
+   (salida rápida + entrada con 170ms de retardo) había ~150ms en los que no se
+   veía NINGUNA palabra y la línea parecía vaciarse. Ahora la que entra arranca
+   mientras la que sale todavía se apaga. */
 const CSS_TITULAR = `
 .fbx-verbo {
   display: inline-block;
   position: relative;
   vertical-align: bottom;
+  transition: width 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .fbx-verbo-in,
 .fbx-verbo-out {
@@ -64,26 +85,80 @@ const CSS_TITULAR = `
 }
 .fbx-verbo-out {
   position: absolute;
-  left: 0;
+  left: 50%;
   top: 0;
+  transform: translateX(-50%);
   white-space: nowrap;
-  animation: fbx-verbo-sale 300ms cubic-bezier(0.4, 0, 0.8, 0.3) forwards;
+  animation: fbx-verbo-sale 300ms cubic-bezier(0.33, 0, 0.67, 1) forwards;
 }
 .fbx-verbo-in {
-  animation: fbx-verbo-entra 580ms cubic-bezier(0.22, 0.61, 0.36, 1) 170ms both;
+  white-space: nowrap;
+  animation: fbx-verbo-entra 460ms cubic-bezier(0.22, 0.61, 0.36, 1) 110ms both;
 }
 @keyframes fbx-verbo-sale {
-  to { transform: translateY(-0.18em); opacity: 0; }
+  to { translate: 0 -0.18em; opacity: 0; }
 }
 @keyframes fbx-verbo-entra {
-  from { transform: translateY(0.18em); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { translate: 0 0.18em; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
 }
+/* Medidor: una copia oculta de cada palabra para conocer su ancho antes de
+   mostrarla. Va absoluta y sin visibilidad, así que no ocupa ni se lee. */
+.fbx-verbo-medidor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.fbx-verbo-medidor > span { display: inline-block; }
 @media (prefers-reduced-motion: reduce) {
+  .fbx-verbo { transition: none; }
   .fbx-verbo-in { animation: none; }
   .fbx-verbo-out { display: none; }
 }
 `;
+
+/**
+ * Ancho en píxeles de cada palabra del titular, medido sobre una copia oculta.
+ *
+ * Hace falta para poder ANIMAR el ancho de la caja del verbo: `width: auto` no
+ * es interpolable, así que sin un número concreto el relevo sólo puede saltar
+ * de un ancho a otro. Se mide después de `document.fonts.ready` porque con la
+ * fuente de sistema los anchos salen distintos a los de Poppins, y se revisa
+ * con un ResizeObserver: el titular cambia de tamaño por breakpoint, y con él
+ * el ancho de cada palabra.
+ */
+function useAnchosPalabras(palabras: string[]) {
+  const medidorRef = useRef<HTMLSpanElement>(null);
+  const [anchos, setAnchos] = useState<number[] | null>(null);
+
+  useEffect(() => {
+    const el = medidorRef.current;
+    if (!el || palabras.length === 0) return;
+
+    const medir = () => {
+      const ns = Array.from(el.children).map((c) => (c as HTMLElement).getBoundingClientRect().width);
+      setAnchos((prev) =>
+        prev && prev.length === ns.length && prev.every((v, i) => Math.abs(v - ns[i]) < 0.5)
+          ? prev
+          : ns
+      );
+    };
+
+    medir();
+    (document as any).fonts?.ready?.then(medir);
+
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(medir);
+    ro.observe(el);
+    return () => ro.disconnect();
+    // `palabras` se compara por contenido: es un array nuevo en cada render.
+  }, [palabras.join("\u0000")]);
+
+  return { medidorRef, anchos };
+}
 
 export default function HeroServiciosReact({
   query,
@@ -108,6 +183,7 @@ export default function HeroServiciosReact({
   const [idx, setIdx] = useState(0);
   const [saliendo, setSaliendo] = useState<number | null>(null);
   const total = palabras.length;
+  const { medidorRef, anchos } = useAnchosPalabras(palabras);
 
   useEffect(() => {
     if (total < 2) return;
@@ -253,7 +329,14 @@ export default function HeroServiciosReact({
                 {/* El verbo va en su propia línea: al cambiar de ancho no
                     arrastra al resto del titular. */}
                 <span className="block">
-                  <span className="fbx-verbo" ref={verboRef}>
+                  <span
+                    className="fbx-verbo"
+                    ref={verboRef}
+                    /* Sin medición todavía (SSR, primer pintado) la caja se
+                       ajusta sola al texto: el ancho explícito sólo entra
+                       cuando ya se puede animar hacia el siguiente. */
+                    style={anchos?.[idx] ? { width: anchos[idx] } : undefined}
+                  >
                     {saliendo !== null && saliendo !== idx && (
                       <span className="fbx-verbo-out" aria-hidden="true">
                         {palabras[saliendo]}
@@ -262,6 +345,11 @@ export default function HeroServiciosReact({
                     <span className="fbx-verbo-in" key={idx}>
                       {palabras[idx]}
                     </span>
+                  </span>
+                  <span className="fbx-verbo-medidor" ref={medidorRef} aria-hidden="true">
+                    {palabras.map((p, i) => (
+                      <span key={i}>{p}</span>
+                    ))}
                   </span>
                 </span>
                 {sufijo && <span className="block">{sufijo}</span>}

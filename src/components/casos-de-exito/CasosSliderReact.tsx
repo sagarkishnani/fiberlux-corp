@@ -39,10 +39,15 @@ export default function CasosSliderReact({
 
   const enough = items.length > 1;
 
-  /* Embla slider: left-aligned cards (obs10), one per arrow, autoplay w/ loop. */
+  /* Embla slider: la card activa va CENTRADA en el encuadre, con la anterior y
+     la siguiente asomando por igual a cada lado (obs. cliente). Antes iba
+     alineada al inicio: la card quedaba pegada al borde izquierdo y sólo se
+     veía un trozo de la siguiente, así que el carrusel se leía descentrado.
+     El loop es lo que garantiza la simetría también en el primer y el último
+     caso — sin él, en los extremos falta el vecino de un lado. */
   const slider = useSlider({
-    align: "start",
-    loop: false,
+    align: "center",
+    loop: true,
     autoplay: autoplay && enough,
     intervalMs,
     effect,
@@ -50,6 +55,15 @@ export default function CasosSliderReact({
   const { activeIndex } = slider;
 
   const hasItems = items.length > 0;
+
+  /* ¿Embla ya tomó las medidas? Hasta que no lo hace, el carrusel se pinta con
+     el HTML crudo: los slides en fila desde el borde izquierdo, sin el
+     desplazamiento que centra la card activa. Al hidratar, Embla escribe ese
+     `transform` de golpe y la card SALTA de la izquierda al centro — que es lo
+     que se veía al refrescar. Con esto el bloque se mantiene invisible hasta que
+     está colocado y entra con un fundido corto. `scrollSnaps` se llena en el
+     mismo momento en que el motor termina de inicializarse. */
+  const colocado = slider.scrollSnaps.length > 0;
 
   const arrowsPill = (
     <SliderArrows
@@ -97,15 +111,26 @@ export default function CasosSliderReact({
           )}
           <div
             ref={slider.viewportRef}
-            className="overflow-hidden pt-2 pb-3 select-none casos-carousel"
+            /* El canal entre cards va como padding de cada slide (no como `gap`
+               del contenedor) y el viewport lo compensa con el `-mx`
+               equivalente: así Embla mide el slide CON su separación y el bucle
+               puede reubicar el vecino del otro extremo. Con `gap` el motor
+               medía 880 y movía 936, y en el primer y el último caso el hueco
+               lateral se quedaba vacío.
+
+               El desborde no puede pasarse del gutter del site-container (24px
+               en móvil, 40px desde md) o aparece scroll horizontal en la
+               página, de ahí los dos valores. */
+            data-listo={colocado ? "1" : undefined}
+            className="-mx-3 md:-mx-7 overflow-hidden pt-2 pb-3 select-none casos-carousel"
             style={{ cursor: hasItems ? "grab" : "default" }}
           >
-          <div className="flex gap-14">
+          <div className="flex">
             {hasItems ? (
               items.map((item, i) => (
                 <div
                   key={i}
-                  className={`caso-slide shrink-0 w-full max-w-[880px] transition-opacity duration-300 ${
+                  className={`caso-slide shrink-0 w-full max-w-[936px] px-3 md:px-7 transition-opacity duration-300 ${
                     i === activeIndex ? "opacity-100" : "opacity-40"
                   }`}
                 >
@@ -118,7 +143,7 @@ export default function CasosSliderReact({
                 </div>
               ))
             ) : (
-              <div className="caso-slide shrink-0 w-full max-w-[880px]">
+              <div className="caso-slide shrink-0 w-full max-w-[936px] px-3 md:px-7">
                 <div className="bg-white/[0.04] border border-white/10 h-[400px] flex items-center justify-center text-white/20 text-sm">
                   Casos de éxito — próximamente
                 </div>
@@ -169,6 +194,66 @@ export default function CasosSliderReact({
       <style>{`
         .casos-carousel { scrollbar-width: none; -ms-overflow-style: none; -webkit-overflow-scrolling: touch; }
         .casos-carousel::-webkit-scrollbar { display: none; }
+
+        /* Entrada sin salto: invisible hasta que Embla centra la card.
+           El keyframe con retardo es la red de seguridad — si el JS no llega a
+           ejecutarse (isla que no hidrata, error de red), el carrusel aparece
+           igual a los 2s en vez de quedarse en negro para siempre. */
+        .casos-carousel {
+          opacity: 0;
+          animation: casos-aparece 0.01s linear 2s forwards;
+        }
+        .casos-carousel[data-listo="1"] {
+          opacity: 1;
+          animation: none;
+          transition: opacity 260ms ease-out;
+        }
+        @keyframes casos-aparece { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .casos-carousel[data-listo="1"] { transition: none; }
+        }
+
+        /* ── Cantos desvanecidos (obs. cliente) ───────────────────────────
+           Los casos vecinos asomaban a cada lado cortados en seco por el
+           overflow-hidden del viewport: una línea recta vertical a media card.
+           Esta máscara los funde hacia afuera.
+
+           El ancho del degradado NO es fijo: tiene que terminar exactamente
+           donde empieza la card activa, o le comería el borde. Esa distancia
+           cambia con el ancho de la ventana — la card mide 880px como mucho, y
+           el sobrante del viewport se reparte a los lados — así que se calcula:
+
+             (ancho del viewport - 936) / 2  +  el px del slide
+
+           936 = 880 de card + 56 de canal, que es lo que mide un slide. Cuando
+           la ventana es angosta el viewport es más chico que el slide, el
+           primer término se vuelve negativo y el max() deja sólo el px del
+           slide: la card sigue intacta y el desvanecido queda igual de justo.
+
+           Así el vecino se desvanece a lo largo de TODO su trozo visible (~126px
+           a 1512px) y la card central no pierde ni un píxel de nitidez. */
+        .casos-carousel {
+          --casos-fade: 12px;
+          -webkit-mask-image: linear-gradient(90deg,
+            transparent 0,
+            rgba(0,0,0,0.4) calc(var(--casos-fade) * 0.55),
+            #000 var(--casos-fade),
+            #000 calc(100% - var(--casos-fade)),
+            rgba(0,0,0,0.4) calc(100% - var(--casos-fade) * 0.55),
+            transparent 100%);
+          mask-image: linear-gradient(90deg,
+            transparent 0,
+            rgba(0,0,0,0.4) calc(var(--casos-fade) * 0.55),
+            #000 var(--casos-fade),
+            #000 calc(100% - var(--casos-fade)),
+            rgba(0,0,0,0.4) calc(100% - var(--casos-fade) * 0.55),
+            transparent 100%);
+        }
+        @media (min-width: 768px) {
+          .casos-carousel {
+            --casos-fade: max(28px, calc((100% - 936px) / 2 + 28px));
+          }
+        }
       `}</style>
     </section>
   );

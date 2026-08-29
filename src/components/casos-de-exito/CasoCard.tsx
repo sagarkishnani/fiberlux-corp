@@ -1,7 +1,9 @@
 import { tinaField } from "tinacms/dist/react";
 import { mediaUrl } from "../../utils/mediaUrl";
 import { tField } from "../../utils/i18n";
+import { t } from "../../i18n/ui";
 import type { Locale } from "../../i18n/config";
+import { useCursorTooltip } from "../shared/CursorTooltip";
 
 export interface Caso {
   poster?: string | null;
@@ -60,23 +62,71 @@ function QuoteMark() {
   );
 }
 
-function PlayButton({ onPlay, disabled }: { onPlay?: () => void; disabled: boolean }) {
+/**
+ * Disparador del video: cubre TODA la foto, no sólo el círculo (obs. cliente).
+ *
+ * Sigue siendo un `<button>` real —y no un div con onClick— para conservar foco
+ * por teclado y lectura por asistencia técnica; el círculo de play pasa a ser
+ * decoración (`aria-hidden`) dentro de él. Al ocupar el panel entero, el hover
+ * afecta a la imagen completa y el objetivo de clic deja de ser un blanco de
+ * 56px en medio de una card de 480px de alto.
+ *
+ * El arrastre del carrusel no dispara el video: Embla cancela el `click` que
+ * sigue a un gesto de arrastre, igual que hacía con el botón chico.
+ */
+function PlayTrigger({
+  onPlay,
+  disabled,
+  locale,
+}: {
+  onPlay?: () => void;
+  disabled: boolean;
+  locale: Locale;
+}) {
+  const { handlers, tooltip } = useCursorTooltip(t("casos.vervideo", locale));
+
   return (
-    <button
-      type="button"
-      onClick={disabled ? undefined : onPlay}
-      disabled={disabled}
-      aria-label={disabled ? "Video no disponible" : "Reproducir video"}
-      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-14 h-14 rounded-full border border-white/15 backdrop-blur-[4px] transition-all ${
-        disabled
-          ? "bg-black/40 opacity-40 cursor-default"
-          : "bg-black/50 hover:bg-black/70 hover:scale-105 cursor-pointer"
-      }`}
-    >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-        <path d="M8 5v14l11-7z" />
-      </svg>
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={disabled ? undefined : onPlay}
+        disabled={disabled}
+        aria-label={
+          disabled
+            ? locale === "en"
+              ? "Video unavailable"
+              : "Video no disponible"
+            : t("casos.vervideo", locale)
+        }
+        {...(disabled ? {} : handlers)}
+        className={`group absolute inset-0 z-10 flex items-center justify-center ${
+          disabled ? "cursor-default" : "cursor-pointer"
+        }`}
+      >
+        {/* Velo que oscurece la foto al pasar el cursor: sin él, con el botón
+            invisible y a pantalla completa, no había ninguna señal de que la
+            imagen entera fuera clicable. */}
+        {!disabled && (
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25 motion-reduce:transition-none"
+          />
+        )}
+        <span
+          aria-hidden="true"
+          className={`relative flex h-14 w-14 items-center justify-center rounded-full border border-white/15 backdrop-blur-[4px] transition-all duration-300 motion-reduce:transition-none ${
+            disabled
+              ? "bg-black/40 opacity-40"
+              : "bg-black/50 group-hover:bg-black/70 group-hover:scale-110"
+          }`}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </span>
+      </button>
+      {!disabled && tooltip}
+    </>
   );
 }
 
@@ -98,10 +148,12 @@ export default function CasoCard({ caso, tinaItem, onPlay, locale = "es" }: Caso
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1526] to-[#0d0d14]" />
       )}
-      <PlayButton onPlay={onPlay} disabled={!playable} />
+      <PlayTrigger onPlay={onPlay} disabled={!playable} locale={locale} />
       {caso.badge && (
         <div
-          className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-md bg-black/55 backdrop-blur-[5px] px-2.5 py-1.5"
+          /* Por encima del disparador (z-10) pero sin capturar el clic: la
+             chapa es informativa y el play tiene que seguir funcionando ahí. */
+          className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-1.5 rounded-md bg-black/55 backdrop-blur-[5px] px-2.5 py-1.5"
           data-tina-field={tinaItem ? tinaField(tinaItem, "badge") : undefined}
         >
           <span className="w-[5px] h-[5px] rounded-sm bg-[#96237A]" />

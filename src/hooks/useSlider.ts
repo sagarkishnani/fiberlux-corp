@@ -158,7 +158,6 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     };
     const clearStyles = () => {
       tweenNodes.current.forEach((n) => {
-        n.style.transform = "";
         n.style.opacity = "";
         const layer = n.firstElementChild as HTMLElement | null;
         if (layer) layer.style.transform = "";
@@ -198,7 +197,15 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
           if (effect === "opacity") {
             node.style.opacity = String(clamp(1 - Math.abs(diff * factor), 0.15, 1));
           } else if (effect === "scale") {
-            node.style.transform = `scale(${clamp(1 - Math.abs(diff * factor), 0.82, 1)})`;
+            /* El escalado va en la CAPA INTERIOR del slide, nunca en el slide.
+               Con `loop`, Embla reubica los slides del otro extremo escribiendo
+               `transform: translate(...)` en el propio nodo del slide: si el
+               tween le pisa el transform con un `scale()`, esa reubicación se
+               pierde y el hueco lateral se queda vacío (el vecino nunca da la
+               vuelta). Escalar el hijo se ve igual — ocupa todo el slide y
+               comparte su centro — y deja el transform del slide para Embla. */
+            const capa = (node.firstElementChild as HTMLElement | null) ?? node;
+            capa.style.transform = `scale(${clamp(1 - Math.abs(diff * factor), 0.82, 1)})`;
           } else if (effect === "parallax") {
             const layer = node.firstElementChild as HTMLElement | null;
             if (layer) layer.style.transform = `translateX(${diff * factor * 22}%)`;

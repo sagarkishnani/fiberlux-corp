@@ -625,18 +625,41 @@ export default function SolucionesStackReact({
      como texto suelto: sube el borde, el relleno pasa a degradado y una
      sombra baja la despega del fondo. */
   .sol-card.sol-card {
-    border-color: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.18);
     background:
       linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.012) 100%),
       rgba(10,10,10,0.55);
+
     /* --sol-cerca (0→1) lo escribe el bucle de scroll: la card se enciende
        de forma continua conforme se acerca al centro del viewport, en vez de
-       saltar entre estados. */
+       saltar entre estados.
+
+       Obs. cliente: en un celular real ese encendido no se notaba. Era un aro
+       de 1px al 42% de magenta sobre negro — en una pantalla chica, con brillo
+       automático y a la luz del día, eso es invisible. Ahora el aro es de 2px
+       y llega al 80%, y por fuera se le suma un halo desenfocado: en una
+       pantalla pequeña el halo es lo que de verdad delata el borde, porque
+       ocupa varios píxeles en vez de uno.
+
+       La card además CRECE un 1.2% al centrarse (obs. cliente). Va en la
+       propiedad scale y no en transform a propósito: el motor de reveals
+       escribe transform en línea sobre este mismo nodo (lleva el atributo
+       data-reveal) y se pisarían. La propiedad scale se compone aparte. Es un
+       crecimiento sin coste de layout —no empuja a las cards vecinas— y 1.2%
+       sobre el alto de la card queda muy por dentro del hueco de 32px que las
+       separa. */
+    scale: calc(1 + 0.012 * var(--sol-cerca, 0));
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,calc(0.06 + 0.04 * var(--sol-cerca, 0))),
-      0 0 0 1px rgba(198,95,172, calc(0.42 * var(--sol-cerca, 0))),
-      0 26px 60px -32px rgba(150,35,122, calc(0.55 * var(--sol-cerca, 0))),
+      inset 0 1px 0 rgba(255,255,255,calc(0.06 + 0.06 * var(--sol-cerca, 0))),
+      0 0 0 2px rgba(198,95,172, calc(0.80 * var(--sol-cerca, 0))),
+      0 0 22px 0 rgba(198,95,172, calc(0.30 * var(--sol-cerca, 0))),
+      0 26px 60px -32px rgba(150,35,122, calc(0.60 * var(--sol-cerca, 0))),
       0 18px 44px -30px rgba(0,0,0,0.95);
+  }
+  /* Con movimiento reducido la card no cambia de tamaño; el aro y el halo se
+     quedan, que es lo que hace falta para verla. */
+  @media (prefers-reduced-motion: reduce) {
+    .sol-card.sol-card { scale: 1; }
   }
 }
 /* Relleno de la barra. Sin transición CSS a propósito: la suavidad ya viene

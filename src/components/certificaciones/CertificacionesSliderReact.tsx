@@ -160,11 +160,14 @@ export default function CertificacionesSliderReact({
   const carousel = (
     <div
       ref={slider.viewportRef}
-      /* `-mx-3` ensancha el viewport 12px por lado y cada slide compensa con
-         `px-3`: así queda un canal de 24px ENTRE cards (antes se tocaban al
-         pasar de una a otra) sin que la card pierda ancho — sigue llegando a
-         los bordes de la columna, como en la referencia. */
-      className="relative -mx-3 overflow-hidden py-2 select-none cert-carousel"
+      /* El viewport se ensancha con `-mx-*` y cada slide lo compensa con el
+         `px-*` equivalente: la card conserva SU ancho (el de la columna) y lo
+         que crece es el canal entre cards. Ese sobrante es el que usa la
+         máscara `.cert-carousel` para desvanecer los bordes (obs. cliente):
+         en reposo la card llega justo donde la máscara ya es opaca, así que no
+         pierde nitidez, y al cambiar de slide los cantos se disuelven en vez de
+         cortarse en seco contra el `overflow-hidden`. */
+      className="relative -mx-3 md:-mx-10 overflow-hidden py-2 select-none cert-carousel"
       style={{ cursor: hasItems ? "grab" : "default" }}
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
@@ -172,7 +175,7 @@ export default function CertificacionesSliderReact({
       <div className="flex items-stretch">
         {hasItems ? (
           items.map((item, i) => (
-            <div key={i} className="cert-slide shrink-0 w-full px-3">
+            <div key={i} className="cert-slide shrink-0 w-full px-3 md:px-10">
               <CertSeal
                 key={cycles[i] ?? 0}
                 cert={item as Cert}
@@ -184,7 +187,7 @@ export default function CertificacionesSliderReact({
             </div>
           ))
         ) : (
-          <div className="cert-slide shrink-0 w-full px-3">
+          <div className="cert-slide shrink-0 w-full px-3 md:px-10">
             <div className="bg-white/[0.04] border border-white/10 min-h-[380px] rounded-[24px] flex items-center justify-center text-white/20 text-sm">
               {locale === "en" ? "Certifications — coming soon" : "Certificaciones — próximamente"}
             </div>
@@ -368,6 +371,22 @@ export default function CertificacionesSliderReact({
         @keyframes cs-up     { from { opacity: 0; transform: translateY(12px); }
                                  to { opacity: 1; transform: none; } }
 
+        /* ── Bordes del carrusel desvanecidos (obs. cliente) ──────────────
+           El overflow-hidden del viewport cortaba las cards en seco: al pasar
+           de una a otra se veía aparecer/desaparecer el borde de cristal contra
+           una línea recta. La máscara horizontal funde esos cantos. El ancho del
+           degradado es exactamente el px del slide, de modo que la card
+           activa (que en reposo empieza justo ahí) queda íntegra: sólo se
+           desvanece lo que entra o sale del encuadre. */
+        .cert-carousel {
+          --cert-fade: 12px;
+          -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--cert-fade), #000 calc(100% - var(--cert-fade)), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 var(--cert-fade), #000 calc(100% - var(--cert-fade)), transparent 100%);
+        }
+        @media (min-width: 768px) {
+          .cert-carousel { --cert-fade: 40px; }
+        }
+
         /* ── Cintas de luz del fondo ──────────────────────────────────────
            Mobile (layout apilado): el haz baja en diagonal hasta donde queda la
            card, y el baño ambiental se centra bajo el texto. */
@@ -375,20 +394,73 @@ export default function CertificacionesSliderReact({
           background: radial-gradient(84% 46% at 50% 74%, rgba(150,35,122,0.28) 0%, rgba(120,28,98,0.13) 44%, rgba(10,10,10,0) 76%);
         }
         .cert-bg-r1 {
+          --rot: -20deg;
           left: -30%; right: -30%; top: 24%; height: 46%;
-          transform: rotate(-20deg);
+          transform: rotate(var(--rot));
           background: radial-gradient(closest-side, rgba(216,96,182,0.34) 0%, rgba(160,40,130,0.16) 38%, rgba(10,10,10,0) 76%);
         }
         .cert-bg-r2 {
+          --rot: 12deg;
           left: -30%; right: -20%; top: 58%; height: 50%;
-          transform: rotate(12deg);
+          transform: rotate(var(--rot));
           background: radial-gradient(closest-side, rgba(150,35,122,0.22) 0%, rgba(90,22,74,0.10) 42%, rgba(10,10,10,0) 78%);
         }
         .cert-bg-r3 {
+          --rot: -20deg;
           left: -15%; right: -15%; top: 40%; height: 12%;
-          transform: rotate(-20deg);
+          transform: rotate(var(--rot));
           background: radial-gradient(closest-side, rgba(240,160,214,0.26) 0%, rgba(216,96,182,0.09) 45%, rgba(10,10,10,0) 80%);
         }
+
+        /* ── Deriva de las cintas (obs. cliente) ──────────────────────────
+           El fondo era una imagen pegada; ahora respira, con el lenguaje del
+           hero de Soluciones: la luz se pasea por detrás de la card.
+
+           EL EJE IMPORTA MÁS QUE LA AMPLITUD. Los dos primeros intentos movían
+           sobre todo en X y no se veía nada, y la razón es geométrica: los
+           porcentajes de translate se resuelven contra la CAJA DEL PROPIO
+           elemento, y estas cintas miden ~2100px de ancho por ~280px de alto.
+           Un 6% en X son 126px sobre una elipse de luz que ya ocupa los 2100px
+           de ancho: la imagen no cambia. Ese mismo 6% en Y son 17px. Por eso el
+           fondo se seguía leyendo como una foto pegada.
+
+           Ahora el vaivén va por el EJE CORTO: ±22% de la altura en las cintas
+           (~62px, casi un cuarto de su grosor) y ±45% en el filamento (~36px,
+           la mitad de su grosor). Es lo mismo que pasa con un haz de luz real:
+           lo que se nota es que suba o baje y que cambie de inclinación, no que
+           se corra a lo largo de sí mismo.
+
+           El bamboleo de INCLINACIÓN (±2.4°) es el segundo motor: con 2100px
+           de brazo, dos grados desplazan los extremos del haz unos 45px. Y el
+           vaivén de opacidad (0.55→1) hace que la luz entre y salga en vez de
+           estar siempre igual.
+
+           Sólo se animan transform y opacity — las dos propiedades que el
+           compositor resuelve en GPU sin repintar el degradado — y cada cinta
+           lleva su propio período (9s / 12s / 15s / 13s) para que nunca
+           coincidan y el conjunto no lata como un solo bloque. La rotación base
+           viaja en la variable --rot porque cambia entre mobile y desktop: los
+           keyframes la reutilizan en vez de duplicarse por breakpoint. */
+        @keyframes cert-drift-1 {
+          from { transform: rotate(calc(var(--rot) - 2.4deg)) translate3d(-3%, -22%, 0) scale(1); opacity: 0.55; }
+          to   { transform: rotate(calc(var(--rot) + 2.4deg)) translate3d(3%, 22%, 0) scale(1.1); opacity: 1; }
+        }
+        @keyframes cert-drift-2 {
+          from { transform: rotate(calc(var(--rot) + 2deg)) translate3d(3%, 20%, 0) scale(1.08); opacity: 1; }
+          to   { transform: rotate(calc(var(--rot) - 2deg)) translate3d(-3%, -20%, 0) scale(0.96); opacity: 0.5; }
+        }
+        @keyframes cert-drift-3 {
+          from { transform: rotate(calc(var(--rot) - 2.2deg)) translate3d(-6%, -45%, 0) scaleX(0.85); opacity: 0.25; }
+          to   { transform: rotate(calc(var(--rot) + 2.2deg)) translate3d(6%, 45%, 0) scaleX(1.18); opacity: 1; }
+        }
+        @keyframes cert-breathe {
+          from { transform: translate3d(-2%, -7%, 0) scale(1); opacity: 0.6; }
+          to   { transform: translate3d(2%, 7%, 0) scale(1.14); opacity: 1; }
+        }
+        .cert-bg-amb { animation: cert-breathe 13s ease-in-out infinite alternate; }
+        .cert-bg-r1  { animation: cert-drift-1 12s ease-in-out infinite alternate; }
+        .cert-bg-r2  { animation: cert-drift-2 15s ease-in-out infinite alternate; }
+        .cert-bg-r3  { animation: cert-drift-3 9s ease-in-out infinite alternate; }
 
         /* Desktop (dos columnas): la luz cruza de izquierda a derecha y termina
            bañando la mitad derecha, donde vive la card. */
@@ -397,18 +469,18 @@ export default function CertificacionesSliderReact({
             background: radial-gradient(58% 62% at 74% 42%, rgba(150,35,122,0.30) 0%, rgba(120,28,98,0.14) 44%, rgba(10,10,10,0) 74%);
           }
           .cert-bg-r1 {
+            --rot: -14deg;
             left: -20%; right: -20%; top: 6%; height: 46%;
-            transform: rotate(-14deg);
             background: radial-gradient(closest-side, rgba(216,96,182,0.40) 0%, rgba(160,40,130,0.19) 38%, rgba(10,10,10,0) 76%);
           }
           .cert-bg-r2 {
+            --rot: 9deg;
             left: -25%; right: -10%; top: 46%; height: 52%;
-            transform: rotate(9deg);
             background: radial-gradient(closest-side, rgba(150,35,122,0.26) 0%, rgba(90,22,74,0.12) 42%, rgba(10,10,10,0) 78%);
           }
           .cert-bg-r3 {
+            --rot: -14deg;
             left: -10%; right: -10%; top: 26%; height: 13%;
-            transform: rotate(-14deg);
             background: radial-gradient(closest-side, rgba(240,160,214,0.30) 0%, rgba(216,96,182,0.10) 45%, rgba(10,10,10,0) 80%);
           }
         }
@@ -478,7 +550,8 @@ export default function CertificacionesSliderReact({
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .cs-spin, .cs-spin-rev, .cert-reveal[data-go="1"] { animation: none !important; }
+          .cs-spin, .cs-spin-rev, .cert-reveal[data-go="1"],
+          .cert-bg-amb, .cert-bg-r1, .cert-bg-r2, .cert-bg-r3 { animation: none !important; }
         }
       `}</style>
     </section>

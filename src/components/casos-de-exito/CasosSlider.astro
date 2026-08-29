@@ -12,8 +12,11 @@ const cfg = (globalQuery.data?.global as any)?.sliders?.casos ?? {};
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
+<!-- `client:load` y no `client:visible`: el carrusel es lo primero que se ve
+     al entrar a la página, y hasta que la isla no hidrata Embla no coloca la
+     card. Esperar al observador de visibilidad sólo alargaba ese hueco. -->
 <CasosSliderReact
-  client:visible
+  client:load
   query={casosQuery.query}
   variables={casosQuery.variables}
   data={casosQuery.data}

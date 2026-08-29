@@ -295,30 +295,56 @@ export default function FooterReact({ query, variables, data: initialData, local
           </div>
 
           {/* Copyright + agency credit — flujo inline para que el logo de la
-              agencia quede al costado del texto (no debajo) al envolver. */}
+              agencia quede al costado del texto (no debajo) al envolver.
+
+              El logo va CENTRADO con la línea de texto (obs. cliente). No basta
+              con `align-middle`: la envoltura era un `inline-block` con la
+              imagen `inline` dentro, así que su caja no medía los 16px del logo
+              sino toda la línea del texto (con el hueco de los descendentes por
+              debajo), y al centrar ESA caja el logo quedaba descolgado ~2.5px
+              respecto al centro óptico de la frase.
+
+              La envoltura ahora mide exactamente una línea de texto (`1lh`, con
+              `1.5em` de reserva para navegadores sin la unidad — es el mismo
+              valor con el `line-height` de este bloque) y se ancla arriba del
+              todo: al ocupar la línea entera, centrar el logo dentro de ella
+              con flex lo deja en el centro exacto de la línea. */}
           <p className="text-white/80">
             <span data-tina-field={tinaField(footer, 'copyright')}>{copyrightText}</span>
             {agencyLogo &&
-              (agencyUrl ? (
-                <a
-                  href={agencyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="TWNSTUDIOS"
-                  className="ml-2 inline-block align-middle"
-                  data-tina-field={tinaField(footer as any, 'agencyLogo')}
-                >
-                  <img src={agencyLogo} alt="TWNSTUDIOS" className="inline h-4 w-auto brightness-0 invert" />
-                </a>
-              ) : (
-                <img
-                  src={agencyLogo}
-                  alt="TWNSTUDIOS"
-                  className="ml-2 inline-block h-4 w-auto align-middle brightness-0 invert"
-                  data-tina-field={tinaField(footer as any, 'agencyLogo')}
-                />
-              ))}
+              (() => {
+                const logo = (
+                  <img
+                    src={agencyLogo}
+                    alt="TWNSTUDIOS"
+                    className="block h-4 w-auto brightness-0 invert"
+                  />
+                );
+                const envoltura = 'ml-2 inline-flex items-center align-top footer-agencia';
+                return agencyUrl ? (
+                  <a
+                    href={agencyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="TWNSTUDIOS"
+                    className={envoltura}
+                    data-tina-field={tinaField(footer as any, 'agencyLogo')}
+                  >
+                    {logo}
+                  </a>
+                ) : (
+                  <span
+                    className={envoltura}
+                    data-tina-field={tinaField(footer as any, 'agencyLogo')}
+                  >
+                    {logo}
+                  </span>
+                );
+              })()}
           </p>
+          <style>{`
+            .footer-agencia { height: 1.5em; height: 1lh; }
+          `}</style>
         </div>
       </div>
     </footer>
