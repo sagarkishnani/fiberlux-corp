@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTina } from "tinacms/dist/react";
 import type { IconType } from "react-icons";
 import {
@@ -139,6 +139,10 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   const { data } = useTina({ query, variables, data: initialData });
   const popup = data?.popup;
 
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const headingId = useId();
+
   const [open, setOpen] = useState(false);
   /* La hoja nace desplazada y sube en el frame siguiente a abrirse: sin este
      doble paso el navegador pinta el estado final y no hay transición. */
@@ -148,6 +152,10 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
      leer storage durante el render daría una hidratación inconsistente. */
   const [allowed, setAllowed] = useState(false);
   const [preview, setPreview] = useState(false);
+  /* Cerrado en esta carga de página: sin esto el disparador se rearma en
+     cuanto `open` vuelve a false y el pop-up reaparece solo (al instante en
+     vista previa, N segundos después en el modo por tiempo). */
+  const [dismissed, setDismissed] = useState(false);
 
   const campaignId = popup?.campaignId || "";
   const remindDays = Math.max(0, popup?.remindAfterDays ?? 7);
@@ -178,7 +186,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   /* Disparador. Cada modo arma su propio listener y todos desembocan en el
      mismo `setOpen(true)`. */
   useEffect(() => {
-    if (open || !allowed) return;
+    if (open || !allowed || dismissed) return;
 
     /* La vista previa se salta el disparador: el editor quiere verlo ya. */
     if (preview) {
@@ -224,7 +232,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
       document.addEventListener("mouseout", onOut);
       return () => document.removeEventListener("mouseout", onOut);
     }
-  }, [open, allowed, preview, trigger, delayMs, scrollPercent]);
+  }, [open, allowed, dismissed, preview, trigger, delayMs, scrollPercent]);
 
   useEffect(() => {
     if (!open) return;
@@ -237,8 +245,78 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
      del editor mientras revisa. */
   const close = useCallback(() => {
     if (!preview) writeDismissal(campaignId);
+    setDismissed(true);
     setOpen(false);
   }, [preview, campaignId]);
+
+  /* Mientras está abierto: Escape cierra, el scroll de la página se congela
+     (incluido Lenis, que corre su propio raf) y el foco no puede salir del
+     panel. La restauración va en el return del efecto y no en el manejador de
+     cierre: si el componente se desmonta por otra vía, el scroll no puede
+     quedarse bloqueado. */
+  useEffect(() => {
+    if (!open) return;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    /* `overflow: hidden` no frena a Lenis: scrollea por su cuenta desde un raf.
+       Y la isla monta con client:idle, a veces antes de que el script inline
+       del layout asigne `window.__lenis`, así que un stop() único se pierde y
+       la página sigue corriendo por detrás del pop-up. Se reintenta durante
+       ~2s (120 frames) y se abandona si nunca aparece. */
+    let lenisFrame = 0;
+    let lenisRaf = 0;
+    const stopLenis = () => {
+      const lenis = (window as any).__lenis;
+      if (lenis?.stop) {
+        lenis.stop();
+        return;
+      }
+      if (lenisFrame++ < 120) lenisRaf = requestAnimationFrame(stopLenis);
+    };
+    stopLenis();
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusables = panel.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!panel.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      cancelAnimationFrame(lenisRaf);
+      document.body.style.overflow = prevOverflow;
+      (window as any).__lenis?.start?.();
+      previouslyFocused?.focus?.();
+    };
+  }, [open, close]);
 
   if (!popup || !open) return null;
 
@@ -248,18 +326,26 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   const hasPhone = Boolean(popup.phoneImage);
 
   return (
-    <div className="fixed inset-0 z-[90] flex items-end justify-center lg:items-center lg:p-6">
+    <div
+      className="fixed inset-0 z-[90] flex items-end justify-center lg:items-center lg:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={popup.heading ? headingId : undefined}
+      aria-label={popup.heading ? undefined : "Aviso"}
+    >
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={close}
       />
 
       <div
+        ref={panelRef}
         className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
         } ${entered ? "translate-y-0" : "translate-y-full lg:translate-y-0"}`}
       >
         <button
+          ref={closeRef}
           type="button"
           onClick={close}
           aria-label="Cerrar"
@@ -292,7 +378,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
             )}
 
             {popup.heading && (
-              <h2 className="text-[28px] font-semibold leading-[1.15] lg:text-[40px]">
+              <h2 id={headingId} className="text-[28px] font-semibold leading-[1.15] lg:text-[40px]">
                 {popup.heading}
               </h2>
             )}
