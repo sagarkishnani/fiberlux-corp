@@ -59,6 +59,18 @@ const BUTTON_ICONS: Record<string, IconType> = {
 
 const BASE = import.meta.env.BASE_URL || "/";
 
+/* Salida: hay que mantener el panel montado mientras se desliza (mobile) o se
+   desvanece (desktop). Debe cubrir la transición más larga, la de mobile. */
+const EXIT_MS = 420;
+
+function prefersReducedMotion(): boolean {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
+}
+
 /* Textos de interfaz que no están en el CMS. */
 const UI = {
   es: { close: "Cerrar", dialog: "Aviso" },
@@ -153,6 +165,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const exitTimer = useRef(0);
   const headingId = useId();
   const ui = UI[locale] || UI.es;
   const ariaFallback = ui.dialog;
@@ -297,8 +310,19 @@ export default function PopupReact({ query, variables, data: initialData, locale
   useEffect(() => {
     if (!open) return;
     if (!preview) markSeenThisSession();
-    const id = requestAnimationFrame(() => setEntered(true));
-    return () => cancelAnimationFrame(id);
+    /* Doble rAF a propósito. Con uno solo el navegador coalesce el montaje y
+       el cambio de estado en el mismo fotograma: nunca llega a pintar el
+       estado inicial, no hay transición y el panel aparece de golpe en su
+       posición final — que es lo que se veía tosco. El primer frame pinta el
+       "antes"; el segundo dispara el "después". */
+    let id2 = 0;
+    const id1 = requestAnimationFrame(() => {
+      id2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(id1);
+      cancelAnimationFrame(id2);
+    };
   }, [open, preview]);
 
   /* Cerrar: en vista previa no se escribe nada, para no ensuciar el storage
@@ -306,8 +330,17 @@ export default function PopupReact({ query, variables, data: initialData, locale
   const close = useCallback(() => {
     if (!preview) writeDismissal(campaignId);
     setDismissed(true);
-    setOpen(false);
+    /* `entered: false` reproduce la transición al revés — abajo en mobile, se
+       apaga en desktop — y el desmontaje espera a que termine. */
+    setEntered(false);
+    window.clearTimeout(exitTimer.current);
+    exitTimer.current = window.setTimeout(
+      () => setOpen(false),
+      prefersReducedMotion() ? 0 : EXIT_MS
+    );
   }, [preview, campaignId]);
+
+  useEffect(() => () => window.clearTimeout(exitTimer.current), []);
 
   /* Mientras está abierto: Escape cierra, el scroll de la página se congela
      (incluido Lenis, que corre su propio raf) y el foco no puede salir del
@@ -401,15 +434,24 @@ export default function PopupReact({ query, variables, data: initialData, locale
       aria-label={L(popup, "heading") ? undefined : ariaFallback}
     >
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ease-out motion-reduce:transition-none ${
+          entered ? "opacity-100" : "opacity-0"
+        }`}
         onClick={close}
       />
 
       <div
         ref={panelRef}
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl ${
+        /* Mobile: sube desde abajo y baja al cerrar, con la curva de las hojas
+           de iOS (arranca rápido y frena largo), que es lo que la hacía sentir
+           tosca con `ease-out` a 300ms. Desktop: sólo funde, sin desplazamiento. */
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-[transform,opacity] motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl lg:duration-300 lg:ease-out ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
-        } ${entered ? "translate-y-0" : "translate-y-full lg:translate-y-0"} ${
+        } ${
+          entered
+            ? "translate-y-0 opacity-100"
+            : "translate-y-full opacity-0 lg:translate-y-0"
+        } ${
           imageMode ? "!max-w-[720px] bg-transparent" : ""
         }`}
       >

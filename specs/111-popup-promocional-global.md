@@ -255,6 +255,30 @@ Cada paso deja el sitio compilando y navegable.
 
 ## Notas de implementación
 
+### Entrada y salida del panel (pedido del cliente)
+
+El cliente reportó que la entrada se sentía tosca. **Y no era la curva: no
+había animación.** El estado visual se activaba con un `requestAnimationFrame`
+simple, y el navegador coalesce el montaje y ese cambio en el mismo fotograma:
+nunca llegaba a pintar el estado inicial, así que la transición no arrancaba y
+el panel aparecía de golpe en su posición final. Se arregla con **doble rAF**
+—el primer frame pinta el «antes», el segundo dispara el «después»—.
+
+Con eso ya animando, se separan los dos comportamientos que pidió:
+
+- **Mobile:** sube desde abajo al abrir y baja al cerrar, con la curva de las
+  hojas de iOS (`cubic-bezier(0.32, 0.72, 0, 1)`, 420ms), que arranca rápido y
+  frena largo. Medido en la entrada: y 688 → 405 → 168 en los primeros 114ms y
+  luego 82 → 45 → 25 → 13 → 6 → 2 → 0.
+- **Desktop:** sólo fundido, sin desplazamiento. Medido: `y = 0` en todo el
+  recorrido y opacidad 0 → 1 en ~290ms; al cerrar, 1.00 → 0.42 → 0.09 → 0.00.
+
+La salida obligó a **retrasar el desmontaje**: antes `close()` ponía
+`open: false` y el panel desaparecía de golpe, sin margen para animar. Ahora
+apaga el estado visual, espera `EXIT_MS` (420ms, o 0 con
+`prefers-reduced-motion`) y recién entonces desmonta. El fondo oscuro funde con
+el panel en vez de aparecer y desaparecer de golpe.
+
 ### Animación de los íconos (pedido del cliente)
 
 El alcance original dejaba fuera la animación de entrada del contenido
