@@ -25,6 +25,7 @@ import {
 import type { PopupQuery, PopupQueryVariables } from "../../../tina/__generated__/types";
 import type { Locale } from "../../i18n/config";
 import { localizeHref, tField } from "../../utils/i18n";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 interface Props {
   query: string;
@@ -57,8 +58,6 @@ const BUTTON_ICONS: Record<string, IconType> = {
   whatsapp: FaWhatsapp,
 };
 
-const BASE = import.meta.env.BASE_URL || "/";
-
 /* Salida: hay que mantener el panel montado mientras se desliza (mobile) o se
    desvanece (desktop). Debe cubrir la transición más larga, la de mobile. */
 const EXIT_MS = 420;
@@ -76,12 +75,6 @@ const UI = {
   es: { close: "Cerrar", dialog: "Aviso" },
   en: { close: "Close", dialog: "Notice" },
 } as const;
-
-/** Las rutas de imagen del CMS vienen sin base ("images/x.png"). */
-function asset(path?: string | null): string {
-  const p = (path || "").replace(/^\//, "");
-  return `${BASE}${p}`.replace(/\/{2,}/g, "/");
-}
 
 /* Persistencia. Dos claves con propósitos distintos: la de sesión evita que el
    pop-up salte en cada navegación de una misma visita; la de localStorage
@@ -497,7 +490,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
             <div className="mb-5 flex justify-center lg:hidden">
               {popup.appIcon ? (
                 <img
-                  src={asset(popup.appIcon)}
+                  src={mediaUrl(popup.appIcon)}
                   alt=""
                   aria-hidden="true"
                   className="h-16 w-16 rounded-[20px]"
@@ -575,7 +568,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                       className="inline-block rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                     >
                       <img
-                        src={asset(b.image)}
+                        src={mediaUrl(b.image)}
                         alt={L(b, "label") || ""}
                         className="block h-[44px] w-auto lg:h-[52px]"
                       />
@@ -619,7 +612,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                 className="absolute inset-0 bg-[radial-gradient(120%_90%_at_25%_0%,rgba(150,35,122,0.30),transparent_72%)]"
               />
               <img
-                src={asset(popup.phoneImage)}
+                src={mediaUrl(popup.phoneImage)}
                 alt=""
                 aria-hidden="true"
                 className={
@@ -653,9 +646,9 @@ function ImagePopup({
 
   const picture = (
     <picture>
-      {desktop && <source media="(min-width: 1024px)" srcSet={asset(desktop)} />}
+      {desktop && <source media="(min-width: 1024px)" srcSet={mediaUrl(desktop)} />}
       <img
-        src={asset(mobile || desktop)}
+        src={mediaUrl(mobile || desktop)}
         alt=""
         className="block h-auto w-full rounded-t-3xl lg:rounded-3xl"
       />
