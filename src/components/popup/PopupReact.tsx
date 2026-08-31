@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTina } from "tinacms/dist/react";
 import type { IconType } from "react-icons";
 import {
@@ -75,6 +75,13 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   const popup = data?.popup;
 
   const [open, setOpen] = useState(true);
+  /* La hoja nace desplazada y sube en el frame siguiente al montaje: sin este
+     doble paso el navegador pinta el estado final y no hay transición. */
+  const [entered, setEntered] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   if (!popup || !open) return null;
 
@@ -91,22 +98,35 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
       />
 
       <div
-        className={`relative w-full overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] lg:rounded-3xl ${
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
-        }`}
+        } ${entered ? "translate-y-0" : "translate-y-full lg:translate-y-0"}`}
       >
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Cerrar"
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/80 transition hover:bg-white/10 hover:text-white lg:right-6 lg:top-6"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-greyscale-darkest/85 text-white/80 backdrop-blur transition hover:bg-white/10 hover:text-white lg:right-6 lg:top-6"
         >
           <FaXmark aria-hidden="true" className="text-lg" />
         </button>
 
-        <div className={hasPhone ? "lg:grid lg:grid-cols-2" : ""}>
+        <div
+          data-lenis-prevent
+          className={`min-h-0 flex-1 overflow-y-auto overscroll-contain ${
+            hasPhone ? "lg:grid lg:grid-cols-2 lg:overflow-visible" : ""
+          }`}
+        >
           {/* ── Columna de contenido ── */}
-          <div className="p-8 lg:p-12">
+          <div className="p-8 text-center lg:p-12 lg:text-left">
+            {popup.appIcon && (
+              <img
+                src={asset(popup.appIcon)}
+                alt=""
+                aria-hidden="true"
+                className="mx-auto mb-6 h-20 w-20 rounded-[22px] lg:hidden"
+              />
+            )}
             {popup.badge && (
               <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-purple/60 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-purple">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-purple" aria-hidden="true" />
@@ -125,7 +145,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
                 {features.map((f: any, i: number) => {
                   const Icon = FEATURE_ICONS[f?.icon || ""];
                   return (
-                    <li key={i} className="flex items-start gap-4">
+                    <li className="flex items-start gap-4 rounded-2xl border border-white/10 p-4 text-left lg:border-0 lg:p-0" key={i}>
                       {Icon && (
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple">
                           <Icon aria-hidden="true" />
@@ -144,7 +164,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
               /* Todos los botones al mismo ancho: el mockup de desktop los
                  muestra con anchos distintos, y el cliente confirmó que es un
                  error del diseño. */
-              <div className="mt-10 flex max-w-[420px] flex-col gap-3">
+              <div className="mx-auto mt-10 flex max-w-[420px] flex-col gap-3 lg:mx-0">
                 {buttons.map((b: any, i: number) => {
                   const Icon = BUTTON_ICONS[b?.icon || ""];
                   const primary = b?.variant !== "secundario";
