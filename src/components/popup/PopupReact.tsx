@@ -23,6 +23,7 @@ import {
 } from "react-icons/lu";
 import type { PopupQuery, PopupQueryVariables } from "../../../tina/__generated__/types";
 import type { Locale } from "../../i18n/config";
+import { localizeHref, tField } from "../../utils/i18n";
 
 interface Props {
   query: string;
@@ -56,6 +57,12 @@ const BUTTON_ICONS: Record<string, IconType> = {
 };
 
 const BASE = import.meta.env.BASE_URL || "/";
+
+/* Textos de interfaz que no están en el CMS. */
+const UI = {
+  es: { close: "Cerrar", dialog: "Aviso" },
+  en: { close: "Close", dialog: "Notice" },
+} as const;
 
 /** Las rutas de imagen del CMS vienen sin base ("images/x.png"). */
 function asset(path?: string | null): string {
@@ -135,13 +142,19 @@ function isPreview(): boolean {
  * cookies z-[100]. El de cookies va encima a propósito: tiene prioridad legal
  * y el pop-up espera a que se resuelva.
  */
-export default function PopupReact({ query, variables, data: initialData }: Props) {
+export default function PopupReact({ query, variables, data: initialData, locale }: Props) {
   const { data } = useTina({ query, variables, data: initialData });
   const popup = data?.popup;
+
+  /* Cada texto del CMS se lee con su hermano `_en` y cae a ES si está vacío
+     (SPEC 80). */
+  const L = (obj: any, key: string) => tField(obj, key, locale);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const headingId = useId();
+  const ui = UI[locale] || UI.es;
+  const ariaFallback = ui.dialog;
 
   const [open, setOpen] = useState(false);
   /* La hoja nace desplazada y sube en el frame siguiente a abrirse: sin este
@@ -336,8 +349,8 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
       className="fixed inset-0 z-[90] flex items-end justify-center lg:items-center lg:p-6"
       role="dialog"
       aria-modal="true"
-      aria-labelledby={popup.heading ? headingId : undefined}
-      aria-label={popup.heading ? undefined : "Aviso"}
+      aria-labelledby={L(popup, "heading") ? headingId : undefined}
+      aria-label={L(popup, "heading") ? undefined : ariaFallback}
     >
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
@@ -356,14 +369,18 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
           ref={closeRef}
           type="button"
           onClick={close}
-          aria-label="Cerrar"
+          aria-label={ui.close}
           className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-greyscale-darkest/85 text-white/80 backdrop-blur transition hover:bg-white/10 hover:text-white lg:right-6 lg:top-6"
         >
           <FaXmark aria-hidden="true" className="text-lg" />
         </button>
 
         {imageMode ? (
-          <ImagePopup desktop={imgDesktop} mobile={imgMobile} url={popup.imageUrl} />
+          <ImagePopup
+            desktop={imgDesktop}
+            mobile={imgMobile}
+            url={localizeHref(popup.imageUrl, locale)}
+          />
         ) : (
         <div
           data-lenis-prevent
@@ -381,16 +398,16 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
                 className="mx-auto mb-6 h-20 w-20 rounded-[22px] lg:hidden"
               />
             )}
-            {popup.badge && (
+            {L(popup, "badge") && (
               <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-purple/60 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-purple">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-purple" aria-hidden="true" />
-                {popup.badge}
+                {L(popup, "badge")}
               </span>
             )}
 
-            {popup.heading && (
+            {L(popup, "heading") && (
               <h2 id={headingId} className="text-[28px] font-semibold leading-[1.15] lg:text-[40px]">
-                {popup.heading}
+                {L(popup, "heading")}
               </h2>
             )}
 
@@ -406,7 +423,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
                         </span>
                       )}
                       <span className="pt-2 text-[15px] leading-relaxed text-white/70">
-                        {f?.text}
+                        {L(f, "text")}
                       </span>
                     </li>
                   );
@@ -425,7 +442,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
                   return (
                     <a
                       key={i}
-                      href={b.url}
+                      href={localizeHref(b.url, locale)}
                       className={`flex w-full items-center justify-center gap-3 rounded-lg px-6 py-4 text-[15px] font-semibold transition ${
                         primary
                           ? "border border-transparent bg-brand-purple text-white hover:bg-brand-purple-dark"
@@ -433,7 +450,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
                       }`}
                     >
                       {Icon && <Icon aria-hidden="true" className="text-lg" />}
-                      {b?.label}
+                      {L(b, "label")}
                     </a>
                   );
                 })}
