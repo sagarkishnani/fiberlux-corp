@@ -320,6 +320,12 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
 
   if (!popup || !open) return null;
 
+  /* Modo imagen: una pieza ya diseñada por breakpoint. Si falta la de uno, se
+     usa la del otro, para que nunca quede un hueco. */
+  const imageMode = popup.mode === "imagen";
+  const imgDesktop = popup.imageDesktop || popup.imageMobile;
+  const imgMobile = popup.imageMobile || popup.imageDesktop;
+
   const features = (popup.features || []).filter(Boolean);
   /* Un botón sin URL sería un enlace muerto: no se pinta. */
   const buttons = (popup.buttons || []).filter((b: any) => b?.url);
@@ -342,7 +348,9 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
         ref={panelRef}
         className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-transform duration-300 ease-out motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
-        } ${entered ? "translate-y-0" : "translate-y-full lg:translate-y-0"}`}
+        } ${entered ? "translate-y-0" : "translate-y-full lg:translate-y-0"} ${
+          imageMode ? "!max-w-[720px] bg-transparent" : ""
+        }`}
       >
         <button
           ref={closeRef}
@@ -354,6 +362,9 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
           <FaXmark aria-hidden="true" className="text-lg" />
         </button>
 
+        {imageMode ? (
+          <ImagePopup desktop={imgDesktop} mobile={imgMobile} url={popup.imageUrl} />
+        ) : (
         <div
           data-lenis-prevent
           className={`min-h-0 flex-1 overflow-y-auto overscroll-contain ${
@@ -447,7 +458,40 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
             </div>
           )}
         </div>
+        )}
       </div>
     </div>
+  );
+}
+
+/** Modo "solo imagen": la pieza entera es la imagen, con enlace opcional. */
+function ImagePopup({
+  desktop,
+  mobile,
+  url,
+}: {
+  desktop?: string | null;
+  mobile?: string | null;
+  url?: string | null;
+}) {
+  if (!desktop && !mobile) return null;
+
+  const picture = (
+    <picture>
+      {desktop && <source media="(min-width: 1024px)" srcSet={asset(desktop)} />}
+      <img
+        src={asset(mobile || desktop)}
+        alt=""
+        className="block h-auto w-full rounded-t-3xl lg:rounded-3xl"
+      />
+    </picture>
+  );
+
+  return url ? (
+    <a href={url} className="block">
+      {picture}
+    </a>
+  ) : (
+    picture
   );
 }
