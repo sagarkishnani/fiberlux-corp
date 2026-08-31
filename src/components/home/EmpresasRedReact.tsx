@@ -70,7 +70,8 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
   const [rebobinar, setRebobinar] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || "0");
-  const count = useCounter(value, 1000 + index * 60, isVisible, rebobinar);
+  // Ídem: la cuenta se escribe en el nodo, sin renders por fotograma.
+  const numRef = useCounter(value, 1000 + index * 60, isVisible, rebobinar, decimals, hasCommas);
 
   useEffect(() => {
     const el = ref.current;
@@ -92,7 +93,7 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
     return () => observer.disconnect();
   }, []);
 
-  const displayNumber = formatNumber(count, decimals, hasCommas);
+  const displayNumber = formatNumber(value, decimals, hasCommas);
 
   const numberCls =
     "text-[36px] leading-[40px] sm:text-[44px] sm:leading-[48px] xl:text-[52px] xl:leading-[56px] font-medium";
@@ -103,7 +104,7 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
     <div ref={ref} className="flex flex-col items-center gap-3 px-4 text-center">
       <p className="text-brand-purple" data-tina-field={tinaField(item as any, "number")}>
         {prefix && <span className={numberCls}>{prefix}</span>}
-        <span className={numberCls}>{displayNumber}</span>
+        <span ref={numRef} className={numberCls}>{displayNumber}</span>
         {suffix && <span className={suffixCls}>{suffix}</span>}
       </p>
       <p

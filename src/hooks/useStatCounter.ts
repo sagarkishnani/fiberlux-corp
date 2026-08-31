@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * Motor compartido de las cifras animadas ("+5,500", "+17,000 km", "100%").
@@ -62,34 +62,51 @@ export function formatNumber(n: number, decimals: number, hasCommas: boolean): s
 /**
  * Cuenta de 0 a `target` con ease-out quad cuando `shouldStart` pasa a true.
  *
- * Arranca en la CIFRA FINAL, no en 0. El sitio es estático y las islas se
- * renderizan en build, así que ese valor inicial es el que queda escrito en el
- * HTML: si el bundle no llega —sin JS, o con la conexión caída a media carga,
- * que es lo que reportó el cliente— las cifras se leen igual en vez de quedarse
- * en cero para siempre.
+ * Devuelve una **ref para el nodo del número**, no un valor de estado. La cifra
+ * se escribe directamente en el DOM (`textContent`) desde el bucle de
+ * animación: la versión anterior hacía `setState` en cada fotograma, o sea un
+ * render de React por cifra y por frame —cuatro cifras a 60 fps son ~240
+ * renders por segundo— justo mientras el dedo scrollea. En un teléfono eso se
+ * siente. Escribir el texto no reconcilia nada y el resultado en pantalla es
+ * idéntico.
+ *
+ * El nodo se pinta en el HTML con la CIFRA FINAL, no con 0. El sitio es
+ * estático y las islas se renderizan en build, así que ese valor es el que
+ * queda escrito: si el bundle no llega —sin JS, o con la conexión caída a media
+ * carga, que es lo que reportó el cliente— las cifras se leen igual en vez de
+ * quedarse en cero para siempre.
  *
  * `rebobinar` es lo que devuelve la cuenta a 0 para poder animarla. Lo decide
- * quien llama (ver `StatsReact`) y sólo lo activa si la cifra todavía está
- * fuera de pantalla: rebobinar algo que ya se está viendo sería un parpadeo
- * del número final al cero.
+ * quien llama (ver `StatsReact`) y sólo lo activa si la cifra todavía no se
+ * está leyendo: rebobinar algo que ya está en pantalla sería un parpadeo del
+ * número final al cero.
  */
 export function useCounter(
   target: number,
   duration: number,
   shouldStart: boolean,
-  rebobinar = false
+  rebobinar = false,
+  decimals = 0,
+  hasCommas = false
 ) {
-  const [count, setCount] = useState(target);
+  const ref = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
-    if (rebobinar && !shouldStart) setCount(0);
-  }, [rebobinar, shouldStart]);
+    if (rebobinar && !shouldStart && ref.current) {
+      ref.current.textContent = formatNumber(0, decimals, hasCommas);
+    }
+  }, [rebobinar, shouldStart, decimals, hasCommas]);
 
   useEffect(() => {
     if (!shouldStart || target === 0 || !rebobinar) return;
 
     let startTime: number | null = null;
     let rafId: number;
+
+    const escribir = (v: number) => {
+      const el = ref.current;
+      if (el) el.textContent = formatNumber(v, decimals, hasCommas);
+    };
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -98,18 +115,18 @@ export function useCounter(
 
       // Ease out quad (less front-loaded than cubic → numbers keep climbing longer)
       const eased = 1 - Math.pow(1 - progress, 2);
-      setCount(eased * target);
+      escribir(eased * target);
 
       if (progress < 1) {
         rafId = requestAnimationFrame(animate);
       } else {
-        setCount(target);
+        escribir(target);
       }
     };
 
     rafId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafId);
-  }, [target, duration, shouldStart, rebobinar]);
+  }, [target, duration, shouldStart, rebobinar, decimals, hasCommas]);
 
-  return count;
+  return ref;
 }

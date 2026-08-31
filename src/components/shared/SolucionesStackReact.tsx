@@ -256,6 +256,10 @@ export default function SolucionesStackReact({
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     let raf = 0;
     let suave = -1; // -1 = aún sin primer valor: engancha sin animar desde 0
+    /* `visible` lo mantiene el IntersectionObserver; `quieto` marca que ya pasó
+       un frame sin scroll nuevo, que es cuando el bucle puede dormirse. */
+    let visible = false;
+    let quieto = false;
 
     /** Índice fraccional de la card que ocupa el centro del viewport. */
     const indiceEn = (centros: number[], centro: number) => {
@@ -304,6 +308,15 @@ export default function SolucionesStackReact({
         const d = Math.abs(centros[i] - vh / 2);
         const cerca = Math.max(0, Math.min(1, 1 - d / (vh * 0.6)));
         n.style.setProperty("--sol-cerca", cerca.toFixed(3));
+        /* `data-cerca` decide qué cards viven en su propia capa (ver el CSS).
+           Se escribe sólo en el cambio de estado: tocar el atributo en cada
+           fotograma sería otra invalidación de estilo por frame, justo lo que
+           se está tratando de quitar. */
+        const activa = cerca > 0.01;
+        if (activa !== (n.dataset.cerca !== undefined)) {
+          if (activa) n.dataset.cerca = "";
+          else delete n.dataset.cerca;
+        }
       });
 
       setPillIndex((prev) => {
@@ -311,14 +324,32 @@ export default function SolucionesStackReact({
         return prev === idx ? prev : idx;
       });
 
+      /* Con el scroll quieto y el lerp ya en su destino no queda nada que
+         calcular: el bucle se apaga y lo vuelve a encender el próximo evento
+         de scroll. Antes seguía midiendo las cinco cards 60 veces por segundo
+         durante todo el rato que la sección estuviera en pantalla, aunque el
+         dedo no se moviera. */
+      if (quieto && suave === t) {
+        raf = 0;
+        return;
+      }
+      quieto = true;
       raf = requestAnimationFrame(frame);
     };
+
+    const arrancar = () => {
+      quieto = false;
+      if (visible && !raf) raf = requestAnimationFrame(frame);
+    };
+    window.addEventListener("scroll", arrancar, { passive: true });
+    window.addEventListener("resize", arrancar);
 
     /* Fuera de pantalla no hay nada que animar: el bucle se apaga. */
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !raf) raf = requestAnimationFrame(frame);
-        else if (!entry.isIntersecting && raf) {
+        visible = entry.isIntersecting;
+        if (visible) arrancar();
+        else if (raf) {
           cancelAnimationFrame(raf);
           raf = 0;
         }
@@ -329,10 +360,13 @@ export default function SolucionesStackReact({
 
     return () => {
       io.disconnect();
+      window.removeEventListener("scroll", arrancar);
+      window.removeEventListener("resize", arrancar);
       if (raf) cancelAnimationFrame(raf);
-      (cardRefs.current.filter(Boolean) as HTMLElement[]).forEach((n) =>
-        n.style.removeProperty("--sol-cerca"),
-      );
+      (cardRefs.current.filter(Boolean) as HTMLElement[]).forEach((n) => {
+        n.style.removeProperty("--sol-cerca");
+        delete n.dataset.cerca;
+      });
     };
   }, [N, compacto]);
 
@@ -646,8 +680,16 @@ export default function SolucionesStackReact({
        sin coste de layout —no empuja a las cards vecinas— y 1.2% sobre el alto
        de la card queda muy por dentro del hueco de 32px que las separa. */
     scale: calc(1 + 0.012 * var(--sol-cerca, 0));
-    will-change: transform;
   }
+
+  /* Promoción a capa propia SÓLO mientras la card está cerca del centro.
+     Estaba puesta fija en las cuatro cards, y una card a pantalla completa en
+     un iPhone (DPR 3) es una textura de varios megabytes: cuatro de esas, más
+     otras cuatro para el aro, es memoria de GPU que iOS acaba pagando en
+     fluidez. data-cerca lo pone y lo quita el bucle de scroll, así que como
+     mucho hay una o dos capas vivas a la vez. */
+  .sol-card.sol-card[data-cerca] { will-change: transform; }
+  .sol-card.sol-card[data-cerca]::after { will-change: opacity; }
 
   /* ── El encendido, en su propia capa ──
      --sol-cerca (0→1) lo escribe el bucle de scroll frame a frame: la card se
@@ -675,7 +717,6 @@ export default function SolucionesStackReact({
     border-radius: inherit;
     pointer-events: none;
     opacity: var(--sol-cerca, 0);
-    will-change: opacity;
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.06),
       0 0 0 2px rgba(198,95,172,0.80),

@@ -220,6 +220,22 @@ export default function ValuesReact({ query, variables, data: initialData, local
           stroke-dasharray: 1;
           animation: vlDraw 4.2s cubic-bezier(.45, 0, .25, 1) infinite;
         }
+        /* En móvil el trazo no se dibuja: se queda el ícono completo, quieto.
+           stroke-dashoffset no es una propiedad que el compositor pueda
+           resolver —obliga a REPINTAR el SVG en cada fotograma— y son un ícono
+           por valor, en bucle, mientras el dedo scrollea. En una pantalla de
+           teléfono el dibujo del trazo casi no se aprecia y costaba justo
+           donde más duele; en desktop se conserva tal cual. */
+        @media (max-width: 767px) {
+          .values-section .vl-trace {
+            animation: none;
+            stroke-dasharray: none;
+            stroke-dashoffset: 0;
+          }
+          /* Sin trazo animado encima, la copia tenue sobra: sería un segundo
+             path pintado sobre el mismo dibujo. */
+          .values-section .vl-ghost { display: none; }
+        }
         @media (prefers-reduced-motion: reduce) {
           .values-section .vl-cell,
           .values-section .vl-cell:hover,

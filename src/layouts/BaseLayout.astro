@@ -494,6 +494,11 @@ const whatsappBubbleMessage =
 {/* FX de scroll (SPEC 71): count-up y parallax. */}
 {!maintenanceMode && <script>import "../scripts/fx.ts";</script>}
 
+{/* Pausa las animaciones CSS de los bloques que no se están viendo: una
+    animación `infinite` sigue repintando fuera de pantalla y en un teléfono
+    ese trabajo compite con el scroll. */}
+{!maintenanceMode && <script>import "../scripts/pauseOffscreen.ts";</script>}
+
 {
   !maintenanceMode && (
     <script>

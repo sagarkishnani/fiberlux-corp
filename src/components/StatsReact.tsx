@@ -47,7 +47,9 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
   const [rebobinar, setRebobinar] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || '0');
-  const count = useCounter(value, 1000 + index * 60, isVisible, rebobinar);
+  /* La cuenta se escribe directamente en este nodo, sin pasar por el estado de
+     React: ver `useCounter`. */
+  const numRef = useCounter(value, 1000 + index * 60, isVisible, rebobinar, decimals, hasCommas);
 
   // Intersection observer to trigger animation when visible
   useEffect(() => {
@@ -76,7 +78,9 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
     return () => observer.disconnect();
   }, []);
 
-  const displayNumber = formatNumber(count, decimals, hasCommas);
+  /* Valor final: es lo que queda escrito en el HTML estático y el punto de
+     partida del que rebobina la animación. */
+  const displayNumber = formatNumber(value, decimals, hasCommas);
 
   // En la banda xl (1280–1536) el grid ya es de 4 columnas pero las celdas son
   // estrechas; se reduce el número para que "+17,000 km" no invada la celda
@@ -94,7 +98,7 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
         data-tina-field={tinaField(item as any, 'number')}
       >
         {prefix && <span className={numberCls}>{prefix}</span>}
-        <span className={numberCls}>{displayNumber}</span>
+        <span ref={numRef} className={numberCls}>{displayNumber}</span>
         {suffix && <span className={suffixCls}>{suffix}</span>}
       </p>
 
