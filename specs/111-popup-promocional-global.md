@@ -255,6 +255,28 @@ Cada paso deja el sitio compilando y navegable.
 
 ## Notas de implementación
 
+### Animación de los íconos (pedido del cliente)
+
+El alcance original dejaba fuera la animación de entrada del contenido
+(«sólo la entrada del panel»). El cliente la pidió después, ligera, así que
+entra como ampliación:
+
+- **Íconos de los puntos:** entrada escalonada al abrirse el pop-up — opacidad
+  0→1 con escala 0.86 → 1.04 → 1, 420ms, retardos de 140/230/320ms. El
+  `animation-fill-mode: both` es obligatorio: sin él los íconos se ven un
+  instante antes de que arranque su retardo.
+- **Ícono de app (mobile):** latido lento del halo, ciclo de 3.2s, escala
+  1.000 → 1.035 y desenfoque de 30 → 46px.
+
+Los keyframes viven en `tailwind.config.mjs` y no en `global.css`, que en este
+repo **no se bundlea**. Ambas respetan `prefers-reduced-motion` vía
+`motion-reduce:animate-none`.
+
+Verificado reiniciando las animaciones con la Web Animations API (medir tras el
+montaje no sirve: la isla es `client:idle` y para cuando responde ya
+terminaron): a 280ms el primer ícono va al 96%, el segundo al 54% y el tercero
+sin arrancar; a 800ms los tres asientan en escala 1.000.
+
 ### Ajustes de diseño contra la referencia (pedido del cliente)
 
 Comparando la implementación con los dos artboards, el cliente marcó cinco

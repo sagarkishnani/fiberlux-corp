@@ -458,7 +458,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
               ) : (
                 <span
                   aria-hidden="true"
-                  className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-gradient-to-br from-[#E9A7DC] via-[#C86BB0] to-[#96237A] text-[#3B0E30] shadow-[0_0_36px_-4px_rgba(200,90,175,0.65)]"
+                  className="flex h-16 w-16 animate-popup-icon-glow items-center justify-center rounded-[20px] bg-gradient-to-br from-[#E9A7DC] via-[#C86BB0] to-[#96237A] text-[#3B0E30] shadow-[0_0_36px_-4px_rgba(200,90,175,0.65)] motion-reduce:animate-none"
                 >
                   <LuSmartphone className="h-7 w-7" strokeWidth={1.75} />
                 </span>
@@ -484,7 +484,10 @@ export default function PopupReact({ query, variables, data: initialData, locale
                   return (
                     <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:items-start lg:gap-4 lg:border-0 lg:p-0" key={i}>
                       {Icon && (
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple lg:h-10 lg:w-10">
+                        <span
+                          className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple motion-reduce:animate-none lg:h-10 lg:w-10"
+                          style={{ animationDelay: `${140 + i * 90}ms` }}
+                        >
                           <Icon aria-hidden="true" />
                         </span>
                       )}

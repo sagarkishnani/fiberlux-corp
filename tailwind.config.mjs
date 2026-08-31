@@ -36,6 +36,25 @@ export default {
       'caption-sm': ['12px', { lineHeight: '14px', fontWeight: '400' }],
     },
     extend: {
+      /* SPEC 111: animaciones del pop-up promocional. Van aquí y no en
+         `global.css`, que en este repo no se bundlea. */
+      keyframes: {
+        'popup-icon-in': {
+          '0%':   { opacity: '0', transform: 'translateY(6px) scale(0.86)' },
+          '60%':  { opacity: '1', transform: 'translateY(0) scale(1.04)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        'popup-icon-glow': {
+          '0%, 100%': { boxShadow: '0 0 30px -6px rgba(200,90,175,0.55)', transform: 'scale(1)' },
+          '50%':      { boxShadow: '0 0 46px -2px rgba(200,90,175,0.85)', transform: 'scale(1.035)' },
+        },
+      },
+      animation: {
+        /* `both` conserva el estado inicial durante el retardo del escalonado:
+           sin él los íconos parpadean visibles antes de arrancar. */
+        'popup-icon-in': 'popup-icon-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both',
+        'popup-icon-glow': 'popup-icon-glow 3.2s ease-in-out infinite',
+      },
       colors: {
         brand: {
           purple: {
