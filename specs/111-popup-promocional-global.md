@@ -1,6 +1,6 @@
 # SPEC 111 — Pop-up promocional global (editable en Tina)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 60 (patrón `modo: nativo | imagen` del `BannerApp`), SPEC 80 (i18n `_en` + `tField`), SPEC 81 (bloqueo de scroll con Lenis en overlays), assets en `public/images/fiberlux-app/`
 > **Fecha:** 2026-08-30
 > **Objetivo:** Crear un pop-up promocional **único** y editable desde Tina, que aparece según un disparador configurable (inmediato, segundos, scroll o intención de salida), se recuerda cerrado durante N días y se renderiza en modo nativo o de solo imagen.
@@ -252,6 +252,42 @@ Cada paso deja el sitio compilando y navegable.
 | `mobile-app.png` (untracked) no llega al deploy | El paso 1 del plan incluye añadirla a git junto al `index.json`. |
 
 ---
+
+## Notas de implementación
+
+Implementado en la rama `spec-111-popup-promocional-global`, un commit por
+step del plan. `astro build` verde: 108 páginas, exit 0.
+
+**Dos desviaciones del plan, ambas por necesidad y ninguna cambia el alcance:**
+
+- `stripBase()` se exportó en el **step 2**, no en el 10: la comparación de
+  rutas del alcance la necesita desde el primer momento y adelantarla evitó
+  escribir código desechable.
+- La espera al modal de cookies entró en el **step 7**, no en el 10: es una de
+  las seis condiciones de la misma compuerta de visibilidad y separarla habría
+  dejado el step 7 con la regla a medias.
+
+**Dos bugs que sólo aparecieron al probar en el navegador** (ambos corregidos
+en el step 8, ver `5e6b85f`):
+
+- `body { overflow: hidden }` **no frena a Lenis**, que scrollea por su cuenta
+  desde su propio `raf`. Y como la isla monta con `client:idle`, a veces lo
+  hace **antes** de que el script del layout asigne `window.__lenis`, así que
+  un `stop()` único se perdía: medido, la página corría 1134px por detrás del
+  pop-up abierto. Se reintenta el `stop()` hasta 120 frames.
+- Al cerrar, el disparador **se rearmaba** y el pop-up volvía solo: al
+  instante en vista previa y a los N segundos en el modo por tiempo. Hizo
+  falta un estado `dismissed` aparte de `open`, porque `open: false` es
+  justo la condición que el disparador espera para volver a armarse.
+
+**Pendientes de contenido** (no de código; el cliente los llena en Tina):
+
+- Las **URLs de las tiendas** están vacías, así que hoy no se pinta ningún
+  botón. Es deliberado —un botón sin URL sería un enlace muerto— y está
+  advertido en la ayuda del campo, pero significa que al encender el pop-up
+  sin llenarlas se verá sin botones.
+- El **ícono de app de mobile** (`appIcon`) está vacío: el mockup lo muestra,
+  pero no hay un asset para él en el repo y el spec no autorizaba inventarlo.
 
 ## Lo que **no** entra en este spec
 
