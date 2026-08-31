@@ -1,0 +1,68 @@
+---
+/**
+ * Popup wrapper (SPEC 111) — resuelve el documento único `popup` de TinaCMS.
+ *
+ * El alcance se decide AQUÍ, en build: si la página no entra, no se emite ni el
+ * HTML ni el JS de la isla. Con más de cien páginas, filtrar en el cliente
+ * significaría cargar el componente en todas para descartarlo en casi todas.
+ *
+ * Se monta globalmente en BaseLayout, dentro del bloque que no corre en modo
+ * mantenimiento.
+ */
+import { client } from "../../../tina/__generated__/client";
+import PopupReact from "./PopupReact.tsx";
+import { stripBase } from "../../utils/i18n";
+import type { Locale } from "../../i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+
+let result: any = null;
+try {
+  result = await client.queries.popup({ relativePath: "index.json" });
+} catch {}
+
+const popup = result?.data?.popup;
+
+/** "/staging/en/fiberlux-app/" → "/fiberlux-app". Sin base y sin idioma. */
+function normalizeRoute(pathname: string): string {
+  const rel = stripBase(pathname);
+  const noLocale = rel === "en" ? "" : rel.startsWith("en/") ? rel.slice(3) : rel;
+  return "/" + noLocale;
+}
+
+/** Lo que escribe el editor en Tina, tolerando "fiberlux-app", "/fiberlux-app/" o "/en/x". */
+function normalizeAuthored(path: string): string {
+  const clean = (path || "").trim().replace(/^\/+|\/+$/g, "");
+  const noLocale = clean === "en" ? "" : clean.startsWith("en/") ? clean.slice(3) : clean;
+  return "/" + noLocale;
+}
+
+const route = normalizeRoute(Astro.url.pathname);
+const scope = popup?.scope || "todo";
+
+const inScope =
+  scope === "home"
+    ? route === "/"
+    : scope === "rutas"
+      ? (popup?.paths || []).some(
+          (p: string | null) => p && normalizeAuthored(p) === route
+        )
+      : true;
+
+const show = popup?.enabled === true && inScope;
+---
+
+{
+  show && (
+    <PopupReact
+      client:idle
+      query={result.query}
+      variables={result.variables}
+      data={result.data}
+      locale={locale}
+    />
+  )
+}

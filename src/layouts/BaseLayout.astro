@@ -4,6 +4,7 @@ import Footer from "../components/shared/Footer.astro";
 // import Header from "../components/shared/Header.astro";
 import HeaderV2 from "../components/shared/HeaderV2.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
+import Popup from "../components/popup/Popup.astro";
 import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
 import AccessibilityPanel from "../components/shared/AccessibilityPanel.tsx";
 import CursorTrail from "../components/shared/CursorTrail.tsx";
@@ -447,6 +448,9 @@ const whatsappBubbleMessage =
             </div>
           </div>
           <CookieConsent />
+          {/* Pop-up promocional (SPEC 111): la isla sólo se emite si está activo
+              y la página entra en su alcance. */}
+          <Popup locale={locale} />
           <WhatsAppButton
             client:idle
             transition:persist="whatsapp"

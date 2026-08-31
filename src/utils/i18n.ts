@@ -18,7 +18,7 @@ function normBase(): string {
 }
 
 /** path relativo a base, sin slashes en los extremos: "/staging/en/nosotros/" → "en/nosotros". */
-function stripBase(pathname: string): string {
+export function stripBase(pathname: string): string {
   const b = normBase();
   let p = pathname.startsWith(b) ? pathname.slice(b.length) : pathname.replace(/^\//, "");
   return p.replace(/^\/+|\/+$/g, "");
