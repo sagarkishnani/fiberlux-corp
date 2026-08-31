@@ -2727,6 +2727,7 @@ type Popup implements Node & Document {
   features: [PopupFeatures]
   buttons: [PopupButtons]
   phoneImage: String
+  phonePosition: String
   appIcon: String
   imageDesktop: String
   imageMobile: String
@@ -2768,6 +2769,7 @@ input PopupFilter {
   features: PopupFeaturesFilter
   buttons: PopupButtonsFilter
   phoneImage: ImageFilter
+  phonePosition: StringFilter
   appIcon: ImageFilter
   imageDesktop: ImageFilter
   imageMobile: ImageFilter
@@ -4033,6 +4035,7 @@ input PopupMutation {
   features: [PopupFeaturesMutation]
   buttons: [PopupButtonsMutation]
   phoneImage: String
+  phonePosition: String
   appIcon: String
   imageDesktop: String
   imageMobile: String

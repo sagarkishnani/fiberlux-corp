@@ -3982,10 +3982,22 @@ export default defineConfig({
               "Se recorta a sangre en la mitad derecha. Si la dejas vacía, el pop-up queda a una sola columna.",
           },
           {
+            name: "phonePosition",
+            label: "Posición de la imagen (desktop)",
+            type: "string",
+            options: [
+              { value: "bottom", label: "Abajo (se recorta por el borde)" },
+              { value: "centro", label: "Centrada (completa)" },
+            ],
+            description:
+              "Cómo se coloca la imagen en la columna derecha. Por defecto, abajo.",
+          },
+          {
             name: "appIcon",
             label: "Ícono de app (mobile, arriba)",
             type: "image",
-            description: "Solo se ve en celulares, sobre la etiqueta.",
+            description:
+              "Solo se ve en celulares, sobre la etiqueta. Si lo dejas vacío se dibuja el ícono de celular por defecto.",
           },
 
           // ── Modo imagen ──

@@ -3764,10 +3764,20 @@ var config_default = defineConfig({
             description: "Se recorta a sangre en la mitad derecha. Si la dejas vac\xEDa, el pop-up queda a una sola columna."
           },
           {
+            name: "phonePosition",
+            label: "Posici\xF3n de la imagen (desktop)",
+            type: "string",
+            options: [
+              { value: "bottom", label: "Abajo (se recorta por el borde)" },
+              { value: "centro", label: "Centrada (completa)" }
+            ],
+            description: "C\xF3mo se coloca la imagen en la columna derecha. Por defecto, abajo."
+          },
+          {
             name: "appIcon",
             label: "\xCDcono de app (mobile, arriba)",
             type: "image",
-            description: "Solo se ve en celulares, sobre la etiqueta."
+            description: "Solo se ve en celulares, sobre la etiqueta. Si lo dejas vac\xEDo se dibuja el \xEDcono de celular por defecto."
           },
           // ── Modo imagen ──
           {

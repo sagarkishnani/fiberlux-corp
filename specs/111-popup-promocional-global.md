@@ -255,6 +255,34 @@ Cada paso deja el sitio compilando y navegable.
 
 ## Notas de implementación
 
+### Ajustes de diseño contra la referencia (pedido del cliente)
+
+Comparando la implementación con los dos artboards, el cliente marcó cinco
+diferencias. Todas corregidas:
+
+- **La pill «FIBERLUX APP»** estaba tosca y grande, y sin el degradado del
+  diseño. Ahora es más pequeña (11px, `px-3.5 py-1.5`) y lleva un degradado
+  horizontal magenta que se apaga hacia la derecha.
+- **El panel izquierdo era negro plano.** Lleva el tinte ciruela de la esquina
+  superior que tiene el diseño.
+- **La imagen de la columna derecha** flotaba con hueco arriba y abajo. Se
+  añade el campo `phonePosition` (`bottom` por defecto, o `centro`): abajo se
+  pega al borde inferior y se recorta contra él, centrada se ve completa.
+- **En mobile la tipografía estaba grande**: el titular entraba en tres líneas
+  cuando en la referencia son dos. Titular 28px → 24px, texto de los puntos
+  15px → 14px y padding de la hoja 32px → 24px. Verificado: titular en 2
+  líneas y cada punto en 2, igual que el artboard.
+- **Faltaba el ícono de celular** de la cabecera mobile. Como no hay asset en
+  el repo, se dibuja de forma nativa —cuadrado redondeado con el degradado
+  rosa→magenta, glifo `LuSmartphone` y halo— y sigue pudiéndose reemplazar
+  subiendo una imagen en `appIcon`.
+
+**Pendiente de asset:** en la referencia el teléfono de la columna derecha
+arranca más arriba y llena el panel. `mobile-app.png` es un recorte de
+416×427, casi cuadrado, así que anclado abajo deja aire ciruela en la parte
+superior. Llenarlo del todo requiere un recorte más alto de la imagen; forzarlo
+por CSS deformaría el teléfono o le comería los bordes.
+
 ### Ampliación posterior — disparador por sección (pedido del cliente)
 
 El cliente pidió que el pop-up salte **al llegar a la segunda sección**. Eso no

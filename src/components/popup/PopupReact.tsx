@@ -17,6 +17,7 @@ import {
   LuClock,
   LuCloud,
   LuScanSearch,
+  LuSmartphone,
   LuShieldCheck,
   LuWifi,
   LuZap,
@@ -389,6 +390,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
   /* Un botón sin URL sería un enlace muerto: no se pinta. */
   const buttons = (popup.buttons || []).filter((b: any) => b?.url);
   const hasPhone = Boolean(popup.phoneImage);
+  const phoneAtBottom = (popup.phonePosition || "bottom") !== "centro";
 
   return (
     <div
@@ -435,40 +437,58 @@ export default function PopupReact({ query, variables, data: initialData, locale
           }`}
         >
           {/* ── Columna de contenido ── */}
-          <div className="p-8 text-center lg:p-12 lg:text-left">
-            {popup.appIcon && (
-              <img
-                src={asset(popup.appIcon)}
-                alt=""
-                aria-hidden="true"
-                className="mx-auto mb-6 h-20 w-20 rounded-[22px] lg:hidden"
-              />
-            )}
+          <div className="relative px-6 pb-6 pt-11 text-center lg:p-12 lg:text-left">
+            {/* Tinte ciruela en la esquina superior, como en el diseño: el
+                panel izquierdo no es negro plano. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_10%_0%,rgba(150,35,122,0.18),transparent_65%)]"
+            />
+            <div className="relative">
+            {/* Ícono de app: la imagen que suba el editor o, si no hay, el
+                glifo de celular sobre el degradado de marca del diseño. */}
+            <div className="mb-5 flex justify-center lg:hidden">
+              {popup.appIcon ? (
+                <img
+                  src={asset(popup.appIcon)}
+                  alt=""
+                  aria-hidden="true"
+                  className="h-16 w-16 rounded-[20px]"
+                />
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-gradient-to-br from-[#E9A7DC] via-[#C86BB0] to-[#96237A] text-[#3B0E30] shadow-[0_0_36px_-4px_rgba(200,90,175,0.65)]"
+                >
+                  <LuSmartphone className="h-7 w-7" strokeWidth={1.75} />
+                </span>
+              )}
+            </div>
             {L(popup, "badge") && (
-              <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-purple/60 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-brand-purple">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-purple" aria-hidden="true" />
+              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-purple/55 bg-gradient-to-r from-brand-purple/30 via-brand-purple/10 to-transparent px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-purple lg:mb-6">
+                <span className="h-1 w-1 rounded-full bg-brand-purple" aria-hidden="true" />
                 {L(popup, "badge")}
               </span>
             )}
 
             {L(popup, "heading") && (
-              <h2 id={headingId} className="text-[28px] font-semibold leading-[1.15] lg:text-[40px]">
+              <h2 id={headingId} className="text-[24px] font-semibold leading-[1.2] lg:text-[40px]">
                 {L(popup, "heading")}
               </h2>
             )}
 
             {features.length > 0 && (
-              <ul className="mt-8 space-y-5">
+              <ul className="mt-6 space-y-3 lg:mt-8 lg:space-y-5">
                 {features.map((f: any, i: number) => {
                   const Icon = FEATURE_ICONS[f?.icon || ""];
                   return (
-                    <li className="flex items-start gap-4 rounded-2xl border border-white/10 p-4 text-left lg:border-0 lg:p-0" key={i}>
+                    <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:items-start lg:gap-4 lg:border-0 lg:p-0" key={i}>
                       {Icon && (
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple lg:h-10 lg:w-10">
                           <Icon aria-hidden="true" />
                         </span>
                       )}
-                      <span className="pt-2 text-[15px] leading-relaxed text-white/70">
+                      <span className="text-[14px] leading-relaxed text-white/70 lg:pt-2 lg:text-[15px]">
                         {L(f, "text")}
                       </span>
                     </li>
@@ -481,7 +501,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
               /* Todos los botones al mismo ancho: el mockup de desktop los
                  muestra con anchos distintos, y el cliente confirmó que es un
                  error del diseño. */
-              <div className="mx-auto mt-10 flex max-w-[420px] flex-col gap-3 lg:mx-0">
+              <div className="mx-auto mt-7 flex max-w-[420px] flex-col gap-3 lg:mx-0 lg:mt-10">
                 {buttons.map((b: any, i: number) => {
                   const Icon = BUTTON_ICONS[b?.icon || ""];
                   const primary = b?.variant !== "secundario";
@@ -502,6 +522,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                 })}
               </div>
             )}
+            </div>
           </div>
 
           {/* ── Columna de imagen (solo desktop) ── */}
@@ -516,7 +537,13 @@ export default function PopupReact({ query, variables, data: initialData, locale
                 src={asset(popup.phoneImage)}
                 alt=""
                 aria-hidden="true"
-                className="absolute inset-x-0 top-20 mx-auto h-auto w-[86%] max-w-none"
+                className={
+                  phoneAtBottom
+                    ? /* Pegada al borde inferior: se recorta contra él, que es
+                         como la imagen entra a sangre en el diseño. */
+                      "absolute inset-x-0 bottom-0 mx-auto h-auto w-[96%] max-w-none"
+                    : "absolute inset-x-0 top-1/2 mx-auto h-auto w-[84%] max-w-none -translate-y-1/2"
+                }
               />
             </div>
           )}

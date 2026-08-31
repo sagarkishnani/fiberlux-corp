@@ -47,6 +47,7 @@
     }
   ],
   "phoneImage": "images/fiberlux-app/mobile-app.png",
+  "phonePosition": "bottom",
   "appIcon": "",
   "imageDesktop": "",
   "imageMobile": "",
