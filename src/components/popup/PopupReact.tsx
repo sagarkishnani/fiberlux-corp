@@ -195,6 +195,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
   const trigger = popup?.trigger || "segundos";
   const delayMs = Math.max(0, popup?.delaySeconds ?? 5) * 1000;
   const scrollPercent = Math.min(100, Math.max(0, popup?.scrollPercent ?? 40));
+  const sectionIndex = Math.max(1, Math.round(popup?.sectionIndex ?? 2));
 
   /* Disparador. Cada modo arma su propio listener y todos desembocan en el
      mismo `setOpen(true)`. */
@@ -238,6 +239,51 @@ export default function PopupReact({ query, variables, data: initialData, locale
       return () => window.removeEventListener("scroll", onScroll);
     }
 
+    if (mode === "seccion") {
+      /* «Segunda sección» no es un porcentaje: dónde cae depende del alto de
+         la ventana. Se cuentan los bloques de nivel superior del <main> que
+         ocupan espacio (los que no pintan nada, como una inyección de HTML
+         vacía, no cuentan) y se dispara cuando el elegido llega al borde
+         superior del viewport, o sea cuando el visitante deja atrás el hero. */
+      const findTarget = () => {
+        const main = document.querySelector("main");
+        if (!main) return undefined;
+        const blocks = (Array.from(main.children) as HTMLElement[]).filter(
+          (el) => el.offsetHeight > 0
+        );
+        return blocks[sectionIndex - 1];
+      };
+
+      const onScroll = () => {
+        /* Sin scroll no se ha «llegado» a ninguna sección. La guarda importa
+           además porque la isla monta con client:idle: en ese primer frame el
+           layout aún no está asentado, varios bloques miden 0 y el segundo
+           visible puede ser uno que ya está en pantalla — medido, disparaba
+           en scrollY 0 con la sección todavía a 836px. */
+        if (window.scrollY <= 0) return;
+        /* Se rebusca en cada evaluación por lo mismo: al montar puede que el
+           bloque correcto todavía no existiera. */
+        const target = findTarget();
+        if (target && target.getBoundingClientRect().top <= 0) setOpen(true);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      /* Repliegue: si con la página ya cargada esa sección no existe, se usa
+         el modo por segundos en vez de no mostrarse nunca. */
+      let fallback = 0;
+      const checkFallback = () => {
+        if (!findTarget()) fallback = window.setTimeout(() => setOpen(true), delayMs);
+      };
+      if (document.readyState === "complete") checkFallback();
+      else window.addEventListener("load", checkFallback, { once: true });
+
+      return () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("load", checkFallback);
+        clearTimeout(fallback);
+      };
+    }
+
     if (mode === "salida") {
       const onOut = (e: MouseEvent) => {
         if (e.clientY <= 0 && !e.relatedTarget) setOpen(true);
@@ -245,7 +291,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
       document.addEventListener("mouseout", onOut);
       return () => document.removeEventListener("mouseout", onOut);
     }
-  }, [open, allowed, dismissed, preview, trigger, delayMs, scrollPercent]);
+  }, [open, allowed, dismissed, preview, trigger, delayMs, scrollPercent, sectionIndex]);
 
   useEffect(() => {
     if (!open) return;

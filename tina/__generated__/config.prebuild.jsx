@@ -3640,6 +3640,7 @@ var config_default = defineConfig({
               { value: "inmediato", label: "Al cargar la p\xE1gina" },
               { value: "segundos", label: "Despu\xE9s de N segundos" },
               { value: "scroll", label: "Al llegar a N% de scroll" },
+              { value: "seccion", label: "Al llegar a la secci\xF3n N" },
               { value: "salida", label: "Al intentar salir de la p\xE1gina" }
             ]
           },
@@ -3654,6 +3655,12 @@ var config_default = defineConfig({
             label: "% de scroll",
             type: "number",
             description: "Solo para \xABal llegar a N% de scroll\xBB. Por defecto 40."
+          },
+          {
+            name: "sectionIndex",
+            label: "N\xFAmero de secci\xF3n",
+            type: "number",
+            description: "Solo para \xABal llegar a la secci\xF3n N\xBB. Cuenta los bloques visibles de la p\xE1gina: 1 es el hero, 2 el siguiente. Por defecto 2. Si la p\xE1gina no tiene esa secci\xF3n, se usa el modo por segundos."
           },
           {
             name: "remindAfterDays",

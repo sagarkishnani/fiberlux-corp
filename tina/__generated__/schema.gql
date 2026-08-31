@@ -2717,6 +2717,7 @@ type Popup implements Node & Document {
   trigger: String
   delaySeconds: Float
   scrollPercent: Float
+  sectionIndex: Float
   remindAfterDays: Float
   mode: String
   badge: String
@@ -2757,6 +2758,7 @@ input PopupFilter {
   trigger: StringFilter
   delaySeconds: NumberFilter
   scrollPercent: NumberFilter
+  sectionIndex: NumberFilter
   remindAfterDays: NumberFilter
   mode: StringFilter
   badge: StringFilter
@@ -4021,6 +4023,7 @@ input PopupMutation {
   trigger: String
   delaySeconds: Float
   scrollPercent: Float
+  sectionIndex: Float
   remindAfterDays: Float
   mode: String
   badge: String

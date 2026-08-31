@@ -24,7 +24,7 @@ El otro motivo es que el mockup entregado es **un caso de uso, no la plantilla e
 - **Colección nueva `popup`** en `tina/config.ts`, documento único (`path: src/content/popup`, `allowedActions: { create: false, delete: false }`), con su `src/content/popup/index.json` precargado con el contenido del mockup de la Fiberlux App.
 - **Par de componentes nuevos** `src/components/popup/Popup.astro` + `PopupReact.tsx` (patrón dual del proyecto), montados globalmente en `BaseLayout.astro` junto a `<CookieConsent />`.
 - **Dónde aparece:** campo `scope` con tres valores — `todo` (todo el sitio), `home` (solo la portada) y `rutas` (lista de paths editable). El filtrado ocurre **en build**: si la página no está en alcance, la isla no se emite.
-- **Cuándo aparece:** campo `trigger` con cuatro modos — `inmediato`, `segundos` (con `delaySeconds`), `scroll` (con `scrollPercent`) y `salida` (intención de salida, con repliegue a `delaySeconds` en dispositivos táctiles).
+- **Cuándo aparece:** campo `trigger` con cinco modos — `inmediato`, `segundos` (con `delaySeconds`), `scroll` (con `scrollPercent`), `seccion` (con `sectionIndex`) y `salida` (intención de salida, con repliegue a `delaySeconds` en dispositivos táctiles).
 - **Cada cuánto vuelve:** `remindAfterDays` (default 7). Una vez **mostrado** no reaparece en la misma sesión; una vez **cerrado** no reaparece hasta que pasen N días.
 - **`campaignId`:** al cambiarlo, el pop-up vuelve a mostrarse incluso a quien ya lo había cerrado.
 - **Modo nativo** (el del mockup, todo editable): badge tipo pill, titular, `features[]` de largo libre (ícono de un set fijo + texto), `buttons[]` de largo libre (etiqueta, URL, ícono, variante primaria/secundaria), imagen del teléfono a sangre en la mitad derecha (desktop) e ícono de app arriba (mobile). Cada bloque se oculta si su campo va vacío.
@@ -254,6 +254,32 @@ Cada paso deja el sitio compilando y navegable.
 ---
 
 ## Notas de implementación
+
+### Ampliación posterior — disparador por sección (pedido del cliente)
+
+El cliente pidió que el pop-up salte **al llegar a la segunda sección**. Eso no
+es un porcentaje: en la portada la segunda sección empieza en y=928 en desktop
+(ventana de 900) y en y=836 en móvil (ventana de 844), así que un `scrollPercent`
+fijo acertaría en un tamaño de pantalla y fallaría en el resto.
+
+Se añade un quinto modo, `seccion`, con un campo `sectionIndex` (por defecto 2):
+cuenta los bloques de nivel superior de `<main>` **que ocupan espacio** —los que
+no pintan nada, como una inyección de HTML vacía, no cuentan— y dispara cuando
+el elegido llega al borde superior del viewport. Si la página no tiene esa
+sección, se repliega al modo por segundos en vez de no mostrarse nunca.
+
+**Bug encontrado al probarlo:** la primera evaluación corría al montar y la isla
+monta con `client:idle`, cuando el layout aún no está asentado: varios bloques
+miden 0 y el «segundo visible» puede ser uno que ya está en pantalla. Medido, el
+pop-up salía con `scrollY = 0` y la sección todavía a 836px. Se corrige con dos
+guardas: no evaluar mientras `scrollY <= 0` (sin scroll no se ha «llegado» a
+ninguna sección) y **rebuscar** el bloque en cada evaluación en vez de cachearlo
+al montar. Verificado en las dos ventanas: la distancia baja 636 → 436 → 236 →
+86 → 6 y dispara al cruzar 0.
+
+El contenido queda **activo** (`enabled: true`) con este modo, que es lo que
+pidió el cliente.
+
 
 Implementado en la rama `spec-111-popup-promocional-global`, un commit por
 step del plan. `astro build` verde: 108 páginas, exit 0.

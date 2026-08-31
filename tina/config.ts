@@ -3850,6 +3850,7 @@ export default defineConfig({
               { value: "inmediato", label: "Al cargar la página" },
               { value: "segundos", label: "Después de N segundos" },
               { value: "scroll", label: "Al llegar a N% de scroll" },
+              { value: "seccion", label: "Al llegar a la sección N" },
               { value: "salida", label: "Al intentar salir de la página" },
             ],
           },
@@ -3866,6 +3867,13 @@ export default defineConfig({
             type: "number",
             description:
               "Solo para «al llegar a N% de scroll». Por defecto 40.",
+          },
+          {
+            name: "sectionIndex",
+            label: "Número de sección",
+            type: "number",
+            description:
+              "Solo para «al llegar a la sección N». Cuenta los bloques visibles de la página: 1 es el hero, 2 el siguiente. Por defecto 2. Si la página no tiene esa sección, se usa el modo por segundos.",
           },
           {
             name: "remindAfterDays",

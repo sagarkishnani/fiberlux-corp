@@ -1035,6 +1035,7 @@ fragment PopupParts on Popup {
   trigger
   delaySeconds
   scrollPercent
+  sectionIndex
   remindAfterDays
   mode
   badge
