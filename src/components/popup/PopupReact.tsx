@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTina } from "tinacms/dist/react";
 import type { IconType } from "react-icons";
 import {
@@ -63,6 +63,71 @@ function asset(path?: string | null): string {
   return `${BASE}${p}`.replace(/\/{2,}/g, "/");
 }
 
+/* Persistencia. Dos claves con propósitos distintos: la de sesión evita que el
+   pop-up salte en cada navegación de una misma visita; la de localStorage
+   implementa los N días de respeto al cierre. */
+const STORAGE_KEY = "flx-popup:v1";
+const SESSION_KEY = "flx-popup-session:v1";
+const COOKIE_CONSENT_KEY = "flx-cookie-consent:v1";
+
+interface Dismissal {
+  closedAt?: number;
+  campaignId?: string;
+}
+
+function readDismissal(): Dismissal | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeDismissal(campaignId: string) {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ closedAt: Date.now(), campaignId })
+    );
+  } catch {
+    /* storage deshabilitado: el pop-up sigue funcionando, sólo no recuerda */
+  }
+}
+
+function markSeenThisSession() {
+  try {
+    sessionStorage.setItem(SESSION_KEY, "1");
+  } catch {}
+}
+
+function seenThisSession(): boolean {
+  try {
+    return sessionStorage.getItem(SESSION_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+/** El modal de cookies tiene prioridad: hasta que no se responde, no hay pop-up. */
+function cookiesResolved(): boolean {
+  try {
+    return localStorage.getItem(COOKIE_CONSENT_KEY) !== null;
+  } catch {
+    /* Sin storage no podemos saberlo; no bloqueamos el pop-up por eso. */
+    return true;
+  }
+}
+
+/** `?popup=1` fuerza la vista previa: ignora persistencia y disparador. */
+function isPreview(): boolean {
+  try {
+    return new URLSearchParams(window.location.search).get("popup") === "1";
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Pop-up promocional (SPEC 111).
  *
@@ -79,6 +144,33 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
      doble paso el navegador pinta el estado final y no hay transición. */
   const [entered, setEntered] = useState(false);
 
+  /* `allowed` se decide tras montar: en SSG el HTML es el mismo para todos y
+     leer storage durante el render daría una hidratación inconsistente. */
+  const [allowed, setAllowed] = useState(false);
+  const [preview, setPreview] = useState(false);
+
+  const campaignId = popup?.campaignId || "";
+  const remindDays = Math.max(0, popup?.remindAfterDays ?? 7);
+
+  useEffect(() => {
+    if (isPreview()) {
+      setPreview(true);
+      setAllowed(true);
+      return;
+    }
+    if (seenThisSession()) return;
+    if (!cookiesResolved()) return;
+
+    const prev = readDismissal();
+    if (prev?.closedAt) {
+      /* Campaña distinta: el cierre anterior ya no aplica. */
+      const sameCampaign = (prev.campaignId || "") === campaignId;
+      const elapsedDays = (Date.now() - prev.closedAt) / 86_400_000;
+      if (sameCampaign && elapsedDays < remindDays) return;
+    }
+    setAllowed(true);
+  }, [campaignId, remindDays]);
+
   const trigger = popup?.trigger || "segundos";
   const delayMs = Math.max(0, popup?.delaySeconds ?? 5) * 1000;
   const scrollPercent = Math.min(100, Math.max(0, popup?.scrollPercent ?? 40));
@@ -86,7 +178,13 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   /* Disparador. Cada modo arma su propio listener y todos desembocan en el
      mismo `setOpen(true)`. */
   useEffect(() => {
-    if (open) return;
+    if (open || !allowed) return;
+
+    /* La vista previa se salta el disparador: el editor quiere verlo ya. */
+    if (preview) {
+      setOpen(true);
+      return;
+    }
 
     /* La intención de salida no existe sin cursor: en táctil se repliega al
        modo por segundos para que el pop-up no quede invisible en celulares. */
@@ -126,13 +224,21 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
       document.addEventListener("mouseout", onOut);
       return () => document.removeEventListener("mouseout", onOut);
     }
-  }, [open, trigger, delayMs, scrollPercent]);
+  }, [open, allowed, preview, trigger, delayMs, scrollPercent]);
 
   useEffect(() => {
     if (!open) return;
+    if (!preview) markSeenThisSession();
     const id = requestAnimationFrame(() => setEntered(true));
     return () => cancelAnimationFrame(id);
-  }, [open]);
+  }, [open, preview]);
+
+  /* Cerrar: en vista previa no se escribe nada, para no ensuciar el storage
+     del editor mientras revisa. */
+  const close = useCallback(() => {
+    if (!preview) writeDismissal(campaignId);
+    setOpen(false);
+  }, [preview, campaignId]);
 
   if (!popup || !open) return null;
 
@@ -145,7 +251,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
     <div className="fixed inset-0 z-[90] flex items-end justify-center lg:items-center lg:p-6">
       <div
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={() => setOpen(false)}
+        onClick={close}
       />
 
       <div
@@ -155,7 +261,7 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
       >
         <button
           type="button"
-          onClick={() => setOpen(false)}
+          onClick={close}
           aria-label="Cerrar"
           className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-greyscale-darkest/85 text-white/80 backdrop-blur transition hover:bg-white/10 hover:text-white lg:right-6 lg:top-6"
         >
