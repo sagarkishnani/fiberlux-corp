@@ -74,14 +74,65 @@ export default function PopupReact({ query, variables, data: initialData }: Prop
   const { data } = useTina({ query, variables, data: initialData });
   const popup = data?.popup;
 
-  const [open, setOpen] = useState(true);
-  /* La hoja nace desplazada y sube en el frame siguiente al montaje: sin este
+  const [open, setOpen] = useState(false);
+  /* La hoja nace desplazada y sube en el frame siguiente a abrirse: sin este
      doble paso el navegador pinta el estado final y no hay transición. */
   const [entered, setEntered] = useState(false);
+
+  const trigger = popup?.trigger || "segundos";
+  const delayMs = Math.max(0, popup?.delaySeconds ?? 5) * 1000;
+  const scrollPercent = Math.min(100, Math.max(0, popup?.scrollPercent ?? 40));
+
+  /* Disparador. Cada modo arma su propio listener y todos desembocan en el
+     mismo `setOpen(true)`. */
   useEffect(() => {
+    if (open) return;
+
+    /* La intención de salida no existe sin cursor: en táctil se repliega al
+       modo por segundos para que el pop-up no quede invisible en celulares. */
+    const coarse =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(pointer: coarse)").matches;
+    const mode = trigger === "salida" && coarse ? "segundos" : trigger;
+
+    if (mode === "inmediato") {
+      /* Un respiro para no competir con la pintura inicial de la página. */
+      const t = setTimeout(() => setOpen(true), 300);
+      return () => clearTimeout(t);
+    }
+
+    if (mode === "segundos") {
+      const t = setTimeout(() => setOpen(true), delayMs);
+      return () => clearTimeout(t);
+    }
+
+    if (mode === "scroll") {
+      const onScroll = () => {
+        const doc = document.documentElement;
+        const scrollable = doc.scrollHeight - window.innerHeight;
+        /* Página que no scrollea: el umbral es inalcanzable, se abre igual. */
+        const pct = scrollable <= 0 ? 100 : (window.scrollY / scrollable) * 100;
+        if (pct >= scrollPercent) setOpen(true);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
+    if (mode === "salida") {
+      const onOut = (e: MouseEvent) => {
+        if (e.clientY <= 0 && !e.relatedTarget) setOpen(true);
+      };
+      document.addEventListener("mouseout", onOut);
+      return () => document.removeEventListener("mouseout", onOut);
+    }
+  }, [open, trigger, delayMs, scrollPercent]);
+
+  useEffect(() => {
+    if (!open) return;
     const id = requestAnimationFrame(() => setEntered(true));
     return () => cancelAnimationFrame(id);
-  }, []);
+  }, [open]);
 
   if (!popup || !open) return null;
 
