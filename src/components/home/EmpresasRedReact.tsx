@@ -65,12 +65,20 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  /* Ídem `StatsReact`: la cifra nace en su valor final (queda así en el HTML
+     estático) y sólo se rebobina a 0 si al hidratar aún está fuera de pantalla. */
+  const [rebobinar, setRebobinar] = useState(false);
+
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || "0");
-  const count = useCounter(value, 1000 + index * 60, isVisible);
+  const count = useCounter(value, 1000 + index * 60, isVisible, rebobinar);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Ídem `StatsReact`: con `client:visible` la isla monta cuando el bloque
+    // asoma por abajo, así que el umbral es "todavía en la mitad inferior".
+    const r = el.getBoundingClientRect();
+    if (r.top > window.innerHeight * 0.5) setRebobinar(true);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -148,6 +156,9 @@ export default function EmpresasRedReact({
 
   // En desktop entran las 3 tarjetas y no hay nada que desplazar: se ocultan
   // las flechas en vez de dejarlas muertas (vuelven al sumar testimonios).
+  // Antes de que Embla arranque `canNext` es optimista (ver `useSlider`), así
+  // que las flechas SÍ salen en el HTML estático: es lo que faltaba cuando el
+  // bundle no llegaba a cargar.
   const scrollable = slider.canPrev || slider.canNext;
 
   // La sección se apaga desde el CMS igual que el slider de testimonios.

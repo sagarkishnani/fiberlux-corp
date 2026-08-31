@@ -258,14 +258,8 @@ export default function SolucionesStackReact({
     let suave = -1; // -1 = aún sin primer valor: engancha sin animar desde 0
 
     /** Índice fraccional de la card que ocupa el centro del viewport. */
-    const objetivo = () => {
-      const nodes = cardRefs.current.filter(Boolean) as HTMLElement[];
-      if (nodes.length === 0) return 0;
-      const centro = window.innerHeight / 2;
-      const centros = nodes.map((n) => {
-        const r = n.getBoundingClientRect();
-        return r.top + r.height / 2;
-      });
+    const indiceEn = (centros: number[], centro: number) => {
+      if (centros.length === 0) return 0;
       if (centro <= centros[0]) return 0;
       const ultimo = centros.length - 1;
       if (centro >= centros[ultimo]) return ultimo;
@@ -279,7 +273,20 @@ export default function SolucionesStackReact({
     };
 
     const frame = () => {
-      const t = objetivo();
+      /* Todas las MEDIDAS primero y todas las ESCRITURAS después.
+         Antes el bucle leía los rects, escribía --sol-p y volvía a medir card
+         por card intercalando `setProperty`: cada escritura invalida el estilo
+         y el `getBoundingClientRect()` siguiente obliga al navegador a
+         recalcular layout ahí mismo — cuatro reflujos forzados por frame, con
+         el scroll en marcha. Los centros se reutilizan para las dos cosas. */
+      const nodes = cardRefs.current.filter(Boolean) as HTMLElement[];
+      const vh = window.innerHeight;
+      const centros = nodes.map((n) => {
+        const r = n.getBoundingClientRect();
+        return r.top + r.height / 2;
+      });
+
+      const t = indiceEn(centros, vh / 2);
       if (suave < 0 || reduce) suave = t;
       else {
         suave += (t - suave) * 0.14;
@@ -293,10 +300,8 @@ export default function SolucionesStackReact({
       );
 
       // Cercanía de cada card al centro (1 = centrada, 0 = lejos).
-      const vh = window.innerHeight;
-      (cardRefs.current.filter(Boolean) as HTMLElement[]).forEach((n) => {
-        const r = n.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - vh / 2);
+      nodes.forEach((n, i) => {
+        const d = Math.abs(centros[i] - vh / 2);
         const cerca = Math.max(0, Math.min(1, 1 - d / (vh * 0.6)));
         n.style.setProperty("--sol-cerca", cerca.toFixed(3));
       });
@@ -403,7 +408,7 @@ export default function SolucionesStackReact({
           />
           {/* Grano. */}
           <div
-            className="absolute inset-0 opacity-[0.16] mix-blend-overlay"
+            className="sol-grano absolute inset-0 opacity-[0.16] mix-blend-overlay"
             style={{ backgroundImage: GRANO, backgroundSize: "160px 160px" }}
           />
         </div>
@@ -471,7 +476,7 @@ export default function SolucionesStackReact({
                 cuatro tramos que se van encendiendo. Cada tramo es además un
                 atajo para saltar a esa card. */}
             <div className="sticky top-4 z-20 -mb-2 lg:hidden">
-              <div className="rounded-2xl border border-white/10 bg-[#0d0b0d]/85 px-4 py-3 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.95)] backdrop-blur-md">
+              <div className="rounded-2xl border border-white/10 bg-[#0d0b0d]/95 px-4 py-3 shadow-[0_16px_40px_-24px_rgba(0,0,0,0.95)]">
                 <div className="flex items-center gap-2.5">
                   {(() => {
                     const ActivoIcon = iconFor(items[pillIndex]?.tabIcon);
@@ -625,37 +630,65 @@ export default function SolucionesStackReact({
      como texto suelto: sube el borde, el relleno pasa a degradado y una
      sombra baja la despega del fondo. */
   .sol-card.sol-card {
+    position: relative;
     border-color: rgba(255,255,255,0.18);
     background:
       linear-gradient(180deg, rgba(255,255,255,0.055) 0%, rgba(255,255,255,0.012) 100%),
       rgba(10,10,10,0.55);
-
-    /* --sol-cerca (0→1) lo escribe el bucle de scroll: la card se enciende
-       de forma continua conforme se acerca al centro del viewport, en vez de
-       saltar entre estados.
-
-       Obs. cliente: en un celular real ese encendido no se notaba. Era un aro
-       de 1px al 42% de magenta sobre negro — en una pantalla chica, con brillo
-       automático y a la luz del día, eso es invisible. Ahora el aro es de 2px
-       y llega al 80%, y por fuera se le suma un halo desenfocado: en una
-       pantalla pequeña el halo es lo que de verdad delata el borde, porque
-       ocupa varios píxeles en vez de uno.
-
-       La card además CRECE un 1.2% al centrarse (obs. cliente). Va en la
-       propiedad scale y no en transform a propósito: el motor de reveals
-       escribe transform en línea sobre este mismo nodo (lleva el atributo
-       data-reveal) y se pisarían. La propiedad scale se compone aparte. Es un
-       crecimiento sin coste de layout —no empuja a las cards vecinas— y 1.2%
-       sobre el alto de la card queda muy por dentro del hueco de 32px que las
-       separa. */
-    scale: calc(1 + 0.012 * var(--sol-cerca, 0));
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,calc(0.06 + 0.06 * var(--sol-cerca, 0))),
-      0 0 0 2px rgba(198,95,172, calc(0.80 * var(--sol-cerca, 0))),
-      0 0 22px 0 rgba(198,95,172, calc(0.30 * var(--sol-cerca, 0))),
-      0 26px 60px -32px rgba(150,35,122, calc(0.60 * var(--sol-cerca, 0))),
+      inset 0 1px 0 rgba(255,255,255,0.06),
       0 18px 44px -30px rgba(0,0,0,0.95);
+
+    /* La card CRECE un 1.2% al centrarse (obs. cliente). Va en la propiedad
+       scale y no en transform a propósito: el motor de reveals escribe
+       transform en línea sobre este mismo nodo (lleva el atributo data-reveal)
+       y se pisarían. La propiedad scale se compone aparte. Es un crecimiento
+       sin coste de layout —no empuja a las cards vecinas— y 1.2% sobre el alto
+       de la card queda muy por dentro del hueco de 32px que las separa. */
+    scale: calc(1 + 0.012 * var(--sol-cerca, 0));
+    will-change: transform;
   }
+
+  /* ── El encendido, en su propia capa ──
+     --sol-cerca (0→1) lo escribe el bucle de scroll frame a frame: la card se
+     enciende de forma continua conforme se acerca al centro del viewport.
+
+     Antes ese valor entraba dentro de cuatro box-shadow con blur (un aro de
+     2px, un halo de 22px y una sombra de 60px) sobre las cuatro cards. Cambiar
+     un color de sombra obliga al navegador a REPINTAR toda esa superficie, y
+     hacerlo cada frame encima de un canvas WebGL fijo es justo lo que producía
+     el tirón y los parpadeos negros que reportó el cliente en gama media
+     (el compositor de Android descarta tiles cuando no llega a tiempo).
+
+     Ahora las sombras se pintan UNA vez, ya en su color final, sobre este
+     pseudo-elemento, y lo único que cambia por frame es su opacity: eso lo
+     resuelve el compositor sin repintar nada. Se ve idéntico.
+
+     Obs. cliente previa que se conserva: el aro es de 2px al 80% de magenta
+     (no 1px al 42%, invisible en una pantalla chica a plena luz) y por fuera
+     lleva un halo desenfocado, que es lo que de verdad delata el borde en
+     móvil porque ocupa varios píxeles en vez de uno. */
+  .sol-card.sol-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--sol-cerca, 0);
+    will-change: opacity;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.06),
+      0 0 0 2px rgba(198,95,172,0.80),
+      0 0 22px 0 rgba(198,95,172,0.30),
+      0 26px 60px -32px rgba(150,35,122,0.60);
+  }
+
+  /* El grano a pantalla completa se compone con mix-blend-overlay, que en
+     móvil obliga al navegador a leer de vuelta lo que hay debajo (el canvas
+     WebGL) en cada composición. Sobre este fondo casi negro la mezcla aporta
+     poco, así que en móvil se pinta plano y más tenue. */
+  .sol-grano.sol-grano { mix-blend-mode: normal; opacity: 0.07; }
+
   /* Con movimiento reducido la card no cambia de tamaño; el aro y el halo se
      quedan, que es lo que hace falta para verla. */
   @media (prefers-reduced-motion: reduce) {

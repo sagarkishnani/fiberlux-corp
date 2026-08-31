@@ -3239,6 +3239,7 @@ export type PopupButtons = {
   label?: Maybe<Scalars['String']['output']>;
   label_en?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
   variant?: Maybe<Scalars['String']['output']>;
 };
@@ -3282,6 +3283,7 @@ export type PopupButtonsFilter = {
   label?: InputMaybe<StringFilter>;
   label_en?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
   icon?: InputMaybe<StringFilter>;
   variant?: InputMaybe<StringFilter>;
 };
@@ -4824,6 +4826,7 @@ export type PopupButtonsMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
   label_en?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['String']['input']>;
   variant?: InputMaybe<Scalars['String']['input']>;
 };
@@ -4891,7 +4894,7 @@ export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: 
 
 export type FiberluxAppPartsFragment = { __typename: 'FiberluxApp', whyUsTitle?: string | null, whyUsTitle_en?: string | null, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, description_en?: string | null, note?: string | null, note_en?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, videoShowcase?: { __typename: 'FiberluxAppVideoShowcase', heading?: string | null, heading_en?: string | null, body?: any | null, body_en?: any | null, buttonLabel?: string | null, buttonLabel_en?: string | null, videoUrl?: string | null, imageDesktop?: string | null, imageMobile?: string | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type PopupPartsFragment = { __typename: 'Popup', enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null };
+export type PopupPartsFragment = { __typename: 'Popup', enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, image?: string | null, icon?: string | null, variant?: string | null } | null> | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5259,7 +5262,7 @@ export type PopupQueryVariables = Exact<{
 }>;
 
 
-export type PopupQuery = { __typename?: 'Query', popup: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null } };
+export type PopupQuery = { __typename?: 'Query', popup: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, image?: string | null, icon?: string | null, variant?: string | null } | null> | null } };
 
 export type PopupConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5271,7 +5274,7 @@ export type PopupConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PopupConnectionQuery = { __typename?: 'Query', popupConnection: { __typename?: 'PopupConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PopupConnectionEdges', cursor: string, node?: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null } | null } | null> | null } };
+export type PopupConnectionQuery = { __typename?: 'Query', popupConnection: { __typename?: 'PopupConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PopupConnectionEdges', cursor: string, node?: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, sectionIndex?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, phonePosition?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, image?: string | null, icon?: string | null, variant?: string | null } | null> | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -6348,6 +6351,7 @@ export const PopupPartsFragmentDoc = gql`
     label
     label_en
     url
+    image
     icon
     variant
   }
@@ -7669,7 +7673,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/main",
         queries,
       })
     )

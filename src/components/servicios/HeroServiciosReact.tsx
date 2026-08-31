@@ -61,8 +61,18 @@ const SALIDA_MS = 340;
    veía NINGUNA palabra y la línea parecía vaciarse. Ahora la que entra arranca
    mientras la que sale todavía se apaga. */
 const CSS_TITULAR = `
+/* inline-flex + justify-content:center, y no inline-block: la caja anima
+   su ancho, y con la palabra en flujo normal quedaba pegada a la IZQUIERDA de
+   una caja que todavía tiene el ancho de la palabra anterior. Al entrar una
+   palabra más larga ("operar" → "conectar") eso la arrancaba ~20px descentrada
+   y la hacía deslizarse hasta su sitio durante los 420ms de la transición: el
+   "salto" que el cliente veía en mobile (en desktop los mismos px se diluyen en
+   un titular de 900px, por eso allí no se notaba). Centrada, la palabra desborda
+   por igual a los dos lados y se queda quieta: sólo respira el ancho. */
 .fbx-verbo {
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: baseline;
   position: relative;
   vertical-align: bottom;
   transition: width 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -70,6 +80,9 @@ const CSS_TITULAR = `
 .fbx-verbo-in,
 .fbx-verbo-out {
   display: inline-block;
+  /* Sin esto el flex de la caja encogería la palabra cuando el ancho todavía es
+     el de la anterior, y el centrado saldría mal justo durante la transición. */
+  flex: 0 0 auto;
   /* El degradado se recorta contra el TEXTO, y la caja que se pinta es la del
      padding: sin este aire abajo la cola de la g de "proteger" cae fuera de esa
      caja, se queda sin pintar y se ve cortada (es la única palabra con

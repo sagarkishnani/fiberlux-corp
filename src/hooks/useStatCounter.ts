@@ -59,12 +59,34 @@ export function formatNumber(n: number, decimals: number, hasCommas: boolean): s
   return decPart ? `${formatted}.${decPart}` : formatted;
 }
 
-/** Cuenta de 0 a `target` con ease-out quad cuando `shouldStart` pasa a true. */
-export function useCounter(target: number, duration: number, shouldStart: boolean) {
-  const [count, setCount] = useState(0);
+/**
+ * Cuenta de 0 a `target` con ease-out quad cuando `shouldStart` pasa a true.
+ *
+ * Arranca en la CIFRA FINAL, no en 0. El sitio es estático y las islas se
+ * renderizan en build, así que ese valor inicial es el que queda escrito en el
+ * HTML: si el bundle no llega —sin JS, o con la conexión caída a media carga,
+ * que es lo que reportó el cliente— las cifras se leen igual en vez de quedarse
+ * en cero para siempre.
+ *
+ * `rebobinar` es lo que devuelve la cuenta a 0 para poder animarla. Lo decide
+ * quien llama (ver `StatsReact`) y sólo lo activa si la cifra todavía está
+ * fuera de pantalla: rebobinar algo que ya se está viendo sería un parpadeo
+ * del número final al cero.
+ */
+export function useCounter(
+  target: number,
+  duration: number,
+  shouldStart: boolean,
+  rebobinar = false
+) {
+  const [count, setCount] = useState(target);
 
   useEffect(() => {
-    if (!shouldStart || target === 0) return;
+    if (rebobinar && !shouldStart) setCount(0);
+  }, [rebobinar, shouldStart]);
+
+  useEffect(() => {
+    if (!shouldStart || target === 0 || !rebobinar) return;
 
     let startTime: number | null = null;
     let rafId: number;
@@ -87,7 +109,7 @@ export function useCounter(target: number, duration: number, shouldStart: boolea
 
     rafId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafId);
-  }, [target, duration, shouldStart]);
+  }, [target, duration, shouldStart, rebobinar]);
 
   return count;
 }

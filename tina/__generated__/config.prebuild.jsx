@@ -3741,6 +3741,12 @@ var config_default = defineConfig({
                 description: "Si la dejas vac\xEDa el bot\xF3n no se muestra (evita enlaces muertos)."
               },
               {
+                name: "image",
+                label: "Badge (imagen)",
+                type: "image",
+                description: "Opcional. Para los badges oficiales de App Store / Google Play: sube el arte y sustituye al bot\xF3n (el texto y el \xEDcono se ignoran, pero el texto se sigue usando como alternativa para lectores de pantalla). Si TODOS los botones traen badge se muestran en fila y a la misma altura; si no, se apilan al mismo ancho."
+              },
+              {
                 name: "icon",
                 label: "\xCDcono",
                 type: "string",

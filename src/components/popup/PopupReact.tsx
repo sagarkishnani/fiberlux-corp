@@ -422,6 +422,11 @@ export default function PopupReact({ query, variables, data: initialData, locale
   const features = (popup.features || []).filter(Boolean);
   /* Un botón sin URL sería un enlace muerto: no se pinta. */
   const buttons = (popup.buttons || []).filter((b: any) => b?.url);
+  /* Los badges van en fila sólo si TODOS traen arte: mezclar una imagen con un
+     botón de texto en la misma fila es justo el desequilibrio que se quería
+     evitar, así que basta con que a uno le falte para que la fila se descarte
+     y se apilen todos como botones nativos. */
+  const todosConBadge = buttons.length > 0 && buttons.every((b: any) => b?.image);
   const hasPhone = Boolean(popup.phoneImage);
   const phoneAtBottom = (popup.phonePosition || "bottom") !== "centro";
 
@@ -507,8 +512,13 @@ export default function PopupReact({ query, variables, data: initialData, locale
               )}
             </div>
             {L(popup, "badge") && (
-              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-purple/55 bg-gradient-to-r from-brand-purple/30 via-brand-purple/10 to-transparent px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-brand-purple lg:mb-6">
-                <span className="h-1 w-1 rounded-full bg-brand-purple" aria-hidden="true" />
+              /* Obs. cliente: en magenta sobre el ciruela del panel el chip no
+                 se leía. Borde y letra en blanco; el relleno magenta se queda,
+                 sólo que ahora aporta color de fondo en vez de ser también el
+                 color del texto. El punto sí sigue magenta claro: es el único
+                 acento de marca que el chip necesita. */
+              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/70 bg-gradient-to-r from-brand-purple/30 via-brand-purple/10 to-transparent px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white lg:mb-6">
+                <span className="h-1 w-1 rounded-full bg-[#e07cc6]" aria-hidden="true" />
                 {L(popup, "badge")}
               </span>
             )}
@@ -524,7 +534,13 @@ export default function PopupReact({ query, variables, data: initialData, locale
                 {features.map((f: any, i: number) => {
                   const Icon = FEATURE_ICONS[f?.icon || ""];
                   return (
-                    <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:items-start lg:gap-4 lg:border-0 lg:p-0" key={i}>
+                    /* Obs. cliente: los íconos se veían desalineados respecto al
+                       texto. En desktop iban anclados arriba (`items-start`) y
+                       el texto además bajaba 8px (`pt-2`): con dos líneas el
+                       ícono quedaba alto y con una, bajo. Centrados contra el
+                       bloque de texto —como en el artboard de referencia— la
+                       relación es la misma tenga el punto una línea o dos. */
+                    <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:gap-4 lg:border-0 lg:p-0" key={i}>
                       {Icon && (
                         <span
                           className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-brand-purple/40 bg-brand-purple/10 text-brand-purple motion-reduce:animate-none lg:h-10 lg:w-10"
@@ -533,7 +549,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                           <Icon aria-hidden="true" />
                         </span>
                       )}
-                      <span className="text-[14px] leading-relaxed text-white/70 lg:pt-2 lg:text-[15px]">
+                      <span className="text-[14px] leading-relaxed text-white/70 lg:text-[15px]">
                         {L(f, "text")}
                       </span>
                     </li>
@@ -542,31 +558,55 @@ export default function PopupReact({ query, variables, data: initialData, locale
               </ul>
             )}
 
-            {buttons.length > 0 && (
-              /* Todos los botones al mismo ancho: el mockup de desktop los
-                 muestra con anchos distintos, y el cliente confirmó que es un
-                 error del diseño. */
-              <div className="mx-auto mt-7 flex max-w-[420px] flex-col gap-3 lg:mx-0 lg:mt-10">
-                {buttons.map((b: any, i: number) => {
-                  const Icon = BUTTON_ICONS[b?.icon || ""];
-                  const primary = b?.variant !== "secundario";
-                  return (
+            {buttons.length > 0 &&
+              (todosConBadge ? (
+                /* ── Badges oficiales ──
+                   Obs. cliente: prefiere los badges que la gente reconoce, "para
+                   que uno no le gane al otro". Cuando TODOS los botones traen
+                   arte subido se muestran en fila y con la MISMA altura (el
+                   ancho lo pone cada arte, que no son proporciones idénticas);
+                   así ninguno pesa más que el otro. El texto del CMS sigue
+                   sirviendo de alternativa para lectores de pantalla. */
+                <div className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:mt-10 lg:justify-start lg:gap-4">
+                  {buttons.map((b: any, i: number) => (
                     <a
                       key={i}
                       href={localizeHref(b.url, locale)}
-                      className={`flex w-full items-center justify-center gap-3 rounded-lg px-6 py-4 text-[15px] font-semibold transition ${
-                        primary
-                          ? "border border-transparent bg-brand-purple text-white hover:bg-brand-purple-dark"
-                          : "border border-white/25 text-white hover:bg-white/10"
-                      }`}
+                      className="inline-block rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                     >
-                      {Icon && <Icon aria-hidden="true" className="text-lg" />}
-                      {L(b, "label")}
+                      <img
+                        src={asset(b.image)}
+                        alt={L(b, "label") || ""}
+                        className="block h-[44px] w-auto lg:h-[52px]"
+                      />
                     </a>
-                  );
-                })}
-              </div>
-            )}
+                  ))}
+                </div>
+              ) : (
+                /* Todos los botones al mismo ancho: el mockup de desktop los
+                   muestra con anchos distintos, y el cliente confirmó que es un
+                   error del diseño. */
+                <div className="mx-auto mt-7 flex max-w-[420px] flex-col gap-3 lg:mx-0 lg:mt-10">
+                  {buttons.map((b: any, i: number) => {
+                    const Icon = BUTTON_ICONS[b?.icon || ""];
+                    const primary = b?.variant !== "secundario";
+                    return (
+                      <a
+                        key={i}
+                        href={localizeHref(b.url, locale)}
+                        className={`flex w-full items-center justify-center gap-3 rounded-lg px-6 py-4 text-[15px] font-semibold transition ${
+                          primary
+                            ? "border border-transparent bg-brand-purple text-white hover:bg-brand-purple-dark"
+                            : "border border-white/25 text-white hover:bg-white/10"
+                        }`}
+                      >
+                        {Icon && <Icon aria-hidden="true" className="text-lg" />}
+                        {L(b, "label")}
+                      </a>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
 

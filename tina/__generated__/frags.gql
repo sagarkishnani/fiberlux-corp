@@ -1053,6 +1053,7 @@ fragment PopupParts on Popup {
     label
     label_en
     url
+    image
     icon
     variant
   }

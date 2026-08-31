@@ -295,7 +295,17 @@ export default function CatalogoSolucionesReact({
                 return (
                   <div
                     key={pi}
-                    className="catalogo-page shrink-0 w-full grid grid-cols-2 auto-rows-fr gap-3"
+                    /* `auto-rows-min` + `content-start`, NO `auto-rows-fr`: las
+                       páginas del carrusel son ítems flex y todas miden lo que
+                       la más alta, así que con filas `fr` la última página —la
+                       que suele traer 2 tarjetas en vez de 4— repartía ese alto
+                       entre una sola fila y las tarjetas salían estiradas (obs.
+                       cliente). Ahora cada fila mide su contenido y `h-full`
+                       sigue igualando las dos tarjetas de una misma fila; el
+                       `minmax` le pone un piso común a todas las filas para que
+                       una de títulos de una línea no se lea más baja que la de
+                       al lado. */
+                    className="catalogo-page shrink-0 w-full grid grid-cols-2 [grid-auto-rows:minmax(164px,auto)] content-start gap-3"
                   >
                     {pageItems.map((item, i) => {
                       const CardTag = item.url ? "a" : "div";

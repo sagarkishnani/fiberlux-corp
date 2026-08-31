@@ -2705,6 +2705,7 @@ type PopupButtons {
   label: String
   label_en: String
   url: String
+  image: String
   icon: String
   variant: String
 }
@@ -2747,6 +2748,7 @@ input PopupButtonsFilter {
   label: StringFilter
   label_en: StringFilter
   url: StringFilter
+  image: ImageFilter
   icon: StringFilter
   variant: StringFilter
 }
@@ -4013,6 +4015,7 @@ input PopupButtonsMutation {
   label: String
   label_en: String
   url: String
+  image: String
   icon: String
   variant: String
 }

@@ -41,13 +41,26 @@ function StatCard({ item, index, locale }: { item: StatItem; index: number; loca
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
+  /* La cifra nace en su valor final (así queda en el HTML estático) y sólo se
+     rebobina a 0 —para poder animarla— si al hidratar todavía no está en
+     pantalla. Ver `useCounter`. */
+  const [rebobinar, setRebobinar] = useState(false);
+
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || '0');
-  const count = useCounter(value, 1000 + index * 60, isVisible);
+  const count = useCounter(value, 1000 + index * 60, isVisible, rebobinar);
 
   // Intersection observer to trigger animation when visible
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    /* Rebobinar sólo si la cifra todavía no se está leyendo. La isla se hidrata
+       con `client:visible`, o sea justo cuando el bloque asoma por el borde de
+       abajo: ahí `top` ronda el alto del viewport y sí hay que rebobinar para
+       que la cuenta se vea subir. Si alguien recarga con las cifras ya a media
+       pantalla se quedan en su valor final, en vez de parpadear a cero. */
+    const r = el.getBoundingClientRect();
+    if (r.top > window.innerHeight * 0.5) setRebobinar(true);
 
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -66,6 +66,16 @@ export interface Slider {
   scrollSnaps: number[];
   canPrev: boolean;
   canNext: boolean;
+  /**
+   * Embla ya arrancó y `canPrev`/`canNext` son de fiar.
+   *
+   * Antes de eso ambos valen false, que es exactamente lo que queda escrito en
+   * el HTML estático: quien lo lea sin JS —o con el bundle colgado por mala
+   * conexión, el caso que reportó el cliente— veía las flechas apagadas o
+   * directamente ausentes. Con esto los sliders pueden pintarlas activas
+   * mientras no haya un motor que diga lo contrario.
+   */
+  ready: boolean;
   /** True while the carousel is moving (drag or animation); false once settled. */
   scrolling: boolean;
   /** Whether the user prefers reduced motion (autoplay/tweens gated on this). */
@@ -114,6 +124,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
+  const [ready, setReady] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
   const onSelect = useCallback(() => {
@@ -130,6 +141,7 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
     const onSettle = () => setScrolling(false);
     syncSnaps();
     onSelect();
+    setReady(true);
     embla.on("select", onSelect);
     embla.on("reInit", syncSnaps);
     embla.on("reInit", onSelect);
@@ -231,5 +243,23 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const prev = useCallback(() => embla?.scrollPrev(), [embla]);
   const goTo = useCallback((index: number) => embla?.scrollTo(index), [embla]);
 
-  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, scrolling, reducedMotion: prefersReduced, next, prev, goTo };
+  return {
+    viewportRef,
+    activeIndex,
+    scrollSnaps,
+    /* Mientras Embla no ha arrancado se asume el estado del primer slide: no
+       hay anterior y sí hay siguiente. Es una suposición, pero es la correcta
+       para el HTML que se sirve —todo carrusel empieza en su primer slide— y
+       evita que un bundle que tarda (o no llega) deje las flechas apagadas o
+       fuera del documento. Los consumidores que necesiten distinguir el
+       "todavía no se sabe" tienen `ready`. */
+    canPrev: ready ? canPrev : false,
+    canNext: ready ? canNext : true,
+    ready,
+    scrolling,
+    reducedMotion: prefersReduced,
+    next,
+    prev,
+    goTo,
+  };
 }
