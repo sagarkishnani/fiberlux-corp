@@ -13,6 +13,33 @@ const BLOG_TAG_OPTIONS = [
   "Infraestructura",
 ];
 
+/* SPEC 111: sets fijos de íconos del pop-up promocional. Mismo patrón que
+   `about.rubros`: el editor elige de un desplegable y el mapa string → glifo
+   vive en el componente (`PopupReact.tsx`). Un valor desconocido cae en "sin
+   ícono", nunca revienta. */
+const FEATURE_ICON_OPTIONS = [
+  { value: "pulso", label: "Pulso / monitoreo" },
+  { value: "edificio", label: "Edificio / sedes" },
+  { value: "lupa", label: "Lupa / diagnóstico" },
+  { value: "escudo", label: "Escudo / seguridad" },
+  { value: "rayo", label: "Rayo / velocidad" },
+  { value: "reloj", label: "Reloj / 24-7" },
+  { value: "nube", label: "Nube" },
+  { value: "wifi", label: "Wifi / conectividad" },
+  { value: "grafico", label: "Gráfico / métricas" },
+  { value: "check", label: "Check" },
+  { value: "ninguno", label: "Sin ícono" },
+];
+
+const BUTTON_ICON_OPTIONS = [
+  { value: "apple", label: "Apple / App Store" },
+  { value: "google-play", label: "Google Play" },
+  { value: "descarga", label: "Descarga" },
+  { value: "flecha", label: "Flecha" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "ninguno", label: "Sin ícono" },
+];
+
 /* SPEC 105 (ampliado en el 107): las diecisiete plantillas de ilustración de una card de "Beneficios",
    en `src/components/servicios/beneficios/`. Con 35 sub-servicios y 3 a 4 cards
    cada uno son más de cien gráficos: dibujarlos como imágenes significaría cien
@@ -3764,6 +3791,215 @@ export default defineConfig({
               },
               { name: "ogImage", label: "Imagen OG", type: "image" },
             ],
+          },
+        ],
+      },
+
+      /* ══════════════════════════════════════
+         POP-UP PROMOCIONAL (SPEC 111)
+         ══════════════════════════════════════ */
+      {
+        name: "popup",
+        label: "Pop-up promocional",
+        path: "src/content/popup",
+        format: "json",
+        // Documento único: un solo pop-up a la vez, por construcción.
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          {
+            name: "enabled",
+            label: "Activar pop-up",
+            type: "boolean",
+            description:
+              "Mientras esté apagado no se muestra en ninguna página, aunque el contenido esté completo.",
+          },
+          {
+            name: "campaignId",
+            label: "ID de campaña",
+            type: "string",
+            description:
+              "Identificador libre (ej. «app-2026-08»). Cámbialo cuando renueves la campaña: el pop-up volverá a mostrarse incluso a quienes ya lo habían cerrado.",
+          },
+
+          // ── Dónde aparece ──
+          {
+            name: "scope",
+            label: "Dónde aparece",
+            type: "string",
+            options: [
+              { value: "todo", label: "En todo el sitio" },
+              { value: "home", label: "Solo en la portada" },
+              { value: "rutas", label: "Solo en rutas específicas" },
+            ],
+          },
+          {
+            name: "paths",
+            label: "Rutas",
+            type: "string",
+            list: true,
+            description:
+              "Solo si elegiste «rutas específicas». Escribe la ruta sin el idioma: «/», «/fiberlux-app», «/soluciones/conectividad». La versión en inglés (/en/...) se incluye sola.",
+          },
+
+          // ── Cuándo aparece ──
+          {
+            name: "trigger",
+            label: "Cuándo aparece",
+            type: "string",
+            options: [
+              { value: "inmediato", label: "Al cargar la página" },
+              { value: "segundos", label: "Después de N segundos" },
+              { value: "scroll", label: "Al llegar a N% de scroll" },
+              { value: "salida", label: "Al intentar salir de la página" },
+            ],
+          },
+          {
+            name: "delaySeconds",
+            label: "Segundos de espera",
+            type: "number",
+            description:
+              "Solo para «después de N segundos». Por defecto 5. También se usa como repliegue del modo «al intentar salir» en celulares, donde no existe el cursor.",
+          },
+          {
+            name: "scrollPercent",
+            label: "% de scroll",
+            type: "number",
+            description:
+              "Solo para «al llegar a N% de scroll». Por defecto 40.",
+          },
+          {
+            name: "remindAfterDays",
+            label: "Volver a mostrar tras (días)",
+            type: "number",
+            description:
+              "Días que se respeta el cierre del visitante antes de volver a mostrarlo. Por defecto 7.",
+          },
+
+          // ── Presentación ──
+          {
+            name: "mode",
+            label: "Modo",
+            type: "string",
+            options: [
+              { value: "nativo", label: "Nativo (editable)" },
+              { value: "imagen", label: "Solo imagen" },
+            ],
+          },
+
+          // ── Modo nativo ──
+          {
+            name: "badge",
+            label: "Etiqueta (pill)",
+            type: "string",
+            description: "Déjala vacía para ocultar la pill.",
+          },
+          { name: "badge_en", label: "Etiqueta (EN)", type: "string" },
+          {
+            name: "heading",
+            label: "Titular",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "heading_en",
+            label: "Titular (EN)",
+            type: "string",
+            ui: { component: "textarea" },
+          },
+          {
+            name: "features",
+            label: "Puntos",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.text || "Punto" }) },
+            fields: [
+              {
+                name: "icon",
+                label: "Ícono",
+                type: "string",
+                options: FEATURE_ICON_OPTIONS,
+              },
+              {
+                name: "text",
+                label: "Texto",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+              {
+                name: "text_en",
+                label: "Texto (EN)",
+                type: "string",
+                ui: { component: "textarea" },
+              },
+            ],
+          },
+          {
+            name: "buttons",
+            label: "Botones",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.label || "Botón" }) },
+            fields: [
+              { name: "label", label: "Texto", type: "string" },
+              { name: "label_en", label: "Texto (EN)", type: "string" },
+              {
+                name: "url",
+                label: "URL",
+                type: "string",
+                description:
+                  "Si la dejas vacía el botón no se muestra (evita enlaces muertos).",
+              },
+              {
+                name: "icon",
+                label: "Ícono",
+                type: "string",
+                options: BUTTON_ICON_OPTIONS,
+              },
+              {
+                name: "variant",
+                label: "Estilo",
+                type: "string",
+                options: [
+                  { value: "primario", label: "Magenta (primario)" },
+                  { value: "secundario", label: "Contorno (secundario)" },
+                ],
+              },
+            ],
+          },
+          {
+            name: "phoneImage",
+            label: "Imagen desktop (columna derecha)",
+            type: "image",
+            description:
+              "Se recorta a sangre en la mitad derecha. Si la dejas vacía, el pop-up queda a una sola columna.",
+          },
+          {
+            name: "appIcon",
+            label: "Ícono de app (mobile, arriba)",
+            type: "image",
+            description: "Solo se ve en celulares, sobre la etiqueta.",
+          },
+
+          // ── Modo imagen ──
+          {
+            name: "imageDesktop",
+            label: "Imagen desktop",
+            type: "image",
+            description: "Solo para el modo «solo imagen».",
+          },
+          {
+            name: "imageMobile",
+            label: "Imagen mobile",
+            type: "image",
+            description:
+              "Solo para el modo «solo imagen». Si falta, se usa la de desktop.",
+          },
+          {
+            name: "imageUrl",
+            label: "Enlace al hacer clic",
+            type: "string",
+            description:
+              "Opcional. Si lo llenas, toda la imagen enlaza a esa dirección.",
           },
         ],
       },

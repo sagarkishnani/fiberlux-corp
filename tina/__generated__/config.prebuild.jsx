@@ -9,6 +9,27 @@ var BLOG_TAG_OPTIONS = [
   "Continuidad de negocio",
   "Infraestructura"
 ];
+var FEATURE_ICON_OPTIONS = [
+  { value: "pulso", label: "Pulso / monitoreo" },
+  { value: "edificio", label: "Edificio / sedes" },
+  { value: "lupa", label: "Lupa / diagn\xF3stico" },
+  { value: "escudo", label: "Escudo / seguridad" },
+  { value: "rayo", label: "Rayo / velocidad" },
+  { value: "reloj", label: "Reloj / 24-7" },
+  { value: "nube", label: "Nube" },
+  { value: "wifi", label: "Wifi / conectividad" },
+  { value: "grafico", label: "Gr\xE1fico / m\xE9tricas" },
+  { value: "check", label: "Check" },
+  { value: "ninguno", label: "Sin \xEDcono" }
+];
+var BUTTON_ICON_OPTIONS = [
+  { value: "apple", label: "Apple / App Store" },
+  { value: "google-play", label: "Google Play" },
+  { value: "descarga", label: "Descarga" },
+  { value: "flecha", label: "Flecha" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "ninguno", label: "Sin \xEDcono" }
+];
 var PLANTILLA_BENEFICIO_OPTIONS = [
   { value: "velocidad", label: "Velocidad \u2014 tarjetas apiladas con anillo" },
   { value: "simetria", label: "Simetr\xEDa \u2014 curva de \xE1rea con columnas" },
@@ -3566,6 +3587,199 @@ var config_default = defineConfig({
               },
               { name: "ogImage", label: "Imagen OG", type: "image" }
             ]
+          }
+        ]
+      },
+      /* ══════════════════════════════════════
+         POP-UP PROMOCIONAL (SPEC 111)
+         ══════════════════════════════════════ */
+      {
+        name: "popup",
+        label: "Pop-up promocional",
+        path: "src/content/popup",
+        format: "json",
+        // Documento único: un solo pop-up a la vez, por construcción.
+        ui: { allowedActions: { create: false, delete: false } },
+        fields: [
+          {
+            name: "enabled",
+            label: "Activar pop-up",
+            type: "boolean",
+            description: "Mientras est\xE9 apagado no se muestra en ninguna p\xE1gina, aunque el contenido est\xE9 completo."
+          },
+          {
+            name: "campaignId",
+            label: "ID de campa\xF1a",
+            type: "string",
+            description: "Identificador libre (ej. \xABapp-2026-08\xBB). C\xE1mbialo cuando renueves la campa\xF1a: el pop-up volver\xE1 a mostrarse incluso a quienes ya lo hab\xEDan cerrado."
+          },
+          // ── Dónde aparece ──
+          {
+            name: "scope",
+            label: "D\xF3nde aparece",
+            type: "string",
+            options: [
+              { value: "todo", label: "En todo el sitio" },
+              { value: "home", label: "Solo en la portada" },
+              { value: "rutas", label: "Solo en rutas espec\xEDficas" }
+            ]
+          },
+          {
+            name: "paths",
+            label: "Rutas",
+            type: "string",
+            list: true,
+            description: "Solo si elegiste \xABrutas espec\xEDficas\xBB. Escribe la ruta sin el idioma: \xAB/\xBB, \xAB/fiberlux-app\xBB, \xAB/soluciones/conectividad\xBB. La versi\xF3n en ingl\xE9s (/en/...) se incluye sola."
+          },
+          // ── Cuándo aparece ──
+          {
+            name: "trigger",
+            label: "Cu\xE1ndo aparece",
+            type: "string",
+            options: [
+              { value: "inmediato", label: "Al cargar la p\xE1gina" },
+              { value: "segundos", label: "Despu\xE9s de N segundos" },
+              { value: "scroll", label: "Al llegar a N% de scroll" },
+              { value: "salida", label: "Al intentar salir de la p\xE1gina" }
+            ]
+          },
+          {
+            name: "delaySeconds",
+            label: "Segundos de espera",
+            type: "number",
+            description: "Solo para \xABdespu\xE9s de N segundos\xBB. Por defecto 5. Tambi\xE9n se usa como repliegue del modo \xABal intentar salir\xBB en celulares, donde no existe el cursor."
+          },
+          {
+            name: "scrollPercent",
+            label: "% de scroll",
+            type: "number",
+            description: "Solo para \xABal llegar a N% de scroll\xBB. Por defecto 40."
+          },
+          {
+            name: "remindAfterDays",
+            label: "Volver a mostrar tras (d\xEDas)",
+            type: "number",
+            description: "D\xEDas que se respeta el cierre del visitante antes de volver a mostrarlo. Por defecto 7."
+          },
+          // ── Presentación ──
+          {
+            name: "mode",
+            label: "Modo",
+            type: "string",
+            options: [
+              { value: "nativo", label: "Nativo (editable)" },
+              { value: "imagen", label: "Solo imagen" }
+            ]
+          },
+          // ── Modo nativo ──
+          {
+            name: "badge",
+            label: "Etiqueta (pill)",
+            type: "string",
+            description: "D\xE9jala vac\xEDa para ocultar la pill."
+          },
+          { name: "badge_en", label: "Etiqueta (EN)", type: "string" },
+          {
+            name: "heading",
+            label: "Titular",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "heading_en",
+            label: "Titular (EN)",
+            type: "string",
+            ui: { component: "textarea" }
+          },
+          {
+            name: "features",
+            label: "Puntos",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.text || "Punto" }) },
+            fields: [
+              {
+                name: "icon",
+                label: "\xCDcono",
+                type: "string",
+                options: FEATURE_ICON_OPTIONS
+              },
+              {
+                name: "text",
+                label: "Texto",
+                type: "string",
+                ui: { component: "textarea" }
+              },
+              {
+                name: "text_en",
+                label: "Texto (EN)",
+                type: "string",
+                ui: { component: "textarea" }
+              }
+            ]
+          },
+          {
+            name: "buttons",
+            label: "Botones",
+            type: "object",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.label || "Bot\xF3n" }) },
+            fields: [
+              { name: "label", label: "Texto", type: "string" },
+              { name: "label_en", label: "Texto (EN)", type: "string" },
+              {
+                name: "url",
+                label: "URL",
+                type: "string",
+                description: "Si la dejas vac\xEDa el bot\xF3n no se muestra (evita enlaces muertos)."
+              },
+              {
+                name: "icon",
+                label: "\xCDcono",
+                type: "string",
+                options: BUTTON_ICON_OPTIONS
+              },
+              {
+                name: "variant",
+                label: "Estilo",
+                type: "string",
+                options: [
+                  { value: "primario", label: "Magenta (primario)" },
+                  { value: "secundario", label: "Contorno (secundario)" }
+                ]
+              }
+            ]
+          },
+          {
+            name: "phoneImage",
+            label: "Imagen desktop (columna derecha)",
+            type: "image",
+            description: "Se recorta a sangre en la mitad derecha. Si la dejas vac\xEDa, el pop-up queda a una sola columna."
+          },
+          {
+            name: "appIcon",
+            label: "\xCDcono de app (mobile, arriba)",
+            type: "image",
+            description: "Solo se ve en celulares, sobre la etiqueta."
+          },
+          // ── Modo imagen ──
+          {
+            name: "imageDesktop",
+            label: "Imagen desktop",
+            type: "image",
+            description: "Solo para el modo \xABsolo imagen\xBB."
+          },
+          {
+            name: "imageMobile",
+            label: "Imagen mobile",
+            type: "image",
+            description: "Solo para el modo \xABsolo imagen\xBB. Si falta, se usa la de desktop."
+          },
+          {
+            name: "imageUrl",
+            label: "Enlace al hacer clic",
+            type: "string",
+            description: "Opcional. Si lo llenas, toda la imagen enlaza a esa direcci\xF3n."
           }
         ]
       }

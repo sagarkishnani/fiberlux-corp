@@ -120,6 +120,8 @@ export type Query = {
   cookieConsentConnection: CookieConsentConnection;
   fiberluxApp: FiberluxApp;
   fiberluxAppConnection: FiberluxAppConnection;
+  popup: Popup;
+  popupConnection: PopupConnection;
 };
 
 
@@ -428,6 +430,21 @@ export type QueryFiberluxAppConnectionArgs = {
   filter?: InputMaybe<FiberluxAppFilter>;
 };
 
+
+export type QueryPopupArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPopupConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PopupFilter>;
+};
+
 export type DocumentFilter = {
   home?: InputMaybe<HomeFilter>;
   service?: InputMaybe<ServiceFilter>;
@@ -448,6 +465,7 @@ export type DocumentFilter = {
   legal?: InputMaybe<LegalFilter>;
   cookieConsent?: InputMaybe<CookieConsentFilter>;
   fiberluxApp?: InputMaybe<FiberluxAppFilter>;
+  popup?: InputMaybe<PopupFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -487,7 +505,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Folder;
+export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Popup | Folder;
 
 export type HomeHeroButtons = {
   __typename?: 'HomeHeroButtons';
@@ -3209,6 +3227,99 @@ export type FiberluxAppConnection = Connection & {
   edges?: Maybe<Array<Maybe<FiberluxAppConnectionEdges>>>;
 };
 
+export type PopupFeatures = {
+  __typename?: 'PopupFeatures';
+  icon?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PopupButtons = {
+  __typename?: 'PopupButtons';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+  icon?: Maybe<Scalars['String']['output']>;
+  variant?: Maybe<Scalars['String']['output']>;
+};
+
+export type Popup = Node & Document & {
+  __typename?: 'Popup';
+  enabled?: Maybe<Scalars['Boolean']['output']>;
+  campaignId?: Maybe<Scalars['String']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  paths?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  trigger?: Maybe<Scalars['String']['output']>;
+  delaySeconds?: Maybe<Scalars['Float']['output']>;
+  scrollPercent?: Maybe<Scalars['Float']['output']>;
+  remindAfterDays?: Maybe<Scalars['Float']['output']>;
+  mode?: Maybe<Scalars['String']['output']>;
+  badge?: Maybe<Scalars['String']['output']>;
+  badge_en?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Array<Maybe<PopupFeatures>>>;
+  buttons?: Maybe<Array<Maybe<PopupButtons>>>;
+  phoneImage?: Maybe<Scalars['String']['output']>;
+  appIcon?: Maybe<Scalars['String']['output']>;
+  imageDesktop?: Maybe<Scalars['String']['output']>;
+  imageMobile?: Maybe<Scalars['String']['output']>;
+  imageUrl?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PopupFeaturesFilter = {
+  icon?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type PopupButtonsFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringFilter>;
+  variant?: InputMaybe<StringFilter>;
+};
+
+export type PopupFilter = {
+  enabled?: InputMaybe<BooleanFilter>;
+  campaignId?: InputMaybe<StringFilter>;
+  scope?: InputMaybe<StringFilter>;
+  paths?: InputMaybe<StringFilter>;
+  trigger?: InputMaybe<StringFilter>;
+  delaySeconds?: InputMaybe<NumberFilter>;
+  scrollPercent?: InputMaybe<NumberFilter>;
+  remindAfterDays?: InputMaybe<NumberFilter>;
+  mode?: InputMaybe<StringFilter>;
+  badge?: InputMaybe<StringFilter>;
+  badge_en?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
+  features?: InputMaybe<PopupFeaturesFilter>;
+  buttons?: InputMaybe<PopupButtonsFilter>;
+  phoneImage?: InputMaybe<ImageFilter>;
+  appIcon?: InputMaybe<ImageFilter>;
+  imageDesktop?: InputMaybe<ImageFilter>;
+  imageMobile?: InputMaybe<ImageFilter>;
+  imageUrl?: InputMaybe<StringFilter>;
+};
+
+export type PopupConnectionEdges = {
+  __typename?: 'PopupConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Popup>;
+};
+
+export type PopupConnection = Connection & {
+  __typename?: 'PopupConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PopupConnectionEdges>>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPendingDocument: DocumentNode;
@@ -3254,6 +3365,8 @@ export type Mutation = {
   createCookieConsent: CookieConsent;
   updateFiberluxApp: FiberluxApp;
   createFiberluxApp: FiberluxApp;
+  updatePopup: Popup;
+  createPopup: Popup;
 };
 
 
@@ -3517,6 +3630,18 @@ export type MutationCreateFiberluxAppArgs = {
   params: FiberluxAppMutation;
 };
 
+
+export type MutationUpdatePopupArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PopupMutation;
+};
+
+
+export type MutationCreatePopupArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PopupMutation;
+};
+
 export type DocumentUpdateMutation = {
   home?: InputMaybe<HomeMutation>;
   service?: InputMaybe<ServiceMutation>;
@@ -3537,6 +3662,7 @@ export type DocumentUpdateMutation = {
   legal?: InputMaybe<LegalMutation>;
   cookieConsent?: InputMaybe<CookieConsentMutation>;
   fiberluxApp?: InputMaybe<FiberluxAppMutation>;
+  popup?: InputMaybe<PopupMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -3560,6 +3686,7 @@ export type DocumentMutation = {
   legal?: InputMaybe<LegalMutation>;
   cookieConsent?: InputMaybe<CookieConsentMutation>;
   fiberluxApp?: InputMaybe<FiberluxAppMutation>;
+  popup?: InputMaybe<PopupMutation>;
 };
 
 export type HomeHeroButtonsMutation = {
@@ -4683,6 +4810,43 @@ export type FiberluxAppMutation = {
   seo?: InputMaybe<FiberluxAppSeoMutation>;
 };
 
+export type PopupFeaturesMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PopupButtonsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  variant?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PopupMutation = {
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  campaignId?: InputMaybe<Scalars['String']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  paths?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  trigger?: InputMaybe<Scalars['String']['input']>;
+  delaySeconds?: InputMaybe<Scalars['Float']['input']>;
+  scrollPercent?: InputMaybe<Scalars['Float']['input']>;
+  remindAfterDays?: InputMaybe<Scalars['Float']['input']>;
+  mode?: InputMaybe<Scalars['String']['input']>;
+  badge?: InputMaybe<Scalars['String']['input']>;
+  badge_en?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
+  features?: InputMaybe<Array<InputMaybe<PopupFeaturesMutation>>>;
+  buttons?: InputMaybe<Array<InputMaybe<PopupButtonsMutation>>>;
+  phoneImage?: InputMaybe<Scalars['String']['input']>;
+  appIcon?: InputMaybe<Scalars['String']['input']>;
+  imageDesktop?: InputMaybe<Scalars['String']['input']>;
+  imageMobile?: InputMaybe<Scalars['String']['input']>;
+  imageUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
@@ -4720,6 +4884,8 @@ export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null,
 export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
 
 export type FiberluxAppPartsFragment = { __typename: 'FiberluxApp', whyUsTitle?: string | null, whyUsTitle_en?: string | null, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, description_en?: string | null, note?: string | null, note_en?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, videoShowcase?: { __typename: 'FiberluxAppVideoShowcase', heading?: string | null, heading_en?: string | null, body?: any | null, body_en?: any | null, buttonLabel?: string | null, buttonLabel_en?: string | null, videoUrl?: string | null, imageDesktop?: string | null, imageMobile?: string | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+
+export type PopupPartsFragment = { __typename: 'Popup', enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null };
 
 export type HomeQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5081,6 +5247,25 @@ export type FiberluxAppConnectionQueryVariables = Exact<{
 
 
 export type FiberluxAppConnectionQuery = { __typename?: 'Query', fiberluxAppConnection: { __typename?: 'FiberluxAppConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'FiberluxAppConnectionEdges', cursor: string, node?: { __typename: 'FiberluxApp', id: string, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, banner?: { __typename: 'FiberluxAppBanner', mode?: string | null, headingLead?: string | null, headingStrong?: string | null, pillText?: string | null, downloadText?: string | null, androidUrl?: string | null, iosUrl?: string | null, mockup?: string | null, imageMobile?: string | null, imageTablet?: string | null, imageDesktop?: string | null, bgColor?: string | null, bullets?: Array<{ __typename: 'FiberluxAppBannerBullets', title?: string | null, text?: string | null } | null> | null } | null, hero?: { __typename: 'FiberluxAppHero', heading?: string | null, description?: string | null, description_en?: string | null, note?: string | null, note_en?: string | null, mockup?: string | null, downloads?: Array<{ __typename: 'FiberluxAppHeroDownloads', store?: string | null, label?: string | null, url?: string | null } | null> | null } | null, beneficios?: { __typename: 'FiberluxAppBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'FiberluxAppBeneficiosItems', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, videoShowcase?: { __typename: 'FiberluxAppVideoShowcase', heading?: string | null, heading_en?: string | null, body?: any | null, body_en?: any | null, buttonLabel?: string | null, buttonLabel_en?: string | null, videoUrl?: string | null, imageDesktop?: string | null, imageMobile?: string | null } | null, casosDeUso?: { __typename: 'FiberluxAppCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, seo?: { __typename: 'FiberluxAppSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+
+export type PopupQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PopupQuery = { __typename?: 'Query', popup: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null } };
+
+export type PopupConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PopupFilter>;
+}>;
+
+
+export type PopupConnectionQuery = { __typename?: 'Query', popupConnection: { __typename?: 'PopupConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PopupConnectionEdges', cursor: string, node?: { __typename: 'Popup', id: string, enabled?: boolean | null, campaignId?: string | null, scope?: string | null, paths?: Array<string | null> | null, trigger?: string | null, delaySeconds?: number | null, scrollPercent?: number | null, remindAfterDays?: number | null, mode?: string | null, badge?: string | null, badge_en?: string | null, heading?: string | null, heading_en?: string | null, phoneImage?: string | null, appIcon?: string | null, imageDesktop?: string | null, imageMobile?: string | null, imageUrl?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features?: Array<{ __typename: 'PopupFeatures', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null, buttons?: Array<{ __typename: 'PopupButtons', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null, variant?: string | null } | null> | null } | null } | null> | null } };
 
 export const HomePartsFragmentDoc = gql`
     fragment HomeParts on Home {
@@ -6127,6 +6312,43 @@ export const FiberluxAppPartsFragmentDoc = gql`
     metaDescription
     ogImage
   }
+}
+    `;
+export const PopupPartsFragmentDoc = gql`
+    fragment PopupParts on Popup {
+  __typename
+  enabled
+  campaignId
+  scope
+  paths
+  trigger
+  delaySeconds
+  scrollPercent
+  remindAfterDays
+  mode
+  badge
+  badge_en
+  heading
+  heading_en
+  features {
+    __typename
+    icon
+    text
+    text_en
+  }
+  buttons {
+    __typename
+    label
+    label_en
+    url
+    icon
+    variant
+  }
+  phoneImage
+  appIcon
+  imageDesktop
+  imageMobile
+  imageUrl
 }
     `;
 export const HomeDocument = gql`
@@ -7212,6 +7434,63 @@ export const FiberluxAppConnectionDocument = gql`
   }
 }
     ${FiberluxAppPartsFragmentDoc}`;
+export const PopupDocument = gql`
+    query popup($relativePath: String!) {
+  popup(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PopupParts
+  }
+}
+    ${PopupPartsFragmentDoc}`;
+export const PopupConnectionDocument = gql`
+    query popupConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PopupFilter) {
+  popupConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PopupParts
+      }
+    }
+  }
+}
+    ${PopupPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
@@ -7328,6 +7607,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     fiberluxAppConnection(variables?: FiberluxAppConnectionQueryVariables, options?: C): Promise<{data: FiberluxAppConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppConnectionQueryVariables, query: string}> {
         return requester<{data: FiberluxAppConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: FiberluxAppConnectionQueryVariables, query: string}, FiberluxAppConnectionQueryVariables>(FiberluxAppConnectionDocument, variables, options);
+      },
+    popup(variables: PopupQueryVariables, options?: C): Promise<{data: PopupQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PopupQueryVariables, query: string}> {
+        return requester<{data: PopupQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PopupQueryVariables, query: string}, PopupQueryVariables>(PopupDocument, variables, options);
+      },
+    popupConnection(variables?: PopupConnectionQueryVariables, options?: C): Promise<{data: PopupConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PopupConnectionQueryVariables, query: string}> {
+        return requester<{data: PopupConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PopupConnectionQueryVariables, query: string}, PopupConnectionQueryVariables>(PopupConnectionDocument, variables, options);
       }
     };
   }
@@ -7376,7 +7661,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/main",
         queries,
       })
     )

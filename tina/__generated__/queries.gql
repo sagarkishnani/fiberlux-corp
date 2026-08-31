@@ -1042,3 +1042,58 @@ query fiberluxAppConnection($before: String, $after: String, $first: Float, $las
     }
   }
 }
+
+query popup($relativePath: String!) {
+  popup(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PopupParts
+  }
+}
+
+query popupConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PopupFilter) {
+  popupConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PopupParts
+      }
+    }
+  }
+}

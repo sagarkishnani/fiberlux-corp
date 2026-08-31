@@ -92,6 +92,8 @@ type Query {
   cookieConsentConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CookieConsentFilter): CookieConsentConnection!
   fiberluxApp(relativePath: String): FiberluxApp!
   fiberluxAppConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: FiberluxAppFilter): FiberluxAppConnection!
+  popup(relativePath: String): Popup!
+  popupConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PopupFilter): PopupConnection!
 }
 
 input DocumentFilter {
@@ -114,6 +116,7 @@ input DocumentFilter {
   legal: LegalFilter
   cookieConsent: CookieConsentFilter
   fiberluxApp: FiberluxAppFilter
+  popup: PopupFilter
 }
 
 type DocumentConnectionEdges {
@@ -139,7 +142,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Folder
+union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Popup | Folder
 
 type HomeHeroButtons {
   text: String!
@@ -2692,6 +2695,94 @@ type FiberluxAppConnection implements Connection {
   edges: [FiberluxAppConnectionEdges]
 }
 
+type PopupFeatures {
+  icon: String
+  text: String
+  text_en: String
+}
+
+type PopupButtons {
+  label: String
+  label_en: String
+  url: String
+  icon: String
+  variant: String
+}
+
+type Popup implements Node & Document {
+  enabled: Boolean
+  campaignId: String
+  scope: String
+  paths: [String]
+  trigger: String
+  delaySeconds: Float
+  scrollPercent: Float
+  remindAfterDays: Float
+  mode: String
+  badge: String
+  badge_en: String
+  heading: String
+  heading_en: String
+  features: [PopupFeatures]
+  buttons: [PopupButtons]
+  phoneImage: String
+  appIcon: String
+  imageDesktop: String
+  imageMobile: String
+  imageUrl: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input PopupFeaturesFilter {
+  icon: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input PopupButtonsFilter {
+  label: StringFilter
+  label_en: StringFilter
+  url: StringFilter
+  icon: StringFilter
+  variant: StringFilter
+}
+
+input PopupFilter {
+  enabled: BooleanFilter
+  campaignId: StringFilter
+  scope: StringFilter
+  paths: StringFilter
+  trigger: StringFilter
+  delaySeconds: NumberFilter
+  scrollPercent: NumberFilter
+  remindAfterDays: NumberFilter
+  mode: StringFilter
+  badge: StringFilter
+  badge_en: StringFilter
+  heading: StringFilter
+  heading_en: StringFilter
+  features: PopupFeaturesFilter
+  buttons: PopupButtonsFilter
+  phoneImage: ImageFilter
+  appIcon: ImageFilter
+  imageDesktop: ImageFilter
+  imageMobile: ImageFilter
+  imageUrl: StringFilter
+}
+
+type PopupConnectionEdges {
+  cursor: String!
+  node: Popup
+}
+
+type PopupConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [PopupConnectionEdges]
+}
+
 type Mutation {
   addPendingDocument(collection: String!, relativePath: String!, template: String): DocumentNode!
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
@@ -2736,6 +2827,8 @@ type Mutation {
   createCookieConsent(relativePath: String!, params: CookieConsentMutation!): CookieConsent!
   updateFiberluxApp(relativePath: String!, params: FiberluxAppMutation!): FiberluxApp!
   createFiberluxApp(relativePath: String!, params: FiberluxAppMutation!): FiberluxApp!
+  updatePopup(relativePath: String!, params: PopupMutation!): Popup!
+  createPopup(relativePath: String!, params: PopupMutation!): Popup!
 }
 
 input DocumentUpdateMutation {
@@ -2758,6 +2851,7 @@ input DocumentUpdateMutation {
   legal: LegalMutation
   cookieConsent: CookieConsentMutation
   fiberluxApp: FiberluxAppMutation
+  popup: PopupMutation
   relativePath: String
 }
 
@@ -2781,6 +2875,7 @@ input DocumentMutation {
   legal: LegalMutation
   cookieConsent: CookieConsentMutation
   fiberluxApp: FiberluxAppMutation
+  popup: PopupMutation
 }
 
 input HomeHeroButtonsMutation {
@@ -3902,6 +3997,43 @@ input FiberluxAppMutation {
   whyUsTitle: String
   whyUsTitle_en: String
   seo: FiberluxAppSeoMutation
+}
+
+input PopupFeaturesMutation {
+  icon: String
+  text: String
+  text_en: String
+}
+
+input PopupButtonsMutation {
+  label: String
+  label_en: String
+  url: String
+  icon: String
+  variant: String
+}
+
+input PopupMutation {
+  enabled: Boolean
+  campaignId: String
+  scope: String
+  paths: [String]
+  trigger: String
+  delaySeconds: Float
+  scrollPercent: Float
+  remindAfterDays: Float
+  mode: String
+  badge: String
+  badge_en: String
+  heading: String
+  heading_en: String
+  features: [PopupFeaturesMutation]
+  buttons: [PopupButtonsMutation]
+  phoneImage: String
+  appIcon: String
+  imageDesktop: String
+  imageMobile: String
+  imageUrl: String
 }
 
 schema {

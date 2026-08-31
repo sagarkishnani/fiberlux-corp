@@ -1025,3 +1025,39 @@ fragment FiberluxAppParts on FiberluxApp {
     ogImage
   }
 }
+
+fragment PopupParts on Popup {
+  __typename
+  enabled
+  campaignId
+  scope
+  paths
+  trigger
+  delaySeconds
+  scrollPercent
+  remindAfterDays
+  mode
+  badge
+  badge_en
+  heading
+  heading_en
+  features {
+    __typename
+    icon
+    text
+    text_en
+  }
+  buttons {
+    __typename
+    label
+    label_en
+    url
+    icon
+    variant
+  }
+  phoneImage
+  appIcon
+  imageDesktop
+  imageMobile
+  imageUrl
+}

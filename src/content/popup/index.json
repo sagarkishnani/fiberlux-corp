@@ -1,0 +1,53 @@
+{
+  "enabled": false,
+  "campaignId": "app-2026-08",
+  "scope": "todo",
+  "paths": [],
+  "trigger": "segundos",
+  "delaySeconds": 5,
+  "scrollPercent": 40,
+  "remindAfterDays": 7,
+  "mode": "nativo",
+  "badge": "FIBERLUX APP",
+  "badge_en": "FIBERLUX APP",
+  "heading": "Obtén control total de tu red desde tu celular",
+  "heading_en": "Get full control of your network from your phone",
+  "features": [
+    {
+      "icon": "pulso",
+      "text": "Monitorea el estado de todos tus servicios en tiempo real.",
+      "text_en": "Monitor the status of all your services in real time."
+    },
+    {
+      "icon": "edificio",
+      "text": "Visualiza cuántas sedes están operativas.",
+      "text_en": "See how many of your sites are up and running."
+    },
+    {
+      "icon": "lupa",
+      "text": "Accede a diagnósticos avanzados y crea tickets al instante.",
+      "text_en": "Run advanced diagnostics and open tickets instantly."
+    }
+  ],
+  "buttons": [
+    {
+      "label": "Descárgala en el App Store",
+      "label_en": "Download on the App Store",
+      "url": "",
+      "icon": "apple",
+      "variant": "primario"
+    },
+    {
+      "label": "Disponible en Google Play",
+      "label_en": "Get it on Google Play",
+      "url": "",
+      "icon": "google-play",
+      "variant": "secundario"
+    }
+  ],
+  "phoneImage": "images/fiberlux-app/mobile-app.png",
+  "appIcon": "",
+  "imageDesktop": "",
+  "imageMobile": "",
+  "imageUrl": ""
+}
