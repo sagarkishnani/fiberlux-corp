@@ -282,10 +282,12 @@ en el step 8, ver `5e6b85f`):
 
 **Pendientes de contenido** (no de código; el cliente los llena en Tina):
 
-- Las **URLs de las tiendas** están vacías, así que hoy no se pinta ningún
-  botón. Es deliberado —un botón sin URL sería un enlace muerto— y está
-  advertido en la ayuda del campo, pero significa que al encender el pop-up
-  sin llenarlas se verá sin botones.
+- Las **URLs de las tiendas** ya están puestas: se copiaron de
+  `fiberluxApp.hero.downloads[]`, que es donde vivían las de la página
+  `/fiberlux-app`. Al ser externas, `localizeHref` las deja intactas también
+  en `/en`. Nota de comportamiento: un botón **sin** URL no se pinta —
+  deliberado, para no dejar enlaces muertos, y advertido en la ayuda del
+  campo en Tina.
 - El **ícono de app de mobile** (`appIcon`) está vacío: el mockup lo muestra,
   pero no hay un asset para él en el repo y el spec no autorizaba inventarlo.
 
