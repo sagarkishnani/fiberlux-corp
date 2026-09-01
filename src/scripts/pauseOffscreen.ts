@@ -67,36 +67,45 @@ onEachPage((cleanup) => {
   /* Bloques de nivel superior y, además, las secciones anidadas: la de
      soluciones mide varias pantallas y como bloque único casi siempre estaría
      "visible", así que sin la segunda pasada la granularidad no serviría de
-     nada. Un Set porque las dos consultas se solapan. */
-  const bloques = new Set<HTMLElement>([
-    ...(Array.from(raiz.children) as HTMLElement[]),
-    ...Array.from(raiz.querySelectorAll<HTMLElement>("section")),
-  ]);
+     nada. Un Set porque las dos consultas se solapan.
+
+     Y sólo los que ocupan una caja. Un `<astro-island>` es `display: contents`
+     —no genera caja, `getClientRects()` da 0— y el IntersectionObserver NUNCA
+     lo reporta como visible: dispara una vez con `isIntersecting: false` y no
+     vuelve. Observarlo era el fallo que dejaba los trazos de Valores pausados
+     para siempre: la isla, que es el primer bloque de la lista, se quedaba con
+     las animaciones y nadie las devolvía. Los bloques con caja (las <section>
+     que la isla contiene) sí reportan bien y son la granularidad correcta. */
+  const bloques = new Set<HTMLElement>(
+    [
+      ...(Array.from(raiz.children) as HTMLElement[]),
+      ...Array.from(raiz.querySelectorAll<HTMLElement>("section")),
+    ].filter((el) => el.getClientRects().length > 0),
+  );
   if (bloques.size === 0) return;
 
-  /** Lo que pausamos nosotros, por bloque, para poder devolverlo tal cual. */
-  const pausadas = new Map<HTMLElement, Animation[]>();
+  /** Lo que pausamos nosotros, para poder devolverlo y no tocar nada más. */
+  const pausadas = new Set<Animation>();
 
   const pausar = (el: HTMLElement) => {
-    if (pausadas.has(el)) return;
-    const propias: Animation[] = [];
     for (const a of el.getAnimations({ subtree: true })) {
       if (a.playState !== "running" || !esCssEnBucle(a)) continue;
       try {
         a.pause();
-        propias.push(a);
+        pausadas.add(a);
       } catch {
         /* una animación que ya no existe no debe frenar a las demás */
       }
     }
-    if (propias.length) pausadas.set(el, propias);
   };
 
+  /* Se reanuda por subárbol y no por la lista que guardó ESE bloque: los
+     bloques se solapan (una sección anidada dentro de otra) y quien pausa no
+     tiene por qué ser quien vuelve a ver. Con el registro global, cualquier
+     bloque que asome devuelve a marcha lo que haya debajo suyo. */
   const reanudar = (el: HTMLElement) => {
-    const propias = pausadas.get(el);
-    if (!propias) return;
-    pausadas.delete(el);
-    for (const a of propias) {
+    for (const a of el.getAnimations({ subtree: true })) {
+      if (!pausadas.delete(a)) continue;
       try {
         a.play();
       } catch {}
@@ -134,6 +143,11 @@ onEachPage((cleanup) => {
     window.clearTimeout(repaso);
     /* Al salir de la página se devuelve todo a marcha: si el swap deja algún
        nodo vivo, no debe quedarse congelado. */
-    Array.from(pausadas.keys()).forEach(reanudar);
+    pausadas.forEach((a) => {
+      try {
+        a.play();
+      } catch {}
+    });
+    pausadas.clear();
   });
 });

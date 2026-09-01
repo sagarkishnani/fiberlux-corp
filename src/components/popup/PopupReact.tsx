@@ -62,6 +62,17 @@ const BUTTON_ICONS: Record<string, IconType> = {
    desvanece (desktop). Debe cubrir la transición más larga, la de mobile. */
 const EXIT_MS = 420;
 
+/* Fondo del panel. Los tres stops salen del artboard: el diseño no es negro
+   plano sino un barrido de ciruela que ENTRA por la derecha, donde vive la
+   captura del teléfono, y se apaga hacia la columna de texto — de ahí la
+   observación de que el lado izquierdo tiene que ser el oscuro. */
+const PANEL_BG =
+  "linear-gradient(90deg, #0B0309 0%, #150410 42%, #2A0821 100%)";
+
+/* Mismo ciruela para la columna de la derecha: es el extremo claro del
+   degradado, ahora tomado del artboard en vez de aproximado. */
+const PHONE_BG = "#2A0821";
+
 function prefersReducedMotion(): boolean {
   try {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -443,14 +454,15 @@ export default function PopupReact({ query, variables, data: initialData, locale
         /* Mobile: sube desde abajo y baja al cerrar, con la curva de las hojas
            de iOS (arranca rápido y frena largo), que es lo que la hacía sentir
            tosca con `ease-out` a 300ms. Desktop: sólo funde, sin desplazamiento. */
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl bg-greyscale-darkest text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-[transform,opacity] motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl lg:duration-300 lg:ease-out ${
+        style={imageMode ? undefined : { background: PANEL_BG }}
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-[transform,opacity] motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl lg:duration-300 lg:ease-out ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
         } ${
           entered
             ? "translate-y-0 opacity-100"
             : "translate-y-full opacity-0 lg:translate-y-0"
         } ${
-          imageMode ? "!max-w-[720px] bg-transparent" : ""
+          imageMode ? "!max-w-[720px]" : ""
         }`}
       >
         <button
@@ -556,21 +568,29 @@ export default function PopupReact({ query, variables, data: initialData, locale
                 /* ── Badges oficiales ──
                    Obs. cliente: prefiere los badges que la gente reconoce, "para
                    que uno no le gane al otro". Cuando TODOS los botones traen
-                   arte subido se muestran en fila y con la MISMA altura (el
-                   ancho lo pone cada arte, que no son proporciones idénticas);
-                   así ninguno pesa más que el otro. El texto del CMS sigue
-                   sirviendo de alternativa para lectores de pantalla. */
+                   arte subido se muestran en fila y en cajas idénticas (ver el
+                   comentario de la caja, más abajo), así ninguno pesa más que
+                   el otro. El texto del CMS sigue sirviendo de alternativa para
+                   lectores de pantalla. */
                 <div className="mt-7 flex flex-wrap items-center justify-center gap-3 lg:mt-10 lg:justify-start lg:gap-4">
                   {buttons.map((b: any, i: number) => (
+                    /* Caja idéntica para los dos badges. Las piezas oficiales
+                       no comparten proporción (Apple 120×40, Google 135×40),
+                       así que a igual alto uno sale 12% más ancho y se ven
+                       disparejos, que es lo que observó el cliente. La caja
+                       tiene la proporción intermedia (√(3 × 3.375) ≈ 3.18):
+                       dentro de ella cada arte se ajusta sin deformarse y las
+                       dos quedan a ±6% en ambos lados, o sea a ojo del mismo
+                       tamaño. */
                     <a
                       key={i}
                       href={localizeHref(b.url, locale)}
-                      className="inline-block rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                      className="block h-[46px] w-[146px] rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:h-[56px] lg:w-[178px]"
                     >
                       <img
                         src={mediaUrl(b.image)}
                         alt={L(b, "label") || ""}
-                        className="block h-[44px] w-auto lg:h-[52px]"
+                        className="block h-full w-full object-contain"
                       />
                     </a>
                   ))}
@@ -605,7 +625,10 @@ export default function PopupReact({ query, variables, data: initialData, locale
 
           {/* ── Columna de imagen (solo desktop) ── */}
           {hasPhone && (
-            <div className="relative hidden overflow-hidden bg-[#240A1E] lg:block">
+            <div
+              style={{ background: PHONE_BG }}
+              className="relative hidden overflow-hidden lg:block"
+            >
               {/* Resplandor suave arriba a la izquierda, como en el diseño. */}
               <div
                 aria-hidden="true"

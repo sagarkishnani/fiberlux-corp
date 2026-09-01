@@ -193,11 +193,16 @@ export default function ValuesReact({ query, variables, data: initialData, local
       </div>
 
       <style>{`
-        /* Trazo del ícono dibujándose en bucle (referencia "Valores FLX"). */
+        /* El ícono se dibuja solo, en bucle (referencia "Valores FLX"), y sólo
+           en desktop; en móvil la sección queda plana.
+           El reparto del ciclo importa: el tramo en que el trazo está a medias
+           es el que se lee como "ícono roto", así que el dibujado es rápido
+           (1.2s), el repliegue más rápido todavía (0.6s) y el ícono se queda
+           COMPLETO los 2.4s del medio — más de la mitad del bucle. */
         @keyframes vlDraw {
           0%   { stroke-dashoffset: 1; }
-          45%  { stroke-dashoffset: 0; }
-          82%  { stroke-dashoffset: 0; }
+          28%  { stroke-dashoffset: 0; }
+          86%  { stroke-dashoffset: 0; }
           100% { stroke-dashoffset: 1; }
         }
         /* Hover sutil: la tarjeta escala apenas y el icono acompaña. */
@@ -215,34 +220,31 @@ export default function ValuesReact({ query, variables, data: initialData, local
             box-shadow: 0 10px 24px rgba(59, 14, 48, .10);
           }
         }
-        .values-section .vl-ghost { opacity: .16; }
         .values-section .vl-trace {
           stroke-dasharray: 1;
           animation: vlDraw 4.2s cubic-bezier(.45, 0, .25, 1) infinite;
         }
-        /* En móvil el trazo no se dibuja: se queda el ícono completo, quieto.
-           stroke-dashoffset no es una propiedad que el compositor pueda
-           resolver —obliga a REPINTAR el SVG en cada fotograma— y son un ícono
-           por valor, en bucle, mientras el dedo scrollea. En una pantalla de
-           teléfono el dibujo del trazo casi no se aprecia y costaba justo
-           donde más duele; en desktop se conserva tal cual. */
+        /* Plano en móvil: el ícono entero, quieto. Se anula el punteado —no se
+           oculta el path, que ahora es el ícono— porque stroke-dashoffset no lo
+           resuelve el compositor: obliga a REPINTAR el SVG en cada fotograma, y
+           son un ícono por valor, en bucle, mientras el dedo scrollea. */
         @media (max-width: 767px) {
           .values-section .vl-trace {
             animation: none;
             stroke-dasharray: none;
             stroke-dashoffset: 0;
           }
-          /* Sin trazo animado encima, la copia tenue sobra: sería un segundo
-             path pintado sobre el mismo dibujo. */
-          .values-section .vl-ghost { display: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .values-section .vl-cell,
           .values-section .vl-cell:hover,
           .values-section .vl-icon,
           .values-section .vl-cell:hover .vl-icon { transform: none; transition: none; }
-          .values-section .vl-ghost { display: none; }
-          .values-section .vl-trace { animation: none; stroke-dasharray: none; }
+          .values-section .vl-trace {
+            animation: none;
+            stroke-dasharray: none;
+            stroke-dashoffset: 0;
+          }
         }
       `}</style>
     </section>
@@ -277,8 +279,9 @@ function ValueCard({ item, index, locale }: { item: ValueItem; index: number; lo
             strokeLinejoin="round"
             aria-hidden="true"
           >
-            {/* Copia estatica tenue: el icono siempre se lee mientras el trazo se dibuja encima. */}
-            <path className="vl-ghost" d={path} />
+            {/* Un solo trazo: el del ícono. Lo que se anima es su propio
+                `stroke-dashoffset` —de ahí el `pathLength=1`, que normaliza el
+                largo del contorno— y no una copia superpuesta. */}
             <path className="vl-trace" d={path} pathLength={1} style={{ animationDelay: `${index * 320}ms` }} />
           </svg>
         </div>

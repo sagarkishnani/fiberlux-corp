@@ -36,14 +36,16 @@
       "label_en": "Download on the App Store",
       "url": "https://apps.apple.com/pe/app/fiberlux-app/id6754546726",
       "icon": "apple",
-      "variant": "primario"
+      "variant": "primario",
+      "image": "images/fiberlux-app/app-store.svg"
     },
     {
       "label": "Disponible en Google Play",
       "label_en": "Get it on Google Play",
       "url": "https://play.google.com/store/apps/details?id=com.fiberlux.app&hl=es_PE",
       "icon": "google-play",
-      "variant": "secundario"
+      "variant": "secundario",
+      "image": "images/fiberlux-app/google-play.svg"
     }
   ],
   "phoneImage": "images/fiberlux-app/mobile-app.png",
