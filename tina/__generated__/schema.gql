@@ -510,6 +510,7 @@ type ServicePartners {
   eyebrow_en: String
   title: String
   title_en: String
+  rows: String
   logos: [ServicePartnersLogos]
 }
 
@@ -608,6 +609,7 @@ input ServicePartnersFilter {
   eyebrow_en: StringFilter
   title: StringFilter
   title_en: StringFilter
+  rows: StringFilter
   logos: ServicePartnersLogosFilter
 }
 
@@ -1790,6 +1792,7 @@ type GlobalPartners {
   eyebrow_en: String
   title: String
   title_en: String
+  rows: String
   logos: [GlobalPartnersLogos]
 }
 
@@ -2011,6 +2014,7 @@ input GlobalPartnersFilter {
   eyebrow_en: StringFilter
   title: StringFilter
   title_en: StringFilter
+  rows: StringFilter
   logos: GlobalPartnersLogosFilter
 }
 
@@ -3074,6 +3078,7 @@ input ServicePartnersMutation {
   eyebrow_en: String
   title: String
   title_en: String
+  rows: String
   logos: [ServicePartnersLogosMutation]
 }
 
@@ -3674,6 +3679,7 @@ input GlobalPartnersMutation {
   eyebrow_en: String
   title: String
   title_en: String
+  rows: String
   logos: [GlobalPartnersLogosMutation]
 }
 

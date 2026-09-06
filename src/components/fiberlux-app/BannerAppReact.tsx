@@ -2,11 +2,15 @@ import { useTina, tinaField } from "tinacms/dist/react";
 import type { FiberluxAppQuery } from "../../../tina/__generated__/types";
 import { FaAndroid, FaApple, FaCheck } from "react-icons/fa6";
 import { mediaUrl } from "../../utils/mediaUrl";
+import { useCursorTooltip } from "../shared/CursorTooltip";
+import { t } from "../../i18n/ui";
+import type { Locale } from "../../i18n/config";
 
 interface BannerAppProps {
   query: string;
   variables: { relativePath: string };
   data: FiberluxAppQuery;
+  locale?: Locale;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -50,8 +54,19 @@ function renderDownloadText(text: string) {
   );
 }
 
-export default function BannerAppReact({ query, variables, data: initialData }: BannerAppProps) {
+export default function BannerAppReact({
+  query,
+  variables,
+  data: initialData,
+  locale = "es",
+}: BannerAppProps) {
   const { data } = useTina<FiberluxAppQuery>({ query, variables, data: initialData });
+
+  /* El banner es un enlace a /fiberlux-app, pero en modo imagen nada lo delataba
+     (obs. cliente): ahora lleva la misma píldora que sigue al cursor en las
+     cards de casos de éxito. El hook va antes de cualquier `return` — es un
+     hook, y no puede quedar detrás de una salida temprana. */
+  const { handlers, tooltip } = useCursorTooltip(t("sol.vermas", locale));
 
   const b = (data?.fiberluxApp as any)?.banner || (initialData?.fiberluxApp as any)?.banner;
   const tinaB = (data?.fiberluxApp as any)?.banner;
@@ -72,8 +87,12 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
           <a
             href={appHref}
             aria-label="Fiberlux App"
-            className="block overflow-hidden rounded-2xl"
+            /* El `scale` va en la IMAGEN, no en el <a>: el enlace conserva su
+               caja (y su `overflow-hidden` recorta el sobrante), así el banner
+               no empuja al resto de la página al agrandarse. */
+            className="banner-app-link group block overflow-hidden rounded-2xl"
             data-tina-field={tinaB ? tinaField(tinaB, "imageDesktop") : undefined}
+            {...handlers}
           >
             <picture>
               <source media="(min-width: 1025px)" srcSet={imgDesktop} />
@@ -81,7 +100,7 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
               <img
                 src={imgMobile}
                 alt="Fiberlux App"
-                className="block w-full h-auto"
+                className="block w-full h-auto transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 draggable={false}
                 /* Va bajo el pliegue y la variante de escritorio pesa medio
                    mega: sin `lazy` competía con el hero por el ancho de banda. */
@@ -91,6 +110,12 @@ export default function BannerAppReact({ query, variables, data: initialData }: 
             </picture>
           </a>
         </div>
+        {tooltip}
+        <style>{`
+          @media (prefers-reduced-motion: reduce) {
+            .banner-app-link img { transition: none; transform: none !important; }
+          }
+        `}</style>
       </section>
     );
   }

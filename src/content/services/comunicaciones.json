@@ -98,6 +98,7 @@
   "partners": {
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
     "title": "Trabajamos con los líderes de la industria",
+    "rows": "1",
     "logos": [
       {
         "image": "/images/partners/yealink.svg",

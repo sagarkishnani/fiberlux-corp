@@ -893,6 +893,17 @@ export default defineConfig({
               { name: "title", label: "Título", type: "string" },
               { name: "title_en", label: "Título (EN)", type: "string" },
               {
+                name: "rows",
+                label: "Filas del carrusel",
+                type: "string",
+                options: [
+                  { value: "2", label: "2 filas (por defecto)" },
+                  { value: "1", label: "1 fila" },
+                ],
+                description:
+                  "Con 2 filas los logos se reparten en dos cintas que corren en sentidos opuestos. Si hay pocos partners conviene 1 fila: repartidos en dos, cada cinta acaba repitiendo el mismo logo. Vacío = 2 filas.",
+              },
+              {
                 name: "logos",
                 label: "Logos",
                 type: "object",
@@ -2660,6 +2671,17 @@ export default defineConfig({
               { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },
               { name: "title_en", label: "Título (EN)", type: "string" },
+              {
+                name: "rows",
+                label: "Filas del carrusel",
+                type: "string",
+                options: [
+                  { value: "2", label: "2 filas (por defecto)" },
+                  { value: "1", label: "1 fila" },
+                ],
+                description:
+                  "Con 2 filas los logos se reparten en dos cintas que corren en sentidos opuestos. Si hay pocos partners conviene 1 fila: repartidos en dos, cada cinta acaba repitiendo el mismo logo. Vacío = 2 filas.",
+              },
               {
                 name: "logos",
                 label: "Logos",

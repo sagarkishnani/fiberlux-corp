@@ -13,6 +13,8 @@ export interface PartnersData {
   eyebrow_en?: string | null;
   title?: string | null;
   title_en?: string | null;
+  /** Nº de filas del marquee, editable desde el CMS ("1" | "2"). Vacío ⇒ 2. */
+  rows?: string | null;
   logos?: (PartnerLogo | null)[] | null;
 }
 
@@ -45,10 +47,15 @@ export default function PartnersMarquee({
   const logos = (partners.logos || []).filter(Boolean) as PartnerLogo[];
   if (logos.length === 0) return null;
 
-  // Dos filas en direcciones opuestas: la mitad de los logos arriba (→) y la
-  // otra mitad abajo (←). Con un solo logo no se parte (queda una sola fila).
+  /* Filas del marquee (obs. cliente): por defecto dos, en direcciones opuestas
+     — la mitad de los logos arriba (→) y la otra mitad abajo (←). El CMS puede
+     pedir una sola fila (`rows: "1"`) para las soluciones con pocos partners,
+     donde partirlos en dos hacía que cada fila fuera un mismo logo repitiéndose.
+     Con un solo logo tampoco se parte, haya lo que haya en el CMS. */
+  const filas = partners.rows === "1" ? 1 : 2;
   const half = Math.ceil(logos.length / 2);
-  const rowLogos = logos.length > 1 ? [logos.slice(0, half), logos.slice(half)] : [logos];
+  const rowLogos =
+    filas === 2 && logos.length > 1 ? [logos.slice(0, half), logos.slice(half)] : [logos];
 
   // Velocidad por logo constante: si el consumidor pasa una duración total
   // (proporcional al nº de logos), se deriva su ritmo; si no, un fallback fijo.

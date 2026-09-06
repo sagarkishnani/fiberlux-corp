@@ -173,6 +173,7 @@ fragment ServiceParts on Service {
     eyebrow_en
     title
     title_en
+    rows
     logos {
       __typename
       image
@@ -720,6 +721,7 @@ fragment GlobalParts on Global {
     eyebrow_en
     title
     title_en
+    rows
     logos {
       __typename
       image

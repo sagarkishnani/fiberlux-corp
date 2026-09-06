@@ -37,7 +37,7 @@ export default function CertificacionesSliderReact({
   const page = data?.certificaciones;
   const sectionTitle =
     tField(page as any, "sectionTitle", locale) ||
-    (locale === "en" ? "Fiberlux group certifications" : "Certificaciones del Grupo Fiberlux");
+    (locale === "en" ? "Fiberlux certifications" : "Certificaciones de Fiberlux");
   const sectionDescription = tField(page as any, "sectionDescription", locale);
   const items = (page?.items || []).filter(Boolean) as any[];
 
@@ -45,13 +45,19 @@ export default function CertificacionesSliderReact({
   const enough = items.length > 1;
 
   /* Embla: una card completa por vista (el sello ocupa toda la columna derecha,
-     como en la referencia). Con loop las flechas nunca se deshabilitan. */
+     como en la referencia). Con loop las flechas nunca se deshabilitan.
+
+     Con una sola certificación el carrusel se apaga entero (`active: false`,
+     obs. cliente): sin flechas, sin dots, sin arrastre ni autoplay — la card se
+     pinta como un bloque fijo. El componente sigue siendo un slider: en cuanto
+     el CMS tenga 2+ items vuelve a comportarse como tal, sin tocar código. */
   const slider = useSlider({
     align: "center",
     loop: true,
     autoplay: false, // autoplay manual (abajo) para pausar al pasar el cursor
     intervalMs,
     effect,
+    active: enough,
   });
 
   const goNext = () => slider.next();
@@ -167,8 +173,11 @@ export default function CertificacionesSliderReact({
          en reposo la card llega justo donde la máscara ya es opaca, así que no
          pierde nitidez, y al cambiar de slide los cantos se disuelven en vez de
          cortarse en seco contra el `overflow-hidden`. */
-      className="relative -mx-3 md:-mx-10 overflow-hidden py-2 select-none cert-carousel"
-      style={{ cursor: hasItems ? "grab" : "default" }}
+      className={`relative -mx-3 md:-mx-10 overflow-hidden py-2 select-none ${
+        enough ? "cert-carousel" : ""
+      }`}
+      /* Sin carrusel no hay nada que arrastrar: el cursor no debe prometerlo. */
+      style={{ cursor: hasItems && enough ? "grab" : "default" }}
       onMouseEnter={() => (pausedRef.current = true)}
       onMouseLeave={() => (pausedRef.current = false)}
     >
