@@ -42,6 +42,16 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
 // (~9s por logo), así no se acelera por tener muchos logos juntos pero mantiene
 // un ritmo algo más ágil.
 const durationSeconds = Math.max(logos.length * 3.5, 20);
+
+// SPEC 100: el home puede pedir la franja sin fondo propio, para que se vea la
+// nube de partículas del contenedor. Por defecto, fondo de siempre.
+const { transparentBg = false } = Astro.props;
 ---
 
-<PartnersMarquee client:visible partners={partners} durationSeconds={durationSeconds} locale={locale} />
+<PartnersMarquee
+  client:visible
+  partners={partners}
+  durationSeconds={durationSeconds}
+  locale={locale}
+  transparentBg={transparentBg}
+/>

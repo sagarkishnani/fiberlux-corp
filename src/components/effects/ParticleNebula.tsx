@@ -22,6 +22,12 @@ import * as THREE from "three";
  */
 
 export type NebulaIntensity = "sutil" | "medio" | "intenso";
+/**
+ * `hero` manda: nube compacta que se dispersa al bajar.
+ * `section` es atmósfera: entra dispersa, se recompone al centrarse la sección
+ * en el viewport y se vuelve a dispersar al salir.
+ */
+export type NebulaVariant = "hero" | "section";
 
 const PARAMS = {
   count: 12000, // partículas (desktop)
@@ -77,6 +83,13 @@ const PARAMS = {
   gridSize: 88, // px entre líneas de la rejilla de fondo
   gridAlpha: 0.05,
 };
+
+/**
+ * La variante `section` va a media densidad: detrás de los logos de partners
+ * la nube tiene que ser atmósfera, no protagonista (los logos son blancos y
+ * una bola densa les resta legibilidad).
+ */
+const SECTION_MOD = { countMul: 0.55, opacityMul: 0.5, sizeMul: 0.95 };
 
 /** Presets de `hero.dotfield.intensity`. */
 const INTENSITY: Record<
@@ -177,6 +190,7 @@ void main() {
 
 interface Props {
   className?: string;
+  variant?: NebulaVariant;
   intensity?: NebulaIntensity;
   /** Dispara `fbx:hero-scene-loaded` en el primer frame (para el preloader). */
   signalReady?: boolean;
@@ -185,6 +199,7 @@ interface Props {
 
 export default function ParticleNebula({
   className,
+  variant = "hero",
   intensity = "medio",
   signalReady,
   onUnsupported,
@@ -198,6 +213,7 @@ export default function ParticleNebula({
     if (!mount) return;
 
     const preset = INTENSITY[intensity] ?? INTENSITY.medio;
+    const isSection = variant === "section";
     const isMobile =
       window.matchMedia?.("(max-width: 1023px)").matches ?? false;
     const reduce =
@@ -236,7 +252,9 @@ export default function ParticleNebula({
 
     // ── Nube ─────────────────────────────────────────────────────────────
     const count = Math.round(
-      (isMobile ? PARAMS.countMobile : PARAMS.count) * preset.countMul
+      (isMobile ? PARAMS.countMobile : PARAMS.count) *
+        preset.countMul *
+        (isSection ? SECTION_MOD.countMul : 1)
     );
 
     const dir = new Float32Array(count * 3);
@@ -296,9 +314,13 @@ export default function ParticleNebula({
     const uniforms = {
       uTime: { value: 0 },
       uSpread: { value: 0 },
-      uOpacity: { value: preset.opacity },
+      uOpacity: {
+        value: preset.opacity * (isSection ? SECTION_MOD.opacityMul : 1),
+      },
       uPixelRatio: { value: dpr },
-      uSizeScale: { value: preset.sizeMul },
+      uSizeScale: {
+        value: preset.sizeMul * (isSection ? SECTION_MOD.sizeMul : 1),
+      },
       uBreath: { value: 1 },
       uPulseBand: { value: PARAMS.pulse.band },
       uPulses: {
@@ -359,7 +381,22 @@ export default function ParticleNebula({
     let spreadTarget = 0;
 
     const readScroll = () => {
-      const h = mount!.getBoundingClientRect().height || window.innerHeight;
+      const rect = mount!.getBoundingClientRect();
+
+      if (isSection) {
+        // Distancia del centro de la sección al centro del viewport,
+        // normalizada: 0 centrada (nube compuesta), 1 en los extremos
+        // (dispersa). Da la curva pedida — entra suelta, se arma al pasar por
+        // el medio y se vuelve a soltar al salir — sin depender de dónde esté
+        // la sección en la página.
+        const vh = window.innerHeight || 1;
+        const offset = rect.top + rect.height / 2 - vh / 2;
+        const range = vh / 2 + rect.height / 2;
+        spreadTarget = Math.min(1, Math.abs(offset) / range);
+        return;
+      }
+
+      const h = rect.height || window.innerHeight;
       spreadTarget = Math.min(1, Math.max(0, window.scrollY / (h * 1.15)));
     };
     readScroll();
@@ -413,7 +450,7 @@ export default function ParticleNebula({
         return;
       addPulse(PARAMS.pulse.clickStrength);
     };
-    window.addEventListener("click", onClick, { passive: true });
+    if (!isSection) window.addEventListener("click", onClick, { passive: true });
 
     // Pulsos automáticos: la nube late sola aunque nadie toque nada.
     const [autoMin, autoMax] = PARAMS.autoPulseMs;
@@ -475,6 +512,7 @@ export default function ParticleNebula({
         Math.sin(uniforms.uTime.value * PARAMS.breathSpeed) * PARAMS.breathAmp;
 
       // Suavizado: el scroll llega a saltos y la nube no debe dar tirones.
+      if (isSection) readScroll();
       stepAutoPulse(dt * 1000);
       stepPulses(dt);
 
@@ -528,7 +566,14 @@ export default function ParticleNebula({
 
   // Fondo: halo radial morado + rejilla tenue (la del ref). Van en CSS porque
   // son estáticos — meterlos en el shader solo añadiría píxeles que pintar.
-  const halo = `radial-gradient(120% 90% at 50% 35%, ${PARAMS.haloStops[0]} 0%, ${PARAMS.haloStops[1]} 45%, ${PARAMS.haloStops[2]} 100%)`;
+  //
+  // Solo en el hero: como telón de fondo de una sección, el halo pinta un
+  // bloque morado con el borde recortado allí donde termina la sección. Ahí la
+  // nube va sola sobre el negro de la página.
+  const isSectionVariant = variant === "section";
+  const halo = isSectionVariant
+    ? undefined
+    : `radial-gradient(120% 90% at 50% 35%, ${PARAMS.haloStops[0]} 0%, ${PARAMS.haloStops[1]} 45%, ${PARAMS.haloStops[2]} 100%)`;
   const grid =
     `repeating-linear-gradient(90deg, rgba(206,102,184,${PARAMS.gridAlpha}) 0 1px, transparent 1px ${PARAMS.gridSize}px), ` +
     `repeating-linear-gradient(0deg, rgba(206,102,184,${PARAMS.gridAlpha}) 0 1px, transparent 1px ${PARAMS.gridSize}px)`;
@@ -540,6 +585,7 @@ export default function ParticleNebula({
       style={{ position: "relative", overflow: "hidden", background: halo }}
     >
       {/* Rejilla, atenuada hacia los bordes para que no se vea el corte. */}
+      {!isSectionVariant && (
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -550,6 +596,7 @@ export default function ParticleNebula({
             "radial-gradient(100% 80% at 50% 45%, #000 20%, transparent 85%)",
         }}
       />
+      )}
       <div ref={mountRef} className="absolute inset-0" />
     </div>
   );

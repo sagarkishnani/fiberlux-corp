@@ -1,0 +1,35 @@
+---
+/**
+ * NebulaBackdrop — telón de fondo con la nube de partículas (SPEC 100).
+ *
+ * Envuelve una sección del home y monta `ParticleNebula` en variante
+ * `section` por detrás de su contenido: la nube entra dispersa, se recompone
+ * cuando la sección se centra en el viewport y se vuelve a dispersar al salir.
+ *
+ * Se aplica SOLO desde `src/pages/index.astro`. La sección que envuelve se
+ * reutiliza en otras páginas (`HomePartners` también vive en `/soluciones`) y
+ * ahí no debe cambiar nada; además tiene que renderizar con fondo
+ * transparente (prop `transparentBg`), o su `bg-*` opaco tapa la nube.
+ */
+import ParticleNebula from "../effects/ParticleNebula";
+
+interface Props {
+  /** Debe coincidir con la intensidad del hero. */
+  intensity?: "sutil" | "medio" | "intenso";
+  class?: string;
+}
+
+const { intensity = "medio", class: className } = Astro.props;
+---
+
+<div class:list={["relative bg-greyscale-darkest", className]}>
+  <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
+    <ParticleNebula
+      client:visible
+      variant="section"
+      intensity={intensity}
+      className="h-full w-full"
+    />
+  </div>
+  <div class="relative z-10"><slot /></div>
+</div>

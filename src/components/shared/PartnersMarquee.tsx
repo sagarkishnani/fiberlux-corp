@@ -28,6 +28,7 @@ export default function PartnersMarquee({
   partners,
   durationSeconds,
   locale = "es",
+  transparentBg = false,
 }: {
   partners?: PartnersData | null;
   /**
@@ -38,6 +39,12 @@ export default function PartnersMarquee({
    */
   durationSeconds?: number;
   locale?: Locale;
+  /**
+   * Fondo transparente: lo pone el contenedor (SPEC 100 — `NebulaBackdrop` en
+   * el home). La franja se reutiliza en `/soluciones` y en las páginas de
+   * solución, donde conserva su fondo de siempre.
+   */
+  transparentBg?: boolean;
 }) {
   if (!partners) return null;
 
@@ -87,7 +94,9 @@ export default function PartnersMarquee({
 
   return (
     <section
-      className="bg-greyscale-darkest py-24 md:py-32 overflow-hidden"
+      className={`py-24 md:py-32 overflow-hidden ${
+        transparentBg ? "" : "bg-greyscale-darkest"
+      }`}
     >
       <div className="site-container text-center mb-14 md:mb-20">
         {eyebrow && (

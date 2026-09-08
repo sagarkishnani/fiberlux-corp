@@ -5,7 +5,7 @@
 > **Fecha:** 2026-09-08
 > **Objetivo:** Añadir un nuevo modo de fondo del hero `dotfield` — una nube esférica de partículas en Three.js, sobre rejilla y halo morado, que se inclina hacia el puntero y se dispersa conforme se hace scroll.
 >
-> **Revisión (2026-09-08, tras QA con el cliente):** el alcance cambió durante la implementación. (1) El efecto queda **solo en el hero**: se retiró la reaparición en secciones posteriores. (2) La **malla plana de puntos con ondas expansivas** se sustituyó por una **nube esférica que se dispersa con el scroll**, siguiendo las referencias de guardz.com que trajo el cliente — la malla se veía "simple", no impactante. Las secciones marcadas ~~así~~ quedaron sin efecto.
+> **Revisión (2026-09-08, tras QA con el cliente):** el alcance cambió durante la implementación. (1) El efecto queda en el **hero** y, tras una segunda vuelta, **también detrás de la franja de partners del home** (y solo ahí): se retiró la reaparición en las otras secciones. (2) La **malla plana de puntos con ondas expansivas** se sustituyó por una **nube esférica que se dispersa con el scroll**, siguiendo las referencias de guardz.com que trajo el cliente — la malla se veía "simple", no impactante. Las secciones marcadas ~~así~~ quedaron sin efecto.
 
 ---
 
@@ -25,13 +25,18 @@
 - **Editable en Tina**: subgrupo `hero.dotfield` con `intensity` (`sutil`/`medio`/`intenso`, mapeado a presets de conteo, opacidad y tamaño). El resto (paleta, radio, corteza, velocidades, curva de dispersión) va horneado en `PARAMS`.
 - **El wordmark FIBERLUX (`HeroLogoIntro`) y toda la coreografía de entrada se mantienen**: el modo comparte el "chrome cinematográfico" con `cinematic` a través de un `CINE_MODES` en `HeroHomeReact` y de la clase `.cine-intro-page` de `BaseLayout`.
 - **Velo de legibilidad propio**: en este modo el velo radial del centro baja mucho respecto al de `cinematic` (allí tapa el brillo del planeta; aquí borraría justo la nube, que **es** el fondo). Queda un apoyo mínimo bajo el bloque de texto, más un refuerzo en mobile.
+- **Reaparición detrás de la franja de partners del home** (`HomePartners` / "Trabajamos con los líderes de la industria"): una **segunda instancia** del island en variante `section`, montada por el wrapper `src/components/shared/NebulaBackdrop.astro` **solo desde `src/pages/index.astro`** — `HomePartners` también se usa en `/soluciones`, donde la franja no cambia. La nube **entra dispersa, se recompone al centrarse la sección en el viewport y se vuelve a dispersar al salir**; el progreso sale de la distancia del centro de la sección al centro del viewport, no del `scrollY` absoluto.
+  - Va a **media densidad** (`SECTION_MOD`: 55% de partículas, 50% de opacidad): detrás de dos filas de logos blancos la nube tiene que ser atmósfera, no protagonista.
+  - **Sin halo ni rejilla** en esta variante: pintados detrás de una sección dibujaban un bloque morado con el borde recortado donde la sección termina. Aquí la nube va sola sobre el negro de la página.
+  - **Sin pulso por click**: es telón de fondo, no una zona interactiva.
+  - Requiere que la franja renderice con fondo transparente (prop `transparentBg` en `PartnersMarquee` + `HomePartners.astro`), porque pinta `bg-greyscale-darkest` en su raíz.
 - **Mobile — versión ligera**: menos partículas, DPR cap 1.5, sin inclinación por puntero, tope de ~30 fps y cámara más lejos (en retrato la nube debe caber entera detrás del texto). Reemplaza el poster estático de SPEC 44 solo en este modo.
 - **Accesibilidad**: `prefers-reduced-motion: reduce` → frame estático (nube quieta, sin dispersión ni puntero, sin rAF). Canvas `aria-hidden`. Señal `fbx:hero-scene-loaded` para el `SitePreloader`.
 - **Rendimiento**: `three` se importa en diferido (`lazy` + `Suspense`, igual que `MorphSolutions`); el rAF se pausa fuera de viewport (`IntersectionObserver`); `renderer.dispose()`, `geometry.dispose()`, `material.dispose()` y baja de listeners al desmontar.
 
 **Fuera de alcance:**
 
-- ~~Reaparición del efecto en secciones posteriores del home~~ — **retirado en la revisión**. Se implementó y se revirtió: las secciones pintan su propio fondo opaco (y `SolucionesStack` ya tiene su aurora WebGL propia), así que exigía tocarlas con una prop `transparentBg`. El cliente acotó el efecto al hero.
+- ~~Reaparición en `SolucionesStack`, `EmpresasRed` y `BannerApp`~~ — **retirado**. Se implementó y se revirtió: `EmpresasRed` es el panel claro del home y `SolucionesStack` ya tiene su propia aurora WebGL. De la reaparición sobrevive **solo la franja de partners**, pedida explícitamente por el cliente.
 - ~~Malla regular de puntos con ondas expansivas por hover/click/scroll~~ — **sustituida** por la nube esférica. La malla se leía "simple"; la referencia de guardz.com es una nube volumétrica.
 - Aplicar `dotfield` a heros de **otras páginas** o al resto de la web.
 - Retirar o reescribir los modos existentes (`cinematic`, `morph`, `waveform`, `nodefield`, `3d`, `video`, `imagen`).
@@ -84,6 +89,9 @@ const PARAMS = {
   haloStops: ["#3B0E30", "#1A0716", "#0A0A0A"], gridSize: 88, gridAlpha: 0.05,
 } as const;
 
+// Variante `section` (franja de partners): atmósfera, no protagonista.
+const SECTION_MOD = { countMul: 0.55, opacityMul: 0.5, sizeMul: 0.95 };
+
 const INTENSITY = {
   sutil:   { countMul: 0.6,  opacity: 0.85, sizeMul: 0.9  },
   medio:   { countMul: 1.0,  opacity: 1.3,  sizeMul: 1.0  },
@@ -133,7 +141,9 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 - [ ] El modo dispara `fbx:hero-scene-loaded`.
 - [ ] El rAF se pausa fuera de viewport y, al desmontar, no quedan listeners, rAF ni recursos WebGL sin liberar.
 - [ ] `three` se carga en diferido: con `heroBackground` en cualquier otro modo, no se descarga.
-- [ ] **Ninguna sección del home** distinta del hero muestra el efecto; `SolucionesStack` conserva su aurora en el home, `/soluciones` y `/soporte-tecnico`.
+- [ ] Detrás de la **franja de partners del home** la nube **se recompone** al centrarse la sección y **se dispersa** al entrar y al salir, a media densidad y sin halo ni rejilla.
+- [ ] En **`/soluciones`** la franja de partners queda **idéntica a hoy** (fondo negro opaco, sin nube).
+- [ ] Ninguna otra sección del home muestra el efecto; `SolucionesStack` conserva su aurora.
 - [ ] `npm run build` pasa sin errores nuevos.
 
 ---
@@ -145,6 +155,8 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 - **Sí (revisado en QA):** **nube esférica volumétrica** en lugar de la **malla plana de puntos con ondas expansivas** del primer diseño. La malla se implementó completa (grid + ripples por hover/scroll/automáticas) y el cliente la vio "simple"; las referencias de guardz.com que trajo son una nube densa que se dispersa. Se conservó de la primera versión la idea de **scroll como motor del efecto**, pero como dispersión, no como onda.
 - **Sí (revisado en QA):** el efecto queda **solo en el hero**. La reaparición en `SolucionesStack`/`EmpresasRed`/`BannerApp` se llegó a implementar (wrapper `DotFieldBackdrop` + prop `transparentBg`) y se revirtió por decisión del cliente. De paso se documenta el hallazgo: **todas las secciones del home pintan su propio fondo opaco**, así que cualquier telón por detrás exige tocarlas.
 - **Sí (revisión 2):** **corteza más fina y esfera más contenida** (`shell` 0.42 → 0.26, `cameraZ` 2.25 → 2.85). Llenando el hero de borde a borde la nube se leía difusa; con la silueta definida gana impacto.
+- **Sí (revisión 4):** vuelve una **segunda ubicación**, solo la franja de partners del home, con **una segunda instancia** en vez de un canvas fijo para toda la página (opción elegida por el cliente): cada instancia vive únicamente mientras su sección está en pantalla, lo que en móvil es bastante más barato, y como entre el hero y partners está todo `SolucionesStack` las dos nunca coinciden en pantalla.
+- **Sí (revisión 4):** el progreso de la variante `section` se mide **contra el centro del viewport**, no contra `scrollY`: así la curva (dispersa → compuesta → dispersa) es la misma sin depender de dónde caiga la sección en la página.
 - **Sí (revisión 3):** el pulso es **onda de luz, no empuje**. La primera versión desplazaba las partículas 0.26 radios y la esfera entera se leía como un estallido; bajarlo a 0.05, afinar la banda (0.16 → 0.10) y bajar el pulso automático (0.7 → 0.3) devuelve el anillo legible del ref.
 - **Sí (revisión 2):** se recupera el **ripple del `dot-wave`** como **sistema de pulsos radiales** (click + automáticos). Es la pieza del primer diseño que sí traduce bien a una nube 3D. Se descartó el ripple por hover (compite con la inclinación de la nube, que ya es la respuesta al cursor) y el ripple ligado al scroll (el scroll ya tiene su propio efecto: la dispersión).
 - **Sí:** **dispersión con multiplicador por partícula**, no escala uniforme de la nube — si no, se ve como un zoom.
@@ -160,6 +172,7 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 
 | Riesgo | Mitigación |
 | --- | --- |
+| Dos contextos WebGL en el home (hero + partners) | Cada uno se monta `client:visible` y pausa su rAF fuera de viewport; la instancia de sección va a 55% de partículas. Nunca coinciden en pantalla. |
 | 12.000 partículas WebGL en el hero castigan móviles de gama media | Conteo y DPR reducidos en mobile, tope de ~30 fps en táctiles, pausa fuera de viewport, todo el trabajo por partícula en GPU (JS solo mueve 4 uniforms por frame). Pendiente de medir en iPhone real. |
 | `three` (~508 KB sin comprimir) pasa a descargarse siempre en el home | Import diferido (`lazy` + `Suspense`), igual que `MorphSolutions`. Si pesa en QA, evaluar un build slim de `three`. |
 | La nube resta legibilidad al titular/subtítulo/botones | Velo suave bajo el bloque de texto (reforzado en mobile), vignettes existentes en z-[1], contenido en z-10. Verificado en QA a 1440×900. |
@@ -171,7 +184,7 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 
 ## Qué **no** está en este spec
 
-- Reaparición del efecto en secciones posteriores del home (retirado por el cliente).
+- Reaparición en secciones del home distintas de la franja de partners.
 - Aplicar `dotfield` en heros de otras páginas.
 - Exponer paleta, radio, velocidades o curva de dispersión en el CMS.
 - Retirar o reescribir los modos de fondo existentes, incluido el planeta `cinematic`.

@@ -18,6 +18,8 @@ import HtmlInjection from "../components/shared/HtmlInjection.astro";
 // pintado, y duplicaba la intro FLX→FIBERLUX, que ya es la entrada de marca.
 // El componente se conserva por si se vuelve al hero 3D.
 // import SitePreloader from "../components/shared/SitePreloader";
+import NebulaBackdrop from "../components/shared/NebulaBackdrop.astro";
+import homeContent from "../content/home/index.json";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
 
@@ -25,6 +27,14 @@ import soporteContent from "../content/soporte-tecnico/index.json";
 // calentar la caché HTTP: aunque las navegaciones ya no recargan el documento
 // (View Transitions, SPEC 110), la isla de esas páginas descarga su escena al
 // montarse, y con la caché caliente aparece de inmediato.
+// SPEC 100 — la nube de partículas del hero reaparece detrás de la franja de
+// partners: entra dispersa, se recompone al centrarse la sección y se vuelve a
+// dispersar al salir. Solo cuando el hero está en modo "dotfield", y solo aquí:
+// `HomePartners` también se usa en /soluciones, donde no debe cambiar.
+const heroDotfield = (homeContent as any).hero?.dotfield ?? {};
+const nebulaOn = (homeContent as any).hero?.heroBackground === "dotfield";
+const nebulaIntensity = heroDotfield.intensity ?? "medio";
+
 const prefetchScenes = [
   serviciosContent.splineSceneUrl,
   soporteContent.splineSceneUrl,
@@ -74,7 +84,15 @@ const prefetchScenes = [
         luego el panel claro. Cifras y testimonios van en un solo bloque
         (`EmpresasRed`), antes eran dos secciones seguidas. */}
     <div class="relative z-20" data-reveal="up">
-      <HomePartners />
+      {
+        nebulaOn ? (
+          <NebulaBackdrop intensity={nebulaIntensity}>
+            <HomePartners transparentBg />
+          </NebulaBackdrop>
+        ) : (
+          <HomePartners />
+        )
+      }
     </div>
     <div class="-mt-2 relative z-30" data-reveal="up" data-overlap-rise>
       <EmpresasRed />
