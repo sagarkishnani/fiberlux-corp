@@ -13,10 +13,6 @@ import { isLocale } from "../../i18n/config";
 
 const homeQuery = await client.queries.home({ relativePath: "index.json" });
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
-
-// SPEC 100: el home puede pedir la sección sin fondo propio para que se vea el
-// campo de puntos del contenedor. Por defecto, fondo de siempre.
-const { transparentBg = false } = Astro.props;
 ---
 
 <SolucionesStackReact
@@ -25,5 +21,4 @@ const { transparentBg = false } = Astro.props;
   variables={homeQuery.variables}
   data={homeQuery.data}
   locale={locale}
-  transparentBg={transparentBg}
 />

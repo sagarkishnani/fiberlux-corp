@@ -13,10 +13,6 @@ const appQuery = await client.queries.fiberluxApp({
   relativePath: "index.json",
 });
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
-
-// SPEC 100: el home puede pedir el banner sin fondo propio para que se vea el
-// campo de puntos del contenedor. Por defecto, fondo de siempre.
-const { transparentBg = false } = Astro.props;
 ---
 
 <BannerAppReact
@@ -25,5 +21,4 @@ const { transparentBg = false } = Astro.props;
   variables={appQuery.variables}
   data={appQuery.data}
   locale={locale}
-  transparentBg={transparentBg}
 />

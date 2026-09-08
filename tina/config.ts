@@ -453,18 +453,6 @@ export default defineConfig({
                     description:
                       "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio.",
                   },
-                  {
-                    type: "string",
-                    name: "sections",
-                    label: "Repetir el fondo en estas secciones",
-                    list: true,
-                    options: [
-                      { value: "soluciones", label: "Soluciones (bloque apilado)" },
-                      { value: "app", label: "Banner Fiberlux App" },
-                    ],
-                    description:
-                      "Secciones del home donde el campo de puntos vuelve a aparecer, más tenue.",
-                  },
                 ],
               },
             ],

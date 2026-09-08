@@ -87,11 +87,7 @@
     "title_en": "Connectivity and IT solutions for your business",
     "subtitle_en": "We power your business with high-quality services over a 100% private fiber-optic network.",
     "dotfield": {
-      "intensity": "medio",
-      "sections": [
-        "soluciones",
-        "app"
-      ]
+      "intensity": "medio"
     }
   },
   "services": {
