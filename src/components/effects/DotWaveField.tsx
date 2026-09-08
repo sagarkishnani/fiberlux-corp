@@ -170,6 +170,11 @@ export default function DotWaveField({
 }: Props) {
   const mountRef = useRef<HTMLDivElement>(null);
 
+  // Vía ref: si el consumidor pasa un callback inline, tenerlo en las deps
+  // remontaría el contexto WebGL en cada render.
+  const onUnsupportedRef = useRef(onUnsupported);
+  onUnsupportedRef.current = onUnsupported;
+
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
@@ -189,7 +194,7 @@ export default function DotWaveField({
         powerPreference: "high-performance",
       });
     } catch {
-      onUnsupported?.();
+      onUnsupportedRef.current?.();
       return;
     }
 
@@ -508,7 +513,7 @@ export default function DotWaveField({
       renderer.dispose();
       if (canvas.parentNode === mount) mount.removeChild(canvas);
     };
-  }, [variant, intensity, signalReady, onUnsupported]);
+  }, [variant, intensity, signalReady]);
 
   // Halo radial morado sobre el negro base: el equivalente al
   // `createRadialGradient` del HTML de referencia, en paleta de marca. Solo en
