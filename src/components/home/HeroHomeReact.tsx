@@ -14,9 +14,9 @@ import HeroLogoIntro from "./HeroLogoIntro";
 // en `heroBackground: "morph"`, así que se carga en diferido: con cualquier otro
 // modo (hoy el home va en "cinematic") Three no llega ni a descargarse.
 const MorphSolutions = lazy(() => import("../effects/MorphSolutions"));
-// DotWaveField (SPEC 100) también arrastra Three.js: mismo trato que el morph,
-// solo se descarga cuando `heroBackground` es "dotfield".
-const DotWaveField = lazy(() => import("../effects/DotWaveField"));
+// ParticleNebula (SPEC 100) también arrastra Three.js: mismo trato que el
+// morph, solo se descarga cuando `heroBackground` es "dotfield".
+const ParticleNebula = lazy(() => import("../effects/ParticleNebula"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 
 // Modos de fondo que comparten el "chrome" cinematográfico del hero: intro del
@@ -451,15 +451,14 @@ export default function HeroHomeReact({
         </div>
       )}
 
-      {/* Modo dotfield (SPEC 100): malla de puntos que reacciona al puntero y
-          emite ondas expansivas al hacer scroll. Transparente sobre el negro
-          base, z-0 detrás de las vignettes y del contenido. */}
+      {/* Modo dotfield (SPEC 100): nube esférica de partículas que se dispersa
+          al hacer scroll, sobre rejilla y halo morado. z-0 detrás de las
+          vignettes y del contenido. */}
       {dotfield && (
         <div className="absolute inset-0 z-0">
           <Suspense fallback={null}>
-            <DotWaveField
+            <ParticleNebula
               className="h-full w-full"
-              variant="hero"
               intensity={dotfieldIntensity}
               signalReady
             />
@@ -496,7 +495,10 @@ export default function HeroHomeReact({
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
             background: dotfield
-              ? "radial-gradient(52% 42% at 50% 56%, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.48) 48%, rgba(10,10,10,0.24) 74%, rgba(10,10,10,0) 92%)"
+              ? // La nube ES el fondo: un velo fuerte en el centro la borraba
+                // justo donde tiene que verse. Solo un apoyo mínimo bajo el
+                // bloque de texto.
+                "radial-gradient(40% 26% at 50% 62%, rgba(10,10,10,0.34) 0%, rgba(10,10,10,0.2) 55%, rgba(10,10,10,0) 88%)"
               : "radial-gradient(58% 48% at 50% 56%, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.78) 46%, rgba(10,10,10,0.42) 72%, rgba(10,10,10,0) 92%)",
           }}
         />
