@@ -78,6 +78,11 @@ uniform float uBaseRadius;
 uniform float uBaseAlpha;
 uniform float uAlphaMul;
 uniform float uDpr;
+uniform float uBand;
+uniform float uMaxRadius;
+uniform float uRippleMul;
+// (x, y, radio, fuerza) por onda activa; fuerza 0 = ranura libre.
+uniform vec4  uRipples[${MAX_RIPPLES}];
 
 varying float vAlpha;
 varying float vHot;
@@ -93,6 +98,21 @@ void main() {
       float t = 1.0 - d / uPointerRadius;
       scale += t * ${PARAMS.pointerBoost.scale.toFixed(2)};
       alpha += t * ${PARAMS.pointerBoost.alpha.toFixed(2)};
+    }
+  }
+
+  // Ondas expansivas: cada anillo agranda y enciende los puntos que cruza,
+  // atenuándose conforme se aleja del origen.
+  for (int i = 0; i < ${MAX_RIPPLES}; i++) {
+    vec4 r = uRipples[i];
+    if (r.w > 0.0) {
+      float diff = abs(distance(position.xy, r.xy) - r.z);
+      if (diff < uBand) {
+        float t = (1.0 - diff / uBand) * r.w;
+        float fade = max(0.0, 1.0 - r.z / uMaxRadius);
+        scale += t * ${PARAMS.ripple.boost.scale.toFixed(2)} * fade * uRippleMul;
+        alpha += t * ${PARAMS.ripple.boost.alpha.toFixed(2)} * fade * uRippleMul;
+      }
     }
   }
 
@@ -206,6 +226,12 @@ export default function DotWaveField({
       uDpr: { value: dpr },
       uColor: { value: rgb(PARAMS.color) },
       uColorLight: { value: rgb(PARAMS.colorLight) },
+      uBand: { value: PARAMS.ripple.band },
+      uMaxRadius: { value: 1 },
+      uRippleMul: { value: preset.rippleMul },
+      uRipples: {
+        value: Array.from({ length: MAX_RIPPLES }, () => new THREE.Vector4()),
+      },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -252,6 +278,8 @@ export default function DotWaveField({
       ch = Math.max(1, h);
       renderer.setSize(cw, ch, false);
       uniforms.uResolution.value.set(cw, ch);
+      uniforms.uMaxRadius.value =
+        Math.max(cw, ch) * PARAMS.ripple.maxRadiusFactor;
       buildGrid(cw, ch);
       return true;
     }
@@ -269,6 +297,31 @@ export default function DotWaveField({
     };
     window.addEventListener("resize", onResize, { passive: true });
 
+    // ── Ondas expansivas ─────────────────────────────────────────────────
+    // Array acotado a MAX_RIPPLES: el coste por frame es O(6), no O(nº puntos).
+    const ripples: { x: number; y: number; radius: number; strength: number }[] =
+      [];
+
+    function addRipple(x: number, y: number, strength: number) {
+      if (ripples.length >= MAX_RIPPLES) ripples.shift();
+      ripples.push({ x, y, radius: 0, strength });
+    }
+
+    /** Avanza los anillos y vuelca el array a los uniforms. */
+    function stepRipples(dtFrames: number) {
+      const max = uniforms.uMaxRadius.value;
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        ripples[i].radius += PARAMS.ripple.speed * dtFrames;
+        if (ripples[i].radius >= max) ripples.splice(i, 1);
+      }
+      const slots = uniforms.uRipples.value;
+      for (let i = 0; i < MAX_RIPPLES; i++) {
+        const r = ripples[i];
+        if (r) slots[i].set(r.x, r.y, r.radius, r.strength);
+        else slots[i].set(0, 0, 0, 0);
+      }
+    }
+
     // ── Loop ─────────────────────────────────────────────────────────────
     let raf = 0;
     let visible = true;
@@ -281,7 +334,16 @@ export default function DotWaveField({
       }
     }
 
-    function frame() {
+    // Delta normalizado a frames de 60fps: las velocidades de PARAMS están en
+    // px/frame como en el HTML de referencia, pero no deben depender del
+    // refresco real de la pantalla.
+    let lastMs = 0;
+
+    function frame(ms: number) {
+      const dtFrames = lastMs ? Math.min((ms - lastMs) / 16.667, 3) : 1;
+      lastMs = ms;
+
+      stepRipples(dtFrames);
       renderer.render(scene, camera);
       signalOnce();
       if (!reduce && visible) raf = requestAnimationFrame(frame);
@@ -291,7 +353,10 @@ export default function DotWaveField({
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
-        if (visible && !reduce && !raf) raf = requestAnimationFrame(frame);
+        if (visible && !reduce && !raf) {
+          lastMs = 0; // no arrastrar el tiempo transcurrido con el loop pausado
+          raf = requestAnimationFrame(frame);
+        }
       },
       { threshold: 0 }
     );
