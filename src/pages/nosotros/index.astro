@@ -39,7 +39,10 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
     data={aboutQuery.data}
     locale={locale}
   />
-  <div class="bg-white">
+  {/* El bloque de historia tiene las esquinas superiores redondeadas, así que
+      por sus muescas asoma el fondo de este contenedor. Tiene que ser el mismo
+      color que la sección de encima (Valores, #2B272F) o se ve un corte. */}
+  <div style="background: #2B272F">
     <TimelineReact
       client:visible
       query={aboutQuery.query}
