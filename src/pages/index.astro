@@ -18,6 +18,8 @@ import HtmlInjection from "../components/shared/HtmlInjection.astro";
 // pintado, y duplicaba la intro FLX→FIBERLUX, que ya es la entrada de marca.
 // El componente se conserva por si se vuelve al hero 3D.
 // import SitePreloader from "../components/shared/SitePreloader";
+import DotFieldBackdrop from "../components/shared/DotFieldBackdrop.astro";
+import homeContent from "../content/home/index.json";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
 
@@ -25,6 +27,17 @@ import soporteContent from "../content/soporte-tecnico/index.json";
 // calentar la caché HTTP: aunque las navegaciones ya no recargan el documento
 // (View Transitions, SPEC 110), la isla de esas páginas descarga su escena al
 // montarse, y con la caché caliente aparece de inmediato.
+// SPEC 100 — campo de puntos: en qué secciones del home vuelve a aparecer y con
+// qué intensidad. Se lee del contenido (lo edita Tina en `hero.dotfield`); es
+// una decisión de layout, resuelta en build. El wrapper se aplica SOLO aquí:
+// `SolucionesStack` y `BannerApp` se reutilizan en otras páginas y ahí no
+// deben cambiar.
+const dotfield = (homeContent as any).hero?.dotfield ?? {};
+const dotfieldOn = (homeContent as any).hero?.heroBackground === "dotfield";
+const dotSections: string[] = dotfieldOn ? dotfield.sections ?? [] : [];
+const dotIntensity = dotfield.intensity ?? "medio";
+const dotEn = (k: string) => dotSections.includes(k);
+
 const prefetchScenes = [
   serviciosContent.splineSceneUrl,
   soporteContent.splineSceneUrl,
@@ -68,7 +81,15 @@ const prefetchScenes = [
     <div class="-mt-16 relative z-10">
       {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) →
           SolucionesStack (SPEC 108) */}
-      <SolucionesStack />
+      {
+        dotEn("soluciones") ? (
+          <DotFieldBackdrop intensity={dotIntensity}>
+            <SolucionesStack transparentBg />
+          </DotFieldBackdrop>
+        ) : (
+          <SolucionesStack />
+        )
+      }
     </div>
     {/* Orden agrupado por color: los oscuros (Soluciones → Partners) juntos y
         luego el panel claro. Cifras y testimonios van en un solo bloque
@@ -83,7 +104,15 @@ const prefetchScenes = [
       <CertificacionesSlider />
     </div>
     <div class="relative z-20" data-reveal="up">
-      <BannerApp />
+      {
+        dotEn("app") ? (
+          <DotFieldBackdrop intensity={dotIntensity}>
+            <BannerApp transparentBg />
+          </DotFieldBackdrop>
+        ) : (
+          <BannerApp />
+        )
+      }
     </div>
     <div class="-mt-6 relative z-30" data-reveal="up">
       <BlogPreview />

@@ -11,6 +11,12 @@ interface BannerAppProps {
   variables: { relativePath: string };
   data: FiberluxAppQuery;
   locale?: Locale;
+  /**
+   * Fondo transparente: lo pone el contenedor (SPEC 100 — `DotFieldBackdrop`
+   * en el home). El banner se reutiliza en otras páginas, donde conserva su
+   * fondo de siempre.
+   */
+  transparentBg?: boolean;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -59,6 +65,7 @@ export default function BannerAppReact({
   variables,
   data: initialData,
   locale = "es",
+  transparentBg = false,
 }: BannerAppProps) {
   const { data } = useTina<FiberluxAppQuery>({ query, variables, data: initialData });
 
@@ -78,7 +85,9 @@ export default function BannerAppReact({
     const imgMobile = mediaUrl(b.imageMobile);
     const imgTablet = mediaUrl(b.imageTablet) || imgMobile;
     const imgDesktop = mediaUrl(b.imageDesktop) || imgTablet;
-    const bgColor: string = b.bgColor || "#0a0a0a";
+    const bgColor: string = transparentBg
+      ? "transparent"
+      : b.bgColor || "#0a0a0a";
     const appHref = asset("/fiberlux-app");
     if (!imgMobile && !imgTablet && !imgDesktop) return null;
     return (
@@ -226,7 +235,11 @@ export default function BannerAppReact({
   );
 
   return (
-    <section className="bg-greyscale-darkest py-10 md:py-14 overflow-hidden">
+    <section
+      className={`py-10 md:py-14 overflow-hidden ${
+        transparentBg ? "" : "bg-greyscale-darkest"
+      }`}
+    >
       <div className="site-container">
         <div className="relative overflow-hidden rounded-[16px]" style={panelBg}>
           {/* Patrón geométrico sutil */}

@@ -28,6 +28,13 @@ interface Props {
   variables: { relativePath: string };
   data: HomeQuery;
   locale?: Locale;
+  /**
+   * Fondo transparente y sin su capa aurora propia: lo pone el contenedor
+   * (SPEC 100 — `DotFieldBackdrop` en el home). Solo se activa desde
+   * `src/pages/index.astro`; en `/soluciones` y `/soporte-tecnico` la sección
+   * conserva su fondo de siempre.
+   */
+  transparentBg?: boolean;
 }
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -93,6 +100,7 @@ export default function SolucionesStackReact({
   variables,
   data: initialData,
   locale = "es",
+  transparentBg = false,
 }: Props) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -410,7 +418,9 @@ export default function SolucionesStackReact({
     <section
       id="soluciones-stack"
       ref={sectionRef}
-      className="relative bg-greyscale-darkest scroll-mt-24"
+      className={`relative scroll-mt-24 ${
+        transparentBg ? "" : "bg-greyscale-darkest"
+      }`}
     >
       {/* ── Fondo ──
           La capa se queda pegada al viewport mientras la sección pasa, igual
@@ -419,6 +429,7 @@ export default function SolucionesStackReact({
           saldría deformado y costaría cuatro veces más píxeles).
           Ojo: nada de `overflow-hidden` en la sección — rompería tanto este
           `sticky` como el del rail. */}
+      {!transparentBg && (
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
         <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
           {sinWebgl ? (
@@ -447,6 +458,7 @@ export default function SolucionesStackReact({
           />
         </div>
       </div>
+      )}
 
       <div className="site-container relative z-10 py-20 md:py-28 lg:py-32">
         {/* Encabezado. */}
