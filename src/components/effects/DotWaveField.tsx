@@ -387,6 +387,53 @@ export default function DotWaveField({
       addRipple(Math.random() * cw, Math.random() * ch, 0.7);
     }
 
+    // ── Ondas ligadas al scroll ──────────────────────────────────────────
+    // El efecto que pidió el cliente (referencia: guardz.com): al bajar por la
+    // página el campo "se abre" en ondas. Se acumula el delta de scroll y, al
+    // superar el umbral, se emite un anillo desde el borde por el que "entra"
+    // el movimiento — arriba al bajar, abajo al subir — con fuerza escalada por
+    // la velocidad del scroll.
+    let lastScrollY = window.scrollY;
+    let scrollAcc = 0;
+    let lastScrollRippleMs = 0;
+    let lastScrollEventMs = 0;
+
+    const onScroll = () => {
+      if (reduce || !visible) {
+        lastScrollY = window.scrollY;
+        return;
+      }
+      const y = window.scrollY;
+      const delta = y - lastScrollY;
+      lastScrollY = y;
+      if (!delta) return;
+
+      // Cambio de dirección: se descarta lo acumulado para no disparar de
+      // inmediato una onda por el rebote del scroll.
+      if (Math.sign(delta) !== Math.sign(scrollAcc) && scrollAcc !== 0) {
+        scrollAcc = 0;
+      }
+      scrollAcc += delta;
+
+      const now = performance.now();
+      if (Math.abs(scrollAcc) < PARAMS.scroll.deltaThreshold) return;
+      if (now - lastScrollRippleMs < PARAMS.scroll.cooldownMs) return;
+
+      // Velocidad en px/ms del tramo recorrido → fuerza dentro del rango.
+      const elapsed = Math.max(16, now - (lastScrollEventMs || now - 16));
+      const speed = Math.abs(scrollAcc) / elapsed;
+      const [minS, maxS] = PARAMS.scroll.strengthRange;
+      const strength = minS + Math.min(1, speed / 2.5) * (maxS - minS);
+
+      const down = scrollAcc > 0;
+      addRipple(cw * (0.25 + Math.random() * 0.5), down ? 0 : ch, strength);
+
+      scrollAcc = 0;
+      lastScrollRippleMs = now;
+      lastScrollEventMs = now;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
     // ── Loop ─────────────────────────────────────────────────────────────
     let raf = 0;
     let visible = true;
@@ -441,6 +488,7 @@ export default function DotWaveField({
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
       io.disconnect();
       geometry.dispose();
       material.dispose();
