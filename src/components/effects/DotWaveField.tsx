@@ -63,6 +63,72 @@ const INTENSITY: Record<
 /** La variante `section` es telón de fondo: el contenido siempre gana. */
 const SECTION_MOD = { spacingMul: 1.2, alphaMul: 0.55 };
 
+const MAX_RIPPLES = PARAMS.ripple.maxActive;
+
+/**
+ * Vertex: posiciones en píxeles CSS → clip space vía `uResolution`. El tamaño
+ * y el brillo de cada punto salen del puntero y de las ondas activas, igual que
+ * en el HTML de referencia pero resuelto en GPU.
+ */
+const VERT = `
+uniform vec2  uResolution;
+uniform vec2  uPointer;
+uniform float uPointerRadius;
+uniform float uBaseRadius;
+uniform float uBaseAlpha;
+uniform float uAlphaMul;
+uniform float uDpr;
+
+varying float vAlpha;
+varying float vHot;
+
+void main() {
+  float scale = 1.0;
+  float alpha = uBaseAlpha;
+
+  // Puntero: halo de puntos que crecen y se encienden (desktop).
+  if (uPointerRadius > 0.0) {
+    float d = distance(position.xy, uPointer);
+    if (d < uPointerRadius) {
+      float t = 1.0 - d / uPointerRadius;
+      scale += t * ${PARAMS.pointerBoost.scale.toFixed(2)};
+      alpha += t * ${PARAMS.pointerBoost.alpha.toFixed(2)};
+    }
+  }
+
+  vAlpha = clamp(alpha, 0.0, 1.0) * uAlphaMul;
+  vHot = clamp((scale - 1.0) * 0.5, 0.0, 1.0);
+
+  gl_PointSize = uBaseRadius * 2.0 * max(scale, 0.6) * uDpr;
+
+  vec2 clip = (position.xy / uResolution) * 2.0 - 1.0;
+  gl_Position = vec4(clip.x, -clip.y, 0.0, 1.0);
+}
+`;
+
+/** Fragment: disco suave; el punto "caliente" vira al magenta claro. */
+const FRAG = `
+precision mediump float;
+
+uniform vec3 uColor;
+uniform vec3 uColorLight;
+
+varying float vAlpha;
+varying float vHot;
+
+void main() {
+  vec2 c = gl_PointCoord - 0.5;
+  float a = smoothstep(0.5, 0.15, length(c));
+  if (a <= 0.001) discard;
+  gl_FragColor = vec4(mix(uColor, uColorLight, vHot), a * vAlpha);
+}
+`;
+
+/** [0..255] → THREE.Color normalizado. */
+function rgb([r, g, b]: [number, number, number]) {
+  return new THREE.Color(r / 255, g / 255, b / 255);
+}
+
 interface Props {
   className?: string;
   /** `hero` manda (halo + ondas automáticas); `section` es telón de fondo. */
@@ -123,6 +189,57 @@ export default function DotWaveField({
     // posiciones en píxeles CSS y de `uResolution`. No hace falta proyección.
     const camera = new THREE.Camera();
 
+    // ── Malla de puntos ──────────────────────────────────────────────────
+    const spacing =
+      (isMobile ? PARAMS.spacingMobile : PARAMS.spacing) *
+      preset.spacingMul *
+      (isSection ? SECTION_MOD.spacingMul : 1);
+    const alphaMul = preset.alphaMul * (isSection ? SECTION_MOD.alphaMul : 1);
+
+    const uniforms = {
+      uResolution: { value: new THREE.Vector2(1, 1) },
+      uPointer: { value: new THREE.Vector2(-9999, -9999) },
+      uPointerRadius: { value: 0 }, // >0 solo con puntero real (step 5)
+      uBaseRadius: { value: PARAMS.baseRadius },
+      uBaseAlpha: { value: PARAMS.baseAlpha },
+      uAlphaMul: { value: alphaMul },
+      uDpr: { value: dpr },
+      uColor: { value: rgb(PARAMS.color) },
+      uColorLight: { value: rgb(PARAMS.colorLight) },
+    };
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const geometry = new THREE.BufferGeometry();
+    const points = new THREE.Points(geometry, material);
+    points.frustumCulled = false; // las posiciones van en píxeles, no en world
+    scene.add(points);
+
+    /** Rehace la grilla al cambiar el tamaño del contenedor. */
+    function buildGrid(w: number, h: number) {
+      const cols = Math.ceil(w / spacing) + 2;
+      const rows = Math.ceil(h / spacing) + 2;
+      const pos = new Float32Array(cols * rows * 3);
+      let k = 0;
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          pos[k++] = i * spacing;
+          pos[k++] = j * spacing;
+          pos[k++] = 0;
+        }
+      }
+      geometry.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      geometry.setDrawRange(0, cols * rows);
+    }
+
     // ── Medidas ──────────────────────────────────────────────────────────
     let cw = 0; // ancho en CSS px
     let ch = 0; // alto en CSS px
@@ -134,6 +251,8 @@ export default function DotWaveField({
       cw = Math.max(1, w);
       ch = Math.max(1, h);
       renderer.setSize(cw, ch, false);
+      uniforms.uResolution.value.set(cw, ch);
+      buildGrid(cw, ch);
       return true;
     }
     resize();
@@ -190,17 +309,32 @@ export default function DotWaveField({
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("resize", onResize);
       io.disconnect();
+      geometry.dispose();
+      material.dispose();
       renderer.dispose();
       if (canvas.parentNode === mount) mount.removeChild(canvas);
     };
   }, [variant, intensity, signalReady, onUnsupported]);
+
+  // Halo radial morado sobre el negro base: el equivalente al
+  // `createRadialGradient` del HTML de referencia, en paleta de marca. Solo en
+  // la variante `hero`; como telón de fondo de una sección compite con su
+  // contenido, así que ahí se apaga.
+  const halo =
+    variant === "hero"
+      ? `radial-gradient(120% 90% at 50% 35%, ${PARAMS.haloStops[0]} 0%, ${PARAMS.haloStops[1]} 45%, ${PARAMS.haloStops[2]} 100%)`
+      : undefined;
 
   return (
     <div
       ref={mountRef}
       aria-hidden="true"
       className={className}
-      style={{ position: "relative", overflow: "hidden" }}
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        background: halo,
+      }}
     />
   );
 }
