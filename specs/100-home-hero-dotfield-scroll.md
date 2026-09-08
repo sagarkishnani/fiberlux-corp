@@ -21,7 +21,7 @@
   3. **Paleta escalonada**: mayoría de partículas tenues en morado, ~17% encendidas en magenta claro y más gordas (el bokeh del ref), y un ~3% de acento frío cian — el guiño a la referencia; `accentRatio: 0` lo deja 100% en paleta Fiberlux.
 - **Dispersión ligada al scroll** (el efecto que pidió el cliente): el progreso se mide contra el alto del propio hero y expande el radio de cada partícula con un **multiplicador propio por partícula** — sin eso la nube se escala como un bloque y parece un zoom, no una dispersión. Al final del recorrido queda un campo suelto de puntos sobre la rejilla.
 - **Inclinación por puntero** (desktop): la nube se inclina suavemente hacia el cursor (lerp), dando profundidad. Desactivada en touch y en `reduced-motion`.
-- **Sistema de pulsos** (lo que sobrevive del `dot-wave` de referencia): un frente esférico viaja del centro hacia fuera y, al cruzar cada capa de la nube, **empuja y enciende** sus partículas. Es el anillo del HTML de referencia trasladado del plano al radio de la esfera. Se dispara por **click en el hero** (fuerza 1.4, ignorando clicks sobre botones/links para no competir con ellos) y **solo** cada 3.2–5.4 s (fuerza 0.7), con los mismos tiempos del ref. Máximo 4 pulsos simultáneos; desactivado en `reduced-motion`.
+- **Sistema de pulsos** (lo que sobrevive del `dot-wave` de referencia): un frente esférico viaja del centro hacia fuera y, al cruzar cada capa de la nube, **enciende** sus partículas. Es el anillo del HTML de referencia trasladado del plano al radio de la esfera, y con su mismo carácter: **la onda es luz, no desplazamiento** — los puntos crecen y brillan al pasar el frente, casi sin moverse (`push: 0.05`). Se dispara por **click en el hero** (ignorando clicks sobre botones/links para no competir con ellos) y solo cada 3.2–5.4 s, con los tiempos del ref. Máximo 4 pulsos simultáneos; desactivado en `reduced-motion`.
 - **Editable en Tina**: subgrupo `hero.dotfield` con `intensity` (`sutil`/`medio`/`intenso`, mapeado a presets de conteo, opacidad y tamaño). El resto (paleta, radio, corteza, velocidades, curva de dispersión) va horneado en `PARAMS`.
 - **El wordmark FIBERLUX (`HeroLogoIntro`) y toda la coreografía de entrada se mantienen**: el modo comparte el "chrome cinematográfico" con `cinematic` a través de un `CINE_MODES` en `HeroHomeReact` y de la clase `.cine-intro-page` de `BaseLayout`.
 - **Velo de legibilidad propio**: en este modo el velo radial del centro baja mucho respecto al de `cinematic` (allí tapa el brillo del planeta; aquí borraría justo la nube, que **es** el fondo). Queda un apoyo mínimo bajo el bloque de texto, más un refuerzo en mobile.
@@ -74,8 +74,8 @@ const PARAMS = {
   brightRatio: 0.17, accentRatio: 0.03, // encendidas / acento frío
   rotationSpeed: 0.045, breathAmp: 0.035, breathSpeed: 0.35, twinkleSpeed: 1.4,
   shell: 0.26,                          // corteza fina: silueta nítida
-  pulse: { maxActive: 4, band: 0.16, speed: 0.85, maxRadius: 2.1,
-           push: 0.26, clickStrength: 1.4, autoStrength: 0.7 },
+  pulse: { maxActive: 4, band: 0.10, speed: 1.15, maxRadius: 2.1,
+           push: 0.05, clickStrength: 1.0, autoStrength: 0.3 },
   autoPulseMs: [3200, 5400],
   spreadMax: 3.6, spreadFadeAt: 0.78,   // curva de dispersión por scroll
   pointerTilt: 0.16, pointerEase: 0.05,
@@ -121,7 +121,7 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 - [ ] Con `dotfield` activo, el hero muestra una **nube esférica densa de partículas** renderizada con **Three.js/WebGL**, sobre rejilla tenue y halo morado.
 - [ ] La nube tiene **profundidad**: partículas de distinto tamaño y brillo, mayoría tenues y una minoría encendidas más gordas.
 - [ ] La nube **gira, respira y centellea** sin ninguna interacción.
-- [ ] Cada 3.2–5.4 s un **pulso** recorre la nube del centro hacia fuera, empujando y encendiendo las partículas al pasar.
+- [ ] Cada 3.2–5.4 s un **pulso** recorre la nube del centro hacia fuera, encendiendo las partículas al pasar, sin que la esfera se infle.
 - [ ] **Hacer click** en el hero dispara un pulso más fuerte; hacer click en un botón o link del hero **no** lo dispara.
 - [ ] Al hacer **scroll** la nube **se dispersa** progresivamente hasta quedar un campo suelto de puntos, y vuelve a compactarse al subir.
 - [ ] En **desktop** la nube se **inclina hacia el puntero**; en **touch** no.
@@ -145,6 +145,7 @@ Separar dirección y radio es lo que permite expandir la nube **sin tocar el buf
 - **Sí (revisado en QA):** **nube esférica volumétrica** en lugar de la **malla plana de puntos con ondas expansivas** del primer diseño. La malla se implementó completa (grid + ripples por hover/scroll/automáticas) y el cliente la vio "simple"; las referencias de guardz.com que trajo son una nube densa que se dispersa. Se conservó de la primera versión la idea de **scroll como motor del efecto**, pero como dispersión, no como onda.
 - **Sí (revisado en QA):** el efecto queda **solo en el hero**. La reaparición en `SolucionesStack`/`EmpresasRed`/`BannerApp` se llegó a implementar (wrapper `DotFieldBackdrop` + prop `transparentBg`) y se revirtió por decisión del cliente. De paso se documenta el hallazgo: **todas las secciones del home pintan su propio fondo opaco**, así que cualquier telón por detrás exige tocarlas.
 - **Sí (revisión 2):** **corteza más fina y esfera más contenida** (`shell` 0.42 → 0.26, `cameraZ` 2.25 → 2.85). Llenando el hero de borde a borde la nube se leía difusa; con la silueta definida gana impacto.
+- **Sí (revisión 3):** el pulso es **onda de luz, no empuje**. La primera versión desplazaba las partículas 0.26 radios y la esfera entera se leía como un estallido; bajarlo a 0.05, afinar la banda (0.16 → 0.10) y bajar el pulso automático (0.7 → 0.3) devuelve el anillo legible del ref.
 - **Sí (revisión 2):** se recupera el **ripple del `dot-wave`** como **sistema de pulsos radiales** (click + automáticos). Es la pieza del primer diseño que sí traduce bien a una nube 3D. Se descartó el ripple por hover (compite con la inclinación de la nube, que ya es la respuesta al cursor) y el ripple ligado al scroll (el scroll ya tiene su propio efecto: la dispersión).
 - **Sí:** **dispersión con multiplicador por partícula**, no escala uniforme de la nube — si no, se ve como un zoom.
 - **Sí:** **velo de legibilidad propio y mucho más suave** que el de `cinematic`. Reusar el del planeta borraba la nube justo en el centro.

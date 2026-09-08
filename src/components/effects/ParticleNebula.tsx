@@ -45,16 +45,18 @@ const PARAMS = {
   twinkleSpeed: 1.4,
 
   // Pulsos: el "ripple" del HTML de referencia trasladado a la esfera. El
-  // frente viaja del centro hacia fuera y, al cruzar cada partícula, la empuja
-  // y la enciende. Los tiempos son los mismos del ref.
+  // frente viaja del centro hacia fuera y, al cruzar cada capa, ENCIENDE sus
+  // partículas. Ojo con `push`: en el ref los puntos no se desplazan, solo
+  // crecen y brillan — subirlo convierte la onda en un estallido de la esfera
+  // entera, que es justo lo que no queremos. El movimiento es un apoyo mínimo.
   pulse: {
     maxActive: 4, // pulsos simultáneos (tamaño del array de uniforms)
-    band: 0.16, // grosor del frente, en unidades de radio
-    speed: 0.85, // radios por segundo
+    band: 0.1, // grosor del frente: fino = anillo legible
+    speed: 1.15, // radios por segundo
     maxRadius: 2.1, // dónde muere el pulso
-    push: 0.26, // cuánto empuja hacia fuera
-    clickStrength: 1.4, // click (igual que el ref)
-    autoStrength: 0.7, // pulso automático
+    push: 0.05, // desplazamiento hacia fuera (casi nulo, como en el ref)
+    clickStrength: 1.0, // click
+    autoStrength: 0.3, // pulso automático: presencia, no protagonismo
   },
   autoPulseMs: [3200, 5400] as [number, number],
 
@@ -148,10 +150,10 @@ void main() {
     2
   )}, 1.0, uSpread) * 0.55;
 
-  vAlpha = uOpacity * twinkle * fade * (1.0 + boost * 2.4);
+  vAlpha = uOpacity * twinkle * fade * (1.0 + boost * 1.7);
   vColor = aColor;
 
-  gl_PointSize = aSize * uSizeScale * uPixelRatio * (1.0 + boost * 1.1) * (2.6 / -mv.z);
+  gl_PointSize = aSize * uSizeScale * uPixelRatio * (1.0 + boost * 0.75) * (2.6 / -mv.z);
 }
 `;
 
