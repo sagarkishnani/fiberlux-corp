@@ -38,13 +38,18 @@ const ICON_PATHS: Record<string, string> = {
 
 const FALLBACK_ICON = 'spark';
 
-/* Colores de la referencia (light) */
+/* Paleta de la sección, en tema oscuro sobre `panel`. Todo el color de
+   "Nuestros valores" sale de aquí: el resto del componente solo referencia `C`. */
 const C = {
-  heading: '#6C1958',
-  name: '#171717',
-  body: '#6E6A6C',
-  hairline: '#E9E4E7',
-  brand: '#96237A',
+  panel: '#2B272F',
+  heading: '#FFFFFF',
+  name: '#FFFFFF',
+  body: 'rgba(255,255,255,0.62)',
+  hairline: 'rgba(255,255,255,0.10)',
+  brand: '#CE66B8', // trazo de los íconos: magenta claro, legible sobre oscuro
+  iconBg: 'rgba(255,255,255,0.045)',
+  iconBorder: 'rgba(255,255,255,0.10)',
+  cardBg: 'rgba(255,255,255,0.03)',
 };
 
 function useIsMobile(): boolean {
@@ -97,7 +102,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
   if (items.length === 0) return null;
 
   return (
-    <section className="bg-white overflow-hidden values-section">
+    <section className="overflow-hidden values-section" style={{ background: C.panel }}>
       {/* Encabezado centrado */}
       <div className="max-w-[1220px] mx-auto px-6 md:px-10 pt-16 md:pt-[76px] pb-10 md:pb-14 text-center" data-reveal="up">
         <h2
@@ -124,7 +129,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
           className="absolute top-0 left-0 right-0 h-px"
           style={{
             background:
-              'linear-gradient(90deg, transparent, #E9E4E7 22%, #E0D6DD 50%, #E9E4E7 78%, transparent)',
+              'linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 22%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0.06) 78%, transparent)',
           }}
         />
         <div
@@ -153,7 +158,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
       <div className="md:hidden pb-14">
         <div
           className="h-px mb-2"
-          style={{ background: 'linear-gradient(90deg, transparent, #E9E4E7 50%, transparent)' }}
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12) 50%, transparent)' }}
         />
         <div className="overflow-hidden px-6" ref={slider.viewportRef}>
           <div className="flex gap-4 items-stretch">
@@ -163,7 +168,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
                   <div
                     key={`m-${gi}-${i}`}
                     className="flex-1 flex flex-col justify-center box-border rounded-[18px] overflow-hidden"
-                    style={{ border: `1px solid ${C.hairline}`, background: '#FCFAFB' }}
+                    style={{ border: `1px solid ${C.hairline}`, background: C.cardBg }}
                   >
                     <ValueCard item={item} index={gi * 2 + i} locale={locale} />
                   </div>
@@ -184,7 +189,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
                 className="h-[6px] rounded-full transition-all duration-300"
                 style={{
                   width: slider.activeIndex === i ? 22 : 6,
-                  background: slider.activeIndex === i ? C.brand : 'rgba(150,35,122,.22)',
+                  background: slider.activeIndex === i ? C.brand : 'rgba(255,255,255,.22)',
                 }}
               />
             ))}
@@ -217,7 +222,7 @@ export default function ValuesReact({ query, variables, data: initialData, local
           .values-section .vl-cell:hover { transform: scale(1.022); }
           .values-section .vl-cell:hover .vl-icon {
             transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(59, 14, 48, .10);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255,255,255,0.07);
           }
         }
         .values-section .vl-trace {
@@ -263,9 +268,9 @@ function ValueCard({ item, index, locale }: { item: ValueItem; index: number; lo
         <div
           className="vl-icon relative flex items-center justify-center w-[52px] h-[52px] md:w-14 md:h-14 rounded-[16px]"
           style={{
-            background: '#FFFFFF',
-            border: '1px solid #EFE3EB',
-            boxShadow: '0 6px 18px rgba(59, 14, 48, .06)',
+            background: C.iconBg,
+            border: `1px solid ${C.iconBorder}`,
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
           }}
         >
           <svg

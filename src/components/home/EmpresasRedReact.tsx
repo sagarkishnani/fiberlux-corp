@@ -102,13 +102,13 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
 
   return (
     <div ref={ref} className="flex flex-col items-center gap-3 px-4 text-center">
-      <p className="text-brand-purple" data-tina-field={tinaField(item as any, "number")}>
+      <p className="text-white" data-tina-field={tinaField(item as any, "number")}>
         {prefix && <span className={numberCls}>{prefix}</span>}
         <span ref={numRef} className={numberCls}>{displayNumber}</span>
         {suffix && <span className={suffixCls}>{suffix}</span>}
       </p>
       <p
-        className="max-w-[210px] text-body-sm leading-snug text-brand-gray-dark"
+        className="max-w-[210px] text-body-sm leading-snug text-white/65"
         data-tina-field={tinaField(item as any, "description")}
       >
         {tField(item as any, "description", locale)}
@@ -172,12 +172,15 @@ export default function EmpresasRedReact({
   const slideCls = "shrink-0 px-3 basis-full md:basis-1/2 lg:basis-1/3";
 
   return (
-    <section className="rounded-t-[32px] bg-brand-purple-lightest md:rounded-t-[56px] py-20 md:py-28 md:pb-32">
+    <section
+      className="rounded-t-[32px] md:rounded-t-[56px] py-20 md:py-28 md:pb-32"
+      style={{ background: "#47113C" }}
+    >
       <div className="site-container">
         {/* `text-wrap: balance` reparte el título en dos líneas parejas sin
             hardcodear el salto (el texto viene del CMS y puede cambiar). */}
         <h2
-          className="mx-auto max-w-[600px] text-center text-subtitle-lg text-brand-purple"
+          className="mx-auto max-w-[600px] text-center text-subtitle-lg text-white"
           style={{ textWrap: "balance" } as any}
           data-tina-field={testimonials ? tinaField(testimonials, "sectionTitle") : undefined}
         >
@@ -234,7 +237,7 @@ export default function EmpresasRedReact({
                   ))
                 : [1, 2, 3].map((_, i) => (
                     <div key={i} className={slideCls}>
-                      <div className="flex h-[360px] items-center justify-center rounded-2xl border border-brand-purple/20 bg-white/40 text-sm text-brand-purple/40">
+                      <div className="flex h-[360px] items-center justify-center rounded-2xl border border-white/15 bg-white/5 text-sm text-white/40">
                         Testimonio — próximamente
                       </div>
                     </div>
@@ -264,7 +267,7 @@ export default function EmpresasRedReact({
               <div
                 key={i}
                 className={[
-                  "flex justify-center border-brand-purple/20",
+                  "flex justify-center border-white/20",
                   // Separadores finos entre columnas: 2 columnas en mobile,
                   // 4 en xl → la primera de cada fila nunca lleva línea.
                   i % 2 !== 0 ? "border-l" : "",

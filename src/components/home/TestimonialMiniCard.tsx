@@ -31,8 +31,17 @@ export default function TestimonialMiniCard({
 }: TestimonialMiniCardProps) {
   const logoSrc = mediaUrl(logo);
 
+  // Glass mínimo: la tarjeta sigue siendo clara y el texto oscuro (los logos de
+  // cliente son a color y necesitan fondo claro), pero deja pasar algo del
+  // morado de la sección y difumina lo que hay detrás.
   return (
-    <article className="flex h-full min-h-[360px] flex-col rounded-2xl bg-white p-6 text-greyscale-darkest shadow-[0_18px_44px_-18px_rgba(59,14,48,0.4)] lg:min-h-[420px] lg:p-8">
+    <article
+      className="flex h-full min-h-[360px] flex-col rounded-2xl p-6 text-greyscale-darkest shadow-[0_18px_44px_-18px_rgba(59,14,48,0.55)] backdrop-blur-md lg:min-h-[420px] lg:p-8"
+      style={{
+        background: "rgba(255,255,255,0.92)",
+        border: "1px solid rgba(255,255,255,0.55)",
+      }}
+    >
       {/* Logo de la empresa. Fallback: nombre como texto. */}
       <div className="mb-6">
         {logoSrc ? (
