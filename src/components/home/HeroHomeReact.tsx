@@ -14,6 +14,9 @@ import HeroLogoIntro from "./HeroLogoIntro";
 // en `heroBackground: "morph"`, así que se carga en diferido: con cualquier otro
 // modo (hoy el home va en "cinematic") Three no llega ni a descargarse.
 const MorphSolutions = lazy(() => import("../effects/MorphSolutions"));
+// DotWaveField (SPEC 100) también arrastra Three.js: mismo trato que el morph,
+// solo se descarga cuando `heroBackground` es "dotfield".
+const DotWaveField = lazy(() => import("../effects/DotWaveField"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 
 // Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
@@ -245,6 +248,12 @@ export default function HeroHomeReact({
   )
     .map((t) => (t?.text || "").trim())
     .filter(Boolean);
+  // Intensidad del modo dotfield (SPEC 100): preset del CMS, default "medio".
+  const dotfieldIntensity = ((): "sutil" | "medio" | "intenso" => {
+    const v = (hero as any).dotfield?.intensity;
+    return v === "sutil" || v === "intenso" ? v : "medio";
+  })();
+
   // Logo FIBERLUX (BASE_URL-aware) para el lockup del hero y el chip central.
   const logoAsset = `${import.meta.env.BASE_URL}images/logo/fiberlux.svg`.replace(
     /\/{2,}/g,
@@ -262,8 +271,12 @@ export default function HeroHomeReact({
   // Imagen estática a sangre del modo 3D en mobile (SPEC 44).
   const mobileCover = mediaUrl(hero.splinePosterUrl);
 
-  // Coreografía de entrada (modo cinematic): revela con stagger cada elemento.
-  const cine = mode === "cinematic";
+  // Chrome cinematográfico: layout a pantalla completa, intro del wordmark,
+  // velos de legibilidad y coreografía de entrada con stagger. Lo comparten el
+  // modo `cinematic` (planeta) y el `dotfield` (campo de puntos, SPEC 100),
+  // porque ambos son fondos full-bleed detrás del mismo contenido.
+  const cine = mode === "cinematic" || mode === "dotfield";
+  const dotfield = mode === "dotfield";
   const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
     cine
@@ -282,7 +295,7 @@ export default function HeroHomeReact({
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
-          : mode === "cinematic"
+          : cine
           ? // Mobile: hero a pantalla completa con el contenido centrado
             // verticalmente (ver el div de contenido). Desktop, hero alto.
             "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
@@ -434,32 +447,53 @@ export default function HeroHomeReact({
         </div>
       )}
 
-      {/* Intro del wordmark FLX → FIBERLUX al cargar (SPEC 97, desktop). */}
-      {mode === "cinematic" && <HeroLogoIntro />}
+      {/* Modo dotfield (SPEC 100): malla de puntos que reacciona al puntero y
+          emite ondas expansivas al hacer scroll. Transparente sobre el negro
+          base, z-0 detrás de las vignettes y del contenido. */}
+      {dotfield && (
+        <div className="absolute inset-0 z-0">
+          <Suspense fallback={null}>
+            <DotWaveField
+              className="h-full w-full"
+              variant="hero"
+              intensity={dotfieldIntensity}
+              signalReady
+            />
+          </Suspense>
+        </div>
+      )}
 
-      {/* Modo cinematic — SOLO mobile: velo oscuro sobre el fondo para que el
-          efecto no compita con el título/descripción (en desktop hay espacio a
-          los costados, así que no se aplica). */}
-      {mode === "cinematic" && (
+      {/* Intro del wordmark FLX → FIBERLUX al cargar (SPEC 97, desktop). */}
+      {cine && <HeroLogoIntro />}
+
+      {/* Modos cinematic/dotfield — SOLO mobile: velo oscuro sobre el fondo para
+          que el efecto no compita con el título/descripción (en desktop hay
+          espacio a los costados, así que no se aplica). */}
+      {cine && (
         <div
           aria-hidden="true"
           className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background:
-              "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.6) 48%, rgba(10,10,10,0.3) 100%)",
+            background: dotfield
+              ? "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.7) 48%, rgba(10,10,10,0.35) 100%)"
+              : "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.6) 48%, rgba(10,10,10,0.3) 100%)",
           }}
         />
       )}
 
-      {/* Modo cinematic — desktop: leve oscurecimiento detrás del título/desc/botones
-          (que quedan sobre el centro brillante del globo) para que se lean mejor. */}
-      {mode === "cinematic" && (
+      {/* Modos cinematic/dotfield — desktop: leve oscurecimiento detrás del
+          título/desc/botones para que se lean mejor. El planeta tiene un centro
+          muy brillante y pide un velo fuerte; el campo de puntos es tenue y
+          parejo, así que ahí basta un velo suave (si no, se borra la malla
+          justo donde queremos que se vea). */}
+      {cine && (
         <div
           aria-hidden="true"
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background:
-              "radial-gradient(58% 48% at 50% 56%, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.78) 46%, rgba(10,10,10,0.42) 72%, rgba(10,10,10,0) 92%)",
+            background: dotfield
+              ? "radial-gradient(52% 42% at 50% 56%, rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.48) 48%, rgba(10,10,10,0.24) 74%, rgba(10,10,10,0) 92%)"
+              : "radial-gradient(58% 48% at 50% 56%, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.78) 46%, rgba(10,10,10,0.42) 72%, rgba(10,10,10,0) 92%)",
           }}
         />
       )}
@@ -556,7 +590,7 @@ export default function HeroHomeReact({
       {/* ══════════ Contenido (z-10) — centrado (SPEC 88) ══════════ */}
       <div
         className={`pointer-events-none relative z-10 site-container pt-28 pb-16 lg:pb-32 ${
-          mode === "cinematic" ? "lg:pt-[13rem]" : "lg:pt-40"
+          cine ? "lg:pt-[13rem]" : "lg:pt-40"
         }`}
       >
         <div
@@ -564,7 +598,7 @@ export default function HeroHomeReact({
           className={
             mode === "morph"
               ? "flex flex-col items-center text-center lg:items-start lg:text-left justify-start md:justify-center max-w-[760px] lg:max-w-[540px] mx-auto lg:mx-0 min-h-0 lg:min-h-[640px]"
-              : mode === "cinematic"
+              : cine
               ? // Mobile: llena el hero (100svh − padding) y centra el contenido
                 // verticalmente. Desktop: se baja un poco (pt mayor + min-h menor)
                 // para despegar el titular del arco de luz del planeta.
@@ -581,8 +615,9 @@ export default function HeroHomeReact({
               : undefined
           }
         >
-          {/* Modo cinematic: titular con glow morado + barrido de luz (SPEC 97). */}
-          {mode === "cinematic" && (
+          {/* Modos cinematic/dotfield: titular con glow morado + barrido de luz
+              (SPEC 97). */}
+          {cine && (
             <style>{`
               /* Frente de revelado por palabra (barrido izq→der, línea por línea). */
               @property --cine-rev {
@@ -626,11 +661,11 @@ export default function HeroHomeReact({
           <h1
             ref={titleRef}
             className={`leading-[1.05] tracking-[-0.02em] text-[clamp(2.125rem,9.5vw,2.75rem)] md:text-subtitle-xl ${
-              mode === "cinematic" ? "cine-headline text-white" : "text-white"
+              cine ? "cine-headline text-white" : "text-white"
             }`}
             data-tina-field={tinaField(hero, "title")}
           >
-            {mode === "cinematic"
+            {cine
               ? titleText.split(" ").flatMap((w, i, arr) =>
                   i < arr.length - 1
                     ? [
