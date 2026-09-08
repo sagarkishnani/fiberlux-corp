@@ -41,7 +41,6 @@ fragment HomeParts on Home {
     dotfield {
       __typename
       intensity
-      sections
     }
   }
   services {

@@ -174,7 +174,6 @@ type HomeHeroCinematic {
 
 type HomeHeroDotfield {
   intensity: String
-  sections: [String]
 }
 
 type HomeHero {
@@ -340,7 +339,6 @@ input HomeHeroCinematicFilter {
 
 input HomeHeroDotfieldFilter {
   intensity: StringFilter
-  sections: StringFilter
 }
 
 input HomeHeroFilter {
@@ -2930,7 +2928,6 @@ input HomeHeroCinematicMutation {
 
 input HomeHeroDotfieldMutation {
   intensity: String
-  sections: [String]
 }
 
 input HomeHeroMutation {
