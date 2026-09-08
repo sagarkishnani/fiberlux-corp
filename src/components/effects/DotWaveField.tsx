@@ -322,6 +322,21 @@ export default function DotWaveField({
       }
     }
 
+    // ── Ondas automáticas ────────────────────────────────────────────────
+    // Vida propia sin interacción, como en el HTML de referencia. En la
+    // variante `section` se apagan: ahí el fondo es telón, y el scroll ya
+    // aporta movimiento suficiente sin robar atención al contenido.
+    const [autoMin, autoMax] = PARAMS.autoRippleMs;
+    let autoTimer = isSection ? Infinity : autoMin + Math.random() * (autoMax - autoMin);
+
+    function stepAutoRipple(dtMs: number) {
+      if (isSection) return;
+      autoTimer -= dtMs;
+      if (autoTimer > 0) return;
+      autoTimer = autoMin + Math.random() * (autoMax - autoMin);
+      addRipple(Math.random() * cw, Math.random() * ch, 0.7);
+    }
+
     // ── Loop ─────────────────────────────────────────────────────────────
     let raf = 0;
     let visible = true;
@@ -343,6 +358,7 @@ export default function DotWaveField({
       const dtFrames = lastMs ? Math.min((ms - lastMs) / 16.667, 3) : 1;
       lastMs = ms;
 
+      stepAutoRipple(dtFrames * 16.667);
       stepRipples(dtFrames);
       renderer.render(scene, camera);
       signalOnce();
