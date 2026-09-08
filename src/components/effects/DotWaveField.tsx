@@ -458,7 +458,9 @@ export default function DotWaveField({
 
     function frame(ms: number) {
       if (ms - lastDrawMs < minFrameMs) {
-        raf = requestAnimationFrame(frame);
+        // Frame saltado por el tope de fps: se reprograma solo si el loop sigue
+        // vivo (si la sección salió del viewport, aquí se corta).
+        raf = visible ? requestAnimationFrame(frame) : 0;
         return;
       }
       lastDrawMs = ms;
