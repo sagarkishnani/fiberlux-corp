@@ -38,6 +38,11 @@ fragment HomeParts on Home {
         text
       }
     }
+    dotfield {
+      __typename
+      intensity
+      sections
+    }
   }
   services {
     __typename

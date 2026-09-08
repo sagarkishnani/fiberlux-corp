@@ -290,7 +290,8 @@ export default defineConfig({
                   { value: "waveform", label: "Waveform (shader animado)" },
                   { value: "nodefield", label: "Node field (partículas plexus)" },
                   { value: "morph", label: "Morph (globo de partículas → soluciones)" },
-                  { value: "cinematic", label: "Cinematic (god-rays + tokens flotantes)" },
+                  { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
+                  { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
@@ -404,11 +405,11 @@ export default defineConfig({
                   },
                 ],
               },
-              // ── Modo Cinematic (SPEC 97): god-rays + tokens flotantes ──
+              // ── Modo Planeta (SPEC 97): globo punteado + tokens flotantes ──
               {
                 type: "object",
                 name: "cinematic",
-                label: "Hero — modo Cinematic (god-rays + tokens)",
+                label: "Hero — modo Planeta de fibra (tokens flotantes)",
                 description:
                   "Solo aplica si el 'Fondo del hero' es 'Cinematic'. Tokens de conectividad que flotan en el fondo (ej. 1 Gbps, 99.9%, 12 ms). Si lo dejas vacío se usa un set por defecto.",
                 fields: [
@@ -429,6 +430,40 @@ export default defineConfig({
                         label: "Texto del token (ej. Gbps, 99.9%, 12 ms)",
                       },
                     ],
+                  },
+                ],
+              },
+              // ── Modo Campo de puntos (SPEC 100) ──
+              {
+                type: "object",
+                name: "dotfield",
+                label: "Hero — modo Campo de puntos",
+                description:
+                  "Solo aplica si el 'Fondo del hero' es 'Campo de puntos'. Malla de puntos que reacciona al mouse y lanza ondas al hacer scroll.",
+                fields: [
+                  {
+                    type: "string",
+                    name: "intensity",
+                    label: "Intensidad del efecto",
+                    options: [
+                      { value: "sutil", label: "Sutil" },
+                      { value: "medio", label: "Medio" },
+                      { value: "intenso", label: "Intenso" },
+                    ],
+                    description:
+                      "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio.",
+                  },
+                  {
+                    type: "string",
+                    name: "sections",
+                    label: "Repetir el fondo en estas secciones",
+                    list: true,
+                    options: [
+                      { value: "soluciones", label: "Soluciones (bloque apilado)" },
+                      { value: "app", label: "Banner Fiberlux App" },
+                    ],
+                    description:
+                      "Secciones del home donde el campo de puntos vuelve a aparecer, más tenue.",
                   },
                 ],
               },

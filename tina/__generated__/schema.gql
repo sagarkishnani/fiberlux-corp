@@ -172,6 +172,11 @@ type HomeHeroCinematic {
   floatingTokens: [HomeHeroCinematicFloatingTokens]
 }
 
+type HomeHeroDotfield {
+  intensity: String
+  sections: [String]
+}
+
 type HomeHero {
   title: String!
   title_en: String
@@ -186,6 +191,7 @@ type HomeHero {
   buttons: [HomeHeroButtons]
   morph: HomeHeroMorph
   cinematic: HomeHeroCinematic
+  dotfield: HomeHeroDotfield
 }
 
 type HomeServicesItemsBullets {
@@ -332,6 +338,11 @@ input HomeHeroCinematicFilter {
   floatingTokens: HomeHeroCinematicFloatingTokensFilter
 }
 
+input HomeHeroDotfieldFilter {
+  intensity: StringFilter
+  sections: StringFilter
+}
+
 input HomeHeroFilter {
   title: StringFilter
   title_en: StringFilter
@@ -346,6 +357,7 @@ input HomeHeroFilter {
   buttons: HomeHeroButtonsFilter
   morph: HomeHeroMorphFilter
   cinematic: HomeHeroCinematicFilter
+  dotfield: HomeHeroDotfieldFilter
 }
 
 input HomeServicesItemsBulletsFilter {
@@ -2916,6 +2928,11 @@ input HomeHeroCinematicMutation {
   floatingTokens: [HomeHeroCinematicFloatingTokensMutation]
 }
 
+input HomeHeroDotfieldMutation {
+  intensity: String
+  sections: [String]
+}
+
 input HomeHeroMutation {
   title: String
   title_en: String
@@ -2930,6 +2947,7 @@ input HomeHeroMutation {
   buttons: [HomeHeroButtonsMutation]
   morph: HomeHeroMorphMutation
   cinematic: HomeHeroCinematicMutation
+  dotfield: HomeHeroDotfieldMutation
 }
 
 input HomeServicesItemsBulletsMutation {
