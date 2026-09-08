@@ -30,8 +30,8 @@ const PARAMS = {
   dprCapMobile: 1.5,
 
   radius: 1.0, // radio base de la nube (unidades de mundo)
-  shell: 0.42, // grosor de la corteza: 0 = cáscara fina, 1 = bola maciza
-  cameraZ: 2.25,
+  shell: 0.26, // grosor de la corteza: 0 = cáscara fina, 1 = bola maciza
+  cameraZ: 2.85,
   fov: 45,
 
   sizeMin: 2.0, // tamaño de punto en px (a la distancia de cámara base)
@@ -43,6 +43,20 @@ const PARAMS = {
   breathAmp: 0.035, // amplitud del "respiro" de la nube
   breathSpeed: 0.35,
   twinkleSpeed: 1.4,
+
+  // Pulsos: el "ripple" del HTML de referencia trasladado a la esfera. El
+  // frente viaja del centro hacia fuera y, al cruzar cada partícula, la empuja
+  // y la enciende. Los tiempos son los mismos del ref.
+  pulse: {
+    maxActive: 4, // pulsos simultáneos (tamaño del array de uniforms)
+    band: 0.16, // grosor del frente, en unidades de radio
+    speed: 0.85, // radios por segundo
+    maxRadius: 2.1, // dónde muere el pulso
+    push: 0.26, // cuánto empuja hacia fuera
+    clickStrength: 1.4, // click (igual que el ref)
+    autoStrength: 0.7, // pulso automático
+  },
+  autoPulseMs: [3200, 5400] as [number, number],
 
   spreadMax: 3.6, // cuánto se expande la nube al final del scroll
   spreadFadeAt: 0.78, // desde qué punto del scroll empieza a desvanecerse
@@ -85,6 +99,9 @@ uniform float uOpacity;
 uniform float uPixelRatio;
 uniform float uSizeScale;
 uniform float uBreath;
+uniform float uPulseBand;
+// (radio del frente, fuerza) por pulso activo; fuerza 0 = ranura libre.
+uniform vec2  uPulses[${PARAMS.pulse.maxActive}];
 
 varying float vAlpha;
 varying vec3  vColor;
@@ -95,6 +112,21 @@ void main() {
   float r = aRadius * uBreath * (1.0 + uSpread * aSpread * ${PARAMS.spreadMax.toFixed(
     2
   )});
+
+  // Pulsos: el frente viaja del centro hacia fuera y, al cruzar la capa donde
+  // está esta partícula, la empuja y la enciende. Es el anillo del HTML de
+  // referencia, pero en el radio de la esfera en vez de en el plano.
+  float boost = 0.0;
+  for (int i = 0; i < ${PARAMS.pulse.maxActive}; i++) {
+    vec2 pulse = uPulses[i];
+    if (pulse.y > 0.0) {
+      float diff = abs(r - pulse.x);
+      if (diff < uPulseBand) {
+        boost += (1.0 - diff / uPulseBand) * pulse.y;
+      }
+    }
+  }
+  r += boost * ${PARAMS.pulse.push.toFixed(2)};
 
   // Turbulencia lenta: la nube nunca queda del todo quieta, y al dispersarse
   // los puntos derivan más (se siente material, no una escala uniforme).
@@ -116,10 +148,10 @@ void main() {
     2
   )}, 1.0, uSpread) * 0.55;
 
-  vAlpha = uOpacity * twinkle * fade;
+  vAlpha = uOpacity * twinkle * fade * (1.0 + boost * 2.4);
   vColor = aColor;
 
-  gl_PointSize = aSize * uSizeScale * uPixelRatio * (2.6 / -mv.z);
+  gl_PointSize = aSize * uSizeScale * uPixelRatio * (1.0 + boost * 1.1) * (2.6 / -mv.z);
 }
 `;
 
@@ -266,6 +298,13 @@ export default function ParticleNebula({
       uPixelRatio: { value: dpr },
       uSizeScale: { value: preset.sizeMul },
       uBreath: { value: 1 },
+      uPulseBand: { value: PARAMS.pulse.band },
+      uPulses: {
+        value: Array.from(
+          { length: PARAMS.pulse.maxActive },
+          () => new THREE.Vector2()
+        ),
+      },
     };
 
     const material = new THREE.ShaderMaterial({
@@ -327,6 +366,64 @@ export default function ParticleNebula({
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    // ── Pulsos ───────────────────────────────────────────────────────────
+    const pulses: { radius: number; strength: number }[] = [];
+
+    function addPulse(strength: number) {
+      if (reduce) return;
+      if (pulses.length >= PARAMS.pulse.maxActive) pulses.shift();
+      pulses.push({ radius: 0, strength });
+    }
+
+    function stepPulses(dt: number) {
+      for (let i = pulses.length - 1; i >= 0; i--) {
+        pulses[i].radius += PARAMS.pulse.speed * dt;
+        if (pulses[i].radius >= PARAMS.pulse.maxRadius) pulses.splice(i, 1);
+      }
+      const slots = uniforms.uPulses.value;
+      for (let i = 0; i < PARAMS.pulse.maxActive; i++) {
+        const p = pulses[i];
+        // El pulso se apaga conforme se aleja, para que no muera de golpe.
+        if (p)
+          slots[i].set(
+            p.radius,
+            p.strength * Math.max(0, 1 - p.radius / PARAMS.pulse.maxRadius)
+          );
+        else slots[i].set(0, 0);
+      }
+    }
+
+    // Click en el hero = pulso fuerte. Se escucha en window y se filtra por
+    // el rect del contenedor: el canvas no recibe eventos (pointer-events
+    // none) y encima hay contenido. Se ignoran los clicks sobre elementos
+    // interactivos para no competir con los botones del hero.
+    const onClick = (e: MouseEvent) => {
+      if (reduce || !visible) return;
+      const el = e.target as Element | null;
+      if (el?.closest?.("a, button, input, select, textarea, label")) return;
+      const rect = mount!.getBoundingClientRect();
+      if (
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom
+      )
+        return;
+      addPulse(PARAMS.pulse.clickStrength);
+    };
+    window.addEventListener("click", onClick, { passive: true });
+
+    // Pulsos automáticos: la nube late sola aunque nadie toque nada.
+    const [autoMin, autoMax] = PARAMS.autoPulseMs;
+    let autoTimer = autoMin + Math.random() * (autoMax - autoMin);
+
+    function stepAutoPulse(dtMs: number) {
+      autoTimer -= dtMs;
+      if (autoTimer > 0) return;
+      autoTimer = autoMin + Math.random() * (autoMax - autoMin);
+      addPulse(PARAMS.pulse.autoStrength);
+    }
+
     // ── Puntero: la nube se inclina hacia el cursor ──────────────────────
     const tilt = { x: 0, y: 0 };
     const tiltTarget = { x: 0, y: 0 };
@@ -376,6 +473,9 @@ export default function ParticleNebula({
         Math.sin(uniforms.uTime.value * PARAMS.breathSpeed) * PARAMS.breathAmp;
 
       // Suavizado: el scroll llega a saltos y la nube no debe dar tirones.
+      stepAutoPulse(dt * 1000);
+      stepPulses(dt);
+
       uniforms.uSpread.value +=
         (spreadTarget - uniforms.uSpread.value) * Math.min(1, dt * 6);
 
@@ -415,6 +515,7 @@ export default function ParticleNebula({
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("click", onClick);
       io.disconnect();
       geometry.dispose();
       material.dispose();
