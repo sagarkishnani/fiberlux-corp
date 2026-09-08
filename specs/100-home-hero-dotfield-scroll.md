@@ -1,9 +1,11 @@
-# SPEC 100 — Hero Home: campo de puntos reactivo (Three.js) + reaparición por scroll
+# SPEC 100 — Hero Home: nube de partículas que se dispersa con el scroll (Three.js)
 
 > **Estado:** Aprobado
 > **Depende de:** SPEC 88 (patrón de modos `heroBackground`), SPEC 97 (modo `cinematic` = planeta COBE, el fondo actual que se conserva), SPEC 96 (island de efecto WebGL + wiring Tina + carga diferida de `three`), SPEC 39 (wordmark FIBERLUX / `HeroLogoIntro`), SPEC 80 (i18n `_en`/`tField`), SPEC 44 (poster mobile 3D)
 > **Fecha:** 2026-09-08
-> **Objetivo:** Añadir un nuevo modo de fondo del hero `dotfield` — una malla de puntos en Three.js que reacciona al puntero y emite ondas expansivas ligadas al scroll, y que reaparece como telón de fondo en tres secciones posteriores del home (SolucionesStack, EmpresasRed, BannerApp).
+> **Objetivo:** Añadir un nuevo modo de fondo del hero `dotfield` — una nube esférica de partículas en Three.js, sobre rejilla y halo morado, que se inclina hacia el puntero y se dispersa conforme se hace scroll.
+>
+> **Revisión (2026-09-08, tras QA con el cliente):** el alcance cambió durante la implementación. (1) El efecto queda **solo en el hero**: se retiró la reaparición en secciones posteriores. (2) La **malla plana de puntos con ondas expansivas** se sustituyó por una **nube esférica que se dispersa con el scroll**, siguiendo las referencias de guardz.com que trajo el cliente — la malla se veía "simple", no impactante. Las secciones marcadas ~~así~~ quedaron sin efecto.
 
 ---
 
@@ -11,180 +13,136 @@
 
 **Dentro:**
 
-- **Nuevo modo `heroBackground: "dotfield"`** en el enum del CMS, hermano de `3d`/`video`/`imagen`/`waveform`/`nodefield`/`morph`/`cinematic`. **Aditivo**: ningún modo existente se toca. Queda **activo en el home** tras el QA.
-- **El planeta actual sigue disponible.** El modo `cinematic` (`CinematicBackground.tsx`, planeta punteado COBE) se conserva íntegro y seleccionable desde Tina; se le **corrige la etiqueta** en `tina/config.ts`, que hoy dice "god-rays + tokens flotantes" (texto heredado de SPEC 97, antes de que el componente pasara a ser el planeta). Pasa a leer: *"Planeta de fibra (globo punteado)"*.
-- **Nuevo componente `src/components/effects/DotWaveField.tsx`** (React island, Three.js): un `<canvas>` WebGL con una **malla regular de puntos** (`THREE.Points` + `ShaderMaterial`) sobre transparente, en paleta de marca, con:
-  1. **Halo radial de fondo** morado (gradiente en el propio shader de fondo o capa CSS detrás), equivalente al `createRadialGradient` del HTML de referencia pero en morado sobre negro `#0A0A0A`.
-  2. **Reacción al puntero** (desktop): los puntos dentro de un radio crecen y ganan opacidad.
-  3. **Ondas expansivas (ripples)**: anillos que se propagan desde un origen agrandando y encendiendo los puntos que cruzan la banda del anillo, desvaneciéndose con la distancia.
-  4. **Ondas automáticas** cada ~3–5 s, para que el fondo tenga vida sin interacción.
-- **Ondas ligadas al scroll (el efecto "Guardz")**: el scroll **emite ondas expansivas**. Al acumular un delta de scroll por encima de un umbral se dispara un ripple cuyo origen depende de la dirección (borde superior al bajar, inferior al subir) y cuya fuerza escala con la velocidad del scroll. Es el mecanismo elegido para "las partículas se abren al hacer scroll".
-- **Reaparición en 3 secciones posteriores** del home: `SolucionesStack`, `EmpresasRed` y `BannerApp`. Se implementa con un **wrapper nuevo `src/components/shared/DotFieldBackdrop.astro`** que envuelve a la sección y monta el island detrás (`client:visible`), en **variante `section`** (menos densidad, menor opacidad, sin halo protagonista). El wrapper se aplica **solo en `src/pages/index.astro`** (y su espejo `/en`), no dentro de los componentes de sección — `SolucionesStack` también se usa en `/soluciones` y `/soporte-tecnico`, y ahí no debe cambiar nada.
-- **Sin click.** El click **no** dispara ondas: el hero tiene botones y las secciones tienen cards/links; el ripple por click competiría con la interacción real. (Sí quedan hover + automáticas + scroll.)
-- **Editable en Tina**: nuevo subgrupo `hero.dotfield` con `intensity` (enum `sutil`/`medio`/`intenso`, mapeado a presets horneados) y `sections` (lista de checkboxes para encender/apagar el fondo en cada una de las tres secciones). El resto de parámetros (colores, spacing, radios, velocidades) van horneados en `PARAMS`.
-- **El wordmark FIBERLUX (`HeroLogoIntro`, SPEC 39/97) se mantiene** igual en el modo nuevo: la condición de montaje pasa de `mode === "cinematic"` a `mode === "cinematic" || mode === "dotfield"`. También se mantienen los velos de legibilidad (mobile y desktop) adaptados a este modo.
-- **Mobile — versión ligera**: corre el efecto (no el poster estático de SPEC 44) con `spacing` mayor (menos puntos), DPR cap 1.5 y **sin hover**; quedan las ondas automáticas y las de scroll.
-- **Accesibilidad**: `prefers-reduced-motion: reduce` → frame estático (malla + halo pintados una vez, sin rAF, sin ondas ni hover). Canvas `aria-hidden`. Señal `fbx:hero-scene-loaded` para el `SitePreloader` como los demás modos.
-- **Rendimiento**: `three` se importa **en diferido** (`lazy`, igual que `MorphSolutions`) para que los otros modos no lo descarguen; el rAF se pausa fuera de viewport con `IntersectionObserver` en las cuatro instancias; `renderer.dispose()` y limpieza de listeners al desmontar.
+- **Nuevo modo `heroBackground: "dotfield"`** en el enum del CMS, hermano de `3d`/`video`/`imagen`/`waveform`/`nodefield`/`morph`/`cinematic`. **Aditivo**: ningún modo existente se toca. Queda **activo en el home**.
+- **El planeta actual sigue disponible.** El modo `cinematic` (`CinematicBackground.tsx`, planeta punteado COBE) se conserva íntegro y seleccionable desde Tina; se le **corrige la etiqueta**, que decía "god-rays + tokens flotantes" (texto heredado de SPEC 97, antes de que el componente pasara a ser el planeta). Pasa a leer *"Planeta de fibra (globo punteado)"*.
+- **Nuevo componente `src/components/effects/ParticleNebula.tsx`** (React island, Three.js). Tres capas, de atrás hacia delante:
+  1. **Halo radial morado** sobre el negro base y **rejilla tenue** enmascarada hacia los bordes — ambos en CSS, porque son estáticos.
+  2. **Nube esférica de partículas** (`THREE.Points` + `ShaderMaterial` additivo): miles de puntos repartidos sobre una **corteza** esférica (más densos hacia el borde, para que se lea el contorno de la esfera y no una bola maciza), con giro autónomo lento, "respiro" y centelleo por partícula.
+  3. **Paleta escalonada**: mayoría de partículas tenues en morado, ~17% encendidas en magenta claro y más gordas (el bokeh del ref), y un ~3% de acento frío cian — el guiño a la referencia; `accentRatio: 0` lo deja 100% en paleta Fiberlux.
+- **Dispersión ligada al scroll** (el efecto que pidió el cliente): el progreso se mide contra el alto del propio hero y expande el radio de cada partícula con un **multiplicador propio por partícula** — sin eso la nube se escala como un bloque y parece un zoom, no una dispersión. Al final del recorrido queda un campo suelto de puntos sobre la rejilla.
+- **Inclinación por puntero** (desktop): la nube se inclina suavemente hacia el cursor (lerp), dando profundidad. Desactivada en touch y en `reduced-motion`.
+- **Editable en Tina**: subgrupo `hero.dotfield` con `intensity` (`sutil`/`medio`/`intenso`, mapeado a presets de conteo, opacidad y tamaño). El resto (paleta, radio, corteza, velocidades, curva de dispersión) va horneado en `PARAMS`.
+- **El wordmark FIBERLUX (`HeroLogoIntro`) y toda la coreografía de entrada se mantienen**: el modo comparte el "chrome cinematográfico" con `cinematic` a través de un `CINE_MODES` en `HeroHomeReact` y de la clase `.cine-intro-page` de `BaseLayout`.
+- **Velo de legibilidad propio**: en este modo el velo radial del centro baja mucho respecto al de `cinematic` (allí tapa el brillo del planeta; aquí borraría justo la nube, que **es** el fondo). Queda un apoyo mínimo bajo el bloque de texto, más un refuerzo en mobile.
+- **Mobile — versión ligera**: menos partículas, DPR cap 1.5, sin inclinación por puntero, tope de ~30 fps y cámara más lejos (en retrato la nube debe caber entera detrás del texto). Reemplaza el poster estático de SPEC 44 solo en este modo.
+- **Accesibilidad**: `prefers-reduced-motion: reduce` → frame estático (nube quieta, sin dispersión ni puntero, sin rAF). Canvas `aria-hidden`. Señal `fbx:hero-scene-loaded` para el `SitePreloader`.
+- **Rendimiento**: `three` se importa en diferido (`lazy` + `Suspense`, igual que `MorphSolutions`); el rAF se pausa fuera de viewport (`IntersectionObserver`); `renderer.dispose()`, `geometry.dispose()`, `material.dispose()` y baja de listeners al desmontar.
 
-**Fuera de alcance (otros specs):**
+**Fuera de alcance:**
 
-- Un **único canvas fijo** detrás de todo el home revelado por sección (opción "Guardz literal"): se descartó por riesgo de rendimiento y por tocar el layout de todas las secciones.
-- Aplicar `dotfield` a heros de **otras páginas** (Nosotros, Soluciones, Casos, Soporte) o a secciones distintas de las tres elegidas.
-- Retirar, reescribir o degradar los modos existentes (`cinematic`, `morph`, `waveform`, `nodefield`, `3d`, `video`, `imagen`).
-- Ondas por **click** y ondas ligadas al puntero en **touch**.
-- Exponer en el CMS colores, spacing, radios, velocidades o número de ondas (horneados en `PARAMS`; solo `intensity` y `sections` son editables).
+- ~~Reaparición del efecto en secciones posteriores del home~~ — **retirado en la revisión**. Se implementó y se revirtió: las secciones pintan su propio fondo opaco (y `SolucionesStack` ya tiene su aurora WebGL propia), así que exigía tocarlas con una prop `transparentBg`. El cliente acotó el efecto al hero.
+- ~~Malla regular de puntos con ondas expansivas por hover/click/scroll~~ — **sustituida** por la nube esférica. La malla se leía "simple"; la referencia de guardz.com es una nube volumétrica.
+- Aplicar `dotfield` a heros de **otras páginas** o al resto de la web.
+- Retirar o reescribir los modos existentes (`cinematic`, `morph`, `waveform`, `nodefield`, `3d`, `video`, `imagen`).
+- Exponer en el CMS paleta, radio, corteza, velocidades o curva de dispersión (horneados en `PARAMS`; solo `intensity` es editable).
 - Traducción `_en`: el modo no introduce copy visible.
-- Réplica 1:1 del HTML de referencia (es canvas 2D y azul): se hace la misma mecánica en Three.js y en morado de marca.
-- Cambios de contenido, orden o diseño de `SolucionesStack` / `EmpresasRed` / `BannerApp`: solo se les pone un telón de fondo.
+- Réplica 1:1 de guardz.com: se hace interpretación de marca en morado.
 
 ---
 
 ## Sección 3 — Modelo de datos
 
-**Contenido nuevo en Tina** (colección `home`, dentro del grupo `hero`, en `tina/config.ts`):
+**Contenido nuevo en Tina** (colección `home`, grupo `hero`, en `tina/config.ts`):
 
 ```js
-// home.hero → añadir "dotfield" al enum de heroBackground (options existentes intactas)
-// y corregir la etiqueta de "cinematic", que hoy describe el efecto anterior.
-options: [
-  { value: "3d",        label: "Escena 3D (Spline)" },
-  { value: "video",     label: "Video de fondo" },
-  { value: "imagen",    label: "Imagen de fondo" },
-  { value: "waveform",  label: "Waveform (shader animado)" },
-  { value: "nodefield", label: "Node field (partículas plexus)" },
-  { value: "morph",     label: "Morph (globo de partículas → soluciones)" },
-  { value: "cinematic", label: "Planeta de fibra (globo punteado)" },   // ← etiqueta corregida
-  { value: "dotfield",  label: "Campo de puntos (ondas por scroll)" },  // ← nuevo
-]
+// heroBackground → nuevo valor + etiqueta corregida de "cinematic"
+{ value: "cinematic", label: "Planeta de fibra (globo punteado)" },   // etiqueta corregida
+{ value: "dotfield",  label: "Campo de puntos (ondas por scroll)" },  // nuevo
 
-// home.hero → nuevo subgrupo para el modo dotfield
-{
-  type: "object", name: "dotfield", label: "Hero — modo Campo de puntos",
+// home.hero → subgrupo del modo
+{ type: "object", name: "dotfield", label: "Hero — modo Campo de puntos",
   fields: [
     { type: "string", name: "intensity", label: "Intensidad del efecto",
-      options: ["sutil", "medio", "intenso"],
-      description: "Controla densidad de puntos, brillo y fuerza de las ondas. Default: medio." },
-    { type: "string", name: "sections", label: "Repetir el fondo en estas secciones",
-      list: true,
-      options: [
-        { value: "soluciones", label: "Soluciones (bloque apilado)" },
-        { value: "empresas",   label: "¿Por qué Fiberlux? + testimonios" },
-        { value: "app",        label: "Banner Fiberlux App" },
-      ],
-      description: "Secciones del home donde el campo de puntos vuelve a aparecer, más tenue." },
-  ]
-}
+      options: ["sutil", "medio", "intenso"] },
+  ] }
 ```
 
-- `intensity` y `sections` son los **únicos** campos editables; todo lo demás va horneado (mismo criterio que SPEC 96/97).
-- Sin siblings `_en`: el modo no introduce texto visible.
-- Contenido inicial en `src/content/home/index.json`: `heroBackground: "dotfield"` tras el QA, `dotfield.intensity: "medio"`, `dotfield.sections: ["soluciones", "empresas", "app"]`.
-- El grupo `hero.cinematic` (planeta) **se conserva tal cual**, para poder volver al fondo actual desde Tina sin perder su configuración.
+- `intensity` es el **único** campo editable. Sin siblings `_en` (no hay texto visible).
+- Contenido en `src/content/home/index.json`: `heroBackground: "dotfield"`, `dotfield.intensity: "medio"`.
+- El grupo `hero.cinematic` (planeta) se conserva tal cual, para poder volver al fondo anterior desde Tina sin perder su configuración.
 
-**Estado en runtime (no persistido, dentro de `DotWaveField.tsx`):**
+**Estado en runtime (`ParticleNebula.tsx`):**
 
 ```ts
 const PARAMS = {
-  spacing: 22,             // px entre puntos (desktop) — igual que el HTML de referencia
-  spacingMobile: 30,       // malla más rala en móvil
-  dprCap: 2,               // cap desktop; 1.5 en mobile
-  baseRadius: 1.15,        // radio base del punto en px
-  baseAlpha: 0.14,         // opacidad de reposo del punto
-  pointerRadius: 140,      // px de influencia del puntero (desktop)
-  pointerBoost: { scale: 1.8, alpha: 0.55 },
-  ripple: {
-    band: 34,              // grosor del anillo (px)
-    speed: 6.5,            // px/frame de expansión
-    maxRadiusFactor: 0.9,  // × max(W,H)
-    boost: { scale: 2.2, alpha: 0.85 },
-    maxActive: 6,          // ondas simultáneas (tamaño del array de uniforms)
-  },
-  autoRippleMs: [3200, 5400],   // rango aleatorio entre ondas automáticas
-  scroll: {
-    deltaThreshold: 180,   // px de scroll acumulado para emitir una onda
-    strengthRange: [0.6, 1.5], // fuerza según velocidad de scroll
-    cooldownMs: 260,       // mínimo entre ondas de scroll
-  },
-  color:       [0x96, 0x23, 0x7a],  // brand-purple #96237A
-  colorLight:  [0xd6, 0x4d, 0xb8],  // acento claro para los puntos encendidos
-  haloStops: ["#3B0E30", "#1A0716", "#0A0A0A"],  // halo radial morado → negro
+  count: 12000, countMobile: 4500,      // partículas
+  dprCap: 2, dprCapMobile: 1.5,
+  radius: 1.0, shell: 0.42,             // corteza: 0 = cáscara fina, 1 = bola maciza
+  cameraZ: 2.25, fov: 45,
+  sizeMin: 2.0, sizeMax: 6.8,           // px; las encendidas son más gordas (bokeh)
+  brightRatio: 0.17, accentRatio: 0.03, // encendidas / acento frío
+  rotationSpeed: 0.045, breathAmp: 0.035, breathSpeed: 0.35, twinkleSpeed: 1.4,
+  spreadMax: 3.6, spreadFadeAt: 0.78,   // curva de dispersión por scroll
+  pointerTilt: 0.16, pointerEase: 0.05,
+  colorDim: [0x7a,0x3f,0x92], colorMid: [0xce,0x66,0xb8],
+  colorHot: [0xff,0xa8,0xe8], colorAccent: [0x4b,0xd6,0xe2],
+  haloStops: ["#3B0E30", "#1A0716", "#0A0A0A"], gridSize: 88, gridAlpha: 0.05,
 } as const;
 
-// Presets aplicados sobre PARAMS según hero.dotfield.intensity.
 const INTENSITY = {
-  sutil:   { spacingMul: 1.25, alphaMul: 0.7, rippleMul: 0.7 },
-  medio:   { spacingMul: 1.0,  alphaMul: 1.0, rippleMul: 1.0 },
-  intenso: { spacingMul: 0.85, alphaMul: 1.3, rippleMul: 1.35 },
+  sutil:   { countMul: 0.6,  opacity: 0.85, sizeMul: 0.9  },
+  medio:   { countMul: 1.0,  opacity: 1.3,  sizeMul: 1.0  },
+  intenso: { countMul: 1.35, opacity: 1.7,  sizeMul: 1.15 },
 } as const;
-
-// Variante de montaje: el hero manda, las secciones son telón de fondo.
-type Variant = "hero" | "section";
-// "section" ⇒ halo apagado, alphaMul × 0.55, sin ondas automáticas (solo scroll),
-// spacing × 1.2. El contenido de la sección siempre gana en contraste.
-
-type Ripple = { x: number; y: number; radius: number; strength: number; maxRadius: number };
 ```
 
-- La malla se construye una vez por resize: `cols × rows` puntos en un `Float32Array` de posiciones, subido a un `BufferGeometry`. **No se recorre el array en JS por frame**: el crecimiento/brillo por puntero y por ondas se calcula **en el vertex/fragment shader** a partir de uniforms (`uPointer`, `uRipples[6]`), que es la diferencia de fondo con el HTML de referencia (canvas 2D, bucle JS sobre todos los puntos).
-- Las ondas activas se mantienen en un array JS de máximo `ripple.maxActive`; cada frame se avanza su `radius`, se descartan las que superan `maxRadius` y se vuelca el array a los uniforms. Coste por frame: O(6), no O(nº de puntos).
-- `Math.random()` está permitido (runtime navegador).
+**Atributos por partícula** (todos precomputados una vez al montar, subidos como `BufferAttribute`): `position` = dirección **normalizada** sobre la esfera, `aRadius` = radio propio dentro de la corteza, `aSpread` = multiplicador de dispersión propio, `aSize`, `aPhase` (centelleo), `aColor`.
+
+Separar dirección y radio es lo que permite expandir la nube **sin tocar el buffer**: el shader hace `position * (aRadius * uBreath * (1 + uSpread * aSpread * spreadMax))`. Por frame en JS solo se actualizan `uTime`, `uSpread`, `uBreath` y la rotación — el coste no crece con el número de partículas.
 
 ---
 
 ## Sección 4 — Plan de implementación
 
-1. **Scaffold del island.** Crear `src/components/effects/DotWaveField.tsx` con props `{ className?, variant?: "hero" | "section", intensity?: "sutil" | "medio" | "intenso", signalReady?, onUnsupported? }`. `<canvas aria-hidden>` + `useEffect` que crea `WebGLRenderer` / `Scene` / `OrthographicCamera` (proyección en píxeles, sin perspectiva). Si no hay WebGL, `onUnsupported?.()` y salir. **Estado:** canvas vacío montado, build verde.
-2. **Malla de puntos + halo.** Construir la grilla (`spacing` según variante/intensidad/dispositivo) en un `BufferGeometry`; `ShaderMaterial` con blending additivo que pinta cada punto como disco suave en `color`/`colorLight`. Detrás, el halo radial morado (`haloStops`). Rebuild de la grilla en `resize` con DPR capado. **Estado:** campo de puntos estático en morado sobre negro, idéntico en composición a la referencia.
-3. **Ondas expansivas (uniforms + shader).** Añadir `uRipples[maxActive]` (`vec4`: x, y, radius, strength) y la lógica de banda del anillo en el shader (`boost` de escala y alpha proporcional a `1 - |dist - radius| / band`, atenuado por `1 - radius / maxRadius`). Loop rAF que avanza y purga ondas. Función interna `addRipple(x, y, strength)`. **Estado:** una onda disparada a mano recorre el campo y lo enciende.
-4. **Ondas automáticas.** Temporizador que llama a `addRipple` en posición aleatoria cada `autoRippleMs` con fuerza baja. Desactivadas en `variant: "section"`. **Estado:** el hero tiene vida sin tocar nada.
-5. **Reacción al puntero (desktop).** Listener `pointermove` sobre el contenedor → uniform `uPointer` con lerp suave en el rAF; `pointerleave` lo manda fuera de pantalla. Desactivado en touch (`matchMedia('(hover: hover)')`). **Estado:** halo de puntos que crecen siguiendo el mouse.
-6. **Ondas ligadas al scroll.** Listener `scroll` pasivo: acumular delta; al superar `deltaThreshold` (respetando `cooldownMs`), `addRipple` con origen en el borde superior o inferior según dirección y `strength` interpolada por velocidad. Es el mecanismo de "apertura" al hacer scroll. **Estado:** bajar por el home lanza ondas que atraviesan el campo.
-7. **Wiring del modo en el hero.** En `HeroHomeReact.tsx`: import diferido (`lazy`) de `DotWaveField`; bloque `mode === "dotfield"` que lo monta en `z-0` con `variant="hero"`, `intensity` desde el CMS y `signalReady`, dentro de `<Suspense>` como `MorphSolutions`. Extender a `dotfield` las condiciones de `HeroLogoIntro` y de los dos velos de legibilidad (mobile/desktop), ajustando su opacidad para este fondo. **Estado:** hero completo con el campo de puntos y el wordmark intacto.
-8. **Wrapper de sección.** Crear `src/components/shared/DotFieldBackdrop.astro`: `<div class="relative">` con el island montado `client:visible` en `absolute inset-0 z-0 pointer-events-none` (variante `section`) y `<slot />` en `z-10`. En `src/pages/index.astro` envolver `SolucionesStack`, `EmpresasRed` y `BannerApp` según `hero.dotfield.sections` (leído de la query `home` que la página ya resuelve). Replicar en el wrapper `/en` si no reexporta la página ES tal cual. **Estado:** el campo reaparece, más tenue, en las tres secciones.
-9. **Tina + contenido.** Añadir `dotfield` al enum, corregir la etiqueta de `cinematic` y crear el subgrupo `hero.dotfield` en `tina/config.ts`; regenerar `tina/__generated__` y actualizar la query `home` si hace falta. Sembrar `src/content/home/index.json` (`heroBackground: "dotfield"`, `intensity: "medio"`, las tres secciones activas). **Estado:** editable en `/admin`, planeta seleccionable como alternativa.
-10. **Mobile ligero.** `matchMedia` / ancho para `spacingMobile`, DPR 1.5 y hover apagado; en el hero mobile se refuerza el velo radial para que el titular se lea. Reemplaza el poster de SPEC 44 solo en este modo. **Estado:** fluido en móvil de gama media.
-11. **reduced-motion + preloader + cleanup.** `prefers-reduced-motion: reduce` → un solo render (malla + halo, sin ondas ni puntero, sin rAF). Disparar `fbx:hero-scene-loaded` en el primer frame. `IntersectionObserver` pausa el rAF de cada instancia fuera de viewport. En el `return`: `cancelAnimationFrame`, `renderer.dispose()`, liberar geometría/material, quitar `pointermove` / `scroll` / `resize` / observer / matchMedia. **Estado:** accesible, sin fugas, sin gasto fuera de pantalla.
-12. **QA visual + build.** Comparar contra la referencia (imagen del cliente + `dot-wave-background.html`) en desktop y mobile; verificar legibilidad del H1/subtítulo/botones sobre el campo y sobre las tres secciones; medir que las cuatro instancias no degraden el scroll. Confirmar que `npm run build` (tinacms build → astro build) pasa sin errores nuevos. **Estado:** listo.
+1. **Scaffold del island** con renderer, cámara perspectiva, guard de WebGL, resize coalescido, `IntersectionObserver`, señal de preloader y cleanup completo.
+2. **Geometría de la nube**: direcciones uniformes sobre la esfera (método de la coordenada z), radios con densidad hacia el borde, y los atributos por partícula (`aSpread`, `aSize`, `aPhase`, `aColor`) con el reparto de paleta.
+3. **Shader**: posición radial + turbulencia lenta, centelleo, tamaño por profundidad (`gl_PointSize` ∝ 1/z), y fragment con núcleo nítido + halo suave (el bokeh sin textura).
+4. **Movimiento propio**: giro autónomo, "respiro" de la nube.
+5. **Dispersión por scroll**: progreso contra el alto del hero, suavizado hacia el uniform `uSpread`, con desvanecimiento parcial al final.
+6. **Inclinación por puntero** en desktop, con lerp en el rAF.
+7. **Fondo CSS**: halo radial morado + rejilla tenue enmascarada hacia los bordes.
+8. **Wiring del modo en el hero** (`HeroHomeReact`): import diferido, bloque `dotfield` en z-0, y extensión del chrome cinematográfico (`CINE_MODES` + `.cine-intro-page`) para que el wordmark, la coreografía de entrada y el bloqueo de scroll funcionen igual que en `cinematic`.
+9. **Velo de legibilidad propio del modo** (mucho más suave que el del planeta) en mobile y desktop.
+10. **Tina + contenido**: enum, etiqueta corregida de `cinematic`, subgrupo `dotfield`, regeneración de tipos y seed del contenido.
+11. **Mobile ligero**: conteo, DPR, cámara más lejos en retrato, sin puntero, tope de 30 fps.
+12. **QA visual + build**: comparar contra las referencias de guardz.com en los tres momentos (nube compacta arriba → dispersión a media pantalla → campo suelto), verificar legibilidad del texto y que `npm run build` pase.
 
 ---
 
 ## Sección 5 — Criterios de aceptación
 
-- [ ] Existe `heroBackground: "dotfield"` en el enum de Tina y el home lo usa; los modos `3d`/`video`/`imagen`/`waveform`/`nodefield`/`morph`/`cinematic` siguen funcionando sin cambios.
-- [ ] El modo `cinematic` (planeta punteado actual) sigue seleccionable desde Tina y su etiqueta ya no dice "god-rays + tokens flotantes".
-- [ ] Con `dotfield` activo, el hero muestra una **malla regular de puntos** morados sobre un halo radial, renderizada con **Three.js/WebGL** (no SVG ni canvas 2D).
-- [ ] En **desktop**, mover el puntero agranda e ilumina los puntos cercanos; en **touch** no hay reacción al puntero.
-- [ ] **Hacer scroll emite ondas expansivas** que atraviesan el campo, con origen según la dirección del scroll y fuerza según su velocidad.
-- [ ] Aparecen **ondas automáticas** cada ~3–5 s en el hero sin ninguna interacción.
-- [ ] El **click no** dispara ondas en ninguna instancia.
-- [ ] El campo **reaparece, más tenue**, detrás de `SolucionesStack`, `EmpresasRed` y `BannerApp`, y cada una se puede apagar desde `hero.dotfield.sections` en Tina.
-- [ ] `SolucionesStack` en `/soluciones` y `/soporte-tecnico` **no** muestra el fondo nuevo (el wrapper vive solo en el home).
-- [ ] `hero.dotfield.intensity` (`sutil`/`medio`/`intenso`) cambia visiblemente densidad, brillo y fuerza de las ondas.
-- [ ] El wordmark FIBERLUX (`HeroLogoIntro`) se mantiene igual que en el modo `cinematic`.
-- [ ] En **mobile** corre la versión ligera (malla más rala, DPR 1.5, sin hover), no el poster estático.
-- [ ] Con `prefers-reduced-motion: reduce` el campo se pinta estático: sin rAF, sin ondas, sin reacción al puntero.
+- [ ] Existe `heroBackground: "dotfield"` en el enum de Tina y el home lo usa; los demás modos siguen funcionando sin cambios.
+- [ ] El modo `cinematic` (planeta punteado) sigue seleccionable y su etiqueta ya no dice "god-rays + tokens flotantes".
+- [ ] Con `dotfield` activo, el hero muestra una **nube esférica densa de partículas** renderizada con **Three.js/WebGL**, sobre rejilla tenue y halo morado.
+- [ ] La nube tiene **profundidad**: partículas de distinto tamaño y brillo, mayoría tenues y una minoría encendidas más gordas.
+- [ ] La nube **gira, respira y centellea** sin ninguna interacción.
+- [ ] Al hacer **scroll** la nube **se dispersa** progresivamente hasta quedar un campo suelto de puntos, y vuelve a compactarse al subir.
+- [ ] En **desktop** la nube se **inclina hacia el puntero**; en **touch** no.
+- [ ] `hero.dotfield.intensity` cambia visiblemente densidad, brillo y tamaño.
+- [ ] El wordmark FIBERLUX y la coreografía de entrada (titular, subtítulo, botones) funcionan igual que en `cinematic`.
+- [ ] El texto del hero se lee sobre la nube sin que el velo la borre.
+- [ ] En **mobile** corre la versión ligera (menos partículas, DPR 1.5, sin puntero, 30 fps), no el poster estático.
+- [ ] Con `prefers-reduced-motion: reduce` la nube queda estática, sin rAF ni dispersión.
 - [ ] El modo dispara `fbx:hero-scene-loaded`.
-- [ ] Las cuatro instancias pausan su rAF fuera de viewport y, al desmontar, no quedan listeners, rAF ni recursos WebGL sin liberar (`renderer.dispose()`).
-- [ ] `three` se carga en diferido: con `heroBackground` en cualquier otro modo y las secciones apagadas, no se descarga.
+- [ ] El rAF se pausa fuera de viewport y, al desmontar, no quedan listeners, rAF ni recursos WebGL sin liberar.
+- [ ] `three` se carga en diferido: con `heroBackground` en cualquier otro modo, no se descarga.
+- [ ] **Ninguna sección del home** distinta del hero muestra el efecto; `SolucionesStack` conserva su aurora en el home, `/soluciones` y `/soporte-tecnico`.
 - [ ] `npm run build` pasa sin errores nuevos.
 
 ---
 
 ## Sección 6 — Decisiones tomadas y descartadas
 
-- **Sí:** `dotfield` como **nuevo modo aditivo**, con el planeta actual (`cinematic`) conservado y seleccionable desde Tina (pedido explícito del cliente: "coloca el del mundo actual en Tina para que lo puedan utilizar si desean").
-- **Sí:** **Three.js/WebGL** con la reacción calculada en shader, no canvas 2D. El HTML de referencia recorre todos los puntos en JS por frame; con la densidad del hero a pantalla completa eso es caro. El cliente además pidió Three.js explícitamente ("que no sea algo simple con SVGs"). `three` ya es dependencia del proyecto (SPEC 96).
-- **Sí:** reaparición en **3 secciones concretas** (`SolucionesStack`, `EmpresasRed`, `BannerApp`), repartidas arriba/medio/abajo del scroll. Descartado el **canvas único fijo detrás de todo el home** (más fiel a guardz.com pero con el mayor riesgo de rendimiento y tocando el layout de todas las secciones), y descartado limitarlo a dos secciones.
-- **Sí:** la "apertura al scroll" se implementa como **onda expansiva ligada al scroll** (opción elegida por el cliente), no como cortina que se parte desde el centro ni como dispersión en Z.
-- **Sí:** se conservan **hover + ondas automáticas**; se descarta la **onda por click** del HTML de referencia, porque el hero tiene botones y las secciones tienen cards/links, y el ripple competiría con la interacción real.
-- **Sí:** paleta **adaptada a marca** (negro `#0A0A0A`, puntos `#96237A`/`#D64DB8`, halo morado), no el azul del HTML de referencia.
-- **Sí:** el **wordmark FIBERLUX** (`HeroLogoIntro`, SPEC 39/97) se mantiene en el modo nuevo — es la entrada de marca y ya sustituye al `SitePreloader`.
-- **Sí:** **wrapper `DotFieldBackdrop.astro` aplicado desde `index.astro`**, no edición de los componentes de sección: `SolucionesStack` se reutiliza en `/soluciones` y `/soporte-tecnico` y ahí no debe cambiar.
-- **Sí:** en el CMS solo `intensity` y `sections`; colores, spacing, radios y velocidades horneados en `PARAMS`, coherente con SPEC 96/97.
-- **Sí:** **mobile corre el efecto** en versión ligera, reemplazando el poster de SPEC 44 solo en este modo.
-- **No:** aplicar `dotfield` a heros de otras páginas (rollout posterior), traducir copy (`_en`, no hay texto nuevo), exponer parámetros crudos en Tina, ni replicar 1:1 el HTML de referencia.
-- **Nota de proceso:** las secciones 3 a 7 se redactaron sin revisión intermedia por indicación del cliente ("asume el resto y guarda"), después de cerrar en Fase 2 las siete preguntas de alcance, interacción, secciones, paleta y wordmark.
+- **Sí:** `dotfield` como **nuevo modo aditivo**, con el planeta actual (`cinematic`) conservado y seleccionable desde Tina (pedido explícito del cliente).
+- **Sí:** **Three.js/WebGL** con todo el trabajo por partícula en el shader. El cliente lo pidió explícitamente ("que no sea algo simple con SVGs") y `three` ya era dependencia (SPEC 96).
+- **Sí (revisado en QA):** **nube esférica volumétrica** en lugar de la **malla plana de puntos con ondas expansivas** del primer diseño. La malla se implementó completa (grid + ripples por hover/scroll/automáticas) y el cliente la vio "simple"; las referencias de guardz.com que trajo son una nube densa que se dispersa. Se conservó de la primera versión la idea de **scroll como motor del efecto**, pero como dispersión, no como onda.
+- **Sí (revisado en QA):** el efecto queda **solo en el hero**. La reaparición en `SolucionesStack`/`EmpresasRed`/`BannerApp` se llegó a implementar (wrapper `DotFieldBackdrop` + prop `transparentBg`) y se revirtió por decisión del cliente. De paso se documenta el hallazgo: **todas las secciones del home pintan su propio fondo opaco**, así que cualquier telón por detrás exige tocarlas.
+- **Sí:** **dispersión con multiplicador por partícula**, no escala uniforme de la nube — si no, se ve como un zoom.
+- **Sí:** **velo de legibilidad propio y mucho más suave** que el de `cinematic`. Reusar el del planeta borraba la nube justo en el centro.
+- **Sí:** el modo **comparte el chrome cinematográfico** (wordmark, coreografía, bloqueo de scroll) vía `CINE_MODES`, en vez de duplicar bloques. Descubierto en QA: esos efectos estaban gateados por `mode === "cinematic"` y en `dotfield` el titular no se revelaba nunca.
+- **Sí:** **acento frío cian minoritario** (~3%) como guiño al ref; `accentRatio: 0` lo deja 100% en paleta Fiberlux si el cliente lo prefiere.
+- **Sí:** en el CMS solo `intensity`; el resto horneado en `PARAMS`, coherente con SPEC 96/97.
+- **No:** aplicar `dotfield` a otras páginas, traducir copy, exponer parámetros crudos, ni replicar 1:1 guardz.com.
 
 ---
 
@@ -192,21 +150,18 @@ type Ripple = { x: number; y: number; radius: number; strength: number; maxRadiu
 
 | Riesgo | Mitigación |
 | --- | --- |
-| Cuatro instancias WebGL en el home (hero + 3 secciones) degradan el scroll | Cada island se monta `client:visible`, pausa su rAF fuera de viewport (`IntersectionObserver`) y las de sección van en variante ligera (menos puntos, sin ondas automáticas). Si el QA lo pide, se reduce a 2 secciones desde Tina sin tocar código. |
-| `three` (~508 KB sin comprimir) pasa a descargarse siempre en el home al activar `dotfield` | Import diferido (`lazy` + `Suspense`), igual que `MorphSolutions`; las 4 instancias comparten un único chunk. Si el peso pesa en QA, se evalúa un build slim de `three` o `three/webgpu`-free imports puntuales. |
-| Las ondas por scroll disparan demasiado seguido y el fondo "vibra" | `deltaThreshold` + `cooldownMs` en `PARAMS`, `strength` proporcional a la velocidad, y máximo `maxActive: 6` ondas simultáneas. |
-| El campo de puntos resta legibilidad al H1/subtítulo/botones y al contenido de las tres secciones | Se reutilizan los velos radiales ya existentes del modo `cinematic` (mobile y desktop), la variante `section` va a ~55% de alpha y sin halo, y el contenido queda en `z-10`. Contraste verificado en QA. |
-| Meter el fondo en `SolucionesStack` afecta también a `/soluciones` y `/soporte-tecnico` | El wrapper se aplica exclusivamente en `src/pages/index.astro` (y su espejo `/en`); los componentes de sección no se modifican. |
-| Listeners globales (`scroll`, `pointermove`, `resize`) multiplicados por 4 instancias = fugas o coste | Un listener por instancia, todos pasivos, con lerp/acumulación resuelta dentro del rAF y `cancelAnimationFrame` + `renderer.dispose()` + `removeEventListener` explícitos en el cleanup. |
-| El resultado no se siente "como guardz.com" porque allí el campo es continuo | Se documentó como decisión: 3 instancias en vez de canvas único. Si el cliente insiste tras verlo, la escalada al canvas fijo es un spec posterior, no un parche. |
+| 12.000 partículas WebGL en el hero castigan móviles de gama media | Conteo y DPR reducidos en mobile, tope de ~30 fps en táctiles, pausa fuera de viewport, todo el trabajo por partícula en GPU (JS solo mueve 4 uniforms por frame). Pendiente de medir en iPhone real. |
+| `three` (~508 KB sin comprimir) pasa a descargarse siempre en el home | Import diferido (`lazy` + `Suspense`), igual que `MorphSolutions`. Si pesa en QA, evaluar un build slim de `three`. |
+| La nube resta legibilidad al titular/subtítulo/botones | Velo suave bajo el bloque de texto (reforzado en mobile), vignettes existentes en z-[1], contenido en z-10. Verificado en QA a 1440×900. |
+| El acento cian se sale de la paleta de marca | Es un `PARAMS.accentRatio` de una línea: bajarlo a 0 deja la nube 100% morada. |
+| La dispersión se siente brusca o demasiado rápida | `spreadMax` + `spreadFadeAt` + el denominador del progreso son afinables en `PARAMS`; ya se suavizaron una vez en QA. |
+| El resultado no calza "1:1" con guardz.com | Se decidió interpretación de marca en morado, no copia. |
 
 ---
 
 ## Qué **no** está en este spec
 
-- Canvas único fijo detrás de todo el home revelado por sección.
-- Aplicar `dotfield` en heros de otras páginas o en secciones distintas de las tres elegidas.
-- Ondas por click, y reacción al puntero en dispositivos touch.
-- Exponer colores, spacing, radios o velocidades en el CMS.
-- Cambios de contenido, orden o diseño de `SolucionesStack`, `EmpresasRed` o `BannerApp`.
+- Reaparición del efecto en secciones posteriores del home (retirado por el cliente).
+- Aplicar `dotfield` en heros de otras páginas.
+- Exponer paleta, radio, velocidades o curva de dispersión en el CMS.
 - Retirar o reescribir los modos de fondo existentes, incluido el planeta `cinematic`.
