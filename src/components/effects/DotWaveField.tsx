@@ -322,6 +322,56 @@ export default function DotWaveField({
       }
     }
 
+    // ── Puntero (solo desktop) ───────────────────────────────────────────
+    // Se escucha en window y se mapea contra el rect del contenedor: el
+    // contenido superpuesto (z superior) interceptaría los eventos si el
+    // listener viviera en el canvas. En táctiles no hay hover y el efecto
+    // competiría con el scroll, así que ni se registra.
+    const hoverCapable =
+      window.matchMedia?.("(hover: hover) and (pointer: fine)").matches ?? false;
+    const pointerEnabled = hoverCapable && !reduce;
+
+    const pointer = { x: -9999, y: -9999 }; // objetivo
+    const pointerSmooth = { x: -9999, y: -9999 }; // valor interpolado
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (e.pointerType && e.pointerType !== "mouse") return;
+      const rect = mount!.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const inside = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
+      if (inside) {
+        // Primer contacto: sin lerp, para no arrastrar un halo desde fuera.
+        if (pointer.x < -9000) {
+          pointerSmooth.x = x;
+          pointerSmooth.y = y;
+        }
+        pointer.x = x;
+        pointer.y = y;
+      } else {
+        pointer.x = -9999;
+        pointer.y = -9999;
+      }
+    };
+
+    if (pointerEnabled) {
+      uniforms.uPointerRadius.value = PARAMS.pointerRadius;
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+    }
+
+    function stepPointer(dtFrames: number) {
+      if (!pointerEnabled) return;
+      if (pointer.x < -9000) {
+        pointerSmooth.x = -9999;
+        pointerSmooth.y = -9999;
+      } else {
+        const k = Math.min(1, 0.18 * dtFrames);
+        pointerSmooth.x += (pointer.x - pointerSmooth.x) * k;
+        pointerSmooth.y += (pointer.y - pointerSmooth.y) * k;
+      }
+      uniforms.uPointer.value.set(pointerSmooth.x, pointerSmooth.y);
+    }
+
     // ── Ondas automáticas ────────────────────────────────────────────────
     // Vida propia sin interacción, como en el HTML de referencia. En la
     // variante `section` se apagan: ahí el fondo es telón, y el scroll ya
@@ -358,6 +408,7 @@ export default function DotWaveField({
       const dtFrames = lastMs ? Math.min((ms - lastMs) / 16.667, 3) : 1;
       lastMs = ms;
 
+      stepPointer(dtFrames);
       stepAutoRipple(dtFrames * 16.667);
       stepRipples(dtFrames);
       renderer.render(scene, camera);
@@ -389,6 +440,7 @@ export default function DotWaveField({
       cancelAnimationFrame(raf);
       if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("pointermove", onPointerMove);
       io.disconnect();
       geometry.dispose();
       material.dispose();
