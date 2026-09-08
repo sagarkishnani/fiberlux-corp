@@ -451,7 +451,18 @@ export default function DotWaveField({
     // refresco real de la pantalla.
     let lastMs = 0;
 
+    // En táctiles limitamos a ~30fps: el efecto es decorativo y liberar hilo
+    // principal evita los tirones al hacer scroll (mismo criterio que NodeField).
+    const minFrameMs = hoverCapable ? 0 : 1000 / 30;
+    let lastDrawMs = -Infinity;
+
     function frame(ms: number) {
+      if (ms - lastDrawMs < minFrameMs) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      lastDrawMs = ms;
+
       const dtFrames = lastMs ? Math.min((ms - lastMs) / 16.667, 3) : 1;
       lastMs = ms;
 
