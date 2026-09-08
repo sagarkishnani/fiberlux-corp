@@ -19,6 +19,10 @@ const MorphSolutions = lazy(() => import("../effects/MorphSolutions"));
 const DotWaveField = lazy(() => import("../effects/DotWaveField"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 
+// Modos de fondo que comparten el "chrome" cinematográfico del hero: intro del
+// wordmark, coreografía de entrada y bloqueo de scroll (SPEC 97 y SPEC 100).
+const CINE_MODES = ["cinematic", "dotfield"];
+
 // Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
 // morph del wordmark FLX→FIBERLUX (~1.4s: hold 420ms + morph 1000ms) y el
 // escalonado de titular/subtítulo/botones, para no dejar scrollear hasta que
@@ -89,7 +93,7 @@ export default function HeroHomeReact({
   // Dispara la entrada cinematográfica del contenido (modo cinematic). El
   // header se revela por CSS desde el SSR (BaseLayout `.cine-intro-page`).
   useEffect(() => {
-    if (mode !== "cinematic" || typeof window === "undefined") return;
+    if (!CINE_MODES.includes(mode) || typeof window === "undefined") return;
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     if (reduce) {
@@ -107,7 +111,7 @@ export default function HeroHomeReact({
   // terminen de animar. Solo si se está en el tope de la página (no cuando se
   // llega a un ancla) y sin reduced-motion.
   useEffect(() => {
-    if (mode !== "cinematic" || typeof window === "undefined") return;
+    if (!CINE_MODES.includes(mode) || typeof window === "undefined") return;
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     if (reduce) return;
@@ -150,7 +154,7 @@ export default function HeroHomeReact({
   // Barrido del titular línea por línea: agrupa las palabras por línea (según su
   // posición real tras el wrap) y les asigna un delay escalonado (línea + palabra).
   useEffect(() => {
-    if (mode !== "cinematic" || typeof window === "undefined") return;
+    if (!CINE_MODES.includes(mode) || typeof window === "undefined") return;
     // Mobile: sin barrido de letras (se sentía lag); el CSS las deja visibles.
     if (window.matchMedia?.("(max-width: 767px)").matches) return;
     const h1 = titleRef.current;
@@ -187,7 +191,7 @@ export default function HeroHomeReact({
   // Parallax de scroll del contenido del hero (modo cinematic): al bajar, el
   // texto/botones derivan y se desvanecen (transición de salida del hero).
   useEffect(() => {
-    if (mode !== "cinematic" || typeof window === "undefined") return;
+    if (!CINE_MODES.includes(mode) || typeof window === "undefined") return;
     const reduce =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     if (reduce) return;

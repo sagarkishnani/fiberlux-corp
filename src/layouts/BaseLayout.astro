@@ -56,8 +56,12 @@ const homeHeroMorph =
   isHome && (homeContent as any)?.hero?.heroBackground === "morph";
 // Modo de hero "cinematic" (SPEC 97): entrada coreografiada — el header se
 // revela de a pocos. La clase se aplica desde el SSR para que no haya parpadeo.
+// SPEC 100: el modo "dotfield" comparte esta coreografía (mismo chrome de hero).
 const homeHeroCinematic =
-  isHome && (homeContent as any)?.hero?.heroBackground === "cinematic";
+  isHome &&
+  ["cinematic", "dotfield"].includes(
+    (homeContent as any)?.hero?.heroBackground
+  );
 // Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de
 // imagen: el header arranca con fondo opaco/blur para que el menú no se pierda
 // sobre la imagen (zonas claras de la foto se mezclaban con el texto blanco).

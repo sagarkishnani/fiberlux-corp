@@ -28,8 +28,8 @@ const PARAMS = {
   spacingMobile: 30, // malla más rala en móvil
   dprCap: 2, // cap desktop
   dprCapMobile: 1.5,
-  baseRadius: 1.15, // radio base del punto (CSS px)
-  baseAlpha: 0.14, // opacidad de reposo del punto
+  baseRadius: 1.35, // radio base del punto (CSS px)
+  baseAlpha: 0.2, // opacidad de reposo del punto
   pointerRadius: 140, // px de influencia del puntero (desktop)
   pointerBoost: { scale: 1.8, alpha: 0.55 },
   ripple: {
@@ -45,8 +45,13 @@ const PARAMS = {
     strengthRange: [0.6, 1.5] as [number, number],
     cooldownMs: 260, // mínimo entre ondas de scroll
   },
-  color: [0x96, 0x23, 0x7a] as [number, number, number], // brand-purple #96237A
-  colorLight: [0xd6, 0x4d, 0xb8] as [number, number, number], // acento claro
+  // Ojo con la paleta: el punto se dibuja ADITIVO sobre un fondo ya morado
+  // oscuro, así que el morado de marca (#96237A) a 14% de alpha desaparece —
+  // hay que partir de un magenta CLARO para que la malla se lea, y reservar el
+  // casi-blanco para los puntos que enciende una onda o el cursor. Mismo
+  // criterio que NodeField.
+  color: [0xce, 0x66, 0xb8] as [number, number, number], // magenta claro (reposo)
+  colorLight: [0xff, 0xd2, 0xf2] as [number, number, number], // casi blanco (encendido)
   haloStops: ["#3B0E30", "#1A0716", "#0A0A0A"] as const,
 };
 
