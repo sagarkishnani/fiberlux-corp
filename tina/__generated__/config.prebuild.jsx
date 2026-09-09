@@ -251,7 +251,8 @@ var config_default = defineConfig({
                   { value: "nodefield", label: "Node field (part\xEDculas plexus)" },
                   { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" },
                   { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
-                  { value: "dotfield", label: "Campo de puntos (ondas por scroll)" }
+                  { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
+                  { value: "lattice", label: "Ret\xEDcula volum\xE9trica (onda que la atraviesa)" }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
@@ -403,6 +404,26 @@ var config_default = defineConfig({
                       { value: "intenso", label: "Intenso" }
                     ],
                     description: "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio."
+                  }
+                ]
+              },
+              // ── Modo Retícula volumétrica (SPEC 112) ──
+              {
+                type: "object",
+                name: "lattice",
+                label: "Hero \u2014 modo Ret\xEDcula volum\xE9trica",
+                description: "Solo aplica si el 'Fondo del hero' es 'Ret\xEDcula volum\xE9trica'. Ret\xEDcula 3D de puntos por la que se avanza; cada onda la atraviesa encendi\xE9ndola y soltando los puntos de su formaci\xF3n.",
+                fields: [
+                  {
+                    type: "string",
+                    name: "intensity",
+                    label: "Intensidad del efecto",
+                    options: [
+                      { value: "sutil", label: "Sutil" },
+                      { value: "medio", label: "Medio" },
+                      { value: "intenso", label: "Intenso" }
+                    ],
+                    description: "Controla densidad de la ret\xEDcula, brillo y fuerza de las ondas. Default: Medio."
                   }
                 ]
               }

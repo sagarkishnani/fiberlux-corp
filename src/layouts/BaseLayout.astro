@@ -56,10 +56,14 @@ const homeHeroMorph =
   isHome && (homeContent as any)?.hero?.heroBackground === "morph";
 // Modo de hero "cinematic" (SPEC 97): entrada coreografiada — el header se
 // revela de a pocos. La clase se aplica desde el SSR para que no haya parpadeo.
-// SPEC 100: el modo "dotfield" comparte esta coreografía (mismo chrome de hero).
+// SPEC 100 ("dotfield") y SPEC 112 ("lattice") comparten esta coreografía
+// (mismo chrome de hero). OJO: esta lista tiene que incluir TODOS los modos que
+// `CINE_MODES` de HeroHomeReact considera cinematográficos. Si un modo se queda
+// fuera, el CSS `.cine-intro-page [data-hero-logo]` no oculta el wordmark real
+// durante el morph y se ven DOS logos a la vez (el real y el de la intro).
 const homeHeroCinematic =
   isHome &&
-  ["cinematic", "dotfield"].includes(
+  ["cinematic", "dotfield", "lattice"].includes(
     (homeContent as any)?.hero?.heroBackground
   );
 // Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de

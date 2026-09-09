@@ -17,11 +17,14 @@ const MorphSolutions = lazy(() => import("../effects/MorphSolutions"));
 // ParticleNebula (SPEC 100) también arrastra Three.js: mismo trato que el
 // morph, solo se descarga cuando `heroBackground` es "dotfield".
 const ParticleNebula = lazy(() => import("../effects/ParticleNebula"));
+// LatticeField (SPEC 112) es el tercer consumidor de Three.js del hero: mismo
+// trato, solo se descarga cuando `heroBackground` es "lattice".
+const LatticeField = lazy(() => import("../effects/LatticeField"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 
 // Modos de fondo que comparten el "chrome" cinematográfico del hero: intro del
 // wordmark, coreografía de entrada y bloqueo de scroll (SPEC 97 y SPEC 100).
-const CINE_MODES = ["cinematic", "dotfield"];
+const CINE_MODES = ["cinematic", "dotfield", "lattice"];
 
 // Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
 // morph del wordmark FLX→FIBERLUX (~1.4s: hold 420ms + morph 1000ms) y el
@@ -257,6 +260,11 @@ export default function HeroHomeReact({
     const v = (hero as any).dotfield?.intensity;
     return v === "sutil" || v === "intenso" ? v : "medio";
   })();
+  // Intensidad del modo lattice (SPEC 112): idem.
+  const latticeIntensity = ((): "sutil" | "medio" | "intenso" => {
+    const v = (hero as any).lattice?.intensity;
+    return v === "sutil" || v === "intenso" ? v : "medio";
+  })();
 
   // Logo FIBERLUX (BASE_URL-aware) para el lockup del hero y el chip central.
   const logoAsset = `${import.meta.env.BASE_URL}images/logo/fiberlux.svg`.replace(
@@ -279,8 +287,14 @@ export default function HeroHomeReact({
   // velos de legibilidad y coreografía de entrada con stagger. Lo comparten el
   // modo `cinematic` (planeta) y el `dotfield` (campo de puntos, SPEC 100),
   // porque ambos son fondos full-bleed detrás del mismo contenido.
-  const cine = mode === "cinematic" || mode === "dotfield";
+  const cine =
+    mode === "cinematic" || mode === "dotfield" || mode === "lattice";
   const dotfield = mode === "dotfield";
+  const lattice = mode === "lattice";
+  // dotfield y lattice comparten tratamiento de velo: en ambos el campo de
+  // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
+  // que verse (el planeta de `cinematic` sí lo pide).
+  const softVeil = dotfield || lattice;
   const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
     cine
@@ -466,6 +480,21 @@ export default function HeroHomeReact({
         </div>
       )}
 
+      {/* Modo lattice (SPEC 112): retícula volumétrica de puntos atravesada por
+          ondas que la funden en nube y la vuelven a ordenar. z-0 detrás de las
+          vignettes y del contenido. */}
+      {lattice && (
+        <div className="absolute inset-0 z-0">
+          <Suspense fallback={null}>
+            <LatticeField
+              className="h-full w-full"
+              intensity={latticeIntensity}
+              signalReady
+            />
+          </Suspense>
+        </div>
+      )}
+
       {/* Intro del wordmark FLX → FIBERLUX al cargar (SPEC 97, desktop). */}
       {cine && <HeroLogoIntro />}
 
@@ -477,7 +506,11 @@ export default function HeroHomeReact({
           aria-hidden="true"
           className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background: dotfield
+            background: lattice
+              ? // La retícula es tenue y pareja, y en mobile ya va a menos
+                // densidad: con el velo de los otros modos desaparecía entera.
+                "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.48) 48%, rgba(10,10,10,0.2) 100%)"
+              : softVeil
               ? "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.7) 48%, rgba(10,10,10,0.35) 100%)"
               : "radial-gradient(120% 95% at 50% 52%, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.6) 48%, rgba(10,10,10,0.3) 100%)",
           }}
@@ -494,8 +527,8 @@ export default function HeroHomeReact({
           aria-hidden="true"
           className="hidden lg:block pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background: dotfield
-              ? // La nube ES el fondo: un velo fuerte en el centro la borraba
+            background: softVeil
+              ? // El campo de puntos ES el fondo: un velo fuerte en el centro la borraba
                 // justo donde tiene que verse. Solo un apoyo mínimo bajo el
                 // bloque de texto.
                 "radial-gradient(40% 26% at 50% 62%, rgba(10,10,10,0.34) 0%, rgba(10,10,10,0.2) 55%, rgba(10,10,10,0) 88%)"

@@ -42,6 +42,10 @@ fragment HomeParts on Home {
       __typename
       intensity
     }
+    lattice {
+      __typename
+      intensity
+    }
   }
   services {
     __typename

@@ -292,6 +292,7 @@ export default defineConfig({
                   { value: "morph", label: "Morph (globo de partículas → soluciones)" },
                   { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
                   { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
+                  { value: "lattice", label: "Retícula volumétrica (onda que la atraviesa)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
@@ -452,6 +453,28 @@ export default defineConfig({
                     ],
                     description:
                       "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio.",
+                  },
+                ],
+              },
+              // ── Modo Retícula volumétrica (SPEC 112) ──
+              {
+                type: "object",
+                name: "lattice",
+                label: "Hero — modo Retícula volumétrica",
+                description:
+                  "Solo aplica si el 'Fondo del hero' es 'Retícula volumétrica'. Retícula 3D de puntos por la que se avanza; cada onda la atraviesa encendiéndola y soltando los puntos de su formación.",
+                fields: [
+                  {
+                    type: "string",
+                    name: "intensity",
+                    label: "Intensidad del efecto",
+                    options: [
+                      { value: "sutil", label: "Sutil" },
+                      { value: "medio", label: "Medio" },
+                      { value: "intenso", label: "Intenso" },
+                    ],
+                    description:
+                      "Controla densidad de la retícula, brillo y fuerza de las ondas. Default: Medio.",
                   },
                 ],
               },

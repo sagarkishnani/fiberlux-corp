@@ -2,7 +2,7 @@
   "hero": {
     "title": "Soluciones de conectividad y TI para tu empresa",
     "subtitle": "Desde Fiberlux impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
-    "heroBackground": "dotfield",
+    "heroBackground": "lattice",
     "splineSceneUrl": "https://prod.spline.design/NPf6t5Aswe3I4AKw/scene.splinecode",
     "splinePosterUrl": "images/home/cover-3d-mobile.jpeg",
     "heroBgOpacity": 60,
@@ -87,6 +87,9 @@
     "title_en": "Connectivity and IT solutions for your business",
     "subtitle_en": "We power your business with high-quality services over a 100% private fiber-optic network.",
     "dotfield": {
+      "intensity": "medio"
+    },
+    "lattice": {
       "intensity": "medio"
     }
   },
