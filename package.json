@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
     "build": "tinacms build && astro build",
+    "build:local": "tinacms dev -p 4021 --datalayer-port 9021 -c \"astro build\"; s=$?; npm run tina:restore; exit $s",
+    "tina:restore": "git checkout -- tina/__generated__/client.ts tina/__generated__/types.ts tina/tina-lock.json",
     "preview": "astro preview",
     "deploy": "bash scripts/deploy-gh-pages.sh"
   },
