@@ -42,6 +42,9 @@ export default function CertificacionesSliderReact({
 
   const hasItems = items.length > 0;
   const enough = items.length > 1;
+  /* Una sola certificación: sin peek en mobile, centrada en desktop y sin motor
+     de carrusel (nada que arrastrar). */
+  const single = items.length === 1;
 
   /* Embla slider: left-aligned cards, one card per arrow, autoplay w/ loop. */
   const slider = useSlider({
@@ -49,9 +52,14 @@ export default function CertificacionesSliderReact({
     loop: false,
     autoplay: autoplay && enough,
     intervalMs,
-    effect,
+    // Con una sola card el tween de opacidad no tiene contra qué interpolar y
+    // el motor está inactivo: lo apagamos para que no toque estilos.
+    effect: enough ? effect : "none",
     // Permite que la última card se alinee a la izquierda (sin cortar la anterior).
     containScroll: false,
+    // Con 0-1 cards no hay scroll posible: desactiva Embla para que el track
+    // quede en flujo normal y `justify-center` funcione.
+    active: enough,
   });
   const arrowsPill = (
     <SliderArrows
@@ -67,14 +75,16 @@ export default function CertificacionesSliderReact({
     <div
       ref={slider.viewportRef}
       className="overflow-hidden py-2 select-none cert-carousel"
-      style={{ cursor: hasItems ? "grab" : "default" }}
+      style={{ cursor: enough ? "grab" : "default" }}
     >
-      <div className="flex items-stretch gap-6">
+      <div className={`flex items-stretch gap-6${single ? " md:justify-center" : ""}`}>
         {hasItems ? (
           items.map((item, i) => (
             <div
               key={i}
-              className="cert-slide shrink-0 w-[85%] md:w-[calc((100%-1.5rem)/2)]"
+              className={`cert-slide shrink-0 md:w-[calc((100%-1.5rem)/2)] ${
+                single ? "w-full" : "w-[85%]"
+              }`}
             >
               <CertCard cert={item as Cert} tinaItem={page?.items?.[i]} locale={locale} />
             </div>
