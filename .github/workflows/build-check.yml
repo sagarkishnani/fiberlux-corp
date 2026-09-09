@@ -1,0 +1,41 @@
+name: Build check
+
+# Verificación de compilación. NO despliega nada: desde el cutover del 9-sep-2026
+# publica el propio servidor de Fiberlux por pull (scripts/server-deploy.sh, cron
+# cada minuto). Sin esto, un commit que rompa el build solo se detectaría en
+# /var/log/fiberlux-deploy.log del servidor, y el sitio se quedaría congelado en
+# la última versión buena sin que nadie se entere.
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
+          TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+          # TinaCloud indexa el contenido POR RAMA y `tinacms build` hornea el valor
+          # en el cliente generado. main y staging tienen schemas distintos, así que
+          # cada rama debe compilar contra su propio índice. En un PR, base_ref es la
+          # rama destino; en un push, ref_name es la rama misma.
+          TINA_BRANCH: ${{ github.base_ref || github.ref_name }}
+          # Site key PÚBLICA de Turnstile (SPEC 79). Si el secreto no existe queda
+          # vacía: el widget no se monta, pero el build no falla.
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+          # El sitio se publica en la raíz del docroot.
+          DEPLOY_BASE: ''

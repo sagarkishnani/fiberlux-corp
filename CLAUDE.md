@@ -14,37 +14,47 @@ No test runner is configured.
 
 ## Environment
 
-Copy `.env.example` to `.env`. Leave variables empty to use TinaCMS in local mode (no cloud credentials needed for dev):
+Copy `.env.example` to `.env`. Leave `TINA_CLIENT_ID`/`TINA_TOKEN` empty to use TinaCMS in local mode (no cloud credentials needed for dev):
 
 ```
 TINA_CLIENT_ID=
 TINA_TOKEN=
-TINA_BRANCH=main
+TINA_BRANCH=staging
+PUBLIC_TURNSTILE_SITE_KEY=
 ```
 
-## Deployment (GitHub Actions + FTP)
+**`TINA_BRANCH` matters more than it looks.** TinaCloud indexes content **per branch**, and the branch is baked into `tina/__generated__/client.ts` by `tinacms build` — it is *not* read at runtime. Since the cutover (below) `main` and `staging` carry **different schemas**, so building this tree against `TINA_BRANCH=main` queries production's index with the wrong schema and fails. Working on `staging` ⇒ `TINA_BRANCH=staging`.
 
-`.github/workflows/deploy.yml` runs on push to `staging` (or manual `workflow_dispatch`): `npm ci` → `npm run build` → generate `dist/config.local.php` from secrets → deploy `dist/` via **SFTP** (`wlixcc/SFTP-Deploy-Action`, port 22 — the host is SFTP, not FTP). The PHP mail backend (`public/send-email.php`, `public/panel-leads.php`, `public/phpmailer/`) ships inside `dist/` because Astro copies `public/` verbatim. `delete_remote_files: false` means the deploy never removes server files, so runtime `data/` (submissions, `counter.json`) and `uploads/` are preserved.
+## Branch model (cutover — 9 Sept 2026)
 
-**Staging vs production.** While the domain still serves WordPress, only `staging` deploys — to a subdirectory `fiberlux.pe/staging/`. The build sets `DEPLOY_BASE=/staging` so `astro.config.mjs` compiles with `base: '/staging'` (all paths, incl. the form endpoint, are `BASE_URL`-aware). At cutover: add a `main` trigger with its own production `server-dir`, and leave `DEPLOY_BASE` empty so production builds at root `/`.
+- **`main` = production.** Holds the ISO-certification hotfix release (`e5d4ec3` + hotfix): an *older* tree than `staging`. Fiberlux's server publishes it to the docroot root.
+- **`staging` = the new site** — the live line of development, ~430 commits ahead of what production serves. Work here and PR here.
+- The two **diverged on purpose**: `main` was rewound to the production release. **Never `git pull` on `main`** — it would merge the new site into production. Sync with `git fetch && git reset --hard origin/main`.
+- Tag `cutover-2026-09-09-sitio-nuevo` marks the commit `staging` was cut from — the rollback point for the rewind.
+- Each branch has its **own TinaCloud index with its own schema** (e.g. the `popup` collection exists only in staging's). Probe one with `POST https://content.tinajs.io/1.6/content/<clientId>/github/<branch>`.
+- Shipping the new site to production = force-push `staging` onto `main`, then move `TINA_BRANCH` back to `main` in `.env` and in the server's `deploy.env`.
 
-**Secrets (mail backend)** live only in `config.local.php`, which is **git-ignored** and generated at deploy time from GitHub Secrets — never committed. `public/config.example.php` documents its shape (copy it to `public/config.local.php` to test locally). The PHP files `require` it; `panel-leads.php` refuses login if `PANEL_USER`/`PANEL_PASS` are unset.
+## Deployment (server pull — not CI push)
 
-**Required GitHub Secrets** (repo → Settings → Secrets and variables → Actions):
+Fiberlux's own server publishes the site; nothing pushes into it from outside. `scripts/server-deploy.sh` is the versioned reference copy — TI installs it at `/opt/fiberlux/deploy.sh`. **cron must not run it from inside the clone**: `git reset --hard` rewrites the file mid-execution and bash, which reads scripts in chunks, breaks.
 
-```
-TINA_CLIENT_ID, TINA_TOKEN            # build
-FTP_HOST, FTP_USER, FTP_PASS          # deploy connection
-FTP_SERVER_DIR                        # remote path dist/ is uploaded to (e.g. /public_html/)
-SMTP_USER, SMTP_PASS, MAIL_FALLBACK   # → config.local.php (Office 365 SMTP + fallback recipient)
-PANEL_USER, PANEL_PASS                # → config.local.php (panel-leads.php login)
-TURNSTILE_SITE_KEY                    # build → PUBLIC_TURNSTILE_SITE_KEY (Vite inlines the public site key)
-TURNSTILE_SECRET                      # → config.local.php (Cloudflare Turnstile server-side verify)
-```
+cron every minute under `flock -n`: `git fetch` → if the branch moved, `git reset --hard` → load `/opt/fiberlux/deploy.env` → `npm ci` (only when the lockfile changed) → `npm run build` → `rsync -a --delete ./dist/ <docroot>/`.
 
-**Captcha (Cloudflare Turnstile — SPEC 79).** Every form that hits `send-email.php` carries an invisible Turnstile token (`appearance: interaction-only`, no visible challenge for legit users). `DynamicFormReact` loads the widget with the **public** site key from build env `PUBLIC_TURNSTILE_SITE_KEY`; `send-email.php` verifies the token server-side against Cloudflare's `siteverify` using `TURNSTILE_SECRET` from `config.local.php`, and **fail-closed**: a missing/invalid token, or an unreachable `siteverify`, is rejected with no email sent (enforced only while `TURNSTILE_SECRET` is set). Both keys are per-project and deploy together; the Turnstile widget lists `fiberlux.pe` (covers `negocios.fiberlux.pe` and the `/portal-de-trabajo` subpath) plus `localhost` for dev. `PUBLIC_TURNSTILE_SITE_KEY=` is documented in `.env.example` (git-ignored) and `TURNSTILE_SECRET` in `public/config.example.php`.
+- **Publishing is the last step**, so a failed build never reaches the docroot: the live site stays up and the error lands in `/var/log/fiberlux-deploy.log`. A successful run opens with `nuevo commit <sha>` and closes with `publicado <sha>`.
+- A content save in TinaCMS is a commit, so **CMS edits publish through this same path**.
+- `rsync --delete` preserves exactly three paths: `data/` (submissions, `counter.json`), `uploads/` (attachments) and `fiberlux-config.php`. Their `.htaccess` files **do** sync — they ship in `dist/` and are what block web access to those directories.
+- Server env `/opt/fiberlux/deploy.env` (chmod 600, outside the repo): `TINA_CLIENT_ID`, `TINA_TOKEN`, `TINA_BRANCH=main`, `PUBLIC_TURNSTILE_SITE_KEY`, `DEPLOY_BASE=` (empty → site at root; `astro.config.mjs` reads it as `base`, and all runtime paths are `BASE_URL`-aware).
+- The script's `BRANCH` and `deploy.env`'s `TINA_BRANCH` **must match**, or the site silently stops receiving content changes with no visible error. The script's own defaults still target staging (`BRANCH=staging`, `DOCROOT=/var/www/fiberlux.pe/staging`); the production install overrides both.
+- **Reverting is done on the branch**, never on the server — the next poll applies it.
+- Full runbook handed to TI: *Fiberlux — Despliegue en servidor propio, v1.0* (26 Aug 2026).
 
-The FTP sync **excludes** `data/**` and `uploads/**` so runtime-created submissions, `counter.json` and uploaded attachments on the server are never deleted.
+**`staging` has no automated publisher.** The GitHub Actions + SFTP workflow was removed at the cutover: its FTP secrets had been deleted and every run failed from 3 Aug 2026 onward. To publish staging, either TI adds a second cron with `DEPLOY_BRANCH=staging` and its own `DOCROOT`, or use `npm run deploy` (manual build → GitHub Pages via `scripts/deploy-gh-pages.sh`).
+
+**Secrets (mail backend)** live only in `fiberlux-config.php` — uploaded by SFTP into the docroot, git-ignored, and never inside `dist/` (SPEC 85). `public/config.example.php` is its template; copy it to `public/fiberlux-config.php` to test locally. `send-email.php` and `panel-leads.php` `require` it; `panel-leads.php` refuses login when `panel_user`/`panel_pass_hash` are unset. The PHP mail backend (`public/send-email.php`, `public/panel-leads.php`, `public/phpmailer/`) ships inside `dist/` because Astro copies `public/` verbatim.
+
+**Captcha (Cloudflare Turnstile — SPEC 79).** Every form that hits `send-email.php` carries an invisible Turnstile token (`appearance: interaction-only`, no visible challenge for legit users). `DynamicFormReact` loads the widget with the **public** site key from build env `PUBLIC_TURNSTILE_SITE_KEY`; `send-email.php` verifies the token server-side against Cloudflare's `siteverify` using `turnstile_secret` from `fiberlux-config.php`, and **fail-closed**: a missing/invalid token, or an unreachable `siteverify`, is rejected with no email sent (enforced only while `turnstile_secret` is set). The Turnstile widget lists `fiberlux.pe` (covers `negocios.fiberlux.pe` and the `/portal-de-trabajo` subpath) plus `localhost` for dev.
+
+**Note:** production currently runs the pre-SPEC-79/85 tree, so its forms have **no Turnstile** and its schema predates the `_en` i18n work on several collections. Both arrive when `staging` ships.
 
 ## Architecture
 

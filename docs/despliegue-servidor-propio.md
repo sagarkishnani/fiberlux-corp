@@ -148,13 +148,14 @@ credenciales de SMTP y del panel de leads (B8). Twin Studios no necesita conocer
 
 Solo cuando Fiberlux confirme que el servidor publicó correctamente:
 
-1. Eliminar el paso `Deploy via SFTP` de `.github/workflows/deploy.yml`.
-2. Borrar los secretos `FTP_HOST`, `FTP_USER`, `FTP_PASS` y `FTP_SERVER_DIR`.
-3. Conservar el workflow como verificación de build (`npm ci && npm run build`), para
-   que un commit que rompa la compilación se detecte en GitHub y no en el servidor.
-   Requiere mantener `TINA_CLIENT_ID`, `TINA_TOKEN` y `TURNSTILE_SITE_KEY`.
-
-Hacerlo antes dejaría al sitio sin ningún camino de despliegue funcionando.
+**Hecho el 9-sep-2026, en el cutover.** `.github/workflows/deploy.yml` (build + SFTP)
+se eliminó y en su lugar quedó `.github/workflows/build-check.yml`, que solo compila
+—`npm ci && npm run build` sobre `main` y `staging`— para que un commit que rompa la
+compilación se detecte en GitHub y no en el log del servidor. Los secretos `FTP_HOST`,
+`FTP_USER`, `FTP_PASS` y `FTP_SERVER_DIR` ya no existían en el repo: el Action llevaba
+fallando desde el 3-ago-2026 por esa causa, así que el despliegue por SFTP ya estaba de
+hecho retirado. Siguen haciendo falta `TINA_CLIENT_ID` y `TINA_TOKEN`;
+`TURNSTILE_SITE_KEY` es opcional.
 
 ### A7. En operación
 
