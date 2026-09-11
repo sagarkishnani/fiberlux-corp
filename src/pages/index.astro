@@ -121,8 +121,11 @@ const prefetchScenes = [
         )
       }
     </div>
+    {/* SPEC 114 — las cifras se construyen siguiendo el scroll de su propia
+        sección. Solo aquí: en las otras 6 páginas que usan el bloque siguen
+        disparándose al entrar en viewport. */}
     <div class="-mt-2 relative z-30" data-reveal="up" data-overlap-rise>
-      <EmpresasRed />
+      <EmpresasRed scrubCounters />
     </div>
     <div class="relative z-20" data-reveal="up">
       <CertificacionesSlider />
