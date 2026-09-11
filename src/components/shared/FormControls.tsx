@@ -563,6 +563,7 @@ interface PageHeaderProps {
 }
 
 export function FormPageHeader({ badge, title, description }: PageHeaderProps) {
+  const isLongDescription = (description?.length ?? 0) > 320;
   return (
     <div style={{ textAlign: "center", marginBottom: "40px" }}>
       {badge && (
@@ -599,15 +600,43 @@ export function FormPageHeader({ badge, title, description }: PageHeaderProps) {
           fontSize: "14px",
           color: "#5B5B5B",
           lineHeight: 1.7,
-          maxWidth: "500px",
+          maxWidth: isLongDescription ? "760px" : "500px",
           margin: "16px auto 0",
+          textAlign: isLongDescription ? "justify" : "center",
           fontFamily: "Poppins, sans-serif",
         }}>
-          {description}
+          {renderInlineLinks(description)}
         </p>
       )}
     </div>
   );
+}
+
+/* Renders markdown-style inline links — [texto](url) — inside a plain CMS string. */
+const INLINE_LINK_RE = /\[([^\]]+)\]\(([^)\s]+)\)/g;
+
+export function renderInlineLinks(text: string): ReactNode {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  INLINE_LINK_RE.lastIndex = 0;
+  while ((m = INLINE_LINK_RE.exec(text)) !== null) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    out.push(
+      <a
+        key={m.index}
+        href={m[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "#96237A", textDecoration: "underline" }}
+      >
+        {m[1]}
+      </a>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out.length === 1 ? out[0] : out;
 }
 
 /* ══════════════════════════════════════════════════

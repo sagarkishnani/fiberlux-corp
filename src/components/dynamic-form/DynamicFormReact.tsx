@@ -381,7 +381,7 @@ function ContactCheckbox({
           type="checkbox"
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
-          className={`mt-1 w-4 h-4 accent-brand-purple rounded ${dark ? "border-white/20" : "border-greyscale-light"}`}
+          className={`mt-1 w-4 h-4 shrink-0 basis-4 accent-brand-purple rounded ${dark ? "border-white/20" : "border-greyscale-light"}`}
         />
         <span className={`text-caption-sm leading-relaxed ${dark ? "text-greyscale-light" : "text-greyscale-dark"}`}>{children}</span>
       </label>
