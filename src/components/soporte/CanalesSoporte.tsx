@@ -162,19 +162,23 @@ export default function CanalesSoporte({
   return (
     <section className="bg-[#FBDCEC] py-16 lg:py-24">
       <div className="site-container">
-        {/* Section header */}
-        <h2
-          className="text-[34px] md:text-[48px] leading-[1.1] font-medium text-brand-purple mb-4"
-          data-tina-field={tinaField(page, "sectionTitle")}
-        >
-          {tField(page as any, "sectionTitle", locale)}
-        </h2>
-        <p
-          className="text-body-lg text-brand-purple/80 max-w-[600px] mb-12"
-          data-tina-field={tinaField(page, "sectionSubtitle")}
-        >
-          {tField(page as any, "sectionSubtitle", locale)}
-        </p>
+        {/* Section header — titular y bajada entran escalonados (SPEC 115).
+            La cascada NO va en los acordeones: el de desktop anima su `height`
+            con un style inline y el de mobile su `grid-template-rows`. */}
+        <div data-reveal="up" data-reveal-stagger="0.12">
+          <h2
+            className="text-[34px] md:text-[48px] leading-[1.1] font-medium text-brand-purple mb-4"
+            data-tina-field={tinaField(page, "sectionTitle")}
+          >
+            {tField(page as any, "sectionTitle", locale)}
+          </h2>
+          <p
+            className="text-body-lg text-brand-purple/80 max-w-[600px] mb-12"
+            data-tina-field={tinaField(page, "sectionSubtitle")}
+          >
+            {tField(page as any, "sectionSubtitle", locale)}
+          </p>
+        </div>
 
         {/* ════ Desktop — horizontal accordion (effortel-style width animation) ════ */}
         <div
