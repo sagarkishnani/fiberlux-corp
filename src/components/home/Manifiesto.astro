@@ -22,6 +22,27 @@ const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(A
 const items = ((data?.home as any)?.manifiesto?.items ?? []).filter(Boolean);
 ---
 
+{/* Estado inicial de las frases, en CSS y gateado por `.reveal-js` — el mismo
+    anti-FOUC del sistema de reveals (SPEC 69). En JS no puede ir: la isla es
+    `client:visible` y hasta que hidrata las frases se verían las tres apiladas
+    en la misma celda de la grilla. Y sin JS el texto se lee igual. */}
+<style is:global>
+  .reveal-js [data-act] {
+    opacity: 0;
+  }
+  .reveal-js [data-act] [data-line] {
+    transform: translateY(110%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-js [data-act] {
+      opacity: 1;
+    }
+    .reveal-js [data-act] [data-line] {
+      transform: none;
+    }
+  }
+</style>
+
 {
   items.length > 0 && (
     <ScrollChapter
@@ -29,12 +50,8 @@ const items = ((data?.home as any)?.manifiesto?.items ?? []).filter(Boolean);
       id="ch-frases"
       stageClass="flex items-center"
     >
-      {/* `client:load` y no `client:visible`: el estado inicial (frases ocultas)
-          lo escribe la isla al hidratar, y con `client:visible` eso ocurre
-          recién al llegar al capítulo — hasta entonces las tres frases se ven
-          apiladas en la misma celda de la grilla. */}
       <ManifiestoReact
-        client:load
+        client:visible
         query={query}
         variables={variables}
         data={data}

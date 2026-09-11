@@ -33,9 +33,10 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
   const items = (manifiesto?.items ?? []).filter(Boolean) as any[];
   const rootRef = useRef<HTMLDivElement>(null);
 
-  /* `useLayoutEffect` y no `useEffect`: el estado inicial (frases ocultas) se
-     escribe antes del primer pintado. Si se escribiera después, la primera
-     frase asomaría un frame ya montada. */
+  /* El estado inicial (frases ocultas) NO se escribe aquí: lo pone el CSS
+     gateado por `.reveal-js` que monta `Manifiesto.astro`, igual que el sistema
+     de reveals del repo (SPEC 69). Así no hay un solo frame con las frases
+     apiladas, y sin JS el texto se lee igual. */
   useLayoutEffect(() => {
     if (!items.length || !chaptersEnabled()) return;
     const root = rootRef.current;
@@ -47,14 +48,6 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
     const len = chapterLen(chapter);
     const slot = 1 / acts.length;
     const stops: Array<() => void> = [];
-
-    // Estado inicial: todo oculto salvo lo que el scroll vaya revelando.
-    acts.forEach((a) => {
-      a.style.opacity = "0";
-      a.querySelectorAll<HTMLElement>("[data-line]").forEach((l) => {
-        l.style.transform = "translateY(110%)";
-      });
-    });
 
     /* UNA sola animación por elemento y propiedad.
        Motion cancela la animación anterior cuando se lanza otra sobre la misma
