@@ -322,7 +322,12 @@ export default function EmpresasRedReact({
 
         {/* ── Cifras (antes sección "¿Por qué Fiberlux?") ── */}
         {statItems.length > 0 && (
-          <div className="mt-16 grid grid-cols-2 gap-y-14 md:mt-20 xl:grid-cols-4">
+          <div
+            className="mt-16 grid grid-cols-2 gap-y-14 md:mt-20 xl:grid-cols-4"
+            data-reveal="up"
+            data-reveal-stagger="0.1"
+            data-reveal-distance="40"
+          >
             {statItems.map((item, i) => (
               <div
                 key={i}

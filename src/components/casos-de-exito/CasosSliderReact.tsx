@@ -79,7 +79,7 @@ export default function CasosSliderReact({
       {/* obs10: sin título "Casos de éxito" (redundante con el H1 del hero).
           El viewport va dentro de site-container (igual que el hero) para que la
           primera card quede alineada al título y la descripción. */}
-      <div className="site-container">
+      <div className="site-container" data-reveal="up">
         {/* Móvil: una flecha a cada lado del video (centradas verticalmente),
             como un carrusel clásico. La card es alta y, con las flechas
             arriba/abajo, el usuario no notaba que podía moverse; a los lados del
@@ -169,7 +169,13 @@ export default function CasosSliderReact({
         {/* Dots: indicador de progreso interactivo, centrado bajo el slider.
             El dot activo se alarga (px) y toma el magenta de marca; clic navega. */}
         {slider.scrollSnaps.length > 1 && (
-          <div className="mt-8 flex justify-center gap-2.5" role="tablist" aria-label="Casos de éxito">
+          <div
+            className="mt-8 flex justify-center gap-2.5"
+            role="tablist"
+            aria-label="Casos de éxito"
+            data-reveal="up"
+            data-reveal-distance="24"
+          >
             {slider.scrollSnaps.map((_, i) => (
               <button
                 key={i}

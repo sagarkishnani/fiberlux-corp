@@ -146,7 +146,11 @@ export default function RubrosReact({
       <div className="relative site-container">
         <div className="flex flex-col gap-10 md:flex-row md:items-center md:gap-14">
           {/* Columna izquierda: título + descripción (fija en desktop, arriba en móvil) */}
-          <div className="shrink-0 md:max-w-[440px]">
+          <div
+            className="shrink-0 md:max-w-[440px]"
+            data-reveal="up"
+            data-reveal-stagger="0.12"
+          >
             <h2
               className="text-[32px] font-medium leading-[1.15] tracking-tight text-white md:text-[52px]"
               data-tina-field={rubros ? tinaField(rubros, 'title') : undefined}
@@ -164,7 +168,7 @@ export default function RubrosReact({
           </div>
 
           {/* Marquee: 2 filas en sentidos opuestos, opacidad tenue + fade en bordes */}
-          <div className="rubro-marquee min-w-0 flex-1">
+          <div className="rubro-marquee min-w-0 flex-1" data-reveal="up" data-reveal-distance="40">
             <div className="rubro-row">{track(rowTop, 'top', true)}</div>
             <div className="rubro-row">{track(rowBottom, 'bottom', false)}</div>
           </div>
