@@ -95,6 +95,24 @@ export function actAnimate(
 }
 
 /**
+ * Progreso (0→1) a lo largo de un contenedor entero — el tramo narrativo
+ * completo, por ejemplo, que abarca varios capítulos.
+ *
+ * `end end` es el instante en que el borde inferior del contenedor toca el
+ * fondo del viewport, es decir: cuando el ÚLTIMO panel sticky se suelta. Es el
+ * mismo criterio que `act()` aplica dentro de un capítulo.
+ */
+export function spanProgress(
+  el: HTMLElement,
+  onProgress: (p: number) => void
+): Stop {
+  return scroll(
+    (progress: number) => onProgress(progress),
+    { target: el, offset: ["start start", "end end"] } as never
+  );
+}
+
+/**
  * Progreso crudo (0→1) de un acto. Para lo que no es una animación de CSS:
  * uniforms de un shader, contadores, clases de estado.
  */

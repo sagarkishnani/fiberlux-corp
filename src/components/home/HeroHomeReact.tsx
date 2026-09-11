@@ -26,6 +26,13 @@ const FiberTunnel = lazy(() => import("../effects/FiberTunnel"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 // Solo el tipo: no arrastra el módulo al bundle del hero.
 import type { FiberTunnelHandle } from "../effects/FiberTunnel";
+import {
+  actAnimate,
+  actProgress,
+  chapterLen,
+  chaptersEnabled,
+  spanProgress,
+} from "../../scripts/chapters";
 
 // Modos de fondo que comparten el "chrome" cinematográfico del hero: intro del
 // wordmark, coreografía de entrada y bloqueo de scroll (SPEC 97 y SPEC 100).
@@ -83,6 +90,7 @@ export default function HeroHomeReact({
   const morphRef = useRef<MorphHandle>(null);
   // Handle del shader de fibra: el capítulo del hero le empuja su progreso.
   const fiberRef = useRef<FiberTunnelHandle>(null);
+  const rootRef = useRef<HTMLElement>(null);
   const [morphActive, setMorphActive] = useState(false);
   // Titular (modo cinematic): se revela línea por línea con un barrido de luz.
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -319,6 +327,71 @@ export default function HeroHomeReact({
   // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
   // que verse (el planeta de `cinematic` sí lo pide).
   const softVeil = dotfield || lattice || fiber;
+
+  /* ── Capítulo del hero en modo `fiber` (SPEC 113) ───────────────────────
+     Coreografía de SALIDA. La de ENTRADA (morph FLX→FIBERLUX, bloqueo de
+     scroll) no se toca: es la de SPEC 97/39.
+
+     El wordmark tampoco se toca. En la Home real el wordmark es el <img> del
+     header y la SPEC 39 ya lo acopla con el scroll en sus primeros 320 px;
+     animarlo aquí sería pelearse con un movimiento contrario. Quien retrocede
+     hacia el punto de fuga es el TITULAR. */
+  useEffect(() => {
+    if (!fiber || !chaptersEnabled()) return;
+    const root = rootRef.current;
+    const chapter = root?.closest("[data-chapter]") as HTMLElement | null;
+    if (!root || !chapter) return;
+    // El tramo narrativo puede abarcar más de un capítulo (hero + frases).
+    const narrative = (root.closest("[data-narrative]") as HTMLElement | null) ?? chapter;
+    const len = chapterLen(chapter);
+    const stops: Array<() => void> = [];
+
+    // Acto 1 — se apagan los satélites: subtítulo y botones.
+    const satellites = [
+      root.querySelector("[data-hero-sub]"),
+      root.querySelector("[data-hero-cta]"),
+    ].filter(Boolean) as Element[];
+    if (satellites.length) {
+      stops.push(
+        actAnimate(chapter, len, 0, 0.35, satellites, { opacity: [1, 0], y: [0, 26] })
+      );
+    }
+
+    // Actos 2 y 3 — el titular se sostiene y retrocede hacia el punto de fuga.
+    // `opacity: [1, 1, 0]` aguanta hasta la mitad del acto y recién ahí se va.
+    if (titleRef.current) {
+      stops.push(
+        actAnimate(chapter, len, 0.22, 0.92, titleRef.current, {
+          scale: [1, 1.45],
+          opacity: [1, 1, 0],
+        })
+      );
+    }
+
+    // Fogonazo del núcleo: sube dentro del hero y DECAE al salir. Si se quedara
+    // en su valor final quemaría el texto del capítulo siguiente.
+    stops.push(
+      actProgress(chapter, len, 0, 1, (p) => {
+        fiberRef.current?.setHero(
+          p < 0.7 ? p / 0.7 : Math.max(0, 1 - (p - 0.7) / 0.3)
+        );
+      })
+    );
+
+    // Avance del viaje y apagado del fondo, a lo largo de TODO el tramo
+    // narrativo: monótono (si dependiera del fogonazo, al decaer se viajaría
+    // hacia atrás) y en opacidad 0 el shader deja de renderizar, que es lo que
+    // garantiza que no haya dos canvas WebGL vivos al entrar en Soluciones.
+    stops.push(
+      spanProgress(narrative, (p) => {
+        fiberRef.current?.setTravel(p);
+        fiberRef.current?.setOpacity(p < 0.86 ? 1 : Math.max(0, 1 - (p - 0.86) / 0.14));
+      })
+    );
+
+    return () => stops.forEach((stop) => stop());
+  }, [fiber]);
+
   const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
     cine
@@ -334,6 +407,7 @@ export default function HeroHomeReact({
 
   return (
     <section
+      ref={rootRef}
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
@@ -526,6 +600,10 @@ export default function HeroHomeReact({
           <Suspense fallback={null}>
             <FiberTunnel
               ref={fiberRef}
+              /* `fixed`: el fondo no se corta entre el hero y el capítulo de
+                 frases — es lo que hace que el tramo se lea como una sola
+                 secuencia y no como dos secciones pegadas. */
+              fixed
               className="h-full w-full"
               variant={fiberVariant}
               intensity={fiberIntensity}
@@ -764,6 +842,7 @@ export default function HeroHomeReact({
 
           {hero.subtitle && (
             <p
+              data-hero-sub=""
               className={`mt-6 text-white text-body-lg leading-relaxed max-w-[520px] mx-auto ${
                 mode === "morph" ? "lg:mx-0" : ""
               }`}
@@ -776,6 +855,7 @@ export default function HeroHomeReact({
 
           {buttons.length > 0 && (
             <div
+              data-hero-cta=""
               className={`mt-8 lg:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full sm:w-auto ${
                 mode === "morph" ? "lg:justify-start" : ""
               }`}

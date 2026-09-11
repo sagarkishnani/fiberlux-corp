@@ -44,11 +44,20 @@ export interface FiberTunnelHandle {
   setHero(p: number): void;
   /** 0→1 a lo largo del tramo narrativo. Avanza el viaje (monótono). */
   setTravel(p: number): void;
+  /**
+   * Opacidad del fondo. En 0 además DEJA DE RENDERIZAR: es lo que garantiza
+   * que al entrar en Soluciones no queden dos canvas WebGL vivos (el aurora de
+   * la SPEC 108 arranca justo ahí). El IntersectionObserver no sirve para esto
+   * cuando el host es `fixed`, porque entonces siempre está en viewport.
+   */
+  setOpacity(v: number): void;
 }
 
 interface Props {
   variant?: FiberVariant;
   intensity?: FiberIntensity;
+  /** Host `fixed` en vez de `absolute`: el fondo atraviesa varios capítulos. */
+  fixed?: boolean;
   className?: string;
   /** Se llama si no hay WebGL2 o si el shader no compila. */
   onUnsupported?: () => void;
@@ -215,7 +224,7 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string) {
 }
 
 const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
-  { variant = "tunel", intensity = "medio", className = "", onUnsupported, signalReady },
+  { variant = "tunel", intensity = "medio", fixed = false, className = "", onUnsupported, signalReady },
   ref
 ) {
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -223,7 +232,7 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
   const failedRef = useRef(false);
   /* Estado que el capítulo empuja. Vive en una ref para que escribirlo no
      re-renderice React en cada frame de scroll. */
-  const stateRef = useRef({ hero: 0, travel: 0 });
+  const stateRef = useRef({ hero: 0, travel: 0, opacity: 1 });
 
   /* Igual que en AuroraRibbons: los callbacks van por ref y el efecto NO
      depende de ellos. Si dependiera, un padre con lambda inline re-ejecutaría
@@ -239,6 +248,12 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
     },
     setTravel(p: number) {
       stateRef.current.travel = Math.max(0, Math.min(1, p));
+    },
+    setOpacity(v: number) {
+      const o = Math.max(0, Math.min(1, v));
+      stateRef.current.opacity = o;
+      const host = hostRef.current;
+      if (host) host.style.opacity = String(o);
     },
   }), []);
 
@@ -365,7 +380,8 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
 
     const loop = (now: number) => {
       raf = requestAnimationFrame(loop);
-      if (!visible || document.hidden) return;
+      // Opacidad 0 ⇒ no se dibuja: ni un frame de trabajo fuera del tramo.
+      if (!visible || document.hidden || stateRef.current.opacity <= 0.01) return;
       if (last >= 0) {
         const dt = now - last;
         if (dt < frameMs) return;
@@ -419,7 +435,11 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
   }, [variant, intensity]);
 
   return (
-    <div ref={hostRef} className={`absolute inset-0 ${className}`} aria-hidden="true">
+    <div
+      ref={hostRef}
+      className={`${fixed ? "fixed" : "absolute"} inset-0 ${className}`}
+      aria-hidden="true"
+    >
       <canvas ref={canvasRef} className="block h-full w-full" />
     </div>
   );
