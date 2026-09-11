@@ -40,15 +40,26 @@ onEachPage((cleanup) => {
   const chapters = Array.from(narrative.querySelectorAll<HTMLElement>("[data-chapter]"));
   if (!chapters.length) return;
 
-  const cut = (target: HTMLElement, offset: [string, string]) =>
+  /* UN velo por costura, no uno compartido.
+     Motion cancela la animación anterior al lanzar otra sobre la misma
+     propiedad del mismo elemento: con un solo velo, el corte del final mataba
+     al del medio y solo funcionaba uno. Cada costura recibe su propia capa
+     dentro del contenedor. */
+  const cut = (target: HTMLElement, offset: [string, string]) => {
+    const layer = document.createElement("div");
+    layer.style.cssText =
+      "position:absolute; inset:0; background:#0A0A0A; opacity:0; pointer-events:none;";
+    veil.appendChild(layer);
+    cleanup(() => layer.remove());
     // `scroll()` deja un listener global vivo: se cancela antes del swap de la
     // siguiente navegación (SPEC 110).
     cleanup(
       scroll(
-        animate(veil, { opacity: [0, PEAK, 0] }, { ease: "linear" }),
+        animate(layer, { opacity: [0, PEAK, 0] }, { ease: "linear" }),
         { target, offset } as never
       )
     );
+  };
 
   // Un corte por cada traspaso interno (hero → frases, frases → …).
   chapters.slice(1).forEach((chapter) => cut(chapter, ["start end", "start start"]));

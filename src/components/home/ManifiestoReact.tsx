@@ -56,37 +56,38 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
       });
     });
 
+    /* UNA sola animación por elemento y propiedad.
+       Motion cancela la animación anterior cuando se lanza otra sobre la misma
+       propiedad del mismo elemento: con un tween de entrada y otro de salida
+       por separado, el de salida mataba al de entrada y las frases se quedaban
+       en el primer fotograma del tween superviviente. Todo el ciclo de vida va
+       en una sola llamada, con keyframes repartidos por igual a lo largo del
+       turno de la frase: entra · aguanta · se va. */
     acts.forEach((actEl, i) => {
       const lines = Array.from(actEl.querySelectorAll<HTMLElement>("[data-line]"));
       const from = i * slot;
+      const last = i === acts.length - 1;
 
-      // Entrada: la frase aparece y sus líneas suben desde detrás de la máscara.
-      stops.push(actAnimate(chapter, len, from, from + slot * 0.2, actEl, { opacity: [0, 1] }));
-      lines.forEach((line, k) => {
-        const lead = k * slot * 0.06; // la segunda línea entra un pelo después
+      stops.push(
+        actAnimate(chapter, len, from, from + slot, actEl, {
+          opacity: last ? [0, 1, 1, 1] : [0, 1, 1, 0],
+        })
+      );
+
+      lines.forEach((line) => {
         stops.push(
-          actAnimate(chapter, len, from + lead, from + lead + slot * 0.34, line, {
-            transform: ["translateY(110%)", "translateY(0%)"],
+          actAnimate(chapter, len, from, from + slot, line, {
+            transform: last
+              ? ["translateY(110%)", "translateY(0%)", "translateY(0%)", "translateY(0%)"]
+              : [
+                  "translateY(110%)",
+                  "translateY(0%)",
+                  "translateY(0%)",
+                  "translateY(-110%)",
+                ],
           })
         );
       });
-
-      // Relevo: todas menos la última se van hacia arriba para dejar sitio.
-      if (i < acts.length - 1) {
-        lines.forEach((line, k) => {
-          const lead = k * slot * 0.04;
-          stops.push(
-            actAnimate(chapter, len, from + slot * 0.66 + lead, from + slot * 0.94 + lead, line, {
-              transform: ["translateY(0%)", "translateY(-110%)"],
-            })
-          );
-        });
-        stops.push(
-          actAnimate(chapter, len, from + slot * 0.78, from + slot * 0.98, actEl, {
-            opacity: [1, 0],
-          })
-        );
-      }
     });
 
     /* `scroll()` deja un listener global vivo: hay que pararlo o sobrevive al

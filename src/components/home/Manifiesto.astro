@@ -29,8 +29,12 @@ const items = ((data?.home as any)?.manifiesto?.items ?? []).filter(Boolean);
       id="ch-frases"
       stageClass="flex items-center"
     >
+      {/* `client:load` y no `client:visible`: el estado inicial (frases ocultas)
+          lo escribe la isla al hidratar, y con `client:visible` eso ocurre
+          recién al llegar al capítulo — hasta entonces las tres frases se ven
+          apiladas en la misma celda de la grilla. */}
       <ManifiestoReact
-        client:visible
+        client:load
         query={query}
         variables={variables}
         data={data}
