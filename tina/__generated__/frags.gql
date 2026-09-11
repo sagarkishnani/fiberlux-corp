@@ -46,6 +46,11 @@ fragment HomeParts on Home {
       __typename
       intensity
     }
+    fiber {
+      __typename
+      variant
+      intensity
+    }
   }
   services {
     __typename
@@ -91,6 +96,16 @@ fragment HomeParts on Home {
       company
       avatar
       logo
+    }
+  }
+  manifiesto {
+    __typename
+    items {
+      __typename
+      line1
+      line2
+      line1_en
+      line2_en
     }
   }
   stats {

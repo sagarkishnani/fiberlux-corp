@@ -19,6 +19,8 @@ import HtmlInjection from "../components/shared/HtmlInjection.astro";
 // El componente se conserva por si se vuelve al hero 3D.
 // import SitePreloader from "../components/shared/SitePreloader";
 import NebulaBackdrop from "../components/shared/NebulaBackdrop.astro";
+import ScrollChapter from "../components/shared/ScrollChapter.astro";
+import Manifiesto from "../components/home/Manifiesto.astro";
 import homeContent from "../content/home/index.json";
 import serviciosContent from "../content/servicios/index.json";
 import soporteContent from "../content/soporte-tecnico/index.json";
@@ -34,6 +36,11 @@ import soporteContent from "../content/soporte-tecnico/index.json";
 const heroDotfield = (homeContent as any).hero?.dotfield ?? {};
 const nebulaOn = (homeContent as any).hero?.heroBackground === "dotfield";
 const nebulaIntensity = heroDotfield.intensity ?? "medio";
+
+// SPEC 113 — tramo narrativo: solo en modo `fiber` el hero pasa a ser un
+// capítulo de scroll. Con cualquier otro modo el markup queda exactamente como
+// estaba, para que cambiar `heroBackground` desde Tina no deje residuos.
+const heroFiber = (homeContent as any).hero?.heroBackground === "fiber";
 
 const prefetchScenes = [
   serviciosContent.splineSceneUrl,
@@ -71,9 +78,29 @@ const prefetchScenes = [
 
   <main class="bg-greyscale-darkest">
     {/* -mt-16 hace que el hero se solape con el HeaderReact transparente */}
-    <div class="-mt-16">
-      <HeroHome />
-    </div>
+    {
+      heroFiber ? (
+        // `data-narrative` envuelve todos los capítulos del tramo: es el rango
+        // sobre el que avanza el viaje del fondo y sobre el que se apaga.
+        <div data-narrative>
+          {/* Corte de película entre capítulos (SPEC 113). Sin marca dentro:
+              el cliente pidió no poner el isotipo por ahora. */}
+          <div
+            data-narrative-cut
+            aria-hidden="true"
+            style="position:fixed; inset:0; z-index:40; pointer-events:none;"
+          />
+          <ScrollChapter len={3} id="ch-hero" class="-mt-16">
+            <HeroHome />
+          </ScrollChapter>
+          <Manifiesto />
+        </div>
+      ) : (
+        <div class="-mt-16">
+          <HeroHome />
+        </div>
+      )
+    }
     <HtmlInjection location="home-after-hero" />
     <div class="-mt-16 relative z-10">
       {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) →

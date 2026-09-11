@@ -1,0 +1,63 @@
+---
+/**
+ * Capítulo de scroll (SPEC 113) — el contenedor del motor de capítulos.
+ *
+ *   <ScrollChapter len={3} id="ch-hero">…</ScrollChapter>
+ *
+ * El wrapper mide `len` alturas de viewport y es lo que genera el recorrido;
+ * el hijo `[data-chapter-stage]` es lo que queda clavado mientras se scrollea.
+ * Las animaciones se atan al progreso del wrapper con los helpers de
+ * `src/scripts/chapters.ts` — nunca con `pin`.
+ *
+ * Recordatorio (está explicado en chapters.ts): el tramo realmente clavado es
+ * `(len − 1)` pantallas, no `len`. La última es el traspaso al capítulo
+ * siguiente. Por eso un capítulo de un solo acto ya necesita `len = 2`.
+ *
+ * Con `prefers-reduced-motion` el capítulo deja de ser alto y el panel deja de
+ * ser sticky: el contenido se lee de corrido, sin scroll extra.
+ */
+interface Props {
+  /** Alturas de viewport que ocupa el capítulo (recorrido útil = len − 1). */
+  len?: number;
+  id?: string;
+  class?: string;
+  /** Clases para el panel clavado (fondos, layout interno). */
+  stageClass?: string;
+}
+
+const { len = 3, id, class: cls, stageClass } = Astro.props;
+---
+
+<section data-chapter id={id} style={`--len:${len}`} class:list={["chapter", cls]}>
+  <div data-chapter-stage class:list={["chapter-stage", stageClass]}>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .chapter {
+    position: relative;
+    /* `svh` y no `vh`: en iOS la barra del navegador cambia la altura del
+       viewport durante el scroll y con `vh` el recorrido del capítulo se
+       recalcularía a mitad de camino. */
+    height: calc(var(--len) * 100svh);
+  }
+
+  .chapter-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chapter {
+      height: auto;
+    }
+    .chapter-stage {
+      position: relative;
+      height: auto;
+      overflow: visible;
+    }
+  }
+</style>
