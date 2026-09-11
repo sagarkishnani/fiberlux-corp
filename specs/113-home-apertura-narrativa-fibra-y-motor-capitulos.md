@@ -256,3 +256,16 @@ El criterio de la Sección 8 ("no hay ninguna línea horizontal") se incumplía 
 2. **Corte al soltarse el panel.** La vignette inferior apaga el pie del hero a `#0a0a0a` opaco para empalmar con la sección siguiente. En `fiber` no hay tal sección: el capítulo de frases comparte el mismo canvas. Al despegarse el panel, ese negro sólido entraba en pantalla contra el fondo intacto. En `fiber` la vignette inferior no se monta, y los otros dos velos que sí llegaban con opacidad al borde (el `lg:hidden` de mobile, ~0.35 α; la vignette izquierda, hasta 0.55 α) se apagan con `mask-image` de 72 % a 100 % para llegar en 0 al borde.
 
 El velo del corte de película (`narrativeCut`) no tapa esto: es una capa uniforme sobre todo el viewport, así que atenúa los dos lados del escalón por igual pero no lo borra, y en los extremos de su ventana está en opacidad ~0 — que es justo donde se ve.
+
+### Corolario — el velo del corte se quedó sin trabajo (y apagaba el fondo)
+
+Arreglada la costura en el origen, el `narrativeCut` del traspaso **hero → frases** dejó de tener qué tapar: el fondo es el mismo canvas a los dos lados y los titulares no se solapan (el del hero ya se fue en el `0.92` de su capítulo; las frases entran después). Pero seguía subiendo a `0.92` de negro sobre **una pantalla entera de scroll** — en desktop pasa rápido con la rueda, en un teléfono ese traspaso se recorre con el dedo y se lee como que el efecto se apagó ("solo es un fondo negro cuando salen las frases", reporte del cliente, 11 sep 2026).
+
+El velo pasa a tener dos valores, porque las dos costuras no son la misma cosa:
+
+| Costura | Pico | Por qué |
+| --- | --- | --- |
+| Entre capítulos (`hero → frases`) | `0.4` | Solo marca el cambio de capítulo. No hay fondo distinto ni titulares solapados que tapar. |
+| Fin del tramo (`frases → SolucionesStack`) | `0.92` | Aquí sí: la última frase sale mientras entra "Soluciones para tu negocio", y además cambia el fondo. Verificado que con `0.4` los dos titulares se leen a la vez. |
+
+También se corrigió el **fallback sin WebGL2** del modo `fiber`: estaba acotado a la sección del hero (`absolute`), así que al soltarse el panel el capítulo de frases se quedaba en negro puro. Ahora es `fixed` mientras el motor de capítulos esté encendido y se apaga con el mismo perfil que el canvas (`fiberFallbackRef` en el `spanProgress` del tramo).

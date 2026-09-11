@@ -14,6 +14,11 @@
  *
  * Accesibilidad: con prefers-reduced-motion no anima (el CSS los muestra tal cual).
  * Anti-FOUC: el estado oculto lo pone el CSS gated por `.reveal-js` (solo con JS).
+ *
+ * Los elementos NO se cablean una sola vez al cargar: un `MutationObserver`
+ * recoge los que aparezcan después (ver el blindaje al final del archivo). Como
+ * el estado oculto es CSS, un nodo sin cablear no se queda "sin animación" sino
+ * INVISIBLE, y React reemplaza nodos más de lo que parece.
  */
 import { animate, inView, scroll } from "motion";
 import { whenHydrated } from "./whenHydrated";
@@ -88,108 +93,175 @@ function revealOut(el: HTMLElement, dir: string, dist: number, dur: number) {
 /* Scrub: fade + desplazamiento ligados al scroll. Entra (desde su lado) al
    aparecer y se desvanece al salir; simétrico al subir. Para bloques de 2
    columnas (ej. Misión/Visión). */
-function initScrub(cleanup: Cleanup) {
+function wireScrub(el: HTMLElement, mobile: boolean, cleanup: Cleanup) {
   // En mobile el bloque ocupa casi toda la pantalla: con la ventana de desktop
   // (25%/65%) el texto pasaba demasiado tiempo desvanecido con el contenedor aún
   // visible. Ahí la entrada y la salida se hacen más cortas (y el recorrido más
   // chico), así el contenido está a plena opacidad casi todo el paso.
-  const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
+  if (skipForBreakpoint(el, mobile)) return;
   const times = mobile ? [0, 0.12, 0.88, 1] : [0, 0.25, 0.65, 1];
-  document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => cleanup(whenHydrated(el, (el) => {
-    if (skipForBreakpoint(el, mobile)) return;
-    const dir = (el.dataset.reveal || "up").toLowerCase();
-    // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
-    // ×1.7 en la misma dirección (no solo fade).
-    const dist = Number(el.dataset.revealDistance || (mobile ? 56 : 100));
-    const enter = offsetsFor(dir, dist);
-    const exit = offsetsFor(dir, dist * 1.7); // la salida se aleja ×1.7
-    const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
-    if (enter.x || exit.x) kf.x = [enter.x, 0, 0, exit.x];
-    if (enter.y || exit.y) kf.y = [enter.y, 0, 0, exit.y];
-    // `scroll()` engancha un listener global: se cancela antes del swap de la
-    // siguiente navegación (SPEC 110).
-    cleanup(
-      scroll(
-        // Desktop: 0–25% entra, 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
-        // Mobile: 0–12% / 12–88% / 88–100%.
-        animate(el, kf as any, { times, ease: "linear" }),
-        { target: el, offset: ["start end", "end start"] }
-      )
-    );
-  })));
+  const dir = (el.dataset.reveal || "up").toLowerCase();
+  // Más agresivo (como on.pe): distancia 100 por defecto; la salida se aleja
+  // ×1.7 en la misma dirección (no solo fade).
+  const dist = Number(el.dataset.revealDistance || (mobile ? 56 : 100));
+  const enter = offsetsFor(dir, dist);
+  const exit = offsetsFor(dir, dist * 1.7); // la salida se aleja ×1.7
+  const kf: Record<string, number[]> = { opacity: [0, 1, 1, 0] };
+  if (enter.x || exit.x) kf.x = [enter.x, 0, 0, exit.x];
+  if (enter.y || exit.y) kf.y = [enter.y, 0, 0, exit.y];
+  // `scroll()` engancha un listener global: se cancela antes del swap de la
+  // siguiente navegación (SPEC 110).
+  cleanup(
+    scroll(
+      // Desktop: 0–25% entra, 25–65% se mantiene, 65–100% sale (slide ×1.7 + fade).
+      // Mobile: 0–12% / 12–88% / 88–100%.
+      animate(el, kf as any, { times, ease: "linear" }),
+      { target: el, offset: ["start end", "end start"] }
+    )
+  );
 }
 
-function initReveal(cleanup: Cleanup) {
-  const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
-  document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => cleanup(whenHydrated(el, (el) => {
-    if (el.dataset.revealScrub != null) return; // lo maneja initScrub
-    if (skipForBreakpoint(el, mobile)) return;
-    const dir = (el.dataset.reveal || "up").toLowerCase();
-    const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
-    const dur = Number(el.dataset.revealDuration || DEFAULT_DURATION);
-    const delay = Number(el.dataset.revealDelay || 0);
-    const hasStagger = el.dataset.revealStagger != null;
-    const stagger = hasStagger ? Number(el.dataset.revealStagger) : 0;
-    const repeat = el.dataset.revealRepeat != null;
+function wireReveal(el: HTMLElement, mobile: boolean, cleanup: Cleanup) {
+  if (el.dataset.revealScrub != null) return; // lo maneja wireScrub
+  if (skipForBreakpoint(el, mobile)) return;
+  const dir = (el.dataset.reveal || "up").toLowerCase();
+  const dist = Number(el.dataset.revealDistance || DEFAULT_DISTANCE);
+  const dur = Number(el.dataset.revealDuration || DEFAULT_DURATION);
+  const delay = Number(el.dataset.revealDelay || 0);
+  const hasStagger = el.dataset.revealStagger != null;
+  const stagger = hasStagger ? Number(el.dataset.revealStagger) : 0;
+  const repeat = el.dataset.revealRepeat != null;
 
-    let stop: (() => void) | undefined;
-    const onEnter = () => {
+  let stop: (() => void) | undefined;
+  const onEnter = () => {
+    if (hasStagger) {
+      Array.from(el.children).forEach((kid, i) =>
+        revealIn(kid as HTMLElement, dir, dist, dur, delay + i * stagger)
+      );
+    } else {
+      revealIn(el, dir, dist, dur, delay);
+    }
+    if (!repeat) {
+      stop?.(); // una sola vez
+      return;
+    }
+    // Repeat: al salir del viewport, volver al estado oculto (re-anima al re-entrar).
+    return () => {
       if (hasStagger) {
-        Array.from(el.children).forEach((kid, i) =>
-          revealIn(kid as HTMLElement, dir, dist, dur, delay + i * stagger)
-        );
+        Array.from(el.children).forEach((kid) => revealOut(kid as HTMLElement, dir, dist, dur));
       } else {
-        revealIn(el, dir, dist, dur, delay);
+        revealOut(el, dir, dist, dur);
       }
-      if (!repeat) {
-        stop?.(); // una sola vez
-        return;
-      }
-      // Repeat: al salir del viewport, volver al estado oculto (re-anima al re-entrar).
-      return () => {
-        if (hasStagger) {
-          Array.from(el.children).forEach((kid) => revealOut(kid as HTMLElement, dir, dist, dur));
-        } else {
-          revealOut(el, dir, dist, dur);
-        }
-      };
     };
-    stop = inView(el, onEnter, { amount: 0.2 });
-    cleanup(() => stop?.());
-  })));
+  };
+  stop = inView(el, onEnter, { amount: 0.2 });
+  cleanup(() => stop?.());
 }
 
-function initSvgDraw(cleanup: Cleanup) {
-  document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => cleanup(whenHydrated(svg, (svg) => {
-    const dur = Number(svg.dataset.drawDuration || 1.2);
-    const shapes: SVGGeometryElement[] = [];
-    svg.querySelectorAll<SVGGeometryElement>("path, line, polyline, polygon, circle, ellipse, rect").forEach((s) => {
-      try {
-        const len = s.getTotalLength?.();
-        if (!len || !isFinite(len)) return;
-        s.style.strokeDasharray = String(len);
-        s.style.strokeDashoffset = String(len);
-        shapes.push(s);
-      } catch {}
-    });
-    if (!shapes.length) return;
-    let stop: (() => void) | undefined;
-    stop = inView(
-      svg,
-      () => {
-        shapes.forEach((s) => animate(s, { strokeDashoffset: 0 } as any, { duration: dur, ease: EASE }));
-        stop?.();
-      },
-      { amount: 0.2 }
-    );
-    cleanup(() => stop?.());
-  })));
+function wireSvgDraw(svg: SVGSVGElement, cleanup: Cleanup) {
+  const dur = Number(svg.dataset.drawDuration || 1.2);
+  const shapes: SVGGeometryElement[] = [];
+  svg.querySelectorAll<SVGGeometryElement>("path, line, polyline, polygon, circle, ellipse, rect").forEach((s) => {
+    try {
+      const len = s.getTotalLength?.();
+      if (!len || !isFinite(len)) return;
+      s.style.strokeDasharray = String(len);
+      s.style.strokeDashoffset = String(len);
+      shapes.push(s);
+    } catch {}
+  });
+  if (!shapes.length) return;
+  let stop: (() => void) | undefined;
+  stop = inView(
+    svg,
+    () => {
+      shapes.forEach((s) => animate(s, { strokeDashoffset: 0 } as any, { duration: dur, ease: EASE }));
+      stop?.();
+    },
+    { amount: 0.2 }
+  );
+  cleanup(() => stop?.());
 }
+
+/* Todo lo que este módulo cablea, para detectar de una pasada si un nodo recién
+   insertado le incumbe. */
+const SEL = "[data-reveal], [data-reveal-scrub], [data-svg-draw]";
 
 onEachPage((cleanup) => {
   if (typeof window === "undefined") return;
   if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
-  initReveal(cleanup);
-  initScrub(cleanup);
-  initSvgDraw(cleanup);
+  const mobile = window.matchMedia?.("(max-width: 767px)").matches ?? false;
+
+  /* Un set POR TIPO y no uno compartido: un mismo elemento puede ser
+     `[data-reveal]` y `[data-reveal-scrub]` a la vez (el scrub lee la dirección
+     de `data-reveal`), y con un set único el primer barrido lo marcaría y el
+     segundo lo saltaría.
+
+     Y viven DENTRO de `onEachPage`, no en el módulo: con View Transitions un
+     nodo puede sobrevivir al swap (`transition:persist`) y ahí hay que
+     recablearlo — su `inView` anterior lo mató el `cleanup`. */
+  const hechos = {
+    reveal: new WeakSet<Element>(),
+    scrub: new WeakSet<Element>(),
+    svg: new WeakSet<Element>(),
+  };
+
+  const barrer = () => {
+    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+      if (hechos.reveal.has(el)) return;
+      hechos.reveal.add(el);
+      cleanup(whenHydrated(el, (e) => wireReveal(e, mobile, cleanup)));
+    });
+    document.querySelectorAll<HTMLElement>("[data-reveal-scrub]").forEach((el) => {
+      if (hechos.scrub.has(el)) return;
+      hechos.scrub.add(el);
+      cleanup(whenHydrated(el, (e) => wireScrub(e, mobile, cleanup)));
+    });
+    document.querySelectorAll<SVGSVGElement>("[data-svg-draw]").forEach((svg) => {
+      if (hechos.svg.has(svg)) return;
+      hechos.svg.add(svg);
+      cleanup(whenHydrated(svg, (e) => wireSvgDraw(e, cleanup)));
+    });
+  };
+
+  barrer();
+
+  /* Blindaje: cablear también lo que aparezca DESPUÉS.
+
+     El estado oculto lo pone el CSS (`.reveal-js [data-reveal]`), así que un
+     nodo que nadie observa no se queda "sin animación": se queda INVISIBLE.
+     Y los nodos se reemplazan más de lo que parece — el caso real (11 sep 2026)
+     fue el blog: una fecha formateada en la zona local daba un texto distinto en
+     el build (UTC) y en el navegador (Lima), React descartaba el árbol SSR y
+     volvía a renderizar la isla entera; los nodos nuevos ya no eran los que
+     había observado el barrido inicial y la sección quedaba en blanco. En
+     producción React no dice por qué, así que el síntoma es "no salen los
+     posts" sin más pista. Arreglada la fecha, esto evita que cualquier otro
+     desajuste (otra fecha, un número, contenido que cambia entre build y
+     cliente) vuelva a esconder una sección entera.
+
+     Una sola pasada por ráfaga: un re-render de React dispara decenas de
+     mutaciones seguidas y el barrido es barato pero no gratis. */
+  let pendiente = 0;
+  const observer = new MutationObserver((records) => {
+    for (const r of records) {
+      for (const n of r.addedNodes) {
+        if (n.nodeType !== 1) continue;
+        const el = n as Element;
+        if (!el.matches(SEL) && !el.querySelector(SEL)) continue;
+        if (!pendiente) {
+          pendiente = requestAnimationFrame(() => {
+            pendiente = 0;
+            barrer();
+          });
+        }
+        return;
+      }
+    }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+  cleanup(() => {
+    observer.disconnect();
+    if (pendiente) cancelAnimationFrame(pendiente);
+  });
 });

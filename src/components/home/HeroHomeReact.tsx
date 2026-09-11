@@ -90,6 +90,9 @@ export default function HeroHomeReact({
   const morphRef = useRef<MorphHandle>(null);
   // Handle del shader de fibra: el capítulo del hero le empuja su progreso.
   const fiberRef = useRef<FiberTunnelHandle>(null);
+  /* Fallback CSS del modo `fiber` (sin WebGL2). Se maneja por ref porque su
+     opacidad la empuja el scroll, igual que la del canvas. */
+  const fiberFallbackRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLElement>(null);
   // Sin WebGL2 el shader se esconde solo y avisa: el hero cae a un halo CSS.
   const [fiberFailed, setFiberFailed] = useState(false);
@@ -325,6 +328,11 @@ export default function HeroHomeReact({
   const dotfield = mode === "dotfield";
   const lattice = mode === "lattice";
   const fiber = mode === "fiber";
+  /* El tramo narrativo está realmente montado (modo `fiber` + motor de
+     capítulos encendido). Con `prefers-reduced-motion` los capítulos no son
+     altos ni sticky, el hero vuelve a ser una sección normal y el fondo NO
+     debe ser `fixed`: se quedaría pegado al viewport toda la página. */
+  const [fiberSpan, setFiberSpan] = useState(false);
   // dotfield y lattice comparten tratamiento de velo: en ambos el campo de
   // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
   // que verse (el planeta de `cinematic` sí lo pide).
@@ -362,6 +370,7 @@ export default function HeroHomeReact({
     const narrative = (root.closest("[data-narrative]") as HTMLElement | null) ?? chapter;
     const len = chapterLen(chapter);
     const stops: Array<() => void> = [];
+    setFiberSpan(true);
 
     // Acto 1 — se apagan los satélites: subtítulo y botones.
     const satellites = [
@@ -401,8 +410,14 @@ export default function HeroHomeReact({
     // garantiza que no haya dos canvas WebGL vivos al entrar en Soluciones.
     stops.push(
       spanProgress(narrative, (p) => {
+        const op = p < 0.86 ? 1 : Math.max(0, 1 - (p - 0.86) / 0.14);
         fiberRef.current?.setTravel(p);
-        fiberRef.current?.setOpacity(p < 0.86 ? 1 : Math.max(0, 1 - (p - 0.86) / 0.14));
+        fiberRef.current?.setOpacity(op);
+        /* El fallback sin WebGL2 no vive dentro del canvas, así que hay que
+           apagarlo aparte — con el mismo perfil, o se quedaría encendido sobre
+           `SolucionesStack`. */
+        const fb = fiberFallbackRef.current;
+        if (fb) fb.style.opacity = String(op);
       })
     );
 
@@ -621,8 +636,14 @@ export default function HeroHomeReact({
           base, en la misma paleta que el shader. */}
       {fiber && fiberFailed && (
         <div
+          ref={fiberFallbackRef}
           aria-hidden="true"
-          className="absolute inset-0 z-0"
+          /* `fixed` igual que el canvas al que sustituye: el fondo del tramo
+             narrativo tiene que seguir vivo en el capítulo de frases. Acotado a
+             la sección, el capítulo siguiente se quedaba en negro puro en cuanto
+             el panel del hero se soltaba — el mismo corte que el del canvas,
+             pero total. */
+          className={`${fiberSpan ? "fixed" : "absolute"} inset-0 z-0`}
           style={{
             background:
               "radial-gradient(115% 85% at 50% 48%, rgba(150,35,122,0.32) 0%, rgba(59,14,48,0.45) 45%, rgba(10,10,10,1) 100%)",

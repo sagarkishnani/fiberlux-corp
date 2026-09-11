@@ -141,3 +141,19 @@ Los wrappers envuelven los elementos (no reemplazan el `sol-fade` interno que co
 - Animar el eyebrow y las flechas del slider.
 
 Cada uno, si aterriza, va en su propio spec.
+
+---
+
+## Anexo — el cableado no puede ser de una sola pasada (11 sep 2026)
+
+`reveal.ts` cableaba los `[data-reveal]` una vez, al cargar. Eso convierte cualquier reemplazo de nodos en **contenido invisible**, no en "contenido sin animación": el estado oculto lo pone el CSS (`.reveal-js [data-reveal]`), así que un nodo que nadie observa se queda en `opacity: 0` para siempre.
+
+El caso real fue el blog en el deploy. La fecha del post se formateaba en la zona horaria local, así que el build (UTC) escribía `June 27` y el navegador (Lima, UTC−5) `June 26`; ese desajuste de texto es un hydration mismatch, React descartaba el árbol del SSR y volvía a renderizar la isla entera, y los nodos nuevos ya no eran los que había observado el barrido inicial. Resultado: los posts estaban en el DOM —se leían por consola— pero la sección se veía en blanco. En producción React solo dice `Minified React error #418`, así que el síntoma que llega es "no salen los posts".
+
+La causa se arregló en su sitio (`timeZone: "UTC"` en los tres `formatDate` del blog). El cableado se blinda aparte, porque el mecanismo se repite con cualquier otro contenido que difiera entre build y cliente:
+
+- El cuerpo de cada `forEach` pasa a una función por elemento (`wireReveal`, `wireScrub`, `wireSvgDraw`) y el barrido las invoca.
+- Un `MutationObserver` sobre `document.body` vuelve a barrer cuando aparece un nodo que le incumbe. **Una sola pasada por ráfaga** (`requestAnimationFrame`): un re-render de React dispara decenas de mutaciones seguidas.
+- Un `WeakSet` **por tipo** evita recablear (uno compartido fallaría: un elemento puede ser `[data-reveal]` y `[data-reveal-scrub]` a la vez). Viven dentro de `onEachPage`, no en el módulo, para que un nodo con `transition:persist` se recablee tras el swap.
+
+Medido: **0 barridos** en un recorrido completo de la home —la página con más movimiento de DOM— así que en régimen el observador no cuesta nada; **1 barrido** por inserción después de tres navegaciones con View Transitions, que confirma que el `cleanup` desconecta el observador anterior y no se acumulan.

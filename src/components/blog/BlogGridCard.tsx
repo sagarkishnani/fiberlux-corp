@@ -19,6 +19,15 @@ interface BlogGridCardProps {
   slug: string;
 }
 
+/* `timeZone: "UTC"` NO es decorativo. La fecha llega de Tina como medianoche
+   UTC (`2026-06-27T00:00:00.000Z`) y sin fijar zona se formatea en la LOCAL:
+   el build (Amplify, UTC) escribe "June 27" y un navegador en Lima (UTC−5)
+   escribe "June 26". Esa diferencia de texto es un hydration mismatch, React
+   descarta el árbol SSR y vuelve a renderizar la isla entera — y los nodos
+   nuevos ya no son los que observó `reveal.ts`, así que se quedan en
+   `opacity: 0` para siempre: el blog aparece vacío. Fijando la zona, el texto
+   es el mismo en el build y en cualquier navegador (y es el día que el editor
+   eligió en el CMS). */
 function formatDate(dateStr: string): string {
   try {
     const d = new Date(dateStr);
@@ -26,6 +35,7 @@ function formatDate(dateStr: string): string {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: 'UTC',
     });
   } catch {
     return dateStr;
