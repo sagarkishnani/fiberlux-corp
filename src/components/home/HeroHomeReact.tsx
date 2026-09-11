@@ -329,6 +329,21 @@ export default function HeroHomeReact({
   // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
   // que verse (el planeta de `cinematic` sí lo pide).
   const softVeil = dotfield || lattice || fiber;
+  /* Máscara de pie para los velos del hero en modo `fiber` (SPEC 113).
+     Ahí el fondo es un canvas `fixed` que sigue vivo en el capítulo siguiente:
+     cualquier velo que llegue con algo de opacidad al borde inferior del panel
+     deja un CORTE horizontal en cuanto el panel se despega y ese borde entra en
+     pantalla (arriba el velo, abajo el mismo fondo sin velo). Se apagan antes
+     de llegar al borde. */
+  const edgeFade = fiber
+    ? // El apagado va al final y no a media altura: el velo tiene que seguir
+      // sosteniendo la legibilidad del subtítulo y los botones (en mobile es lo
+      // único que separa el texto del fondo).
+      "linear-gradient(180deg, #000 0%, #000 72%, transparent 100%)"
+    : undefined;
+  const edgeFadeStyle: CSSProperties | undefined = edgeFade
+    ? { maskImage: edgeFade, WebkitMaskImage: edgeFade }
+    : undefined;
 
   /* ── Capítulo del hero en modo `fiber` (SPEC 113) ───────────────────────
      Coreografía de SALIDA. La de ENTRADA (morph FLX→FIBERLUX, bloqueo de
@@ -413,6 +428,13 @@ export default function HeroHomeReact({
       className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
+          : fiber
+          ? // El panel clavado del capítulo mide 100svh (ScrollChapter). Si el
+            // hero mide menos (en desktop, `lg:min-h-[900px]` contra un viewport
+            // más alto) queda una franja al pie donde el fondo `fixed` se ve sin
+            // los velos del hero: una raya horizontal fija durante todo el
+            // capítulo. Aquí el hero mide lo mismo que su panel.
+            "min-h-[100svh]"
           : cine
           ? // Mobile: hero a pantalla completa con el contenido centrado
             // verticalmente (ver el div de contenido). Desktop, hero alto.
@@ -640,6 +662,7 @@ export default function HeroHomeReact({
           aria-hidden="true"
           className="lg:hidden pointer-events-none absolute inset-0 z-[1]"
           style={{
+            ...edgeFadeStyle,
             background: lattice
               ? // La retícula es tenue y pareja, y en mobile ya va a menos
                 // densidad: con el velo de los otros modos desaparecía entera.
@@ -677,21 +700,30 @@ export default function HeroHomeReact({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
+          ...edgeFadeStyle,
           background:
             "linear-gradient(90deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.25) 35%, rgba(10,10,10,0) 60%)",
         }}
       />
 
-      {/* Vignette inferior — fade largo que apaga el waveform a negro sólido bien
-          antes del borde, para empalmar sin costura ni rayas con la sección siguiente. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-80 md:h-[26rem] z-[1]"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.45) 38%, rgba(10,10,10,0.82) 60%, #0a0a0a 80%, #0a0a0a 100%)",
-        }}
-      />
+      {/* Vignette inferior — fade largo que apaga el fondo a negro sólido bien
+          antes del borde, para empalmar sin costura ni rayas con la sección
+          siguiente.
+
+          NO en modo `fiber`: ahí no hay "sección siguiente" con fondo propio —
+          el capítulo de frases comparte el mismo canvas `fixed`. Apagar el pie
+          del hero a negro sólido contra ese fondo intacto es justo lo que
+          producía el corte horizontal al salir del hero. */}
+      {!fiber && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-80 md:h-[26rem] z-[1]"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.45) 38%, rgba(10,10,10,0.82) 60%, #0a0a0a 80%, #0a0a0a 100%)",
+          }}
+        />
+      )}
 
       {/* Modo morph: luces de color animadas en zonas del hero (dinamismo).
           Blend screen sobre el negro; se ubican en esquinas/izquierda para no

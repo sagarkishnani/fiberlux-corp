@@ -245,3 +245,14 @@ Cada paso deja el sitio compilando y funcionando.
 4. **`scroll()` y View Transitions.** Deja listener global; sin registrar la parada en el `cleanup` de `onEachPage` se acumulan entre navegaciones (SPEC 110).
 5. **`100svh` en iOS.** La barra del navegador cambia la altura del viewport durante el scroll y el recorrido de un capítulo se recalcula. `svh` es la unidad correcta, pero conviene verificar en dispositivo real que el relevo de frases no salta.
 6. **El shader en equipo ligero.** Hay auto-degradado, pero la medición de fps en un equipo modesto sigue siendo requisito duro del cliente y no se ha hecho todavía (mismo pendiente que dejó la SPEC 112).
+
+---
+
+## Anexo — la línea horizontal del pie del panel (11 sep 2026)
+
+El criterio de la Sección 8 ("no hay ninguna línea horizontal") se incumplía por dos motivos, los dos del mismo origen: **el fondo es un canvas `fixed` que sigue vivo fuera del hero, pero los velos del hero terminan en el borde de su panel**. Donde ese borde cae dentro del viewport, arriba se ve el fondo con velo y abajo el mismo fondo sin velo — un escalón de brillo, no un artefacto del shader.
+
+1. **Franja fija al pie, durante todo el capítulo.** El panel de `ScrollChapter` mide `100svh`, pero el hero traía `lg:min-h-[900px]`: en cualquier desktop más alto que 900 px el `<section>` quedaba más corto que su panel (936 px contra 968 px, medido a 1905×968) y esa franja mostraba el canvas crudo contra el negro sólido de la vignette inferior. En `fiber` el hero pasa a `min-h-[100svh]`, la misma medida del panel.
+2. **Corte al soltarse el panel.** La vignette inferior apaga el pie del hero a `#0a0a0a` opaco para empalmar con la sección siguiente. En `fiber` no hay tal sección: el capítulo de frases comparte el mismo canvas. Al despegarse el panel, ese negro sólido entraba en pantalla contra el fondo intacto. En `fiber` la vignette inferior no se monta, y los otros dos velos que sí llegaban con opacidad al borde (el `lg:hidden` de mobile, ~0.35 α; la vignette izquierda, hasta 0.55 α) se apagan con `mask-image` de 72 % a 100 % para llegar en 0 al borde.
+
+El velo del corte de película (`narrativeCut`) no tapa esto: es una capa uniforme sobre todo el viewport, así que atenúa los dos lados del escalón por igual pero no lo borra, y en los extremos de su ventana está en opacidad ~0 — que es justo donde se ve.
