@@ -91,6 +91,8 @@ export default function HeroHomeReact({
   // Handle del shader de fibra: el capítulo del hero le empuja su progreso.
   const fiberRef = useRef<FiberTunnelHandle>(null);
   const rootRef = useRef<HTMLElement>(null);
+  // Sin WebGL2 el shader se esconde solo y avisa: el hero cae a un halo CSS.
+  const [fiberFailed, setFiberFailed] = useState(false);
   const [morphActive, setMorphActive] = useState(false);
   // Titular (modo cinematic): se revela línea por línea con un barrido de luz.
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -593,6 +595,19 @@ export default function HeroHomeReact({
         </div>
       )}
 
+      {/* Fallback del modo fiber sin WebGL2: halo radial morado sobre el negro
+          base, en la misma paleta que el shader. */}
+      {fiber && fiberFailed && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "radial-gradient(115% 85% at 50% 48%, rgba(150,35,122,0.32) 0%, rgba(59,14,48,0.45) 45%, rgba(10,10,10,1) 100%)",
+          }}
+        />
+      )}
+
       {/* Modo fiber (SPEC 113): túnel de filamentos ópticos. WebGL2 crudo, sin
           Three. z-0 detrás de las vignettes y del contenido. */}
       {fiber && (
@@ -600,6 +615,7 @@ export default function HeroHomeReact({
           <Suspense fallback={null}>
             <FiberTunnel
               ref={fiberRef}
+              onUnsupported={() => setFiberFailed(true)}
               /* `fixed`: el fondo no se corta entre el hero y el capítulo de
                  frases — es lo que hace que el tramo se lea como una sola
                  secuencia y no como dos secciones pegadas. */
