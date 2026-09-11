@@ -88,6 +88,8 @@ export default function BlogGrid({
       <div className="site-container">
         {/* Section title — italic bold, matching Figma */}
         <h2
+          data-reveal="up"
+          data-reveal-distance="40"
           className="text-[#0a0a0a] font-medium mb-6"
           style={{ fontSize: '48px', lineHeight: '56px' }}
         >
@@ -95,7 +97,7 @@ export default function BlogGrid({
         </h2>
 
         {/* Filters */}
-        <div className="mb-10" data-reveal="up">
+        <div className="mb-10" data-reveal="up" data-reveal-stagger="0.12">
           {/* "Filtros" label */}
           <div className="flex items-center gap-3 mb-4">
             <svg
@@ -134,7 +136,12 @@ export default function BlogGrid({
 
         {/* Grid (fade-up del contenedor: pagination-safe, sin ocultar cards al paginar) */}
         {paginatedPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-reveal="up">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            data-reveal="up"
+            data-reveal-stagger="0.07"
+            data-reveal-distance="40"
+          >
             {paginatedPosts.map((edge) => {
               const post = edge.node!;
               return (
@@ -159,7 +166,7 @@ export default function BlogGrid({
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-1.5 mt-14">
+          <div className="flex items-center justify-center gap-1.5 mt-14" data-reveal="up" data-reveal-distance="24">
             {/* Prev */}
             <button
               onClick={() => goToPage(safeCurrentPage - 1)}

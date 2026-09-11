@@ -135,6 +135,8 @@ export default function InfoAbonadosReact({
                       fontStyle: "italic",
                     }}
                     data-tina-field={tinaField(section, "title")}
+                    data-reveal="up"
+                    data-reveal-distance="30"
                   >
                     {tField(section, "title", locale)}
                   </h2>

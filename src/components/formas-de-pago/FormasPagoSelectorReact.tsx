@@ -163,7 +163,12 @@ export default function FormasPagoSelectorReact({
     <section style={{ background: "#0a0a0a" }} className="pb-20 md:pb-28">
       <div className="site-container">
         {/* Selectors */}
-        <div className="flex flex-col sm:flex-row gap-4 pt-2 pb-6">
+        <div
+          className="flex flex-col sm:flex-row gap-4 pt-2 pb-6"
+          data-reveal="up"
+          data-reveal-stagger="0.1"
+          data-reveal-distance="30"
+        >
           <Dropdown
             ariaLabel={tField(page as any, "bankSelectLabel", locale) || "Selecciona tu banco"}
             value={safeBankIdx}
@@ -184,7 +189,7 @@ export default function FormasPagoSelectorReact({
 
         {/* Steps of the active bank + method */}
         {steps.length > 0 && (
-          <div>
+          <div data-reveal="up" data-reveal-stagger="0.09" data-reveal-distance="40">
             {steps.map((step, i) => (
               <StepRow
                 key={`${safeBankIdx}-${safeMethodIdx}-${i}`}
