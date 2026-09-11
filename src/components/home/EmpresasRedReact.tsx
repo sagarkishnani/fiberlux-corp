@@ -4,6 +4,7 @@ import type { HomeQuery, HomeQueryVariables } from "../../../tina/__generated__/
 import { tField, localizeHref } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import { parseStat, formatNumber, useCounter } from "../../hooks/useStatCounter";
+import { chaptersEnabled, spanProgress } from "../../scripts/chapters";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderSideArrows from "../shared/SliderSideArrows";
 import TestimonialMiniCard from "./TestimonialMiniCard";
@@ -37,6 +38,12 @@ interface EmpresasRedProps {
   effect?: SliderEffect;
   /** Oculta el CTA a casos de éxito (en la propia página de casos sobra). */
   hideCta?: boolean;
+  /**
+   * Ata las cifras al progreso de la sección en vez de dispararlas al entrar en
+   * viewport (SPEC 114). **Solo la Home la enciende**: el bloque se usa en 7
+   * páginas y las otras 6 siguen con el disparo por viewport de siempre.
+   */
+  scrubCounters?: boolean;
 }
 
 interface StatItem {
@@ -60,8 +67,25 @@ const UI = {
   en: { prev: "Previous", next: "Next" },
 } as const;
 
+/* Fracción del recorrido de la sección en la que la cifra llega a su valor.
+   No es 1: si el final de la cuenta coincide con el final del recorrido, el
+   usuario nunca ve la cifra quieta. Con la sección midiendo ~1,33 pantallas,
+   0.55 deja alrededor de media pantalla de lectura con el número ya completo.
+   (Es la misma lección que costó una corrección en el QA de la SPEC 113.) */
+const SCRUB_FIN = 0.55;
+
 /* ── Cifra suelta, tema claro (magenta sobre el panel rosa) ── */
-function StatFigure({ item, index, locale }: { item: StatItem; index: number; locale: Locale }) {
+function StatFigure({
+  item,
+  index,
+  locale,
+  scrub = false,
+}: {
+  item: StatItem;
+  index: number;
+  locale: Locale;
+  scrub?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -70,12 +94,42 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
   const [rebobinar, setRebobinar] = useState(false);
 
   const { prefix, value, suffix, decimals, hasCommas } = parseStat(item.number || "0");
-  // Ídem: la cuenta se escribe en el nodo, sin renders por fotograma.
-  const numRef = useCounter(value, 1000 + index * 60, isVisible, rebobinar, decimals, hasCommas);
+  /* Con `scrub` la cuenta la manda el scroll, así que el motor por tiempo se
+     deja inerte (`shouldStart` y `rebobinar` en false): `useCounter` devuelve
+     la ref del nodo y no escribe nada. El hook se sigue llamando siempre —las
+     reglas de los hooks no admiten llamadas condicionales. */
+  const porScroll = scrub && chaptersEnabled();
+  const numRef = useCounter(
+    value,
+    1000 + index * 60,
+    porScroll ? false : isVisible,
+    porScroll ? false : rebobinar,
+    decimals,
+    hasCommas
+  );
+
+  /* Cifra atada al progreso de la sección (SPEC 114). Escribe en el nodo, como
+     hace `useCounter`: nada de un render de React por fotograma de scroll. */
+  useEffect(() => {
+    if (!porScroll) return;
+    const section = ref.current?.closest("section") as HTMLElement | null;
+    if (!section) return;
+    const escribir = (v: number) => {
+      const el = numRef.current;
+      if (el) el.textContent = formatNumber(v, decimals, hasCommas);
+    };
+    const stop = spanProgress(section, (p) => {
+      escribir(value * Math.min(Math.max(p, 0) / SCRUB_FIN, 1));
+    });
+    /* `scroll()` deja un listener global vivo: sin esta parada sobrevive al
+       swap de View Transitions apuntando a un nodo que ya no existe (SPEC 110). */
+    return stop;
+  }, [porScroll, value, decimals, hasCommas, numRef]);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    // Con el scrub activo no hace falta observar la entrada en viewport.
+    if (!el || porScroll) return;
     // Ídem `StatsReact`: con `client:visible` la isla monta cuando el bloque
     // asoma por abajo, así que el umbral es "todavía en la mitad inferior".
     const r = el.getBoundingClientRect();
@@ -91,7 +145,7 @@ function StatFigure({ item, index, locale }: { item: StatItem; index: number; lo
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [porScroll]);
 
   const displayNumber = formatNumber(value, decimals, hasCommas);
 
@@ -126,6 +180,7 @@ export default function EmpresasRedReact({
   intervalMs = 5000,
   effect = "none",
   hideCta = false,
+  scrubCounters = false,
 }: EmpresasRedProps) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
 
@@ -274,7 +329,7 @@ export default function EmpresasRedReact({
                   i !== 0 && i % 2 === 0 ? "xl:border-l" : "",
                 ].join(" ")}
               >
-                <StatFigure item={item} index={i} locale={locale} />
+                <StatFigure item={item} index={i} locale={locale} scrub={scrubCounters} />
               </div>
             ))}
           </div>
