@@ -83,6 +83,13 @@ const prefetchScenes = [
         // `data-narrative` envuelve todos los capítulos del tramo: es el rango
         // sobre el que avanza el viaje del fondo y sobre el que se apaga.
         <div data-narrative>
+          {/* Corte de película entre capítulos (SPEC 113). Sin marca dentro:
+              el cliente pidió no poner el isotipo por ahora. */}
+          <div
+            data-narrative-cut
+            aria-hidden="true"
+            style="position:fixed; inset:0; z-index:40; background:#0A0A0A; opacity:0; pointer-events:none;"
+          />
           <ScrollChapter len={3} id="ch-hero" class="-mt-16">
             <HeroHome />
           </ScrollChapter>
