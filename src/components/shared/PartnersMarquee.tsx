@@ -29,6 +29,7 @@ export default function PartnersMarquee({
   durationSeconds,
   locale = "es",
   transparentBg = false,
+  staggerHeader = false,
 }: {
   partners?: PartnersData | null;
   /**
@@ -45,6 +46,8 @@ export default function PartnersMarquee({
    * solución, donde conserva su fondo de siempre.
    */
   transparentBg?: boolean;
+  /** Cascada de entrada en el encabezado (SPEC 114). Solo la enciende `HomePartners`. */
+  staggerHeader?: boolean;
 }) {
   if (!partners) return null;
 
@@ -98,7 +101,14 @@ export default function PartnersMarquee({
         transparentBg ? "" : "bg-greyscale-darkest"
       }`}
     >
-      <div className="site-container text-center mb-14 md:mb-20">
+      {/* SPEC 114 — cascada de entrada: eyebrow y titular entran escalonados en
+          vez de en bloque. Va por prop y no siempre porque este componente lo
+          comparten también `PartnersReact` y `ServicePartnersReact`, que la
+          spec no contempla: el radio acordado era `HomePartners`. */}
+      <div
+        className="site-container text-center mb-14 md:mb-20"
+        {...(staggerHeader ? { "data-reveal": "up", "data-reveal-stagger": "0.12" } : {})}
+      >
         {eyebrow && (
           <p
             className="font-mono text-xs md:text-sm tracking-[0.2em] text-white/50 uppercase mb-4"
