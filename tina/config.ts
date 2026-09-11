@@ -662,6 +662,32 @@ export default defineConfig({
             ],
           },
 
+          // ── Frases del tramo narrativo (SPEC 113) ──
+          {
+            name: "manifiesto",
+            label: "Frases (tramo narrativo)",
+            type: "object",
+            description:
+              "Frases que se relevan con el scroll justo después del hero. Solo se muestran si el 'Fondo del hero' es 'Túnel de fibra'. Cada frase son dos líneas: se revelan una debajo de la otra.",
+            fields: [
+              {
+                name: "items",
+                label: "Frases",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item: any) => ({ label: item?.line1 || "Frase" }),
+                },
+                fields: [
+                  { name: "line1", label: "Línea 1", type: "string" },
+                  { name: "line2", label: "Línea 2", type: "string" },
+                  { name: "line1_en", label: "Línea 1 (EN)", type: "string" },
+                  { name: "line2_en", label: "Línea 2 (EN)", type: "string" },
+                ],
+              },
+            ],
+          },
+
           // ── Stats ──
           {
             name: "stats",

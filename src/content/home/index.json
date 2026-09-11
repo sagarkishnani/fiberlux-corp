@@ -2,7 +2,7 @@
   "hero": {
     "title": "Soluciones de conectividad y TI para tu empresa",
     "subtitle": "Desde Fiberlux impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
-    "heroBackground": "lattice",
+    "heroBackground": "fiber",
     "splineSceneUrl": "https://prod.spline.design/NPf6t5Aswe3I4AKw/scene.splinecode",
     "splinePosterUrl": "images/home/cover-3d-mobile.jpeg",
     "heroBgOpacity": 60,
@@ -90,6 +90,10 @@
       "intensity": "medio"
     },
     "lattice": {
+      "intensity": "medio"
+    },
+    "fiber": {
+      "variant": "tunel",
       "intensity": "medio"
     }
   },
@@ -423,5 +427,27 @@
     "buttonUrl": "/blog",
     "title_en": "Insights & News",
     "buttonText_en": "View all"
+  },
+  "manifiesto": {
+    "items": [
+      {
+        "line1": "Impulsamos tu operación",
+        "line2": "con servicios de alta calidad.",
+        "line1_en": "We power your operation",
+        "line2_en": "with high-quality services."
+      },
+      {
+        "line1": "Sobre una red privada",
+        "line2": "100% de fibra óptica.",
+        "line1_en": "Over a private network",
+        "line2_en": "100% fiber optic."
+      },
+      {
+        "line1": "Desplegada en 99 ciudades",
+        "line2": "de todo el Perú.",
+        "line1_en": "Deployed across 99 cities",
+        "line2_en": "throughout Peru."
+      }
+    ]
   }
 }
