@@ -1,0 +1,41 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import ManifiestoReact from './ManifiestoReact.tsx';
+import ScrollChapter from '../shared/ScrollChapter.astro';
+import { getLocale } from '../../utils/i18n';
+import { isLocale } from '../../i18n/config';
+
+/**
+ * Capítulo de frases del tramo narrativo (SPEC 113).
+ *
+ * Se monta justo después del hero y antes de `SolucionesStack`. El fondo lo
+ * pone el hero (canvas `fixed`), que no se corta entre capítulos.
+ *
+ * `len = frases + 1`: la pantalla de más es el traspaso al capítulo siguiente
+ * (el tramo realmente clavado de un capítulo es `len − 1`, ver chapters.ts).
+ */
+const { data, query, variables } = await client.queries.home({
+  relativePath: 'index.json',
+});
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+
+const items = ((data?.home as any)?.manifiesto?.items ?? []).filter(Boolean);
+---
+
+{
+  items.length > 0 && (
+    <ScrollChapter
+      len={items.length + 1}
+      id="ch-frases"
+      stageClass="flex items-center"
+    >
+      <ManifiestoReact
+        client:visible
+        query={query}
+        variables={variables}
+        data={data}
+        locale={locale}
+      />
+    </ScrollChapter>
+  )
+}

@@ -98,6 +98,16 @@ fragment HomeParts on Home {
       logo
     }
   }
+  manifiesto {
+    __typename
+    items {
+      __typename
+      line1
+      line2
+      line1_en
+      line2_en
+    }
+  }
   stats {
     __typename
     title

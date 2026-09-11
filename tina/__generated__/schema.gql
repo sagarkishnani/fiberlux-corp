@@ -253,6 +253,17 @@ type HomeTestimonials {
   items: [HomeTestimonialsItems]
 }
 
+type HomeManifiestoItems {
+  line1: String
+  line2: String
+  line1_en: String
+  line2_en: String
+}
+
+type HomeManifiesto {
+  items: [HomeManifiestoItems]
+}
+
 type HomeStatsItems {
   number: String
   label: String
@@ -289,6 +300,7 @@ type Home implements Node & Document {
   hero: HomeHero
   services: HomeServices
   testimonials: HomeTestimonials
+  manifiesto: HomeManifiesto
   stats: HomeStats
   blogPreview: HomeBlogPreview
   id: ID!
@@ -434,6 +446,17 @@ input HomeTestimonialsFilter {
   items: HomeTestimonialsItemsFilter
 }
 
+input HomeManifiestoItemsFilter {
+  line1: StringFilter
+  line2: StringFilter
+  line1_en: StringFilter
+  line2_en: StringFilter
+}
+
+input HomeManifiestoFilter {
+  items: HomeManifiestoItemsFilter
+}
+
 input HomeStatsItemsFilter {
   number: StringFilter
   label: StringFilter
@@ -470,6 +493,7 @@ input HomeFilter {
   hero: HomeHeroFilter
   services: HomeServicesFilter
   testimonials: HomeTestimonialsFilter
+  manifiesto: HomeManifiestoFilter
   stats: HomeStatsFilter
   blogPreview: HomeBlogPreviewFilter
 }
@@ -3029,6 +3053,17 @@ input HomeTestimonialsMutation {
   items: [HomeTestimonialsItemsMutation]
 }
 
+input HomeManifiestoItemsMutation {
+  line1: String
+  line2: String
+  line1_en: String
+  line2_en: String
+}
+
+input HomeManifiestoMutation {
+  items: [HomeManifiestoItemsMutation]
+}
+
 input HomeStatsItemsMutation {
   number: String
   label: String
@@ -3065,6 +3100,7 @@ input HomeMutation {
   hero: HomeHeroMutation
   services: HomeServicesMutation
   testimonials: HomeTestimonialsMutation
+  manifiesto: HomeManifiestoMutation
   stats: HomeStatsMutation
   blogPreview: HomeBlogPreviewMutation
 }
