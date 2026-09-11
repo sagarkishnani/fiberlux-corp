@@ -166,7 +166,30 @@ El parallax necesita una capa que se mueva por detrás del contenido. Inventarle
 
 ---
 
-## Sección 9 — Riesgos
+## Sección 9 — Resultado del QA (Step 7)
+
+Verificado sobre el build de esta rama. Todo medido leyendo el DOM, no a ojo.
+
+| Comprobación | Resultado |
+| --- | --- |
+| Build | 108 páginas, exit 0 |
+| Cifras antes de entrar / durante / al final | `0` → `49 %` → valor exacto (`+5,500`, `+17,000 km`, `99`, `100%`) |
+| La cifra final se queda quieta | sí, desde el 55 % del recorrido hasta que la sección sale |
+| Rebobinado | simétrico bajando y subiendo: el valor es función de la posición |
+| Otras 6 páginas con el bloque | `/nosotros`, `/soporte-tecnico`, `/casos-de-exito`, `/fiberlux-app` llegan al valor completo con el disparo por viewport de siempre |
+| Cascada | verificada escalonando en el encabezado de partners (`0.14` vs `0`) y en las tarjetas de blog (`0.28` vs `0`) |
+| `prefers-reduced-motion` | cifras en su valor final sin scrollear; hijos de las cascadas todos en opacidad 1 |
+| Capítulos / velos | 2 y 1: la Home no gana ninguno |
+| Altura de la Home | 13.304 px vs 13.002 px = **+302 px (0,34 pantallas)** |
+| Errores de consola en Home | 0, escritorio y móvil |
+| View Transitions | tras navegar a `/blog`: 0 capítulos, 0 cifras, nada escuchando |
+| `SolucionesStack` | sin tocar |
+
+**Un matiz de medición, para que nadie lo repita:** un muestreo intermedio dio `+0` en las otras páginas y opacidad `0` permanente en el encabezado del blog. Ambos eran artefactos del arnés —la primera lectura se tomó justo en el umbral del `IntersectionObserver` (30 %), y la segunda con un salto de scroll que con Lenis no aterrizaba donde se creía—. Con scroll natural los tres contenedores llegan a opacidad 1 y las cuatro cifras a su valor.
+
+---
+
+## Sección 10 — Riesgos
 
 1. **La cascada se propaga a 6 páginas.** Es la decisión de mayor radio de esta spec. `BlogPreview` aparece en 4 páginas y `HomePartners` en 2; hay que revisarlas todas, no solo la Home. Va como criterio de aceptación.
 2. **Ventana de scrub corta.** La sección mide 1,33 pantallas y el recorrido útil para el contador es aún menor. Si las cifras se sienten apresuradas, la palanca es el 55 %, no alargar la sección.
