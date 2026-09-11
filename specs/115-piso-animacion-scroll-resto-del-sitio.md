@@ -71,7 +71,11 @@ Salen tres grupos con criterios distintos:
 
 ## Sección 4 — El umbral, y cómo se mide
 
-**Piso: ninguna ruta del alcance por debajo de 6 `data-reveal` y 2 `data-reveal-stagger`.**
+**Piso: todo bloque de contenido de la página tiene entrada propia, y ≥ 2 `data-reveal-stagger`.**
+
+> **Reformulación (durante la implementación).** El piso original era "≥ 6 reveals y ≥ 2 cascadas". Hecho el trabajo, **ocho de las diez rutas lo pasaban con holgura y dos no llegaban por falta de contenido, no por falta de trabajo**: en `/blog` (3) y `/formas-de-pago` (4) ya está animado todo lo que hay — hero fuera de alcance más un único componente cuyos bloques entran todos. Llegar a 6 ahí exigía **añadir reveals decorativos**, que es exactamente el riesgo nº 6 que esta spec declara.
+>
+> El 6 era un **proxy** para detectar páginas olvidadas. Hecha la auditoría, el proxy ya cumplió y a partir de ahí solo estorba, así que se sustituye por el criterio que de verdad importa. La parte de las cascadas se mantiene en 2 porque sí se cumple en las diez.
 
 La medición no es sobre el HTML construido: `grep` sobre `dist/` cuenta también los props serializados dentro de `<astro-island>` y da números inflados (hasta 4× en las pruebas). **Se mide en el DOM**, dentro de `<main>`, y **después de recorrer la página entera**, porque las islas `client:visible` no existen hasta que se las visita:
 
@@ -105,7 +109,7 @@ Cada paso deja el sitio compilando y funcionando.
 ## Sección 6 — Criterios de aceptación
 
 - [ ] `npx tinacms dev -c "astro build"` termina con exit 0 y 108 páginas.
-- [ ] **Las 11 rutas del alcance** dan ≥ 6 `data-reveal` y ≥ 2 `data-reveal-stagger`, medido en el DOM dentro de `<main>` tras recorrer la página entera.
+- [ ] **Las 10 rutas del alcance** tienen todos sus bloques de contenido con entrada propia y ≥ 2 `data-reveal-stagger`, medido en el DOM (dentro de `<main>` cuando existe, sobre `<body>` cuando no) tras recorrer la página entera.
 - [ ] **Las 8 páginas excluidas siguen exactamente en 0 `data-reveal`**: `/contacto`, `/reclamos`, `/reclamos/reclamo`, `/reclamos/queja`, `/reclamos/apelacion` y los 3 `/legales`.
 - [ ] `/blog/[slug]` no cambia: mismo conteo de reveals que antes de la spec.
 - [ ] **Ningún hero modificado**: `git diff` no toca `HeroCasos`, `BlogHero`, `HeroFormasPago` ni los componentes de hero de las SPECs 91/98/101/102/104.
@@ -167,7 +171,50 @@ Medido en el DOM a 1440×900, recorriendo cada página entera. Umbral: **≥ 6 r
 
 ---
 
-## Sección 9 — Riesgos
+## Sección 9 — Resultado (Steps 2–8)
+
+**Conteo final**, medido en el DOM a 1440×900 tras recorrer cada página:
+
+| Ruta | reveals | cascadas | antes |
+| --- | --- | --- | --- |
+| `/nosotros` | 15 | 4 | 12 / 2 |
+| `/soluciones` | 11 | 3 | 11 / 3 |
+| `/soluciones/conectividad` | 9 | 4 | 8 / 3 |
+| `…/internet-dedicado` | 8 | 4 | 7 / 3 |
+| `/soporte-tecnico` | 11 | 3 | 9 / **1** |
+| `/casos-de-exito` | 8 | 2 | **3 / 0** |
+| `/fiberlux-app` | 7 | 4 | 6 / 3 |
+| `/informacion-abonados` | 7 | 3 | **4** / 3 |
+| `/blog` | 3 | 2 | **2 / 0** |
+| `/formas-de-pago` | 4 | 2 | **2 / 0** |
+
+Las **8 páginas excluidas siguen exactamente en 0 reveals y 0 cascadas**. Ninguna página ganó canvas ni capítulos, y ninguna creció de alto.
+
+**Step 7 — parallax: no se añade ninguno, y por qué.** Todos los fondos de los bloques tocados son **color plano**: `CasosSlider` y `BlogGrid` sobre plano, `FormasPagoSelector` sobre `#0a0a0a`, `CanalesSoporte` sobre `#FBDCEC`, `InfoAbonados` sobre blanco. La única capa decorativa del alcance es el `glow` de `RubrosReact`, que **está desactivado en todas las páginas** (`glow` por defecto `false`, y casos lo descarta explícitamente). Los gradientes de `CasosSlider` son máscaras de borde, no fondo. El parallax existente en `/nosotros` y `/soluciones` es el glow de Certificaciones (SPEC 52) y sigue funcionando.
+
+**Step 8 — QA.** `prefers-reduced-motion`: todo visible sin scrollear en las cuatro rutas probadas. Móvil 390×844: mismos conteos y 0 errores. View Transitions: tras navegar de `/casos-de-exito` a `/blog`, los reveals disparan y no queda nada oculto.
+
+### Dónde NO va la cascada, y por qué
+
+Cuatro sitios donde la cascada habría roto algo, encontrados al implementar. Vale la pena que queden escritos, porque son el mismo patrón: **animar la opacidad de algo que ya tiene su propia animación.**
+
+| Sitio | Qué se rompía |
+| --- | --- |
+| Track del carrusel de casos | Las cards usan `opacity-40/100` para marcar la activa; un reveal que escribe opacidad inline las pondría todas a 1 |
+| Filas de rubros | Marquees CSS infinitos |
+| Acordeón de canales (desktop) | Anima su `height` con `style` inline |
+| Acordeón de canales (mobile) | Anima su `grid-template-rows` |
+
+### Dos artefactos del arnés de medición
+
+Se repitieron, y conviene no volver a caer:
+
+1. **Medir un `data-reveal-scrub` fuera de su ventana no dice nada.** Sus keyframes son `opacity: [0, 1, 1, 0]`: fuera de la ventana vale 0 por diseño, no porque falle.
+2. **Saltar el scroll con `window.scrollTo` y muestrear enseguida da falsos negativos**, porque con Lenis el scroll no aterriza donde se cree. Dos veces pareció haber contenido invisible —en `/nosotros` y tras navegar a `/blog`— y las dos veces, con scroll de rueda y esperas largas, no había nada oculto.
+
+---
+
+## Sección 10 — Riesgos
 
 1. **Componentes compartidos, otra vez.** Es el riesgo que ya mordió en la 114. `RubrosReact` lo usan `/casos-de-exito` **y** `/nosotros`; `EmpresasRed` está en 7 páginas. Cada cambio dentro de un componente hay que verificarlo en todas las páginas que lo montan, no solo en la que motivó el cambio.
 2. **Una plantilla, 30 páginas.** El subservicio es un solo archivo que genera 30 rutas. Un acierto se multiplica por 30 y un error también; conviene verificar en más de un subservicio.
