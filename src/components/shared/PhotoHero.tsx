@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { mediaUrl } from "../../utils/mediaUrl";
 
 /**
  * Hero de foto a sangre — SPEC 104.
@@ -25,13 +26,6 @@ interface PhotoHeroProps {
   children?: ReactNode;
 }
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-function withBase(path: string): string {
-  if (/^https?:\/\//.test(path)) return path;
-  return `${BASE}${path.startsWith("/") ? "" : "/"}${path}`;
-}
-
 export default function PhotoHero({
   image,
   focus = "72% 50%",
@@ -47,7 +41,7 @@ export default function PhotoHero({
       {/* Foto a sangre. */}
       {image && (
         <img
-          src={withBase(image)}
+          src={mediaUrl(image)}
           alt=""
           aria-hidden="true"
           fetchPriority="high"
