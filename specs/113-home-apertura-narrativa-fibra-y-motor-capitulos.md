@@ -269,3 +269,23 @@ El velo pasa a tener dos valores, porque las dos costuras no son la misma cosa:
 | Fin del tramo (`frases → SolucionesStack`) | `0.92` | Aquí sí: la última frase sale mientras entra "Soluciones para tu negocio", y además cambia el fondo. Verificado que con `0.4` los dos titulares se leen a la vez. |
 
 También se corrigió el **fallback sin WebGL2** del modo `fiber`: estaba acotado a la sección del hero (`absolute`), así que al soltarse el panel el capítulo de frases se quedaba en negro puro. Ahora es `fixed` mientras el motor de capítulos esté encendido y se apaga con el mismo perfil que el canvas (`fiberFallbackRef` en el `spanProgress` del tramo).
+
+### Corolario 2 — en iOS el fondo NO puede vivir dentro del capítulo
+
+Reporte desde iPhone físico (11 sep 2026): al soltarse el hero, el efecto se cortaba en seco a media pantalla y debajo quedaba negro. En desktop y en el modo responsive del navegador no pasaba.
+
+La causa es de WebKit: **un `position: fixed` dentro de un ancestro que lo contiene se recorta contra ese ancestro**. El canvas colgaba de la sección del hero, que está bajo dos `overflow: hidden` (la propia sección y el panel clavado de `ScrollChapter`). El velo del corte, que siempre estuvo colgado de `[data-narrative]` —fuera del capítulo—, nunca tuvo el problema: por eso sí tapaba la pantalla entera en el móvil.
+
+Reproducido y medido en Chrome forzando el mismo mecanismo (`transform: translateZ(0)` en el panel y en la sección convierte al ancestro en bloque contenedor de los `fixed`), con el viewport a 390×844 y el borde del panel a 422:
+
+| Montaje | Rect del canvas |
+| --- | --- |
+| Anterior (canvas dentro de la sección) | `-422 → 422` — termina justo en el borde del panel: la captura del iPhone |
+| Actual (portal) | `0 → 844` — pantalla completa |
+
+El fondo pasa a montarse por **portal de React** en `[data-narrative-bg]`, un `fixed` con `z-index: 0` que cuelga directo de `[data-narrative]`, junto al velo del corte. Detalles que importan:
+
+- **`bgTarget` se resuelve en un efecto y el fondo no se pinta hasta entonces.** Montarlo dentro de la sección y moverlo después haría que React lo desmontara y volviera a montar, y eso recrea el contexto WebGL.
+- **Sin capítulos** (`prefers-reduced-motion`) no hay panel que recorte: ahí el fondo sigue montándose dentro de la sección, como antes.
+- **La sección del hero pierde su `bg` opaco** cuando el fondo va por portal: el portal cuelga antes en el DOM y pinta primero, así que un `bg-[#0a0a0a]` en la sección lo taparía justo dentro del hero. Detrás queda el negro de `main`.
+- El apagado al final del tramo (`setOpacity`) sigue igual: verificado `opacity: 0` al entrar en `SolucionesStack`, así que no hay dos canvas WebGL vivos.

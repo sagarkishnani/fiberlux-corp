@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties } from "react";
+import { lazy, Suspense, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery } from "../../../tina/__generated__/types";
 import { tField, localizeHref } from "../../utils/i18n";
@@ -70,6 +71,12 @@ interface HeroHomeProps {
 function signalHeroReady() {
   if (typeof window === "undefined") return;
   window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
+}
+
+/** Monta el fondo del modo `fiber` donde toque (ver `bgTarget`). */
+function renderFiberBg(target: HTMLElement | "inline", layer: ReactNode) {
+  if (target === "inline") return <div className="absolute inset-0 z-0">{layer}</div>;
+  return createPortal(layer, target);
 }
 
 export default function HeroHomeReact({
@@ -328,11 +335,20 @@ export default function HeroHomeReact({
   const dotfield = mode === "dotfield";
   const lattice = mode === "lattice";
   const fiber = mode === "fiber";
-  /* El tramo narrativo está realmente montado (modo `fiber` + motor de
-     capítulos encendido). Con `prefers-reduced-motion` los capítulos no son
-     altos ni sticky, el hero vuelve a ser una sección normal y el fondo NO
-     debe ser `fixed`: se quedaría pegado al viewport toda la página. */
-  const [fiberSpan, setFiberSpan] = useState(false);
+  /* Dónde se monta el fondo del modo `fiber`:
+
+     - un elemento ⇒ portal a `[data-narrative-bg]`, el `fixed` que cuelga del
+       tramo narrativo. Es la única forma de que iOS no lo recorte: dentro del
+       capítulo, el canvas vive bajo dos `overflow: hidden` (la sección del hero
+       y el panel clavado) y Safari SÍ recorta los `position: fixed` contra
+       ellos — el fondo se cortaba a media pantalla al soltarse el hero.
+     - "inline" ⇒ como siempre, dentro de la sección. Es el caso sin motor de
+       capítulos (`prefers-reduced-motion`), donde no hay panel que recorte.
+
+     Arranca en `null` y lo decide un efecto: así el canvas se monta UNA sola
+     vez y ya en su sitio. Montarlo dentro y moverlo después recrearía el
+     contexto WebGL. */
+  const [bgTarget, setBgTarget] = useState<HTMLElement | "inline" | null>(null);
   // dotfield y lattice comparten tratamiento de velo: en ambos el campo de
   // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
   // que verse (el planeta de `cinematic` sí lo pide).
@@ -353,6 +369,14 @@ export default function HeroHomeReact({
     ? { maskImage: edgeFade, WebkitMaskImage: edgeFade }
     : undefined;
 
+  useEffect(() => {
+    if (!fiber) return;
+    const host = chaptersEnabled()
+      ? document.querySelector<HTMLElement>("[data-narrative-bg]")
+      : null;
+    setBgTarget(host ?? "inline");
+  }, [fiber]);
+
   /* ── Capítulo del hero en modo `fiber` (SPEC 113) ───────────────────────
      Coreografía de SALIDA. La de ENTRADA (morph FLX→FIBERLUX, bloqueo de
      scroll) no se toca: es la de SPEC 97/39.
@@ -370,7 +394,6 @@ export default function HeroHomeReact({
     const narrative = (root.closest("[data-narrative]") as HTMLElement | null) ?? chapter;
     const len = chapterLen(chapter);
     const stops: Array<() => void> = [];
-    setFiberSpan(true);
 
     // Acto 1 — se apagan los satélites: subtítulo y botones.
     const satellites = [
@@ -440,7 +463,12 @@ export default function HeroHomeReact({
   return (
     <section
       ref={rootRef}
-      className={`relative w-full overflow-hidden bg-[#0a0a0a] ${
+      /* Sin fondo propio cuando el canvas va por portal: el portal pinta ANTES
+         que la sección (cuelga antes en el DOM), así que un `bg` opaco aquí lo
+         taparía justo dentro del hero. Detrás queda el negro de `main`. */
+      className={`relative w-full overflow-hidden ${
+        fiber && bgTarget && bgTarget !== "inline" ? "bg-transparent" : "bg-[#0a0a0a]"
+      } ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
           : fiber
@@ -632,44 +660,39 @@ export default function HeroHomeReact({
         </div>
       )}
 
-      {/* Fallback del modo fiber sin WebGL2: halo radial morado sobre el negro
-          base, en la misma paleta que el shader. */}
-      {fiber && fiberFailed && (
-        <div
-          ref={fiberFallbackRef}
-          aria-hidden="true"
-          /* `fixed` igual que el canvas al que sustituye: el fondo del tramo
-             narrativo tiene que seguir vivo en el capítulo de frases. Acotado a
-             la sección, el capítulo siguiente se quedaba en negro puro en cuanto
-             el panel del hero se soltaba — el mismo corte que el del canvas,
-             pero total. */
-          className={`${fiberSpan ? "fixed" : "absolute"} inset-0 z-0`}
-          style={{
-            background:
-              "radial-gradient(115% 85% at 50% 48%, rgba(150,35,122,0.32) 0%, rgba(59,14,48,0.45) 45%, rgba(10,10,10,1) 100%)",
-          }}
-        />
-      )}
-
-      {/* Modo fiber (SPEC 113): túnel de filamentos ópticos. WebGL2 crudo, sin
-          Three. z-0 detrás de las vignettes y del contenido. */}
-      {fiber && (
-        <div className="absolute inset-0 z-0">
+      {/* Modo fiber (SPEC 113): túnel de filamentos ópticos (WebGL2 crudo, sin
+          Three) + su fallback CSS. Los dos van juntos al mismo sitio: por
+          portal al `fixed` del tramo narrativo, o dentro de la sección si no
+          hay capítulos. Ver `bgTarget`. */}
+      {fiber && bgTarget && renderFiberBg(
+        bgTarget,
+        <>
+          {fiberFailed && (
+            <div
+              ref={fiberFallbackRef}
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(115% 85% at 50% 48%, rgba(150,35,122,0.32) 0%, rgba(59,14,48,0.45) 45%, rgba(10,10,10,1) 100%)",
+              }}
+            />
+          )}
           <Suspense fallback={null}>
             <FiberTunnel
               ref={fiberRef}
               onUnsupported={() => setFiberFailed(true)}
-              /* `fixed`: el fondo no se corta entre el hero y el capítulo de
-                 frases — es lo que hace que el tramo se lea como una sola
-                 secuencia y no como dos secciones pegadas. */
-              fixed
+              /* Dentro de la sección le toca ser `fixed` él mismo (el fondo no
+                 se corta entre capítulos). En el portal el `fixed` ya lo pone
+                 el host, así que basta con llenarlo. */
+              fixed={bgTarget === "inline"}
               className="h-full w-full"
               variant={fiberVariant}
               intensity={fiberIntensity}
               signalReady
             />
           </Suspense>
-        </div>
+        </>
       )}
 
       {/* Intro del wordmark FLX → FIBERLUX al cargar (SPEC 97, desktop). */}

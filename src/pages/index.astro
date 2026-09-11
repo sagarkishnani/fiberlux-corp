@@ -83,6 +83,24 @@ const prefetchScenes = [
         // `data-narrative` envuelve todos los capítulos del tramo: es el rango
         // sobre el que avanza el viaje del fondo y sobre el que se apaga.
         <div data-narrative>
+          {/* Fondo del tramo (SPEC 113). El canvas de fibra se monta AQUÍ por
+              portal, y no dentro del hero, porque este div cuelga directo de
+              `[data-narrative]`: fuera de los `overflow: hidden` del capítulo
+              (la sección del hero y el panel clavado de `ScrollChapter`).
+
+              En iOS un `position: fixed` dentro de ese panel se RECORTA contra
+              él: al soltarse el hero el fondo se cortaba a media pantalla y
+              debajo quedaba negro (iPhone físico, 11 sep 2026). En desktop no
+              pasa, por eso solo se veía en el teléfono. El velo del corte, que
+              siempre estuvo aquí, nunca tuvo el problema.
+
+              z-0: por debajo de los capítulos (que van en `z-auto` y después en
+              el DOM) y del velo del corte (z-40). */}
+          <div
+            data-narrative-bg
+            aria-hidden="true"
+            style="position:fixed; inset:0; z-index:0; pointer-events:none;"
+          />
           {/* Corte de película entre capítulos (SPEC 113). Sin marca dentro:
               el cliente pidió no poner el isotipo por ahora. */}
           <div
