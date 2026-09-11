@@ -71,7 +71,12 @@ export default function BlogPreviewReact({
       <div className="site-container">
         {/* Header */}
         <div className="">
-          <div className="flex items-center justify-between mb-12">
+          {/* SPEC 114 — cascada: titular y CTA entran escalonados, no en bloque. */}
+          <div
+            className="flex items-center justify-between mb-12"
+            data-reveal="up"
+            data-reveal-stagger="0.12"
+          >
             <h2
               className="text-subtitle-lg text-white"
               data-tina-field={
@@ -99,7 +104,12 @@ export default function BlogPreviewReact({
             className="overflow-hidden pb-4 select-none blog-carousel"
             style={{ cursor: "grab" }}
           >
-            <div className="flex gap-6">
+            <div
+              className="flex gap-6"
+              data-reveal="up"
+              data-reveal-stagger="0.09"
+              data-reveal-distance="40"
+            >
               {hasPosts
                 ? posts.map((edge, i) => {
                     const post = edge?.node;
