@@ -81,9 +81,13 @@ interface EmpresasRedProps {
 
 ## Sección 4 — Mecánica
 
-**El scrub de las cifras.** `spanProgress(section, p => …)` entrega 0→1 desde que el borde superior de la sección toca el tope del viewport hasta que su borde inferior toca el fondo. Cada cifra se interpola desde 0 hasta el valor que ya extrae `parseStat` (que resuelve prefijo, sufijo, decimales y separador de miles: `+5,500`, `+17,000 km`, `99`, `100%`).
+**El scrub de las cifras.** `enterProgress(section, p => …)` entrega 0→1 a lo largo de la **entrada** de la sección: desde que su borde superior asoma por el fondo del viewport hasta que su borde inferior lo alcanza. Cada cifra se interpola desde 0 hasta el valor que ya extrae `parseStat` (que resuelve prefijo, sufijo, decimales y separador de miles: `+5,500`, `+17,000 km`, `99`, `100%`).
 
-**Las cifras llegan a su valor al 55 % del recorrido**, no al 100 %. Es la misma lección de la 113 que costó una corrección en QA: si el valor final coincide con el final del recorrido, el usuario nunca lo ve quieto. Con la sección midiendo 1,33 pantallas, el 55 % deja aproximadamente media pantalla de lectura con la cifra ya completa.
+> **Corrección (durante la implementación).** Esta sección prescribía `spanProgress`, de la SPEC 113. Implementado y medido, **no consigue su propio objetivo**: `spanProgress` recorre `alto − viewport`, que aquí son `1194 − 900 = 294 px`. Con el 55 %, la cuenta entera ocurría en **162 px — menos de un quinto de pantalla**: se disparaba y terminaba en el mismo gesto. Cumplía los criterios al pie de la letra y aun así no entregaba lo que se pedía, que era ver la cifra construirse mientras se scrollea.
+>
+> Se sustituye por **`enterProgress`**, una ventana nueva en `chapters.ts` cuyo recorrido es el **alto completo** del elemento. `spanProgress` no se toca: sigue siendo la correcta para encadenar capítulos, donde el panel está clavado y el recorrido es el wrapper entero. Medido tras el cambio: ventana de **1194 px (1,33 pantallas)** y cuenta completa en **657 px (0,73 pantallas)**, con progresión 12 % → 49 % → 85 % → 100 %.
+
+**Las cifras llegan a su valor al 55 % del recorrido**, no al 100 %. Es la misma lección de la 113 que costó una corrección en QA: si el valor final coincide con el final del recorrido, el usuario nunca lo ve quieto. Con la ventana de entrada, ese 55 % deja **0,6 pantallas** de lectura con la cifra ya completa antes de que la sección empiece a salir.
 
 **Ir hacia atrás desanda la cifra.** Es inherente al scrub y es deseable: la cifra está atada a la posición, no a un evento. Sustituye al `rebobinar` de `useCounter`, que hacía lo mismo de forma discreta.
 
@@ -173,7 +177,8 @@ Verificado sobre el build de esta rama. Todo medido leyendo el DOM, no a ojo.
 | Comprobación | Resultado |
 | --- | --- |
 | Build | 108 páginas, exit 0 |
-| Cifras antes de entrar / durante / al final | `0` → `49 %` → valor exacto (`+5,500`, `+17,000 km`, `99`, `100%`) |
+| Cifras a lo largo de la entrada | `12 %` → `49 %` → `85 %` → valor exacto (`+5,500`, `+17,000 km`, `99`, `100%`) al 55 % |
+| Ventana del contador | 1194 px (1,33 pantallas); la cuenta se completa en 657 px (0,73 pantallas) |
 | La cifra final se queda quieta | sí, desde el 55 % del recorrido hasta que la sección sale |
 | Rebobinado | simétrico bajando y subiendo: el valor es función de la posición |
 | Otras 6 páginas con el bloque | `/nosotros`, `/soporte-tecnico`, `/casos-de-exito`, `/fiberlux-app` llegan al valor completo con el disparo por viewport de siempre |

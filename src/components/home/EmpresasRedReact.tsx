@@ -4,7 +4,7 @@ import type { HomeQuery, HomeQueryVariables } from "../../../tina/__generated__/
 import { tField, localizeHref } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import { parseStat, formatNumber, useCounter } from "../../hooks/useStatCounter";
-import { chaptersEnabled, spanProgress } from "../../scripts/chapters";
+import { chaptersEnabled, enterProgress } from "../../scripts/chapters";
 import { useSlider, type SliderEffect } from "../../hooks/useSlider";
 import SliderSideArrows from "../shared/SliderSideArrows";
 import TestimonialMiniCard from "./TestimonialMiniCard";
@@ -118,7 +118,12 @@ function StatFigure({
       const el = numRef.current;
       if (el) el.textContent = formatNumber(v, decimals, hasCommas);
     };
-    const stop = spanProgress(section, (p) => {
+    /* `enterProgress` y no `spanProgress`: el segundo recorre `alto − viewport`,
+       que aquí son 294 px (la sección mide 1194 y el viewport 900). Con el 55 %
+       la cuenta entera ocurría en 162 px — menos de un quinto de pantalla, se
+       disparaba y terminaba en el mismo gesto. Con la ventana de entrada el
+       recorrido es el alto completo: ~657 px, unas 0,73 pantallas. */
+    const stop = enterProgress(section, (p) => {
       escribir(value * Math.min(Math.max(p, 0) / SCRUB_FIN, 1));
     });
     /* `scroll()` deja un listener global vivo: sin esta parada sobrevive al

@@ -113,6 +113,28 @@ export function spanProgress(
 }
 
 /**
+ * Progreso (0→1) de la ENTRADA de un elemento: desde que su borde superior
+ * asoma por el fondo del viewport hasta que su borde inferior lo alcanza.
+ *
+ * Es la ventana ANCHA, y la diferencia con `spanProgress` no es cosmética:
+ * `spanProgress` recorre `alto − viewport`, que para una sección apenas más
+ * alta que la pantalla son un par de cientos de píxeles. Sirve para encadenar
+ * capítulos (donde el panel está clavado y el recorrido es el wrapper entero),
+ * pero se queda corto para algo que el usuario tiene que poder leer mientras
+ * scrollea — una cuenta, por ejemplo. Aquí el recorrido es el alto completo del
+ * elemento (SPEC 114).
+ */
+export function enterProgress(
+  el: HTMLElement,
+  onProgress: (p: number) => void
+): Stop {
+  return scroll(
+    (progress: number) => onProgress(progress),
+    { target: el, offset: ["start end", "end end"] } as never
+  );
+}
+
+/**
  * Progreso crudo (0→1) de un acto. Para lo que no es una animación de CSS:
  * uniforms de un shader, contadores, clases de estado.
  */
