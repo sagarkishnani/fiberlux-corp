@@ -27,7 +27,9 @@ Medido en el build de la 113, a 1440×900:
 
 1. **Los bloques no son de la Home.** `EmpresasRed` se usa en **7 páginas**, `BlogPreview` en 4, `CertificacionesSlider` en 3 y `HomePartners` en 2. Solo `BannerApp` es exclusivo de Home. Cualquier cambio dentro del componente se propaga.
 2. **`EmpresasRed` mide 1,33 pantallas: no cabe clavado en un panel de 100svh.** La 113 anticipaba convertirlo en capítulo y partirlo en dos (cifras / testimonio). Un panel sticky lo recortaría, y partirlo toca las otras 6 páginas. **Se descarta el capítulo**: las cifras se atan al progreso de la propia sección, sin sticky.
-3. **`EmpresasRed` es un panel claro** (magenta sobre rosa, SPEC 49 + 54). Los círculos concéntricos del prototipo eran sobre negro: llevarlos ahí no es una animación, es un rediseño de una decisión visual que el cliente ya aprobó.
+3. **`EmpresasRed` tiene un diseño propio ya aprobado**, y cambiarlo no es animar. Los círculos concéntricos del prototipo son un rediseño de una decisión visual cerrada.
+
+   > **Corrección de hecho (durante la implementación).** Esta spec afirmaba que el bloque es "un panel claro, magenta sobre rosa". **No lo es**: su `<section>` pinta un plano sólido `#47113C` (ciruela oscuro) con el texto en blanco. La descripción venía del docstring del componente, que es histórico (SPEC 49 fue el panel claro; el diseño cambió después). La decisión de no rediseñarlo no cambia —era del cliente y se sostiene—, pero la justificación original era incorrecta y queda corregida aquí.
 
 Y dos de los cuatro bloques restantes **ya tienen parte del tratamiento**: `CertificacionesSlider` lleva 2 `data-parallax` internos (el glow de la SPEC 52) y `BannerApp` 4 `data-reveal` internos. Entran a esta spec **solo para revisión**, no para rehacerse.
 
@@ -147,6 +149,18 @@ Verificado en navegador sobre el build de esta rama, a 1440×900:
 
 - **`CertificacionesSlider` — correcto, no se toca.** Su `data-parallax="0.08"` sigue activo tras la 113: el `translateY` del nodo de fondo va de `−7,13 px` a `−2,26 px` y a `+2,61 px` conforme la sección cruza el viewport.
 - **`BannerApp` — correcto en lo suyo, con un matiz que conviene dejar escrito.** Sus cuatro `data-reveal` internos pertenecen al **modo nativo** del bloque (SPEC 60), y la Home lo tiene configurado en `banner.mode: "imagen"`. En ese modo el componente renderiza solo la imagen enlazada, así que esos reveals **no llegan al DOM**: la entrada del bloque en Home es únicamente la del wrapper de página (`data-reveal="up"`). No es un fallo —es la consecuencia de una elección de contenido— y **queda fuera de alcance** por la decisión de "solo revisión, no reescritura". Si en algún momento se quiere una entrada más rica ahí, la palanca es el contenido (pasar el banner a modo nativo), no el código.
+
+**Resultado del Step 6 (parallax).** Ningún bloque restante califica, y por eso **no se añade ninguno**:
+
+| Bloque | Fondo | Veredicto |
+| --- | --- | --- |
+| `CertificacionesSlider` | glow radial decorativo | **ya tiene** `data-parallax="0.08"`, verificado |
+| `EmpresasRed` | plano sólido `#47113C` | nada que desplazar |
+| `HomePartners` | plano `bg-greyscale-darkest` | nada que desplazar |
+| `BlogPreview` | plano `bg-greyscale-darkest` | nada que desplazar |
+| `BannerApp` | imagen (modo `imagen`) | solo revisión, fuera de alcance |
+
+El parallax necesita una capa que se mueva por detrás del contenido. Inventarle una a un bloque de color plano sería **introducir un fondo nuevo**, que es justo lo que el alcance excluye.
 
 **Hallazgo de contexto que enmarca los pasos 4–6:** la Home entera tiene hoy **11 `data-reveal`, todos de tipo `up`, un solo `data-reveal-stagger` y un solo `data-parallax`**. El repertorio de la SPEC 71 está disponible pero apenas usado fuera del tramo narrativo.
 
