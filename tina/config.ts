@@ -293,6 +293,7 @@ export default defineConfig({
                   { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
                   { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
                   { value: "lattice", label: "Retícula volumétrica (onda que la atraviesa)" },
+                  { value: "fiber", label: "Túnel de fibra (filamentos de luz)" },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
@@ -475,6 +476,38 @@ export default defineConfig({
                     ],
                     description:
                       "Controla densidad de la retícula, brillo y fuerza de las ondas. Default: Medio.",
+                  },
+                ],
+              },
+              // ── Modo Túnel de fibra (SPEC 113) ──
+              {
+                type: "object",
+                name: "fiber",
+                label: "Hero — modo Túnel de fibra",
+                description:
+                  "Solo aplica si el 'Fondo del hero' es 'Túnel de fibra'. Filamentos de luz con paquetes recorriéndolos, que avanzan con el scroll.",
+                fields: [
+                  {
+                    type: "string",
+                    name: "variant",
+                    label: "Tratamiento",
+                    options: [
+                      { value: "tunel", label: "Túnel (haces hacia el punto de fuga)" },
+                      { value: "haz", label: "Haz (filamentos horizontales)" },
+                      { value: "reticula", label: "Retícula (malla con paquetes)" },
+                    ],
+                    description: "Default: Túnel.",
+                  },
+                  {
+                    type: "string",
+                    name: "intensity",
+                    label: "Intensidad del efecto",
+                    options: [
+                      { value: "sutil", label: "Sutil" },
+                      { value: "medio", label: "Medio" },
+                      { value: "intenso", label: "Intenso" },
+                    ],
+                    description: "Brillo general del fondo. Default: Medio.",
                   },
                 ],
               },

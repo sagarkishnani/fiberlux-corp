@@ -252,7 +252,8 @@ var config_default = defineConfig({
                   { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" },
                   { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
                   { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
-                  { value: "lattice", label: "Ret\xEDcula volum\xE9trica (onda que la atraviesa)" }
+                  { value: "lattice", label: "Ret\xEDcula volum\xE9trica (onda que la atraviesa)" },
+                  { value: "fiber", label: "T\xFAnel de fibra (filamentos de luz)" }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
@@ -424,6 +425,37 @@ var config_default = defineConfig({
                       { value: "intenso", label: "Intenso" }
                     ],
                     description: "Controla densidad de la ret\xEDcula, brillo y fuerza de las ondas. Default: Medio."
+                  }
+                ]
+              },
+              // ── Modo Túnel de fibra (SPEC 113) ──
+              {
+                type: "object",
+                name: "fiber",
+                label: "Hero \u2014 modo T\xFAnel de fibra",
+                description: "Solo aplica si el 'Fondo del hero' es 'T\xFAnel de fibra'. Filamentos de luz con paquetes recorri\xE9ndolos, que avanzan con el scroll.",
+                fields: [
+                  {
+                    type: "string",
+                    name: "variant",
+                    label: "Tratamiento",
+                    options: [
+                      { value: "tunel", label: "T\xFAnel (haces hacia el punto de fuga)" },
+                      { value: "haz", label: "Haz (filamentos horizontales)" },
+                      { value: "reticula", label: "Ret\xEDcula (malla con paquetes)" }
+                    ],
+                    description: "Default: T\xFAnel."
+                  },
+                  {
+                    type: "string",
+                    name: "intensity",
+                    label: "Intensidad del efecto",
+                    options: [
+                      { value: "sutil", label: "Sutil" },
+                      { value: "medio", label: "Medio" },
+                      { value: "intenso", label: "Intenso" }
+                    ],
+                    description: "Brillo general del fondo. Default: Medio."
                   }
                 ]
               }

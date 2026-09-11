@@ -52,8 +52,9 @@ interface Props {
   className?: string;
   /** Se llama si no hay WebGL2 o si el shader no compila. */
   onUnsupported?: () => void;
-  /** Se llama tras el primer frame pintado (señal `fbx:hero-scene-loaded`). */
-  onReady?: () => void;
+  /** Emite `fbx:hero-scene-loaded` tras el primer frame, como el resto de
+      fondos del hero (lo escucha el prefetch de escenas de `index.astro`). */
+  signalReady?: boolean;
 }
 
 /** Palancas del efecto. Todo lo caro se regula desde aquí. */
@@ -214,7 +215,7 @@ function compile(gl: WebGL2RenderingContext, type: number, src: string) {
 }
 
 const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
-  { variant = "tunel", intensity = "medio", className = "", onUnsupported, onReady },
+  { variant = "tunel", intensity = "medio", className = "", onUnsupported, signalReady },
   ref
 ) {
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -229,8 +230,8 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
      el efecto en cada render y cada pasada crearía un contexto WebGL nuevo. */
   const unsupportedRef = useRef(onUnsupported);
   unsupportedRef.current = onUnsupported;
-  const readyRef = useRef(onReady);
-  readyRef.current = onReady;
+  const readyRef = useRef(signalReady);
+  readyRef.current = signalReady;
 
   useImperativeHandle(ref, () => ({
     setHero(p: number) {
@@ -342,9 +343,9 @@ const FiberTunnel = forwardRef<FiberTunnelHandle, Props>(function FiberTunnel(
       gl.uniform1f(uHero, stateRef.current.hero);
       gl.uniform2f(uMouse, mouse.x, mouse.y);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-      if (!signalled) {
+      if (!signalled && readyRef.current) {
         signalled = true;
-        readyRef.current?.();
+        window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
       }
     };
 

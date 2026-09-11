@@ -180,6 +180,11 @@ type HomeHeroLattice {
   intensity: String
 }
 
+type HomeHeroFiber {
+  variant: String
+  intensity: String
+}
+
 type HomeHero {
   title: String!
   title_en: String
@@ -196,6 +201,7 @@ type HomeHero {
   cinematic: HomeHeroCinematic
   dotfield: HomeHeroDotfield
   lattice: HomeHeroLattice
+  fiber: HomeHeroFiber
 }
 
 type HomeServicesItemsBullets {
@@ -350,6 +356,11 @@ input HomeHeroLatticeFilter {
   intensity: StringFilter
 }
 
+input HomeHeroFiberFilter {
+  variant: StringFilter
+  intensity: StringFilter
+}
+
 input HomeHeroFilter {
   title: StringFilter
   title_en: StringFilter
@@ -366,6 +377,7 @@ input HomeHeroFilter {
   cinematic: HomeHeroCinematicFilter
   dotfield: HomeHeroDotfieldFilter
   lattice: HomeHeroLatticeFilter
+  fiber: HomeHeroFiberFilter
 }
 
 input HomeServicesItemsBulletsFilter {
@@ -2944,6 +2956,11 @@ input HomeHeroLatticeMutation {
   intensity: String
 }
 
+input HomeHeroFiberMutation {
+  variant: String
+  intensity: String
+}
+
 input HomeHeroMutation {
   title: String
   title_en: String
@@ -2960,6 +2977,7 @@ input HomeHeroMutation {
   cinematic: HomeHeroCinematicMutation
   dotfield: HomeHeroDotfieldMutation
   lattice: HomeHeroLatticeMutation
+  fiber: HomeHeroFiberMutation
 }
 
 input HomeServicesItemsBulletsMutation {

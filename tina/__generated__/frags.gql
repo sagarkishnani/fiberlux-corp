@@ -46,6 +46,11 @@ fragment HomeParts on Home {
       __typename
       intensity
     }
+    fiber {
+      __typename
+      variant
+      intensity
+    }
   }
   services {
     __typename
