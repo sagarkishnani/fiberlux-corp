@@ -70,8 +70,6 @@ export default function ValorSolucionReact({
   const interactive = clickable && !!widget?.hint;
 
   const sectionRef = useRef<HTMLElement>(null);
-  const industriesRef = useRef<HTMLElement>(null);
-  const barsRef = useRef<SVGSVGElement>(null);
   const [inView, setInView] = useState(false);
 
   /* Tooltip-hint que sigue el cursor sobre TODO el bloque "El desafío"
@@ -157,65 +155,6 @@ export default function ValorSolucionReact({
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
-
-  // Scroll-linked sequential reveal: as the card scrolls up through the
-  // viewport, the diagonal bars rise into place one after another (bar 1,
-  // then bar 2, …), each over its own slice of the scroll progress.
-  useEffect(() => {
-    const card = industriesRef.current;
-    const svg = barsRef.current;
-    if (!card || !svg) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    // Order the bars left → right by their geometric center-x, so the reveal
-    // sweeps across the card in that direction (getBBox ignores CSS transforms).
-    const bars = Array.from(
-      svg.querySelectorAll<SVGPathElement>("[data-op]")
-    ).sort((a, b) => {
-      const ba = a.getBBox();
-      const bb = b.getBBox();
-      return ba.x + ba.width / 2 - (bb.x + bb.width / 2);
-    });
-    const n = bars.length;
-    const OFFSET = 150; // user units each bar starts below its resting place
-    // Play the whole sequence early — as the card rises into view — so the
-    // bars have all settled well before the card starts leaving the screen.
-    const WIN_START = 0.0; // scroll-progress where bar 1 begins to rise
-    const WIN_END = 0.5; // scroll-progress where the last bar finishes (~centered)
-    const step = (WIN_END - WIN_START) / n;
-    const DUR = step * 1.7; // overlap so the sequence flows smoothly
-    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-    let raf = 0;
-
-    const update = () => {
-      raf = 0;
-      const rect = card.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
-      // 0 when the card's top hits the bottom of the viewport, 1 once it has
-      // scrolled fully past — the sequence plays across this range.
-      const p = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
-      bars.forEach((bar, i) => {
-        const start = WIN_START + i * step;
-        const lp = Math.min(1, Math.max(0, (p - start) / DUR));
-        const e = easeOut(lp);
-        bar.style.transform = `translateY(${(1 - e) * OFFSET}px)`;
-        bar.style.opacity = String(Number(bar.dataset.op || 1) * e);
-      });
-    };
-
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
   }, []);
 
   const valor = data?.service?.valor;
@@ -312,17 +251,6 @@ export default function ValorSolucionReact({
                       fill="none"
                       stroke="rgba(213,167,202,0.28)"
                       strokeWidth="1.5"
-                    />
-                    {/* Luz que recorre la línea del horizonte. */}
-                    <path
-                      className="valor-horizon-beam"
-                      d="M-40 150 Q300 66 640 150"
-                      pathLength={100}
-                      fill="none"
-                      stroke="#D64DB8"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeDasharray="15 85"
                     />
                   </svg>
                 </div>
@@ -421,64 +349,9 @@ export default function ValorSolucionReact({
           {/* ── Right bottom — Industrias destacadas (magenta + arrow) ── */}
           {industries && (
             <article
-              ref={industriesRef}
               className="valor-card relative flex flex-col justify-start overflow-hidden rounded-[28px] min-h-[240px] p-7 md:p-9 bg-[linear-gradient(135deg,#9E2680_0%,#7c1c64_60%,#651551_100%)]"
               style={{ ["--d" as any]: "0.39s" }}
             >
-              {/* industrias.svg — diagonal bars that rise on scroll (parallax) */}
-              <svg
-                ref={barsRef}
-                className="pointer-events-none absolute inset-0 h-full w-full"
-                viewBox="0 0 579 434"
-                preserveAspectRatio="xMidYMid slice"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  data-order="0" data-op="0.45"
-                  opacity="0.45"
-                  d="M437.342 278.326C461.445 254.223 461.444 215.143 437.341 191.04C413.238 166.937 374.159 166.937 350.056 191.04L21.0575 520.038C-3.04571 544.142 -3.04538 583.221 21.0578 607.324C45.1611 631.427 84.2401 631.427 108.343 607.324L437.342 278.326Z"
-                  fill="#D5A7CA"
-                  style={{ willChange: "transform" }}
-                />
-                <path
-                  data-order="1" data-op="0.2"
-                  opacity="0.2"
-                  d="M709.67 103.755L709.67 103.755C685.567 79.6513 646.487 79.6513 622.384 103.755L189.234 536.905C165.131 561.008 165.131 600.087 189.234 624.191C213.337 648.294 252.416 648.294 276.52 624.191L709.67 191.04C733.773 166.937 733.773 127.858 709.67 103.755Z"
-                  fill="#F3E4EF"
-                  style={{ willChange: "transform" }}
-                />
-                <path
-                  data-order="2" data-op="0.2"
-                  opacity="0.2"
-                  d="M811.47 187.972L811.469 187.971C787.366 163.868 748.287 163.868 724.184 187.971L291.033 621.122C266.93 645.225 266.93 684.304 291.034 708.408C315.137 732.511 354.216 732.511 378.319 708.408L811.47 275.257C835.573 251.154 835.573 212.075 811.47 187.972Z"
-                  fill="#F3E4EF"
-                  style={{ willChange: "transform" }}
-                />
-                <path
-                  data-order="3" data-op="0.2"
-                  opacity="0.2"
-                  d="M126.681 318.921L126.681 318.921C102.577 294.818 63.4984 294.818 39.3951 318.921L-367.671 725.987C-391.774 750.09 -391.774 789.169 -367.671 813.273L-367.671 813.273C-343.567 837.376 -304.488 837.376 -280.385 813.273L126.681 406.207C150.784 382.104 150.784 343.025 126.681 318.921Z"
-                  fill="#F3E4EF"
-                  style={{ willChange: "transform" }}
-                />
-                <path
-                  data-order="4" data-op="0.2"
-                  opacity="0.2"
-                  d="M73.837 275.91C97.9402 251.807 97.9399 212.727 73.8367 188.624C49.7335 164.521 10.6544 164.521 -13.4488 188.624L-420.515 595.69C-444.618 619.793 -444.618 658.873 -420.515 682.976C-396.411 707.079 -357.332 707.079 -333.229 682.976L73.837 275.91Z"
-                  fill="#F3E4EF"
-                  style={{ willChange: "transform" }}
-                />
-              </svg>
-              {/* diagonal light stripe */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(122deg, transparent 38%, rgba(255,255,255,0.10) 50%, transparent 62%)",
-                }}
-              />
               <div className="relative z-10 max-w-[85%]">
                 {industries.heading && (
                   <h3
@@ -553,13 +426,9 @@ export default function ValorSolucionReact({
           }
         }
 
-        /* Vida en la base "horizonte": luz que recorre la línea + destello que
-           barre la semiesfera magenta (SPEC 95). */
-        @keyframes valor-horizon { to { stroke-dashoffset: -100; } }
-        .valor-horizon-beam {
-          filter: drop-shadow(0 0 4px rgba(214, 77, 184, 0.9));
-          animation: valor-horizon 5s linear infinite;
-        }
+        /* Vida en la base "horizonte": destello que barre la semiesfera
+           magenta (SPEC 95). La línea del horizonte queda apagada: sin luz
+           viajera, para no sobrecargar de movimiento la sección. */
         @keyframes valor-sheen {
           0%   { transform: skewX(-20deg) translateX(-220px); opacity: 0; }
           18%  { opacity: 1; }
@@ -579,7 +448,6 @@ export default function ValorSolucionReact({
           }
           .valor-wave { clip-path: none; transition: none; }
           .valor-section.is-visible .valor-card:hover { transform: none; }
-          .valor-horizon-beam { animation: none; }
           .valor-hill-sheen { animation: none; opacity: 0; }
         }
       `}</style>
