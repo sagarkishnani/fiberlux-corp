@@ -267,7 +267,6 @@ type HomeManifiesto {
 type HomePlanetaPuntos {
   frase: Float
   label: String
-  label_en: String
   lat: Float
   lng: Float
   conectaCon: String
@@ -483,7 +482,6 @@ input HomeManifiestoFilter {
 input HomePlanetaPuntosFilter {
   frase: NumberFilter
   label: StringFilter
-  label_en: StringFilter
   lat: NumberFilter
   lng: NumberFilter
   conectaCon: StringFilter
@@ -3113,7 +3111,6 @@ input HomeManifiestoMutation {
 input HomePlanetaPuntosMutation {
   frase: Float
   label: String
-  label_en: String
   lat: Float
   lng: Float
   conectaCon: String

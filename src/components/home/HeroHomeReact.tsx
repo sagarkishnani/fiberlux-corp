@@ -583,7 +583,6 @@ export default function HeroHomeReact({
             : null;
         return {
           phrase,
-          label: (tField(pt, "label", locale) as string) || "",
           loc: [lat, lng] as [number, number],
           to,
         } satisfies PlanetPoint;

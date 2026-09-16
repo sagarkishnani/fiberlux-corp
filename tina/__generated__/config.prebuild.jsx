@@ -653,8 +653,12 @@ var config_default = defineConfig({
                     label: "Frase a la que acompa\xF1a (1, 2, 3\u2026)",
                     type: "number"
                   },
-                  { name: "label", label: "Etiqueta", type: "string" },
-                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
+                  {
+                    name: "label",
+                    label: "Nombre del punto",
+                    type: "string",
+                    description: "S\xF3lo para identificarlo en este panel y para enlazar arcos desde otro punto. No se muestra sobre el planeta."
+                  },
                   { name: "lat", label: "Latitud", type: "number" },
                   { name: "lng", label: "Longitud", type: "number" },
                   {

@@ -114,7 +114,6 @@ fragment HomeParts on Home {
       __typename
       frase
       label
-      label_en
       lat
       lng
       conectaCon

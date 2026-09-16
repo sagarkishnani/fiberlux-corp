@@ -714,8 +714,13 @@ export default defineConfig({
                     label: "Frase a la que acompaña (1, 2, 3…)",
                     type: "number",
                   },
-                  { name: "label", label: "Etiqueta", type: "string" },
-                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
+                  {
+                    name: "label",
+                    label: "Nombre del punto",
+                    type: "string",
+                    description:
+                      "Sólo para identificarlo en este panel y para enlazar arcos desde otro punto. No se muestra sobre el planeta.",
+                  },
                   { name: "lat", label: "Latitud", type: "number" },
                   { name: "lng", label: "Longitud", type: "number" },
                   {

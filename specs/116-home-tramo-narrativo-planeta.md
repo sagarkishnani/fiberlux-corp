@@ -31,7 +31,7 @@ Se eligió el horizonte y no la inmersión ni el alejamiento por una razón veri
 
 **Elementos por frase.** Mientras corre el capítulo de frases, cada frase puede traer dos tipos de elemento, ambos editables desde Tina:
 
-- **Puntos** que se encienden sobre el planeta —un hub con su etiqueta y un arco de fibra hacia otro punto—, dibujados con la misma proyección que ya usan los hubs de `CinematicBackground`, así que giran pegados al globo y se cortan por detrás del limbo.
+- **Puntos** que se encienden sobre el planeta —un hub y un arco de fibra hacia otro punto—, dibujados con la misma proyección que ya usan los hubs de `CinematicBackground`, así que giran pegados al globo y se cortan por detrás del limbo. **Sin rótulo**: ver el corolario del 16 sep 2026.
 - **Cifras** que acompañan al texto: un número que se cuenta con el scroll dentro del turno de su frase, con sufijo y etiqueta.
 
 Cada elemento declara a qué frase pertenece. Los que no tienen frase asignada no se muestran.
@@ -48,7 +48,7 @@ Cada elemento declara a qué frase pertenece. Los que no tienen frase asignada n
 - **Coreografía de salida del hero en modo `planeta`** (Sección 2), montada sobre `actAnimate`/`actProgress`/`spanProgress` de `chapters.ts`. Los actos 1 y 2 son los mismos de `fiber`; el 3 conduce el planeta.
 - **Apagado del canvas al final del tramo** con el mismo perfil que `fiber` (`setOpacity` a 0 antes de entrar en `SolucionesStack`), para garantizar **un solo canvas WebGL vivo** — COBE también es WebGL.
 - **Grupo nuevo en Tina `home.planeta`** con `puntos[]` y `cifras[]`, cada elemento atado a una frase por número, con sus `_en`.
-- **Puntos sobre el globo**: nodo encendido + etiqueta + arco de fibra hacia otro punto (o hacia Lima, el centro de red ya horneado). Aparecen y se apagan con el turno de su frase.
+- **Puntos sobre el globo**: nodo encendido + arco de fibra hacia otro punto (o hacia Lima, el centro de red ya horneado). Aparecen y se apagan con el turno de su frase.
 - **Cifras junto a la frase**: renderizadas por `ManifiestoReact` dentro del acto de cada frase, con el número contado por scroll. Aditivo: si no hay `cifras` el componente renderiza lo mismo que hoy, así que el modo `fiber` no se ve afectado.
 - **Reutilización de las frases**: el capítulo consume `home.manifiesto` tal cual. No se duplica copy.
 - **Velo de legibilidad propio del modo**: con el planeta al pie, el velo radial centrado de `ManifiestoReact` sobra; en modo `planeta` el apoyo va en la mitad inferior, sobre el limbo.
@@ -82,8 +82,8 @@ Cada elemento declara a qué frase pertenece. Los que no tienen frase asignada n
       ui: { itemProps: (i) => ({ label: i?.label || "Punto" }) },
       fields: [
         { type: "number", name: "frase",       label: "Frase a la que acompaña (1, 2, 3…)" },
-        { type: "string", name: "label",       label: "Etiqueta" },
-        { type: "string", name: "label_en",    label: "Etiqueta (EN)" },
+        { type: "string", name: "label",       label: "Nombre del punto",
+          description: "Sólo identifica el punto en el panel y enlaza arcos; no se muestra." },
         { type: "number", name: "lat",         label: "Latitud" },
         { type: "number", name: "lng",         label: "Longitud" },
         { type: "string", name: "conectaCon",  label: "Traza un arco hasta (etiqueta de otro punto)",
@@ -156,14 +156,14 @@ Cada paso deja el sitio compilando y funcionando.
 - [ ] Con `heroBackground: "planeta"`, el hero queda clavado, sus satélites y su titular salen según la coreografía, y el planeta **no se corta** al pasar al capítulo de frases (verificado a 1440×900, 390×844 y en un iPhone físico).
 - [ ] Al final del capítulo del hero el planeta queda como horizonte al pie de la pantalla y las frases se leen sobre el cielo oscuro, sin competir con el brillo del limbo.
 - [ ] Las frases del manifiesto son **las mismas** que en modo `fiber`: no hay copy duplicado en el CMS.
-- [ ] Un punto declarado en `home.planeta.puntos` con `frase: 2` se enciende sobre el planeta durante la segunda frase, muestra su etiqueta, traza su arco y se apaga al pasar de frase.
+- [ ] Un punto declarado en `home.planeta.puntos` con `frase: 2` se enciende sobre el planeta durante la segunda frase, traza su arco y se apaga al pasar de frase.
 - [ ] Un punto con `frase` vacía o fuera del rango de frases no se renderiza y no rompe el resto.
 - [ ] Una cifra declarada con `frase: 3` termina de contar **antes** de que el panel sticky se suelte.
 - [ ] Al entrar en `SolucionesStack`, el canvas del planeta ya no consume rAF y el aurora es el único canvas WebGL vivo.
 - [ ] Con `prefers-reduced-motion: reduce`: un frame fijo del planeta, frases visibles sin scroll, elementos en su estado final y sin capítulos de altura extra.
 - [ ] Cambiar `heroBackground` a `cinematic` restituye **exactamente** el hero anterior: sin capítulos, con su auto-fundido por scroll y sin residuos del tramo narrativo.
 - [ ] Cambiar a `fiber` restituye el tramo narrativo de la SPEC 113 sin regresiones (frases, velo de corte, apagado del canvas).
-- [ ] Las etiquetas de puntos y cifras y sus `_en` se editan desde Tina y se reflejan en `/` y en `/en`.
+- [ ] La etiqueta de las cifras y su `_en` se editan desde Tina y se reflejan en `/` y en `/en`.
 - [ ] Tras navegar a otra página con View Transitions, no queda ningún `scroll()` del tramo narrativo escuchando.
 - [ ] No se ven dos logos a la vez durante el morph de entrada (regresión de `CINE_MODES` de la SPEC 112).
 - [ ] No hay ninguna línea o escalón horizontal en el fondo durante todo el recorrido.
@@ -209,3 +209,21 @@ Cada paso deja el sitio compilando y funcionando.
 - Llevar el fondo `planeta` a los heros de otras páginas.
 - Exponer en Tina la paleta, la densidad, la rotación o los hubs base del planeta.
 - Tipos de elemento por frase distintos de puntos y cifras.
+
+---
+
+## Anexo — los cuatro hallazgos del QA (16 sep 2026)
+
+1. **El velo de las frases no podía vivir en `ManifiestoReact`.** Ese contenedor mide lo que mide el bloque de texto: el velo llegaba con opacidad a su borde inferior y dejaba un **escalón horizontal** con el planeta crudo debajo — la misma costura que documenta el anexo de la SPEC 113 y por el mismo motivo: un velo acotado sobre un fondo que no lo está. Pasa a colgar de `[data-narrative-bg]`, cubre el viewport entero y sube al final del capítulo del hero. En `fiber` el velo radial se queda donde estaba.
+
+2. **El apagado del planeta va en el TRASPASO, no dentro del tramo.** Copiar el perfil de `fiber` (`spanProgress`, fundido de 0.86 a 1) dejaba el planeta al 14 % mientras todavía se leía la tercera frase: `spanProgress` llega a 1 cuando el último panel se suelta, así que su tramo final cae **dentro** del turno de esa frase. Se añade `handoffProgress()` a `chapters.ts` —la pantalla que `act()` descuenta— y el fundido ocurre ahí, llegando a 0 justo al entrar `SolucionesStack`.
+
+3. **Un handler por frase no sirve para saber cuál está en curso.** `scroll()` de Motion dispara **todos** los callbacks en cada scroll con el progreso recortado a [0,1], no sólo dentro de su ventana: con un `actProgress` por frase, la frase "activa" acababa siendo siempre la última registrada (medido `phrase: 2` estando en la primera, con los puntos de la segunda sin encender nunca). Va un solo handler sobre el capítulo y el reparto lo hace `slotAt()`, la otra cara del `slotWindow` que usa `ManifiestoReact`. Es el riesgo 3 de la Sección 8, resuelto en origen.
+
+4. **La rotación se ancla a la red, y la rodadura es al SUR.** Dos medidas por la misma causa: con el globo girando libre, Perú miraba a cámara una vez cada ~40 s, y con la rodadura al norte quedaba además fuera del casquete visible (medido `front: false`, y ≈ 1040 px con el viewport en 900). Conducido, `phi` parte de la longitud de Lima y lo mueve el scroll —coherente con un tramo de scrollytelling: la escena avanza cuando avanza el usuario—, y `NARRATIVE.theta` es **negativa**. La vida de la escena la siguen poniendo las estrellas y los pulsos de los arcos, que van con el tiempo.
+
+## Corolario — sin nombres de ciudad (16 sep 2026)
+
+Los puntos llevaban rotulado el nombre de su ciudad al costado (encima del nodo en móvil, tras chocar con el texto de la frase a 390 px). **El cliente lo descarta**: "no termina de verse bien". Quedan el nodo y su arco; la frase ya dice de qué habla.
+
+El campo `label` **se conserva** en Tina, pero deja de ser copy visible: identifica el punto en el panel y es lo que empareja `conectaCon`. Por eso se retira su `label_en`, que sólo existía para mostrarse.

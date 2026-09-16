@@ -190,7 +190,6 @@ function project(
  */
 export interface PlanetPoint {
   phrase: number; // índice 0-based de la frase
-  label: string; // ya localizado por tField
   loc: [number, number]; // lat, lng
   to: [number, number] | null;
 }
@@ -741,6 +740,10 @@ function CinematicBackgroundImpl(
      * se cortan por detrás del limbo. El arco se traza durante el primer tramo
      * del turno de la frase (la luz "viaja" hasta la ciudad) y todo el conjunto
      * se apaga al cederle el turno a la frase siguiente.
+     *
+     * Sin rótulo: el nombre de la ciudad sobre el planeta no terminaba de verse
+     * bien (pedido del cliente, 16 sep 2026). El punto y su arco bastan, y la
+     * frase ya dice de qué habla.
      */
     const drawCmsPoints = (phi: number, theta: number, op: number) => {
       const st = stateRef.current;
@@ -793,7 +796,7 @@ function CinematicBackgroundImpl(
         octx.strokeStyle = `rgba(${BRAND_LIT},${0.95 * alpha})`;
         octx.stroke();
 
-        // Nodo + etiqueta, sólo si el punto mira hacia nosotros.
+        // Nodo, sólo si el punto mira hacia nosotros.
         const pr = project([to[0] * R, to[1] * R, to[2] * R], phi, theta);
         if (!pr.front) continue;
         const x = dLeft + pr.x * dSize;
@@ -803,36 +806,6 @@ function CinematicBackgroundImpl(
         octx.arc(x, y, 2.4, 0, Math.PI * 2);
         octx.fillStyle = `rgba(255,236,250,${alpha})`;
         octx.fill();
-
-        if (pt.label && traced > 0.85) {
-          const la = alpha * Math.min(1, (traced - 0.85) / 0.15);
-          octx.save();
-          octx.font = '500 12px "Space Mono", ui-monospace, monospace';
-          (octx as any).letterSpacing = "0.14em";
-          octx.textBaseline = "middle";
-          const text = pt.label.toUpperCase();
-          octx.fillStyle = `rgba(255,236,250,${la})`;
-          if (narrowView) {
-            /* En móvil el planeta ocupa toda la pantalla y los puntos caen a la
-               derecha, muy cerca del borde: la etiqueta al costado o se salía
-               del viewport o se metía encima del texto de la frase (medido con
-               AREQUIPA a 390 px). Aquí va ENCIMA del nodo y centrada, que es el
-               único sitio libre. */
-            octx.textAlign = "center";
-            octx.fillText(text, x, y - 16);
-          } else {
-            // Escritorio: guion de enganche + etiqueta al costado.
-            octx.textAlign = "left";
-            octx.beginPath();
-            octx.moveTo(x + 8, y);
-            octx.lineTo(x + 20, y);
-            octx.lineWidth = 1;
-            octx.strokeStyle = `rgba(${BRAND_LIT},${0.8 * la})`;
-            octx.stroke();
-            octx.fillText(text, x + 26, y);
-          }
-          octx.restore();
-        }
       }
     };
 

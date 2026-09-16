@@ -455,14 +455,12 @@
       {
         "frase": 2,
         "label": "Lima",
-        "label_en": "Lima",
         "lat": -12.05,
         "lng": -77.04
       },
       {
         "frase": 2,
         "label": "Arequipa",
-        "label_en": "Arequipa",
         "lat": -16.41,
         "lng": -71.54,
         "conectaCon": "Lima"
@@ -470,7 +468,6 @@
       {
         "frase": 3,
         "label": "Trujillo",
-        "label_en": "Trujillo",
         "lat": -8.11,
         "lng": -79.03,
         "conectaCon": "Lima"
@@ -478,7 +475,6 @@
       {
         "frase": 3,
         "label": "Iquitos",
-        "label_en": "Iquitos",
         "lat": -3.75,
         "lng": -73.25,
         "conectaCon": "Lima"
