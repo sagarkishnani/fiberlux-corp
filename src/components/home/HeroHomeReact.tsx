@@ -74,6 +74,51 @@ function signalHeroReady() {
   window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
 }
 
+/**
+ * Actos 1 y 2 del capítulo del hero, comunes a los modos narrativos (SPEC 113 y
+ * SPEC 116): se apagan los satélites (subtítulo y botones) y el titular se
+ * sostiene y retrocede. Lo único que cambia entre `fiber` y `planeta` es el
+ * acto 3, que es el que conduce el fondo.
+ *
+ * El wordmark no se toca: la SPEC 39 ya lo acopla al scroll en sus primeros
+ * 320 px y animarlo aquí sería pelearse con un movimiento contrario.
+ *
+ * Devuelve las funciones de parada, que el llamante DEBE ejecutar al limpiar:
+ * `scroll()` deja un listener global que sobrevive a View Transitions (SPEC 110).
+ */
+function heroExitActs(
+  root: HTMLElement,
+  chapter: HTMLElement,
+  len: number,
+  title: HTMLElement | null
+): Array<() => void> {
+  const stops: Array<() => void> = [];
+
+  // Acto 1 — se apagan los satélites: subtítulo y botones.
+  const satellites = [
+    root.querySelector("[data-hero-sub]"),
+    root.querySelector("[data-hero-cta]"),
+  ].filter(Boolean) as Element[];
+  if (satellites.length) {
+    stops.push(
+      actAnimate(chapter, len, 0, 0.35, satellites, { opacity: [1, 0], y: [0, 26] })
+    );
+  }
+
+  // Acto 2 — el titular se sostiene y retrocede.
+  // `opacity: [1, 1, 0]` aguanta hasta la mitad del acto y recién ahí se va.
+  if (title) {
+    stops.push(
+      actAnimate(chapter, len, 0.22, 0.92, title, {
+        scale: [1, 1.45],
+        opacity: [1, 1, 0],
+      })
+    );
+  }
+
+  return stops;
+}
+
 /** Monta el fondo de un modo narrativo (`fiber`/`planeta`) donde toque (ver
  *  `bgTarget`). */
 function renderNarrativeBg(target: HTMLElement | "inline", layer: ReactNode) {
@@ -404,29 +449,8 @@ export default function HeroHomeReact({
     // El tramo narrativo puede abarcar más de un capítulo (hero + frases).
     const narrative = (root.closest("[data-narrative]") as HTMLElement | null) ?? chapter;
     const len = chapterLen(chapter);
-    const stops: Array<() => void> = [];
-
-    // Acto 1 — se apagan los satélites: subtítulo y botones.
-    const satellites = [
-      root.querySelector("[data-hero-sub]"),
-      root.querySelector("[data-hero-cta]"),
-    ].filter(Boolean) as Element[];
-    if (satellites.length) {
-      stops.push(
-        actAnimate(chapter, len, 0, 0.35, satellites, { opacity: [1, 0], y: [0, 26] })
-      );
-    }
-
-    // Actos 2 y 3 — el titular se sostiene y retrocede hacia el punto de fuga.
-    // `opacity: [1, 1, 0]` aguanta hasta la mitad del acto y recién ahí se va.
-    if (titleRef.current) {
-      stops.push(
-        actAnimate(chapter, len, 0.22, 0.92, titleRef.current, {
-          scale: [1, 1.45],
-          opacity: [1, 1, 0],
-        })
-      );
-    }
+    // Actos 1 y 2 (satélites y titular): comunes a los modos narrativos.
+    const stops = heroExitActs(root, chapter, len, titleRef.current);
 
     // Fogonazo del núcleo: sube dentro del hero y DECAE al salir. Si se quedara
     // en su valor final quemaría el texto del capítulo siguiente.
@@ -457,6 +481,43 @@ export default function HeroHomeReact({
 
     return () => stops.forEach((stop) => stop());
   }, [fiber]);
+
+  /* ── Capítulo del hero en modo `planeta` (SPEC 116) ──────────────────────
+     Mismos actos 1 y 2 que `fiber`; el acto 3 es el descenso del planeta hasta
+     quedar como horizonte al pie de la pantalla, con las frases pasando por
+     delante sobre el cielo. */
+  useEffect(() => {
+    if (!planeta || !chaptersEnabled()) return;
+    const root = rootRef.current;
+    const chapter = root?.closest("[data-chapter]") as HTMLElement | null;
+    if (!root || !chapter) return;
+    // El tramo narrativo puede abarcar más de un capítulo (hero + frases).
+    const narrative = (root.closest("[data-narrative]") as HTMLElement | null) ?? chapter;
+    const len = chapterLen(chapter);
+    const stops = heroExitActs(root, chapter, len, titleRef.current);
+
+    // Acto 3 — el planeta desciende, crece y rueda hasta el horizonte.
+    // Monótono de 0 a 1: al soltarse el panel, la pose ya está completa.
+    stops.push(
+      actProgress(chapter, len, 0, 1, (p) => planetRef.current?.setHero(p))
+    );
+
+    // Deriva y apagado a lo largo de TODO el tramo narrativo, con el mismo
+    // perfil que `fiber`: en opacidad 0 el planeta deja de renderizar, que es
+    // lo que garantiza que no haya dos canvas WebGL vivos al entrar en
+    // Soluciones (el aurora de la SPEC 108 arranca justo ahí).
+    stops.push(
+      spanProgress(narrative, (p) => {
+        const op = p < 0.86 ? 1 : Math.max(0, 1 - (p - 0.86) / 0.14);
+        planetRef.current?.setTravel(p);
+        planetRef.current?.setOpacity(op);
+        const fb = bgFallbackRef.current;
+        if (fb) fb.style.opacity = String(op);
+      })
+    );
+
+    return () => stops.forEach((stop) => stop());
+  }, [planeta]);
 
   const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
