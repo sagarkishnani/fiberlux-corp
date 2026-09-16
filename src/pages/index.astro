@@ -37,10 +37,18 @@ const heroDotfield = (homeContent as any).hero?.dotfield ?? {};
 const nebulaOn = (homeContent as any).hero?.heroBackground === "dotfield";
 const nebulaIntensity = heroDotfield.intensity ?? "medio";
 
-// SPEC 113 — tramo narrativo: solo en modo `fiber` el hero pasa a ser un
-// capítulo de scroll. Con cualquier otro modo el markup queda exactamente como
-// estaba, para que cambiar `heroBackground` desde Tina no deje residuos.
-const heroFiber = (homeContent as any).hero?.heroBackground === "fiber";
+// SPEC 113 / SPEC 116 — tramo narrativo: en los modos narrativos el hero pasa a
+// ser un capítulo de scroll. Con cualquier otro modo el markup queda exactamente
+// como estaba, para que cambiar `heroBackground` desde Tina no deje residuos.
+//
+// El motor (ScrollChapter, chapters.ts, narrativeCut.ts, Manifiesto) es agnóstico
+// del fondo: lo único que distingue a un modo narrativo es que monte este markup
+// y conduzca su canvas. La lista equivalente del lado React es `narrativeBg` en
+// `HeroHomeReact`.
+const NARRATIVE_MODES = ["fiber", "planeta"];
+const heroNarrative = NARRATIVE_MODES.includes(
+  (homeContent as any).hero?.heroBackground
+);
 
 const prefetchScenes = [
   serviciosContent.splineSceneUrl,
@@ -79,7 +87,7 @@ const prefetchScenes = [
   <main class="bg-greyscale-darkest">
     {/* -mt-16 hace que el hero se solape con el HeaderReact transparente */}
     {
-      heroFiber ? (
+      heroNarrative ? (
         // `data-narrative` envuelve todos los capítulos del tramo: es el rango
         // sobre el que avanza el viaje del fondo y sobre el que se apaga.
         <div data-narrative>
