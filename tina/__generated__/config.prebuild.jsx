@@ -253,7 +253,11 @@ var config_default = defineConfig({
                   { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
                   { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
                   { value: "lattice", label: "Ret\xEDcula volum\xE9trica (onda que la atraviesa)" },
-                  { value: "fiber", label: "T\xFAnel de fibra (filamentos de luz)" }
+                  { value: "fiber", label: "T\xFAnel de fibra (filamentos de luz)" },
+                  {
+                    value: "planeta",
+                    label: "Planeta narrativo (globo + frases por scroll)"
+                  }
                 ],
                 description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
               },
@@ -609,7 +613,7 @@ var config_default = defineConfig({
             name: "manifiesto",
             label: "Frases (tramo narrativo)",
             type: "object",
-            description: "Frases que se relevan con el scroll justo despu\xE9s del hero. Solo se muestran si el 'Fondo del hero' es 'T\xFAnel de fibra'. Cada frase son dos l\xEDneas: se revelan una debajo de la otra.",
+            description: "Frases que se relevan con el scroll justo despu\xE9s del hero. Solo se muestran si el 'Fondo del hero' es 'T\xFAnel de fibra' o 'Planeta narrativo'. Cada frase son dos l\xEDneas: se revelan una debajo de la otra.",
             fields: [
               {
                 name: "items",
@@ -624,6 +628,65 @@ var config_default = defineConfig({
                   { name: "line2", label: "L\xEDnea 2", type: "string" },
                   { name: "line1_en", label: "L\xEDnea 1 (EN)", type: "string" },
                   { name: "line2_en", label: "L\xEDnea 2 (EN)", type: "string" }
+                ]
+              }
+            ]
+          },
+          // ── Planeta (SPEC 116): elementos que acompañan a cada frase ──
+          {
+            name: "planeta",
+            label: "Planeta (tramo narrativo)",
+            type: "object",
+            description: "Elementos que aparecen con cada frase cuando el 'Fondo del hero' es 'Planeta narrativo'. Cada elemento indica a qu\xE9 frase acompa\xF1a por su n\xFAmero (1, 2, 3\u2026); si el n\xFAmero queda vac\xEDo o no existe esa frase, el elemento no se muestra.",
+            fields: [
+              {
+                name: "puntos",
+                label: "Puntos que se encienden sobre el planeta",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.label || "Punto" })
+                },
+                fields: [
+                  {
+                    name: "frase",
+                    label: "Frase a la que acompa\xF1a (1, 2, 3\u2026)",
+                    type: "number"
+                  },
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
+                  { name: "lat", label: "Latitud", type: "number" },
+                  { name: "lng", label: "Longitud", type: "number" },
+                  {
+                    name: "conectaCon",
+                    label: "Traza un arco hasta (etiqueta de otro punto)",
+                    type: "string",
+                    description: "Vac\xEDo \u21D2 conecta con Lima, el centro de la red."
+                  }
+                ]
+              },
+              {
+                name: "cifras",
+                label: "Cifras que acompa\xF1an a la frase",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item) => ({ label: item?.label || "Cifra" })
+                },
+                fields: [
+                  {
+                    name: "frase",
+                    label: "Frase a la que acompa\xF1a (1, 2, 3\u2026)",
+                    type: "number"
+                  },
+                  {
+                    name: "valor",
+                    label: "Valor final (se cuenta con el scroll)",
+                    type: "number"
+                  },
+                  { name: "sufijo", label: "Sufijo (%, km, +\u2026)", type: "string" },
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" }
                 ]
               }
             ]

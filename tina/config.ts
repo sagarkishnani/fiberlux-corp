@@ -672,7 +672,7 @@ export default defineConfig({
             label: "Frases (tramo narrativo)",
             type: "object",
             description:
-              "Frases que se relevan con el scroll justo después del hero. Solo se muestran si el 'Fondo del hero' es 'Túnel de fibra'. Cada frase son dos líneas: se revelan una debajo de la otra.",
+              "Frases que se relevan con el scroll justo después del hero. Solo se muestran si el 'Fondo del hero' es 'Túnel de fibra' o 'Planeta narrativo'. Cada frase son dos líneas: se revelan una debajo de la otra.",
             fields: [
               {
                 name: "items",
@@ -687,6 +687,67 @@ export default defineConfig({
                   { name: "line2", label: "Línea 2", type: "string" },
                   { name: "line1_en", label: "Línea 1 (EN)", type: "string" },
                   { name: "line2_en", label: "Línea 2 (EN)", type: "string" },
+                ],
+              },
+            ],
+          },
+
+          // ── Planeta (SPEC 116): elementos que acompañan a cada frase ──
+          {
+            name: "planeta",
+            label: "Planeta (tramo narrativo)",
+            type: "object",
+            description:
+              "Elementos que aparecen con cada frase cuando el 'Fondo del hero' es 'Planeta narrativo'. Cada elemento indica a qué frase acompaña por su número (1, 2, 3…); si el número queda vacío o no existe esa frase, el elemento no se muestra.",
+            fields: [
+              {
+                name: "puntos",
+                label: "Puntos que se encienden sobre el planeta",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item: any) => ({ label: item?.label || "Punto" }),
+                },
+                fields: [
+                  {
+                    name: "frase",
+                    label: "Frase a la que acompaña (1, 2, 3…)",
+                    type: "number",
+                  },
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
+                  { name: "lat", label: "Latitud", type: "number" },
+                  { name: "lng", label: "Longitud", type: "number" },
+                  {
+                    name: "conectaCon",
+                    label: "Traza un arco hasta (etiqueta de otro punto)",
+                    type: "string",
+                    description: "Vacío ⇒ conecta con Lima, el centro de la red.",
+                  },
+                ],
+              },
+              {
+                name: "cifras",
+                label: "Cifras que acompañan a la frase",
+                type: "object",
+                list: true,
+                ui: {
+                  itemProps: (item: any) => ({ label: item?.label || "Cifra" }),
+                },
+                fields: [
+                  {
+                    name: "frase",
+                    label: "Frase a la que acompaña (1, 2, 3…)",
+                    type: "number",
+                  },
+                  {
+                    name: "valor",
+                    label: "Valor final (se cuenta con el scroll)",
+                    type: "number",
+                  },
+                  { name: "sufijo", label: "Sufijo (%, km, +…)", type: "string" },
+                  { name: "label", label: "Etiqueta", type: "string" },
+                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
                 ],
               },
             ],

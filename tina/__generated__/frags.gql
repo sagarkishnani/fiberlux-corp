@@ -108,6 +108,26 @@ fragment HomeParts on Home {
       line2_en
     }
   }
+  planeta {
+    __typename
+    puntos {
+      __typename
+      frase
+      label
+      label_en
+      lat
+      lng
+      conectaCon
+    }
+    cifras {
+      __typename
+      frase
+      valor
+      sufijo
+      label
+      label_en
+    }
+  }
   stats {
     __typename
     title

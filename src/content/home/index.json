@@ -2,7 +2,7 @@
   "hero": {
     "title": "Soluciones de conectividad y TI para tu empresa",
     "subtitle": "Desde Fiberlux impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
-    "heroBackground": "fiber",
+    "heroBackground": "planeta",
     "splineSceneUrl": "https://prod.spline.design/NPf6t5Aswe3I4AKw/scene.splinecode",
     "splinePosterUrl": "images/home/cover-3d-mobile.jpeg",
     "heroBgOpacity": 60,
@@ -447,6 +447,57 @@
         "line2": "de todo el Perú.",
         "line1_en": "Deployed across 99 cities",
         "line2_en": "throughout Peru."
+      }
+    ]
+  },
+  "planeta": {
+    "puntos": [
+      {
+        "frase": 2,
+        "label": "Lima",
+        "label_en": "Lima",
+        "lat": -12.05,
+        "lng": -77.04
+      },
+      {
+        "frase": 2,
+        "label": "Arequipa",
+        "label_en": "Arequipa",
+        "lat": -16.41,
+        "lng": -71.54,
+        "conectaCon": "Lima"
+      },
+      {
+        "frase": 3,
+        "label": "Trujillo",
+        "label_en": "Trujillo",
+        "lat": -8.11,
+        "lng": -79.03,
+        "conectaCon": "Lima"
+      },
+      {
+        "frase": 3,
+        "label": "Iquitos",
+        "label_en": "Iquitos",
+        "lat": -3.75,
+        "lng": -73.25,
+        "conectaCon": "Lima"
+      }
+    ],
+    "cifras": [
+      {
+        "frase": 2,
+        "valor": 17000,
+        "sufijo": " km",
+        "label": "Fibra óptica desplegada",
+        "label_en": "Deployed fiber optics"
+      },
+      {
+        "frase": 3,
+        "valor": 99,
+        "sufijo": "",
+        "label": "Ciudades en cobertura",
+        "label_en": "Cities covered"
       }
     ]
   }

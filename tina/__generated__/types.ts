@@ -643,6 +643,31 @@ export type HomeManifiesto = {
   items?: Maybe<Array<Maybe<HomeManifiestoItems>>>;
 };
 
+export type HomePlanetaPuntos = {
+  __typename?: 'HomePlanetaPuntos';
+  frase?: Maybe<Scalars['Float']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  lat?: Maybe<Scalars['Float']['output']>;
+  lng?: Maybe<Scalars['Float']['output']>;
+  conectaCon?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomePlanetaCifras = {
+  __typename?: 'HomePlanetaCifras';
+  frase?: Maybe<Scalars['Float']['output']>;
+  valor?: Maybe<Scalars['Float']['output']>;
+  sufijo?: Maybe<Scalars['String']['output']>;
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomePlaneta = {
+  __typename?: 'HomePlaneta';
+  puntos?: Maybe<Array<Maybe<HomePlanetaPuntos>>>;
+  cifras?: Maybe<Array<Maybe<HomePlanetaCifras>>>;
+};
+
 export type HomeStatsItems = {
   __typename?: 'HomeStatsItems';
   number?: Maybe<Scalars['String']['output']>;
@@ -685,6 +710,7 @@ export type Home = Node & Document & {
   services?: Maybe<HomeServices>;
   testimonials?: Maybe<HomeTestimonials>;
   manifiesto?: Maybe<HomeManifiesto>;
+  planeta?: Maybe<HomePlaneta>;
   stats?: Maybe<HomeStats>;
   blogPreview?: Maybe<HomeBlogPreview>;
   id: Scalars['ID']['output'];
@@ -841,6 +867,28 @@ export type HomeManifiestoFilter = {
   items?: InputMaybe<HomeManifiestoItemsFilter>;
 };
 
+export type HomePlanetaPuntosFilter = {
+  frase?: InputMaybe<NumberFilter>;
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  lat?: InputMaybe<NumberFilter>;
+  lng?: InputMaybe<NumberFilter>;
+  conectaCon?: InputMaybe<StringFilter>;
+};
+
+export type HomePlanetaCifrasFilter = {
+  frase?: InputMaybe<NumberFilter>;
+  valor?: InputMaybe<NumberFilter>;
+  sufijo?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+};
+
+export type HomePlanetaFilter = {
+  puntos?: InputMaybe<HomePlanetaPuntosFilter>;
+  cifras?: InputMaybe<HomePlanetaCifrasFilter>;
+};
+
 export type HomeStatsItemsFilter = {
   number?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
@@ -878,6 +926,7 @@ export type HomeFilter = {
   services?: InputMaybe<HomeServicesFilter>;
   testimonials?: InputMaybe<HomeTestimonialsFilter>;
   manifiesto?: InputMaybe<HomeManifiestoFilter>;
+  planeta?: InputMaybe<HomePlanetaFilter>;
   stats?: InputMaybe<HomeStatsFilter>;
   blogPreview?: InputMaybe<HomeBlogPreviewFilter>;
 };
@@ -3880,6 +3929,28 @@ export type HomeManifiestoMutation = {
   items?: InputMaybe<Array<InputMaybe<HomeManifiestoItemsMutation>>>;
 };
 
+export type HomePlanetaPuntosMutation = {
+  frase?: InputMaybe<Scalars['Float']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  lat?: InputMaybe<Scalars['Float']['input']>;
+  lng?: InputMaybe<Scalars['Float']['input']>;
+  conectaCon?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomePlanetaCifrasMutation = {
+  frase?: InputMaybe<Scalars['Float']['input']>;
+  valor?: InputMaybe<Scalars['Float']['input']>;
+  sufijo?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomePlanetaMutation = {
+  puntos?: InputMaybe<Array<InputMaybe<HomePlanetaPuntosMutation>>>;
+  cifras?: InputMaybe<Array<InputMaybe<HomePlanetaCifrasMutation>>>;
+};
+
 export type HomeStatsItemsMutation = {
   number?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
@@ -3917,6 +3988,7 @@ export type HomeMutation = {
   services?: InputMaybe<HomeServicesMutation>;
   testimonials?: InputMaybe<HomeTestimonialsMutation>;
   manifiesto?: InputMaybe<HomeManifiestoMutation>;
+  planeta?: InputMaybe<HomePlanetaMutation>;
   stats?: InputMaybe<HomeStatsMutation>;
   blogPreview?: InputMaybe<HomeBlogPreviewMutation>;
 };
@@ -4951,7 +5023,7 @@ export type PopupMutation = {
   imageUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
+export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, label_en?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -4996,7 +5068,7 @@ export type HomeQueryVariables = Exact<{
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } };
+export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, label_en?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } };
 
 export type HomeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5008,7 +5080,7 @@ export type HomeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
+export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, label_en?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
 
 export type ServiceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5480,6 +5552,26 @@ export const HomePartsFragmentDoc = gql`
       line2
       line1_en
       line2_en
+    }
+  }
+  planeta {
+    __typename
+    puntos {
+      __typename
+      frase
+      label
+      label_en
+      lat
+      lng
+      conectaCon
+    }
+    cifras {
+      __typename
+      frase
+      valor
+      sufijo
+      label
+      label_en
     }
   }
   stats {
@@ -7793,7 +7885,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/staging",
         queries,
       })
     )

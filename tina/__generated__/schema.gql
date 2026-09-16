@@ -264,6 +264,28 @@ type HomeManifiesto {
   items: [HomeManifiestoItems]
 }
 
+type HomePlanetaPuntos {
+  frase: Float
+  label: String
+  label_en: String
+  lat: Float
+  lng: Float
+  conectaCon: String
+}
+
+type HomePlanetaCifras {
+  frase: Float
+  valor: Float
+  sufijo: String
+  label: String
+  label_en: String
+}
+
+type HomePlaneta {
+  puntos: [HomePlanetaPuntos]
+  cifras: [HomePlanetaCifras]
+}
+
 type HomeStatsItems {
   number: String
   label: String
@@ -301,6 +323,7 @@ type Home implements Node & Document {
   services: HomeServices
   testimonials: HomeTestimonials
   manifiesto: HomeManifiesto
+  planeta: HomePlaneta
   stats: HomeStats
   blogPreview: HomeBlogPreview
   id: ID!
@@ -457,6 +480,28 @@ input HomeManifiestoFilter {
   items: HomeManifiestoItemsFilter
 }
 
+input HomePlanetaPuntosFilter {
+  frase: NumberFilter
+  label: StringFilter
+  label_en: StringFilter
+  lat: NumberFilter
+  lng: NumberFilter
+  conectaCon: StringFilter
+}
+
+input HomePlanetaCifrasFilter {
+  frase: NumberFilter
+  valor: NumberFilter
+  sufijo: StringFilter
+  label: StringFilter
+  label_en: StringFilter
+}
+
+input HomePlanetaFilter {
+  puntos: HomePlanetaPuntosFilter
+  cifras: HomePlanetaCifrasFilter
+}
+
 input HomeStatsItemsFilter {
   number: StringFilter
   label: StringFilter
@@ -494,6 +539,7 @@ input HomeFilter {
   services: HomeServicesFilter
   testimonials: HomeTestimonialsFilter
   manifiesto: HomeManifiestoFilter
+  planeta: HomePlanetaFilter
   stats: HomeStatsFilter
   blogPreview: HomeBlogPreviewFilter
 }
@@ -3064,6 +3110,28 @@ input HomeManifiestoMutation {
   items: [HomeManifiestoItemsMutation]
 }
 
+input HomePlanetaPuntosMutation {
+  frase: Float
+  label: String
+  label_en: String
+  lat: Float
+  lng: Float
+  conectaCon: String
+}
+
+input HomePlanetaCifrasMutation {
+  frase: Float
+  valor: Float
+  sufijo: String
+  label: String
+  label_en: String
+}
+
+input HomePlanetaMutation {
+  puntos: [HomePlanetaPuntosMutation]
+  cifras: [HomePlanetaCifrasMutation]
+}
+
 input HomeStatsItemsMutation {
   number: String
   label: String
@@ -3101,6 +3169,7 @@ input HomeMutation {
   services: HomeServicesMutation
   testimonials: HomeTestimonialsMutation
   manifiesto: HomeManifiestoMutation
+  planeta: HomePlanetaMutation
   stats: HomeStatsMutation
   blogPreview: HomeBlogPreviewMutation
 }
