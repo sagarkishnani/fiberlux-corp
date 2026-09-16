@@ -294,6 +294,10 @@ export default defineConfig({
                   { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
                   { value: "lattice", label: "Retícula volumétrica (onda que la atraviesa)" },
                   { value: "fiber", label: "Túnel de fibra (filamentos de luz)" },
+                  {
+                    value: "planeta",
+                    label: "Planeta narrativo (globo + frases por scroll)",
+                  },
                 ],
                 description:
                   "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",

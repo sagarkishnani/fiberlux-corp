@@ -27,6 +27,7 @@ const FiberTunnel = lazy(() => import("../effects/FiberTunnel"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 // Solo el tipo: no arrastra el módulo al bundle del hero.
 import type { FiberTunnelHandle } from "../effects/FiberTunnel";
+import type { PlanetHandle } from "../effects/CinematicBackground";
 import {
   actAnimate,
   actProgress,
@@ -41,7 +42,7 @@ import {
 // Hay que tocar las dos: si un modo se queda fuera de la de allí, el CSS
 // `.cine-intro-page [data-hero-logo]` no oculta el wordmark real durante el
 // morph y se ven DOS logos a la vez (SPEC 112).
-const CINE_MODES = ["cinematic", "dotfield", "lattice", "fiber"];
+const CINE_MODES = ["cinematic", "dotfield", "lattice", "fiber", "planeta"];
 
 // Duración del bloqueo de scroll durante la intro cinematográfica: cubre el
 // morph del wordmark FLX→FIBERLUX (~1.4s: hold 420ms + morph 1000ms) y el
@@ -73,8 +74,9 @@ function signalHeroReady() {
   window.dispatchEvent(new CustomEvent("fbx:hero-scene-loaded"));
 }
 
-/** Monta el fondo del modo `fiber` donde toque (ver `bgTarget`). */
-function renderFiberBg(target: HTMLElement | "inline", layer: ReactNode) {
+/** Monta el fondo de un modo narrativo (`fiber`/`planeta`) donde toque (ver
+ *  `bgTarget`). */
+function renderNarrativeBg(target: HTMLElement | "inline", layer: ReactNode) {
   if (target === "inline") return <div className="absolute inset-0 z-0">{layer}</div>;
   return createPortal(layer, target);
 }
@@ -97,12 +99,14 @@ export default function HeroHomeReact({
   const morphRef = useRef<MorphHandle>(null);
   // Handle del shader de fibra: el capítulo del hero le empuja su progreso.
   const fiberRef = useRef<FiberTunnelHandle>(null);
-  /* Fallback CSS del modo `fiber` (sin WebGL2). Se maneja por ref porque su
-     opacidad la empuja el scroll, igual que la del canvas. */
-  const fiberFallbackRef = useRef<HTMLDivElement>(null);
+  // Handle del planeta conducido (SPEC 116): mismo papel que el de la fibra.
+  const planetRef = useRef<PlanetHandle>(null);
+  /* Fallback CSS de los modos narrativos (sin WebGL). Se maneja por ref porque
+     su opacidad la empuja el scroll, igual que la del canvas. */
+  const bgFallbackRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLElement>(null);
-  // Sin WebGL2 el shader se esconde solo y avisa: el hero cae a un halo CSS.
-  const [fiberFailed, setFiberFailed] = useState(false);
+  // Sin WebGL el fondo se esconde solo y avisa: el hero cae a un halo CSS.
+  const [bgFailed, setBgFailed] = useState(false);
   const [morphActive, setMorphActive] = useState(false);
   // Titular (modo cinematic): se revela línea por línea con un barrido de luz.
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -331,10 +335,17 @@ export default function HeroHomeReact({
     mode === "cinematic" ||
     mode === "dotfield" ||
     mode === "lattice" ||
-    mode === "fiber";
+    mode === "fiber" ||
+    mode === "planeta";
   const dotfield = mode === "dotfield";
   const lattice = mode === "lattice";
   const fiber = mode === "fiber";
+  // Modo `planeta` (SPEC 116): el mismo globo de `cinematic`, pero conducido
+  // por el motor de capítulos en vez de leer el scroll por su cuenta.
+  const planeta = mode === "planeta";
+  /* Modos que montan el tramo narrativo. La lista equivalente del lado Astro
+     vive en `index.astro` (`NARRATIVE_MODES`). */
+  const narrativeBg = fiber || planeta;
   /* Dónde se monta el fondo del modo `fiber`:
 
      - un elemento ⇒ portal a `[data-narrative-bg]`, el `fixed` que cuelga del
@@ -370,12 +381,12 @@ export default function HeroHomeReact({
     : undefined;
 
   useEffect(() => {
-    if (!fiber) return;
+    if (!narrativeBg) return;
     const host = chaptersEnabled()
       ? document.querySelector<HTMLElement>("[data-narrative-bg]")
       : null;
     setBgTarget(host ?? "inline");
-  }, [fiber]);
+  }, [narrativeBg]);
 
   /* ── Capítulo del hero en modo `fiber` (SPEC 113) ───────────────────────
      Coreografía de SALIDA. La de ENTRADA (morph FLX→FIBERLUX, bloqueo de
@@ -439,7 +450,7 @@ export default function HeroHomeReact({
         /* El fallback sin WebGL2 no vive dentro del canvas, así que hay que
            apagarlo aparte — con el mismo perfil, o se quedaría encendido sobre
            `SolucionesStack`. */
-        const fb = fiberFallbackRef.current;
+        const fb = bgFallbackRef.current;
         if (fb) fb.style.opacity = String(op);
       })
     );
@@ -664,12 +675,12 @@ export default function HeroHomeReact({
           Three) + su fallback CSS. Los dos van juntos al mismo sitio: por
           portal al `fixed` del tramo narrativo, o dentro de la sección si no
           hay capítulos. Ver `bgTarget`. */}
-      {fiber && bgTarget && renderFiberBg(
+      {fiber && bgTarget && renderNarrativeBg(
         bgTarget,
         <>
-          {fiberFailed && (
+          {bgFailed && (
             <div
-              ref={fiberFallbackRef}
+              ref={bgFallbackRef}
               aria-hidden="true"
               className="absolute inset-0"
               style={{
@@ -681,7 +692,7 @@ export default function HeroHomeReact({
           <Suspense fallback={null}>
             <FiberTunnel
               ref={fiberRef}
-              onUnsupported={() => setFiberFailed(true)}
+              onUnsupported={() => setBgFailed(true)}
               /* Dentro de la sección le toca ser `fixed` él mismo (el fondo no
                  se corta entre capítulos). En el portal el `fixed` ya lo pone
                  el host, así que basta con llenarlo. */
@@ -692,6 +703,39 @@ export default function HeroHomeReact({
               signalReady
             />
           </Suspense>
+        </>
+      )}
+
+      {/* Modo planeta (SPEC 116): el globo punteado de `cinematic` conducido por
+          el motor de capítulos. Va al mismo sitio que el túnel de fibra —por
+          portal al `fixed` del tramo narrativo— y por la misma razón: dentro del
+          capítulo, iOS lo recortaría contra los `overflow: hidden`. */}
+      {planeta && bgTarget && renderNarrativeBg(
+        bgTarget,
+        <>
+          {bgFailed && (
+            <div
+              ref={bgFallbackRef}
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{
+                background:
+                  "radial-gradient(120% 80% at 50% 96%, rgba(150,35,122,0.34) 0%, rgba(59,14,48,0.42) 42%, rgba(10,10,10,1) 100%)",
+              }}
+            />
+          )}
+          <CinematicBackground
+            ref={planetRef}
+            onUnsupported={() => setBgFailed(true)}
+            /* En el portal el `fixed` ya lo pone el host, y sin capítulos
+               (`reduced-motion`) el planeta se queda dentro del hero como en
+               `cinematic`: sólo hace falta que sea `fixed` él mismo si acaba
+               inline CON capítulos, porque entonces el fondo sí cruza paneles. */
+            fixed={bgTarget === "inline" && chaptersEnabled()}
+            driven={chaptersEnabled()}
+            className="h-full w-full"
+            signalReady
+          />
         </>
       )}
 
