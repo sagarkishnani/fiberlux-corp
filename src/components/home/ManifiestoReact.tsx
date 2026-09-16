@@ -5,6 +5,7 @@ import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import {
   actAnimate,
+  actProgress,
   chapterLen,
   chaptersEnabled,
   slotWindow,
@@ -37,6 +38,27 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
   const manifiesto = (live?.home as any)?.manifiesto;
   const items = (manifiesto?.items ?? []).filter(Boolean) as any[];
   const rootRef = useRef<HTMLDivElement>(null);
+
+  /* Cifras que acompañan a cada frase (SPEC 116). Sólo en modo `planeta`: el
+     grupo puede estar sembrado en el JSON y el modo `fiber` debe seguir viéndose
+     exactamente como lo dejó la SPEC 113. `frase` es 1-based en el CMS. */
+  const isPlaneta = (live?.home as any)?.hero?.heroBackground === "planeta";
+  const cifrasPorFrase = (() => {
+    const out: any[][] = items.map(() => []);
+    if (!isPlaneta) return out;
+    const raw = (((live?.home as any)?.planeta?.cifras ?? []) as any[]).filter(
+      Boolean
+    );
+    raw.forEach((c) => {
+      const i = Number(c.frase) - 1;
+      const valor = Number(c.valor);
+      if (!Number.isFinite(i) || i < 0 || i >= out.length) return;
+      if (!Number.isFinite(valor)) return;
+      out[i].push(c);
+    });
+    return out;
+  })();
+  const numberFormat = locale === "en" ? "en-US" : "es-PE";
 
   /* El estado inicial (frases ocultas) NO se escribe aquí: lo pone el CSS
      gateado por `.reveal-js` que monta `Manifiesto.astro`, igual que el sistema
@@ -73,6 +95,27 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
         })
       );
 
+      /* Cifras: cuentan dentro del turno de SU frase y terminan en el 60 % de
+         ese turno, no en el borde. Una cuenta que acaba en el borde del capítulo
+         llega a su valor final con el panel ya fuera de pantalla — el error que
+         dejó documentado la SPEC 113 con los contadores del prototipo. */
+      const counters = Array.from(
+        actEl.querySelectorAll<HTMLElement>("[data-cifra]")
+      );
+      counters.forEach((el) => {
+        const target = Number(el.dataset.valor);
+        const sufijo = el.dataset.sufijo || "";
+        if (!Number.isFinite(target)) return;
+        const end = from + (to - from) * 0.6;
+        stops.push(
+          actProgress(chapter, len, from, end, (p) => {
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent =
+              Math.round(target * eased).toLocaleString(numberFormat) + sufijo;
+          })
+        );
+      });
+
       lines.forEach((line) => {
         stops.push(
           actAnimate(chapter, len, from, to, line, {
@@ -92,7 +135,8 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
     /* `scroll()` deja un listener global vivo: hay que pararlo o sobrevive al
        swap de View Transitions apuntando a nodos que ya no existen (SPEC 110). */
     return () => stops.forEach((stop) => stop());
-  }, [items.length]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length, isPlaneta, numberFormat]);
 
   if (!items.length) return null;
 
@@ -137,6 +181,37 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
                 );
               })}
             </h2>
+
+            {cifrasPorFrase[i]?.length > 0 && (
+              <div className="mt-8 flex flex-wrap gap-x-12 gap-y-5">
+                {cifrasPorFrase[i].map((c: any, k: number) => {
+                  const valor = Number(c.valor);
+                  const sufijo = (c.sufijo as string) || "";
+                  return (
+                    <div key={k}>
+                      {/* El texto inicial ya es el valor final: sin JS (o con
+                          reduced-motion, donde no hay capítulo) la cifra se lee
+                          igual. El estado a 0 lo pone la cuenta al registrarse,
+                          con el acto todavía en opacidad 0. */}
+                      <span
+                        data-cifra=""
+                        data-valor={valor}
+                        data-sufijo={sufijo}
+                        className="block font-mono text-[clamp(1.5rem,3.2vw,2.4rem)] leading-none text-white"
+                      >
+                        {valor.toLocaleString(numberFormat) + sufijo}
+                      </span>
+                      <span
+                        className="mt-2 block font-mono text-[11px] uppercase tracking-[0.2em] text-white/55"
+                        data-tina-field={tinaField(c, "label")}
+                      >
+                        {tField(c, "label", locale) as string}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         ))}
       </div>
