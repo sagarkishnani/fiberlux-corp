@@ -8,7 +8,6 @@ import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import DynamicFormReact from "../dynamic-form/DynamicFormReact";
 import { mediaUrl } from "../../utils/mediaUrl";
-import NetworkDepth from "../effects/NetworkDepth";
 
 interface FormIsland {
   query: string;
@@ -58,9 +57,7 @@ export default function HeroSolucionReact({
       {isImageMode ? (
         <>
           {/* ── Modo imagen ── */}
-          {/* Orden de capas: fotos → malla de red → velos. Así la malla queda
-              sobre la imagen pero por debajo del degradado que da contraste al
-              texto, en ambos breakpoints. */}
+          {/* Orden de capas: fotos → velos. */}
 
           {/* Desktop: imagen a sangre a la derecha */}
           <div
@@ -80,11 +77,6 @@ export default function HeroSolucionReact({
             }}
             aria-hidden="true"
           />
-
-          {/* Malla de red en perspectiva (SPEC 104), igual en las 4 categorías. */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0">
-            <NetworkDepth variant="constelacion" opacity={0.7} />
-          </div>
 
           {/* Desktop: velo hacia el texto */}
           <div
