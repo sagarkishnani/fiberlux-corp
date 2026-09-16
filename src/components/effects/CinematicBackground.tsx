@@ -27,6 +27,33 @@ const LAND: [number, number, number] = [0.93, 0.87, 0.98]; // continentes (punto
 
 const BASE_THETA = 0.22;
 
+/**
+ * Coreografía del tramo narrativo (SPEC 116): del globo centrado al HORIZONTE.
+ *
+ * El planeta desciende, crece un poco y rueda hasta que solo queda su limbo al
+ * pie de la pantalla; las frases pasan por delante sobre el cielo, que queda
+ * casi negro. Se eligió esto y no la inmersión precisamente por eso: en el modo
+ * `fiber` el núcleo del túnel caía donde va el texto y hubo que hacerle decaer
+ * el fogonazo para que no lo quemara (SPEC 113).
+ *
+ * El crecimiento NO reescala el buffer de COBE (reasignarlo cada frame es caro):
+ * va por `transform` del canvas, y el overlay 2D replica esa misma pose para que
+ * arcos, nodos y halo sigan pegados al planeta.
+ */
+const NARRATIVE = {
+  /** Rodadura dentro del capítulo del hero (se suma a BASE_THETA). */
+  theta: 0.62,
+  /** Cuánto baja el centro del globo, en fracción del alto del viewport. */
+  drop: 0.46,
+  /** Crecimiento del globo al acercarse (1 + zoom). */
+  zoom: 0.22,
+  /** Rodadura y descenso extra a lo largo del RESTO del tramo (frases). */
+  travelTheta: 0.1,
+  travelDrop: 0.06,
+  /** Multiplicador de la velocidad de rotación al final del tramo. */
+  spin: 2.2,
+} as const;
+
 // NOTA: la atenuación de los puntos/arcos por detrás del texto (para que no
 // compitan con la tipografía) NO se hace aquí: es el velo radial que HeroHomeReact
 // pinta en z-[1], sobre este fondo y bajo el contenido. Enmascarar el canvas WebGL
@@ -344,6 +371,12 @@ function CinematicBackgroundImpl(
     let sizePx = 0;
     let gLeft = 0;
     let gTop = 0;
+    /* Pose EFECTIVA (la que ve el usuario): sin conducir es la geometría base;
+       conducida, la que deja la coreografía del horizonte. El overlay dibuja
+       siempre contra estas tres, nunca contra las base. */
+    let dLeft = 0;
+    let dTop = 0;
+    let dSize = 0;
     let narrowView = false; // viewport angosto → geometría/halo de mobile
 
     // ── Estrellas laterales (mismo canvas/loop → sin canvas ni rAF extra).
@@ -425,6 +458,10 @@ function CinematicBackgroundImpl(
       // El halo del planeta ya no se dibuja con un box-shadow externo (llenaba las
       // esquinas de forma dura): ahora es un gradiente radial en la capa 2D
       // (drawOverlay), centrado en la esfera. Aquí solo geometría del globo.
+
+      dLeft = gLeft;
+      dTop = gTop;
+      dSize = sizePx;
 
       seedStars();
     };
@@ -566,12 +603,13 @@ function CinematicBackgroundImpl(
       if (op <= 0.01) return;
 
       // Halo/atmósfera del planeta: blit del sprite precomputado, anclado al
-      // borde REAL de los puntos (radio 0.4·sizePx, porque la proyección de COBE
-      // usa GLOBE_R = 0.8), para que la línea de luz quede PEGADA al planeta.
+      // borde REAL de los puntos (radio 0.4 del tamaño YA POSADO, porque la
+      // proyección de COBE usa GLOBE_R = 0.8), para que la línea de luz quede
+      // PEGADA al planeta.
       {
-        const gcx = gLeft + sizePx / 2;
-        const gcy = gTop + sizePx / 2;
-        const rOuter = sizePx * 0.4 * HALO_OUTER;
+        const gcx = dLeft + dSize / 2;
+        const gcy = dTop + dSize / 2;
+        const rOuter = dSize * 0.4 * HALO_OUTER;
         octx.globalCompositeOperation = "lighter";
         // En mobile el planeta ocupa toda la pantalla y sobre él va un velo
         // oscuro (HeroHomeReact): sin este refuerzo el limbo queda casi apagado.
@@ -623,8 +661,8 @@ function CinematicBackgroundImpl(
         for (let k = 0; k <= SEG; k++) {
           const p = slerp(u, v, k / SEG);
           const pr = project([p[0] * R, p[1] * R, p[2] * R], phi, theta);
-          const sx = gLeft + pr.x * sizePx;
-          const sy = gTop + pr.y * sizePx;
+          const sx = dLeft + pr.x * dSize;
+          const sy = dTop + pr.y * dSize;
           if (pr.front) {
             if (!started) {
               octx.moveTo(sx, sy);
@@ -644,7 +682,7 @@ function CinematicBackgroundImpl(
         const pp = slerp(u, v, tp);
         const ppr = project([pp[0] * R, pp[1] * R, pp[2] * R], phi, theta);
         if (ppr.front) {
-          drawSoft(gLeft + ppr.x * sizePx, gTop + ppr.y * sizePx, 6, 0.85 * op);
+          drawSoft(dLeft + ppr.x * dSize, dTop + ppr.y * dSize, 6, 0.85 * op);
         }
       }
 
@@ -653,8 +691,26 @@ function CinematicBackgroundImpl(
         const { v, r } = hubVecs[i];
         const pr = project([v[0] * R, v[1] * R, v[2] * R], phi, theta);
         if (pr.front)
-          drawSoft(gLeft + pr.x * sizePx, gTop + pr.y * sizePx, r, 0.8 * op);
+          drawSoft(dLeft + pr.x * dSize, dTop + pr.y * dSize, r, 0.8 * op);
       }
+    };
+
+    /**
+     * Coloca el globo según el progreso del tramo. Escribe la `transform` del
+     * canvas (barato: no toca el buffer de COBE) y deja en dLeft/dTop/dSize la
+     * pose que el overlay tiene que replicar.
+     */
+    const applyPose = (hero: number, travel: number) => {
+      const h = root.clientHeight || 1;
+      const w = root.clientWidth || 1;
+      const drop = (hero * NARRATIVE.drop + travel * NARRATIVE.travelDrop) * h;
+      const scale = 1 + hero * NARRATIVE.zoom;
+      canvas.style.transform = `translateX(-50%) translateY(${drop}px) scale(${scale})`;
+      // `scale` va con origen en el centro del canvas: el desplazamiento que
+      // provoca es la mitad de lo que crece, y hay que sumarlo a la esquina.
+      dSize = sizePx * scale;
+      dLeft = w / 2 - dSize / 2;
+      dTop = gTop + drop + (sizePx - dSize) / 2;
     };
 
     const frame = (ms: number) => {
@@ -673,12 +729,18 @@ function CinematicBackgroundImpl(
       const scrollP = drivenRef.current
         ? stateRef.current.hero
         : Math.max(0, Math.min(1, (window.scrollY - heroTop) / heroHeight));
-      if (!reduce) phi += 0.0026; // rotación
+      const travel = drivenRef.current ? stateRef.current.travel : 0;
+      // La rotación acelera a lo largo del tramo (el viaje se nota aunque el
+      // planeta ya esté fuera de encuadre por abajo).
+      if (!reduce) phi += 0.0026 * (1 + travel * (NARRATIVE.spin - 1));
 
-      const theta = BASE_THETA + scrollP * 0.9;
+      const theta = drivenRef.current
+        ? BASE_THETA + scrollP * NARRATIVE.theta + travel * NARRATIVE.travelTheta
+        : BASE_THETA + scrollP * 0.9;
       const op = drivenRef.current
         ? introE * stateRef.current.opacity
         : introE * (1 - scrollP * 0.85);
+      if (drivenRef.current) applyPose(scrollP, travel);
       globe?.update({
         phi,
         theta, // al hacer scroll rueda hacia arriba (dirección del scroll)
