@@ -144,18 +144,21 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
 
   return (
     <div ref={rootRef} className="site-container relative z-10 w-full">
-      {/* Velo de legibilidad. Dónde hace falta depende del fondo: en `fiber` el
-          núcleo del túnel cae justo detrás del texto; en `planeta` el cielo ya
-          está casi negro ahí y lo que brilla es el limbo, abajo. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background: isPlaneta
-            ? "linear-gradient(180deg, rgba(7,6,10,0) 0%, rgba(7,6,10,0.35) 42%, rgba(7,6,10,0.78) 100%)"
-            : "radial-gradient(60% 55% at 35% 50%, rgba(7,6,10,0.82) 0%, rgba(7,6,10,0.55) 45%, rgba(7,6,10,0) 78%)",
-        }}
-      />
+      {/* Velo de legibilidad del modo `fiber`: el núcleo del túnel cae justo
+          detrás del texto. En `planeta` NO va aquí: este div mide lo que mide el
+          bloque de frases, y un velo que llega con opacidad a su borde deja un
+          escalón horizontal con el fondo crudo debajo. Allí lo pone el propio
+          fondo, que cubre el viewport entero (ver `planetVeilRef`). */}
+      {!isPlaneta && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(60% 55% at 35% 50%, rgba(7,6,10,0.82) 0%, rgba(7,6,10,0.55) 45%, rgba(7,6,10,0) 78%)",
+          }}
+        />
+      )}
 
       <div className="grid min-h-[44svh] content-center motion-reduce:gap-14">
         {items.map((item, i) => (

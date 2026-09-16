@@ -148,6 +148,39 @@ export function slotWindow(i: number, n: number): [number, number] {
 }
 
 /**
+ * Frase activa (y su progreso local) para un progreso `p` del capítulo entero.
+ *
+ * Es la otra cara de `slotWindow`, y existe por un detalle de `scroll()` de
+ * Motion que no es evidente: el callback se dispara en CADA scroll con el
+ * progreso RECORTADO a [0,1], no sólo dentro de su ventana. Un handler por
+ * frase, por tanto, no sirve para saber cuál está en curso — todos responden y
+ * gana el último registrado. Hay que leer el capítulo con UN solo handler y
+ * repartirlo aquí.
+ */
+export function slotAt(p: number, n: number): { index: number; local: number } {
+  const total = Math.max(1, n);
+  const scaled = Math.max(0, Math.min(1, p)) * total;
+  const index = Math.min(total - 1, Math.floor(scaled));
+  return { index, local: Math.max(0, Math.min(1, scaled - index)) };
+}
+
+/**
+ * Progreso del TRASPASO de un capítulo: desde que el panel clavado se suelta
+ * hasta que el capítulo termina de salir. Es justo la pantalla que `act()`
+ * descuenta, y es donde tiene que ocurrir lo que no debe pisar al contenido
+ * (apagar el fondo, por ejemplo).
+ */
+export function handoffProgress(
+  el: HTMLElement,
+  onProgress: (p: number) => void
+): Stop {
+  return scroll(
+    (progress: number) => onProgress(progress),
+    { target: el, offset: ["end end", "end start"] } as never
+  );
+}
+
+/**
  * Progreso crudo (0→1) de un acto. Para lo que no es una animación de CSS:
  * uniforms de un shader, contadores, clases de estado.
  */

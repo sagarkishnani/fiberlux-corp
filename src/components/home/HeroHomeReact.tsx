@@ -33,7 +33,8 @@ import {
   actProgress,
   chapterLen,
   chaptersEnabled,
-  slotWindow,
+  handoffProgress,
+  slotAt,
   spanProgress,
 } from "../../scripts/chapters";
 
@@ -147,6 +148,11 @@ export default function HeroHomeReact({
   const fiberRef = useRef<FiberTunnelHandle>(null);
   // Handle del planeta conducido (SPEC 116): mismo papel que el de la fibra.
   const planetRef = useRef<PlanetHandle>(null);
+  /* Velo de legibilidad del capítulo de frases en modo `planeta`. Cuelga del
+     FONDO (el `fixed` del tramo) y no del contenedor del texto: dentro del
+     capítulo sólo cubriría el alto del bloque de frases y dejaba un escalón
+     horizontal justo donde terminaba, con el planeta crudo debajo. */
+  const planetVeilRef = useRef<HTMLDivElement>(null);
   /* Fallback CSS de los modos narrativos (sin WebGL). Se maneja por ref porque
      su opacidad la empuja el scroll, igual que la del canvas. */
   const bgFallbackRef = useRef<HTMLDivElement>(null);
@@ -498,20 +504,34 @@ export default function HeroHomeReact({
     const len = chapterLen(chapter);
     const stops = heroExitActs(root, chapter, len, titleRef.current);
 
+    // El velo del capítulo de frases sube al final del hero, de modo que ya
+    // está puesto cuando entra la primera frase.
+    stops.push(
+      actProgress(chapter, len, 0.72, 1, (p) => {
+        const veil = planetVeilRef.current;
+        if (veil) veil.style.opacity = String(p);
+      })
+    );
+
     // Acto 3 — el planeta desciende, crece y rueda hasta el horizonte.
     // Monótono de 0 a 1: al soltarse el panel, la pose ya está completa.
     stops.push(
       actProgress(chapter, len, 0, 1, (p) => planetRef.current?.setHero(p))
     );
 
-    // Deriva y apagado a lo largo de TODO el tramo narrativo, con el mismo
-    // perfil que `fiber`: en opacidad 0 el planeta deja de renderizar, que es
-    // lo que garantiza que no haya dos canvas WebGL vivos al entrar en
-    // Soluciones (el aurora de la SPEC 108 arranca justo ahí).
+    // Deriva a lo largo de TODO el tramo narrativo (rotación y descenso extra).
+    stops.push(spanProgress(narrative, (p) => planetRef.current?.setTravel(p)));
+
+    /* El apagado va en el TRASPASO, no dentro del tramo: `spanProgress` llega a
+       1 cuando el último panel se suelta, así que un fundido que empiece antes
+       (como el de `fiber`) se come la última frase — con el planeta ya al 14 %
+       mientras se lee "Desplegada en 99 ciudades". Aquí se apaga en la pantalla
+       de traspaso, y llega a 0 justo al entrar `SolucionesStack`: en 0 el
+       planeta deja de renderizar, que es lo que garantiza que no haya dos
+       canvas WebGL vivos (el aurora de la SPEC 108 arranca ahí). */
     stops.push(
-      spanProgress(narrative, (p) => {
-        const op = p < 0.86 ? 1 : Math.max(0, 1 - (p - 0.86) / 0.14);
-        planetRef.current?.setTravel(p);
+      handoffProgress(narrative, (p) => {
+        const op = Math.max(0, 1 - p / 0.85);
         planetRef.current?.setOpacity(op);
         const fb = bgFallbackRef.current;
         if (fb) fb.style.opacity = String(op);
@@ -584,15 +604,18 @@ export default function HeroHomeReact({
     if (!chapter) return;
     const len = chapterLen(chapter);
     const total = manifiestoItems.length;
-    const stops: Array<() => void> = [];
-    for (let i = 0; i < total; i++) {
-      const [from, to] = slotWindow(i, total);
-      stops.push(
-        actProgress(chapter, len, from, to, (p) =>
-          planetRef.current?.setPhrase(i, p)
-        )
-      );
-    }
+    /* UN solo handler para todo el capítulo. Con uno por frase no funciona:
+       `scroll()` dispara todos los callbacks en cada scroll con el progreso
+       recortado a [0,1], así que la frase "activa" acababa siendo siempre la
+       última registrada (verificado: `phrase: 2` estando en la primera). El
+       reparto lo hace `slotAt`, la otra cara del `slotWindow` que usa
+       `ManifiestoReact` para revelarlas. */
+    const stops: Array<() => void> = [
+      actProgress(chapter, len, 0, 1, (p) => {
+        const { index, local } = slotAt(p, total);
+        planetRef.current?.setPhrase(index, local);
+      }),
+    ];
     return () => stops.forEach((stop) => stop());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [planeta, bgTarget, planetPointsKey, manifiestoItems.length]);
@@ -876,6 +899,24 @@ export default function HeroHomeReact({
             driven={chaptersEnabled()}
             className="h-full w-full"
             signalReady
+          />
+          {/* Velo del capítulo de frases: el cielo ya está casi negro arriba,
+              así que sólo hay que apoyar abajo, sobre el limbo. Sube al final
+              del hero (ver el capítulo) y cubre el viewport entero, porque
+              cuelga del fondo y no del bloque de texto. */}
+          <div
+            ref={planetVeilRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              opacity: 0,
+              /* Dos capas: una diagonal que sostiene el texto (siempre a la
+                 izquierda) y un fondo bajo muy suave. Un velo parejo y fuerte
+                 abajo apagaba justo los puntos de las ciudades, que caen a la
+                 derecha sobre el limbo. */
+              background:
+                "linear-gradient(100deg, rgba(7,6,10,0.9) 0%, rgba(7,6,10,0.62) 38%, rgba(7,6,10,0.18) 68%, rgba(7,6,10,0) 88%), linear-gradient(180deg, rgba(7,6,10,0) 45%, rgba(7,6,10,0.38) 100%)",
+            }}
           />
         </>
       )}

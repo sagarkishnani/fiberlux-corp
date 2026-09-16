@@ -41,17 +41,29 @@ const BASE_THETA = 0.22;
  * arcos, nodos y halo sigan pegados al planeta.
  */
 const NARRATIVE = {
-  /** Rodadura dentro del capítulo del hero (se suma a BASE_THETA). */
-  theta: 0.62,
+  /**
+   * Rodadura dentro del capítulo del hero (se suma a BASE_THETA).
+   *
+   * NEGATIVA a propósito. Al descender, del globo sólo se ve su casquete
+   * superior —el centro queda muy por debajo del viewport—, y ahí arriba caen
+   * las latitudes NORTE. Rodando al norte (positiva), Perú, que es donde está
+   * la red y de donde salen los puntos del CMS, se iba al hemisferio trasero y
+   * por debajo del encuadre: medido `front: false`, y ≈ 1040 px con el viewport
+   * en 900. Con esta rodadura al sur, Lima queda a ~410 px, dentro de cuadro.
+   */
+  theta: -1.42,
   /** Cuánto baja el centro del globo, en fracción del alto del viewport. */
-  drop: 0.46,
+  drop: 0.4,
   /** Crecimiento del globo al acercarse (1 + zoom). */
   zoom: 0.22,
   /** Rodadura y descenso extra a lo largo del RESTO del tramo (frases). */
-  travelTheta: 0.1,
-  travelDrop: 0.06,
-  /** Multiplicador de la velocidad de rotación al final del tramo. */
-  spin: 2.2,
+  travelTheta: -0.06,
+  travelDrop: 0.04,
+  /* Giro (rad) que suma el capítulo del hero y el resto del tramo. Corto a
+     propósito: cada radián aleja los puntos ~735 px del centro del disco, y con
+     0.8 rad acababan pegados al borde derecho, medio fuera de cuadro. */
+  spinHero: 0.08,
+  spinTravel: 0.16,
 } as const;
 
 // NOTA: la atenuación de los puntos/arcos por detrás del texto (para que no
@@ -122,6 +134,22 @@ function locToVec3([lat, lng]: [number, number]): [number, number, number] {
   const o = Math.cos(r);
   return [-o * Math.cos(a), Math.sin(r), o * Math.sin(a)];
 }
+
+/**
+ * Fase de rotación que deja la red mirando a cámara.
+ *
+ * En el tramo narrativo la rotación NO puede ir libre: los puntos del CMS son
+ * ciudades del Perú, y con el globo girando por su cuenta sólo miran a cámara
+ * una vez cada ~40 s — la mayor parte del tiempo la frase se lee sin sus
+ * puntos. Conducido, el giro se ancla aquí y lo mueve el scroll, que además es
+ * lo coherente con un tramo de scrollytelling: la escena avanza cuando el
+ * usuario avanza. La vida de la escena la siguen poniendo las estrellas y los
+ * pulsos de los arcos, que van con el tiempo.
+ */
+const PHI_ANCHOR = (() => {
+  const v = locToVec3(LIMA);
+  return Math.atan2(-v[0], v[2]);
+})();
 
 /** Interpolación esférica (los puntos quedan sobre la superficie de la esfera). */
 function slerp(
@@ -770,7 +798,7 @@ function CinematicBackgroundImpl(
         if (!pr.front) continue;
         const x = dLeft + pr.x * dSize;
         const y = dTop + pr.y * dSize;
-        drawSoft(x, y, 11, alpha);
+        drawSoft(x, y, 13, alpha);
         octx.beginPath();
         octx.arc(x, y, 2.4, 0, Math.PI * 2);
         octx.fillStyle = `rgba(255,236,250,${alpha})`;
@@ -783,15 +811,26 @@ function CinematicBackgroundImpl(
           (octx as any).letterSpacing = "0.14em";
           octx.textBaseline = "middle";
           const text = pt.label.toUpperCase();
-          // Guion de enganche + etiqueta a la derecha del nodo.
-          octx.beginPath();
-          octx.moveTo(x + 8, y);
-          octx.lineTo(x + 20, y);
-          octx.lineWidth = 1;
-          octx.strokeStyle = `rgba(${BRAND_LIT},${0.8 * la})`;
-          octx.stroke();
-          octx.fillStyle = `rgba(255,236,250,${0.92 * la})`;
-          octx.fillText(text, x + 26, y);
+          octx.fillStyle = `rgba(255,236,250,${la})`;
+          if (narrowView) {
+            /* En móvil el planeta ocupa toda la pantalla y los puntos caen a la
+               derecha, muy cerca del borde: la etiqueta al costado o se salía
+               del viewport o se metía encima del texto de la frase (medido con
+               AREQUIPA a 390 px). Aquí va ENCIMA del nodo y centrada, que es el
+               único sitio libre. */
+            octx.textAlign = "center";
+            octx.fillText(text, x, y - 16);
+          } else {
+            // Escritorio: guion de enganche + etiqueta al costado.
+            octx.textAlign = "left";
+            octx.beginPath();
+            octx.moveTo(x + 8, y);
+            octx.lineTo(x + 20, y);
+            octx.lineWidth = 1;
+            octx.strokeStyle = `rgba(${BRAND_LIT},${0.8 * la})`;
+            octx.stroke();
+            octx.fillText(text, x + 26, y);
+          }
           octx.restore();
         }
       }
@@ -832,9 +871,15 @@ function CinematicBackgroundImpl(
         ? stateRef.current.hero
         : Math.max(0, Math.min(1, (window.scrollY - heroTop) / heroHeight));
       const travel = drivenRef.current ? stateRef.current.travel : 0;
-      // La rotación acelera a lo largo del tramo (el viaje se nota aunque el
-      // planeta ya esté fuera de encuadre por abajo).
-      if (!reduce) phi += 0.0026 * (1 + travel * (NARRATIVE.spin - 1));
+      if (drivenRef.current) {
+        // Anclado a la red y movido por el scroll (ver PHI_ANCHOR).
+        phi =
+          PHI_ANCHOR +
+          scrollP * NARRATIVE.spinHero +
+          travel * NARRATIVE.spinTravel;
+      } else if (!reduce) {
+        phi += 0.0026; // rotación libre del modo `cinematic`
+      }
 
       const theta = drivenRef.current
         ? BASE_THETA + scrollP * NARRATIVE.theta + travel * NARRATIVE.travelTheta
