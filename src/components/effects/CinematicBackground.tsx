@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import type { Ref } from "react";
 import createGlobe from "cobe";
 
 /**
@@ -128,11 +129,53 @@ function project(
   return { x: (c + 1) / 2, y: (-s + 1) / 2, front: z >= 0 };
 }
 
+/**
+ * Un punto del CMS que se enciende sobre el planeta durante su frase
+ * (SPEC 116). `to` es el destino del arco de fibra; `null` ⇒ Lima.
+ */
+export interface PlanetPoint {
+  phrase: number; // índice 0-based de la frase
+  label: string; // ya localizado por tField
+  loc: [number, number]; // lat, lng
+  to: [number, number] | null;
+}
+
+/**
+ * Mando del tramo narrativo (SPEC 116). Solo se usa con `driven`: es lo que
+ * convierte al planeta en el fondo conducido por el motor de capítulos, igual
+ * que `FiberTunnelHandle` hace con el túnel de fibra.
+ */
+export interface PlanetHandle {
+  /** 0→1 dentro del capítulo del hero: el planeta desciende hasta horizonte. */
+  setHero(p: number): void;
+  /** 0→1 a lo largo de TODO el tramo: deriva y aceleración de la rotación. */
+  setTravel(p: number): void;
+  /**
+   * Opacidad del fondo. En 0 además DEJA DE RENDERIZAR (se corta el rAF): es
+   * lo que garantiza que al entrar en Soluciones no queden dos canvas WebGL
+   * vivos — COBE también lo es. El IntersectionObserver no sirve para esto
+   * cuando el host es `fixed`, porque entonces siempre está en viewport.
+   */
+  setOpacity(v: number): void;
+  /** Puntos del CMS, ya localizados y con su arco resuelto. */
+  setPoints(points: PlanetPoint[]): void;
+  /** Frase activa (0-based) y su progreso 0→1: enciende/apaga sus puntos. */
+  setPhrase(index: number, p: number): void;
+}
+
 interface Props {
   className?: string;
   iconKeys?: string[]; // (no usado)
   signalReady?: boolean;
   onUnsupported?: () => void;
+  /** Host `fixed` en vez de `relative`: el fondo atraviesa varios capítulos. */
+  fixed?: boolean;
+  /**
+   * El scroll ya NO lo lee el componente: lo empuja el capítulo por el handle.
+   * Sin esto el comportamiento es exactamente el de siempre (modo `cinematic`),
+   * que es lo que lo mantiene intacto en producción.
+   */
+  driven?: boolean;
 }
 
 // Estrella: la posición base (x,y) deriva con velocidad CONSTANTE y envuelve por
@@ -151,14 +194,59 @@ interface Star {
   ovy: number;
 }
 
-export default function CinematicBackground({
-  className,
-  signalReady,
-  onUnsupported,
-}: Props) {
+function CinematicBackgroundImpl(
+  { className, signalReady, onUnsupported, fixed = false, driven = false }: Props,
+  ref: Ref<PlanetHandle>
+) {
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
+
+  /* Estado que empuja el capítulo. Vive en una ref para que escribirlo en cada
+     frame de scroll no re-renderice React (mismo patrón que `FiberTunnel`). */
+  const stateRef = useRef({
+    hero: 0,
+    travel: 0,
+    opacity: 1,
+    points: [] as PlanetPoint[],
+    phrase: -1,
+    phraseP: 0,
+  });
+  /* `driven` se lee dentro del rAF, que se monta una sola vez: por ref, para no
+     recrear el contexto WebGL si el padre re-renderiza. */
+  const drivenRef = useRef(driven);
+  drivenRef.current = driven;
+  /* Reanuda el rAF tras un `setOpacity(0)`. Lo publica el efecto. */
+  const wakeRef = useRef<(() => void) | null>(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setHero(p: number) {
+        stateRef.current.hero = Math.max(0, Math.min(1, p));
+      },
+      setTravel(p: number) {
+        stateRef.current.travel = Math.max(0, Math.min(1, p));
+      },
+      setOpacity(v: number) {
+        const o = Math.max(0, Math.min(1, v));
+        const was = stateRef.current.opacity;
+        stateRef.current.opacity = o;
+        const host = rootRef.current;
+        if (host) host.style.opacity = String(o);
+        // Volver de 0: el loop se había cortado y nadie lo reanudaría.
+        if (was <= 0.01 && o > 0.01) wakeRef.current?.();
+      },
+      setPoints(points: PlanetPoint[]) {
+        stateRef.current.points = points;
+      },
+      setPhrase(index: number, p: number) {
+        stateRef.current.phrase = index;
+        stateRef.current.phraseP = Math.max(0, Math.min(1, p));
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -570,17 +658,27 @@ export default function CinematicBackground({
     };
 
     const frame = (ms: number) => {
+      // Opacidad 0 en modo conducido ⇒ el loop se corta aquí (no basta con no
+      // pintar: el criterio es que el planeta deje de consumir rAF cuando entra
+      // el aurora de Soluciones). Lo reanuda `setOpacity` al volver a subir.
+      if (drivenRef.current && stateRef.current.opacity <= 0.01) {
+        raf = 0;
+        return;
+      }
       if (startMs < 0) startMs = ms;
       const intro = reduce ? 1 : Math.min(1, (ms - startMs) / 1600);
       const introE = 1 - Math.pow(1 - intro, 3);
-      const scrollP = Math.max(
-        0,
-        Math.min(1, (window.scrollY - heroTop) / heroHeight)
-      );
+      // Conducido: el progreso lo empuja el capítulo. Sin conducir: el
+      // auto-fundido de siempre, leyendo el scroll contra el alto del hero.
+      const scrollP = drivenRef.current
+        ? stateRef.current.hero
+        : Math.max(0, Math.min(1, (window.scrollY - heroTop) / heroHeight));
       if (!reduce) phi += 0.0026; // rotación
 
       const theta = BASE_THETA + scrollP * 0.9;
-      const op = introE * (1 - scrollP * 0.85);
+      const op = drivenRef.current
+        ? introE * stateRef.current.opacity
+        : introE * (1 - scrollP * 0.85);
       globe?.update({
         phi,
         theta, // al hacer scroll rueda hacia arriba (dirección del scroll)
@@ -604,6 +702,11 @@ export default function CinematicBackground({
     );
     io.observe(root);
 
+    // Reanudador para `setOpacity`: al volver de 0 hay que rearmar el loop.
+    wakeRef.current = () => {
+      if (!reduce && visible && !raf) raf = requestAnimationFrame(frame);
+    };
+
     if (reduce) {
       globe?.update({ phi: 0.6, opacity: 1 });
       drawOverlay(0.6, BASE_THETA, 1, 0);
@@ -613,6 +716,7 @@ export default function CinematicBackground({
     }
 
     return () => {
+      wakeRef.current = null;
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("pointermove", onPointerMove);
@@ -627,7 +731,13 @@ export default function CinematicBackground({
     <div
       ref={rootRef}
       className={className}
-      style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden" }}
+      style={{
+        position: fixed ? "fixed" : "relative",
+        ...(fixed ? { inset: 0 } : null),
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+      }}
     >
       {/* Resplandor de base (morado de marca) detrás del globo. Más bajo y más
           contenido que antes: el "espacio" alrededor del planeta debe quedar casi
@@ -669,3 +779,7 @@ export default function CinematicBackground({
     </div>
   );
 }
+
+const CinematicBackground = forwardRef(CinematicBackgroundImpl);
+
+export default CinematicBackground;
