@@ -135,6 +135,19 @@ export function enterProgress(
 }
 
 /**
+ * Ventana (en fracciones del capítulo) del turno de la frase `i` de `n`.
+ *
+ * Vive aquí y no en el componente porque la consumen DOS sitios: el revelado de
+ * las frases (`ManifiestoReact`) y los elementos que se encienden con cada una
+ * (SPEC 116). Si cada uno calculara su reparto, bastaría con que uno cambiara
+ * para que los elementos se encendieran con la frase equivocada.
+ */
+export function slotWindow(i: number, n: number): [number, number] {
+  const slot = 1 / Math.max(1, n);
+  return [i * slot, (i + 1) * slot];
+}
+
+/**
  * Progreso crudo (0→1) de un acto. Para lo que no es una animación de CSS:
  * uniforms de un shader, contadores, clases de estado.
  */

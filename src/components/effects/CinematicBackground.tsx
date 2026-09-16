@@ -282,6 +282,15 @@ function CinematicBackgroundImpl(
     if (!canvas || !root) return;
     const octx = overlay?.getContext("2d") ?? null;
 
+    /* Puntos del CMS (SPEC 116): sus vectores se cachean y sólo se recalculan
+       cuando el handle entrega otra lista (una edición en Tina, por ejemplo). */
+    let cmsPoints: PlanetPoint[] | null = null;
+    let cmsVecs: {
+      pt: PlanetPoint;
+      from: [number, number, number];
+      to: [number, number, number];
+    }[] = [];
+
     // Vectores 3D precomputados (endpoints de rutas + nodos).
     const routeVecs = ROUTES.map(
       ([from, to]) => [locToVec3(from), locToVec3(to)] as const
@@ -692,6 +701,99 @@ function CinematicBackgroundImpl(
         const pr = project([v[0] * R, v[1] * R, v[2] * R], phi, theta);
         if (pr.front)
           drawSoft(dLeft + pr.x * dSize, dTop + pr.y * dSize, r, 0.8 * op);
+      }
+
+      drawCmsPoints(phi, theta, op);
+    };
+
+    /**
+     * Puntos del CMS que acompañan a la frase en curso (SPEC 116).
+     *
+     * Van en la MISMA proyección que los hubs, así que giran pegados al globo y
+     * se cortan por detrás del limbo. El arco se traza durante el primer tramo
+     * del turno de la frase (la luz "viaja" hasta la ciudad) y todo el conjunto
+     * se apaga al cederle el turno a la frase siguiente.
+     */
+    const drawCmsPoints = (phi: number, theta: number, op: number) => {
+      const st = stateRef.current;
+      if (!octx || op <= 0.01 || st.phrase < 0 || !st.points.length) return;
+
+      if (st.points !== cmsPoints) {
+        cmsPoints = st.points;
+        cmsVecs = st.points.map((pt) => ({
+          pt,
+          from: locToVec3(pt.to ?? LIMA),
+          to: locToVec3(pt.loc),
+        }));
+      }
+
+      const p = st.phraseP;
+      // Entra, aguanta y se va dentro del turno de su frase.
+      const env =
+        Math.min(1, p / 0.18) * (p > 0.9 ? Math.max(0, (1 - p) / 0.1) : 1);
+      if (env <= 0.01) return;
+      const alpha = env * op;
+      // Fracción del arco ya trazada.
+      const traced = Math.min(1, p / 0.45);
+
+      octx.lineCap = "round";
+      for (let i = 0; i < cmsVecs.length; i++) {
+        const { pt, from, to } = cmsVecs[i];
+        if (pt.phrase !== st.phrase) continue;
+
+        // Arco de fibra, trazándose desde el hub de origen hacia el punto.
+        let started = false;
+        octx.beginPath();
+        for (let k = 0; k <= SEG; k++) {
+          const t = k / SEG;
+          if (t > traced) break;
+          const q = slerp(from, to, t);
+          const pr = project([q[0] * R, q[1] * R, q[2] * R], phi, theta);
+          const sx = dLeft + pr.x * dSize;
+          const sy = dTop + pr.y * dSize;
+          if (pr.front) {
+            if (!started) {
+              octx.moveTo(sx, sy);
+              started = true;
+            } else octx.lineTo(sx, sy);
+          } else started = false;
+        }
+        octx.lineWidth = 3.6;
+        octx.strokeStyle = `rgba(${BRAND},${0.22 * alpha})`;
+        octx.stroke();
+        octx.lineWidth = 1.4;
+        octx.strokeStyle = `rgba(${BRAND_LIT},${0.95 * alpha})`;
+        octx.stroke();
+
+        // Nodo + etiqueta, sólo si el punto mira hacia nosotros.
+        const pr = project([to[0] * R, to[1] * R, to[2] * R], phi, theta);
+        if (!pr.front) continue;
+        const x = dLeft + pr.x * dSize;
+        const y = dTop + pr.y * dSize;
+        drawSoft(x, y, 11, alpha);
+        octx.beginPath();
+        octx.arc(x, y, 2.4, 0, Math.PI * 2);
+        octx.fillStyle = `rgba(255,236,250,${alpha})`;
+        octx.fill();
+
+        if (pt.label && traced > 0.85) {
+          const la = alpha * Math.min(1, (traced - 0.85) / 0.15);
+          octx.save();
+          octx.font = '500 12px "Space Mono", ui-monospace, monospace';
+          (octx as any).letterSpacing = "0.14em";
+          octx.textBaseline = "middle";
+          const text = pt.label.toUpperCase();
+          // Guion de enganche + etiqueta a la derecha del nodo.
+          octx.beginPath();
+          octx.moveTo(x + 8, y);
+          octx.lineTo(x + 20, y);
+          octx.lineWidth = 1;
+          octx.strokeStyle = `rgba(${BRAND_LIT},${0.8 * la})`;
+          octx.stroke();
+          octx.fillStyle = `rgba(255,236,250,${0.92 * la})`;
+          octx.fillText(text, x + 26, y);
+          octx.restore();
+        }
       }
     };
 

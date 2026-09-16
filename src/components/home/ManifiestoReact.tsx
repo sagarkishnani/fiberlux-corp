@@ -3,7 +3,12 @@ import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery, HomeQueryVariables } from "../../../tina/__generated__/types";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
-import { actAnimate, chapterLen, chaptersEnabled } from "../../scripts/chapters";
+import {
+  actAnimate,
+  chapterLen,
+  chaptersEnabled,
+  slotWindow,
+} from "../../scripts/chapters";
 
 /**
  * Manifiesto — capítulo de frases del tramo narrativo (SPEC 113).
@@ -46,7 +51,6 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
     const acts = Array.from(root.querySelectorAll<HTMLElement>("[data-act]"));
     if (!acts.length) return;
     const len = chapterLen(chapter);
-    const slot = 1 / acts.length;
     const stops: Array<() => void> = [];
 
     /* UNA sola animación por elemento y propiedad.
@@ -58,18 +62,20 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
        turno de la frase: entra · aguanta · se va. */
     acts.forEach((actEl, i) => {
       const lines = Array.from(actEl.querySelectorAll<HTMLElement>("[data-line]"));
-      const from = i * slot;
+      // El reparto del capítulo entre frases vive en `chapters.ts`: lo comparte
+      // con los elementos que se encienden con cada frase (SPEC 116).
+      const [from, to] = slotWindow(i, acts.length);
       const last = i === acts.length - 1;
 
       stops.push(
-        actAnimate(chapter, len, from, from + slot, actEl, {
+        actAnimate(chapter, len, from, to, actEl, {
           opacity: last ? [0, 1, 1, 1] : [0, 1, 1, 0],
         })
       );
 
       lines.forEach((line) => {
         stops.push(
-          actAnimate(chapter, len, from, from + slot, line, {
+          actAnimate(chapter, len, from, to, line, {
             transform: last
               ? ["translateY(110%)", "translateY(0%)", "translateY(0%)", "translateY(0%)"]
               : [

@@ -27,12 +27,13 @@ const FiberTunnel = lazy(() => import("../effects/FiberTunnel"));
 import type { MorphNode, MorphHandle } from "../effects/MorphSolutions";
 // Solo el tipo: no arrastra el módulo al bundle del hero.
 import type { FiberTunnelHandle } from "../effects/FiberTunnel";
-import type { PlanetHandle } from "../effects/CinematicBackground";
+import type { PlanetHandle, PlanetPoint } from "../effects/CinematicBackground";
 import {
   actAnimate,
   actProgress,
   chapterLen,
   chaptersEnabled,
+  slotWindow,
   spanProgress,
 } from "../../scripts/chapters";
 
@@ -517,7 +518,83 @@ export default function HeroHomeReact({
     );
 
     return () => stops.forEach((stop) => stop());
-  }, [planeta]);
+    // `bgTarget`: hasta que el fondo no está montado, `planetRef` es null y el
+    // primer empujón de la pose se perdería (se notaría al recargar a media
+    // página, con el scroll restaurado).
+  }, [planeta, bgTarget]);
+
+  /* ── Elementos del planeta por frase (SPEC 116) ───────────────────────────
+     `frase` es 1-based en el CMS (las frases del manifiesto no tienen id, y
+     dárselo obligaría a migrar contenido ya publicado). Aquí se normaliza a
+     0-based y se descarta lo que no apunte a una frase real: así el grupo puede
+     existir en el JSON sin que ningún otro modo se entere. */
+  const manifiestoItems = (
+    ((data?.home as any)?.manifiesto?.items ?? []) as any[]
+  ).filter(Boolean);
+  const planetPoints: PlanetPoint[] = (() => {
+    if (!planeta) return [];
+    const raw = (((data?.home as any)?.planeta?.puntos ?? []) as any[]).filter(
+      Boolean
+    );
+    const key = (v: unknown) => String(v ?? "").trim().toLowerCase();
+    return raw
+      .map((pt) => {
+        const phrase = Number(pt.frase) - 1;
+        const lat = Number(pt.lat);
+        const lng = Number(pt.lng);
+        if (
+          !Number.isFinite(phrase) ||
+          phrase < 0 ||
+          phrase >= manifiestoItems.length ||
+          !Number.isFinite(lat) ||
+          !Number.isFinite(lng)
+        ) {
+          return null;
+        }
+        // El arco empareja por etiqueta; sin destino (o si no existe) va a Lima,
+        // que es el centro de red que ya trae el componente.
+        const dest = pt.conectaCon
+          ? raw.find((o) => key(o.label) === key(pt.conectaCon))
+          : null;
+        const to =
+          dest && Number.isFinite(Number(dest.lat)) && Number.isFinite(Number(dest.lng))
+            ? ([Number(dest.lat), Number(dest.lng)] as [number, number])
+            : null;
+        return {
+          phrase,
+          label: (tField(pt, "label", locale) as string) || "",
+          loc: [lat, lng] as [number, number],
+          to,
+        } satisfies PlanetPoint;
+      })
+      .filter(Boolean) as PlanetPoint[];
+  })();
+  // Firma del contenido: re-registra el mando si el editor toca los puntos.
+  const planetPointsKey = JSON.stringify(planetPoints);
+
+  /* Mando de los puntos: la lista va al fondo y cada frase del capítulo de
+     frases empuja su progreso. El reparto por frase sale de `slotWindow`, el
+     mismo que usa `ManifiestoReact` para revelarlas. */
+  useEffect(() => {
+    if (!planeta || !chaptersEnabled()) return;
+    planetRef.current?.setPoints(planetPoints);
+    if (!planetPoints.length) return;
+    const chapter = document.getElementById("ch-frases");
+    if (!chapter) return;
+    const len = chapterLen(chapter);
+    const total = manifiestoItems.length;
+    const stops: Array<() => void> = [];
+    for (let i = 0; i < total; i++) {
+      const [from, to] = slotWindow(i, total);
+      stops.push(
+        actProgress(chapter, len, from, to, (p) =>
+          planetRef.current?.setPhrase(i, p)
+        )
+      );
+    }
+    return () => stops.forEach((stop) => stop());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planeta, bgTarget, planetPointsKey, manifiestoItems.length]);
 
   const titleText = (tField(hero as any, "title", locale) as string) || "";
   const revealStyle = (delayMs: number): CSSProperties | undefined =>
