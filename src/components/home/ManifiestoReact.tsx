@@ -144,13 +144,16 @@ export default function ManifiestoReact({ query, variables, data, locale = "es" 
 
   return (
     <div ref={rootRef} className="site-container relative z-10 w-full">
-      {/* Velo: el núcleo del túnel cae justo donde va el texto. */}
+      {/* Velo de legibilidad. Dónde hace falta depende del fondo: en `fiber` el
+          núcleo del túnel cae justo detrás del texto; en `planeta` el cielo ya
+          está casi negro ahí y lo que brilla es el limbo, abajo. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
-          background:
-            "radial-gradient(60% 55% at 35% 50%, rgba(7,6,10,0.82) 0%, rgba(7,6,10,0.55) 45%, rgba(7,6,10,0) 78%)",
+          background: isPlaneta
+            ? "linear-gradient(180deg, rgba(7,6,10,0) 0%, rgba(7,6,10,0.35) 42%, rgba(7,6,10,0.78) 100%)"
+            : "radial-gradient(60% 55% at 35% 50%, rgba(7,6,10,0.82) 0%, rgba(7,6,10,0.55) 45%, rgba(7,6,10,0) 78%)",
         }}
       />
 

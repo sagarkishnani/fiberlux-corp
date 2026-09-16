@@ -410,13 +410,14 @@ export default function HeroHomeReact({
   // puntos ES el fondo, así que un velo fuerte lo borraría justo donde tiene
   // que verse (el planeta de `cinematic` sí lo pide).
   const softVeil = dotfield || lattice || fiber;
-  /* Máscara de pie para los velos del hero en modo `fiber` (SPEC 113).
+  /* Máscara de pie para los velos del hero en los modos narrativos (SPEC 113,
+     SPEC 116).
      Ahí el fondo es un canvas `fixed` que sigue vivo en el capítulo siguiente:
      cualquier velo que llegue con algo de opacidad al borde inferior del panel
      deja un CORTE horizontal en cuanto el panel se despega y ese borde entra en
      pantalla (arriba el velo, abajo el mismo fondo sin velo). Se apagan antes
      de llegar al borde. */
-  const edgeFade = fiber
+  const edgeFade = narrativeBg
     ? // El apagado va al final y no a media altura: el velo tiene que seguir
       // sosteniendo la legibilidad del subtítulo y los botones (en mobile es lo
       // único que separa el texto del fondo).
@@ -616,11 +617,13 @@ export default function HeroHomeReact({
          que la sección (cuelga antes en el DOM), así que un `bg` opaco aquí lo
          taparía justo dentro del hero. Detrás queda el negro de `main`. */
       className={`relative w-full overflow-hidden ${
-        fiber && bgTarget && bgTarget !== "inline" ? "bg-transparent" : "bg-[#0a0a0a]"
+        narrativeBg && bgTarget && bgTarget !== "inline"
+          ? "bg-transparent"
+          : "bg-[#0a0a0a]"
       } ${
         mode === "morph"
           ? "min-h-[100svh] md:min-h-[820px] lg:min-h-[900px]"
-          : fiber
+          : narrativeBg
           ? // El panel clavado del capítulo mide 100svh (ScrollChapter). Si el
             // hero mide menos (en desktop, `lg:min-h-[900px]` contra un viewport
             // más alto) queda una franja al pie donde el fondo `fixed` se ve sin
@@ -936,11 +939,11 @@ export default function HeroHomeReact({
           antes del borde, para empalmar sin costura ni rayas con la sección
           siguiente.
 
-          NO en modo `fiber`: ahí no hay "sección siguiente" con fondo propio —
-          el capítulo de frases comparte el mismo canvas `fixed`. Apagar el pie
-          del hero a negro sólido contra ese fondo intacto es justo lo que
+          NO en los modos narrativos: ahí no hay "sección siguiente" con fondo
+          propio — el capítulo de frases comparte el mismo canvas `fixed`. Apagar
+          el pie del hero a negro sólido contra ese fondo intacto es justo lo que
           producía el corte horizontal al salir del hero. */}
-      {!fiber && (
+      {!narrativeBg && (
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-80 md:h-[26rem] z-[1]"
