@@ -1,15 +1,19 @@
 {
-  "sectionTitle": "Certificaciones del grupo Fiberlux",
-  "sectionTitle_en": "Fiberlux group certifications",
+  "sectionTitle": "Certificaciones de Fiberlux",
+  "sectionTitle_en": "Fiberlux certifications",
+  "sectionDescription": "En Fiberlux trabajamos bajo altos estándares de seguridad, calidad y transparencia. Contamos con la certificación ISO 27001 de Seguridad de la Información, reafirmando nuestro compromiso con la confianza y la excelencia en cada proyecto.",
+  "sectionDescription_en": "At Fiberlux we work to the highest standards of security, quality and transparency. We hold the ISO 27001 Information Security certification, reaffirming our commitment to trust and excellence in every project.",
   "items": [
     {
-      "year": "2025",
-      "icon": "seguridad",
-      "title": "ISO 27001",
-      "heading": "Seguridad de la Información",
-      "heading_en": "Information Security",
-      "description": "Sistema de gestión que protege la confidencialidad, integridad y disponibilidad de la información del grupo.",
-      "description_en": "Management system that protects the confidentiality, integrity and availability of the group's information."
+      "code": "27001",
+      "label": "SEGURIDAD DE LA INFORMACIÓN",
+      "label_en": "INFORMATION SECURITY",
+      "ringText": "CERTIFICACIÓN ISO 27001 · SEGURIDAD DE LA INFORMACIÓN",
+      "ringText_en": "ISO 27001 CERTIFICATION · INFORMATION SECURITY",
+      "norm": "ISO/IEC 27001 — Sistemas de gestión de seguridad de la información",
+      "norm_en": "ISO/IEC 27001 — Information security management systems",
+      "scope": "Alcance: toda la operación del Grupo Fiberlux.",
+      "scope_en": "Scope: the entire operation of the Fiberlux Group."
     }
   ]
 }

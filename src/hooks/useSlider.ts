@@ -66,6 +66,8 @@ export interface Slider {
   canNext: boolean;
   /** True while the carousel is moving (drag or animation); false once settled. */
   scrolling: boolean;
+  /** Whether the user prefers reduced motion (autoplay/tweens gated on this). */
+  reducedMotion: boolean;
   next: () => void;
   prev: () => void;
   goTo: (index: number) => void;
@@ -205,5 +207,16 @@ export function useSlider(opts: UseSliderOptions = {}): Slider {
   const prev = useCallback(() => embla?.scrollPrev(), [embla]);
   const goTo = useCallback((index: number) => embla?.scrollTo(index), [embla]);
 
-  return { viewportRef, activeIndex, scrollSnaps, canPrev, canNext, scrolling, next, prev, goTo };
+  return {
+    viewportRef,
+    activeIndex,
+    scrollSnaps,
+    canPrev,
+    canNext,
+    scrolling,
+    reducedMotion: prefersReduced,
+    next,
+    prev,
+    goTo,
+  };
 }

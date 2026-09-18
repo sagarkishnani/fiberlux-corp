@@ -263,6 +263,20 @@ fragment AboutParts on About {
     text_en
   }
   missionImage
+  sgsi {
+    __typename
+    badge
+    badge_en
+    title
+    title_en
+    intro
+    intro_en
+    items {
+      __typename
+      text
+      text_en
+    }
+  }
   values {
     __typename
     title
@@ -438,15 +452,19 @@ fragment CertificacionesParts on Certificaciones {
   __typename
   sectionTitle
   sectionTitle_en
+  sectionDescription
+  sectionDescription_en
   items {
     __typename
-    year
-    icon
-    title
-    heading
-    heading_en
-    description
-    description_en
+    code
+    label
+    label_en
+    ringText
+    ringText_en
+    norm
+    norm_en
+    scope
+    scope_en
   }
 }
 
