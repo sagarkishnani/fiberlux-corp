@@ -4,43 +4,72 @@
       "formType": "reclamo",
       "label": "Formulario de Reclamo OSIPTEL",
       "enabled": true,
-      "recipients": ["oalvarez@fiberlux.pe", "aquispe@fiberlux.pe", "reclamos@fiberlux.pe"]
+      "recipients": [
+        "oalvarez@fiberlux.pe",
+        "aquispe@fiberlux.pe",
+        "reclamos@fiberlux.pe"
+      ]
     },
     {
       "formType": "queja",
       "label": "Formulario de Queja",
       "enabled": true,
-      "recipients": ["oalvarez@fiberlux.pe", "aquispe@fiberlux.pe", "reclamos@fiberlux.pe"]
+      "recipients": [
+        "oalvarez@fiberlux.pe",
+        "aquispe@fiberlux.pe",
+        "reclamos@fiberlux.pe"
+      ]
     },
     {
       "formType": "apelacion",
       "label": "Formulario de Apelación",
       "enabled": true,
-      "recipients": ["oalvarez@fiberlux.pe", "aquispe@fiberlux.pe", "reclamos@fiberlux.pe"]
+      "recipients": [
+        "oalvarez@fiberlux.pe",
+        "aquispe@fiberlux.pe",
+        "reclamos@fiberlux.pe"
+      ]
     },
     {
       "formType": "libro_reclamaciones",
       "label": "Libro de Reclamaciones",
       "enabled": true,
-      "recipients": ["oalvarez@fiberlux.pe", "aquispe@fiberlux.pe", "reclamos@fiberlux.pe"]
+      "recipients": [
+        "oalvarez@fiberlux.pe",
+        "aquispe@fiberlux.pe",
+        "reclamos@fiberlux.pe"
+      ]
     },
     {
       "formType": "derechos-arco",
       "label": "Solicitud de Derechos ARCO",
       "enabled": true,
-      "recipients": ["derechosarco@fiberlux.pe", "oalvarez@fiberlux.pe"]
+      "recipients": [
+        "derechosarco@fiberlux.pe",
+        "oalvarez@fiberlux.pe"
+      ]
     },
     {
       "formType": "contacto",
       "label": "Formulario de Contacto",
       "enabled": true,
-      "recipients": ["hola@fiberlux.pe", "malvarez@fiberlux.pe", "eushinahua@fiberlux.pe", "jrafael@fiberlux.pe"]
+      "recipients": [
+        "hola@fiberlux.pe",
+        "malvarez@fiberlux.pe",
+        "jsoto@Fiberlux.pe",
+        "jrafael@fiberlux.pe"
+      ]
     },
     {
       "formType": "servicios",
       "label": "Servicios — Déjanos tus datos",
       "enabled": true,
-      "recipients": ["hola@fiberlux.pe", "malvarez@fiberlux.pe", "eushinahua@fiberlux.pe", "jrafael@fiberlux.pe"]
+      "recipients": [
+        "hola@fiberlux.pe",
+        "malvarez@fiberlux.pe",
+        "eushinahua@fiberlux.pe",
+        "jrafael@fiberlux.pe"
+      ]
     }
   ]
 }
