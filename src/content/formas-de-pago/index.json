@@ -1,8 +1,8 @@
 {
   "heading": "Selecciona tu banco y paga tus facturas de manera sencilla",
   "intro": "",
-  "bankSelectLabel": "Selecciona tu banco",
-  "methodSelectLabel": "Selecciona el método",
+  "bankSelectLabel": "Banco",
+  "methodSelectLabel": "Canal",
   "banks": [
     {
       "name": "BBVA",
@@ -229,6 +229,6 @@
     "ogImage": ""
   },
   "heading_en": "Choose your bank and pay your invoices easily",
-  "bankSelectLabel_en": "Choose your bank",
-  "methodSelectLabel_en": "Choose the method"
+  "bankSelectLabel_en": "Bank",
+  "methodSelectLabel_en": "Channel"
 }

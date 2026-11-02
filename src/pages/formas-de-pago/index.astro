@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
-import HeroFormasPago from "../../components/formas-de-pago/HeroFormasPago.astro";
-import FormasPagoSelector from "../../components/formas-de-pago/FormasPagoSelector.astro";
+import FormasPagoV2React from "../../components/formas-de-pago/FormasPagoV2React";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
 
-const formasQuery = await client.queries.formasDePago({
-  relativePath: "index.json",
-});
+const formasQuery = await client.queries.formasDePago({ relativePath: "index.json" });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 const page = formasQuery.data.formasDePago;
 const seo = page?.seo;
 
@@ -16,11 +16,14 @@ const description =
   "Aprende a pagar tus facturas de Fiberlux desde tu banco de forma sencilla, paso a paso.";
 ---
 
-<BaseLayout title={title} description={description}>
-  <main>
-    <HeroFormasPago />
-    <div data-reveal="up">
-      <FormasPagoSelector />
-    </div>
+<BaseLayout title={title} description={description} footerOverlap>
+  <main class="bg-fx-bg">
+    <FormasPagoV2React
+      client:load
+      query={formasQuery.query}
+      variables={formasQuery.variables}
+      data={formasQuery.data}
+      locale={locale}
+    />
   </main>
 </BaseLayout>
