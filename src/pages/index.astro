@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeHeroReact from "../components/home/HomeHeroReact";
 import HomeStatsReact from "../components/home/HomeStatsReact";
+import HomeReelReact from "../components/home/HomeReelReact";
 import BlogPreview from "../components/blog/BlogPreview.astro";
 import SolucionesStack from "../components/shared/SolucionesStack.astro";
 import EmpresasRed from "../components/home/EmpresasRed.astro";
@@ -21,6 +22,7 @@ const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data
   <main class="bg-fx-bg">
     <HomeHeroReact client:load {...homeProps} />
     <HomeStatsReact client:tina {...homeProps} />
+    <HomeReelReact client:visible {...homeProps} />
     <HtmlInjection location="home-after-hero" />
     <SolucionesStack />
     <HomePartners />
