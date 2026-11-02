@@ -1,76 +1,25 @@
 ---
-// src/pages/nosotros.astro
 import { client } from "../../../tina/__generated__/client";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import MissionVisionReact from "../../components/nosotros/MissionVisionReact.tsx";
-import ValuesReact from "../../components/nosotros/ValuesReact.tsx";
-import HeroNosotrosReact from "../../components/nosotros/HeroNosotrosReact";
+import NosotrosIntroReact from "../../components/nosotros/NosotrosIntroReact";
+import NosotrosMetodologiaReact from "../../components/nosotros/NosotrosMetodologiaReact";
+import NosotrosMisionValoresReact from "../../components/nosotros/NosotrosMisionValoresReact";
 import TimelineReact from "../../components/nosotros/TimelineReact.tsx";
-import EmpresasRedReact from "../../components/home/EmpresasRedReact";
 import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
-import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
 import { getLocale } from "../../utils/i18n";
 import { isLocale } from "../../i18n/config";
 
 const aboutQuery = await client.queries.about({ relativePath: "index.json" });
-const homeQuery = await client.queries.home({ relativePath: "index.json" });
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const aboutProps = { query: aboutQuery.query, variables: aboutQuery.variables, data: aboutQuery.data, locale };
 ---
 
 <BaseLayout title="Nosotros">
-  <HeroNosotrosReact
-    client:load
-    query={aboutQuery.query}
-    variables={aboutQuery.variables}
-    data={aboutQuery.data}
-    locale={locale}
-  />
-  <MissionVisionReact
-    client:load
-    query={aboutQuery.query}
-    variables={aboutQuery.variables}
-    data={aboutQuery.data}
-    locale={locale}
-  />
-  <ValuesReact
-    client:load
-    query={aboutQuery.query}
-    variables={aboutQuery.variables}
-    data={aboutQuery.data}
-    locale={locale}
-  />
-  {/* El bloque de historia tiene las esquinas superiores redondeadas, así que
-      por sus muescas asoma el fondo de este contenedor. Tiene que ser el mismo
-      color que la sección de encima (Valores, #2B272F) o se ve un corte. */}
-  <div style="background: #2B272F">
-    <TimelineReact
-      client:visible
-      query={aboutQuery.query}
-      variables={aboutQuery.variables}
-      data={aboutQuery.data}
-      locale={locale}
-    />
-  </div>
-  <div class="-mt-16 relative z-20" data-reveal="up" data-overlap-rise>
-    <EmpresasRedReact
-      client:visible
-      query={homeQuery.query}
-      variables={homeQuery.variables}
-      data={homeQuery.data}
-      locale={locale}
-      effect="none"
-    />
-  </div>
-  <div class="-mt-4 relative z-30" data-reveal="up">
-    <RubrosReact
-      client:visible
-      query={aboutQuery.query}
-      variables={aboutQuery.variables}
-      data={aboutQuery.data}
-      locale={locale}
-    />
-  </div>
-  <div data-reveal="up">
-    <CertificacionesSlider />
-  </div>
+  <main class="bg-fx-bg">
+    <NosotrosIntroReact client:load {...aboutProps} />
+    <NosotrosMetodologiaReact client:visible {...aboutProps} />
+    <TimelineReact client:visible {...aboutProps} />
+    <NosotrosMisionValoresReact client:visible {...aboutProps} />
+    <RubrosReact client:visible {...aboutProps} />
+  </main>
 </BaseLayout>

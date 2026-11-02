@@ -30,6 +30,9 @@ export const UI: Record<Locale, Record<string, string>> = {
     "testimonios.caseTitle": "Caso de Éxito -",
     "blog.eyebrow": "[ BLOG ]",
     "blog.viewAllMobile": "Ver todos los artículos",
+    "page.nosotros": "Nosotros",
+    "page.casos": "Casos de éxito",
+    "page.blog": "Blog",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -66,6 +69,9 @@ export const UI: Record<Locale, Record<string, string>> = {
     "testimonios.caseTitle": "Success story -",
     "blog.eyebrow": "[ BLOG ]",
     "blog.viewAllMobile": "View all articles",
+    "page.nosotros": "About us",
+    "page.casos": "Success stories",
+    "page.blog": "Blog",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",
