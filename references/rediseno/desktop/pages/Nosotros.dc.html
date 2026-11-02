@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Fiberlux Corporativo — Nosotros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#F7F7F7;color:#453C46;font-family:Poppins,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html.lenis,html.lenis body{height:auto}
+*{box-sizing:border-box}
+a{color:#96217A;text-decoration:none}
+a:hover{color:#C81D87}
+::selection{background:#EBD1E4;color:#650D4A}
+@keyframes fxWave{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.045);opacity:.55}}
+@keyframes fxShield{0%,100%{transform:translateY(0) rotateY(-24deg) rotateX(6deg)}50%{transform:translateY(-22px) rotateY(24deg) rotateX(2deg)}}
+@keyframes fxShadowPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.82);opacity:.6}}
+@keyframes fxVmFade{from{opacity:0}to{opacity:1}}
+@keyframes fxVmPop{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes fxMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fxMarqueeR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes fxPulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+@keyframes fxDraw{0%{stroke-dashoffset:100;opacity:1}45%{stroke-dashoffset:0;opacity:1}80%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes fxTwinkle{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes fxDrift{0%{transform:translate3d(0,0,0) rotate(0deg) scale(1)}33%{transform:translate3d(-60px,40px,0) rotate(-4deg) scale(1.06)}66%{transform:translate3d(40px,-30px,0) rotate(3deg) scale(.96)}100%{transform:translate3d(0,0,0) rotate(0deg) scale(1)}}
+@keyframes fxSpin{to{transform:rotate(360deg)}}
+@keyframes fxBreath{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+@keyframes fxRing{0%{transform:scale(.8);opacity:.7}100%{transform:scale(2.1);opacity:0}}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="position:relative;width:100%;overflow-x:clip;background:#F7F7F7;font-family:Poppins,system-ui,sans-serif;color:#453C46">
+
+  <!-- TOP BAR -->
+  <div style="position:relative;z-index:65;background:#FFFFFF;border-bottom:1px solid #ECE9EC">
+    <div style="max-width:1320px;margin:0 auto;height:44px;display:flex;align-items:center;justify-content:space-between;font-size:13px">
+      <div style="display:flex;gap:28px;height:100%">
+        <a href="#" style="display:flex;align-items:center;height:100%;color:#453C46;font-weight:600;border-bottom:2px solid #96217A;padding-top:2px">Empresas</a>
+        <a href="https://negocios.fiberlux.pe/" style="display:flex;align-items:center;height:100%;color:#868687;border-bottom:2px solid transparent;padding-top:2px;transition:color .25s" style-hover="color:#96217A">Negocios</a>
+      </div>
+      <div style="display:flex;gap:28px;align-items:center">
+        <a href="#" style="color:#5E5560;transition:color .25s" style-hover="color:#96217A">Información a abonados y usuarios</a>
+        <button style="display:flex;align-items:center;gap:6px;background:none;border:0;padding:0;font:600 13px Poppins;color:#453C46;cursor:pointer">ES<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header ref="{{ navRef }}" style="position:sticky;top:0;z-index:60;transition:transform .55s cubic-bezier(.2,.8,.2,1), background .35s, box-shadow .35s">
+    <div style="max-width:1320px;margin:0 auto;height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center">
+      <div style="display:flex;align-items:center;gap:20px">
+        <button onClick="{{ openDrawer }}" aria-label="Abrir menú" data-hg="1" style="width:48px;height:48px;border-radius:50%;border:1px solid #D8D5D8;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:border-color .3s, background .3s" style-hover="border-color:#453C46;background:#F2F1F2">
+          <span data-hs="width:20px" style="display:block;width:18px;height:2px;border-radius:2px;background:#453C46;transition:width .3s, background .3s"></span>
+          <span data-hs="width:12px" style="display:block;width:18px;height:2px;border-radius:2px;background:#453C46;transition:width .3s .05s, background .3s"></span>
+          <span data-hs="width:20px" style="display:block;width:18px;height:2px;border-radius:2px;background:#453C46;transition:width .3s .1s, background .3s"></span>
+        </button>
+        <a href="Fiberlux Home.dc.html" aria-label="Fiberlux"><img src="assets/logo.svg" alt="Fiberlux" style="display:block;width:150px;height:auto"></a>
+      </div>
+
+      <nav style="display:flex;align-items:center;gap:2px;background:#453C46;border-radius:999px;padding:6px;box-shadow:0 10px 30px -12px rgba(69,60,70,.45)">
+        <a href="Nosotros.dc.html" style="padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.16);color:#FFFFFF;font-size:14px;font-weight:500;transition:background .25s" style-hover="background:rgba(255,255,255,.12);color:#FFFFFF">Nosotros</a>
+        <div onMouseEnter="{{ ddOpen }}" onMouseLeave="{{ ddClose }}" style="position:relative">
+          <a href="Fiberlux Home.dc.html#soluciones" style="display:flex;align-items:center;gap:6px;padding:10px 16px 10px 18px;border-radius:999px;color:#FFFFFF;font-size:14px;transition:background .25s" style-hover="background:rgba(255,255,255,.12);color:#FFFFFF">Soluciones<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="transition:transform .3s;transform:rotate({{ ddRot }})"><path d="M6 9l6 6 6-6"></path></svg></a>
+          <div style="position:absolute;top:100%;left:50%;padding-top:14px;width:760px;margin-left:-380px;opacity:{{ ddOp }};transform:translateY({{ ddY }});pointer-events:{{ ddPe }};transition:opacity .3s, transform .4s cubic-bezier(.2,.8,.2,1)">
+            <div style="display:grid;grid-template-columns:290px minmax(0,1fr);gap:8px;padding:8px;background:#FFFFFF;border:1px solid #ECE9EC;border-radius:28px;box-shadow:0 30px 70px -24px rgba(17,12,16,.28)">
+              <div style="display:flex;flex-direction:column;gap:2px;padding:4px">
+                <sc-for list="{{ megaCats }}" as="c" hint-placeholder-count="5">
+                  <a href="{{ c.href }}" onMouseEnter="{{ c.hover }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font-size:15px;font-weight:500;transition:background .3s, color .3s">{{ c.t }}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;opacity:{{ c.chev }};transform:translateX({{ c.cx }});transition:opacity .3s, transform .3s"><path d="M9 6l6 6-6 6"></path></svg></a>
+                </sc-for>
+              </div>
+              <div style="display:flex;flex-direction:column;min-height:340px;padding:20px 12px 12px;border-radius:22px;background:#F7F7F7">
+                <div style="padding:0 14px 10px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.18em;color:#868687">{{ megaLabel }}</div>
+                <sc-for list="{{ megaSols }}" as="s" hint-placeholder-count="6">
+                  <a href="{{ s.href }}" data-hg="1" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;border-radius:14px;color:#453C46;font-size:14px;transition:background .25s, color .25s" style-hover="background:#FFFFFF;color:#96217A">{{ s.t }}<span data-hs="opacity:1;transform:translateX(0)" style="display:flex;opacity:0;transform:translateX(-6px);transition:all .3s;color:#96217A"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+                </sc-for>
+                <a href="{{ megaHref }}" data-hg="1" style="display:inline-flex;align-items:center;gap:10px;margin-top:auto;padding:16px 14px 6px;font-size:14px;font-weight:500;color:#96217A" style-hover="color:#650D4A">{{ megaCta }}<span data-hs="transform:translateX(4px)" style="display:flex;transition:transform .3s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="Soporte.dc.html" style="padding:10px 18px;border-radius:999px;color:#FFFFFF;font-size:14px;transition:background .25s" style-hover="background:rgba(255,255,255,.12);color:#FFFFFF">Soporte técnico</a>
+        <a href="Casos de Exito.dc.html" style="padding:10px 18px;border-radius:999px;color:#FFFFFF;font-size:14px;transition:background .25s" style-hover="background:rgba(255,255,255,.12);color:#FFFFFF">Casos de éxito</a>
+        <a href="Blog.dc.html" style="padding:10px 18px;border-radius:999px;color:#FFFFFF;font-size:14px;transition:background .25s" style-hover="background:rgba(255,255,255,.12);color:#FFFFFF">Blog</a>
+        <button onClick="{{ openSearch }}" aria-label="Buscar" style="width:38px;height:38px;margin-left:4px;border-radius:50%;border:0;background:#FFFFFF;color:#453C46;display:grid;place-items:center;cursor:pointer;transition:background .25s, color .25s, transform .3s" style-hover="background:#7F1666;color:#FFFFFF;transform:scale(1.06)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+      </nav>
+
+      <div style="display:flex;justify-content:flex-end">
+        <a href="Contacto.dc.html" data-hg="1" style="display:inline-flex;align-items:center;gap:12px;height:48px;padding:0 6px 0 22px;border-radius:999px;background:#96217A;color:#FFFFFF;font-size:14px;font-weight:500;transition:background .35s, box-shadow .35s" style-hover="background:#7F1666;color:#FFFFFF">Contacto<span data-hs="transform:rotate(-45deg)" style="width:36px;height:36px;border-radius:50%;background:#FFFFFF;color:#96217A;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section data-screen-label="Hero Nosotros" style="position:relative;padding-top:120px">
+    <div ref="{{ heroImg }}" style="position:absolute;left:0;right:0;top:-40px;height:1300px;pointer-events:none;will-change:transform">
+      <img src="assets/nosotros-gradient.png" alt="" style="position:absolute;left:-10%;top:0;width:120%;height:auto;opacity:.95;animation:fxDrift 18s ease-in-out infinite">
+    </div>
+    <div style="position:relative;max-width:1320px;margin:0 auto">
+      <div data-reveal="up" style="display:flex;align-items:center;gap:8px;font-size:15px;color:#868687"><a href="Fiberlux Home.dc.html" style="color:#868687;transition:color .25s" style-hover="color:#453C46">Inicio</a><span style="color:#96217A">/</span><span style="color:#96217A;font-weight:500">Nosotros</span></div>
+      <h1 data-reveal="up" data-delay="80" style="margin:16px 0 0;max-width:680px;font-size:64px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#453C46;text-wrap:balance">La red que impulsa a las empresas del Perú</h1>
+      <p data-reveal="up" data-delay="160" style="margin:32px 0 0;max-width:540px;font-size:18px;line-height:1.6;color:#6B636C;text-wrap:pretty">Somos una empresa tecnológica centrada en brindar soluciones orientadas a la mejora de la operación de cada uno de nuestros clientes.</p>
+    </div>
+  </section>
+
+  <!-- POR QUE FIBERLUX -->
+  <section data-screen-label="¿Por qué Fiberlux?" style="position:relative;max-width:1320px;margin:110px auto 0">
+    <div data-reveal="up" style="border-radius:40px;background:#FFFFFF">
+      <div style="padding:88px 64px 64px;text-align:center">
+        <h2 style="margin:0;font-size:52px;line-height:1.1;font-weight:500;letter-spacing:-.025em;color:#96217A">¿Por qué Fiberlux?</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #F2F1F2">
+        <div data-hg="1" style="display:flex;flex-direction:column;align-items:center;gap:24px;padding:64px 40px 72px;text-align:center">
+          <div data-hs="background:#96217A;color:#FFFFFF;border-color:#96217A;transform:translateY(-4px)" style="width:60px;height:60px;border-radius:16px;border:1px solid #ECE9EC;background:#FFFFFF;color:#96217A;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(17,12,16,.14);transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-8 4 16 3-8h6"></path></svg></div>
+          <div style="max-width:300px;font-size:24px;line-height:1.3;font-weight:500;letter-spacing:-.01em;color:#2B252C;text-wrap:balance">Infraestructura propia</div>
+          <p style="margin:-8px 0 0;max-width:280px;font-size:15px;line-height:1.6;color:#6B636C;text-wrap:pretty">Fibra óptica nacional con cobertura en +100 ciudades</p>
+        </div>
+        <div data-hg="1" style="display:flex;flex-direction:column;align-items:center;gap:24px;padding:64px 40px 72px;border-left:1px solid #F2F1F2;text-align:center">
+          <div data-hs="background:#96217A;color:#FFFFFF;border-color:#96217A;transform:translateY(-4px)" style="width:60px;height:60px;border-radius:16px;border:1px solid #ECE9EC;background:#FFFFFF;color:#96217A;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(17,12,16,.14);transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2"></path></svg></div>
+          <div style="max-width:300px;font-size:24px;line-height:1.3;font-weight:500;letter-spacing:-.01em;color:#2B252C;text-wrap:balance">Experiencia +15 años</div>
+          <p style="margin:-8px 0 0;max-width:280px;font-size:15px;line-height:1.6;color:#6B636C;text-wrap:pretty">Trayectoria sólida en el mercado que genera confianza y credibilidad</p>
+        </div>
+        <div data-hg="1" style="display:flex;flex-direction:column;align-items:center;gap:24px;padding:64px 40px 72px;border-left:1px solid #F2F1F2;text-align:center">
+          <div data-hs="background:#96217A;color:#FFFFFF;border-color:#96217A;transform:translateY(-4px)" style="width:60px;height:60px;border-radius:16px;border:1px solid #ECE9EC;background:#FFFFFF;color:#96217A;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(17,12,16,.14);transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+          <div style="max-width:300px;font-size:24px;line-height:1.3;font-weight:500;letter-spacing:-.01em;color:#2B252C;text-wrap:balance">+10000 clientes del segmento empresarial</div>
+          <p style="margin:-8px 0 0;max-width:280px;font-size:15px;line-height:1.6;color:#6B636C;text-wrap:pretty">Nuestros clientes nos respaldan como sus aliados tecnológicos</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px;margin-top:24px">
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.05fr);gap:24px">
+        <div data-reveal="up" style="display:flex;flex-direction:column;justify-content:center;min-height:460px;padding:64px 72px;border-radius:40px;background:#453C46;color:#FFFFFF">
+          <h3 style="margin:0;font-size:52px;font-weight:500;letter-spacing:-.025em;line-height:1.05;text-wrap:balance">Data Center propio</h3>
+          <p style="margin:24px 0 0;font-size:17px;line-height:1.6;color:#E6E3E6;text-wrap:pretty">Infraestructura propia en Lima para alojar, respaldar y proteger la información crítica de tu empresa, con energía redundante y climatización de precisión.</p>
+        </div>
+        <div data-reveal="scale" data-hg="1" style="position:relative;min-height:460px;border-radius:40px;overflow:hidden;background:#453C46"><img data-hs="transform:scale(1.05)" src="assets/nos-dc.png" alt="Data Center Fiberlux" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,2.05fr) minmax(0,1fr);gap:24px">
+        <div data-reveal="scale" data-hg="1" style="position:relative;min-height:460px;border-radius:40px;overflow:hidden;background:#453C46"><img data-hs="transform:scale(1.05)" src="assets/nos-noc.png" alt="NOC y SOC Fiberlux" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)"></div>
+        <div data-reveal="up" data-delay="80" style="display:flex;flex-direction:column;justify-content:center;min-height:460px;padding:64px 72px;border-radius:40px;background:#96217A;color:#FFFFFF">
+          <h3 style="margin:0;font-size:52px;font-weight:500;letter-spacing:-.025em;line-height:1.05;text-wrap:balance">NOC y SOC propios</h3>
+          <p style="margin:24px 0 0;font-size:17px;line-height:1.6;color:#F3DDEC;text-wrap:pretty">Centros de operaciones de red y seguridad que monitorean tus servicios 24/7, detectan incidentes y responden antes de que afecten tu operación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METODOLOGIA -->
+  <section data-screen-label="Metodología" style="position:relative;max-width:1320px;margin:160px auto 0;padding-bottom:180px">
+    <div data-reveal="up" style="display:flex;align-items:flex-end;justify-content:space-between;gap:64px">
+      <div><div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ METODOLOGÍA ]</div><h2 style="margin:18px 0 0;max-width:640px;font-size:52px;line-height:1.08;font-weight:500;letter-spacing:-.03em;color:#453C46;text-wrap:balance">Del diagnóstico a la <span style="font-weight:600;color:#96217A">mejora continua</span></h2></div>
+      <p style="margin:0;max-width:420px;font-size:17px;line-height:1.6;color:#6B636C;text-wrap:pretty">Nuestro proceso inicia desde el diagnóstico a la mejora continua, con una decisión clara en cada etapa.</p>
+    </div>
+    <div data-tl="1" style="position:relative;margin-top:72px">
+      <div data-tltrack="1" style="position:absolute;top:10px;height:1px;background:#E6E3E6"></div>
+      <div data-tlfill="1" style="position:absolute;top:10px;height:1px;width:0;background:#96217A"></div>
+      <div data-tlhead="1" style="position:absolute;left:-8px;top:3px;z-index:2;width:16px;height:16px;border-radius:50%;background:#FFFFFF;border:3px solid #96217A;box-sizing:border-box;box-shadow:0 0 0 6px rgba(150,33,122,.14), 0 0 18px 4px rgba(150,33,122,.35);will-change:transform"></div>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px">
+        <div data-tlcol="1" style="position:relative;min-width:0;opacity:.38;transition:opacity .6s cubic-bezier(.16,1,.3,1)">
+          <span data-tldot="1" style="display:block;width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:1.5px solid #C9C3CA;background:#FFFFFF;transition:background .4s, border-color .4s, box-shadow .4s"></span>
+          <h3 style="margin:56px 0 0;font-size:34px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#453C46;overflow-wrap:anywhere;text-wrap:balance">Diagnóstico</h3>
+          <p style="margin:20px 0 0;max-width:290px;font-size:16px;line-height:1.65;color:#6B636C;text-wrap:pretty">Entendemos tu operación, tu infraestructura actual y los objetivos de tu negocio.</p>
+        </div>
+        <div data-tlcol="1" style="position:relative;min-width:0;opacity:.38;transition:opacity .6s cubic-bezier(.16,1,.3,1)">
+          <span data-tldot="1" style="display:block;width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:1.5px solid #C9C3CA;background:#FFFFFF;transition:background .4s, border-color .4s, box-shadow .4s"></span>
+          <h3 style="margin:56px 0 0;font-size:34px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#453C46;overflow-wrap:anywhere;text-wrap:balance">Diseño</h3>
+          <p style="margin:20px 0 0;max-width:290px;font-size:16px;line-height:1.65;color:#6B636C;text-wrap:pretty">Definimos la solución y la arquitectura adecuadas para cada sede y servicio.</p>
+        </div>
+        <div data-tlcol="1" style="position:relative;min-width:0;opacity:.38;transition:opacity .6s cubic-bezier(.16,1,.3,1)">
+          <span data-tldot="1" style="display:block;width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:1.5px solid #C9C3CA;background:#FFFFFF;transition:background .4s, border-color .4s, box-shadow .4s"></span>
+          <h3 style="margin:56px 0 0;font-size:34px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#453C46;overflow-wrap:anywhere;text-wrap:balance">Implementación</h3>
+          <p style="margin:20px 0 0;max-width:290px;font-size:16px;line-height:1.65;color:#6B636C;text-wrap:pretty">Desplegamos e integramos la solución sin interrumpir tu operación.</p>
+        </div>
+        <div data-tlcol="1" style="position:relative;min-width:0;opacity:.38;transition:opacity .6s cubic-bezier(.16,1,.3,1)">
+          <span data-tldot="1" style="display:block;width:22px;height:22px;box-sizing:border-box;border-radius:50%;border:1.5px solid #C9C3CA;background:#FFFFFF;transition:background .4s, border-color .4s, box-shadow .4s"></span>
+          <h3 style="margin:56px 0 0;font-size:34px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#453C46;overflow-wrap:anywhere;text-wrap:balance">Mejora continua</h3>
+          <p style="margin:20px 0 0;max-width:290px;font-size:16px;line-height:1.65;color:#6B636C;text-wrap:pretty">Monitoreamos 24/7 y optimizamos el servicio a partir de los resultados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIBERSEGURIDAD -->
+  <section data-screen-label="Ciberseguridad" style="position:relative;z-index:2;background:#FFFFFF;border-radius:40px 40px 0 0;padding:120px 0 200px;overflow:clip">
+    <div style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:80px;align-items:center">
+      <div data-reveal="up">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ CIBERSEGURIDAD ]</div>
+        <h2 style="margin:18px 0 0;font-size:52px;line-height:1.08;font-weight:500;letter-spacing:-.03em;color:#453C46;text-wrap:balance">La ciberseguridad como <span style="font-weight:600;color:#96217A">pilar estratégico</span></h2>
+        <p style="margin:28px 0 0;max-width:560px;font-size:17px;line-height:1.7;color:#6B636C;text-wrap:pretty">En un entorno digital en constante evolución, proteger sus activos no es un complemento, sino la base de la continuidad operativa. A través de un modelo de defensa en profundidad y monitoreo SOC 24/7, blindamos cada capa de su infraestructura para que su negocio crezca con total confianza y resiliencia.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:32px"><span style="padding:10px 18px;border-radius:999px;background:#FAF0F6;font-size:14px;font-weight:500;color:#650D4A">Defensa en profundidad</span><span style="padding:10px 18px;border-radius:999px;background:#FAF0F6;font-size:14px;font-weight:500;color:#650D4A">Monitoreo SOC 24/7</span></div>
+        <div style="display:flex;margin-top:40px"><a href="Ciberseguridad.dc.html" data-hg="1" style="display:inline-flex;align-items:center;gap:14px;height:56px;padding:0 28px 0 8px;border-radius:999px;background:#96217A;color:#FFFFFF;font-size:15px;font-weight:500;transition:background .35s" style-hover="background:#7F1666;color:#FFFFFF"><span data-hs="transform:rotate(-45deg)" style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;color:#96217A;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>Conoce Ciberseguridad</a></div>
+      </div>
+      <div data-reveal="scale" style="position:relative;height:520px;display:grid;place-items:center">
+        <div style="position:absolute;width:520px;height:520px;background:radial-gradient(closest-side,rgba(150,33,122,.24),rgba(213,167,202,.12) 55%,rgba(255,255,255,0));pointer-events:none"></div>
+        <div aria-hidden="true" style="position:relative;width:300px;height:333px;perspective:1400px">
+          <div style="position:absolute;left:10%;right:10%;bottom:-14%;height:14%;border-radius:50%;background:radial-gradient(closest-side,rgba(101,13,74,.32),rgba(101,13,74,0));animation:fxShadowPulse 6s ease-in-out infinite"></div>
+          <div style="position:absolute;inset:0;transform-style:preserve-3d;animation:fxShield 9s ease-in-out infinite">
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-27.200000000000003px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-25.6px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-24px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-22.400000000000002px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-20.8px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-19.200000000000003px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-17.6px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-16px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-14.4px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-12.8px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-11.200000000000001px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-9.600000000000001px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-8px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-6.4px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-4.800000000000001px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-3.2px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#650D4A" opacity="0.92"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(-1.6px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#B2308F" opacity="1"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(0px)"><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="#B2308F" opacity="1"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(1px)"><defs><linearGradient id="shg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E0479E"></stop><stop offset=".5" stop-color="#96217A"></stop><stop offset="1" stop-color="#650D4A"></stop></linearGradient><linearGradient id="shl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".55"></stop><stop offset=".5" stop-color="#FFFFFF" stop-opacity="0"></stop></linearGradient></defs><path d="M100 8 L176 36 V104 C176 158 140 196 100 214 C60 196 24 158 24 104 V36 Z" fill="url(#shg)"></path><path d="M100 22 L164 46 V104 C164 150 134 184 100 200 C66 184 36 150 36 104 V46 Z" fill="none" stroke="#FFFFFF" stroke-opacity=".35" stroke-width="2"></path><path d="M100 8 L176 36 V96 C130 80 70 80 24 96 V36 Z" fill="url(#shl)"></path></svg>
+            <svg viewBox="0 0 200 222" style="position:absolute;inset:0;width:100%;height:100%;transform:translateZ(22px)"><path d="M70 112 L92 134 L134 90" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section ref="{{ histSec }}" data-screen-label="Historia" style="position:relative;z-index:3;margin-top:-40px;background:#3C0E30;border-radius:40px 40px 0 0;overflow:clip;color:#FFFFFF">
+    <div style="position:absolute;inset:0;background:radial-gradient(60% 40% at 70% 0%,rgba(120,24,96,.55),rgba(60,14,48,0) 70%);pointer-events:none"></div>
+    <div style="position:absolute;left:38%;top:-10%;width:26%;height:60%;background:linear-gradient(90deg,rgba(150,33,122,0),rgba(170,45,140,.5) 50%,rgba(150,33,122,0));transform:rotate(28deg);transform-origin:top center;filter:blur(40px);pointer-events:none"></div>
+    <div style="position:relative;max-width:1320px;margin:0 auto;padding:140px 0 180px">
+      <div data-reveal="up" style="text-align:center">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.3em;color:#B7A6B3">NUESTRA HISTORIA</div>
+        <h2 style="margin:20px auto 0;max-width:760px;font-size:52px;line-height:1.1;font-weight:500;letter-spacing:-.025em;text-wrap:balance">Los hitos que construyeron nuestra red</h2>
+      </div>
+      <div data-hline="1" style="position:relative;display:grid;grid-template-columns:minmax(0,1fr) 160px minmax(0,1fr);margin-top:100px">
+        <div style="position:absolute;left:50%;top:0;bottom:0;width:2px;margin-left:-1px;border-radius:2px;background:rgba(255,255,255,.12)"></div>
+        <div data-hfill="1" style="position:absolute;left:50%;top:0;height:0%;width:2px;margin-left:-1px;border-radius:2px;background:linear-gradient(180deg,#F0509E,#C2349A 60%,#96217A);box-shadow:0 0 18px 2px rgba(224,71,158,.45)"></div>
+          <div data-hi="1" style="grid-column:1;grid-row:1;text-align:right;justify-self:end;max-width:460px;margin-top:0;padding:80px 0;opacity:.28;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)">
+            <div style="font-size:112px;font-weight:600;letter-spacing:-.05em;line-height:.95;color:#FFFFFF;font-variant-numeric:tabular-nums">2006</div>
+            <p style="margin:26px 0 0;font-size:22px;line-height:1.5;color:#F3E6EF;text-wrap:pretty">Más de 19 años construyendo la red que conecta a las empresas del Perú</p>
+          </div>
+          <div data-hi="1" style="grid-column:3;grid-row:2;justify-self:start;max-width:460px;margin-top:-120px;padding:80px 0;opacity:.28;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)">
+            <div style="font-size:112px;font-weight:600;letter-spacing:-.05em;line-height:.95;color:#FFFFFF;font-variant-numeric:tabular-nums">2012</div>
+            <p style="margin:26px 0 0;font-size:22px;line-height:1.5;color:#F3E6EF;text-wrap:pretty">Expansión de nuestra red de fibra óptica a nivel nacional</p>
+          </div>
+          <div data-hi="1" style="grid-column:1;grid-row:3;text-align:right;justify-self:end;max-width:460px;margin-top:-120px;padding:80px 0;opacity:.28;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)">
+            <div style="font-size:112px;font-weight:600;letter-spacing:-.05em;line-height:.95;color:#FFFFFF;font-variant-numeric:tabular-nums">2019</div>
+            <p style="margin:26px 0 0;font-size:22px;line-height:1.5;color:#F3E6EF;text-wrap:pretty">Consolidación como referente B2B en conectividad empresarial</p>
+          </div>
+          <div data-hi="1" style="grid-column:3;grid-row:4;justify-self:start;max-width:460px;margin-top:-120px;padding:80px 0;opacity:.28;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1)">
+            <div style="font-size:112px;font-weight:600;letter-spacing:-.05em;line-height:.95;color:#FFFFFF;font-variant-numeric:tabular-nums">2025</div>
+            <p style="margin:26px 0 0;font-size:22px;line-height:1.5;color:#F3E6EF;text-wrap:pretty">Red propia presente en 92 ciudades del Perú</p>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICACION -->
+  <section data-screen-label="Certificación ISO" style="position:relative;z-index:4;margin-top:-40px;background:#F7F7F7;border-radius:40px 40px 0 0;padding:120px 0 160px">
+    <div style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+      <div data-reveal="up">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ CERTIFICACIONES ]</div>
+        <h2 style="margin:18px 0 0;font-size:48px;line-height:1.1;font-weight:400;letter-spacing:-.02em;color:#453C46">Certificaciones del <span style="font-weight:600;color:#96217A">grupo Fiberlux</span></h2>
+        <p style="margin:24px 0 0;max-width:520px;font-size:16px;line-height:1.7;color:#6B636C;text-wrap:pretty">Trabajamos bajo altos estándares de seguridad, calidad y transparencia. Contamos con la certificación ISO 27001 de Seguridad de la Información, reafirmando nuestro compromiso con la confianza y la excelencia en cada proyecto.</p>
+        
+      </div>
+      <div data-reveal="scale" style="position:relative;height:460px;border-radius:32px;background:#FFFFFF;border:1px solid #ECE9EC;overflow:hidden">
+        <div style="position:absolute;inset:0;background:radial-gradient(50% 60% at 50% 40%,#FAF0F6,rgba(250,240,246,0))"></div>
+        
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div style="position:relative;width:220px;height:220px;display:grid;place-items:center">
+              <div style="position:absolute;inset:0;border-radius:50%;border:1.5px dashed #D5A7CA;animation:fxSpin 30s linear infinite"></div>
+              <div style="position:absolute;inset:18px;border-radius:50%;border:1px solid #EBD1E4"></div>
+              <div style="position:absolute;inset:36px;border-radius:50%;background:#FFFFFF;box-shadow:0 20px 50px -20px rgba(150,33,122,.4)"></div>
+              <div style="position:relative;text-align:center">
+                <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.3em;color:#868687">ISO</div>
+                <div style="font-size:44px;font-weight:600;letter-spacing:-.02em;color:#96217A;line-height:1.1">27001</div>
+              </div>
+            </div>
+            <div style="margin-top:32px;font-size:18px;font-weight:600;color:#453C46">ISO/IEC 27001</div>
+            <div style="margin-top:6px;font-size:15px;color:#6B636C">Sistemas de gestión de seguridad de la información</div>
+          </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- MISION PANEL -->
+  <section data-screen-label="Misión, visión y valores" style="position:relative;z-index:5;margin-top:-40px;background:#FFFFFF;border-radius:40px 40px 0 0;padding:120px 0 160px">
+  <!-- MISION VISION -->
+  <section data-screen-label="Misión y visión" style="position:relative;max-width:1320px;margin:0 auto">
+    <div data-reveal="up" style="max-width:760px;margin:0 auto 96px;text-align:center">
+      <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ QUIÉNES SOMOS ]</div>
+      <h2 style="margin:18px 0 0;font-size:48px;line-height:1.1;font-weight:400;letter-spacing:-.02em;color:#453C46;text-wrap:balance">Comprometidos con el <span style="font-weight:600;color:#96217A">desarrollo tecnológico</span> del Perú</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:88px;align-items:center">
+      <div data-reveal="scale" data-hg="1" style="position:relative;height:580px;border-radius:32px;overflow:hidden;background:#453C46"><img data-hs="transform:scale(1.05)" src="https://staging.d25d5it86bz63g.amplifyapp.com/images/nosotros/about-us-hero.webp" alt="Equipo Fiberlux" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)"></div>
+      <div data-reveal="up">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#96217A">[ MISIÓN ]</div>
+        <p style="margin:24px 0 0;font-size:38px;line-height:1.25;font-weight:400;letter-spacing:-.02em;color:#453C46;text-wrap:pretty">Impulsar el desarrollo de más peruanos a través del <span style="font-weight:600;color:#96217A">acceso a la tecnología.</span></p>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:88px;align-items:center;margin-top:140px">
+      <div data-reveal="up">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#96217A">[ VISIÓN ]</div>
+        <p style="margin:24px 0 0;font-size:34px;line-height:1.28;font-weight:400;letter-spacing:-.02em;color:#453C46;text-wrap:pretty">Ser la empresa tecnológica <span style="font-weight:600;color:#96217A">más confiable y respetada del Perú.</span> Convirtiéndonos en el referente local en innovación para empresas y personas.</p>
+      </div>
+      <div data-reveal="scale" data-hg="1" style="position:relative;height:580px;border-radius:32px;overflow:hidden;background:#453C46"><img data-hs="transform:scale(1.05)" src="https://assets.tina.io/b7c4f7b2-044d-45ce-ad83-b851ea96927b/images/nosotros/comprometidos-mision-vision.webp" alt="Compromiso tecnológico" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)"></div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section data-screen-label="Valores" style="position:relative;max-width:1320px;margin:160px auto 0;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:96px;align-items:start">
+    <div data-reveal="up" style="position:sticky;top:140px">
+      <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ NUESTROS VALORES ]</div>
+      <h2 style="margin:18px 0 0;font-size:56px;line-height:1.08;font-weight:400;letter-spacing:-.025em;color:#453C46"><span style="font-weight:600;color:#96217A">Valores</span> que nos conectan</h2>
+      <p style="margin:24px 0 0;max-width:420px;font-size:17px;line-height:1.65;color:#6B636C;text-wrap:pretty">Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:72px 56px">
+      <sc-for list="{{ values }}" as="v" hint-placeholder-count="4">
+        <div data-reveal="up" data-hg="1" style="padding-top:32px;border-top:1px solid #DCD8DC">
+          <div data-hs="background:#96217A;color:#FFFFFF;border-color:#96217A;transform:translateY(-4px)" style="width:56px;height:56px;border-radius:16px;border:1px solid #E6E3E6;background:#FFFFFF;color:#96217A;display:grid;place-items:center;box-shadow:0 6px 14px -6px rgba(17,12,16,.12);transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ v.icon }}"></path></svg></div>
+          <h3 style="margin:28px 0 0;font-size:26px;font-weight:500;letter-spacing:-.01em;color:#2B252C">{{ v.t }}</h3>
+          <p style="margin:12px 0 0;max-width:320px;font-size:16px;line-height:1.65;color:#6B636C;text-wrap:pretty">{{ v.d }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  </section>
+
+  <!-- POLITICA ISO -->
+  <section data-screen-label="Política SGSI" style="position:relative;z-index:6;margin-top:-40px;background:#F7F7F7;border-radius:40px 40px 0 0;padding:120px 0 160px">
+    <div data-reveal="up" style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:80px">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;background:#FAF0F6;font:500 13px 'JetBrains Mono',monospace;letter-spacing:.12em;color:#650D4A"><span style="width:28px;height:28px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>ISO 27001</div>
+        <h2 style="margin:28px 0 0;font-size:40px;line-height:1.15;font-weight:400;letter-spacing:-.02em;color:#453C46;text-wrap:balance">Política del Sistema de Gestión de <span style="font-weight:600;color:#96217A">Seguridad de la Información</span></h2>
+        <p style="margin:24px 0 0;font-size:16px;line-height:1.7;color:#6B636C;text-wrap:pretty"><strong style="font-weight:600;color:#453C46">FIBERLUX TECH SAC</strong> es una empresa de Telecomunicaciones, donde la tecnología de información y los sistemas de información son de vital importancia como activos, que alineados a nuestro propósito y tomando en consideración el contexto, riesgos y oportunidades, nos comprometemos a:</p>
+      </div>
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ policy }}" as="p" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:24px 0;border-bottom:1px solid #F2F1F2">
+            <div style="font-size:16px;line-height:1.6;color:#453C46">{{ p.t }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios" data-screen-label="Testimonios" style="position:relative;z-index:7;margin-top:-40px;background:#FFFFFF;border-radius:40px 40px 0 0;padding:120px 0 160px">
+    <div style="max-width:1320px;margin:0 auto">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between">
+        <div data-reveal="up">
+          <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ CASOS DE ÉXITO ]</div>
+          <h2 style="margin:18px 0 0;font-size:48px;line-height:1.1;font-weight:400;letter-spacing:-.02em;color:#453C46"><span style="font-weight:600;color:#96217A">Empresas</span> que confían<br>en nuestra red</h2>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button onClick="{{ prevT }}" aria-label="Anterior" style="width:56px;height:56px;border-radius:50%;border:1px solid #D8D5D8;background:#FFFFFF;color:#453C46;display:grid;place-items:center;cursor:pointer;transition:all .3s" style-hover="background:#453C46;color:#FFFFFF;border-color:#453C46"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+          <button onClick="{{ nextT }}" aria-label="Siguiente" style="width:56px;height:56px;border-radius:50%;border:0;background:#96217A;color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:all .3s" style-hover="background:#7F1666"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+        </div>
+      </div>
+      <div ref="{{ trackWrap }}" data-reveal="up" data-delay="120" style="margin-top:56px;cursor:grab;touch-action:pan-y;user-select:none">
+        <div ref="{{ trackRef }}" style="display:flex;gap:24px;width:max-content;padding:12px 0 24px;transition:transform .8s cubic-bezier(.16,1,.3,1)">
+          <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="4">
+            <article onClick="{{ t.open }}" style="cursor:pointer;width:460px;flex:none;display:flex;flex-direction:column;padding:14px 14px 26px;border-radius:24px;background:#FFFFFF;border:1px solid #ECE9EC;box-shadow:0 1px 2px rgba(17,12,16,.04);transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s, border-color .5s" style-hover="transform:translateY(-8px);border-color:#D8D5D8;box-shadow:0 30px 60px -30px rgba(150,33,122,.35)">
+              <div data-hg="1" style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#F2EEF1">
+                <img data-hs="transform:scale(1.05)" src="{{ t.cover }}" alt="{{ t.company }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)">
+                <div data-hs="transform:scale(1.08)" style="position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center;pointer-events:none;box-shadow:0 0 0 10px rgba(150,33,122,.16);transition:transform .4s cubic-bezier(.2,.8,.2,1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg></div>
+              </div>
+              <div style="display:flex;flex-direction:column;flex:1;padding:24px 14px 0">
+                <div style="height:40px;display:flex;align-items:center"><img src="{{ t.logo }}" alt="{{ t.company }}" style="display:block;max-height:{{ t.lh }};max-width:140px;width:auto"></div>
+                <div style="flex:1"><h3 style="margin:20px 0 0;font-size:18px;line-height:1.4;font-weight:500;letter-spacing:-.01em;color:#453C46;text-wrap:pretty">{{ t.title }}</h3><p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#6B636C;text-wrap:pretty">{{ t.quote }}</p></div>
+                <div style="margin-top:22px;padding-top:18px;border-top:1px solid #F2F1F2">
+                  <div style="font-size:15px;font-weight:600;color:#453C46">{{ t.name }}</div>
+                  <div style="font-size:13px;color:#868687;margin-top:2px">{{ t.role }}</div>
+                </div>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top:16px;height:2px;background:#ECE9EC;border-radius:2px;overflow:hidden"><div ref="{{ progRef }}" style="height:100%;width:30%;background:#96217A;border-radius:2px;transition:transform .8s cubic-bezier(.16,1,.3,1), width .8s"></div></div>
+    </div>
+    <div data-screen-label="CTA casos" style="max-width:1320px;margin:8px auto 0">
+    <div data-reveal="up" style="display:flex;justify-content:center;margin-top:48px"><a href="Casos de Exito.dc.html" data-hg="1" style="display:inline-flex;align-items:center;gap:14px;height:56px;padding:0 28px 0 8px;border-radius:999px;background:#96217A;color:#FFFFFF;font-size:15px;font-weight:500;transition:background .35s" style-hover="background:#7F1666;color:#FFFFFF"><span data-hs="transform:rotate(-45deg)" style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;color:#96217A;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>Ver casos de éxito</a></div>
+  </div>
+  </section>
+
+  <!-- RUBROS -->
+  <section data-screen-label="Rubros" style="position:relative;z-index:8;margin-top:-40px;background:#453C46;border-radius:40px 40px 0 0;padding:120px 0 160px;overflow:clip">
+    <div style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:56px;align-items:center">
+      <div data-reveal="up">
+        <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#B9B2BA">[ RUBROS ]</div>
+        <h2 style="margin:18px 0 0;font-size:56px;line-height:1.1;font-weight:400;letter-spacing:-.025em;color:#FFFFFF">Rubros con los que trabajamos</h2>
+        <p style="margin:24px 0 0;font-size:16px;line-height:1.7;color:#D8D5D8;text-wrap:pretty">Conectamos a los sectores más importantes del Perú con infraestructura de fibra óptica de última generación. Sin importar tu industria, tu red no puede detenerse.</p>
+      </div>
+      <div data-reveal="up" data-delay="120" style="min-width:0;display:flex;flex-direction:column;gap:32px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)">
+        <div style="display:flex;gap:24px;width:max-content;padding-top:8px;animation:fxMarquee 46s linear infinite" style-hover="animation-play-state:paused">
+          <sc-for list="{{ rubrosA }}" as="r" hint-placeholder-count="18">
+            <div style="width:150px;flex:none;display:flex;flex-direction:column;align-items:center;gap:16px;cursor:default">
+              <div style="width:116px;height:116px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#B9B2BA;display:grid;place-items:center;transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="{{ r.icon }}"></path></svg></div>
+              <div style="font-size:15px;color:#B9B2BA;white-space:nowrap">{{ r.t }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:24px;width:max-content;padding-top:8px;animation:fxMarqueeR 52s linear infinite" style-hover="animation-play-state:paused">
+          <sc-for list="{{ rubrosB }}" as="r" hint-placeholder-count="18">
+            <div style="width:150px;flex:none;display:flex;flex-direction:column;align-items:center;gap:16px;cursor:default">
+              <div style="width:116px;height:116px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#B9B2BA;display:grid;place-items:center;transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="{{ r.icon }}"></path></svg></div>
+              <div style="font-size:15px;color:#B9B2BA;white-space:nowrap">{{ r.t }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contacto" data-screen-label="Footer" style="position:relative;z-index:9;margin-top:-40px;background:#650D4A;border-radius:40px 40px 0 0;color:#FFFFFF">
+    <div id="soporte" style="max-width:1320px;margin:0 auto;padding:96px 0 40px">
+      <div style="display:grid;grid-template-columns:1.3fr 1fr 1.3fr;gap:64px">
+        <div>
+          <h2 style="margin:0;font-size:48px;line-height:1.1;font-weight:600;letter-spacing:-.02em">Potencia tu conectividad empresarial</h2>
+                    <div style="display:flex;gap:12px;margin-top:40px">
+            <sc-for list="{{ socials }}" as="so" hint-placeholder-count="5">
+              <a href="{{ so.href }}" target="_blank" rel="noopener" aria-label="{{ so.label }}" style="display:block;width:40px;height:40px;transition:transform .35s cubic-bezier(.2,.8,.2,1), filter .3s" style-hover="transform:translateY(-3px);filter:brightness(.8)"><img src="{{ so.src }}" alt="{{ so.label }}" style="display:block;width:40px;height:40px"></a>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:40px">
+          <div>
+            <div style="font-size:15px;font-weight:600">Servicios</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+              <sc-for list="{{ fServ }}" as="l" hint-placeholder-count="5"><a href="{{ l.href }}" style="font-size:14px;color:#E9D3E2;transition:color .25s, transform .3s" style-hover="color:#FFFFFF;transform:translateX(4px)">{{ l.t }}</a></sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:600">Sobre nosotros</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+              <sc-for list="{{ fAbout }}" as="l" hint-placeholder-count="6"><a href="{{ l.href }}" style="font-size:14px;color:#E9D3E2;transition:color .25s, transform .3s" style-hover="color:#FFFFFF;transform:translateX(4px)">{{ l.t }}</a></sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:40px">
+          <div>
+            <div style="font-size:15px;font-weight:600">Legales</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+              <sc-for list="{{ fLegal }}" as="l" hint-placeholder-count="12"><a href="{{ l.href }}" style="font-size:14px;color:#E9D3E2;transition:color .25s, transform .3s" style-hover="color:#FFFFFF;transform:translateX(4px)">{{ l.t }}</a></sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:600">Solicitudes</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+              <a href="Soporte.dc.html" style="font-size:14px;color:#E9D3E2;transition:color .25s, transform .3s" style-hover="color:#FFFFFF;transform:translateX(4px)">Cancelación de servicio</a>
+              <a href="Soporte.dc.html" style="font-size:14px;color:#E9D3E2;transition:color .25s, transform .3s" style-hover="color:#FFFFFF;transform:translateX(4px)">Suspensión temporal del servicio</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:96px;padding-top:32px;border-top:1px solid rgba(255,255,255,.16)">
+        <img src="assets/logo-white.svg" alt="Fiberlux" style="width:150px;height:auto">
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#E9D3E2"><span>Copyright © 2026 Fiberlux. Diseño y desarrollo por</span><a href="https://twnstudios.com/" target="_blank" rel="noopener" aria-label="TWN Studios" style="display:flex;transition:opacity .3s" style-hover="opacity:.7"><img src="assets/twn-logo.svg" alt="TWN Studios" style="display:block;height:15px;width:auto"></a></div>
+        
+      </div>
+    </div>
+  </footer>
+
+  <!-- DRAWER -->
+  <div onClick="{{ closeDrawer }}" style="position:fixed;inset:0;z-index:90;background:rgba(17,12,16,.45);backdrop-filter:blur(4px);opacity:{{ dOp }};pointer-events:{{ dPe }};transition:opacity .5s"></div>
+  <aside style="position:fixed;left:0;top:0;bottom:0;z-index:100;width:560px;background:#96217A;border-radius:0 32px 32px 0;color:#FFFFFF;display:flex;flex-direction:column;padding:48px 72px;transform:translateX({{ dX }});transition:transform .8s cubic-bezier(.76,0,.24,1)">
+    <button onClick="{{ closeDrawer }}" data-hg="1" style="display:flex;align-items:center;gap:14px;background:none;border:0;padding:0;color:#FFFFFF;font:500 16px Poppins;cursor:pointer;align-self:flex-start"><span data-hs="width:24px" style="display:block;width:40px;height:2px;background:#FFFFFF;transition:width .35s"></span>Cerrar</button>
+    <img src="assets/logo-white.svg" alt="Fiberlux" style="width:200px;height:auto;margin-top:36px">
+    <nav style="display:flex;flex-direction:column;gap:8px;margin-top:72px">
+      <sc-for list="{{ drawerLinks }}" as="dl" hint-placeholder-count="3">
+        <a href="{{ dl.href }}" data-hg="1" style="display:flex;align-items:center;gap:16px;font-size:44px;font-weight:600;letter-spacing:-.02em;line-height:1.3;color:#FFFFFF;opacity:{{ dl.op }};transform:translateX({{ dl.x }});transition:opacity .6s {{ dl.delay }}, transform .8s cubic-bezier(.16,1,.3,1) {{ dl.delay }}" style-hover="color:#FFFFFF">
+          <span data-hs="transform:translateX(14px);color:#FFFFFF" style="transition:transform .45s cubic-bezier(.2,.8,.2,1), color .3s;color:#FFFFFF">{{ dl.t }}</span>
+          <span data-hs="opacity:1;transform:translateX(14px) rotate(-45deg)" style="opacity:0;transform:translateX(-10px);transition:all .45s cubic-bezier(.2,.8,.2,1);display:flex"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+        </a>
+      </sc-for>
+    </nav>
+    <div style="margin-top:auto;display:flex;align-items:center;gap:18px">
+      <span style="font-size:15px;color:#F3DDEC">Síguenos</span>
+      <sc-for list="{{ socials }}" as="so" hint-placeholder-count="5">
+        <a href="{{ so.href }}" target="_blank" rel="noopener" aria-label="{{ so.label }}" style="display:block;width:40px;height:40px;transition:transform .35s cubic-bezier(.2,.8,.2,1), filter .3s" style-hover="transform:translateY(-3px);filter:brightness(.8)"><img src="{{ so.src }}" alt="{{ so.label }}" style="display:block;width:40px;height:40px"></a>
+      </sc-for>
+    </div>
+  </aside>
+
+  <!-- SEARCH -->
+  <div onClick="{{ closeSearch }}" style="position:fixed;inset:0;z-index:110;background:rgba(17,12,16,.38);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);opacity:{{ sOp }};pointer-events:{{ sPe }};transition:opacity .45s"></div>
+  <div role="dialog" aria-label="Buscar" style="position:fixed;left:50%;top:120px;z-index:120;width:880px;margin-left:-440px;padding:40px 44px 28px;border-radius:32px;background:#FFFFFF;border:1px solid #ECE9EC;box-shadow:0 40px 100px -30px rgba(17,12,16,.35);opacity:{{ sOp }};transform:translateY({{ sY }}) scale({{ sScale }});pointer-events:{{ sPe }};transition:opacity .45s, transform .6s cubic-bezier(.16,1,.3,1)">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:20px;font-weight:600;color:#453C46">Busca información o soluciones</div>
+      <button onClick="{{ closeSearch }}" aria-label="Cerrar" style="width:40px;height:40px;border-radius:50%;border:0;background:#F2F1F2;color:#453C46;display:grid;place-items:center;cursor:pointer;transition:background .3s, transform .4s" style-hover="background:#D8D5D8;transform:rotate(90deg)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;height:64px;margin-top:24px;padding:0 24px;border-radius:999px;border:1.5px solid #96217A;background:#FFFFFF;box-shadow:0 0 0 4px #F5E9F2">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#868687" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input ref="{{ searchInput }}" value="{{ q }}" onChange="{{ onQ }}" placeholder="Ej. Soluciones de conectividad" style="flex:1;height:100%;border:0;outline:none;background:transparent;font:400 17px Poppins;color:#453C46">
+    </div>
+    <div style="margin-top:28px;font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">{{ sLabel }}</div>
+    <div style="display:flex;flex-direction:column;margin-top:8px">
+      <sc-for list="{{ sResults }}" as="r" hint-placeholder-count="5">
+        <a href="Fiberlux Home.dc.html#soluciones" onClick="{{ r.go }}" data-hg="1" style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F2F1F2;font-size:20px;color:#453C46;transition:color .3s" style-hover="color:#650D4A">
+          <span data-hs="transform:translateX(8px)" style="transition:transform .45s cubic-bezier(.2,.8,.2,1)">{{ r.t }}</span>
+          <span data-hs="opacity:1;transform:translateX(0) rotate(-45deg)" style="display:flex;color:#96217A;opacity:0;transform:translateX(-8px);transition:all .45s cubic-bezier(.2,.8,.2,1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+        </a>
+      </sc-for>
+      <sc-if value="{{ sEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 0;font-size:16px;color:#868687">Sin resultados. Prueba con otra palabra.</div></sc-if>
+    </div>
+  </div>
+
+  <!-- VIDEO VIEWER -->
+  <sc-if value="{{ vmOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ vmClose }}" style="position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:48px;background:rgba(20,8,17,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);animation:fxVmFade .35s ease both">
+      <div onClick="{{ vmStop }}" role="dialog" aria-label="{{ vmTitle }}" style="position:relative;width:min(1120px,100%);border-radius:32px;overflow:hidden;background:#1C0F19;box-shadow:0 60px 120px -40px rgba(0,0,0,.7);animation:fxVmPop .55s cubic-bezier(.16,1,.3,1) both">
+        <div style="position:relative;aspect-ratio:16/9;background:#000">
+          <sc-if value="{{ vmHasYt }}" hint-placeholder-val="{{ false }}"><iframe src="{{ vmSrc }}" title="{{ vmTitle }}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></sc-if>
+          <sc-if value="{{ vmNoYt }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ vmCover }}" alt="{{ vmTitle }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+            <div style="position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(60,14,48,.25),rgba(28,15,25,.85))"></div>
+            <a href="https://www.youtube.com/@fiberlux_peru" target="_blank" rel="noopener" data-hg="1" aria-label="Reproducir" style="position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center;box-shadow:0 0 0 16px rgba(150,33,122,.22);transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s" style-hover="transform:scale(1.08);box-shadow:0 0 0 24px rgba(150,33,122,.18);color:#FFFFFF"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg></a>
+          </sc-if>
+          <div style="position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:16px;padding:24px 28px;background:linear-gradient(180deg,rgba(20,8,17,.75),rgba(20,8,17,0));pointer-events:none">
+            <div style="width:48px;height:48px;flex:none;border-radius:50%;background:#96217A;display:grid;place-items:center"><img src="assets/logo-white.svg" alt="" style="width:34px;height:auto"></div>
+            <div style="min-width:0"><div style="font-size:20px;font-weight:600;color:#FFFFFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ vmTitle }}</div><div style="margin-top:2px;font-size:14px;color:#E9D3E2">Fiberlux Perú</div></div>
+          </div>
+          <button type="button" onClick="{{ vmClose }}" aria-label="Cerrar" style="position:absolute;right:22px;top:22px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(20,8,17,.4);color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:background .3s, transform .4s cubic-bezier(.2,.8,.2,1)" style-hover="background:#96217A;transform:rotate(90deg)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;padding:24px 32px">
+          <div style="display:flex;align-items:center;gap:20px;min-width:0">
+            <div style="height:44px;padding:0 14px;border-radius:12px;background:#FFFFFF;display:flex;align-items:center"><img src="{{ vmLogo }}" alt="" style="display:block;max-height:30px;max-width:120px;width:auto"></div>
+            <div style="min-width:0"><div style="font-size:15px;font-weight:600;color:#FFFFFF">{{ vmName }}</div><div style="margin-top:2px;font-size:13px;color:#B7A6B3">{{ vmRole }}</div></div>
+          </div>
+          <a href="https://www.youtube.com/@fiberlux_peru" target="_blank" rel="noopener" style="flex:none;display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 20px;border-radius:999px;border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:500;color:#FFFFFF;transition:background .3s, border-color .3s" style-hover="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.4);color:#FFFFFF">Más videos en YouTube</a>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FLOATING -->
+  <button aria-label="Accesibilidad" style="position:fixed;left:14px;bottom:14px;z-index:70;width:81px;height:81px;padding:0;border:0;background:none;cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1), filter .3s" style-hover="transform:scale(1.06);filter:brightness(.85)"><img src="assets/a11y.svg" alt="" style="display:block;width:81px;height:81px"></button>
+  <a href="https://wa.me/" aria-label="WhatsApp" data-hg="1" style="position:fixed;right:28px;bottom:28px;z-index:70;height:60px;display:flex;align-items:center;border-radius:999px;background:#51C859;color:#FFFFFF;box-shadow:0 12px 30px -8px rgba(37,211,102,.6);overflow:hidden;transition:box-shadow .3s" style-hover="color:#FFFFFF;box-shadow:0 0 0 6px rgba(37,211,102,.22)">
+    <span data-hs="max-width:160px;padding-left:22px;opacity:1" style="max-width:0;padding-left:0;opacity:0;white-space:nowrap;overflow:hidden;font-size:14px;font-weight:600;transition:all .45s cubic-bezier(.2,.8,.2,1)">Escríbenos</span>
+    <span style="width:60px;height:60px;flex:none;display:grid;place-items:center"><img src="assets/wa-float.svg" alt="" style="display:block;width:60px;height:60px"></span>
+  </a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;smoothScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;revealOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;navAutoHide&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navegación&quot;}}">
+const ICONS = {
+  wifi: 'M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4',
+  server: 'M4 3h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM4 13h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM6 7h.01M6 17h.01',
+  building: 'M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1',
+  chat: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'
+};
+const SOL = [
+  { t: 'Conectividad empresarial', icon: ICONS.wifi, d: 'Internet dedicado y redes privadas sobre fibra óptica, con SLA garantizado para operaciones que no pueden detenerse.', tags: ['Internet corporativo', 'Radioenlaces', 'Alta disponibilidad', 'Fibra oscura'] },
+  { t: 'Ciberseguridad', icon: ICONS.shield, d: 'Protección gestionada 24/7 de tu red, usuarios y datos frente a amenazas que evolucionan cada día.', tags: ['Firewall gestionado', 'Anti-DDoS', 'SOC 24/7', 'SASE'] },
+  { t: 'Data Center', icon: ICONS.server, d: 'Colocation, nube privada y continuidad de negocio sobre infraestructura propia en Perú.', tags: ['Colocation', 'Nube privada', 'Backup', 'Continuidad'] },
+  { t: 'Infraestructura', icon: ICONS.building, d: 'Diseño, despliegue y mantenimiento de redes físicas e inalámbricas a la medida de cada sede.', tags: ['Cableado estructurado', 'Redes LAN / WiFi', 'Energía y UPS', 'NOC'] },
+  { t: 'Comunicaciones unificadas', icon: ICONS.chat, d: 'Telefonía IP, colaboración y contact center en una sola plataforma, desde cualquier lugar.', tags: ['Telefonía IP', 'SIP Trunk', 'Central virtual', 'Colaboración'] }
+];
+const CERTS = [
+  { code: '27001', name: 'ISO/IEC 27001', desc: 'Sistemas de gestión de seguridad de la información' }
+];
+const TESTI_OLD = [
+  { company: 'Boticas Hogar y Salud', quote: 'La cobertura de Fiberlux nos permite abrir más sedes a nivel nacional. Este año aperturamos locales en Arequipa, Huancayo y Barranca, sumando 36 sedes.', name: 'Bernardo Olivar', role: 'Subgerente de Seguridad de la Información', ini: 'BO' },
+  { company: 'Clínica Internacional', quote: 'Nuestras historias clínicas viven en la nube privada de Fiberlux. El respaldo y la recuperación ante desastres nos permiten operar sin interrupciones.', name: 'Mariana Prado', role: 'Directora de Tecnología', ini: 'MP' },
+  { company: 'Gloria', quote: 'Con enlaces redundantes en nuestras plantas, la producción ya no depende de un solo proveedor. La respuesta del NOC es inmediata.', name: 'Luis Herrera', role: 'Gerente de Infraestructura TI', ini: 'LH' },
+  { company: 'Cámara de Comercio de Lima', quote: 'Migramos nuestra central telefónica a comunicaciones unificadas y redujimos costos operativos sin perder calidad de atención.', name: 'Andrea Salas', role: 'Jefa de Sistemas', ini: 'AS' },
+  { company: 'Universidad del Pacífico', quote: 'Miles de estudiantes conectados al mismo tiempo, con una red estable y un soporte que entiende el ritmo académico.', name: 'Jorge Medina', role: 'Director de TI', ini: 'JM' },
+  { company: 'Grupo Retail Andino', quote: 'El firewall gestionado de Cyberguard bloqueó intentos de intrusión que antes ni siquiera detectábamos.', name: 'Carla Núñez', role: 'CISO', ini: 'CN' }
+];
+const TESTI = [
+  { company: 'Boticas Hogar y Salud', logo: 'assets/client-boticas.png', lh: '34px', title: 'La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir más sedes a nivel nacional.', quote: 'Este año hemos aperturado locales en provincia como Arequipa, Huancayo y Barranca contando con el servicio de Fiberlux. En el 2022 sumamos 36 sedes adicionales y actualmente contamos con 115 sedes.', name: 'Bernardo Olivar', role: 'Jefe de Tecnología, Informática y Comunicaciones' },
+  { company: 'Cámara de Comercio e Industria de Arequipa', logo: 'assets/client-camara.png', lh: '40px', title: 'La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales.', quote: 'Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.', name: 'Broswi Gálvez', role: 'Gerente General' },
+  { company: 'Grupo Gloria', logo: 'assets/client-gloria.png', lh: '44px', title: 'A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G.', quote: 'Los tiempos de respuesta mejoraron notablemente, dando eficiencia acorde a la necesidad entre la Sede Principal corporativa y la Planta Huachipa.', name: 'Gustavo Pazos', role: 'Gerente de TI' }
+];
+const POSTS = [
+  { tag: 'Telefonía IP', title: 'Telefonía IP: ¿cómo transformar la comunicación de tu empresa?', meta: '27 JUN 2026 · 5 MIN', img: 'assets/insight2.webp', hasImg: true, noImg: false },
+  { tag: 'Conectividad', title: 'MVNO: la guía definitiva para empresas', meta: '12 JUN 2026 · 7 MIN', img: 'assets/insight1.webp', hasImg: true, noImg: false },
+  { tag: 'Ciberseguridad', title: '5 amenazas que tu empresa debe anticipar este año', meta: '30 MAY 2026 · 6 MIN', img: 'assets/insight3.webp', hasImg: true, noImg: false }
+];
+const PA = ['Yealink', 'Fanvil', 'Yeastar', 'Sangoma', 'Grandstream', 'Ubiquiti'];
+const PB = ['aws', 'Azure', 'Veeam', 'H3C', 'Peplink', 'Fortinet'];
+const SOCIALS = [{ src: 'assets/fb.svg', label: 'Facebook', href: 'https://www.facebook.com/fiberluxsac' }, { src: 'assets/in.svg', label: 'LinkedIn', href: 'https://www.linkedin.com/company/fiberlux-peru/' }, { src: 'assets/ig.svg', label: 'Instagram', href: 'https://www.instagram.com/fiberlux_peru' }, { src: 'assets/wa.svg', label: 'WhatsApp', href: 'https://wa.me/51986176790' }, { src: 'assets/yt.svg', label: 'YouTube', href: 'https://www.youtube.com/@fiberlux_peru' }];
+const MILESTONES = [
+  { y: 2006, t: 'Más de 19 años construyendo la red que conecta a las empresas del Perú' },
+  { y: 2012, t: 'Expansión de nuestra red de fibra óptica a nivel nacional' },
+  { y: 2019, t: 'Consolidación como referente B2B en conectividad empresarial' },
+  { y: 2025, t: 'Red propia presente en 92 ciudades del Perú' }
+];
+const VALUES = [
+  { t: 'Integridad', d: 'Actuamos con honestidad y ética, generando confianza y respeto con clientes, socios y proveedores.', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4' },
+  { t: 'Respeto', d: 'Valoramos a las personas, cumplimos las normas y actuamos con consideración hacia los demás y la competencia.', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
+  { t: 'Innovación', d: 'Impulsamos ideas diferentes y fomentamos la creatividad para innovar continuamente.', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
+  { t: 'Calidad', d: 'Brindamos un servicio de excelencia, siendo aliados estratégicos de nuestros clientes.', icon: 'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z' }
+];
+const RUBROS = [
+  { t: 'Consultoría', icon: 'M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M3 13h18' },
+  { t: 'Finanzas y Bancos', icon: 'M3 21h18M4 10h16M12 3l9 5H3l9-5zM6 10v8M10 10v8M14 10v8M18 10v8' },
+  { t: 'Salud', icon: 'M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8zM3.5 12h4l2-3 3 6 2-3h6' },
+  { t: 'Energía y Minería', icon: 'M13 2L3 14h9l-1 8 10-12h-9l1-8z' },
+  { t: 'Educación', icon: 'M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5' },
+  { t: 'Tecnología', icon: 'M4 5h16a1 1 0 0 1 1 1v10H3V6a1 1 0 0 1 1-1zM1 19h22' },
+  { t: 'Industria', icon: 'M2 20h20V9l-6 4V9l-6 4V4H2v16zM6 16h2M11 16h2M16 16h2' },
+  { t: 'Comercio', icon: 'M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6M10 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM18 21a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
+  { t: 'Servicios', icon: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z' }
+];
+const MEGA = [
+  { t: 'Conectividad', href: 'Categoria.dc.html?c=conectividad', label: 'SOLUCIONES', sols: [['Internet Dedicado', 'internet-dedicado'], ['Alta Disponibilidad', 'alta-disponibilidad'], ['Acceso Satelital', 'acceso-satelital'], ['LAN to LAN', 'lan-to-lan'], ['Fibra Oscura', 'fibra-oscura'], ['SD-WAN', 'sd-wan']] },
+  { t: 'Ciberseguridad', href: 'Ciberseguridad.dc.html', label: 'PLANES CYBERGUARD', sols: [['Cyberguard Start', '#planes'], ['Cyberguard Pro', '#planes'], ['Cyberguard Max', '#planes']] },
+  { t: 'Data Center', href: 'Categoria.dc.html?c=data-center', label: 'SOLUCIONES', sols: [['Virtual Server', 'virtual-server'], ['Backup as a Service (BaaS)', 'baas'], ['Disaster Recovery (DRaaS)', 'draas'], ['Virtual Desktop', 'virtual-desktop'], ['Autocontenido (on premise)', 'autocontenido'], ['NAS (on premise)', 'nas'], ['Construcción de Data Center', 'construccion-dc']] },
+  { t: 'Infraestructura', href: 'Categoria.dc.html?c=infraestructura', label: 'SOLUCIONES', sols: [['WiFi Gestionado', 'wifi-gestionado'], ['Servidores', 'servidores'], ['Video Vigilancia', 'video-vigilancia']] },
+  { t: 'Comunicaciones Unificadas', href: 'Categoria.dc.html?c=comunicaciones', label: 'SOLUCIONES', sols: [['Comunicaciones Unificadas (UCaaS)', 'ucaas'], ['Cloud PBX', 'cloud-pbx'], ['Colaboración IA', 'colaboracion-ia'], ['Contact Center Multicanal', 'contact-center']] }
+];
+const vmAdd = (self, list) => list.map(t => ({ ...t, open: () => self.setState({ vm: { company: t.company, cover: t.cover || t.img, logo: t.logo, name: t.name, role: t.role, yt: t.yt || '' } }) }));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = t => 1 - Math.pow(1 - t, 3);
+
+class Component extends DCLogic {
+  _tlTick() {
+    const H = window.innerHeight;
+    document.querySelectorAll('[data-tl]').forEach(tl => {
+      const r = tl.getBoundingClientRect(); const p = Math.max(0, Math.min(1, (H * 0.82 - r.top) / (H * 0.5)));
+      const dots = Array.from(tl.querySelectorAll('[data-tldot]')); if (!dots.length) return;
+      const xs = dots.map(d => { const b = d.getBoundingClientRect(); return b.left + b.width / 2 - r.left; });
+      const x0 = xs[0], x1 = xs[xs.length - 1], x = x0 + (x1 - x0) * p;
+      const tr = tl.querySelector('[data-tltrack]'), fi = tl.querySelector('[data-tlfill]'), hd = tl.querySelector('[data-tlhead]'), cols = tl.querySelectorAll('[data-tlcol]');
+      tr.style.left = x0 + 'px'; tr.style.width = (x1 - x0) + 'px'; fi.style.left = x0 + 'px'; fi.style.width = (x - x0) + 'px'; hd.style.transform = 'translateX(' + x + 'px)';
+      hd.style.opacity = p > 0.995 ? 0 : 1;
+      dots.forEach((d, i) => { const on = xs[i] <= x + 2; if (d._on === on) return; d._on = on;
+        d.style.background = on ? '#96217A' : '#FFFFFF'; d.style.borderColor = on ? '#96217A' : '#C9C3CA'; d.style.boxShadow = on ? '0 0 0 7px rgba(150,33,122,.14)' : 'none'; cols[i].style.opacity = on ? 1 : 0.38; });
+    });
+  }
+  
+  state = { vm: null, mc: 0, sede: '', dd: false, drawer: false, sol: 0, cert: 0, search: false, q: '' };
+  searchInput = React.createRef();
+  navRef = React.createRef(); mapRef = React.createRef(); vidSec = React.createRef(); vidCard = React.createRef(); vidInner = React.createRef();
+  mq1 = React.createRef(); mq2 = React.createRef(); handsSec = React.createRef(); handL = React.createRef(); handR = React.createRef(); spark = React.createRef();
+  cyberGlow = React.createRef(); trackRef = React.createRef(); trackWrap = React.createRef(); progRef = React.createRef();
+  tx = 0; lastY = 0;
+  histSec = React.createRef(); yearRef = React.createRef(); histBar = React.createRef(); histTitle = React.createRef(); histIdx = 0; histP = 0; heroImg = React.createRef();
+
+  histGo(d) {
+    const s = this.histSec.current; if (!s) return;
+    const n = MILESTONES.length;
+    const ti = Math.max(0, Math.min(n - 1, this.histIdx + d));
+    const span = s.offsetHeight - window.innerHeight;
+    const top = s.getBoundingClientRect().top + window.scrollY + span * ((ti + 0.5) / n);
+    if (this.lenis) this.lenis.scrollTo(top, { duration: 1.4 });
+    else window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  componentDidMount() {
+    this._tlFn = () => this._tlTick(); window.addEventListener('scroll', this._tlFn, { passive: true }); window.addEventListener('resize', this._tlFn); setTimeout(this._tlFn, 60); setTimeout(this._tlFn, 600); window.addEventListener('keydown', e => { if (e.key === 'Escape' && this.state.vm) this.setState({ vm: null }); });
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    document.addEventListener('click', this.onAnchor);
+    if (this.props.smoothScroll !== false) this.initLenis();
+    if (this.props.revealOnScroll !== false) this.initReveal();
+    this.initCounters();
+    this.initDrag();
+    this.bindHover();
+    this.onScroll();
+    this.updateTrack();
+    const v = this.vidInner.current; if (v) { v.muted = true; v.defaultMuted = true; v.volume = 0; v.setAttribute("muted", ""); const pl = () => v.play().catch(() => {}); pl(); v.addEventListener("canplay", pl, { once: true }); }
+  }
+  componentDidUpdate() { this.bindHover(); }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._tlFn); window.removeEventListener('resize', this._tlFn);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    document.removeEventListener('click', this.onAnchor);
+    cancelAnimationFrame(this.raf); clearInterval(this.li); clearInterval(this.ct); clearTimeout(this.rt);
+    this.onVis && document.removeEventListener('visibilitychange', this.onVis);
+    if (this.lenis) this.lenis.destroy();
+    this.io && this.io.disconnect(); this.cio && this.cio.disconnect();
+  }
+
+  initLenis() {
+    const go = () => {
+      if (this.lenis) return true;
+      if (!window.Lenis) return false;
+      this.lenis = new window.Lenis({ lerp: 0.085, smoothWheel: true });
+      const raf = t => { this.lenis.raf(t); this.raf = requestAnimationFrame(raf); };
+      this.raf = requestAnimationFrame(raf);
+      return true;
+    };
+    if (!go()) { let n = 0; this.li = setInterval(() => { if (go() || ++n > 24) clearInterval(this.li); }, 250); }
+  }
+
+  onAnchor = e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href');
+    e.preventDefault();
+    if (id.length < 2) return;
+    const t = document.querySelector(id);
+    if (this.state.drawer || this.state.dd) this.setState({ drawer: false, dd: false });
+    if (!t) return;
+    if (this.lenis) this.lenis.scrollTo(t, { offset: -100, duration: 1.6 });
+    else window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+  };
+
+  initReveal() {
+    if (document.visibilityState !== 'visible' || (window.matchMedia && window.matchMedia('print').matches) || !window.IntersectionObserver) return;
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    this.io = new IntersectionObserver(es => { this.ioFired = true; es.forEach(en => {
+      if (!en.isIntersecting) return;
+      show(en.target); this.io.unobserve(en.target);
+    }); }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    const H = window.innerHeight;
+    const hidden = [];
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.getBoundingClientRect().top < H * 0.92) return;
+      const d = +(el.dataset.delay || 0);
+      const init = el.dataset.reveal === 'scale' ? 'scale(.94)' : 'translateY(56px)';
+      el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + `opacity 1s cubic-bezier(.16,1,.3,1) ${d}ms, transform 1.2s cubic-bezier(.16,1,.3,1) ${d}ms`;
+      el.style.opacity = '0'; el.style.transform = init;
+      hidden.push(el); this.io.observe(el);
+    });
+    this.rt = setTimeout(() => { if (!this.ioFired) { hidden.forEach(show); this.io.disconnect(); } }, 2000);
+    this.onVis = () => { if (document.visibilityState !== 'visible') hidden.forEach(show); };
+    document.addEventListener('visibilitychange', this.onVis);
+    window.addEventListener('beforeprint', () => hidden.forEach(show));
+  }
+
+  initCounters() {
+    if (!window.IntersectionObserver) return;
+    const els = document.querySelectorAll('[data-count]');
+    this.cio = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target; this.cio.unobserve(el);
+      if (document.visibilityState !== 'visible') return;
+      const end = +el.dataset.count, pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+      const t0 = performance.now(), dur = 1800;
+      const step = now => {
+        const p = clamp((now - t0) / dur, 0, 1);
+        el.textContent = pre + Math.round(end * (1 - Math.pow(2, -10 * p))).toLocaleString('es-PE').replace(/,/g, '') + suf;
+        if (p < 1) requestAnimationFrame(step); else el.textContent = pre + end + suf;
+      };
+      el.textContent = pre + '0' + suf;
+      requestAnimationFrame(step);
+      setTimeout(() => { el.textContent = pre + end + suf; }, dur + 400);
+    }), { threshold: 0.5 });
+    els.forEach(el => this.cio.observe(el));
+  }
+
+  bindHover() {
+    document.querySelectorAll('[data-hg]').forEach(g => {
+      if (g.__hg) return; g.__hg = 1;
+      const kids = () => [...g.querySelectorAll('[data-hs]')].filter(el => el.closest('[data-hg]') === g);
+      g.addEventListener('mouseenter', () => kids().forEach(el => {
+        if (el.__o == null) el.__o = el.getAttribute('style') || '';
+        el.setAttribute('style', el.__o + ';' + el.dataset.hs);
+      }));
+      g.addEventListener('mouseleave', () => kids().forEach(el => {
+        if (el.__o != null) { el.setAttribute('style', el.__o); el.__o = null; }
+      }));
+    });
+  }
+
+  onScroll = () => {
+    const y = window.scrollY, H = window.innerHeight;
+    const n = this.navRef.current;
+    if (n) {
+      const hide = this.props.navAutoHide !== false && y > 400 && y > this.lastY + 2 && !this.state.drawer && !this.state.dd;
+      if (hide) n.style.transform = 'translateY(-110%)';
+      else if (y < this.lastY - 2 || y <= 400) n.style.transform = 'translateY(0)';
+      const solid = y > 40;
+      n.style.background = solid ? 'rgba(247,247,247,.82)' : 'rgba(247,247,247,0)';
+      n.style.backdropFilter = solid ? 'blur(18px) saturate(1.4)' : 'none';
+      n.style.webkitBackdropFilter = n.style.backdropFilter;
+      n.style.boxShadow = solid ? '0 1px 0 #E6E3E6' : 'none';
+    }
+    this.lastY = y;
+    if (this.mapRef.current) this.mapRef.current.style.transform = `translate3d(0,${Math.min(y, 900) * 0.18}px,0)`;
+    
+
+    const vs = this.vidSec.current, vc = this.vidCard.current;
+    if (vs && vc) {
+      const r = vs.getBoundingClientRect();
+      const p = ease(clamp(-r.top / Math.max(1, r.height - H), 0, 1));
+      const it = 6 * (1 - p), ib = 42 * (1 - p), ix = 28 * (1 - p), rad = 28 * (1 - p);
+      vc.style.clipPath = `inset(${it}% ${ix}% ${ib}% ${ix}% round ${rad}px)`;
+      if (this.vidInner.current) this.vidInner.current.style.transform = `scale(${1.18 - 0.18 * p})`;
+      const raw = clamp((H - r.top) / (r.height + H), 0, 1);
+      if (this.mq1.current) this.mq1.current.style.transform = `translate3d(${-raw * 900}px,0,0)`;
+      if (this.mq2.current) this.mq2.current.style.transform = `translate3d(${-900 + raw * 900}px,0,0)`;
+    }
+
+    const hsec = this.histSec.current;
+    if (hsec) {
+      const line = hsec.querySelector('[data-hline]'), fill = hsec.querySelector('[data-hfill]');
+      if (line && fill) {
+        const r = line.getBoundingClientRect(), c = H * 0.6;
+        fill.style.height = (clamp((c - r.top) / r.height, 0, 1) * 100) + '%';
+        hsec.querySelectorAll('[data-hi]').forEach(el => {
+          const bb = el.getBoundingClientRect(); const on = bb.top + bb.height * 0.4 < c;
+          if (el._on !== on) { el._on = on; el.style.opacity = on ? 1 : 0.28; el.style.transform = on ? 'none' : 'translateY(16px)'; }
+        });
+      }
+    }
+    if (this.heroImg.current) this.heroImg.current.style.transform = `translate3d(0,${Math.min(y, 800) * 0.08}px,0)`;
+    const hs = this.handsSec.current;
+    if (hs && this.handL.current) {
+      const r = hs.getBoundingClientRect();
+      const c = r.top + r.height * 0.55 - H / 2;
+      const p = ease(clamp(1 - c / (H * 0.75), 0, 1));
+      const off = (1 - p) * window.innerWidth * 0.2;
+      this.handL.current.style.transform = `translate3d(${-off}px,0,0)`;
+      this.handR.current.style.transform = `translate3d(${off}px,0,0)`;
+    }
+  };
+
+  initDrag() {
+    const w = this.trackWrap.current, t = this.trackRef.current;
+    if (!w || !t) return;
+    let sx = 0, st = 0, drag = false, moved = 0;
+    w.addEventListener('pointerdown', e => { drag = true; moved = 0; sx = e.clientX; st = this.tx; t.style.transition = 'none'; w.style.cursor = 'grabbing'; w.setPointerCapture(e.pointerId); });
+    w.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - sx; moved = Math.abs(dx);
+      const min = this.minTx(); let v = st + dx;
+      if (v > 0) v = v * 0.35; if (v < min) v = min + (v - min) * 0.35;
+      this.tx = v; t.style.transform = `translate3d(${v}px,0,0)`;
+    });
+    const end = () => { if (!drag) return; drag = false; w.style.cursor = 'grab'; t.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)'; this.tx = clamp(this.tx, this.minTx(), 0); this.updateTrack(); };
+    w.addEventListener('pointerup', end); w.addEventListener('pointercancel', end);
+    w.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+  }
+  minTx() { const w = this.trackWrap.current, t = this.trackRef.current; return w && t ? Math.min(0, w.clientWidth - t.scrollWidth) : 0; }
+  updateTrack() {
+    const t = this.trackRef.current, w = this.trackWrap.current, pr = this.progRef.current;
+    if (!t || !w) return;
+    t.style.transform = `translate3d(${this.tx}px,0,0)`;
+    if (pr) {
+      const frac = clamp(w.clientWidth / t.scrollWidth, 0.1, 1), min = this.minTx();
+      const pos = min ? this.tx / min : 0;
+      pr.style.width = frac * 100 + '%';
+      pr.style.transform = `translateX(${pos * (1 / frac - 1) * 100}%)`;
+    }
+  }
+  slideT(dir) { this.tx = clamp(this.tx - dir * 564, this.minTx(), 0); if (this.trackRef.current) this.trackRef.current.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)'; this.updateTrack(); }
+
+  startCertTimer() { clearInterval(this.ct); this.ct = setInterval(() => this.setState(s => ({ cert: (s.cert + 1) % CERTS.length })), 5000); }
+  goCert(i) { this.setState({ cert: (i + CERTS.length) % CERTS.length }); this.startCertTimer(); }
+
+  renderVals() {
+    const { dd, drawer, sol, cert } = this.state;
+    const solutions = SOL.map((s, i) => {
+      const a = i === sol;
+      return {
+        ...s,
+        enter: () => this.state.sol !== i && this.setState({ sol: i }),
+        pick: () => this.setState({ sol: i, dd: false }),
+        flex: a ? 3.4 : 1,
+        bg: a ? '#96217A' : '#FFFFFF',
+        border: a ? '#96217A' : '#ECE9EC',
+        shadow: a ? '0 40px 80px -40px rgba(150,33,122,.6)' : '0 1px 2px rgba(17,12,16,.04)',
+        num: a ? 'rgba(255,255,255,.45)' : '#B9B4BA',
+        color: a ? '#FFFFFF' : '#453C46',
+        iconBg: a ? 'rgba(255,255,255,.14)' : '#FFFFFF',
+        iconBorder: a ? 'rgba(255,255,255,.25)' : '#D8D5D8',
+        titleSize: a ? '28px' : '17px',
+        iconH: a ? '0px' : '44px', iconOp: a ? 0 : 1, iconMb: a ? '0px' : '18px',
+        bodyMax: a ? '280px' : '0px',
+        op: a ? 1 : 0,
+        rot: a ? '0deg' : '-90deg',
+        delay: a ? '.25s' : '0s'
+      };
+    });
+    const certs = CERTS.map((c, i) => {
+      const a = i === cert;
+      return { ...c, op: a ? 1 : 0, x: a ? '0px' : (i < cert ? '-40px' : '40px'), dotW: a ? '28px' : '6px', dotBg: a ? '#96217A' : '#D8D5D8',
+        tabBg: a ? '#96217A' : '#FFFFFF', tabColor: a ? '#FFFFFF' : '#453C46', tabBorder: a ? '#96217A' : '#D8D5D8', go: () => this.goCert(i) };
+    });
+    const drawerLinks = ['Formas de pago', 'Fiberlux App', 'Portal de trabajo'].map((t, i) => ({
+      t, href: t === 'Formas de pago' ? 'Formas de Pago.dc.html' : t === 'Fiberlux App' ? 'Fiberlux App.dc.html' : '#', op: drawer ? 1 : 0, x: drawer ? '0px' : '-40px', delay: drawer ? (0.3 + i * 0.08) + 's' : '0s'
+    }));
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const qq = norm(this.state.q.trim());
+    const sResults = ['Ciberseguridad', 'Comunicaciones Unificadas', 'Conectividad', 'Data Center', 'Infraestructura']
+      .filter(t => !qq || norm(t).includes(qq) || SOL.some(s => norm(s.t).includes(norm(t).split(' ')[0]) && s.tags.some(g => norm(g).includes(qq))))
+      .map(t => ({ t, go: () => { this.setState({ search: false }); this.lenis && this.lenis.start(); } }));
+    return {
+      navRef: this.navRef, mapRef: this.mapRef, vidSec: this.vidSec, vidCard: this.vidCard, vidInner: this.vidInner, mq1: this.mq1, mq2: this.mq2,
+      handsSec: this.handsSec, handL: this.handL, handR: this.handR, spark: this.spark, cyberGlow: this.cyberGlow,
+      trackRef: this.trackRef, trackWrap: this.trackWrap, progRef: this.progRef,
+      solutions, certs, drawerLinks,
+      histSec: this.histSec, yearRef: this.yearRef, histBar: this.histBar, histTitle: this.histTitle, histPrev: () => this.histGo(-1), histNext: () => this.histGo(1), heroImg: this.heroImg,
+      policy: [
+        { n: '01', t: 'Asegurar la protección de los activos de información relevantes, requeridos por los diferentes grupos de interés, a fin de garantizar la confidencialidad, integridad y disponibilidad de la información.' },
+        { n: '02', t: 'Cumplir con los requisitos legales, contractuales, regulatorios y otros requisitos aplicables al SGSI.' },
+        { n: '03', t: 'Gestionar el riesgo operacional y tecnológico mediante la gestión de políticas y controles de sus sistemas de información.' },
+        { n: '04', t: 'Promover la formación y la toma de conciencia del personal con el fin de incentivar la mejora continua del SGSI.' }
+      ],
+      values: VALUES.map((v, i) => ({ ...v, bl: i ? '1px solid #F2F1F2' : '0' })),
+      rubrosA: [...RUBROS, ...RUBROS], rubrosB: [...RUBROS.slice(4), ...RUBROS.slice(0, 4), ...RUBROS.slice(4), ...RUBROS.slice(0, 4)],
+      ...(() => { const v = this.state.vm; return { vmOpen: !!v, vmNoYt: !!v && !v.yt, vmHasYt: !!(v && v.yt), vmSrc: v && v.yt ? 'https://www.youtube.com/embed/' + v.yt + '?autoplay=1&rel=0' : '', vmTitle: v ? 'Caso de Éxito - ' + v.company : '', vmCover: v ? v.cover : '', vmLogo: v ? v.logo : '', vmName: v ? v.name : '', vmRole: v ? v.role : '', vmClose: () => this.setState({ vm: null }), vmStop: e => e.stopPropagation() }; })(),
+      testimonials: vmAdd(this, TESTI.map((t, i) => ({ ...t, vid: 'testi-video-' + i, cover: ["https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-boticas.png","https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-camara-comercio.jpg","https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-grupo-gloria.jpg"][/boticas/i.test(t.company) ? 0 : /c[aá]mara/i.test(t.company) ? 1 : /gloria/i.test(t.company) ? 2 : i % 3] }))), posts: POSTS, socials: SOCIALS,
+      partnersA: [...PA, ...PA], partnersB: [...PB, ...PB],
+      fServ: [['Conectividad', 'Categoria.dc.html?c=conectividad'], ['Ciberseguridad', 'Ciberseguridad.dc.html'], ['Data Center', 'Categoria.dc.html?c=data-center'], ['Infraestructura', 'Categoria.dc.html?c=infraestructura'], ['Comunicaciones Unificadas', 'Categoria.dc.html?c=comunicaciones']].map(([t, href]) => ({ t, href })),
+      fAbout: [['Nosotros', 'Nosotros.dc.html'], ['Casos de éxito', 'Casos de Exito.dc.html'], ['Blog', 'Blog.dc.html'], ['Soporte técnico', 'Soporte.dc.html'], ['Contacto', 'Contacto.dc.html'], ['Formas de pago', 'Formas de Pago.dc.html']].map(([t, href]) => ({ t, href })),
+      fLegal: ['Libro de reclamaciones', 'Tratamiento de datos personales', 'Política de Cookies', 'Política de Privacidad', 'Política de videovigilancia', 'Política de SST', 'Manual de derechos ARCO', 'Formulario de solicitud de derechos ARCO', 'Guía de presentación de Reclamos de OSIPTEL', 'Formulario de reclamo', 'Formulario de apelación', 'Formulario de queja'].map(t => ({ t, href: ({"Libro de reclamaciones":"libro","Tratamiento de datos personales":"datos","Política de Cookies":"datos","Política de Privacidad":"datos","Política de videovigilancia":"datos","Política de SST":"datos","Manual de derechos ARCO":"arco","Formulario de solicitud de derechos ARCO":"arco","Guía de presentación de Reclamos de OSIPTEL":"libro","Formulario de reclamo":"reclamo","Formulario de apelación":"apelacion","Formulario de queja":"queja"})[t] ? 'Legal.dc.html?p=' + ({"Libro de reclamaciones":"libro","Tratamiento de datos personales":"datos","Política de Cookies":"datos","Política de Privacidad":"datos","Política de videovigilancia":"datos","Política de SST":"datos","Manual de derechos ARCO":"arco","Formulario de solicitud de derechos ARCO":"arco","Guía de presentación de Reclamos de OSIPTEL":"libro","Formulario de reclamo":"reclamo","Formulario de apelación":"apelacion","Formulario de queja":"queja"})[t] : '#' })),
+      megaCats: MEGA.map((c, i) => { const on = i === (this.state.mc || 0); return { t: c.t, href: c.href, hover: () => (this.state.mc || 0) !== i && this.setState({ mc: i }), bg: on ? '#F7F7F7' : 'rgba(247,247,247,0)', color: on ? '#96217A' : '#453C46', chev: on ? 1 : 0.3, cx: on ? '0px' : '-4px' }; }),
+      megaSols: MEGA[this.state.mc || 0].sols.map(s => ({ t: s[0], href: s[1].charAt(0) === '#' ? 'Ciberseguridad.dc.html' + s[1] : 'Solucion.dc.html?s=' + s[1] })),
+      megaLabel: MEGA[this.state.mc || 0].label, megaHref: MEGA[this.state.mc || 0].href, megaCta: 'Ver todo ' + MEGA[this.state.mc || 0].t,
+      ddOpen: () => this.setState({ dd: true }), ddClose: () => this.setState({ dd: false }),
+      ddOp: dd ? 1 : 0, ddY: dd ? '0px' : '-8px', ddPe: dd ? 'auto' : 'none', ddRot: dd ? '180deg' : '0deg',
+      openDrawer: () => { this.setState({ drawer: true }); this.lenis && this.lenis.stop(); },
+      closeDrawer: () => { this.setState({ drawer: false }); this.lenis && this.lenis.start(); },
+      dOp: drawer ? 1 : 0, dPe: drawer ? 'auto' : 'none', dX: drawer ? '0%' : '-105%',
+      prevT: () => this.slideT(-1), nextT: () => this.slideT(1),
+      prevC: () => this.goCert(cert - 1), nextC: () => this.goCert(cert + 1),
+      openSearch: () => { this.setState({ search: true, dd: false }); this.lenis && this.lenis.stop(); setTimeout(() => this.searchInput.current && this.searchInput.current.focus(), 250); },
+      closeSearch: () => { this.setState({ search: false }); this.lenis && this.lenis.start(); },
+      searchInput: this.searchInput, q: this.state.q, onQ: e => this.setState({ q: e.target.value }),
+      sOp: this.state.search ? 1 : 0, sPe: this.state.search ? 'auto' : 'none', sY: this.state.search ? '0px' : '-16px', sScale: this.state.search ? 1 : 0.98,
+      sLabel: this.state.q.trim() ? 'RESULTADOS' : 'SOLUCIONES SUGERIDAS', sResults, sEmpty: !sResults.length,
+      cyberMove: e => { const g = this.cyberGlow.current; if (!g) return; const r = e.currentTarget.getBoundingClientRect(); g.style.left = (e.clientX - r.left) + 'px'; g.style.top = (e.clientY - r.top) + 'px'; },
+      cyberLeave: () => { const g = this.cyberGlow.current; if (!g) return; g.style.left = '25%'; g.style.top = '50%'; }
+    };
+  }
+}
+</script>
+</body>
+</html>
