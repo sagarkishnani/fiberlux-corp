@@ -34,6 +34,11 @@ export const UI: Record<Locale, Record<string, string>> = {
     "casos.eyebrow": "[ CASOS DE ÉXITO ]",
     "page.casos": "Casos de éxito",
     "page.blog": "Blog",
+    "blog.subtitle": "Insights, novedades y tendencias en conectividad y tecnología empresarial.",
+    "blog.latest": "Último artículo",
+    "blog.allPosts": "Todos los artículos",
+    "blog.all": "Todos",
+    "blog.empty": "Aún no hay artículos en esta categoría.",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -74,6 +79,11 @@ export const UI: Record<Locale, Record<string, string>> = {
     "casos.eyebrow": "[ SUCCESS STORIES ]",
     "page.casos": "Success stories",
     "page.blog": "Blog",
+    "blog.subtitle": "Insights, news and trends in connectivity and enterprise technology.",
+    "blog.latest": "Latest article",
+    "blog.allPosts": "All articles",
+    "blog.all": "All",
+    "blog.empty": "There are no articles in this category yet.",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",

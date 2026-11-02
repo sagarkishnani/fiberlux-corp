@@ -5,17 +5,10 @@ import { t } from "../../i18n/ui";
 import { localizeHref, tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
 import { renderEmphasis } from "../../utils/emphasis";
+import { firstTag, postMeta, type PostSummary } from "../../utils/postMeta";
 import { ArrowIcon, Eyebrow, PillLink } from "../shared/fx/FxPrimitives";
 
-export interface InsightPost {
-  title?: string | null;
-  title_en?: string | null;
-  coverImage?: string | null;
-  tags?: (string | null)[] | null;
-  readTime?: string | null;
-  date?: string | null;
-  slug: string;
-}
+export type InsightPost = PostSummary;
 
 interface Props {
   query: string;
@@ -23,22 +16,6 @@ interface Props {
   data: HomeQuery;
   locale?: Locale;
   posts: InsightPost[];
-}
-
-const MONTHS = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN", "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"];
-const MONTHS_EN = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-
-function meta(post: InsightPost, locale: Locale): string {
-  const parts: string[] = [];
-  if (post.date) {
-    const d = new Date(post.date);
-    if (!isNaN(d.getTime())) {
-      const month = (locale === "en" ? MONTHS_EN : MONTHS)[d.getUTCMonth()];
-      parts.push(`${String(d.getUTCDate()).padStart(2, "0")} ${month} ${d.getUTCFullYear()}`);
-    }
-  }
-  if (post.readTime) parts.push(post.readTime.toUpperCase());
-  return parts.join(" · ");
 }
 
 export default function HomeInsightsReact({ query, variables, data: initialData, locale = "es", posts }: Props) {
@@ -68,7 +45,7 @@ export default function HomeInsightsReact({ query, variables, data: initialData,
       </div>
       <div className="mt-7 flex flex-col gap-3 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-6">
         {posts.map((post, i) => {
-          const tag = (post.tags || []).find(Boolean);
+          const tag = firstTag(post);
           return (
             <a
               key={i}
@@ -100,7 +77,7 @@ export default function HomeInsightsReact({ query, variables, data: initialData,
                   {tField(post, "title", locale)}
                 </h3>
                 <div className="mt-4 flex items-center justify-between lg:mt-auto lg:pt-7">
-                  <span className="font-mono text-[12px] text-fx-muted lg:text-[13px]">{meta(post, locale)}</span>
+                  <span className="font-mono text-[12px] text-fx-muted lg:text-[13px]">{postMeta(post, locale)}</span>
                   <span className="grid h-9 w-9 place-items-center rounded-full border border-fx-line-strong text-fx-ink transition-all duration-[450ms] ease-fx-spring group-hover/post:-rotate-45 group-hover/post:border-fx-purple group-hover/post:bg-fx-purple group-hover/post:text-white lg:h-10 lg:w-10">
                     <ArrowIcon size={15} />
                   </span>

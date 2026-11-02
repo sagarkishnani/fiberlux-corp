@@ -1,73 +1,27 @@
 ---
-/**
- * /blog — Blog listing page
- *
- * Hero: BlogHero with ellipse glow, breadcrumb, title, carousel of featured posts
- * Body: BlogGrid with tag filters, 3-col grid, numeric pagination.
- */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { client } from '../../../tina/__generated__/client';
-import BlogHero from '../../components/blog/BlogHero.tsx';
-import BlogGrid from '../../components/blog/BlogGrid.tsx';
+import BlogV2React from '../../components/blog/BlogV2React';
+import { byDateDesc, toPostSummary } from '../../utils/postMeta';
 import { getLocale } from '../../utils/i18n';
 import { isLocale } from '../../i18n/config';
 
-/* ── Fetch ALL blog posts ── */
-let allPosts: any[] = [];
-let featuredPosts: any[] = [];
+let posts: ReturnType<typeof toPostSummary>[] = [];
 try {
-  const postsQuery = await client.queries.postConnection({
-    sort: 'date',
-    last: 100,
-  });
-  const edges = postsQuery.data?.postConnection?.edges || [];
-  allPosts = edges;
-  featuredPosts = edges.filter((e: any) => e?.node?.featured);
-  // If no featured, use latest 6
-  if (featuredPosts.length === 0) {
-    featuredPosts = edges.slice(0, 6);
-  }
+  const postsQuery = await client.queries.postConnection({ sort: 'date', last: 100 });
+  posts = ((postsQuery.data?.postConnection?.edges || []) as any[])
+    .map((e) => e?.node)
+    .filter(Boolean)
+    .map(toPostSummary)
+    .sort(byDateDesc);
 } catch {
-  allPosts = [];
-  featuredPosts = [];
-}
-
-/* ── Extract all unique tags from posts ── */
-const tagSet = new Set<string>();
-allPosts.forEach((edge: any) => {
-  edge?.node?.tags?.forEach((tag: string | null) => {
-    if (tag) tagSet.add(tag);
-  });
-});
-const availableTags = Array.from(tagSet).sort();
-
-// Autoplay del hero: reusa la config del slider de blog (global.sliders.blogPreview).
-let heroCfg: any = {};
-try {
-  const globalQuery = await client.queries.global({ relativePath: 'index.json' });
-  heroCfg = (globalQuery.data?.global as any)?.sliders?.blogPreview ?? {};
-} catch {
-  heroCfg = {};
+  posts = [];
 }
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
-<BaseLayout title="Blog" description="Insights, novedades y tendencias en conectividad y tecnología empresarial">
-  {/* Hero with carousel */}
-  <BlogHero
-    client:load
-    posts={featuredPosts}
-    locale={locale}
-    autoplay={heroCfg.autoplay ?? true}
-    intervalMs={heroCfg.intervalMs ?? 6000}
-    effect={heroCfg.effect ?? "none"}
-  />
-
-  {/* Grid with filters + pagination */}
-  <BlogGrid
-    client:load
-    posts={allPosts}
-    availableTags={availableTags}
-    locale={locale}
-  />
+<BaseLayout title="Blog" description="Insights, novedades y tendencias en conectividad y tecnología empresarial" footerOverlap>
+  <main class="bg-fx-bg">
+    <BlogV2React client:load posts={posts} locale={locale} />
+  </main>
 </BaseLayout>

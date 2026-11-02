@@ -15,6 +15,7 @@ import client from "../../tina/__generated__/client";
 import { getLocale } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 import { loadCertificaciones } from "../utils/certificaciones";
+import { byDateDesc, toPostSummary } from "../utils/postMeta";
 
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 const [homeQuery, certificaciones, postsQuery] = await Promise.all([
@@ -27,17 +28,9 @@ const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data
 const posts: InsightPost[] = ((postsQuery.data?.postConnection?.edges || []) as any[])
   .map((e) => e?.node)
   .filter(Boolean)
-  .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
-  .slice(0, 3)
-  .map((p) => ({
-    title: p.title ?? null,
-    title_en: p.title_en ?? null,
-    coverImage: p.coverImage ?? null,
-    tags: p.tags ?? null,
-    readTime: p.readTime ?? null,
-    date: p.date ?? null,
-    slug: p._sys.filename,
-  }));
+  .map(toPostSummary)
+  .sort(byDateDesc)
+  .slice(0, 3);
 ---
 
 <BaseLayout title="Inicio">
