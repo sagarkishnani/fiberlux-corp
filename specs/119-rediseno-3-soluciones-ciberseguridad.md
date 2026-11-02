@@ -1,6 +1,6 @@
 # SPEC 119 — Rediseño 3: Categorías, Soluciones y Ciberseguridad
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 109 (portafolio 5 categorías / 30 soluciones), SPEC 117 (fundaciones), SPEC 118 (bloques compartidos testimonios/CTA)
 > **Fecha:** 2026-11-01
 > **Objetivo:** Rehacer las 4 páginas de categoría genérica, las 30 páginas de solución y la página especial de Ciberseguridad (5 categorías en total, SPEC 109) con el diseño claro del prototipo.
