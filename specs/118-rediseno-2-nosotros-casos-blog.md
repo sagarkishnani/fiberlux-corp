@@ -1,6 +1,6 @@
 # SPEC 118 — Rediseño 2: Nosotros, Casos de éxito, Blog y Artículo
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 117 (fundaciones, chrome y Home del rediseño)
 > **Fecha:** 2026-11-01
 > **Objetivo:** Rehacer las páginas Nosotros, Casos de éxito, listado del Blog y Artículo con el diseño claro del prototipo, reutilizando el contenido de Tina.
