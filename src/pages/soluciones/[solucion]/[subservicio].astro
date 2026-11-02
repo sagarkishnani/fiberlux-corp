@@ -1,13 +1,8 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { client } from "../../../../tina/__generated__/client";
-import HeroSubservicio from "../../../components/servicios/HeroSubservicio.astro";
-import Beneficios from "../../../components/servicios/Beneficios.astro";
-import CasosDeUso from "../../../components/servicios/CasosDeUso.astro";
-import EmpresasRed from "../../../components/home/EmpresasRed.astro";
-import ServiciosForm from "../../../components/servicios/ServiciosForm.astro";
-import BlogPreview from "../../../components/blog/BlogPreview.astro";
-import FaqSubservicio from "../../../components/servicios/FaqSubservicio.astro";
+import SolucionV2React from "../../../components/servicios/SolucionV2React";
+import { loadServiciosForm } from "../../../utils/relatedPosts";
 import HtmlInjection from "../../../components/shared/HtmlInjection.astro";
 import { getLocale } from "../../../utils/i18n";
 import { isLocale } from "../../../i18n/config";
@@ -40,6 +35,22 @@ const subQuery = await client.queries.subservicio({ relativePath });
 const sub = subQuery.data?.subservicio;
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
+const [parentQuery, homeQuery, serviciosForm] = await Promise.all([
+  client.queries.service({ relativePath: `${sub?.solucionSlug}.json` }).catch(() => null),
+  client.queries.home({ relativePath: "index.json" }),
+  loadServiciosForm(),
+]);
+const parent = parentQuery?.data?.service as any;
+const category = {
+  title: parent?.title || sub?.solucionTitle || "",
+  title_en: parent?.title_en ?? null,
+  href: `/soluciones/${sub?.solucionSlug}`,
+};
+const siblings = ((parent?.catalogo?.items || []) as any[])
+  .filter((item) => item?.url && !item.url.endsWith(`/${subservicio}`))
+  .map((item) => ({ title: item.title, title_en: item.title_en ?? null, url: item.url }));
+const testimonials = ((homeQuery.data?.home?.testimonials?.items || []) as any[]).filter(Boolean);
+
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const globalSeo = globalQuery.data?.global?.seo;
 
@@ -49,41 +60,24 @@ const metaDescription =
 ---
 
 <BaseLayout
+  footerOverlap
   title={metaTitle}
   description={metaDescription}
   whatsappContext={sub?.title ?? undefined}
   whatsappKind="servicio"
 >
-  <main>
-    {/* Overlap sticky (SPEC 70): el hero queda fijo y Beneficios sube por
-        encima cubriéndolo; el hero se libera al terminar la sección.
-        Solo desktop (lg+): el hero de subservicio incluye el formulario, que en
-        mobile se apila y hace el hero más alto que el viewport; ahí se apila
-        normal para no dejar el formulario inaccesible bajo el solape. */}
-    <div class="relative">
-      <div class="lg:sticky lg:top-0 lg:z-0" data-hero-sticky>
-        <HeroSubservicio relativePath={relativePath} />
-      </div>
-      <div class="relative z-10">
-        <HtmlInjection location="subservicio-after-hero" />
-        <Beneficios relativePath={relativePath} />
-      </div>
-    </div>
-    <div data-reveal="up">
-      <CasosDeUso relativePath={relativePath} />
-    </div>
-    <div class="-mt-16 relative z-20" data-reveal="up" data-overlap-rise>
-      <EmpresasRed scrubCounters />
-    </div>
-    <div data-reveal="up">
-      <ServiciosForm prefill={{ servicio: subservicio ?? "" }} />
-    </div>
-    {/* obs4: en mobile el solape (-mt-16) tapaba el boton "Contactar" del form;
-        el solape se limita a desktop y en mobile las secciones se apilan. */}
-    <div class="mt-0 md:-mt-16 relative z-20" data-reveal="up">
-      <BlogPreview tags={sub?.blogTags} />
-    </div>
-    <FaqSubservicio relativePath={relativePath} />
+  <main class="bg-fx-bg">
+    <SolucionV2React
+      client:load
+      query={subQuery.query}
+      variables={subQuery.variables}
+      data={subQuery.data}
+      locale={locale}
+      category={category}
+      siblings={siblings}
+      testimonials={testimonials}
+      form={serviciosForm}
+    />
     <HtmlInjection location="subservicio-before-footer" />
   </main>
 </BaseLayout>

@@ -1,9 +1,8 @@
-import { useRef, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { Locale } from "../../../i18n/config";
 import { t } from "../../../i18n/ui";
 import { localizedPath } from "../../../utils/i18n";
-import { prefersReducedMotion, useScrollFrame } from "../../home/useScrollFrame";
-import { fxAsset } from "./FxPrimitives";
+import PageHeroBackdrop from "./PageHeroBackdrop";
 
 interface PageHeroProps {
   crumb: string;
@@ -40,29 +39,11 @@ export default function PageHero({
   aside,
   children,
 }: PageHeroProps) {
-  const bgRef = useRef<HTMLDivElement>(null);
   const full = variant === "full";
-
-  useScrollFrame(() => {
-    if (!bgRef.current || prefersReducedMotion()) return;
-    bgRef.current.style.transform = `translate3d(0,${Math.min(window.scrollY, 800) * 0.08}px,0)`;
-  });
 
   return (
     <section className={`relative ${full ? "pt-[50px] lg:pt-[120px]" : "pt-[50px] lg:pt-24"}`}>
-      <div
-        ref={bgRef}
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 -top-10 will-change-transform ${
-          full ? "h-[1300px]" : "bottom-0 overflow-hidden [mask-image:linear-gradient(180deg,#000_55%,transparent_95%)]"
-        }`}
-      >
-        <img
-          src={fxAsset("nosotros/nosotros-gradient.webp")}
-          alt=""
-          className={`fx-drift absolute -left-[10%] top-0 h-auto w-[120%] max-w-none ${full ? "opacity-95" : "opacity-50"}`}
-        />
-      </div>
+      <PageHeroBackdrop variant={variant} />
       <div className="fx-container relative">
         <Breadcrumb crumb={crumb} locale={locale} />
         <div className={aside ? "lg:flex lg:items-end lg:justify-between lg:gap-16" : ""}>

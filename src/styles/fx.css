@@ -17,6 +17,7 @@
   50% { transform: translateY(-22px) rotateY(24deg) rotateX(2deg); }
 }
 @keyframes fxShadowPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.82); opacity: .6; } }
+@keyframes fxWave { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.045); opacity: .55; } }
 @keyframes fxVmFade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fxVmPop { from { opacity: 0; transform: translateY(30px) scale(.96); } to { opacity: 1; transform: none; } }
 
@@ -26,6 +27,7 @@
   transform-origin: center;
   animation: fxPulse 5.5s cubic-bezier(.2,.6,.3,1) infinite;
 }
+.fx-wave { animation: fxWave 9s ease-in-out infinite; }
 .fx-drift { animation: fxDrift 18s ease-in-out infinite; }
 .fx-shield { transform-style: preserve-3d; animation: fxShield 9s ease-in-out infinite; }
 .fx-shadow-pulse { animation: fxShadowPulse 6s ease-in-out infinite; }
@@ -55,5 +57,5 @@
 .fx-art img { max-width: 100%; height: auto; border-radius: 24px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse { animation: none; }
+  .fx-wave, .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse { animation: none; }
 }
