@@ -2150,6 +2150,10 @@ var config_default = defineConfig({
             type: "image",
             description: "Imagen que se muestra mientras carga el video y en reduce-motion (sin reproducci\xF3n)."
           },
+          { name: "heroQuestion", label: "Pregunta bajo el intro", type: "string" },
+          { name: "heroQuestion_en", label: "Pregunta bajo el intro (EN)", type: "string" },
+          { name: "heroCtaLabel", label: "Texto del bot\xF3n del hero", type: "string", description: "Lleva a la secci\xF3n de canales." },
+          { name: "heroCtaLabel_en", label: "Texto del bot\xF3n del hero (EN)", type: "string" },
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "T\xEDtulo de secci\xF3n", type: "string" },
           { name: "sectionTitle_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
@@ -4000,6 +4004,13 @@ var config_default = defineConfig({
               { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
               { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
               {
+                name: "heading",
+                label: "Titular",
+                type: "string",
+                description: "Encierra entre *asteriscos* la parte que va en morado."
+              },
+              { name: "heading_en", label: "Titular (EN)", type: "string" },
+              {
                 name: "items",
                 label: "Cards",
                 type: "object",
@@ -4014,6 +4025,8 @@ var config_default = defineConfig({
                       "monitoreo",
                       "sedes",
                       "diagnostico",
+                      "factura",
+                      "ticket",
                       "reloj",
                       "red",
                       "escudo",

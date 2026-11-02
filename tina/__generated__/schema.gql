@@ -2002,6 +2002,10 @@ type SoporteTecnico implements Node & Document {
   heroImage: String
   heroVideo: String
   heroVideoPoster: String
+  heroQuestion: String
+  heroQuestion_en: String
+  heroCtaLabel: String
+  heroCtaLabel_en: String
   sectionTitle: String
   sectionTitle_en: String
   sectionSubtitle: String
@@ -2041,6 +2045,10 @@ input SoporteTecnicoFilter {
   heroImage: ImageFilter
   heroVideo: ImageFilter
   heroVideoPoster: ImageFilter
+  heroQuestion: StringFilter
+  heroQuestion_en: StringFilter
+  heroCtaLabel: StringFilter
+  heroCtaLabel_en: StringFilter
   sectionTitle: StringFilter
   sectionTitle_en: StringFilter
   sectionSubtitle: StringFilter
@@ -3263,6 +3271,8 @@ type FiberluxAppBeneficiosItems {
 type FiberluxAppBeneficios {
   title: String
   title_en: String
+  heading: String
+  heading_en: String
   items: [FiberluxAppBeneficiosItems]
 }
 
@@ -3351,6 +3361,8 @@ input FiberluxAppBeneficiosItemsFilter {
 input FiberluxAppBeneficiosFilter {
   title: StringFilter
   title_en: StringFilter
+  heading: StringFilter
+  heading_en: StringFilter
   items: FiberluxAppBeneficiosItemsFilter
 }
 
@@ -4470,6 +4482,10 @@ input SoporteTecnicoMutation {
   heroImage: String
   heroVideo: String
   heroVideoPoster: String
+  heroQuestion: String
+  heroQuestion_en: String
+  heroCtaLabel: String
+  heroCtaLabel_en: String
   sectionTitle: String
   sectionTitle_en: String
   sectionSubtitle: String
@@ -5025,6 +5041,8 @@ input FiberluxAppBeneficiosItemsMutation {
 input FiberluxAppBeneficiosMutation {
   title: String
   title_en: String
+  heading: String
+  heading_en: String
   items: [FiberluxAppBeneficiosItemsMutation]
 }
 

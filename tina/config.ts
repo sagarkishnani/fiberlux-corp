@@ -2256,6 +2256,11 @@ export default defineConfig({
               "Imagen que se muestra mientras carga el video y en reduce-motion (sin reproducción).",
           },
 
+          { name: "heroQuestion", label: "Pregunta bajo el intro", type: "string" },
+          { name: "heroQuestion_en", label: "Pregunta bajo el intro (EN)", type: "string" },
+          { name: "heroCtaLabel", label: "Texto del botón del hero", type: "string", description: "Lleva a la sección de canales." },
+          { name: "heroCtaLabel_en", label: "Texto del botón del hero (EN)", type: "string" },
+
           // ── Sección Soporte Técnico (acordeón) ──
           { name: "sectionTitle", label: "Título de sección", type: "string" },
           { name: "sectionTitle_en", label: "Título de sección (EN)", type: "string" },
@@ -4198,6 +4203,13 @@ export default defineConfig({
               { name: "title", label: "Título de sección", type: "string" },
               { name: "title_en", label: "Título de sección (EN)", type: "string" },
               {
+                name: "heading",
+                label: "Titular",
+                type: "string",
+                description: "Encierra entre *asteriscos* la parte que va en morado.",
+              },
+              { name: "heading_en", label: "Titular (EN)", type: "string" },
+              {
                 name: "items",
                 label: "Cards",
                 type: "object",
@@ -4212,6 +4224,8 @@ export default defineConfig({
                       "monitoreo",
                       "sedes",
                       "diagnostico",
+                      "factura",
+                      "ticket",
                       "reloj",
                       "red",
                       "escudo",

@@ -777,6 +777,10 @@ fragment SoporteTecnicoParts on SoporteTecnico {
   heroImage
   heroVideo
   heroVideoPoster
+  heroQuestion
+  heroQuestion_en
+  heroCtaLabel
+  heroCtaLabel_en
   sectionTitle
   sectionTitle_en
   sectionSubtitle
@@ -1308,6 +1312,8 @@ fragment FiberluxAppParts on FiberluxApp {
     __typename
     title
     title_en
+    heading
+    heading_en
     items {
       __typename
       icon

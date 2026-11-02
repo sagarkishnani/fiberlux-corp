@@ -2,7 +2,7 @@
   "breadcrumb": "Soporte técnico",
   "heading": "Contáctate con nuestros ingenieros especializados",
   "intro": "En el Grupo Fiberlux estamos comprometidos con la calidad de la atención a nuestros clientes; por ello contamos con un equipo totalmente personalizado pensado en su empresa.",
-  "heroImage": "/images/soporte-tecnico/fotonoc.webp",
+  "heroImage": "/images/soporte-tecnico/soporte-cover.webp",
   "heroVideo": "/videos/router-soporte-tecnico.mp4",
   "heroVideoPoster": "/models/hero-soporte.webp",
   "sectionTitle": "Soporte Técnico",
@@ -115,5 +115,9 @@
   "heading_en": "Get in touch with our specialized engineers",
   "intro_en": "At Grupo Fiberlux we are committed to the quality of care for our clients; that's why we have a fully personalized team focused on your company.",
   "sectionTitle_en": "Technical Support",
-  "sectionSubtitle_en": "Contact our specialists at (01) 748 0606. Choose the channel that best fits your needs:"
+  "sectionSubtitle_en": "Contact our specialists at (01) 748 0606. Choose the channel that best fits your needs:",
+  "heroQuestion": "¿Tienes algún problema con tu servicio?",
+  "heroQuestion_en": "Having an issue with your service?",
+  "heroCtaLabel": "Gestiónalo aquí",
+  "heroCtaLabel_en": "Manage it here"
 }
