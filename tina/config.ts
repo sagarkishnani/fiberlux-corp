@@ -1277,6 +1277,133 @@ export default defineConfig({
           },
 
           // ── Misión y Visión ──
+          // ── ¿Por qué Fiberlux? (SPEC 118) ──
+          {
+            name: "porQue",
+            label: "¿Por qué Fiberlux?",
+            type: "object",
+            fields: [
+              { name: "title", label: "Título", type: "string" },
+              { name: "title_en", label: "Título (EN)", type: "string" },
+              {
+                name: "items",
+                label: "Pilares",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item: any) => ({ label: item?.title || "Pilar" }) },
+                fields: [
+                  {
+                    name: "icon",
+                    label: "Ícono",
+                    type: "string",
+                    options: [
+                      { value: "pulse", label: "Pulso / Red" },
+                      { value: "clock", label: "Reloj / Experiencia" },
+                      { value: "users", label: "Personas / Clientes" },
+                      { value: "shield", label: "Escudo" },
+                      { value: "server", label: "Servidor" },
+                      { value: "globe", label: "Globo" },
+                    ],
+                  },
+                  { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
+                  { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                ],
+              },
+              {
+                name: "features",
+                label: "Bloques con foto",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item: any) => ({ label: item?.title || "Bloque" }) },
+                fields: [
+                  { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
+                  { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                  { name: "image", label: "Foto", type: "image" },
+                  {
+                    name: "tone",
+                    label: "Color del bloque de texto",
+                    type: "string",
+                    options: [
+                      { value: "dark", label: "Gris oscuro" },
+                      { value: "purple", label: "Morado" },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          // ── Metodología (SPEC 118) ──
+          {
+            name: "metodologia",
+            label: "Metodología",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Antetítulo", type: "string" },
+              { name: "eyebrow_en", label: "Antetítulo (EN)", type: "string" },
+              { name: "title", label: "Título", type: "string", description: "Encierra entre *asteriscos* el texto que va en morado." },
+              { name: "title_en", label: "Título (EN)", type: "string" },
+              { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+              { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+              {
+                name: "steps",
+                label: "Pasos",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item: any) => ({ label: item?.title || "Paso" }) },
+                fields: [
+                  { name: "title", label: "Título", type: "string" },
+                  { name: "title_en", label: "Título (EN)", type: "string" },
+                  { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                ],
+              },
+            ],
+          },
+          // ── Ciberseguridad (SPEC 118) ──
+          {
+            name: "ciberseguridad",
+            label: "Ciberseguridad",
+            type: "object",
+            fields: [
+              { name: "eyebrow", label: "Antetítulo", type: "string" },
+              { name: "eyebrow_en", label: "Antetítulo (EN)", type: "string" },
+              { name: "title", label: "Título", type: "string", description: "Encierra entre *asteriscos* el texto que va en morado." },
+              { name: "title_en", label: "Título (EN)", type: "string" },
+              { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+              { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+              {
+                name: "tags",
+                label: "Etiquetas",
+                type: "object",
+                list: true,
+                ui: { itemProps: (item: any) => ({ label: item?.label || "Etiqueta" }) },
+                fields: [
+                  { name: "label", label: "Texto", type: "string" },
+                  { name: "label_en", label: "Texto (EN)", type: "string" },
+                ],
+              },
+              {
+                name: "cta",
+                label: "Botón",
+                type: "object",
+                fields: [
+                  { name: "label", label: "Texto", type: "string" },
+                  { name: "label_en", label: "Texto (EN)", type: "string" },
+                  { name: "href", label: "Enlace", type: "string" },
+                ],
+              },
+            ],
+          },
+          {
+            name: "missionVisionEyebrow",
+            label: "Misión y visión — antetítulo",
+            type: "string",
+          },
+          { name: "missionVisionEyebrow_en", label: "Misión y visión — antetítulo (EN)", type: "string" },
           {
             name: "missionVisionTitle",
             label: "Título sección Misión/Visión",
@@ -1418,6 +1545,8 @@ export default defineConfig({
             label: "Valores",
             type: "object",
             fields: [
+              { name: "eyebrow", label: "Antetítulo", type: "string" },
+              { name: "eyebrow_en", label: "Antetítulo (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },
               { name: "title_en", label: "Título (EN)", type: "string" },
               {
@@ -1479,6 +1608,8 @@ export default defineConfig({
             fields: [
               { name: "title", label: "Antítulo (eyebrow)", type: "string" },
               { name: "title_en", label: "Antítulo (eyebrow) (EN)", type: "string" },
+              { name: "heading", label: "Título", type: "string" },
+              { name: "heading_en", label: "Título (EN)", type: "string" },
               { name: "startYear", label: "Año inicio (etiqueta barra)", type: "string" },
               { name: "endYear", label: "Año fin (etiqueta barra)", type: "string" },
               {
@@ -1512,6 +1643,8 @@ export default defineConfig({
             label: "Rubros (sección Nosotros)",
             type: "object",
             fields: [
+              { name: "eyebrow", label: "Antetítulo", type: "string" },
+              { name: "eyebrow_en", label: "Antetítulo (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },
               { name: "title_en", label: "Título (EN)", type: "string" },
               { name: "description", label: "Descripción", type: "string", ui: { component: "textarea" } },
@@ -1579,6 +1712,7 @@ export default defineConfig({
                   { name: "number", label: "Número", type: "string" },
                   { name: "label", label: "Etiqueta", type: "string" },
                   { name: "description", label: "Descripción", type: "string" },
+                  { name: "description_en", label: "Descripción (EN)", type: "string" },
                 ],
               },
             ],
@@ -1988,7 +2122,15 @@ export default defineConfig({
           },
 
           // ── Sección carrusel ──
-          { name: "sectionTitle", label: "Título de la sección", type: "string" },
+          { name: "sectionEyebrow", label: "Antetítulo de la sección", type: "string" },
+          { name: "sectionEyebrow_en", label: "Antetítulo de la sección (EN)", type: "string" },
+          {
+            name: "sectionTitle",
+            label: "Título de la sección",
+            type: "string",
+            description: "Encierra entre *asteriscos* el texto que va en morado.",
+          },
+          { name: "sectionTitle_en", label: "Título de la sección (EN)", type: "string" },
           {
             name: "items",
             label: "Casos",
@@ -2014,6 +2156,8 @@ export default defineConfig({
                   "Sube aquí un archivo .mp4. Se usa solo si no hay URL de YouTube.",
               },
               { name: "logo", label: "Logo del cliente", type: "image" },
+              { name: "title", label: "Titular de la card", type: "string", description: "Frase destacada. La cita completa queda como cuerpo." },
+              { name: "title_en", label: "Titular de la card (EN)", type: "string" },
               {
                 name: "quote",
                 label: "Cita / testimonio",

@@ -1429,6 +1429,77 @@ export type AboutHero = {
   ctaUrl?: Maybe<Scalars['String']['output']>;
 };
 
+export type AboutPorQueItems = {
+  __typename?: 'AboutPorQueItems';
+  icon?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutPorQueFeatures = {
+  __typename?: 'AboutPorQueFeatures';
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  tone?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutPorQue = {
+  __typename?: 'AboutPorQue';
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<AboutPorQueItems>>>;
+  features?: Maybe<Array<Maybe<AboutPorQueFeatures>>>;
+};
+
+export type AboutMetodologiaSteps = {
+  __typename?: 'AboutMetodologiaSteps';
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutMetodologia = {
+  __typename?: 'AboutMetodologia';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  steps?: Maybe<Array<Maybe<AboutMetodologiaSteps>>>;
+};
+
+export type AboutCiberseguridadTags = {
+  __typename?: 'AboutCiberseguridadTags';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutCiberseguridadCta = {
+  __typename?: 'AboutCiberseguridadCta';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type AboutCiberseguridad = {
+  __typename?: 'AboutCiberseguridad';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<Maybe<AboutCiberseguridadTags>>>;
+  cta?: Maybe<AboutCiberseguridadCta>;
+};
+
 export type AboutMission = {
   __typename?: 'AboutMission';
   icon?: Maybe<Scalars['String']['output']>;
@@ -1475,6 +1546,8 @@ export type AboutValuesItems = {
 
 export type AboutValues = {
   __typename?: 'AboutValues';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   title_en?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
@@ -1493,6 +1566,8 @@ export type AboutTimeline = {
   __typename?: 'AboutTimeline';
   title?: Maybe<Scalars['String']['output']>;
   title_en?: Maybe<Scalars['String']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  heading_en?: Maybe<Scalars['String']['output']>;
   startYear?: Maybe<Scalars['String']['output']>;
   endYear?: Maybe<Scalars['String']['output']>;
   milestones?: Maybe<Array<Maybe<AboutTimelineMilestones>>>;
@@ -1508,6 +1583,8 @@ export type AboutRubrosItems = {
 
 export type AboutRubros = {
   __typename?: 'AboutRubros';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
   title_en?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
@@ -1520,6 +1597,7 @@ export type AboutStatsItems = {
   number?: Maybe<Scalars['String']['output']>;
   label?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type AboutStats = {
@@ -1544,6 +1622,11 @@ export type AboutTeam = {
 export type About = Node & Document & {
   __typename?: 'About';
   hero?: Maybe<AboutHero>;
+  porQue?: Maybe<AboutPorQue>;
+  metodologia?: Maybe<AboutMetodologia>;
+  ciberseguridad?: Maybe<AboutCiberseguridad>;
+  missionVisionEyebrow?: Maybe<Scalars['String']['output']>;
+  missionVisionEyebrow_en?: Maybe<Scalars['String']['output']>;
   missionVisionTitle?: Maybe<Scalars['String']['output']>;
   missionVisionTitle_en?: Maybe<Scalars['String']['output']>;
   mission?: Maybe<AboutMission>;
@@ -1569,6 +1652,69 @@ export type AboutHeroFilter = {
   ctaLabel?: InputMaybe<StringFilter>;
   ctaLabel_en?: InputMaybe<StringFilter>;
   ctaUrl?: InputMaybe<StringFilter>;
+};
+
+export type AboutPorQueItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type AboutPorQueFeaturesFilter = {
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  image?: InputMaybe<ImageFilter>;
+  tone?: InputMaybe<StringFilter>;
+};
+
+export type AboutPorQueFilter = {
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<AboutPorQueItemsFilter>;
+  features?: InputMaybe<AboutPorQueFeaturesFilter>;
+};
+
+export type AboutMetodologiaStepsFilter = {
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type AboutMetodologiaFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  steps?: InputMaybe<AboutMetodologiaStepsFilter>;
+};
+
+export type AboutCiberseguridadTagsFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+};
+
+export type AboutCiberseguridadCtaFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type AboutCiberseguridadFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<AboutCiberseguridadTagsFilter>;
+  cta?: InputMaybe<AboutCiberseguridadCtaFilter>;
 };
 
 export type AboutMissionFilter = {
@@ -1611,6 +1757,8 @@ export type AboutValuesItemsFilter = {
 };
 
 export type AboutValuesFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
   subtitle?: InputMaybe<StringFilter>;
@@ -1627,6 +1775,8 @@ export type AboutTimelineMilestonesFilter = {
 export type AboutTimelineFilter = {
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
+  heading?: InputMaybe<StringFilter>;
+  heading_en?: InputMaybe<StringFilter>;
   startYear?: InputMaybe<StringFilter>;
   endYear?: InputMaybe<StringFilter>;
   milestones?: InputMaybe<AboutTimelineMilestonesFilter>;
@@ -1640,6 +1790,8 @@ export type AboutRubrosItemsFilter = {
 };
 
 export type AboutRubrosFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
@@ -1651,6 +1803,7 @@ export type AboutStatsItemsFilter = {
   number?: InputMaybe<StringFilter>;
   label?: InputMaybe<StringFilter>;
   description?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
 };
 
 export type AboutStatsFilter = {
@@ -1671,6 +1824,11 @@ export type AboutTeamFilter = {
 
 export type AboutFilter = {
   hero?: InputMaybe<AboutHeroFilter>;
+  porQue?: InputMaybe<AboutPorQueFilter>;
+  metodologia?: InputMaybe<AboutMetodologiaFilter>;
+  ciberseguridad?: InputMaybe<AboutCiberseguridadFilter>;
+  missionVisionEyebrow?: InputMaybe<StringFilter>;
+  missionVisionEyebrow_en?: InputMaybe<StringFilter>;
   missionVisionTitle?: InputMaybe<StringFilter>;
   missionVisionTitle_en?: InputMaybe<StringFilter>;
   mission?: InputMaybe<AboutMissionFilter>;
@@ -1971,6 +2129,8 @@ export type CasosDeExitoItems = {
   youtubeUrl?: Maybe<Scalars['String']['output']>;
   videoFile?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
   quote?: Maybe<Scalars['String']['output']>;
   quote_en?: Maybe<Scalars['String']['output']>;
   author?: Maybe<Scalars['String']['output']>;
@@ -1996,7 +2156,10 @@ export type CasosDeExito = Node & Document & {
   intro?: Maybe<Scalars['String']['output']>;
   intro_en?: Maybe<Scalars['String']['output']>;
   heroImage?: Maybe<Scalars['String']['output']>;
+  sectionEyebrow?: Maybe<Scalars['String']['output']>;
+  sectionEyebrow_en?: Maybe<Scalars['String']['output']>;
   sectionTitle?: Maybe<Scalars['String']['output']>;
+  sectionTitle_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<CasosDeExitoItems>>>;
   seo?: Maybe<CasosDeExitoSeo>;
   id: Scalars['ID']['output'];
@@ -2009,6 +2172,8 @@ export type CasosDeExitoItemsFilter = {
   youtubeUrl?: InputMaybe<StringFilter>;
   videoFile?: InputMaybe<ImageFilter>;
   logo?: InputMaybe<ImageFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
   quote?: InputMaybe<StringFilter>;
   quote_en?: InputMaybe<StringFilter>;
   author?: InputMaybe<StringFilter>;
@@ -2032,7 +2197,10 @@ export type CasosDeExitoFilter = {
   intro?: InputMaybe<StringFilter>;
   intro_en?: InputMaybe<StringFilter>;
   heroImage?: InputMaybe<ImageFilter>;
+  sectionEyebrow?: InputMaybe<StringFilter>;
+  sectionEyebrow_en?: InputMaybe<StringFilter>;
   sectionTitle?: InputMaybe<StringFilter>;
+  sectionTitle_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<CasosDeExitoItemsFilter>;
   seo?: InputMaybe<CasosDeExitoSeoFilter>;
 };
@@ -4190,6 +4358,69 @@ export type AboutHeroMutation = {
   ctaUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type AboutPorQueItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AboutPorQueFeaturesMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  tone?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AboutPorQueMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<AboutPorQueItemsMutation>>>;
+  features?: InputMaybe<Array<InputMaybe<AboutPorQueFeaturesMutation>>>;
+};
+
+export type AboutMetodologiaStepsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AboutMetodologiaMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  steps?: InputMaybe<Array<InputMaybe<AboutMetodologiaStepsMutation>>>;
+};
+
+export type AboutCiberseguridadTagsMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AboutCiberseguridadCtaMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AboutCiberseguridadMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Array<InputMaybe<AboutCiberseguridadTagsMutation>>>;
+  cta?: InputMaybe<AboutCiberseguridadCtaMutation>;
+};
+
 export type AboutMissionMutation = {
   icon?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -4230,6 +4461,8 @@ export type AboutValuesItemsMutation = {
 };
 
 export type AboutValuesMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
@@ -4246,6 +4479,8 @@ export type AboutTimelineMilestonesMutation = {
 export type AboutTimelineMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
+  heading?: InputMaybe<Scalars['String']['input']>;
+  heading_en?: InputMaybe<Scalars['String']['input']>;
   startYear?: InputMaybe<Scalars['String']['input']>;
   endYear?: InputMaybe<Scalars['String']['input']>;
   milestones?: InputMaybe<Array<InputMaybe<AboutTimelineMilestonesMutation>>>;
@@ -4259,6 +4494,8 @@ export type AboutRubrosItemsMutation = {
 };
 
 export type AboutRubrosMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -4270,6 +4507,7 @@ export type AboutStatsItemsMutation = {
   number?: InputMaybe<Scalars['String']['input']>;
   label?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type AboutStatsMutation = {
@@ -4290,6 +4528,11 @@ export type AboutTeamMutation = {
 
 export type AboutMutation = {
   hero?: InputMaybe<AboutHeroMutation>;
+  porQue?: InputMaybe<AboutPorQueMutation>;
+  metodologia?: InputMaybe<AboutMetodologiaMutation>;
+  ciberseguridad?: InputMaybe<AboutCiberseguridadMutation>;
+  missionVisionEyebrow?: InputMaybe<Scalars['String']['input']>;
+  missionVisionEyebrow_en?: InputMaybe<Scalars['String']['input']>;
   missionVisionTitle?: InputMaybe<Scalars['String']['input']>;
   missionVisionTitle_en?: InputMaybe<Scalars['String']['input']>;
   mission?: InputMaybe<AboutMissionMutation>;
@@ -4402,6 +4645,8 @@ export type CasosDeExitoItemsMutation = {
   youtubeUrl?: InputMaybe<Scalars['String']['input']>;
   videoFile?: InputMaybe<Scalars['String']['input']>;
   logo?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
   quote?: InputMaybe<Scalars['String']['input']>;
   quote_en?: InputMaybe<Scalars['String']['input']>;
   author?: InputMaybe<Scalars['String']['input']>;
@@ -4425,7 +4670,10 @@ export type CasosDeExitoMutation = {
   intro?: InputMaybe<Scalars['String']['input']>;
   intro_en?: InputMaybe<Scalars['String']['input']>;
   heroImage?: InputMaybe<Scalars['String']['input']>;
+  sectionEyebrow?: InputMaybe<Scalars['String']['input']>;
+  sectionEyebrow_en?: InputMaybe<Scalars['String']['input']>;
   sectionTitle?: InputMaybe<Scalars['String']['input']>;
+  sectionTitle_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<CasosDeExitoItemsMutation>>>;
   seo?: InputMaybe<CasosDeExitoSeoMutation>;
 };
@@ -4999,7 +5247,7 @@ export type ServicePartsFragment = { __typename: 'Service', title: string, title
 
 export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, title_en?: string | null, slug: string, solucionSlug: string, solucionTitle?: string | null, solucionTitle_en?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, note?: string | null, note_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, plantilla?: string | null, image?: string | null, datos?: { __typename: 'SubservicioBeneficiosItemsDatos', etiqueta?: string | null, etiqueta_en?: string | null, valor?: string | null, unidad?: string | null, unidad_en?: string | null, porcentaje?: number | null, hilos?: number | null, barras?: number | null, tarjetas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosTarjetas', etiqueta?: string | null, etiqueta_en?: string | null, porcentaje?: number | null } | null> | null, filas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosFilas', label?: string | null, label_en?: string | null, nivel?: string | null, porcentaje?: number | null } | null> | null, rutas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosRutas', label?: string | null, label_en?: string | null, activa?: boolean | null } | null> | null, nodos?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosNodos', label?: string | null, label_en?: string | null } | null> | null, chips?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosChips', label?: string | null, label_en?: string | null } | null> | null } | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
-export type AboutPartsFragment = { __typename: 'About', missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
+export type AboutPartsFragment = { __typename: 'About', missionVisionEyebrow?: string | null, missionVisionEyebrow_en?: string | null, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, porQue?: { __typename: 'AboutPorQue', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'AboutPorQueItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null, features?: Array<{ __typename: 'AboutPorQueFeatures', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, tone?: string | null } | null> | null } | null, metodologia?: { __typename: 'AboutMetodologia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, steps?: Array<{ __typename: 'AboutMetodologiaSteps', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, ciberseguridad?: { __typename: 'AboutCiberseguridad', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<{ __typename: 'AboutCiberseguridadTags', label?: string | null, label_en?: string | null } | null> | null, cta?: { __typename: 'AboutCiberseguridadCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, heading?: string | null, heading_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null };
 
 export type PostPartsFragment = { __typename: 'Post', title: string, title_en?: string | null, excerpt?: string | null, excerpt_en?: string | null, body_en?: any | null, coverImage?: string | null, date?: string | null, readTime?: string | null, tags?: Array<string | null> | null, featured?: boolean | null, body?: any | null };
 
@@ -5009,7 +5257,7 @@ export type SoporteTecnicoPartsFragment = { __typename: 'SoporteTecnico', breadc
 
 export type ServiciosPartsFragment = { __typename: 'Servicios', breadcrumb?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, heading?: string | null, headingPrefix?: string | null, headingPrefix_en?: string | null, headingSuffix?: string | null, headingSuffix_en?: string | null, intro?: string | null, ctaLabel?: string | null, heroImage?: string | null, heroVideo?: string | null, heroVideoPoster?: string | null, formTitle?: string | null, formTitle_en?: string | null, formSubtitle?: string | null, formSubtitle_en?: string | null, headingWords?: Array<{ __typename: 'ServiciosHeadingWords', word: string, word_en?: string | null } | null> | null };
 
-export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type CasosDeExitoPartsFragment = { __typename: 'CasosDeExito', breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionEyebrow?: string | null, sectionEyebrow_en?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, title?: string | null, title_en?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type CertificacionesPartsFragment = { __typename: 'Certificaciones', sectionTitle?: string | null, sectionTitle_en?: string | null, sectionDescription?: string | null, sectionDescription_en?: string | null, items?: Array<{ __typename: 'CertificacionesItems', code?: string | null, label?: string | null, label_en?: string | null, ringText?: string | null, ringText_en?: string | null, norm?: string | null, norm_en?: string | null, scope?: string | null, scope_en?: string | null } | null> | null };
 
@@ -5095,7 +5343,7 @@ export type AboutQueryVariables = Exact<{
 }>;
 
 
-export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
+export type AboutQuery = { __typename?: 'Query', about: { __typename: 'About', id: string, missionVisionEyebrow?: string | null, missionVisionEyebrow_en?: string | null, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, porQue?: { __typename: 'AboutPorQue', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'AboutPorQueItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null, features?: Array<{ __typename: 'AboutPorQueFeatures', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, tone?: string | null } | null> | null } | null, metodologia?: { __typename: 'AboutMetodologia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, steps?: Array<{ __typename: 'AboutMetodologiaSteps', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, ciberseguridad?: { __typename: 'AboutCiberseguridad', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<{ __typename: 'AboutCiberseguridadTags', label?: string | null, label_en?: string | null } | null> | null, cta?: { __typename: 'AboutCiberseguridadCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, heading?: string | null, heading_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } };
 
 export type AboutConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5107,7 +5355,7 @@ export type AboutConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
+export type AboutConnectionQuery = { __typename?: 'Query', aboutConnection: { __typename?: 'AboutConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AboutConnectionEdges', cursor: string, node?: { __typename: 'About', id: string, missionVisionEyebrow?: string | null, missionVisionEyebrow_en?: string | null, missionVisionTitle?: string | null, missionVisionTitle_en?: string | null, missionImage?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'AboutHero', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, image?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null } | null, porQue?: { __typename: 'AboutPorQue', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'AboutPorQueItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null, features?: Array<{ __typename: 'AboutPorQueFeatures', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, tone?: string | null } | null> | null } | null, metodologia?: { __typename: 'AboutMetodologia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, steps?: Array<{ __typename: 'AboutMetodologiaSteps', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, ciberseguridad?: { __typename: 'AboutCiberseguridad', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<{ __typename: 'AboutCiberseguridadTags', label?: string | null, label_en?: string | null } | null> | null, cta?: { __typename: 'AboutCiberseguridadCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, mission?: { __typename: 'AboutMission', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, vision?: { __typename: 'AboutVision', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, sgsi?: { __typename: 'AboutSgsi', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, intro?: any | null, intro_en?: any | null, items?: Array<{ __typename: 'AboutSgsiItems', text?: string | null, text_en?: string | null } | null> | null } | null, values?: { __typename: 'AboutValues', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'AboutValuesItems', icon?: string | null, name?: string | null, name_en?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, timeline?: { __typename: 'AboutTimeline', title?: string | null, title_en?: string | null, heading?: string | null, heading_en?: string | null, startYear?: string | null, endYear?: string | null, milestones?: Array<{ __typename: 'AboutTimelineMilestones', year?: string | null, heading?: string | null, heading_en?: string | null } | null> | null } | null, rubros?: { __typename: 'AboutRubros', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, items?: Array<{ __typename: 'AboutRubrosItems', icon?: string | null, label?: string | null, label_en?: string | null, image?: string | null } | null> | null } | null, stats?: { __typename: 'AboutStats', title?: string | null, items?: Array<{ __typename: 'AboutStatsItems', number?: string | null, label?: string | null, description?: string | null, description_en?: string | null } | null> | null } | null, team?: { __typename: 'AboutTeam', title?: string | null, members?: Array<{ __typename: 'AboutTeamMembers', name?: string | null, role?: string | null, photo?: string | null } | null> | null } | null } | null } | null> | null } };
 
 export type PostQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5190,7 +5438,7 @@ export type CasosDeExitoQueryVariables = Exact<{
 }>;
 
 
-export type CasosDeExitoQuery = { __typename?: 'Query', casosDeExito: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type CasosDeExitoQuery = { __typename?: 'Query', casosDeExito: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionEyebrow?: string | null, sectionEyebrow_en?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, title?: string | null, title_en?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type CasosDeExitoConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5202,7 +5450,7 @@ export type CasosDeExitoConnectionQueryVariables = Exact<{
 }>;
 
 
-export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionTitle?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type CasosDeExitoConnectionQuery = { __typename?: 'Query', casosDeExitoConnection: { __typename?: 'CasosDeExitoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CasosDeExitoConnectionEdges', cursor: string, node?: { __typename: 'CasosDeExito', id: string, breadcrumb?: string | null, breadcrumb_en?: string | null, heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, heroImage?: string | null, sectionEyebrow?: string | null, sectionEyebrow_en?: string | null, sectionTitle?: string | null, sectionTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, items?: Array<{ __typename: 'CasosDeExitoItems', poster?: string | null, youtubeUrl?: string | null, videoFile?: string | null, logo?: string | null, title?: string | null, title_en?: string | null, quote?: string | null, quote_en?: string | null, author?: string | null, role?: string | null, role_en?: string | null, badge?: string | null, badge_en?: string | null } | null> | null, seo?: { __typename: 'CasosDeExitoSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type CertificacionesQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5785,6 +6033,66 @@ export const AboutPartsFragmentDoc = gql`
     ctaLabel_en
     ctaUrl
   }
+  porQue {
+    __typename
+    title
+    title_en
+    items {
+      __typename
+      icon
+      title
+      title_en
+      text
+      text_en
+    }
+    features {
+      __typename
+      title
+      title_en
+      text
+      text_en
+      image
+      tone
+    }
+  }
+  metodologia {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    steps {
+      __typename
+      title
+      title_en
+      text
+      text_en
+    }
+  }
+  ciberseguridad {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    tags {
+      __typename
+      label
+      label_en
+    }
+    cta {
+      __typename
+      label
+      label_en
+      href
+    }
+  }
+  missionVisionEyebrow
+  missionVisionEyebrow_en
   missionVisionTitle
   missionVisionTitle_en
   mission {
@@ -5820,6 +6128,8 @@ export const AboutPartsFragmentDoc = gql`
   }
   values {
     __typename
+    eyebrow
+    eyebrow_en
     title
     title_en
     subtitle
@@ -5837,6 +6147,8 @@ export const AboutPartsFragmentDoc = gql`
     __typename
     title
     title_en
+    heading
+    heading_en
     startYear
     endYear
     milestones {
@@ -5848,6 +6160,8 @@ export const AboutPartsFragmentDoc = gql`
   }
   rubros {
     __typename
+    eyebrow
+    eyebrow_en
     title
     title_en
     description
@@ -5868,6 +6182,7 @@ export const AboutPartsFragmentDoc = gql`
       number
       label
       description
+      description_en
     }
   }
   team {
@@ -5990,13 +6305,18 @@ export const CasosDeExitoPartsFragmentDoc = gql`
   intro
   intro_en
   heroImage
+  sectionEyebrow
+  sectionEyebrow_en
   sectionTitle
+  sectionTitle_en
   items {
     __typename
     poster
     youtubeUrl
     videoFile
     logo
+    title
+    title_en
     quote
     quote_en
     author

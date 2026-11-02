@@ -1,35 +1,35 @@
 {
   "hero": {
     "title": "La red que impulsa a las empresas del Perú",
-    "subtitle": "Más de 15 años desarrollando infraestructura de conectividad de alta calidad para organizaciones que no pueden detenerse.",
+    "subtitle": "Somos una empresa tecnológica centrada en brindar soluciones orientadas a la mejora de la operación de cada uno de nuestros clientes.",
     "title_en": "The network that powers Peru's businesses",
-    "subtitle_en": "Over 15 years building high-quality connectivity infrastructure for organizations that can't afford to stop.",
+    "subtitle_en": "We are a technology company focused on delivering solutions that improve the operations of each of our clients.",
     "image": "/images/nosotros/about-us-hero.webp",
     "ctaLabel": "Contáctanos",
     "ctaLabel_en": "Contact us",
     "ctaUrl": "/contacto"
   },
-  "missionVisionTitle": "Comprometidos con el desarrollo tecnológico del Perú",
+  "missionVisionTitle": "Comprometidos con el *desarrollo tecnológico* del Perú",
   "mission": {
     "icon": "globe",
     "title": "Misión",
-    "text": "Impulsar el desarrollo de más peruanos a través del acceso a la tecnología.",
+    "text": "Impulsar el desarrollo de más peruanos a través del *acceso a la tecnología.*",
     "title_en": "Mission",
-    "text_en": "To drive the development of more Peruvians through access to technology."
+    "text_en": "To drive the development of more Peruvians through *access to technology.*"
   },
   "vision": {
     "icon": "sparkles",
     "title": "Visión",
-    "text": "Ser la empresa tecnológica más confiable y respetada del Perú. Convirtiéndonos en el referente local en innovación para empresas y personas.",
+    "text": "Ser la empresa tecnológica *más confiable y respetada del Perú.* Convirtiéndonos en el referente local en innovación para empresas y personas.",
     "title_en": "Vision",
-    "text_en": "To be the most trusted and respected technology company in Peru, becoming the benchmark in high-quality enterprise connectivity."
+    "text_en": "To be *the most trusted and respected technology company in Peru,* becoming the local benchmark in innovation for businesses and people."
   },
   "missionImage": "/images/nosotros/comprometidos-mision-vision.webp",
   "sgsi": {
     "badge": "ISO 27001",
     "badge_en": "ISO 27001",
-    "title": "Política del Sistema de Gestión de Seguridad de la Información",
-    "title_en": "Information Security Management System Policy",
+    "title": "Política del Sistema de Gestión de *Seguridad de la Información*",
+    "title_en": "*Information Security* Management System Policy",
     "intro": "**FIBERLUX TECH SAC** es una empresa de Telecomunicaciones, donde la tecnología de información y los sistemas de información son de vital importancia como activos, que alineados a nuestro propósito y tomando en consideración el contexto, riesgos y oportunidades, nos comprometemos a:",
     "intro_en": "**FIBERLUX TECH SAC** is a telecommunications company where information technology and information systems are vital assets. Aligned with our purpose, and taking into account our context, risks and opportunities, we commit to:",
     "items": [
@@ -52,7 +52,7 @@
     ]
   },
   "values": {
-    "title": "Nuestros valores",
+    "title": "*Valores* que nos conectan",
     "subtitle": "Conectamos a las organizaciones más importantes del Perú con infraestructura de fibra óptica de última generación.",
     "items": [
       {
@@ -84,11 +84,13 @@
         "description_en": "We deliver a service of excellence, acting as strategic allies to our clients."
       }
     ],
-    "title_en": "Our values",
-    "subtitle_en": "We connect Peru's most important organizations with state-of-the-art fiber-optic infrastructure."
+    "title_en": "*Values* that connect us",
+    "subtitle_en": "We connect Peru's most important organizations with state-of-the-art fiber-optic infrastructure.",
+    "eyebrow": "[ NUESTROS VALORES ]",
+    "eyebrow_en": "[ OUR VALUES ]"
   },
   "timeline": {
-    "title": "Nuestra historia",
+    "title": "NUESTRA HISTORIA",
     "startYear": "2006",
     "endYear": "2025",
     "milestones": [
@@ -113,12 +115,14 @@
         "heading_en": "Our own network present in 92 cities across Peru"
       }
     ],
-    "title_en": "Our history"
+    "title_en": "OUR HISTORY",
+    "heading": "Los hitos que construyeron nuestra red",
+    "heading_en": "The milestones that built our network"
   },
   "rubros": {
     "title": "Rubros con los que trabajamos",
     "description": "Conectamos a los sectores más importantes del Perú con infraestructura de fibra óptica de última generación. Sin importar tu industria, tu red no puede detenerse.",
-    "description_en": "We connect Peru's most important sectors with next-generation fiber optic infrastructure. No matter your industry, your network can't stop.",
+    "description_en": "We connect Peru's most important sectors with state-of-the-art fiber-optic infrastructure. Whatever your industry, your network can't stop.",
     "items": [
       {
         "icon": "consultoria",
@@ -175,7 +179,9 @@
         "label_en": "Services"
       }
     ],
-    "title_en": "Industries we work with"
+    "title_en": "Industries we work with",
+    "eyebrow": "[ RUBROS ]",
+    "eyebrow_en": "[ INDUSTRIES ]"
   },
   "stats": {
     "title": "¿Por qué Fiberlux?",
@@ -183,22 +189,26 @@
       {
         "number": "+5,500",
         "label": "Clientes satisfechos",
-        "description": "Empresas que confían en nuestra red en todo el Perú"
+        "description": "clientes satisfechos que confían en nuestra red en todo el Perú",
+        "description_en": "satisfied clients who trust our network across Peru"
       },
       {
         "number": "+17,000 km",
         "label": "Fibra óptica",
-        "description": "Infraestructura de fibra óptica desplegada"
+        "description": "de infraestructura de fibra óptica desplegada",
+        "description_en": "of deployed fiber-optic infrastructure"
       },
       {
         "number": "92",
         "label": "Presencia nacional",
-        "description": "Presentes en 92 ciudades en todo el Perú"
+        "description": "ciudades en cobertura en todo el Perú",
+        "description_en": "cities covered across Peru"
       },
       {
         "number": "100%",
         "label": "Red propia",
-        "description": "Red privada de fibra óptica de última generación"
+        "description": "red privada de fibra óptica de última generación",
+        "description_en": "state-of-the-art private fiber-optic network"
       }
     ]
   },
@@ -206,5 +216,109 @@
     "title": "Nuestro equipo",
     "members": []
   },
-  "missionVisionTitle_en": "Committed to Peru's technological development"
+  "missionVisionTitle_en": "Committed to Peru's *technological development*",
+  "porQue": {
+    "title": "¿Por qué Fiberlux?",
+    "title_en": "Why Fiberlux?",
+    "items": [
+      {
+        "icon": "pulse",
+        "title": "Infraestructura propia",
+        "title_en": "Our own infrastructure",
+        "text": "Fibra óptica nacional con cobertura en +100 ciudades",
+        "text_en": "Nationwide fiber optics covering 100+ cities"
+      },
+      {
+        "icon": "clock",
+        "title": "Experiencia +15 años",
+        "title_en": "15+ years of experience",
+        "text": "Trayectoria sólida en el mercado que genera confianza y credibilidad",
+        "text_en": "A solid track record that builds trust and credibility"
+      },
+      {
+        "icon": "users",
+        "title": "+10000 clientes del segmento empresarial",
+        "title_en": "10,000+ business clients",
+        "text": "Nuestros clientes nos respaldan como sus aliados tecnológicos",
+        "text_en": "Our clients back us as their technology partners"
+      }
+    ],
+    "features": [
+      {
+        "title": "Data Center propio",
+        "title_en": "Our own Data Center",
+        "text": "Infraestructura propia en Lima para alojar, respaldar y proteger la información crítica de tu empresa, con energía redundante y climatización de precisión.",
+        "text_en": "Our own facility in Lima to host, back up and protect your company's critical information, with redundant power and precision cooling.",
+        "image": "/images/rediseno/nosotros/nos-dc.webp",
+        "tone": "dark"
+      },
+      {
+        "title": "NOC y SOC propios",
+        "title_en": "Our own NOC and SOC",
+        "text": "Centros de operaciones de red y seguridad que monitorean tus servicios 24/7, detectan incidentes y responden antes de que afecten tu operación.",
+        "text_en": "Network and security operations centers that monitor your services 24/7, detect incidents and respond before they affect your operation.",
+        "image": "/images/rediseno/nosotros/nos-noc.webp",
+        "tone": "purple"
+      }
+    ]
+  },
+  "metodologia": {
+    "eyebrow": "[ METODOLOGÍA ]",
+    "eyebrow_en": "[ METHODOLOGY ]",
+    "title": "Del diagnóstico a la *mejora continua*",
+    "title_en": "From diagnosis to *continuous improvement*",
+    "text": "Nuestro proceso inicia desde el diagnóstico a la mejora continua, con una decisión clara en cada etapa.",
+    "text_en": "Our process runs from diagnosis to continuous improvement, with a clear decision at every stage.",
+    "steps": [
+      {
+        "title": "Diagnóstico",
+        "title_en": "Diagnosis",
+        "text": "Entendemos tu operación, tu infraestructura actual y los objetivos de tu negocio.",
+        "text_en": "We understand your operation, your current infrastructure and your business goals."
+      },
+      {
+        "title": "Diseño",
+        "title_en": "Design",
+        "text": "Definimos la solución y la arquitectura adecuadas para cada sede y servicio.",
+        "text_en": "We define the right solution and architecture for each site and service."
+      },
+      {
+        "title": "Implementación",
+        "title_en": "Implementation",
+        "text": "Desplegamos e integramos la solución sin interrumpir tu operación.",
+        "text_en": "We deploy and integrate the solution without interrupting your operation."
+      },
+      {
+        "title": "Mejora continua",
+        "title_en": "Continuous improvement",
+        "text": "Monitoreamos 24/7 y optimizamos el servicio a partir de los resultados.",
+        "text_en": "We monitor 24/7 and optimize the service based on results."
+      }
+    ]
+  },
+  "ciberseguridad": {
+    "eyebrow": "[ CIBERSEGURIDAD ]",
+    "eyebrow_en": "[ CYBERSECURITY ]",
+    "title": "La ciberseguridad como *pilar estratégico*",
+    "title_en": "Cybersecurity as a *strategic pillar*",
+    "text": "En un entorno digital en constante evolución, proteger sus activos no es un complemento, sino la base de la continuidad operativa. A través de un modelo de defensa en profundidad y monitoreo SOC 24/7, blindamos cada capa de su infraestructura para que su negocio crezca con total confianza y resiliencia.",
+    "text_en": "In a constantly evolving digital environment, protecting your assets is not an add-on but the foundation of operational continuity. Through a defense-in-depth model and 24/7 SOC monitoring, we shield every layer of your infrastructure so your business can grow with full confidence and resilience.",
+    "tags": [
+      {
+        "label": "Defensa en profundidad",
+        "label_en": "Defense in depth"
+      },
+      {
+        "label": "Monitoreo SOC 24/7",
+        "label_en": "24/7 SOC monitoring"
+      }
+    ],
+    "cta": {
+      "label": "Conoce Ciberseguridad",
+      "label_en": "Explore Cybersecurity",
+      "href": "/soluciones/ciberseguridad"
+    }
+  },
+  "missionVisionEyebrow": "[ QUIÉNES SOMOS ]",
+  "missionVisionEyebrow_en": "[ WHO WE ARE ]"
 }

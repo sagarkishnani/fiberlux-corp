@@ -1016,6 +1016,69 @@ type AboutHero {
   ctaUrl: String
 }
 
+type AboutPorQueItems {
+  icon: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type AboutPorQueFeatures {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  image: String
+  tone: String
+}
+
+type AboutPorQue {
+  title: String
+  title_en: String
+  items: [AboutPorQueItems]
+  features: [AboutPorQueFeatures]
+}
+
+type AboutMetodologiaSteps {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type AboutMetodologia {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  steps: [AboutMetodologiaSteps]
+}
+
+type AboutCiberseguridadTags {
+  label: String
+  label_en: String
+}
+
+type AboutCiberseguridadCta {
+  label: String
+  label_en: String
+  href: String
+}
+
+type AboutCiberseguridad {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  tags: [AboutCiberseguridadTags]
+  cta: AboutCiberseguridadCta
+}
+
 type AboutMission {
   icon: String
   title: String
@@ -1056,6 +1119,8 @@ type AboutValuesItems {
 }
 
 type AboutValues {
+  eyebrow: String
+  eyebrow_en: String
   title: String
   title_en: String
   subtitle: String
@@ -1072,6 +1137,8 @@ type AboutTimelineMilestones {
 type AboutTimeline {
   title: String
   title_en: String
+  heading: String
+  heading_en: String
   startYear: String
   endYear: String
   milestones: [AboutTimelineMilestones]
@@ -1085,6 +1152,8 @@ type AboutRubrosItems {
 }
 
 type AboutRubros {
+  eyebrow: String
+  eyebrow_en: String
   title: String
   title_en: String
   description: String
@@ -1096,6 +1165,7 @@ type AboutStatsItems {
   number: String
   label: String
   description: String
+  description_en: String
 }
 
 type AboutStats {
@@ -1116,6 +1186,11 @@ type AboutTeam {
 
 type About implements Node & Document {
   hero: AboutHero
+  porQue: AboutPorQue
+  metodologia: AboutMetodologia
+  ciberseguridad: AboutCiberseguridad
+  missionVisionEyebrow: String
+  missionVisionEyebrow_en: String
   missionVisionTitle: String
   missionVisionTitle_en: String
   mission: AboutMission
@@ -1141,6 +1216,69 @@ input AboutHeroFilter {
   ctaLabel: StringFilter
   ctaLabel_en: StringFilter
   ctaUrl: StringFilter
+}
+
+input AboutPorQueItemsFilter {
+  icon: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input AboutPorQueFeaturesFilter {
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  image: ImageFilter
+  tone: StringFilter
+}
+
+input AboutPorQueFilter {
+  title: StringFilter
+  title_en: StringFilter
+  items: AboutPorQueItemsFilter
+  features: AboutPorQueFeaturesFilter
+}
+
+input AboutMetodologiaStepsFilter {
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input AboutMetodologiaFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  steps: AboutMetodologiaStepsFilter
+}
+
+input AboutCiberseguridadTagsFilter {
+  label: StringFilter
+  label_en: StringFilter
+}
+
+input AboutCiberseguridadCtaFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input AboutCiberseguridadFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  tags: AboutCiberseguridadTagsFilter
+  cta: AboutCiberseguridadCtaFilter
 }
 
 input AboutMissionFilter {
@@ -1183,6 +1321,8 @@ input AboutValuesItemsFilter {
 }
 
 input AboutValuesFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
   title_en: StringFilter
   subtitle: StringFilter
@@ -1199,6 +1339,8 @@ input AboutTimelineMilestonesFilter {
 input AboutTimelineFilter {
   title: StringFilter
   title_en: StringFilter
+  heading: StringFilter
+  heading_en: StringFilter
   startYear: StringFilter
   endYear: StringFilter
   milestones: AboutTimelineMilestonesFilter
@@ -1212,6 +1354,8 @@ input AboutRubrosItemsFilter {
 }
 
 input AboutRubrosFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
   title_en: StringFilter
   description: StringFilter
@@ -1223,6 +1367,7 @@ input AboutStatsItemsFilter {
   number: StringFilter
   label: StringFilter
   description: StringFilter
+  description_en: StringFilter
 }
 
 input AboutStatsFilter {
@@ -1243,6 +1388,11 @@ input AboutTeamFilter {
 
 input AboutFilter {
   hero: AboutHeroFilter
+  porQue: AboutPorQueFilter
+  metodologia: AboutMetodologiaFilter
+  ciberseguridad: AboutCiberseguridadFilter
+  missionVisionEyebrow: StringFilter
+  missionVisionEyebrow_en: StringFilter
   missionVisionTitle: StringFilter
   missionVisionTitle_en: StringFilter
   mission: AboutMissionFilter
@@ -1524,6 +1674,8 @@ type CasosDeExitoItems {
   youtubeUrl: String
   videoFile: String
   logo: String
+  title: String
+  title_en: String
   quote: String
   quote_en: String
   author: String
@@ -1547,7 +1699,10 @@ type CasosDeExito implements Node & Document {
   intro: String
   intro_en: String
   heroImage: String
+  sectionEyebrow: String
+  sectionEyebrow_en: String
   sectionTitle: String
+  sectionTitle_en: String
   items: [CasosDeExitoItems]
   seo: CasosDeExitoSeo
   id: ID!
@@ -1560,6 +1715,8 @@ input CasosDeExitoItemsFilter {
   youtubeUrl: StringFilter
   videoFile: ImageFilter
   logo: ImageFilter
+  title: StringFilter
+  title_en: StringFilter
   quote: StringFilter
   quote_en: StringFilter
   author: StringFilter
@@ -1583,7 +1740,10 @@ input CasosDeExitoFilter {
   intro: StringFilter
   intro_en: StringFilter
   heroImage: ImageFilter
+  sectionEyebrow: StringFilter
+  sectionEyebrow_en: StringFilter
   sectionTitle: StringFilter
+  sectionTitle_en: StringFilter
   items: CasosDeExitoItemsFilter
   seo: CasosDeExitoSeoFilter
 }
@@ -3377,6 +3537,69 @@ input AboutHeroMutation {
   ctaUrl: String
 }
 
+input AboutPorQueItemsMutation {
+  icon: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input AboutPorQueFeaturesMutation {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  image: String
+  tone: String
+}
+
+input AboutPorQueMutation {
+  title: String
+  title_en: String
+  items: [AboutPorQueItemsMutation]
+  features: [AboutPorQueFeaturesMutation]
+}
+
+input AboutMetodologiaStepsMutation {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input AboutMetodologiaMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  steps: [AboutMetodologiaStepsMutation]
+}
+
+input AboutCiberseguridadTagsMutation {
+  label: String
+  label_en: String
+}
+
+input AboutCiberseguridadCtaMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input AboutCiberseguridadMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  tags: [AboutCiberseguridadTagsMutation]
+  cta: AboutCiberseguridadCtaMutation
+}
+
 input AboutMissionMutation {
   icon: String
   title: String
@@ -3417,6 +3640,8 @@ input AboutValuesItemsMutation {
 }
 
 input AboutValuesMutation {
+  eyebrow: String
+  eyebrow_en: String
   title: String
   title_en: String
   subtitle: String
@@ -3433,6 +3658,8 @@ input AboutTimelineMilestonesMutation {
 input AboutTimelineMutation {
   title: String
   title_en: String
+  heading: String
+  heading_en: String
   startYear: String
   endYear: String
   milestones: [AboutTimelineMilestonesMutation]
@@ -3446,6 +3673,8 @@ input AboutRubrosItemsMutation {
 }
 
 input AboutRubrosMutation {
+  eyebrow: String
+  eyebrow_en: String
   title: String
   title_en: String
   description: String
@@ -3457,6 +3686,7 @@ input AboutStatsItemsMutation {
   number: String
   label: String
   description: String
+  description_en: String
 }
 
 input AboutStatsMutation {
@@ -3477,6 +3707,11 @@ input AboutTeamMutation {
 
 input AboutMutation {
   hero: AboutHeroMutation
+  porQue: AboutPorQueMutation
+  metodologia: AboutMetodologiaMutation
+  ciberseguridad: AboutCiberseguridadMutation
+  missionVisionEyebrow: String
+  missionVisionEyebrow_en: String
   missionVisionTitle: String
   missionVisionTitle_en: String
   mission: AboutMissionMutation
@@ -3589,6 +3824,8 @@ input CasosDeExitoItemsMutation {
   youtubeUrl: String
   videoFile: String
   logo: String
+  title: String
+  title_en: String
   quote: String
   quote_en: String
   author: String
@@ -3612,7 +3849,10 @@ input CasosDeExitoMutation {
   intro: String
   intro_en: String
   heroImage: String
+  sectionEyebrow: String
+  sectionEyebrow_en: String
   sectionTitle: String
+  sectionTitle_en: String
   items: [CasosDeExitoItemsMutation]
   seo: CasosDeExitoSeoMutation
 }

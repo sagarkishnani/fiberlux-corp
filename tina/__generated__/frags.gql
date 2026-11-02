@@ -366,6 +366,66 @@ fragment AboutParts on About {
     ctaLabel_en
     ctaUrl
   }
+  porQue {
+    __typename
+    title
+    title_en
+    items {
+      __typename
+      icon
+      title
+      title_en
+      text
+      text_en
+    }
+    features {
+      __typename
+      title
+      title_en
+      text
+      text_en
+      image
+      tone
+    }
+  }
+  metodologia {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    steps {
+      __typename
+      title
+      title_en
+      text
+      text_en
+    }
+  }
+  ciberseguridad {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    tags {
+      __typename
+      label
+      label_en
+    }
+    cta {
+      __typename
+      label
+      label_en
+      href
+    }
+  }
+  missionVisionEyebrow
+  missionVisionEyebrow_en
   missionVisionTitle
   missionVisionTitle_en
   mission {
@@ -401,6 +461,8 @@ fragment AboutParts on About {
   }
   values {
     __typename
+    eyebrow
+    eyebrow_en
     title
     title_en
     subtitle
@@ -418,6 +480,8 @@ fragment AboutParts on About {
     __typename
     title
     title_en
+    heading
+    heading_en
     startYear
     endYear
     milestones {
@@ -429,6 +493,8 @@ fragment AboutParts on About {
   }
   rubros {
     __typename
+    eyebrow
+    eyebrow_en
     title
     title_en
     description
@@ -449,6 +515,7 @@ fragment AboutParts on About {
       number
       label
       description
+      description_en
     }
   }
   team {
@@ -566,13 +633,18 @@ fragment CasosDeExitoParts on CasosDeExito {
   intro
   intro_en
   heroImage
+  sectionEyebrow
+  sectionEyebrow_en
   sectionTitle
+  sectionTitle_en
   items {
     __typename
     poster
     youtubeUrl
     videoFile
     logo
+    title
+    title_en
     quote
     quote_en
     author
