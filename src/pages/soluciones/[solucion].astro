@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import CategoriaV2React from "../../components/servicios/CategoriaV2React";
+import CiberCierreReact from "../../components/servicios/CiberCierreReact";
 import CiberIntroReact from "../../components/servicios/CiberIntroReact";
 import CategoriaCierreReact from "../../components/servicios/CategoriaCierreReact";
 import { loadRelatedPosts, loadServiciosForm } from "../../utils/relatedPosts";
@@ -57,6 +58,7 @@ const metaDescription =
         <Fragment>
           <CiberIntroReact client:load {...serviceProps} />
           <HtmlInjection location="solucion-after-hero" />
+          <CiberCierreReact client:visible {...serviceProps} form={serviciosForm} />
         </Fragment>
       ) : (
         <Fragment>
