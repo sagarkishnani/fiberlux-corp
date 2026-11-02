@@ -126,35 +126,6 @@ fragment HomeParts on Home {
       youtubeUrl
     }
   }
-  manifiesto {
-    __typename
-    items {
-      __typename
-      line1
-      line2
-      line1_en
-      line2_en
-    }
-  }
-  planeta {
-    __typename
-    puntos {
-      __typename
-      frase
-      label
-      lat
-      lng
-      conectaCon
-    }
-    cifras {
-      __typename
-      frase
-      valor
-      sufijo
-      label
-      label_en
-    }
-  }
   stats {
     __typename
     title

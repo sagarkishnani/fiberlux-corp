@@ -11,8 +11,6 @@
   "dependencies": {
     "@astrojs/react": "^4.2.1",
     "@astrojs/tailwind": "^6.0.2",
-    "@splinetool/react-spline": "^4.1.0",
-    "@splinetool/viewer": "^1.12.92",
     "@tailwindcss/typography": "^0.5.19",
     "@tinacms/cli": "^1.6.12",
     "@types/three": "^0.185.4",

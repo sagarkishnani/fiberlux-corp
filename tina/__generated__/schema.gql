@@ -276,38 +276,6 @@ type HomeTestimonials {
   items: [HomeTestimonialsItems]
 }
 
-type HomeManifiestoItems {
-  line1: String
-  line2: String
-  line1_en: String
-  line2_en: String
-}
-
-type HomeManifiesto {
-  items: [HomeManifiestoItems]
-}
-
-type HomePlanetaPuntos {
-  frase: Float
-  label: String
-  lat: Float
-  lng: Float
-  conectaCon: String
-}
-
-type HomePlanetaCifras {
-  frase: Float
-  valor: Float
-  sufijo: String
-  label: String
-  label_en: String
-}
-
-type HomePlaneta {
-  puntos: [HomePlanetaPuntos]
-  cifras: [HomePlanetaCifras]
-}
-
 type HomeStatsItems {
   number: String
   label: String
@@ -348,8 +316,6 @@ type Home implements Node & Document {
   certificacionesIntro: HomeCertificacionesIntro
   services: HomeServices
   testimonials: HomeTestimonials
-  manifiesto: HomeManifiesto
-  planeta: HomePlaneta
   stats: HomeStats
   blogPreview: HomeBlogPreview
   id: ID!
@@ -508,48 +474,6 @@ input HomeTestimonialsFilter {
   items: HomeTestimonialsItemsFilter
 }
 
-input HomeManifiestoItemsFilter {
-  line1: StringFilter
-  line2: StringFilter
-  line1_en: StringFilter
-  line2_en: StringFilter
-}
-
-input HomeManifiestoFilter {
-  items: HomeManifiestoItemsFilter
-}
-
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
-}
-
-input HomePlanetaPuntosFilter {
-  frase: NumberFilter
-  label: StringFilter
-  lat: NumberFilter
-  lng: NumberFilter
-  conectaCon: StringFilter
-}
-
-input HomePlanetaCifrasFilter {
-  frase: NumberFilter
-  valor: NumberFilter
-  sufijo: StringFilter
-  label: StringFilter
-  label_en: StringFilter
-}
-
-input HomePlanetaFilter {
-  puntos: HomePlanetaPuntosFilter
-  cifras: HomePlanetaCifrasFilter
-}
-
 input HomeStatsItemsFilter {
   number: StringFilter
   label: StringFilter
@@ -590,8 +514,6 @@ input HomeFilter {
   certificacionesIntro: HomeCertificacionesIntroFilter
   services: HomeServicesFilter
   testimonials: HomeTestimonialsFilter
-  manifiesto: HomeManifiestoFilter
-  planeta: HomePlanetaFilter
   stats: HomeStatsFilter
   blogPreview: HomeBlogPreviewFilter
 }
@@ -955,6 +877,16 @@ input SubservicioHeroFilter {
   formTitle_en: StringFilter
   heroBackground: StringFilter
   heroImage: ImageFilter
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
 }
 
 input SubservicioBeneficiosItemsDatosTarjetasFilter {
@@ -3174,38 +3106,6 @@ input HomeTestimonialsMutation {
   items: [HomeTestimonialsItemsMutation]
 }
 
-input HomeManifiestoItemsMutation {
-  line1: String
-  line2: String
-  line1_en: String
-  line2_en: String
-}
-
-input HomeManifiestoMutation {
-  items: [HomeManifiestoItemsMutation]
-}
-
-input HomePlanetaPuntosMutation {
-  frase: Float
-  label: String
-  lat: Float
-  lng: Float
-  conectaCon: String
-}
-
-input HomePlanetaCifrasMutation {
-  frase: Float
-  valor: Float
-  sufijo: String
-  label: String
-  label_en: String
-}
-
-input HomePlanetaMutation {
-  puntos: [HomePlanetaPuntosMutation]
-  cifras: [HomePlanetaCifrasMutation]
-}
-
 input HomeStatsItemsMutation {
   number: String
   label: String
@@ -3246,8 +3146,6 @@ input HomeMutation {
   certificacionesIntro: HomeCertificacionesIntroMutation
   services: HomeServicesMutation
   testimonials: HomeTestimonialsMutation
-  manifiesto: HomeManifiestoMutation
-  planeta: HomePlanetaMutation
   stats: HomeStatsMutation
   blogPreview: HomeBlogPreviewMutation
 }
