@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
 import CategoriaV2React from "../../components/servicios/CategoriaV2React";
+import CiberIntroReact from "../../components/servicios/CiberIntroReact";
 import CategoriaCierreReact from "../../components/servicios/CategoriaCierreReact";
 import { loadRelatedPosts, loadServiciosForm } from "../../utils/relatedPosts";
 import HtmlInjection from "../../components/shared/HtmlInjection.astro";
@@ -31,6 +32,8 @@ const serviceQuery = await client.queries.service({ relativePath });
 const service = serviceQuery.data?.service;
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
+const serviceProps = { query: serviceQuery.query, variables: serviceQuery.variables, data: serviceQuery.data, locale };
+const isCyberguard = Boolean((service as any)?.cyberguard?.hero?.title);
 const [relatedPosts, serviciosForm] = await Promise.all([loadRelatedPosts(service?.blogTags), loadServiciosForm()]);
 
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
@@ -49,23 +52,20 @@ const metaDescription =
   whatsappKind="solución"
 >
   <main class="bg-fx-bg">
-    <CategoriaV2React
-      client:load
-      query={serviceQuery.query}
-      variables={serviceQuery.variables}
-      data={serviceQuery.data}
-      locale={locale}
-    />
-    <HtmlInjection location="solucion-after-hero" />
-    <CategoriaCierreReact
-      client:visible
-      query={serviceQuery.query}
-      variables={serviceQuery.variables}
-      data={serviceQuery.data}
-      locale={locale}
-      posts={relatedPosts}
-      form={serviciosForm}
-    />
+    {
+      isCyberguard ? (
+        <Fragment>
+          <CiberIntroReact client:load {...serviceProps} />
+          <HtmlInjection location="solucion-after-hero" />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <CategoriaV2React client:load {...serviceProps} />
+          <HtmlInjection location="solucion-after-hero" />
+          <CategoriaCierreReact client:visible {...serviceProps} posts={relatedPosts} form={serviciosForm} />
+        </Fragment>
+      )
+    }
     <HtmlInjection location="solucion-before-footer" />
   </main>
 </BaseLayout>
