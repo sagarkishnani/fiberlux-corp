@@ -3,8 +3,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import HomeHeroReact from "../components/home/HomeHeroReact";
 import HomeStatsReact from "../components/home/HomeStatsReact";
 import HomeReelReact from "../components/home/HomeReelReact";
+import HomeSolucionesReact from "../components/home/HomeSolucionesReact";
+import HomeManifestoReact from "../components/home/HomeManifestoReact";
+import HomeCyberguardReact from "../components/home/HomeCyberguardReact";
 import BlogPreview from "../components/blog/BlogPreview.astro";
-import SolucionesStack from "../components/shared/SolucionesStack.astro";
 import EmpresasRed from "../components/home/EmpresasRed.astro";
 import HomePartners from "../components/shared/HomePartners.astro";
 import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
@@ -24,7 +26,9 @@ const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data
     <HomeStatsReact client:tina {...homeProps} />
     <HomeReelReact client:visible {...homeProps} />
     <HtmlInjection location="home-after-hero" />
-    <SolucionesStack />
+    <HomeSolucionesReact client:visible {...homeProps} />
+    <HomeManifestoReact client:visible {...homeProps} />
+    <HomeCyberguardReact client:tina {...homeProps} />
     <HomePartners />
     <EmpresasRed />
     <CertificacionesSlider />
