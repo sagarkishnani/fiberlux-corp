@@ -12,6 +12,7 @@ import {
   FaXmark,
   FaRotateLeft,
 } from "react-icons/fa6";
+import { fxAsset } from "./fx/FxPrimitives";
 
 /* ─────────────────────────── State model ─────────────────────────── */
 
@@ -213,7 +214,7 @@ export default function AccessibilityPanel({ locale = "es" }: { locale?: Locale 
         aria-haspopup="dialog"
         onClick={() => setOpen(true)}
       >
-        <FaUniversalAccess aria-hidden="true" />
+        <img src={fxAsset("a11y.svg")} alt="" className="a11y-fab-img" />
         {activeCount > 0 && (
           <span className="a11y-fab-badge" aria-hidden="true">
             {activeCount}
@@ -524,31 +525,39 @@ const styles = `
 
   .a11y-fab {
     position: fixed;
-    left: clamp(16px, 3vw, 28px);
-    bottom: clamp(16px, 3vw, 28px);
-    z-index: 90;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    left: 16px;
+    bottom: 16px;
+    z-index: 70;
+    display: block;
     width: 56px;
     height: 56px;
-    border-radius: 9999px;
-    border: 3px solid #fff; /* white ring keeps the FAB visible on any bg (incl. brand-purple sections) */
-    background: #96237A;
-    color: #fff;
-    font-size: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
     cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(150, 35, 122, 0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.3s;
+  }
+  .a11y-fab-img {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   .a11y-fab:hover {
-    background: #650F50; /* purple dark */
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 12px 30px rgba(101, 15, 80, 0.5); /* #650F50 glow */
+    transform: scale(1.06);
+    filter: brightness(0.85);
   }
   .a11y-fab:focus-visible {
-    outline: 3px solid rgba(150, 35, 122, 0.5);
+    outline: 3px solid rgba(150, 33, 122, 0.5);
     outline-offset: 2px;
+    border-radius: 9999px;
+  }
+  @media (min-width: 1024px) {
+    .a11y-fab {
+      left: 14px;
+      bottom: 14px;
+      width: 81px;
+      height: 81px;
+    }
   }
   .a11y-fab-badge {
     position: absolute;

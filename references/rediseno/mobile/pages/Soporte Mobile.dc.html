@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Fiberlux Corporativo — Soporte técnico (Mobile)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<style>
+html,body{margin:0;padding:0;background:#E9E6E9;color:#453C46;font-family:Poppins,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html.lenis,html.lenis body{height:auto}
+*{box-sizing:border-box}
+a{color:#96217A;text-decoration:none}
+a:hover{color:#C81D87}
+::selection{background:#EBD1E4;color:#650D4A}
+@keyframes fxWave{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.045);opacity:.55}}
+@keyframes fxChIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fxVmFade{from{opacity:0}to{opacity:1}}
+@keyframes fxVmPop{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes fxMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fxMarqueeR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes fxPulse{0%{transform:scale(.5);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+@keyframes fxDraw{0%{stroke-dashoffset:100;opacity:1}45%{stroke-dashoffset:0;opacity:1}80%{stroke-dashoffset:0;opacity:0}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes fxTwinkle{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes fxSpin{to{transform:rotate(360deg)}}
+@keyframes fxBreath{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.12);opacity:1}}
+@keyframes fxRing{0%{transform:scale(.8);opacity:.7}100%{transform:scale(2.1);opacity:0}}
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="position:relative;width:390px;margin:0 auto;overflow-x:clip;background:#F7F7F7;font-family:Poppins,system-ui,sans-serif;color:#453C46">
+
+  <!-- TOP BAR -->
+  <div style="position:relative;z-index:65;background:#FFFFFF;border-bottom:1px solid #ECE9EC">
+    <div style="width:358px;margin:0 auto;height:44px;display:flex;align-items:center;justify-content:space-between;font-size:13px">
+      <div style="display:flex;gap:24px;height:100%">
+        <a href="#" style="display:flex;align-items:center;height:100%;color:#453C46;font-weight:600;border-bottom:2px solid #96217A;padding-top:2px">Empresas</a>
+        <a href="https://negocios.fiberlux.pe/" style="display:flex;align-items:center;height:100%;color:#868687;border-bottom:2px solid transparent;padding-top:2px">Negocios</a>
+      </div>
+      <button style="display:flex;align-items:center;gap:6px;height:44px;background:none;border:0;padding:0;font:600 13px Poppins;color:#453C46">ES<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <header ref="{{ navRef }}" style="position:sticky;top:0;z-index:60;transition:transform .5s cubic-bezier(.2,.8,.2,1), background .3s, box-shadow .3s">
+    <div style="width:358px;margin:0 auto;height:68px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:14px">
+        <button onClick="{{ m_openDrawer }}" aria-label="Abrir menú" style="width:44px;height:44px;border-radius:50%;border:1px solid #D8D5D8;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:transform .2s" style-active="transform:scale(.94)">
+          <span style="display:block;width:18px;height:2px;border-radius:2px;background:#453C46"></span>
+          <span style="display:block;width:12px;height:2px;border-radius:2px;background:#453C46;margin-left:-6px"></span>
+          <span style="display:block;width:18px;height:2px;border-radius:2px;background:#453C46"></span>
+        </button>
+        <a href="Fiberlux Home Mobile.dc.html" aria-label="Fiberlux"><img src="assets/logo.svg" alt="Fiberlux" style="display:block;width:124px;height:auto"></a>
+      </div>
+      <button onClick="{{ m_openSearch }}" aria-label="Buscar" style="width:44px;height:44px;border-radius:50%;border:0;background:#453C46;color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:transform .2s, background .3s" style-active="transform:scale(.94);background:#96217A"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section data-screen-label="Hero Soporte" style="max-width:358px;margin:0 auto;padding-top:20px">
+    <div data-reveal="scale" style="position:relative;border-radius:24px;overflow:hidden;background:#1C0F19">
+      <img ref="{{ supImg }}" src="assets/soporte-cover.png" alt="Centro de operaciones Fiberlux" style="position:absolute;left:0;top:-6%;width:100%;height:112%;object-fit:cover;will-change:transform">
+      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,15,25,.88) 0%,rgba(28,15,25,.72) 55%,rgba(28,15,25,.9) 100%)"></div>
+      <div style="position:relative;display:flex;flex-direction:column;padding:36px 24px 32px">
+        <div data-reveal="up" style="display:flex;align-items:center;gap:8px;font-size:15px;color:#D8D5D8"><a href="Fiberlux Home Mobile.dc.html" style="color:#D8D5D8;transition:color .25s" style-hover="color:#FFFFFF">Inicio</a><span style="color:#E0479E">/</span><span style="color:#FFFFFF;font-weight:500">Soporte técnico</span></div>
+        <h1 data-reveal="up" data-delay="80" style="margin:20px 0 0;max-width:620px;font-size:30px;line-height:1.1;font-weight:500;letter-spacing:-.03em;color:#FFFFFF;text-wrap:balance">Contáctate con nuestros ingenieros especializados</h1>
+        
+        <div data-reveal="up" data-delay="240" style="display:flex;flex-direction:column;align-items:flex-start;gap:16px;margin-top:28px">
+          <span style="font-size:16px;font-weight:500;color:#FFFFFF">¿Tienes algún problema con tu servicio?</span>
+          <a href="#canales" data-hg="1" style="display:inline-flex;align-items:center;gap:14px;height:56px;padding:0 20px 0 8px;border-radius:999px;background:#96217A;color:#FFFFFF;font-size:15px;font-weight:500;transition:background .35s;white-space:nowrap" style-hover="background:#B2308F;color:#FFFFFF"><span data-hs="transform:rotate(-45deg)" style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;color:#96217A;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>Gestiónalo aquí</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANALES -->
+  <section id="canales" data-screen-label="Canales de soporte" style="max-width:358px;margin:24px auto 0">
+    <div data-reveal="up" style="padding:32px 16px 16px;border-radius:24px;background:#F8DCEB">
+      <h2 style="margin:0 8px;font-size:30px;line-height:1.1;font-weight:600;letter-spacing:-.02em;color:#96217A">Soporte Técnico</h2>
+      <p style="margin:12px 8px 0;font-size:16px;line-height:1.55;color:#7F1666">Contáctate con nuestros especialistas al <a href="tel:+5117480606" style="color:#650D4A;font-weight:600" style-hover="color:#96217A">(01) 748 0606</a>. Elige el canal que mejor se adapte a tus necesidades:</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:28px">
+        <sc-for list="{{ chPanels }}" as="p" hint-placeholder-count="3">
+          <div style="border-radius:20px;overflow:hidden;background:#FFFFFF">
+            <button type="button" onClick="{{ p.pick }}" aria-label="{{ p.label }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px;padding:18px 20px;border:0;background:#FDF6FA;cursor:pointer;text-align:left;font-family:Poppins,system-ui,sans-serif">
+              <span style="font-size:16px;font-weight:600;line-height:1.3;color:#2B252C">{{ p.label }}</span>
+              <span style="width:40px;height:40px;flex:none;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center"><sc-if value="{{ p.off }}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></sc-if><sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></sc-if></span>
+            </button>
+            <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:24px 20px 12px;animation:fxChIn .5s cubic-bezier(.16,1,.3,1) both">
+                <h3 style="margin:0;font-size:20px;font-weight:500;letter-spacing:-.01em;color:#2B252C">{{ p.title }}</h3>
+                <p style="margin:8px 0 0;font-size:14px;line-height:1.55;color:#868687">{{ p.desc }}</p>
+                <div style="display:flex;flex-direction:column;margin-top:16px">
+                  <sc-for list="{{ p.rows }}" as="r" hint-placeholder-count="5">
+                    <a href="{{ r.href }}" target="{{ r.target }}" style="display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:{{ r.bd }};color:#2B252C">
+                      <span style="width:40px;height:40px;flex:none;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="{{ p.icon }}"></path></svg></span>
+                      <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                        <span style="display:flex;flex-wrap:wrap;align-items:center;gap:8px"><span style="padding:4px 12px;border-radius:999px;background:#FAF0F6;font-size:12px;font-weight:600;color:#96217A">{{ r.tag }}</span><span style="font-size:16px;color:#2B252C">{{ r.val }}</span></span>
+                        <span style="font-size:13px;color:#A39AA4">{{ r.opt }}</span>
+                      </span>
+                    </a>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUCIONES -->
+  <section id="soluciones" data-screen-label="Soluciones" style="position:relative;width:358px;margin:64px auto 0">
+    <div data-reveal="up">
+      <div style="font:500 12px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ SOLUCIONES ]</div>
+      <h2 style="margin:14px 0 0;font-size:32px;line-height:1.12;font-weight:400;letter-spacing:-.02em;color:#453C46"><span style="font-weight:600;color:#96217A">Soluciones</span> para tu empresa</h2>
+      <p style="margin:14px 0 0;font-size:15px;line-height:1.6;color:#6B636C">Diseñadas para operaciones que no pueden detenerse. Toca cada una para explorarla.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:28px">
+      <sc-for list="{{ solAcc }}" as="s" hint-placeholder-count="5">
+        <div data-reveal="up" style="border-radius:22px;overflow:hidden;background:{{ s.bg }};border:1px solid {{ s.border }};transition:background .5s, border-color .5s">
+          <button onClick="{{ s.toggle }}" aria-expanded="{{ s.open }}" style="width:100%;display:flex;align-items:center;gap:14px;min-height:72px;padding:{{ s.hp }} 16px;background:none;border:0;text-align:left;cursor:pointer;font-family:Poppins">
+            <span style="width:44px;height:44px;flex:none;border-radius:12px;display:grid;place-items:center;background:{{ s.iconBg }};border:1px solid {{ s.iconBorder }};color:{{ s.color }};transition:all .5s"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ s.icon }}"></path></svg></span>
+            <span style="flex:1;font-size:17px;font-weight:500;line-height:1.25;color:{{ s.color }};transition:color .5s">{{ s.t }}</span>
+            <span style="width:32px;height:32px;flex:none;border-radius:50%;display:grid;place-items:center;background:{{ s.plusBg }};color:{{ s.plusColor }};transform:rotate({{ s.rot }});transition:transform .5s cubic-bezier(.2,.8,.2,1), background .5s"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></span>
+          </button>
+          <div style="display:grid;grid-template-rows:{{ s.rows }};transition:grid-template-rows .6s cubic-bezier(.65,0,.35,1)">
+            <div style="overflow:hidden">
+              <div style="padding:8px 8px 16px;opacity:{{ s.op }};transition:opacity .4s {{ s.delay }}">
+                <div style="position:relative;height:168px;border-radius:16px;overflow:hidden;background:#7F1666"><img src="{{ s.cover }}" alt="{{ s.t }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+                <div style="padding:16px 8px 8px">
+                  <p style="margin:0;font-size:14px;line-height:1.6;color:#F3DDEC">{{ s.d }}</p>
+                  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:14px">
+                    <sc-for list="{{ s.tags }}" as="tag" hint-placeholder-count="4"><span style="padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);font-size:12px;color:#FFFFFF">{{ tag }}</span></sc-for>
+                  </div>
+                  <a href="{{ s.href }}" style="display:flex;align-items:center;justify-content:space-between;height:48px;margin-top:18px;padding:0 6px 0 20px;border-radius:999px;background:#FFFFFF;color:#96217A;font-size:14px;font-weight:500" style-active="background:#F2F1F2">Conoce más<span style="width:36px;height:36px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section id="testimonios" data-screen-label="Testimonios" style="padding:59px 0 0">
+    <div style="max-width:358px;margin:0 auto">
+      <div style="display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:20px">
+        <div data-reveal="up">
+          <div style="font:500 13px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">[ TESTIMONIOS ]</div>
+          <h2 style="margin:18px 0 0;font-size:33px;line-height:1.1;font-weight:400;letter-spacing:-.02em;color:#453C46"><span style="font-weight:600;color:#96217A">Empresas</span> que confían en nuestra red</h2>
+        </div>
+        <div style="display:flex;gap:12px">
+          <button onClick="{{ prevT }}" aria-label="Anterior" style="width:56px;height:56px;border-radius:50%;border:1px solid #D8D5D8;background:#FFFFFF;color:#453C46;display:grid;place-items:center;cursor:pointer;transition:all .3s" style-hover="background:#453C46;color:#FFFFFF;border-color:#453C46"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+          <button onClick="{{ nextT }}" aria-label="Siguiente" style="width:56px;height:56px;border-radius:50%;border:0;background:#96217A;color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:all .3s" style-hover="background:#7F1666"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+        </div>
+      </div>
+      <div ref="{{ trackWrap }}" data-reveal="up" data-delay="120" style="margin-top:34px;cursor:grab;touch-action:pan-y;user-select:none">
+        <div ref="{{ trackRef }}" style="display:flex;gap:24px;width:max-content;padding:12px 0 24px;transition:transform .8s cubic-bezier(.16,1,.3,1)">
+          <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="4">
+            <article onClick="{{ t.open }}" style="cursor:pointer;width:316px;flex:none;display:flex;flex-direction:column;padding:14px 14px 20px;border-radius:24px;background:#FFFFFF;border:1px solid #ECE9EC;box-shadow:0 1px 2px rgba(17,12,16,.04);transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s, border-color .5s" style-hover="transform:translateY(-8px);border-color:#D8D5D8;box-shadow:0 30px 60px -30px rgba(150,33,122,.35)">
+              <div data-hg="1" style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#F2EEF1">
+                <img data-hs="transform:scale(1.05)" src="{{ t.cover }}" alt="{{ t.company }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)">
+                <div data-hs="transform:scale(1.08)" style="position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center;pointer-events:none;box-shadow:0 0 0 10px rgba(150,33,122,.16);transition:transform .4s cubic-bezier(.2,.8,.2,1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg></div>
+              </div>
+              <div style="display:flex;flex-direction:column;flex:1;padding:24px 14px 0">
+                <div style="height:40px;display:flex;align-items:center"><img src="{{ t.logo }}" alt="{{ t.company }}" style="display:block;max-height:{{ t.lh }};max-width:140px;width:auto"></div>
+                <div style="flex:1"><h3 style="margin:20px 0 0;font-size:18px;line-height:1.4;font-weight:500;letter-spacing:-.01em;color:#453C46;text-wrap:pretty">{{ t.title }}</h3><p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:#6B636C;text-wrap:pretty">{{ t.quote }}</p></div>
+                <div style="margin-top:22px;padding-top:18px;border-top:1px solid #F2F1F2">
+                  <div style="font-size:15px;font-weight:600;color:#453C46">{{ t.name }}</div>
+                  <div style="font-size:13px;color:#868687;margin-top:2px">{{ t.role }}</div>
+                </div>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+      <div style="margin-top:16px;height:2px;background:#ECE9EC;border-radius:2px;overflow:hidden"><div ref="{{ progRef }}" style="height:100%;width:30%;background:#96217A;border-radius:2px;transition:transform .8s cubic-bezier(.16,1,.3,1), width .8s"></div></div>
+    </div>
+  </section>
+
+  <div data-screen-label="CTA casos" style="max-width:358px;margin:0 auto;padding-bottom:0;">
+    <div data-reveal="up" style="display:flex;justify-content:center;margin-top:29px"><a href="Casos de Exito Mobile.dc.html" data-hg="1" style="display:inline-flex;align-items:center;gap:14px;height:56px;padding:0 20px 0 8px;border-radius:999px;background:#96217A;color:#FFFFFF;font-size:15px;font-weight:500;transition:background .35s;white-space:nowrap" style-hover="background:#7F1666;color:#FFFFFF"><span data-hs="transform:rotate(-45deg)" style="width:40px;height:40px;border-radius:50%;background:#FFFFFF;color:#96217A;display:grid;place-items:center;transition:transform .45s cubic-bezier(.2,.8,.2,1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>Ver casos de éxito</a></div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer id="contacto" data-screen-label="Footer" style="margin-top:48px;background:#650D4A;border-radius:28px 28px 0 0;color:#FFFFFF">
+    <div style="width:358px;margin:0 auto;padding:56px 0 120px">
+      <h2 style="margin:0;font-size:32px;line-height:1.12;font-weight:600;letter-spacing:-.02em">Potencia tu conectividad empresarial</h2>
+      <div style="display:flex;gap:10px;margin-top:24px">
+        <sc-for list="{{ m_socials }}" as="so" hint-placeholder-count="5"><a href="{{ so.href }}" target="_blank" rel="noopener" aria-label="{{ so.label }}" style="display:block;width:44px;height:44px"><img src="{{ so.src }}" alt="{{ so.label }}" style="display:block;width:44px;height:44px"></a></sc-for>
+      </div>
+      <div style="margin-top:40px;border-top:1px solid rgba(255,255,255,.16)">
+        <sc-for list="{{ m_fGroups }}" as="g" hint-placeholder-count="4">
+          <div style="border-bottom:1px solid rgba(255,255,255,.16)">
+            <button onClick="{{ g.toggle }}" style="width:100%;height:60px;display:flex;align-items:center;justify-content:space-between;background:none;border:0;padding:0;color:#FFFFFF;font:600 15px Poppins;cursor:pointer">{{ g.t }}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="transform:rotate({{ g.rot }});transition:transform .4s cubic-bezier(.2,.8,.2,1)"><path d="M6 9l6 6 6-6"></path></svg></button>
+            <div style="display:grid;grid-template-rows:{{ g.rows }};transition:grid-template-rows .5s cubic-bezier(.65,0,.35,1)">
+              <div style="overflow:hidden">
+                <div style="display:flex;flex-direction:column;padding-bottom:16px">
+                  <sc-for list="{{ g.links }}" as="l" hint-placeholder-count="5"><a href="{{ l.href }}" style="display:flex;align-items:center;min-height:40px;font-size:14px;color:#E9D3E2" style-active="color:#FFFFFF">{{ l.t }}</a></sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:20px;margin-top:40px">
+        <img src="assets/logo-white.svg" alt="Fiberlux" style="width:132px;height:auto">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;line-height:1.6;color:#E9D3E2"><span>Copyright © 2026 Fiberlux. Diseño y desarrollo por</span><a href="https://twnstudios.com/" target="_blank" rel="noopener" aria-label="TWN Studios" style="display:flex"><img src="assets/twn-logo.svg" alt="TWN Studios" style="display:block;height:13px;width:auto"></a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DRAWER -->
+  <aside aria-hidden="{{ m_dHidden }}" style="position:fixed;top:0;bottom:0;left:50%;width:390px;margin-left:-195px;z-index:100;background:#96217A;color:#FFFFFF;display:flex;flex-direction:column;overflow:hidden;clip-path:{{ m_dClip }};transition:clip-path .7s cubic-bezier(.76,0,.24,1);pointer-events:{{ m_dPe }}">
+    <div style="flex:none;width:358px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between;font-size:14px">
+      <div style="display:flex;gap:24px"><span style="font-weight:600;color:#FFFFFF">Empresas</span><a href="https://negocios.fiberlux.pe/" style="font-weight:500;color:#F3DDEC">Negocios</a></div>
+      <span style="display:flex;align-items:center;gap:6px;font-weight:600">ES<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"></path></svg></span>
+    </div>
+    <div style="flex:none;width:358px;margin:0 auto;height:64px;display:flex;align-items:center">
+      <button onClick="{{ m_drawerClose }}" style="display:flex;align-items:center;gap:14px;height:44px;background:none;border:0;padding:0;color:#FFFFFF;font:600 17px Poppins;cursor:pointer"><span style="display:block;width:28px;height:2px;background:#FFFFFF"></span>Cerrar</button>
+    </div>
+    <div style="position:relative;flex:1;overflow:hidden">
+      <div style="position:absolute;inset:0;overflow-y:auto;transform:translateX({{ m_mainX }});opacity:{{ m_mainOp }};transition:transform .55s cubic-bezier(.65,0,.35,1), opacity .4s">
+        <div style="width:358px;margin:0 auto;padding:40px 0 140px">
+          <nav style="display:flex;flex-direction:column">
+            <sc-for list="{{ m_drawerMain }}" as="dl" hint-placeholder-count="6">
+              <a href="{{ dl.href }}" onClick="{{ dl.click }}" style="display:flex;align-items:center;justify-content:space-between;min-height:46px;font-size:31px;line-height:1.15;font-weight:700;letter-spacing:-.01em;color:#FFFFFF;opacity:{{ dl.op }};transform:translateY({{ dl.y }});transition:opacity .5s {{ dl.delay }}, transform .7s cubic-bezier(.16,1,.3,1) {{ dl.delay }}" style-active="color:#F3DDEC">{{ dl.t }}<sc-if value="{{ dl.sub }}" hint-placeholder-val="{{ false }}"><span style="display:flex;color:#E9C7DD"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></sc-if></a>
+            </sc-for>
+          </nav>
+          <div style="height:1px;background:rgba(255,255,255,.24);margin:36px 0 20px"></div>
+          <sc-for list="{{ m_drawerSec }}" as="dl" hint-placeholder-count="4">
+            <a href="{{ dl.href }}" style="display:flex;align-items:center;min-height:48px;padding:4px 0;font-size:17px;line-height:1.4;color:#FFFFFF;opacity:{{ dl.op }};transition:opacity .5s {{ dl.delay }}" style-active="color:#F3DDEC">{{ dl.t }}</a>
+          </sc-for>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:36px">
+            <span style="font-size:15px;color:#E9C7DD">Síguenos</span>
+            <div style="display:flex;gap:4px">
+              <sc-for list="{{ m_socials }}" as="so" hint-placeholder-count="5"><a href="{{ so.href }}" target="_blank" rel="noopener" aria-label="{{ so.label }}" style="display:block;width:44px;height:44px"><img src="{{ so.src }}" alt="{{ so.label }}" style="display:block;width:44px;height:44px"></a></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="position:absolute;inset:0;overflow-y:auto;transform:translateX({{ m_subX }});opacity:{{ m_subOp }};transition:transform .55s cubic-bezier(.65,0,.35,1), opacity .4s">
+        <div style="width:358px;margin:0 auto;padding:40px 0 140px">
+          <button onClick="{{ m_drawerBack }}" style="display:flex;align-items:center;gap:10px;height:44px;background:none;border:0;padding:0;color:#E9C7DD;font:500 19px Poppins;cursor:pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg>Atrás</button>
+          <div style="display:flex;flex-direction:column;margin-top:20px">
+            <sc-for list="{{ m_megaCats }}" as="c" hint-placeholder-count="5">
+              <div>
+                <button onClick="{{ c.toggle }}" style="display:flex;align-items:center;gap:12px;min-height:52px;background:none;border:0;padding:0;color:#FFFFFF;font:700 20px Poppins;text-align:left;cursor:pointer">{{ c.t }}<span style="display:flex;color:#E9C7DD;transform:rotate({{ c.rot }});transition:transform .4s"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></span></button>
+                <div style="display:grid;grid-template-rows:{{ c.rows }};transition:grid-template-rows .5s cubic-bezier(.65,0,.35,1)">
+                  <div style="overflow:hidden">
+                    <div style="display:flex;flex-direction:column;margin:6px 0 16px 4px;padding-left:20px;border-left:2px solid rgba(255,255,255,.22)">
+                      <sc-for list="{{ c.sols }}" as="s" hint-placeholder-count="4"><a href="{{ s.href }}" style="display:flex;align-items:center;min-height:48px;font-size:17px;color:#FFFFFF" style-active="color:#F3DDEC">{{ s.t }}</a></sc-for>
+                      <a href="{{ c.href }}" style="display:flex;align-items:center;min-height:48px;font-size:15px;font-weight:600;color:#E9C7DD">Ver todo {{ c.t }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- SEARCH -->
+  <div role="dialog" aria-label="Buscar" style="position:fixed;top:0;bottom:0;left:50%;width:390px;margin-left:-195px;z-index:120;background:#F7F7F7;display:flex;flex-direction:column;opacity:{{ m_sOp }};transform:translateY({{ m_sY }});pointer-events:{{ m_sPe }};transition:opacity .35s, transform .5s cubic-bezier(.16,1,.3,1)">
+    <div style="width:358px;margin:0 auto;padding-top:16px;display:flex;align-items:center;gap:10px">
+      <div style="flex:1;display:flex;align-items:center;gap:10px;height:52px;padding:0 18px;border-radius:999px;border:1.5px solid #96217A;background:#FFFFFF;box-shadow:0 0 0 4px #F5E9F2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#868687" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+        <input ref="{{ m_searchInput }}" value="{{ m_q }}" onChange="{{ m_onQ }}" placeholder="Busca soluciones" style="flex:1;min-width:0;height:100%;border:0;outline:none;background:transparent;font:400 16px Poppins;color:#453C46">
+      </div>
+      <button onClick="{{ m_closeSearch }}" aria-label="Cerrar" style="width:52px;height:52px;flex:none;border-radius:50%;border:0;background:#453C46;color:#FFFFFF;display:grid;place-items:center;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+    </div>
+    <div style="width:358px;margin:32px auto 0">
+      <div style="font:500 11px 'JetBrains Mono',monospace;letter-spacing:.2em;color:#868687">{{ m_sLabel }}</div>
+      <div style="display:flex;flex-direction:column;margin-top:6px">
+        <sc-for list="{{ m_sResults }}" as="r" hint-placeholder-count="5">
+          <a href="{{ r.href }}" onClick="{{ r.go }}" style="display:flex;align-items:center;justify-content:space-between;min-height:60px;border-bottom:1px solid #ECE9EC;font-size:18px;color:#453C46" style-active="color:#96217A">{{ r.t }}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#96217A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </sc-for>
+        <sc-if value="{{ m_sEmpty }}" hint-placeholder-val="{{ false }}"><div style="padding:20px 0;font-size:15px;color:#868687">Sin resultados. Prueba con otra palabra.</div></sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO VIEWER -->
+  <sc-if value="{{ vmOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ vmClose }}" style="position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:16px;background:rgba(20,8,17,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);animation:fxVmFade .35s ease both">
+      <div onClick="{{ vmStop }}" role="dialog" aria-label="{{ vmTitle }}" style="position:relative;width:min(1120px,100%);border-radius:32px;overflow:hidden;background:#1C0F19;box-shadow:0 60px 120px -40px rgba(0,0,0,.7);animation:fxVmPop .55s cubic-bezier(.16,1,.3,1) both">
+        <div style="position:relative;aspect-ratio:16/9;background:#000">
+          <sc-if value="{{ vmHasYt }}" hint-placeholder-val="{{ false }}"><iframe src="{{ vmSrc }}" title="{{ vmTitle }}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></sc-if>
+          <sc-if value="{{ vmNoYt }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ vmCover }}" alt="{{ vmTitle }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+            <div style="position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(60,14,48,.25),rgba(28,15,25,.85))"></div>
+            <a href="https://www.youtube.com/@fiberlux_peru" target="_blank" rel="noopener" data-hg="1" aria-label="Reproducir" style="position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;background:#96217A;color:#FFFFFF;display:grid;place-items:center;box-shadow:0 0 0 16px rgba(150,33,122,.22);transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s" style-hover="transform:scale(1.08);box-shadow:0 0 0 24px rgba(150,33,122,.18);color:#FFFFFF"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path></svg></a>
+          </sc-if>
+          <div style="position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:16px;padding:24px 28px;background:linear-gradient(180deg,rgba(20,8,17,.75),rgba(20,8,17,0));pointer-events:none">
+            <div style="width:48px;height:48px;flex:none;border-radius:50%;background:#96217A;display:grid;place-items:center"><img src="assets/logo-white.svg" alt="" style="width:34px;height:auto"></div>
+            <div style="min-width:0"><div style="font-size:15px;font-weight:600;color:#FFFFFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ vmTitle }}</div><div style="margin-top:2px;font-size:14px;color:#E9D3E2">Fiberlux Perú</div></div>
+          </div>
+          <button type="button" onClick="{{ vmClose }}" aria-label="Cerrar" style="position:absolute;right:22px;top:22px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(20,8,17,.4);color:#FFFFFF;display:grid;place-items:center;cursor:pointer;transition:background .3s, transform .4s cubic-bezier(.2,.8,.2,1)" style-hover="background:#96217A;transform:rotate(90deg)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:32px;padding:24px 32px">
+          <div style="display:flex;align-items:center;gap:20px;min-width:0">
+            <div style="height:44px;padding:0 14px;border-radius:12px;background:#FFFFFF;display:flex;align-items:center"><img src="{{ vmLogo }}" alt="" style="display:block;max-height:30px;max-width:120px;width:auto"></div>
+            <div style="min-width:0"><div style="font-size:15px;font-weight:600;color:#FFFFFF">{{ vmName }}</div><div style="margin-top:2px;font-size:13px;color:#B7A6B3">{{ vmRole }}</div></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- FLOATING -->
+  <div style="position:fixed;bottom:16px;left:50%;width:358px;margin-left:-179px;z-index:70;display:flex;justify-content:space-between;align-items:flex-end;pointer-events:none;opacity:{{ m_fOp }};transition:opacity .3s">
+    <button aria-label="Accesibilidad" style="width:56px;height:56px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto"><img src="assets/a11y.svg" alt="" style="display:block;width:56px;height:56px"></button>
+    <a href="https://wa.me/51986176790" aria-label="WhatsApp" style="width:56px;height:56px;border-radius:50%;display:block;box-shadow:0 10px 24px -8px rgba(37,211,102,.6);pointer-events:auto"><img src="assets/wa-float.svg" alt="" style="display:block;width:56px;height:56px"></a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;smoothScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;revealOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;navAutoHide&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Navegación&quot;}}">
+const M_ICONS = {
+  wifi: 'M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4',
+  server: 'M4 3h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM4 13h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM6 7h.01M6 17h.01',
+  building: 'M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1',
+  chat: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'
+};
+
+const M_SOL = [
+  { href: 'Categoria Mobile.dc.html?c=conectividad', key: 'conectividad', t: 'Conectividad empresarial', icon: M_ICONS.wifi, d: 'Internet dedicado y redes privadas sobre fibra óptica, con SLA garantizado para operaciones que no pueden detenerse.', tags: ['Internet corporativo', 'Radioenlaces', 'Alta disponibilidad', 'Fibra oscura'] },
+  { href: 'Ciberseguridad Mobile.dc.html', key: 'ciberseguridad', t: 'Ciberseguridad', icon: M_ICONS.shield, d: 'Protección gestionada 24/7 de tu red, usuarios y datos frente a amenazas que evolucionan cada día.', tags: ['Firewall gestionado', 'Anti-DDoS', 'SOC 24/7', 'SASE'] },
+  { href: 'Categoria Mobile.dc.html?c=data-center', key: 'datacenter', t: 'Data Center', icon: M_ICONS.server, d: 'Colocation, nube privada y continuidad de negocio sobre infraestructura propia en Perú.', tags: ['Colocation', 'Nube privada', 'Backup', 'Continuidad'] },
+  { href: 'Categoria Mobile.dc.html?c=infraestructura', key: 'infrastructure', t: 'Infraestructura', icon: M_ICONS.building, d: 'Diseño, despliegue y mantenimiento de redes físicas e inalámbricas a la medida de cada sede.', tags: ['Cableado estructurado', 'Redes LAN / WiFi', 'Energía y UPS', 'NOC'] },
+  { href: 'Categoria Mobile.dc.html?c=comunicaciones', key: 'comunicaciones', t: 'Comunicaciones unificadas', icon: M_ICONS.chat, d: 'Telefonía IP, colaboración y contact center en una sola plataforma, desde cualquier lugar.', tags: ['Telefonía IP', 'SIP Trunk', 'Central virtual', 'Colaboración'] }
+];
+
+const M_SOCIALS = [{ src: 'assets/fb.svg', label: 'Facebook', href: 'https://www.facebook.com/fiberluxsac' }, { src: 'assets/in.svg', label: 'LinkedIn', href: 'https://www.linkedin.com/company/fiberlux-peru/' }, { src: 'assets/ig.svg', label: 'Instagram', href: 'https://www.instagram.com/fiberlux_peru' }, { src: 'assets/wa.svg', label: 'WhatsApp', href: 'https://wa.me/51986176790' }, { src: 'assets/yt.svg', label: 'YouTube', href: 'https://www.youtube.com/@fiberlux_peru' }];
+
+const M_MEGA = [
+  { t: 'Conectividad', href: 'Categoria Mobile.dc.html?c=conectividad', sols: [['Internet Dedicado', 'internet-dedicado'], ['Alta Disponibilidad', 'alta-disponibilidad'], ['Acceso Satelital', 'acceso-satelital'], ['LAN to LAN', 'lan-to-lan'], ['Fibra Oscura', 'fibra-oscura'], ['SD-WAN', 'sd-wan']] },
+  { t: 'Ciberseguridad', href: 'Ciberseguridad Mobile.dc.html', sols: [['Cyberguard Start', '#planes'], ['Cyberguard Pro', '#planes'], ['Cyberguard Max', '#planes']] },
+  { t: 'Data Center', href: 'Categoria Mobile.dc.html?c=data-center', sols: [['Virtual Server', 'virtual-server'], ['Backup as a Service (BaaS)', 'baas'], ['Disaster Recovery (DRaaS)', 'draas'], ['Virtual Desktop', 'virtual-desktop'], ['Autocontenido (on premise)', 'autocontenido'], ['NAS (on premise)', 'nas'], ['Construcción de Data Center', 'construccion-dc']] },
+  { t: 'Infraestructura', href: 'Categoria Mobile.dc.html?c=infraestructura', sols: [['WiFi Gestionado', 'wifi-gestionado'], ['Servidores', 'servidores'], ['Video Vigilancia', 'video-vigilancia']] },
+  { t: 'Comunicaciones Unificadas', href: 'Categoria Mobile.dc.html?c=comunicaciones', sols: [['Comunicaciones Unificadas (UCaaS)', 'ucaas'], ['Cloud PBX', 'cloud-pbx'], ['Colaboración IA', 'colaboracion-ia'], ['Contact Center Multicanal', 'contact-center']] }
+];
+
+const M_LEGAL = { 'Libro de reclamaciones': 'libro', 'Tratamiento de datos personales': 'datos', 'Política de Cookies': 'datos', 'Política de Privacidad': 'datos', 'Política de videovigilancia': 'datos', 'Política de SST': 'datos', 'Manual de derechos ARCO': 'arco', 'Formulario de solicitud de derechos ARCO': 'arco', 'Guía de presentación de Reclamos de OSIPTEL': 'libro', 'Formulario de reclamo': 'reclamo', 'Formulario de apelación': 'apelacion', 'Formulario de queja': 'queja' };
+
+const M_FOOT = [
+  { t: 'Servicios', links: [['Conectividad', 'Categoria Mobile.dc.html?c=conectividad'], ['Ciberseguridad', 'Ciberseguridad Mobile.dc.html'], ['Data Center', 'Categoria Mobile.dc.html?c=data-center'], ['Infraestructura', 'Categoria Mobile.dc.html?c=infraestructura'], ['Comunicaciones Unificadas', 'Categoria Mobile.dc.html?c=comunicaciones']] },
+  { t: 'Sobre nosotros', links: [['Nosotros', 'Nosotros Mobile.dc.html'], ['Casos de éxito', 'Casos de Exito Mobile.dc.html'], ['Blog', 'Blog Mobile.dc.html'], ['Soporte técnico', 'Soporte Mobile.dc.html'], ['Contacto', 'Contacto Mobile.dc.html'], ['Formas de pago', 'Formas de Pago Mobile.dc.html']] },
+  { t: 'Legales', links: Object.keys(M_LEGAL).map(t => [t, 'Legal Mobile.dc.html?p=' + M_LEGAL[t]]) },
+  { t: 'Solicitudes', links: [['Cancelación de servicio', 'Soporte Mobile.dc.html'], ['Suspensión temporal del servicio', 'Soporte Mobile.dc.html']] }
+];
+
+const M_CH = self => {
+  const m = self.state.mcs || {};
+  const set = o => self.setState(s => ({ mcs: { ...(s.mcs || {}), ...o } }));
+  const lock = on => { document.body.style.overflow = on ? 'hidden' : ''; if (self.lenis) on ? self.lenis.stop() : self.lenis.start(); };
+  const close = () => { set({ drawer: false }); lock(false); setTimeout(() => set({ sub: false, mc: -1 }), 700); };
+  self.m_si = self.m_si || React.createRef();
+  const drawer = !!m.drawer, sub = !!m.sub, mc = m.mc == null ? -1 : m.mc, foot = m.foot == null ? -1 : m.foot, search = !!m.search, q = m.q || '';
+  const main = [['Soluciones', '#', true], ['Nosotros', 'Nosotros Mobile.dc.html'], ['Casos de éxito', 'Casos de Exito Mobile.dc.html'], ['Blog', 'Blog Mobile.dc.html'], ['Soporte técnico', 'Soporte Mobile.dc.html'], ['Contacto', 'Contacto Mobile.dc.html']];
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const qq = norm(q.trim());
+  const res = M_SOL.filter(s => !qq || norm(s.t).includes(qq) || s.tags.some(g => norm(g).includes(qq))).map(s => ({ t: s.t, href: s.href, go: () => { set({ search: false }); lock(false); } }));
+  return {
+    m_openDrawer: () => { set({ drawer: true, sub: false, mc: -1 }); lock(true); },
+    m_drawerClose: () => close(), m_drawerBack: () => sub ? set({ sub: false, mc: -1 }) : close(),
+    m_backLabel: sub ? 'Soluciones' : 'Cerrar', m_inSub: sub, m_notSub: !sub,
+    m_dClip: drawer ? 'inset(0 0 0 0 round 0px)' : 'inset(0 0 100% 0 round 0 0 40px 40px)', m_dPe: drawer ? 'auto' : 'none', m_dHidden: drawer ? 'false' : 'true',
+    m_mainX: sub ? '-30%' : '0%', m_mainOp: sub ? 0 : 1, m_subX: sub ? '0%' : '100%', m_subOp: sub ? 1 : 0,
+    m_drawerMain: main.map(([t, href, isSub], i) => ({ t, href, sub: !!isSub, op: drawer ? 1 : 0, y: drawer ? '0px' : '24px', delay: drawer ? (0.25 + i * 0.05) + 's' : '0s', click: isSub ? e => { e.preventDefault(); set({ sub: true }); } : () => close() })),
+    m_drawerSec: [['Formas de pago', 'Formas de Pago Mobile.dc.html'], ['Fiberlux App', 'Fiberlux App Mobile.dc.html'], ['Portal de trabajo', '#'], ['Información a abonados y usuarios', '#']].map(([t, href], i) => ({ t, href, op: drawer ? 1 : 0, delay: drawer ? (0.5 + i * 0.05) + 's' : '0s' })),
+    m_megaCats: M_MEGA.map((c, i) => { const on = i === mc; return { t: c.t, href: c.href, bg: on ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,0)', rot: on ? '90deg' : '0deg', rows: on ? '1fr' : '0fr', toggle: () => set({ mc: on ? -1 : i }), sols: c.sols.map(s => ({ t: s[0], href: s[1].charAt(0) === '#' ? 'Ciberseguridad Mobile.dc.html' + s[1] : 'Solucion Mobile.dc.html?s=' + s[1] })) }; }),
+    m_socials: M_SOCIALS,
+    m_fGroups: M_FOOT.map((g, i) => ({ t: g.t, rows: foot === i ? '1fr' : '0fr', rot: foot === i ? '180deg' : '0deg', toggle: () => set({ foot: foot === i ? -1 : i }), links: g.links.map(([t, href]) => ({ t, href })) })),
+    m_openSearch: () => { set({ search: true }); lock(true); setTimeout(() => self.m_si.current && self.m_si.current.focus(), 300); },
+    m_closeSearch: () => { set({ search: false }); lock(false); },
+    m_searchInput: self.m_si, m_q: q, m_onQ: e => set({ q: e.target.value }),
+    m_sOp: search ? 1 : 0, m_sPe: search ? 'auto' : 'none', m_sY: search ? '0px' : '24px',
+    m_sLabel: q.trim() ? 'RESULTADOS' : 'SOLUCIONES SUGERIDAS', m_sResults: res, m_sEmpty: !res.length,
+    m_fOp: drawer || search ? 0 : 1
+  };
+};
+
+const ICONS = {
+  wifi: 'M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01',
+  shield: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4',
+  server: 'M4 3h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM4 13h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2zM6 7h.01M6 17h.01',
+  building: 'M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1',
+  chat: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'
+};
+const SOL = [
+  { href: 'Categoria Mobile.dc.html?c=conectividad', t: 'Conectividad empresarial', icon: ICONS.wifi, d: 'Internet dedicado y redes privadas sobre fibra óptica, con SLA garantizado para operaciones que no pueden detenerse.', tags: ['Internet corporativo', 'Radioenlaces', 'Alta disponibilidad', 'Fibra oscura'] },
+  { href: 'Ciberseguridad Mobile.dc.html', t: 'Ciberseguridad', icon: ICONS.shield, d: 'Protección gestionada 24/7 de tu red, usuarios y datos frente a amenazas que evolucionan cada día.', tags: ['Firewall gestionado', 'Anti-DDoS', 'SOC 24/7', 'SASE'] },
+  { href: 'Categoria Mobile.dc.html?c=data-center', t: 'Data Center', icon: ICONS.server, d: 'Colocation, nube privada y continuidad de negocio sobre infraestructura propia en Perú.', tags: ['Colocation', 'Nube privada', 'Backup', 'Continuidad'] },
+  { href: 'Categoria Mobile.dc.html?c=infraestructura', t: 'Infraestructura', icon: ICONS.building, d: 'Diseño, despliegue y mantenimiento de redes físicas e inalámbricas a la medida de cada sede.', tags: ['Cableado estructurado', 'Redes LAN / WiFi', 'Energía y UPS', 'NOC'] },
+  { href: 'Categoria Mobile.dc.html?c=comunicaciones', t: 'Comunicaciones unificadas', icon: ICONS.chat, d: 'Telefonía IP, colaboración y contact center en una sola plataforma, desde cualquier lugar.', tags: ['Telefonía IP', 'SIP Trunk', 'Central virtual', 'Colaboración'] }
+];
+const CERTS = [
+  { code: '27001', name: 'ISO/IEC 27001', desc: 'Sistemas de gestión de seguridad de la información' }
+];
+const TESTI_OLD = [
+  { company: 'Boticas Hogar y Salud', quote: 'La cobertura de Fiberlux nos permite abrir más sedes a nivel nacional. Este año aperturamos locales en Arequipa, Huancayo y Barranca, sumando 36 sedes.', name: 'Bernardo Olivar', role: 'Subgerente de Seguridad de la Información', ini: 'BO' },
+  { company: 'Clínica Internacional', quote: 'Nuestras historias clínicas viven en la nube privada de Fiberlux. El respaldo y la recuperación ante desastres nos permiten operar sin interrupciones.', name: 'Mariana Prado', role: 'Directora de Tecnología', ini: 'MP' },
+  { company: 'Gloria', quote: 'Con enlaces redundantes en nuestras plantas, la producción ya no depende de un solo proveedor. La respuesta del NOC es inmediata.', name: 'Luis Herrera', role: 'Gerente de Infraestructura TI', ini: 'LH' },
+  { company: 'Cámara de Comercio de Lima', quote: 'Migramos nuestra central telefónica a comunicaciones unificadas y redujimos costos operativos sin perder calidad de atención.', name: 'Andrea Salas', role: 'Jefa de Sistemas', ini: 'AS' },
+  { company: 'Universidad del Pacífico', quote: 'Miles de estudiantes conectados al mismo tiempo, con una red estable y un soporte que entiende el ritmo académico.', name: 'Jorge Medina', role: 'Director de TI', ini: 'JM' },
+  { company: 'Grupo Retail Andino', quote: 'El firewall gestionado de Cyberguard bloqueó intentos de intrusión que antes ni siquiera detectábamos.', name: 'Carla Núñez', role: 'CISO', ini: 'CN' }
+];
+const TESTI = [
+  { company: 'Boticas Hogar y Salud', logo: 'assets/client-boticas.png', lh: '34px', title: 'La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir más sedes a nivel nacional.', quote: 'Este año hemos aperturado locales en provincia como Arequipa, Huancayo y Barranca contando con el servicio de Fiberlux. En el 2022 sumamos 36 sedes adicionales y actualmente contamos con 115 sedes.', name: 'Bernardo Olivar', role: 'Jefe de Tecnología, Informática y Comunicaciones' },
+  { company: 'Cámara de Comercio e Industria de Arequipa', logo: 'assets/client-camara.png', lh: '40px', title: 'La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales.', quote: 'Fiberlux ha sido un pilar en esa transición y en fortalecer nuestro vínculo con los empresarios arequipeños.', name: 'Broswi Gálvez', role: 'Gerente General' },
+  { company: 'Grupo Gloria', logo: 'assets/client-gloria.png', lh: '44px', title: 'A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G.', quote: 'Los tiempos de respuesta mejoraron notablemente, dando eficiencia acorde a la necesidad entre la Sede Principal corporativa y la Planta Huachipa.', name: 'Gustavo Pazos', role: 'Gerente de TI' }
+];
+const POSTS = [
+  { tag: 'Telefonía IP', title: 'Telefonía IP: ¿cómo transformar la comunicación de tu empresa?', meta: '27 JUN 2026 · 5 MIN', img: 'assets/insight2.webp', hasImg: true, noImg: false },
+  { tag: 'Conectividad', title: 'MVNO: la guía definitiva para empresas', meta: '12 JUN 2026 · 7 MIN', img: 'assets/insight1.webp', hasImg: true, noImg: false },
+  { tag: 'Ciberseguridad', title: '5 amenazas que tu empresa debe anticipar este año', meta: '30 MAY 2026 · 6 MIN', img: 'assets/insight3.webp', hasImg: true, noImg: false }
+];
+const PA = ['Yealink', 'Fanvil', 'Yeastar', 'Sangoma', 'Grandstream', 'Ubiquiti'];
+const PB = ['aws', 'Azure', 'Veeam', 'H3C', 'Peplink', 'Fortinet'];
+const SOCIALS = [{ src: 'assets/fb.svg', label: 'Facebook', href: 'https://www.facebook.com/fiberluxsac' }, { src: 'assets/in.svg', label: 'LinkedIn', href: 'https://www.linkedin.com/company/fiberlux-peru/' }, { src: 'assets/ig.svg', label: 'Instagram', href: 'https://www.instagram.com/fiberlux_peru' }, { src: 'assets/wa.svg', label: 'WhatsApp', href: 'https://wa.me/51986176790' }, { src: 'assets/yt.svg', label: 'YouTube', href: 'https://www.youtube.com/@fiberlux_peru' }];
+const MEGA = [
+  { t: 'Conectividad', href: 'Categoria Mobile.dc.html?c=conectividad', label: 'SOLUCIONES', sols: [['Internet Dedicado', 'internet-dedicado'], ['Alta Disponibilidad', 'alta-disponibilidad'], ['Acceso Satelital', 'acceso-satelital'], ['LAN to LAN', 'lan-to-lan'], ['Fibra Oscura', 'fibra-oscura'], ['SD-WAN', 'sd-wan']] },
+  { t: 'Ciberseguridad', href: 'Ciberseguridad Mobile.dc.html', label: 'PLANES CYBERGUARD', sols: [['Cyberguard Start', '#planes'], ['Cyberguard Pro', '#planes'], ['Cyberguard Max', '#planes']] },
+  { t: 'Data Center', href: 'Categoria Mobile.dc.html?c=data-center', label: 'SOLUCIONES', sols: [['Virtual Server', 'virtual-server'], ['Backup as a Service (BaaS)', 'baas'], ['Disaster Recovery (DRaaS)', 'draas'], ['Virtual Desktop', 'virtual-desktop'], ['Autocontenido (on premise)', 'autocontenido'], ['NAS (on premise)', 'nas'], ['Construcción de Data Center', 'construccion-dc']] },
+  { t: 'Infraestructura', href: 'Categoria Mobile.dc.html?c=infraestructura', label: 'SOLUCIONES', sols: [['WiFi Gestionado', 'wifi-gestionado'], ['Servidores', 'servidores'], ['Video Vigilancia', 'video-vigilancia']] },
+  { t: 'Comunicaciones Unificadas', href: 'Categoria Mobile.dc.html?c=comunicaciones', label: 'SOLUCIONES', sols: [['Comunicaciones Unificadas (UCaaS)', 'ucaas'], ['Cloud PBX', 'cloud-pbx'], ['Colaboración IA', 'colaboracion-ia'], ['Contact Center Multicanal', 'contact-center']] }
+];
+const vmAdd = (self, list) => list.map(t => ({ ...t, open: () => self.setState({ vm: { company: t.company, cover: t.cover || t.img, logo: t.logo, name: t.name, role: t.role, yt: t.yt || '' } }) }));
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = t => 1 - Math.pow(1 - t, 3);
+
+class Component extends DCLogic {
+  state = { ch: 1, vm: null, mc: 0, sede: '', dd: false, drawer: false, sol: 0, cert: 0, search: false, q: '' };
+  searchInput = React.createRef(); supImg = React.createRef();
+  navRef = React.createRef(); mapRef = React.createRef(); vidSec = React.createRef(); vidCard = React.createRef(); vidInner = React.createRef();
+  mq1 = React.createRef(); mq2 = React.createRef(); handsSec = React.createRef(); handL = React.createRef(); handR = React.createRef(); spark = React.createRef();
+  cyberGlow = React.createRef(); trackRef = React.createRef(); trackWrap = React.createRef(); progRef = React.createRef();
+  tx = 0; lastY = 0;
+
+  componentDidMount() { window.addEventListener('keydown', e => { if (e.key === 'Escape' && this.state.vm) this.setState({ vm: null }); });
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    document.addEventListener('click', this.onAnchor);
+    if (this.props.smoothScroll === true) this.initLenis();
+    if (this.props.revealOnScroll !== false) this.initReveal();
+    this.initCounters();
+    this.initDrag();
+    this.bindHover();
+    this.onScroll();
+    this.updateTrack();
+    const v = this.vidInner.current; if (v) { v.muted = true; v.defaultMuted = true; v.volume = 0; v.setAttribute("muted", ""); const pl = () => v.play().catch(() => {}); pl(); v.addEventListener("canplay", pl, { once: true }); }
+  }
+  componentDidUpdate() { this.bindHover(); }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
+    document.removeEventListener('click', this.onAnchor);
+    cancelAnimationFrame(this.raf); clearInterval(this.li); clearInterval(this.ct); clearTimeout(this.rt);
+    this.onVis && document.removeEventListener('visibilitychange', this.onVis);
+    if (this.lenis) this.lenis.destroy();
+    this.io && this.io.disconnect(); this.cio && this.cio.disconnect();
+  }
+
+  initLenis() {
+    const go = () => {
+      if (this.lenis) return true;
+      if (!window.Lenis) return false;
+      this.lenis = new window.Lenis({ lerp: 0.085, smoothWheel: true });
+      const raf = t => { this.lenis.raf(t); this.raf = requestAnimationFrame(raf); };
+      this.raf = requestAnimationFrame(raf);
+      return true;
+    };
+    if (!go()) { let n = 0; this.li = setInterval(() => { if (go() || ++n > 24) clearInterval(this.li); }, 250); }
+  }
+
+  onAnchor = e => {
+    const a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href');
+    e.preventDefault();
+    if (id.length < 2) return;
+    const t = document.querySelector(id);
+    if (this.state.drawer || this.state.dd) this.setState({ drawer: false, dd: false });
+    if (!t) return;
+    if (this.lenis) this.lenis.scrollTo(t, { offset: -100, duration: 1.6 });
+    else window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+  };
+
+  initReveal() {
+    if (document.visibilityState !== 'visible' || (window.matchMedia && window.matchMedia('print').matches) || !window.IntersectionObserver) return;
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    this.io = new IntersectionObserver(es => { this.ioFired = true; es.forEach(en => {
+      if (!en.isIntersecting) return;
+      show(en.target); this.io.unobserve(en.target);
+    }); }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    const H = window.innerHeight;
+    const hidden = [];
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.getBoundingClientRect().top < H * 0.92) return;
+      const d = +(el.dataset.delay || 0);
+      const init = el.dataset.reveal === 'scale' ? 'scale(.94)' : 'translateY(56px)';
+      el.style.transition = (el.style.transition ? el.style.transition + ', ' : '') + `opacity 1s cubic-bezier(.16,1,.3,1) ${d}ms, transform 1.2s cubic-bezier(.16,1,.3,1) ${d}ms`;
+      el.style.opacity = '0'; el.style.transform = init;
+      hidden.push(el); this.io.observe(el);
+    });
+    this.rt = setTimeout(() => { if (!this.ioFired) { hidden.forEach(show); this.io.disconnect(); } }, 2000);
+    this.onVis = () => { if (document.visibilityState !== 'visible') hidden.forEach(show); };
+    document.addEventListener('visibilitychange', this.onVis);
+    window.addEventListener('beforeprint', () => hidden.forEach(show));
+  }
+
+  initCounters() {
+    if (!window.IntersectionObserver) return;
+    const els = document.querySelectorAll('[data-count]');
+    this.cio = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target; this.cio.unobserve(el);
+      if (document.visibilityState !== 'visible') return;
+      const end = +el.dataset.count, pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+      const t0 = performance.now(), dur = 1800;
+      const step = now => {
+        const p = clamp((now - t0) / dur, 0, 1);
+        el.textContent = pre + Math.round(end * (1 - Math.pow(2, -10 * p))).toLocaleString('es-PE').replace(/,/g, '') + suf;
+        if (p < 1) requestAnimationFrame(step); else el.textContent = pre + end + suf;
+      };
+      el.textContent = pre + '0' + suf;
+      requestAnimationFrame(step);
+      setTimeout(() => { el.textContent = pre + end + suf; }, dur + 400);
+    }), { threshold: 0.5 });
+    els.forEach(el => this.cio.observe(el));
+  }
+
+  bindHover() {
+    document.querySelectorAll('[data-hg]').forEach(g => {
+      if (g.__hg) return; g.__hg = 1;
+      const kids = () => [...g.querySelectorAll('[data-hs]')].filter(el => el.closest('[data-hg]') === g);
+      g.addEventListener('mouseenter', () => kids().forEach(el => {
+        if (el.__o == null) el.__o = el.getAttribute('style') || '';
+        el.setAttribute('style', el.__o + ';' + el.dataset.hs);
+      }));
+      g.addEventListener('mouseleave', () => kids().forEach(el => {
+        if (el.__o != null) { el.setAttribute('style', el.__o); el.__o = null; }
+      }));
+    });
+  }
+
+  onScroll = () => {
+    const y = window.scrollY, H = window.innerHeight;
+    const n = this.navRef.current;
+    if (n) {
+      const hide = this.props.navAutoHide !== false && y > 400 && y > this.lastY + 2 && !this.state.drawer && !this.state.dd;
+      if (hide) n.style.transform = 'translateY(-110%)';
+      else if (y < this.lastY - 2 || y <= 400) n.style.transform = 'translateY(0)';
+      const solid = y > 40;
+      n.style.background = solid ? 'rgba(247,247,247,.82)' : 'rgba(247,247,247,0)';
+      n.style.backdropFilter = solid ? 'blur(18px) saturate(1.4)' : 'none';
+      n.style.webkitBackdropFilter = n.style.backdropFilter;
+      n.style.boxShadow = solid ? '0 1px 0 #E6E3E6' : 'none';
+    }
+    this.lastY = y;
+    if (this.mapRef.current) this.mapRef.current.style.transform = `translate3d(0,${Math.min(y, 900) * 0.18}px,0)`;
+    
+
+    const vs = this.vidSec.current, vc = this.vidCard.current;
+    if (vs && vc) {
+      const r = vs.getBoundingClientRect();
+      const p = ease(clamp(-r.top / Math.max(1, r.height - H), 0, 1));
+      const it = 6 * (1 - p), ib = 42 * (1 - p), ix = 28 * (1 - p), rad = 28 * (1 - p);
+      vc.style.clipPath = `inset(${it}% ${ix}% ${ib}% ${ix}% round ${rad}px)`;
+      if (this.vidInner.current) this.vidInner.current.style.transform = `scale(${1.18 - 0.18 * p})`;
+      const raw = clamp((H - r.top) / (r.height + H), 0, 1);
+      if (this.mq1.current) this.mq1.current.style.transform = `translate3d(${-raw * 900}px,0,0)`;
+      if (this.mq2.current) this.mq2.current.style.transform = `translate3d(${-900 + raw * 900}px,0,0)`;
+    }
+
+    if (this.supImg.current) this.supImg.current.style.transform = `translate3d(0,${Math.min(y, 800) * 0.1}px,0)`;
+    const hs = this.handsSec.current;
+    if (hs && this.handL.current) {
+      const r = hs.getBoundingClientRect();
+      const c = r.top + r.height * 0.55 - H / 2;
+      const p = ease(clamp(1 - c / (H * 0.75), 0, 1));
+      const off = (1 - p) * window.innerWidth * 0.2;
+      this.handL.current.style.transform = `translate3d(${-off}px,0,0)`;
+      this.handR.current.style.transform = `translate3d(${off}px,0,0)`;
+    }
+  };
+
+  initDrag() {
+    const w = this.trackWrap.current, t = this.trackRef.current;
+    if (!w || !t) return;
+    let sx = 0, st = 0, drag = false, moved = 0;
+    w.addEventListener('pointerdown', e => { drag = true; moved = 0; sx = e.clientX; st = this.tx; t.style.transition = 'none'; w.style.cursor = 'grabbing'; w.setPointerCapture(e.pointerId); });
+    w.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - sx; moved = Math.abs(dx);
+      const min = this.minTx(); let v = st + dx;
+      if (v > 0) v = v * 0.35; if (v < min) v = min + (v - min) * 0.35;
+      this.tx = v; t.style.transform = `translate3d(${v}px,0,0)`;
+    });
+    const end = () => { if (!drag) return; drag = false; w.style.cursor = 'grab'; t.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)'; this.tx = clamp(this.tx, this.minTx(), 0); this.updateTrack(); };
+    w.addEventListener('pointerup', end); w.addEventListener('pointercancel', end);
+    w.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+  }
+  minTx() { const w = this.trackWrap.current, t = this.trackRef.current; return w && t ? Math.min(0, w.clientWidth - t.scrollWidth) : 0; }
+  updateTrack() {
+    const t = this.trackRef.current, w = this.trackWrap.current, pr = this.progRef.current;
+    if (!t || !w) return;
+    t.style.transform = `translate3d(${this.tx}px,0,0)`;
+    if (pr) {
+      const frac = clamp(w.clientWidth / t.scrollWidth, 0.1, 1), min = this.minTx();
+      const pos = min ? this.tx / min : 0;
+      pr.style.width = frac * 100 + '%';
+      pr.style.transform = `translateX(${pos * (1 / frac - 1) * 100}%)`;
+    }
+  }
+  slideT(dir) { this.tx = clamp(this.tx - dir * 328, this.minTx(), 0); if (this.trackRef.current) this.trackRef.current.style.transition = 'transform .8s cubic-bezier(.16,1,.3,1)'; this.updateTrack(); }
+
+  startCertTimer() { clearInterval(this.ct); this.ct = setInterval(() => this.setState(s => ({ cert: (s.cert + 1) % CERTS.length })), 5000); }
+  goCert(i) { this.setState({ cert: (i + CERTS.length) % CERTS.length }); this.startCertTimer(); }
+  renderVals() { return { ...this.renderValsPage(), ...M_CH(this) }; }
+  renderValsPage() {
+    const { dd, drawer, sol, cert } = this.state;
+    const solutions = SOL.map((s, i) => {
+      const a = i === sol;
+      return {
+        ...s, img: 'sol-img-' + i, cover: 'assets/cat-hero-' + (/Ciber/.test(s.t) ? 'ciberseguridad' : /Data/.test(s.t) ? 'datacenter' : /Infra/.test(s.t) ? 'infrastructure' : /Comunic/.test(s.t) ? 'comunicaciones' : 'conectividad') + '.jpeg', imgY: a ? '0px' : '-16px',
+        enter: () => this.state.sol !== i && this.setState({ sol: i }),
+        pick: () => this.setState({ sol: i, dd: false }),
+        flex: a ? 3.4 : 1,
+        bg: a ? '#96217A' : '#FFFFFF',
+        border: a ? '#96217A' : '#ECE9EC',
+        shadow: a ? '0 40px 80px -40px rgba(150,33,122,.6)' : '0 1px 2px rgba(17,12,16,.04)',
+        num: a ? 'rgba(255,255,255,.45)' : '#B9B4BA',
+        color: a ? '#FFFFFF' : '#453C46',
+        iconBg: a ? 'rgba(255,255,255,.14)' : '#FFFFFF',
+        iconBorder: a ? 'rgba(255,255,255,.25)' : '#D8D5D8',
+        titleSize: a ? '28px' : '17px',
+        iconH: a ? '0px' : '44px', iconOp: a ? 0 : 1, iconMb: a ? '0px' : '18px',
+        bodyMax: a ? '280px' : '0px',
+        op: a ? 1 : 0,
+        rot: a ? '0deg' : '-90deg',
+        delay: a ? '.25s' : '0s'
+      };
+    });
+    const certs = CERTS.map((c, i) => {
+      const a = i === cert;
+      return { ...c, op: a ? 1 : 0, x: a ? '0px' : (i < cert ? '-40px' : '40px'), dotW: a ? '28px' : '6px', dotBg: a ? '#96217A' : '#D8D5D8',
+        tabBg: a ? '#96217A' : '#FFFFFF', tabColor: a ? '#FFFFFF' : '#453C46', tabBorder: a ? '#96217A' : '#D8D5D8', go: () => this.goCert(i) };
+    });
+    const drawerLinks = ['Formas de pago', 'Fiberlux App', 'Portal de trabajo'].map((t, i) => ({
+      t, href: t === 'Formas de pago' ? 'Formas de Pago Mobile.dc.html' : t === 'Fiberlux App' ? 'Fiberlux App Mobile.dc.html' : '#', op: drawer ? 1 : 0, x: drawer ? '0px' : '-40px', delay: drawer ? (0.3 + i * 0.08) + 's' : '0s'
+    }));
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const qq = norm(this.state.q.trim());
+    const sResults = ['Ciberseguridad', 'Comunicaciones Unificadas', 'Conectividad', 'Data Center', 'Infraestructura']
+      .filter(t => !qq || norm(t).includes(qq) || SOL.some(s => norm(s.t).includes(norm(t).split(' ')[0]) && s.tags.some(g => norm(g).includes(qq))))
+      .map(t => ({ t, go: () => { this.setState({ search: false }); this.lenis && this.lenis.start(); } }));
+    return {
+      navRef: this.navRef, mapRef: this.mapRef, vidSec: this.vidSec, vidCard: this.vidCard, vidInner: this.vidInner, mq1: this.mq1, mq2: this.mq2,
+      handsSec: this.handsSec, handL: this.handL, handR: this.handR, spark: this.spark, cyberGlow: this.cyberGlow,
+      trackRef: this.trackRef, trackWrap: this.trackWrap, progRef: this.progRef,
+      solutions, certs, drawerLinks,
+      ...(() => { const v = this.state.vm; return { vmOpen: !!v, vmNoYt: !!v && !v.yt, vmHasYt: !!(v && v.yt), vmSrc: v && v.yt ? 'https://www.youtube.com/embed/' + v.yt + '?autoplay=1&rel=0' : '', vmTitle: v ? 'Caso de Éxito - ' + v.company : '', vmCover: v ? v.cover : '', vmLogo: v ? v.logo : '', vmName: v ? v.name : '', vmRole: v ? v.role : '', vmClose: () => this.setState({ vm: null }), vmStop: e => e.stopPropagation() }; })(),
+solAcc: SOL.map((s, i) => { const a = i === this.state.sol; return { ...s, cover: 'assets/cat-hero-' + (/Ciber/.test(s.t) ? 'ciberseguridad' : /Data/.test(s.t) ? 'datacenter' : /Infra/.test(s.t) ? 'infrastructure' : /Comunic/.test(s.t) ? 'comunicaciones' : 'conectividad') + '.jpeg', open: a ? 'true' : 'false', toggle: () => this.setState({ sol: a ? -1 : i }), bg: a ? '#96217A' : '#FFFFFF', border: a ? '#96217A' : '#ECE9EC', color: a ? '#FFFFFF' : '#453C46', iconBg: a ? 'rgba(255,255,255,.14)' : '#FFFFFF', iconBorder: a ? 'rgba(255,255,255,.25)' : '#D8D5D8', plusBg: a ? '#FFFFFF' : '#F2F1F2', plusColor: a ? '#96217A' : '#453C46', rot: a ? '45deg' : '0deg', rows: a ? '1fr' : '0fr', op: a ? 1 : 0, delay: a ? '.2s' : '0s', hp: a ? '22px' : '14px' }; }),
+      chPanels: [
+        { label: 'Contáctate por WhatsApp', title: 'Contáctate por WhatsApp', desc: 'Escríbenos por WhatsApp y un especialista te atenderá.', icon: 'M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z', rows: [['NOC', '51913795489', 'https://wa.me/51913795489', '']] },
+        { label: 'Contáctate por llamada', title: 'Contáctate por llamada', desc: 'Llama directamente a nuestro equipo especializado. Selecciona la opción que corresponda a tu necesidad.', icon: 'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z', rows: [['NOC', '(01) 748 0606', 'tel:+5117480606', 'Opción 1 – 1'], ['Telefonía', '(01) 748 0606', 'tel:+5117480606', 'Opción 1 – 2'], ['Data Center', '(01) 748 0606', 'tel:+5117480606', 'Opción 1 – 3'], ['SOC', '(01) 748 0606', 'tel:+5117480606', 'Opción 1 – 4'], ['WiFi', '(01) 748 0606', 'tel:+5117480606', 'Opción 1 – 5']] },
+        { label: 'Contáctate por correo', title: 'Contáctate por correo', desc: 'Envíanos un correo y te responderemos a la brevedad.', icon: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM22 6l-10 7L2 6', rows: [['NOC', 'noc@fiberlux.pe', 'mailto:noc@fiberlux.pe', ''], ['Telefonía', 'telefonia@fiberlux.pe', 'mailto:telefonia@fiberlux.pe', ''], ['Data Center', 'infraestructuraydatacenter@fiberlux.pe', 'mailto:infraestructuraydatacenter@fiberlux.pe', ''], ['SOC', 'soc@fiberlux.pe', 'mailto:soc@fiberlux.pe', ''], ['WiFi', 'wifi@fiberlux.pe', 'mailto:wifi@fiberlux.pe', '']] }
+      ].map((p, i) => { const on = i === this.state.ch; return { ...p, on, off: !on, flex: on ? '1 1 0' : '0 0 150px', bg: on ? '#FFFFFF' : '#FCF5F9', pick: () => this.setState({ ch: i }), rows: p.rows.map((r, j) => ({ tag: r[0], val: r[1], href: r[2], target: /^https/.test(r[2]) ? '_blank' : '_self', opt: r[3], bd: j === p.rows.length - 1 ? '0' : '1px solid #F2F1F2' })) }; }),
+      supImg: this.supImg,
+      testimonials: vmAdd(this, TESTI.map((t, i) => ({ ...t, vid: 'testi-video-' + i, cover: ["https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-boticas.png","https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-camara-comercio.jpg","https://staging.d25d5it86bz63g.amplifyapp.com/images/casos/caso-de-exito-grupo-gloria.jpg"][/boticas/i.test(t.company) ? 0 : /c[aá]mara/i.test(t.company) ? 1 : /gloria/i.test(t.company) ? 2 : i % 3] }))), posts: POSTS, socials: SOCIALS,
+      partnersA: [...PA, ...PA], partnersB: [...PB, ...PB],
+      fServ: [['Conectividad', 'Categoria Mobile.dc.html?c=conectividad'], ['Ciberseguridad', 'Ciberseguridad Mobile.dc.html'], ['Data Center', 'Categoria Mobile.dc.html?c=data-center'], ['Infraestructura', 'Categoria Mobile.dc.html?c=infraestructura'], ['Comunicaciones Unificadas', 'Categoria Mobile.dc.html?c=comunicaciones']].map(([t, href]) => ({ t, href })),
+      fAbout: [['Nosotros', 'Nosotros Mobile.dc.html'], ['Casos de éxito', 'Casos de Exito Mobile.dc.html'], ['Blog', 'Blog Mobile.dc.html'], ['Soporte técnico', '#'], ['Contacto', 'Contacto Mobile.dc.html'], ['Formas de pago', 'Formas de Pago Mobile.dc.html']].map(([t, href]) => ({ t, href })),
+      fLegal: ['Libro de reclamaciones', 'Tratamiento de datos personales', 'Política de Cookies', 'Política de Privacidad', 'Política de videovigilancia', 'Política de SST', 'Manual de derechos ARCO', 'Formulario de solicitud de derechos ARCO', 'Guía de presentación de Reclamos de OSIPTEL', 'Formulario de reclamo', 'Formulario de apelación', 'Formulario de queja'].map(t => ({ t, href: ({"Libro de reclamaciones":"libro","Tratamiento de datos personales":"datos","Política de Cookies":"datos","Política de Privacidad":"datos","Política de videovigilancia":"datos","Política de SST":"datos","Manual de derechos ARCO":"arco","Formulario de solicitud de derechos ARCO":"arco","Guía de presentación de Reclamos de OSIPTEL":"libro","Formulario de reclamo":"reclamo","Formulario de apelación":"apelacion","Formulario de queja":"queja"})[t] ? 'Legal Mobile.dc.html?p=' + ({"Libro de reclamaciones":"libro","Tratamiento de datos personales":"datos","Política de Cookies":"datos","Política de Privacidad":"datos","Política de videovigilancia":"datos","Política de SST":"datos","Manual de derechos ARCO":"arco","Formulario de solicitud de derechos ARCO":"arco","Guía de presentación de Reclamos de OSIPTEL":"libro","Formulario de reclamo":"reclamo","Formulario de apelación":"apelacion","Formulario de queja":"queja"})[t] : '#' })),
+      megaCats: MEGA.map((c, i) => { const on = i === (this.state.mc || 0); return { t: c.t, href: c.href, hover: () => (this.state.mc || 0) !== i && this.setState({ mc: i }), bg: on ? '#F7F7F7' : 'rgba(247,247,247,0)', color: on ? '#96217A' : '#453C46', chev: on ? 1 : 0.3, cx: on ? '0px' : '-4px' }; }),
+      megaSols: MEGA[this.state.mc || 0].sols.map(s => ({ t: s[0], href: s[1].charAt(0) === '#' ? 'Ciberseguridad Mobile.dc.html' + s[1] : 'Solucion Mobile.dc.html?s=' + s[1] })),
+      megaLabel: MEGA[this.state.mc || 0].label, megaHref: MEGA[this.state.mc || 0].href, megaCta: 'Ver todo ' + MEGA[this.state.mc || 0].t,
+      ddOpen: () => this.setState({ dd: true }), ddClose: () => this.setState({ dd: false }),
+      ddOp: dd ? 1 : 0, ddY: dd ? '0px' : '-8px', ddPe: dd ? 'auto' : 'none', ddRot: dd ? '180deg' : '0deg',
+      openDrawer: () => { this.setState({ drawer: true }); this.lenis && this.lenis.stop(); },
+      closeDrawer: () => { this.setState({ drawer: false }); this.lenis && this.lenis.start(); },
+      dOp: drawer ? 1 : 0, dPe: drawer ? 'auto' : 'none', dX: drawer ? '0%' : '-105%',
+      prevT: () => this.slideT(-1), nextT: () => this.slideT(1),
+      prevC: () => this.goCert(cert - 1), nextC: () => this.goCert(cert + 1),
+      openSearch: () => { this.setState({ search: true, dd: false }); this.lenis && this.lenis.stop(); setTimeout(() => this.searchInput.current && this.searchInput.current.focus(), 250); },
+      closeSearch: () => { this.setState({ search: false }); this.lenis && this.lenis.start(); },
+      searchInput: this.searchInput, q: this.state.q, onQ: e => this.setState({ q: e.target.value }),
+      sOp: this.state.search ? 1 : 0, sPe: this.state.search ? 'auto' : 'none', sY: this.state.search ? '0px' : '-16px', sScale: this.state.search ? 1 : 0.98,
+      sLabel: this.state.q.trim() ? 'RESULTADOS' : 'SOLUCIONES SUGERIDAS', sResults, sEmpty: !sResults.length,
+      cyberMove: e => { const g = this.cyberGlow.current; if (!g) return; const r = e.currentTarget.getBoundingClientRect(); g.style.left = (e.clientX - r.left) + 'px'; g.style.top = (e.clientY - r.top) + 'px'; },
+      cyberLeave: () => { const g = this.cyberGlow.current; if (!g) return; g.style.left = '25%'; g.style.top = '50%'; }
+    };
+  }
+}
+</script>
+</body>
+</html>

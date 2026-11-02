@@ -1,6 +1,7 @@
 import { tinaField } from "tinacms/dist/react";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
+import { stripEmphasis } from "../../utils/emphasis";
 
 export interface PartnerLogo {
   image?: string | null;
@@ -52,7 +53,7 @@ export default function PartnersMarquee({
   if (!partners) return null;
 
   const eyebrow = tField(partners as any, "eyebrow", locale);
-  const title = tField(partners as any, "title", locale);
+  const title = stripEmphasis(tField(partners as any, "title", locale));
 
   const logos = (partners.logos || []).filter(Boolean) as PartnerLogo[];
   if (logos.length === 0) return null;

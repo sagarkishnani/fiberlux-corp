@@ -256,7 +256,7 @@ export default defineConfig({
           allowedActions: { create: false, delete: false },
         },
         fields: [
-          // ── Hero ──
+          // ── Hero (SPEC 117) ──
           {
             type: "object",
             name: "hero",
@@ -264,257 +264,155 @@ export default defineConfig({
             fields: [
               {
                 type: "string",
-                name: "title",
-                label: "Título principal",
-                required: true,
-                description:
-                  "Mantén ≤ 60 caracteres para evitar saltos largos en mobile.",
+                name: "titleBefore",
+                label: "Título — texto antes del énfasis",
+                description: "Ej. \"Soluciones de\".",
               },
-              { type: "string", name: "title_en", label: "Título principal (EN)" },
+              { type: "string", name: "titleBefore_en", label: "Título — antes del énfasis (EN)" },
+              {
+                type: "string",
+                name: "titleEmphasis",
+                label: "Título — texto en morado",
+                description: "Ej. \"conectividad y TI\".",
+              },
+              { type: "string", name: "titleEmphasis_en", label: "Título — texto en morado (EN)" },
+              {
+                type: "string",
+                name: "titleAfter",
+                label: "Título — texto después del énfasis",
+                description: "Ej. \"para tu empresa\".",
+              },
+              { type: "string", name: "titleAfter_en", label: "Título — después del énfasis (EN)" },
               {
                 type: "string",
                 name: "subtitle",
                 label: "Subtítulo",
                 ui: { component: "textarea" },
-                description: "Frase de apoyo bajo el título. ≤ 140 caracteres.",
               },
               { type: "string", name: "subtitle_en", label: "Subtítulo (EN)", ui: { component: "textarea" } },
               {
+                type: "object",
+                name: "ctaPrimary",
+                label: "Botón principal (morado)",
+                fields: [
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace (URL o ancla #seccion)" },
+                ],
+              },
+              {
+                type: "object",
+                name: "ctaSecondary",
+                label: "Botón secundario (oscuro)",
+                fields: [
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace (URL o ancla #seccion)" },
+                ],
+              },
+            ],
+          },
+
+          // ── Reel con video (SPEC 117) ──
+          {
+            type: "object",
+            name: "reel",
+            label: "Reel (video del Home)",
+            description:
+              "Sección con el video en loop que se expande con el scroll. El loop va sin audio; el video completo solo se descarga al abrir el visor.",
+            fields: [
+              { type: "string", name: "marqueeTop", label: "Texto en movimiento — fila superior" },
+              { type: "string", name: "marqueeTop_en", label: "Texto en movimiento — fila superior (EN)" },
+              { type: "string", name: "marqueeBottom", label: "Texto en movimiento — fila inferior (contorno)" },
+              { type: "string", name: "marqueeBottom_en", label: "Texto en movimiento — fila inferior (EN)" },
+              { type: "string", name: "loopWebm1080", label: "Loop desktop — WebM", description: "Ej. /videos/home/reel-1080.webm" },
+              { type: "string", name: "loopMp41080", label: "Loop desktop — MP4", description: "Ej. /videos/home/reel-1080.mp4" },
+              { type: "string", name: "loopWebm720", label: "Loop mobile — WebM", description: "Ej. /videos/home/reel-720.webm" },
+              { type: "string", name: "loopMp4720", label: "Loop mobile — MP4", description: "Ej. /videos/home/reel-720.mp4" },
+              { type: "image", name: "poster", label: "Imagen de portada del video" },
+              { type: "string", name: "fullVideoLabel", label: "Botón — ver video completo" },
+              { type: "string", name: "fullVideoLabel_en", label: "Botón — ver video completo (EN)" },
+              { type: "string", name: "fullVideoTitle", label: "Título del visor" },
+              { type: "string", name: "fullVideoTitle_en", label: "Título del visor (EN)" },
+              { type: "string", name: "fullVideoMp41080", label: "Video completo — MP4 desktop", description: "Ej. /videos/home/fiberlux-corp-full-1080.mp4" },
+              { type: "string", name: "fullVideoMp4720", label: "Video completo — MP4 mobile", description: "Ej. /videos/home/fiberlux-corp-full-720.mp4" },
+              {
                 type: "string",
-                name: "heroBackground",
-                label: "Fondo del hero",
-                options: [
-                  { value: "3d", label: "Escena 3D (Spline)" },
-                  { value: "video", label: "Video de fondo" },
-                  { value: "imagen", label: "Imagen de fondo" },
-                  { value: "waveform", label: "Waveform (shader animado)" },
-                  { value: "nodefield", label: "Node field (partículas plexus)" },
-                  { value: "morph", label: "Morph (globo de partículas → soluciones)" },
-                  { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
-                  { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
-                  { value: "lattice", label: "Retícula volumétrica (onda que la atraviesa)" },
-                  { value: "fiber", label: "Túnel de fibra (filamentos de luz)" },
-                  {
-                    value: "planeta",
-                    label: "Planeta narrativo (globo + frases por scroll)",
-                  },
-                ],
-                description:
-                  "Elige qué se muestra detrás del texto del hero. Default: Escena 3D.",
+                name: "fullVideoYoutubeUrl",
+                label: "Video completo — URL de YouTube (opcional)",
+                description: "Si se completa, el visor muestra YouTube en lugar del video alojado.",
               },
+            ],
+          },
+
+          // ── Somos más que internet (SPEC 117) ──
+          {
+            type: "object",
+            name: "manifesto",
+            label: "Somos más que internet",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Antetítulo" },
+              { type: "string", name: "eyebrow_en", label: "Antetítulo (EN)" },
               {
                 type: "string",
-                name: "splineSceneUrl",
-                label: "URL de la escena de Spline (modo 3D)",
-                description:
-                  "Pega aquí la URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode",
+                name: "title",
+                label: "Título",
+                description: "Encierra entre *asteriscos* la palabra que va en morado.",
+              },
+              { type: "string", name: "title_en", label: "Título (EN)" },
+            ],
+          },
+
+          // ── Banner Cyberguard (SPEC 117) ──
+          {
+            type: "object",
+            name: "cyberguardBanner",
+            label: "Banner Cyberguard",
+            fields: [
+              { type: "string", name: "brand", label: "Marca", description: "Ej. Cyberguard" },
+              { type: "string", name: "eyebrow", label: "Antetítulo" },
+              { type: "string", name: "eyebrow_en", label: "Antetítulo (EN)" },
+              { type: "string", name: "title", label: "Título" },
+              { type: "string", name: "title_en", label: "Título (EN)" },
+              { type: "string", name: "text", label: "Texto", ui: { component: "textarea" } },
+              { type: "string", name: "text_en", label: "Texto (EN)", ui: { component: "textarea" } },
+              {
+                type: "object",
+                name: "cta",
+                label: "Botón",
+                fields: [
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace" },
+                ],
               },
               {
                 type: "image",
-                name: "splinePosterUrl",
-                label: "Imagen estática mobile (modo 3D)",
-                description:
-                  "Imagen a sangre que se muestra en mobile en lugar del 3D (el 3D solo carga en desktop).",
+                name: "image",
+                label: "Imagen (opcional)",
+                description: "Si se deja vacía se muestra el escudo animado.",
               },
+            ],
+          },
+
+          // ── Certificaciones — intro del Home (SPEC 117) ──
+          {
+            type: "object",
+            name: "certificacionesIntro",
+            label: "Certificaciones (intro del Home)",
+            description: "Si se deja vacío se usa el título y texto de la colección Certificaciones.",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Antetítulo" },
+              { type: "string", name: "eyebrow_en", label: "Antetítulo (EN)" },
               {
-                type: "image",
-                name: "heroBgVideo",
-                label: "Video de fondo (modo Video)",
-                description:
-                  "Video a sangre (mp4) detrás del texto. Se reproduce en loop, silenciado, en desktop y mobile.",
+                type: "string",
+                name: "title",
+                label: "Título",
+                description: "Encierra entre *asteriscos* el texto que va en morado.",
               },
-              {
-                type: "image",
-                name: "heroBgImage",
-                label: "Imagen de fondo (modo Imagen)",
-                description: "Imagen a sangre detrás del texto.",
-              },
-              {
-                type: "number",
-                name: "heroBgOpacity",
-                label: "Opacidad del fondo (video/imagen) — 0 a 100",
-                description:
-                  "Opacidad del video/imagen de fondo. Baja el valor para que se funda con el negro y el texto se lea mejor. Default 60.",
-              },
-              {
-                type: "object",
-                name: "buttons",
-                label: "Botones (CTAs)",
-                list: true,
-                ui: {
-                  itemProps: (item) => ({
-                    label: item?.text || "Botón sin texto",
-                  }),
-                },
-                fields: [
-                  {
-                    type: "string",
-                    name: "text",
-                    label: "Texto del botón",
-                    required: true,
-                  },
-                  { type: "string", name: "text_en", label: "Texto del botón (EN)" },
-                  {
-                    type: "string",
-                    name: "url",
-                    label: "Enlace (URL o ancla #seccion)",
-                  },
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Estilo del botón",
-                    options: [
-                      { value: "primary", label: "Primario (magenta sólido)" },
-                      { value: "secondary", label: "Secundario (outline)" },
-                    ],
-                  },
-                ],
-              },
-              // ── Modo Morph (SPEC 96): globo de partículas → soluciones ──
-              {
-                type: "object",
-                name: "morph",
-                label: "Hero — modo Morph (globo → soluciones)",
-                description:
-                  "Solo aplica si el 'Fondo del hero' es 'Morph'. Texto del trigger y los 4 nodos-solución que aparecen al pulsarlo.",
-                fields: [
-                  { type: "string", name: "triggerLabel", label: "Texto del trigger (ES)" },
-                  { type: "string", name: "triggerLabel_en", label: "Texto del trigger (EN)" },
-                  {
-                    type: "object",
-                    name: "solutionNodes",
-                    label: "Nodos-solución (hasta 4)",
-                    list: true,
-                    ui: {
-                      itemProps: (item: any) => ({ label: item?.label || "Nodo" }),
-                    },
-                    fields: [
-                      { type: "string", name: "label", label: "Label (ES)" },
-                      { type: "string", name: "label_en", label: "Label (EN)" },
-                      {
-                        type: "string",
-                        name: "url",
-                        label: "URL destino (página de solución)",
-                      },
-                      {
-                        type: "string",
-                        name: "icon",
-                        label: "Ícono",
-                        options: [
-                          { value: "datacenter", label: "Data Center / Cloud" },
-                          { value: "conectividad", label: "Conectividad" },
-                          { value: "ciberseguridad", label: "Ciberseguridad" },
-                          { value: "gestionados", label: "Servicios Gestionados" },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-              // ── Modo Planeta (SPEC 97): globo punteado + tokens flotantes ──
-              {
-                type: "object",
-                name: "cinematic",
-                label: "Hero — modo Planeta de fibra (tokens flotantes)",
-                description:
-                  "Solo aplica si el 'Fondo del hero' es 'Cinematic'. Tokens de conectividad que flotan en el fondo (ej. 1 Gbps, 99.9%, 12 ms). Si lo dejas vacío se usa un set por defecto.",
-                fields: [
-                  {
-                    type: "object",
-                    name: "floatingTokens",
-                    label: "Tokens flotantes (fondo)",
-                    list: true,
-                    ui: {
-                      itemProps: (item: any) => ({
-                        label: item?.text || "Token",
-                      }),
-                    },
-                    fields: [
-                      {
-                        type: "string",
-                        name: "text",
-                        label: "Texto del token (ej. Gbps, 99.9%, 12 ms)",
-                      },
-                    ],
-                  },
-                ],
-              },
-              // ── Modo Campo de puntos (SPEC 100) ──
-              {
-                type: "object",
-                name: "dotfield",
-                label: "Hero — modo Campo de puntos",
-                description:
-                  "Solo aplica si el 'Fondo del hero' es 'Campo de puntos'. Malla de puntos que reacciona al mouse y lanza ondas al hacer scroll.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" },
-                    ],
-                    description:
-                      "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio.",
-                  },
-                ],
-              },
-              // ── Modo Retícula volumétrica (SPEC 112) ──
-              {
-                type: "object",
-                name: "lattice",
-                label: "Hero — modo Retícula volumétrica",
-                description:
-                  "Solo aplica si el 'Fondo del hero' es 'Retícula volumétrica'. Retícula 3D de puntos por la que se avanza; cada onda la atraviesa encendiéndola y soltando los puntos de su formación.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" },
-                    ],
-                    description:
-                      "Controla densidad de la retícula, brillo y fuerza de las ondas. Default: Medio.",
-                  },
-                ],
-              },
-              // ── Modo Túnel de fibra (SPEC 113) ──
-              {
-                type: "object",
-                name: "fiber",
-                label: "Hero — modo Túnel de fibra",
-                description:
-                  "Solo aplica si el 'Fondo del hero' es 'Túnel de fibra'. Filamentos de luz con paquetes recorriéndolos, que avanzan con el scroll.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Tratamiento",
-                    options: [
-                      { value: "tunel", label: "Túnel (haces hacia el punto de fuga)" },
-                      { value: "haz", label: "Haz (filamentos horizontales)" },
-                      { value: "reticula", label: "Retícula (malla con paquetes)" },
-                    ],
-                    description: "Default: Túnel.",
-                  },
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" },
-                    ],
-                    description: "Brillo general del fondo. Default: Medio.",
-                  },
-                ],
-              },
+              { type: "string", name: "title_en", label: "Título (EN)" },
+              { type: "string", name: "text", label: "Texto", ui: { component: "textarea" } },
+              { type: "string", name: "text_en", label: "Texto (EN)", ui: { component: "textarea" } },
             ],
           },
 
@@ -524,8 +422,15 @@ export default defineConfig({
             label: "Servicios",
             type: "object",
             fields: [
-              { name: "title", label: "Título de sección", type: "string" },
+              {
+                name: "title",
+                label: "Título de sección",
+                type: "string",
+                description: "Encierra entre *asteriscos* el texto que va en morado.",
+              },
               { name: "title_en", label: "Título de sección (EN)", type: "string" },
+              { name: "subtitle", label: "Bajada de sección", type: "string", ui: { component: "textarea" } },
+              { name: "subtitle_en", label: "Bajada de sección (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Servicios",
@@ -549,6 +454,12 @@ export default defineConfig({
                     name: "icon",
                     label: "Ícono (SVG o imagen)",
                     type: "image",
+                  },
+                  {
+                    name: "cover",
+                    label: "Imagen de la card abierta",
+                    type: "image",
+                    description: "Foto que aparece al desplegar la categoría en el bloque de soluciones del Home.",
                   },
                   // SPEC 103 — panel de soluciones (chips + card en stack).
                   {
@@ -661,98 +572,13 @@ export default defineConfig({
                   { name: "company", label: "Empresa", type: "string" },
                   { name: "avatar", label: "Foto", type: "image" },
                   { name: "logo", label: "Logo empresa", type: "image" },
-                ],
-              },
-            ],
-          },
-
-          // ── Frases del tramo narrativo (SPEC 113) ──
-          {
-            name: "manifiesto",
-            label: "Frases (tramo narrativo)",
-            type: "object",
-            description:
-              "Frases que se relevan con el scroll justo después del hero. Solo se muestran si el 'Fondo del hero' es 'Túnel de fibra' o 'Planeta narrativo'. Cada frase son dos líneas: se revelan una debajo de la otra.",
-            fields: [
-              {
-                name: "items",
-                label: "Frases",
-                type: "object",
-                list: true,
-                ui: {
-                  itemProps: (item: any) => ({ label: item?.line1 || "Frase" }),
-                },
-                fields: [
-                  { name: "line1", label: "Línea 1", type: "string" },
-                  { name: "line2", label: "Línea 2", type: "string" },
-                  { name: "line1_en", label: "Línea 1 (EN)", type: "string" },
-                  { name: "line2_en", label: "Línea 2 (EN)", type: "string" },
-                ],
-              },
-            ],
-          },
-
-          // ── Planeta (SPEC 116): elementos que acompañan a cada frase ──
-          {
-            name: "planeta",
-            label: "Planeta (tramo narrativo)",
-            type: "object",
-            description:
-              "Elementos que aparecen con cada frase cuando el 'Fondo del hero' es 'Planeta narrativo'. Cada elemento indica a qué frase acompaña por su número (1, 2, 3…); si el número queda vacío o no existe esa frase, el elemento no se muestra.",
-            fields: [
-              {
-                name: "puntos",
-                label: "Puntos que se encienden sobre el planeta",
-                type: "object",
-                list: true,
-                ui: {
-                  itemProps: (item: any) => ({ label: item?.label || "Punto" }),
-                },
-                fields: [
+                  { name: "cover", label: "Portada del video", type: "image" },
                   {
-                    name: "frase",
-                    label: "Frase a la que acompaña (1, 2, 3…)",
-                    type: "number",
-                  },
-                  {
-                    name: "label",
-                    label: "Nombre del punto",
+                    name: "youtubeUrl",
+                    label: "Video de YouTube",
                     type: "string",
-                    description:
-                      "Sólo para identificarlo en este panel y para enlazar arcos desde otro punto. No se muestra sobre el planeta.",
+                    description: "URL del video del caso. Vacío ⇒ la card abre el visor con la portada.",
                   },
-                  { name: "lat", label: "Latitud", type: "number" },
-                  { name: "lng", label: "Longitud", type: "number" },
-                  {
-                    name: "conectaCon",
-                    label: "Traza un arco hasta (etiqueta de otro punto)",
-                    type: "string",
-                    description: "Vacío ⇒ conecta con Lima, el centro de la red.",
-                  },
-                ],
-              },
-              {
-                name: "cifras",
-                label: "Cifras que acompañan a la frase",
-                type: "object",
-                list: true,
-                ui: {
-                  itemProps: (item: any) => ({ label: item?.label || "Cifra" }),
-                },
-                fields: [
-                  {
-                    name: "frase",
-                    label: "Frase a la que acompaña (1, 2, 3…)",
-                    type: "number",
-                  },
-                  {
-                    name: "valor",
-                    label: "Valor final (se cuenta con el scroll)",
-                    type: "number",
-                  },
-                  { name: "sufijo", label: "Sufijo (%, km, +…)", type: "string" },
-                  { name: "label", label: "Etiqueta", type: "string" },
-                  { name: "label_en", label: "Etiqueta (EN)", type: "string" },
                 ],
               },
             ],

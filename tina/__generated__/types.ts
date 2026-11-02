@@ -507,73 +507,90 @@ export type CollectionDocumentsArgs = {
 
 export type DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Popup | Folder;
 
-export type HomeHeroButtons = {
-  __typename?: 'HomeHeroButtons';
-  text: Scalars['String']['output'];
-  text_en?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
-  variant?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomeHeroMorphSolutionNodes = {
-  __typename?: 'HomeHeroMorphSolutionNodes';
+export type HomeHeroCtaPrimary = {
+  __typename?: 'HomeHeroCtaPrimary';
   label?: Maybe<Scalars['String']['output']>;
   label_en?: Maybe<Scalars['String']['output']>;
-  url?: Maybe<Scalars['String']['output']>;
-  icon?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
 };
 
-export type HomeHeroMorph = {
-  __typename?: 'HomeHeroMorph';
-  triggerLabel?: Maybe<Scalars['String']['output']>;
-  triggerLabel_en?: Maybe<Scalars['String']['output']>;
-  solutionNodes?: Maybe<Array<Maybe<HomeHeroMorphSolutionNodes>>>;
-};
-
-export type HomeHeroCinematicFloatingTokens = {
-  __typename?: 'HomeHeroCinematicFloatingTokens';
-  text?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomeHeroCinematic = {
-  __typename?: 'HomeHeroCinematic';
-  floatingTokens?: Maybe<Array<Maybe<HomeHeroCinematicFloatingTokens>>>;
-};
-
-export type HomeHeroDotfield = {
-  __typename?: 'HomeHeroDotfield';
-  intensity?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomeHeroLattice = {
-  __typename?: 'HomeHeroLattice';
-  intensity?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomeHeroFiber = {
-  __typename?: 'HomeHeroFiber';
-  variant?: Maybe<Scalars['String']['output']>;
-  intensity?: Maybe<Scalars['String']['output']>;
+export type HomeHeroCtaSecondary = {
+  __typename?: 'HomeHeroCtaSecondary';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
 };
 
 export type HomeHero = {
   __typename?: 'HomeHero';
-  title: Scalars['String']['output'];
-  title_en?: Maybe<Scalars['String']['output']>;
+  titleBefore?: Maybe<Scalars['String']['output']>;
+  titleBefore_en?: Maybe<Scalars['String']['output']>;
+  titleEmphasis?: Maybe<Scalars['String']['output']>;
+  titleEmphasis_en?: Maybe<Scalars['String']['output']>;
+  titleAfter?: Maybe<Scalars['String']['output']>;
+  titleAfter_en?: Maybe<Scalars['String']['output']>;
   subtitle?: Maybe<Scalars['String']['output']>;
   subtitle_en?: Maybe<Scalars['String']['output']>;
-  heroBackground?: Maybe<Scalars['String']['output']>;
-  splineSceneUrl?: Maybe<Scalars['String']['output']>;
-  splinePosterUrl?: Maybe<Scalars['String']['output']>;
-  heroBgVideo?: Maybe<Scalars['String']['output']>;
-  heroBgImage?: Maybe<Scalars['String']['output']>;
-  heroBgOpacity?: Maybe<Scalars['Float']['output']>;
-  buttons?: Maybe<Array<Maybe<HomeHeroButtons>>>;
-  morph?: Maybe<HomeHeroMorph>;
-  cinematic?: Maybe<HomeHeroCinematic>;
-  dotfield?: Maybe<HomeHeroDotfield>;
-  lattice?: Maybe<HomeHeroLattice>;
-  fiber?: Maybe<HomeHeroFiber>;
+  ctaPrimary?: Maybe<HomeHeroCtaPrimary>;
+  ctaSecondary?: Maybe<HomeHeroCtaSecondary>;
+};
+
+export type HomeReel = {
+  __typename?: 'HomeReel';
+  marqueeTop?: Maybe<Scalars['String']['output']>;
+  marqueeTop_en?: Maybe<Scalars['String']['output']>;
+  marqueeBottom?: Maybe<Scalars['String']['output']>;
+  marqueeBottom_en?: Maybe<Scalars['String']['output']>;
+  loopWebm1080?: Maybe<Scalars['String']['output']>;
+  loopMp41080?: Maybe<Scalars['String']['output']>;
+  loopWebm720?: Maybe<Scalars['String']['output']>;
+  loopMp4720?: Maybe<Scalars['String']['output']>;
+  poster?: Maybe<Scalars['String']['output']>;
+  fullVideoLabel?: Maybe<Scalars['String']['output']>;
+  fullVideoLabel_en?: Maybe<Scalars['String']['output']>;
+  fullVideoTitle?: Maybe<Scalars['String']['output']>;
+  fullVideoTitle_en?: Maybe<Scalars['String']['output']>;
+  fullVideoMp41080?: Maybe<Scalars['String']['output']>;
+  fullVideoMp4720?: Maybe<Scalars['String']['output']>;
+  fullVideoYoutubeUrl?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeManifesto = {
+  __typename?: 'HomeManifesto';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeCyberguardBannerCta = {
+  __typename?: 'HomeCyberguardBannerCta';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeCyberguardBanner = {
+  __typename?: 'HomeCyberguardBanner';
+  brand?: Maybe<Scalars['String']['output']>;
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  cta?: Maybe<HomeCyberguardBannerCta>;
+  image?: Maybe<Scalars['String']['output']>;
+};
+
+export type HomeCertificacionesIntro = {
+  __typename?: 'HomeCertificacionesIntro';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type HomeServicesItemsBullets = {
@@ -591,6 +608,7 @@ export type HomeServicesItems = {
   description?: Maybe<Scalars['String']['output']>;
   description_en?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Scalars['String']['output']>;
+  cover?: Maybe<Scalars['String']['output']>;
   tabIcon?: Maybe<Scalars['String']['output']>;
   tabLabel?: Maybe<Scalars['String']['output']>;
   tabLabel_en?: Maybe<Scalars['String']['output']>;
@@ -602,6 +620,8 @@ export type HomeServices = {
   __typename?: 'HomeServices';
   title?: Maybe<Scalars['String']['output']>;
   title_en?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  subtitle_en?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<HomeServicesItems>>>;
 };
 
@@ -617,6 +637,8 @@ export type HomeTestimonialsItems = {
   company?: Maybe<Scalars['String']['output']>;
   avatar?: Maybe<Scalars['String']['output']>;
   logo?: Maybe<Scalars['String']['output']>;
+  cover?: Maybe<Scalars['String']['output']>;
+  youtubeUrl?: Maybe<Scalars['String']['output']>;
 };
 
 export type HomeTestimonials = {
@@ -628,43 +650,6 @@ export type HomeTestimonials = {
   ctaLabel_en?: Maybe<Scalars['String']['output']>;
   ctaUrl?: Maybe<Scalars['String']['output']>;
   items?: Maybe<Array<Maybe<HomeTestimonialsItems>>>;
-};
-
-export type HomeManifiestoItems = {
-  __typename?: 'HomeManifiestoItems';
-  line1?: Maybe<Scalars['String']['output']>;
-  line2?: Maybe<Scalars['String']['output']>;
-  line1_en?: Maybe<Scalars['String']['output']>;
-  line2_en?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomeManifiesto = {
-  __typename?: 'HomeManifiesto';
-  items?: Maybe<Array<Maybe<HomeManifiestoItems>>>;
-};
-
-export type HomePlanetaPuntos = {
-  __typename?: 'HomePlanetaPuntos';
-  frase?: Maybe<Scalars['Float']['output']>;
-  label?: Maybe<Scalars['String']['output']>;
-  lat?: Maybe<Scalars['Float']['output']>;
-  lng?: Maybe<Scalars['Float']['output']>;
-  conectaCon?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomePlanetaCifras = {
-  __typename?: 'HomePlanetaCifras';
-  frase?: Maybe<Scalars['Float']['output']>;
-  valor?: Maybe<Scalars['Float']['output']>;
-  sufijo?: Maybe<Scalars['String']['output']>;
-  label?: Maybe<Scalars['String']['output']>;
-  label_en?: Maybe<Scalars['String']['output']>;
-};
-
-export type HomePlaneta = {
-  __typename?: 'HomePlaneta';
-  puntos?: Maybe<Array<Maybe<HomePlanetaPuntos>>>;
-  cifras?: Maybe<Array<Maybe<HomePlanetaCifras>>>;
 };
 
 export type HomeStatsItems = {
@@ -706,10 +691,12 @@ export type HomeBlogPreview = {
 export type Home = Node & Document & {
   __typename?: 'Home';
   hero?: Maybe<HomeHero>;
+  reel?: Maybe<HomeReel>;
+  manifesto?: Maybe<HomeManifesto>;
+  cyberguardBanner?: Maybe<HomeCyberguardBanner>;
+  certificacionesIntro?: Maybe<HomeCertificacionesIntro>;
   services?: Maybe<HomeServices>;
   testimonials?: Maybe<HomeTestimonials>;
-  manifiesto?: Maybe<HomeManifiesto>;
-  planeta?: Maybe<HomePlaneta>;
   stats?: Maybe<HomeStats>;
   blogPreview?: Maybe<HomeBlogPreview>;
   id: Scalars['ID']['output'];
@@ -724,6 +711,31 @@ export type StringFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type HomeHeroCtaPrimaryFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type HomeHeroCtaSecondaryFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type HomeHeroFilter = {
+  titleBefore?: InputMaybe<StringFilter>;
+  titleBefore_en?: InputMaybe<StringFilter>;
+  titleEmphasis?: InputMaybe<StringFilter>;
+  titleEmphasis_en?: InputMaybe<StringFilter>;
+  titleAfter?: InputMaybe<StringFilter>;
+  titleAfter_en?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  subtitle_en?: InputMaybe<StringFilter>;
+  ctaPrimary?: InputMaybe<HomeHeroCtaPrimaryFilter>;
+  ctaSecondary?: InputMaybe<HomeHeroCtaSecondaryFilter>;
+};
+
 export type ImageFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
@@ -731,74 +743,57 @@ export type ImageFilter = {
   in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
-export type NumberFilter = {
-  lt?: InputMaybe<Scalars['Float']['input']>;
-  lte?: InputMaybe<Scalars['Float']['input']>;
-  gte?: InputMaybe<Scalars['Float']['input']>;
-  gt?: InputMaybe<Scalars['Float']['input']>;
-  eq?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+export type HomeReelFilter = {
+  marqueeTop?: InputMaybe<StringFilter>;
+  marqueeTop_en?: InputMaybe<StringFilter>;
+  marqueeBottom?: InputMaybe<StringFilter>;
+  marqueeBottom_en?: InputMaybe<StringFilter>;
+  loopWebm1080?: InputMaybe<StringFilter>;
+  loopMp41080?: InputMaybe<StringFilter>;
+  loopWebm720?: InputMaybe<StringFilter>;
+  loopMp4720?: InputMaybe<StringFilter>;
+  poster?: InputMaybe<ImageFilter>;
+  fullVideoLabel?: InputMaybe<StringFilter>;
+  fullVideoLabel_en?: InputMaybe<StringFilter>;
+  fullVideoTitle?: InputMaybe<StringFilter>;
+  fullVideoTitle_en?: InputMaybe<StringFilter>;
+  fullVideoMp41080?: InputMaybe<StringFilter>;
+  fullVideoMp4720?: InputMaybe<StringFilter>;
+  fullVideoYoutubeUrl?: InputMaybe<StringFilter>;
 };
 
-export type HomeHeroButtonsFilter = {
-  text?: InputMaybe<StringFilter>;
-  text_en?: InputMaybe<StringFilter>;
-  url?: InputMaybe<StringFilter>;
-  variant?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroMorphSolutionNodesFilter = {
-  label?: InputMaybe<StringFilter>;
-  label_en?: InputMaybe<StringFilter>;
-  url?: InputMaybe<StringFilter>;
-  icon?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroMorphFilter = {
-  triggerLabel?: InputMaybe<StringFilter>;
-  triggerLabel_en?: InputMaybe<StringFilter>;
-  solutionNodes?: InputMaybe<HomeHeroMorphSolutionNodesFilter>;
-};
-
-export type HomeHeroCinematicFloatingTokensFilter = {
-  text?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroCinematicFilter = {
-  floatingTokens?: InputMaybe<HomeHeroCinematicFloatingTokensFilter>;
-};
-
-export type HomeHeroDotfieldFilter = {
-  intensity?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroLatticeFilter = {
-  intensity?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroFiberFilter = {
-  variant?: InputMaybe<StringFilter>;
-  intensity?: InputMaybe<StringFilter>;
-};
-
-export type HomeHeroFilter = {
+export type HomeManifestoFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
-  subtitle?: InputMaybe<StringFilter>;
-  subtitle_en?: InputMaybe<StringFilter>;
-  heroBackground?: InputMaybe<StringFilter>;
-  splineSceneUrl?: InputMaybe<StringFilter>;
-  splinePosterUrl?: InputMaybe<ImageFilter>;
-  heroBgVideo?: InputMaybe<ImageFilter>;
-  heroBgImage?: InputMaybe<ImageFilter>;
-  heroBgOpacity?: InputMaybe<NumberFilter>;
-  buttons?: InputMaybe<HomeHeroButtonsFilter>;
-  morph?: InputMaybe<HomeHeroMorphFilter>;
-  cinematic?: InputMaybe<HomeHeroCinematicFilter>;
-  dotfield?: InputMaybe<HomeHeroDotfieldFilter>;
-  lattice?: InputMaybe<HomeHeroLatticeFilter>;
-  fiber?: InputMaybe<HomeHeroFiberFilter>;
+};
+
+export type HomeCyberguardBannerCtaFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type HomeCyberguardBannerFilter = {
+  brand?: InputMaybe<StringFilter>;
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  cta?: InputMaybe<HomeCyberguardBannerCtaFilter>;
+  image?: InputMaybe<ImageFilter>;
+};
+
+export type HomeCertificacionesIntroFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
 };
 
 export type HomeServicesItemsBulletsFilter = {
@@ -814,6 +809,7 @@ export type HomeServicesItemsFilter = {
   description?: InputMaybe<StringFilter>;
   description_en?: InputMaybe<StringFilter>;
   icon?: InputMaybe<ImageFilter>;
+  cover?: InputMaybe<ImageFilter>;
   tabIcon?: InputMaybe<StringFilter>;
   tabLabel?: InputMaybe<StringFilter>;
   tabLabel_en?: InputMaybe<StringFilter>;
@@ -824,6 +820,8 @@ export type HomeServicesItemsFilter = {
 export type HomeServicesFilter = {
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  subtitle_en?: InputMaybe<StringFilter>;
   items?: InputMaybe<HomeServicesItemsFilter>;
 };
 
@@ -843,6 +841,8 @@ export type HomeTestimonialsItemsFilter = {
   company?: InputMaybe<StringFilter>;
   avatar?: InputMaybe<ImageFilter>;
   logo?: InputMaybe<ImageFilter>;
+  cover?: InputMaybe<ImageFilter>;
+  youtubeUrl?: InputMaybe<StringFilter>;
 };
 
 export type HomeTestimonialsFilter = {
@@ -853,38 +853,6 @@ export type HomeTestimonialsFilter = {
   ctaLabel_en?: InputMaybe<StringFilter>;
   ctaUrl?: InputMaybe<StringFilter>;
   items?: InputMaybe<HomeTestimonialsItemsFilter>;
-};
-
-export type HomeManifiestoItemsFilter = {
-  line1?: InputMaybe<StringFilter>;
-  line2?: InputMaybe<StringFilter>;
-  line1_en?: InputMaybe<StringFilter>;
-  line2_en?: InputMaybe<StringFilter>;
-};
-
-export type HomeManifiestoFilter = {
-  items?: InputMaybe<HomeManifiestoItemsFilter>;
-};
-
-export type HomePlanetaPuntosFilter = {
-  frase?: InputMaybe<NumberFilter>;
-  label?: InputMaybe<StringFilter>;
-  lat?: InputMaybe<NumberFilter>;
-  lng?: InputMaybe<NumberFilter>;
-  conectaCon?: InputMaybe<StringFilter>;
-};
-
-export type HomePlanetaCifrasFilter = {
-  frase?: InputMaybe<NumberFilter>;
-  valor?: InputMaybe<NumberFilter>;
-  sufijo?: InputMaybe<StringFilter>;
-  label?: InputMaybe<StringFilter>;
-  label_en?: InputMaybe<StringFilter>;
-};
-
-export type HomePlanetaFilter = {
-  puntos?: InputMaybe<HomePlanetaPuntosFilter>;
-  cifras?: InputMaybe<HomePlanetaCifrasFilter>;
 };
 
 export type HomeStatsItemsFilter = {
@@ -921,10 +889,12 @@ export type HomeBlogPreviewFilter = {
 
 export type HomeFilter = {
   hero?: InputMaybe<HomeHeroFilter>;
+  reel?: InputMaybe<HomeReelFilter>;
+  manifesto?: InputMaybe<HomeManifestoFilter>;
+  cyberguardBanner?: InputMaybe<HomeCyberguardBannerFilter>;
+  certificacionesIntro?: InputMaybe<HomeCertificacionesIntroFilter>;
   services?: InputMaybe<HomeServicesFilter>;
   testimonials?: InputMaybe<HomeTestimonialsFilter>;
-  manifiesto?: InputMaybe<HomeManifiestoFilter>;
-  planeta?: InputMaybe<HomePlanetaFilter>;
   stats?: InputMaybe<HomeStatsFilter>;
   blogPreview?: InputMaybe<HomeBlogPreviewFilter>;
 };
@@ -1317,6 +1287,16 @@ export type SubservicioHeroFilter = {
   formTitle_en?: InputMaybe<StringFilter>;
   heroBackground?: InputMaybe<StringFilter>;
   heroImage?: InputMaybe<ImageFilter>;
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
 export type SubservicioBeneficiosItemsDatosTarjetasFilter = {
@@ -3807,64 +3787,82 @@ export type DocumentMutation = {
   popup?: InputMaybe<PopupMutation>;
 };
 
-export type HomeHeroButtonsMutation = {
-  text?: InputMaybe<Scalars['String']['input']>;
-  text_en?: InputMaybe<Scalars['String']['input']>;
-  url?: InputMaybe<Scalars['String']['input']>;
-  variant?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomeHeroMorphSolutionNodesMutation = {
+export type HomeHeroCtaPrimaryMutation = {
   label?: InputMaybe<Scalars['String']['input']>;
   label_en?: InputMaybe<Scalars['String']['input']>;
-  url?: InputMaybe<Scalars['String']['input']>;
-  icon?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type HomeHeroMorphMutation = {
-  triggerLabel?: InputMaybe<Scalars['String']['input']>;
-  triggerLabel_en?: InputMaybe<Scalars['String']['input']>;
-  solutionNodes?: InputMaybe<Array<InputMaybe<HomeHeroMorphSolutionNodesMutation>>>;
-};
-
-export type HomeHeroCinematicFloatingTokensMutation = {
-  text?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomeHeroCinematicMutation = {
-  floatingTokens?: InputMaybe<Array<InputMaybe<HomeHeroCinematicFloatingTokensMutation>>>;
-};
-
-export type HomeHeroDotfieldMutation = {
-  intensity?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomeHeroLatticeMutation = {
-  intensity?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomeHeroFiberMutation = {
-  variant?: InputMaybe<Scalars['String']['input']>;
-  intensity?: InputMaybe<Scalars['String']['input']>;
+export type HomeHeroCtaSecondaryMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HomeHeroMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  title_en?: InputMaybe<Scalars['String']['input']>;
+  titleBefore?: InputMaybe<Scalars['String']['input']>;
+  titleBefore_en?: InputMaybe<Scalars['String']['input']>;
+  titleEmphasis?: InputMaybe<Scalars['String']['input']>;
+  titleEmphasis_en?: InputMaybe<Scalars['String']['input']>;
+  titleAfter?: InputMaybe<Scalars['String']['input']>;
+  titleAfter_en?: InputMaybe<Scalars['String']['input']>;
   subtitle?: InputMaybe<Scalars['String']['input']>;
   subtitle_en?: InputMaybe<Scalars['String']['input']>;
-  heroBackground?: InputMaybe<Scalars['String']['input']>;
-  splineSceneUrl?: InputMaybe<Scalars['String']['input']>;
-  splinePosterUrl?: InputMaybe<Scalars['String']['input']>;
-  heroBgVideo?: InputMaybe<Scalars['String']['input']>;
-  heroBgImage?: InputMaybe<Scalars['String']['input']>;
-  heroBgOpacity?: InputMaybe<Scalars['Float']['input']>;
-  buttons?: InputMaybe<Array<InputMaybe<HomeHeroButtonsMutation>>>;
-  morph?: InputMaybe<HomeHeroMorphMutation>;
-  cinematic?: InputMaybe<HomeHeroCinematicMutation>;
-  dotfield?: InputMaybe<HomeHeroDotfieldMutation>;
-  lattice?: InputMaybe<HomeHeroLatticeMutation>;
-  fiber?: InputMaybe<HomeHeroFiberMutation>;
+  ctaPrimary?: InputMaybe<HomeHeroCtaPrimaryMutation>;
+  ctaSecondary?: InputMaybe<HomeHeroCtaSecondaryMutation>;
+};
+
+export type HomeReelMutation = {
+  marqueeTop?: InputMaybe<Scalars['String']['input']>;
+  marqueeTop_en?: InputMaybe<Scalars['String']['input']>;
+  marqueeBottom?: InputMaybe<Scalars['String']['input']>;
+  marqueeBottom_en?: InputMaybe<Scalars['String']['input']>;
+  loopWebm1080?: InputMaybe<Scalars['String']['input']>;
+  loopMp41080?: InputMaybe<Scalars['String']['input']>;
+  loopWebm720?: InputMaybe<Scalars['String']['input']>;
+  loopMp4720?: InputMaybe<Scalars['String']['input']>;
+  poster?: InputMaybe<Scalars['String']['input']>;
+  fullVideoLabel?: InputMaybe<Scalars['String']['input']>;
+  fullVideoLabel_en?: InputMaybe<Scalars['String']['input']>;
+  fullVideoTitle?: InputMaybe<Scalars['String']['input']>;
+  fullVideoTitle_en?: InputMaybe<Scalars['String']['input']>;
+  fullVideoMp41080?: InputMaybe<Scalars['String']['input']>;
+  fullVideoMp4720?: InputMaybe<Scalars['String']['input']>;
+  fullVideoYoutubeUrl?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomeManifestoMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomeCyberguardBannerCtaMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomeCyberguardBannerMutation = {
+  brand?: InputMaybe<Scalars['String']['input']>;
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  cta?: InputMaybe<HomeCyberguardBannerCtaMutation>;
+  image?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HomeCertificacionesIntroMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HomeServicesItemsBulletsMutation = {
@@ -3880,6 +3878,7 @@ export type HomeServicesItemsMutation = {
   description?: InputMaybe<Scalars['String']['input']>;
   description_en?: InputMaybe<Scalars['String']['input']>;
   icon?: InputMaybe<Scalars['String']['input']>;
+  cover?: InputMaybe<Scalars['String']['input']>;
   tabIcon?: InputMaybe<Scalars['String']['input']>;
   tabLabel?: InputMaybe<Scalars['String']['input']>;
   tabLabel_en?: InputMaybe<Scalars['String']['input']>;
@@ -3890,6 +3889,8 @@ export type HomeServicesItemsMutation = {
 export type HomeServicesMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  subtitle_en?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<HomeServicesItemsMutation>>>;
 };
 
@@ -3904,6 +3905,8 @@ export type HomeTestimonialsItemsMutation = {
   company?: InputMaybe<Scalars['String']['input']>;
   avatar?: InputMaybe<Scalars['String']['input']>;
   logo?: InputMaybe<Scalars['String']['input']>;
+  cover?: InputMaybe<Scalars['String']['input']>;
+  youtubeUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HomeTestimonialsMutation = {
@@ -3914,38 +3917,6 @@ export type HomeTestimonialsMutation = {
   ctaLabel_en?: InputMaybe<Scalars['String']['input']>;
   ctaUrl?: InputMaybe<Scalars['String']['input']>;
   items?: InputMaybe<Array<InputMaybe<HomeTestimonialsItemsMutation>>>;
-};
-
-export type HomeManifiestoItemsMutation = {
-  line1?: InputMaybe<Scalars['String']['input']>;
-  line2?: InputMaybe<Scalars['String']['input']>;
-  line1_en?: InputMaybe<Scalars['String']['input']>;
-  line2_en?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomeManifiestoMutation = {
-  items?: InputMaybe<Array<InputMaybe<HomeManifiestoItemsMutation>>>;
-};
-
-export type HomePlanetaPuntosMutation = {
-  frase?: InputMaybe<Scalars['Float']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-  lat?: InputMaybe<Scalars['Float']['input']>;
-  lng?: InputMaybe<Scalars['Float']['input']>;
-  conectaCon?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomePlanetaCifrasMutation = {
-  frase?: InputMaybe<Scalars['Float']['input']>;
-  valor?: InputMaybe<Scalars['Float']['input']>;
-  sufijo?: InputMaybe<Scalars['String']['input']>;
-  label?: InputMaybe<Scalars['String']['input']>;
-  label_en?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HomePlanetaMutation = {
-  puntos?: InputMaybe<Array<InputMaybe<HomePlanetaPuntosMutation>>>;
-  cifras?: InputMaybe<Array<InputMaybe<HomePlanetaCifrasMutation>>>;
 };
 
 export type HomeStatsItemsMutation = {
@@ -3982,10 +3953,12 @@ export type HomeBlogPreviewMutation = {
 
 export type HomeMutation = {
   hero?: InputMaybe<HomeHeroMutation>;
+  reel?: InputMaybe<HomeReelMutation>;
+  manifesto?: InputMaybe<HomeManifestoMutation>;
+  cyberguardBanner?: InputMaybe<HomeCyberguardBannerMutation>;
+  certificacionesIntro?: InputMaybe<HomeCertificacionesIntroMutation>;
   services?: InputMaybe<HomeServicesMutation>;
   testimonials?: InputMaybe<HomeTestimonialsMutation>;
-  manifiesto?: InputMaybe<HomeManifiestoMutation>;
-  planeta?: InputMaybe<HomePlanetaMutation>;
   stats?: InputMaybe<HomeStatsMutation>;
   blogPreview?: InputMaybe<HomeBlogPreviewMutation>;
 };
@@ -5020,7 +4993,7 @@ export type PopupMutation = {
   imageUrl?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
+export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', titleBefore?: string | null, titleBefore_en?: string | null, titleEmphasis?: string | null, titleEmphasis_en?: string | null, titleAfter?: string | null, titleAfter_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, ctaPrimary?: { __typename: 'HomeHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'HomeHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, reel?: { __typename: 'HomeReel', marqueeTop?: string | null, marqueeTop_en?: string | null, marqueeBottom?: string | null, marqueeBottom_en?: string | null, loopWebm1080?: string | null, loopMp41080?: string | null, loopWebm720?: string | null, loopMp4720?: string | null, poster?: string | null, fullVideoLabel?: string | null, fullVideoLabel_en?: string | null, fullVideoTitle?: string | null, fullVideoTitle_en?: string | null, fullVideoMp41080?: string | null, fullVideoMp4720?: string | null, fullVideoYoutubeUrl?: string | null } | null, manifesto?: { __typename: 'HomeManifesto', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null } | null, cyberguardBanner?: { __typename: 'HomeCyberguardBanner', brand?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, cta?: { __typename: 'HomeCyberguardBannerCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, certificacionesIntro?: { __typename: 'HomeCertificacionesIntro', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, cover?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null, cover?: string | null, youtubeUrl?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
 export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -5065,7 +5038,7 @@ export type HomeQueryVariables = Exact<{
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } };
+export type HomeQuery = { __typename?: 'Query', home: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', titleBefore?: string | null, titleBefore_en?: string | null, titleEmphasis?: string | null, titleEmphasis_en?: string | null, titleAfter?: string | null, titleAfter_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, ctaPrimary?: { __typename: 'HomeHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'HomeHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, reel?: { __typename: 'HomeReel', marqueeTop?: string | null, marqueeTop_en?: string | null, marqueeBottom?: string | null, marqueeBottom_en?: string | null, loopWebm1080?: string | null, loopMp41080?: string | null, loopWebm720?: string | null, loopMp4720?: string | null, poster?: string | null, fullVideoLabel?: string | null, fullVideoLabel_en?: string | null, fullVideoTitle?: string | null, fullVideoTitle_en?: string | null, fullVideoMp41080?: string | null, fullVideoMp4720?: string | null, fullVideoYoutubeUrl?: string | null } | null, manifesto?: { __typename: 'HomeManifesto', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null } | null, cyberguardBanner?: { __typename: 'HomeCyberguardBanner', brand?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, cta?: { __typename: 'HomeCyberguardBannerCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, certificacionesIntro?: { __typename: 'HomeCertificacionesIntro', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, cover?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null, cover?: string | null, youtubeUrl?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } };
 
 export type HomeConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5077,7 +5050,7 @@ export type HomeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', title: string, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, heroBackground?: string | null, splineSceneUrl?: string | null, splinePosterUrl?: string | null, heroBgVideo?: string | null, heroBgImage?: string | null, heroBgOpacity?: number | null, buttons?: Array<{ __typename: 'HomeHeroButtons', text: string, text_en?: string | null, url?: string | null, variant?: string | null } | null> | null, morph?: { __typename: 'HomeHeroMorph', triggerLabel?: string | null, triggerLabel_en?: string | null, solutionNodes?: Array<{ __typename: 'HomeHeroMorphSolutionNodes', label?: string | null, label_en?: string | null, url?: string | null, icon?: string | null } | null> | null } | null, cinematic?: { __typename: 'HomeHeroCinematic', floatingTokens?: Array<{ __typename: 'HomeHeroCinematicFloatingTokens', text?: string | null } | null> | null } | null, dotfield?: { __typename: 'HomeHeroDotfield', intensity?: string | null } | null, lattice?: { __typename: 'HomeHeroLattice', intensity?: string | null } | null, fiber?: { __typename: 'HomeHeroFiber', variant?: string | null, intensity?: string | null } | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null } | null> | null } | null, manifiesto?: { __typename: 'HomeManifiesto', items?: Array<{ __typename: 'HomeManifiestoItems', line1?: string | null, line2?: string | null, line1_en?: string | null, line2_en?: string | null } | null> | null } | null, planeta?: { __typename: 'HomePlaneta', puntos?: Array<{ __typename: 'HomePlanetaPuntos', frase?: number | null, label?: string | null, lat?: number | null, lng?: number | null, conectaCon?: string | null } | null> | null, cifras?: Array<{ __typename: 'HomePlanetaCifras', frase?: number | null, valor?: number | null, sufijo?: string | null, label?: string | null, label_en?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
+export type HomeConnectionQuery = { __typename?: 'Query', homeConnection: { __typename?: 'HomeConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HomeConnectionEdges', cursor: string, node?: { __typename: 'Home', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'HomeHero', titleBefore?: string | null, titleBefore_en?: string | null, titleEmphasis?: string | null, titleEmphasis_en?: string | null, titleAfter?: string | null, titleAfter_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, ctaPrimary?: { __typename: 'HomeHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'HomeHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, reel?: { __typename: 'HomeReel', marqueeTop?: string | null, marqueeTop_en?: string | null, marqueeBottom?: string | null, marqueeBottom_en?: string | null, loopWebm1080?: string | null, loopMp41080?: string | null, loopWebm720?: string | null, loopMp4720?: string | null, poster?: string | null, fullVideoLabel?: string | null, fullVideoLabel_en?: string | null, fullVideoTitle?: string | null, fullVideoTitle_en?: string | null, fullVideoMp41080?: string | null, fullVideoMp4720?: string | null, fullVideoYoutubeUrl?: string | null } | null, manifesto?: { __typename: 'HomeManifesto', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null } | null, cyberguardBanner?: { __typename: 'HomeCyberguardBanner', brand?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, cta?: { __typename: 'HomeCyberguardBannerCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, certificacionesIntro?: { __typename: 'HomeCertificacionesIntro', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, cover?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null, cover?: string | null, youtubeUrl?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null } | null } | null> | null } };
 
 export type ServiceQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5445,60 +5418,85 @@ export const HomePartsFragmentDoc = gql`
   __typename
   hero {
     __typename
-    title
-    title_en
+    titleBefore
+    titleBefore_en
+    titleEmphasis
+    titleEmphasis_en
+    titleAfter
+    titleAfter_en
     subtitle
     subtitle_en
-    heroBackground
-    splineSceneUrl
-    splinePosterUrl
-    heroBgVideo
-    heroBgImage
-    heroBgOpacity
-    buttons {
+    ctaPrimary {
       __typename
-      text
-      text_en
-      url
-      variant
+      label
+      label_en
+      href
     }
-    morph {
+    ctaSecondary {
       __typename
-      triggerLabel
-      triggerLabel_en
-      solutionNodes {
-        __typename
-        label
-        label_en
-        url
-        icon
-      }
+      label
+      label_en
+      href
     }
-    cinematic {
+  }
+  reel {
+    __typename
+    marqueeTop
+    marqueeTop_en
+    marqueeBottom
+    marqueeBottom_en
+    loopWebm1080
+    loopMp41080
+    loopWebm720
+    loopMp4720
+    poster
+    fullVideoLabel
+    fullVideoLabel_en
+    fullVideoTitle
+    fullVideoTitle_en
+    fullVideoMp41080
+    fullVideoMp4720
+    fullVideoYoutubeUrl
+  }
+  manifesto {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+  }
+  cyberguardBanner {
+    __typename
+    brand
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    cta {
       __typename
-      floatingTokens {
-        __typename
-        text
-      }
+      label
+      label_en
+      href
     }
-    dotfield {
-      __typename
-      intensity
-    }
-    lattice {
-      __typename
-      intensity
-    }
-    fiber {
-      __typename
-      variant
-      intensity
-    }
+    image
+  }
+  certificacionesIntro {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
   }
   services {
     __typename
     title
     title_en
+    subtitle
+    subtitle_en
     items {
       __typename
       number
@@ -5507,6 +5505,7 @@ export const HomePartsFragmentDoc = gql`
       description
       description_en
       icon
+      cover
       tabIcon
       tabLabel
       tabLabel_en
@@ -5539,35 +5538,8 @@ export const HomePartsFragmentDoc = gql`
       company
       avatar
       logo
-    }
-  }
-  manifiesto {
-    __typename
-    items {
-      __typename
-      line1
-      line2
-      line1_en
-      line2_en
-    }
-  }
-  planeta {
-    __typename
-    puntos {
-      __typename
-      frase
-      label
-      lat
-      lng
-      conectaCon
-    }
-    cifras {
-      __typename
-      frase
-      valor
-      sufijo
-      label
-      label_en
+      cover
+      youtubeUrl
     }
   }
   stats {

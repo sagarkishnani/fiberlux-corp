@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { FaWhatsapp, FaXmark } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
+import type { Locale } from "../../i18n/config";
+import { fxAsset } from "./fx/FxPrimitives";
 
 /**
  * Botón flotante de WhatsApp. El número y los textos se editan en Tina
  * (`global.whatsapp`); `BaseLayout` resuelve qué burbuja toca según la página.
  *
- * El botón late siempre —dos anillos desfasados medio ciclo— y, si la página
- * tiene mensaje, una burbuja asoma sola a los `delayMs` y se cierra con la ✕.
+ * Diseño del rediseño claro (SPEC 117): píldora verde que despliega
+ * "Escríbenos" al pasar el cursor. Si la página tiene mensaje, una burbuja
+ * asoma sola a los `delayMs` y se cierra con la ✕.
  */
 interface WhatsAppButtonProps {
   /** Phone in international format, digits only (e.g. "51986176790"). */
@@ -20,7 +23,10 @@ interface WhatsAppButtonProps {
   bubbleKey?: string;
   /** Retraso hasta que asoma la burbuja, en milisegundos. */
   delayMs?: number;
+  locale?: Locale;
 }
+
+const LABEL: Record<Locale, string> = { es: "Escríbenos", en: "Message us" };
 
 const DEFAULT_PHONE = "51986176790";
 const DEFAULT_MESSAGE =
@@ -86,6 +92,7 @@ export default function WhatsAppButton({
   bubbleMessage,
   bubbleKey = "global",
   delayMs = 7000,
+  locale = "es",
 }: WhatsAppButtonProps) {
   const digits = (phone || DEFAULT_PHONE).replace(/\D/g, "");
   const href = `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(message)}`;
@@ -130,11 +137,6 @@ export default function WhatsAppButton({
 
   return (
     <div className="wa-fab-wrap">
-      {/* Dos anillos desfasados medio ciclo. Van detrás del botón y fuera del
-          árbol de accesibilidad: son decoración, no información. */}
-      <span aria-hidden="true" className="wa-pulse" />
-      <span aria-hidden="true" className="wa-pulse wa-pulse--delay" />
-
       {gancho && fase !== "oculta" && (
         /* `role="status"` y no `dialog`: la burbuja se anuncia una vez y no roba
            el foco a quien está leyendo la página. */
@@ -175,7 +177,10 @@ export default function WhatsAppButton({
         aria-label="Contáctanos por WhatsApp"
         className="wa-fab"
       >
-        <FaWhatsapp aria-hidden="true" />
+        <span className="wa-fab__label">{LABEL[locale]}</span>
+        <span className="wa-fab__icon">
+          <img src={fxAsset("wa-float.svg")} alt="" />
+        </span>
       </a>
 
       <style>{`
@@ -183,28 +188,17 @@ export default function WhatsAppButton({
            absoluto para que la cola caiga siempre sobre el mismo punto. */
         .wa-fab-wrap {
           position: fixed;
-          right: clamp(16px, 3vw, 28px);
-          bottom: clamp(16px, 3vw, 28px);
-          z-index: 60;
-          width: 56px;
+          right: 16px;
+          bottom: 16px;
+          z-index: 70;
           height: 56px;
         }
-
-        /* ── Pulso ── */
-        .wa-pulse {
-          position: absolute;
-          inset: 0;
-          border-radius: 9999px;
-          background: #25D366;
-          pointer-events: none;
-          animation: wa-pulse 2400ms cubic-bezier(0.16, 1, 0.3, 1) infinite;
-        }
-        .wa-pulse--delay { animation-delay: 1200ms; }
-
-        @keyframes wa-pulse {
-          0%   { opacity: 0.45; transform: scale(1); }
-          70%  { opacity: 0; transform: scale(1.9); }
-          100% { opacity: 0; transform: scale(1.9); }
+        @media (min-width: 1024px) {
+          .wa-fab-wrap {
+            right: 28px;
+            bottom: 28px;
+            height: 60px;
+          }
         }
 
         /* ── Burbuja ── */
@@ -283,39 +277,65 @@ export default function WhatsAppButton({
 
         /* ── FAB ── */
         .wa-fab {
-          position: relative;
-          display: inline-flex;
+          display: flex;
           align-items: center;
-          justify-content: center;
-          width: 56px;
-          height: 56px;
+          height: 100%;
           border-radius: 9999px;
-          background: #25D366;
+          background: #51C859;
           color: #fff;
-          font-size: 28px;
-          box-shadow: 0 8px 24px rgba(37, 211, 102, 0.45);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          overflow: hidden;
+          box-shadow: 0 10px 24px -8px rgba(37, 211, 102, 0.6);
+          transition: box-shadow 0.3s;
         }
         .wa-fab:hover {
-          transform: scale(1.05);
-          box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55);
+          color: #fff;
+          box-shadow: 0 0 0 6px rgba(37, 211, 102, 0.22);
         }
         .wa-fab:focus-visible {
           outline: 3px solid rgba(37, 211, 102, 0.4);
           outline-offset: 2px;
         }
+        .wa-fab__label {
+          max-width: 0;
+          padding-left: 0;
+          opacity: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          font-size: 14px;
+          font-weight: 600;
+          transition: all 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .wa-fab__icon {
+          display: grid;
+          place-items: center;
+          flex: none;
+          width: 56px;
+          height: 56px;
+        }
+        .wa-fab__icon img {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        @media (min-width: 1024px) {
+          .wa-fab {
+            box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.6);
+          }
+          .wa-fab__icon {
+            width: 60px;
+            height: 60px;
+          }
+          .wa-fab:hover .wa-fab__label {
+            max-width: 160px;
+            padding-left: 22px;
+            opacity: 1;
+          }
+        }
 
-        /* Movimiento reducido pide menos movimiento, no menos contenido: los
-           anillos se van del todo, pero la burbuja sigue asomando —sin
-           transición— porque lo que dice es contenido. El componente desmonta
-           con un temporizador de respaldo, así que apagar la animación de
-           salida no la deja colgada. */
         @media (prefers-reduced-motion: reduce) {
-          .wa-pulse { display: none; }
           .wa-bubble--in,
           .wa-bubble--out { animation: none; }
-          .wa-fab { transition: none; }
-          .wa-fab:hover { transform: none; }
+          .wa-fab__label { transition: none; }
         }
       `}</style>
     </div>

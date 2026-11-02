@@ -23,3 +23,17 @@
 .site-container--narrow {
   max-width: 1200px;
 }
+
+/* Contenedor del rediseño (SPEC 117): 1320px útiles, gutter de 16px en mobile
+   (358px en un teléfono de 390px, como el prototipo) y 32px desde lg. */
+.fx-container {
+  width: calc(100% - 32px);
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 1024px) {
+  .fx-container {
+    width: calc(100% - 64px);
+  }
+}

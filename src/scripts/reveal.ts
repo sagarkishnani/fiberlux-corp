@@ -7,7 +7,7 @@
  *   <svg data-svg-draw>…</svg>                            ← dibuja su trazo
  *
  * Atributos: data-reveal (up|down|left|right|fade|scale, default "up"),
- * data-reveal-delay, data-reveal-duration, data-reveal-distance (px),
+ * data-reveal-delay, data-reveal-duration, data-reveal-distance (px), data-reveal-ease ("fx"),
  * data-reveal-stagger (cascada de hijos), data-reveal-repeat (re-dispara),
  * data-reveal-only ("mobile"|"desktop": limita el reveal a ese breakpoint; en el
  * otro el elemento se muestra sin animar), data-svg-draw + data-draw-duration.
@@ -27,6 +27,8 @@ import { onEachPage } from "./lifecycle";
 type Cleanup = (fn: () => void) => void;
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+/* Curva del rediseño claro (SPEC 117): `data-reveal-ease="fx"`. */
+const EASE_FX: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const DEFAULT_DURATION = 1;
 const DEFAULT_DISTANCE = 80;
 
@@ -82,7 +84,8 @@ function skipForBreakpoint(el: HTMLElement, mobile: boolean): boolean {
 }
 
 function revealIn(el: HTMLElement, dir: string, dist: number, dur: number, delay: number) {
-  const c = animate(el, enterKeyframes(dir, dist) as any, { duration: dur, delay, ease: EASE });
+  const ease = el.dataset.revealEase === "fx" ? EASE_FX : EASE;
+  const c = animate(el, enterKeyframes(dir, dist) as any, { duration: dur, delay, ease });
   c.finished.then(() => { el.style.willChange = "auto"; }).catch(() => {});
 }
 

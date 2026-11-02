@@ -11,3 +11,6 @@ public/fiberlux-config.php
 .env.example
 .playwright-mcp
 .playwright-screens
+# Rediseño: bundles originales y assets desempaquetados (se regeneran con scripts/unpack-prototipo.mjs)
+references/rediseno/prototipo-*.html
+references/rediseno/assets/

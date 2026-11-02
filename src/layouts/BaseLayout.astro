@@ -1,8 +1,6 @@
 ---
-import Footer from "../components/shared/Footer.astro";
-// Header antiguo — reemplazado por HeaderV2 (SPEC 33). Se deja comentado por si acaso.
-// import Header from "../components/shared/Header.astro";
-import HeaderV2 from "../components/shared/HeaderV2.astro";
+import FooterV2 from "../components/shared/FooterV2.astro";
+import HeaderV3 from "../components/shared/HeaderV3.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
 import Popup from "../components/popup/Popup.astro";
 import WhatsAppButton from "../components/shared/WhatsAppButton.tsx";
@@ -11,8 +9,8 @@ import CursorTrail from "../components/shared/CursorTrail.tsx";
 import CursorShapes from "../components/shared/CursorShapes.tsx";
 import client from "../../tina/__generated__/client";
 import { ClientRouter } from "astro:transitions";
-import homeContent from "../content/home/index.json";
 import "../styles/site-container.css";
+import "../styles/fx.css";
 import { getLocale, tField } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 
@@ -37,45 +35,14 @@ interface Props {
 const {
   title = "Fiberlux",
   description = "Soluciones de conectividad y TI para tu empresa",
-  headerTheme = "dark",
   whatsappContext,
   whatsappKind = "servicio",
 } = Astro.props;
 
-// ─── Home detection (SPEC 39) ───
-// El logo grande animado del hero (que vuela al header con el scroll) solo aplica
-// en la home. BASE_URL-aware para que funcione si el sitio se despliega en subpath.
+// ─── Home detection (burbuja de WhatsApp) — BASE_URL-aware ───
 const normalizePath = (p: string) => p.replace(/\/+$/, "") || "/";
 const isHome =
   normalizePath(Astro.url.pathname) === normalizePath(import.meta.env.BASE_URL);
-// En el modo de hero "morph" (SPEC 96) el hero es texto-izquierda + globo, así
-// que el logo grande animado del header (SPEC 39) se alinea a la IZQUIERDA en
-// vez de al centro (SPEC 88). Conserva la animación de subir al header al hacer
-// scroll.
-const homeHeroMorph =
-  isHome && (homeContent as any)?.hero?.heroBackground === "morph";
-// Modo de hero "cinematic" (SPEC 97): entrada coreografiada — el header se
-// revela de a pocos. La clase se aplica desde el SSR para que no haya parpadeo.
-// SPEC 100 ("dotfield") y SPEC 112 ("lattice") comparten esta coreografía
-// (mismo chrome de hero). OJO: esta lista tiene que incluir TODOS los modos que
-// `CINE_MODES` de HeroHomeReact considera cinematográficos. Si un modo se queda
-// fuera, el CSS `.cine-intro-page [data-hero-logo]` no oculta el wordmark real
-// durante el morph y se ven DOS logos a la vez (el real y el de la intro).
-const homeHeroCinematic =
-  isHome &&
-  ["cinematic", "dotfield", "lattice", "fiber", "planeta"].includes(
-    (homeContent as any)?.hero?.heroBackground
-  );
-// Páginas de solución (categoría + subservicio) y fiberlux-app tienen hero de
-// imagen: el header arranca con fondo opaco/blur para que el menú no se pierda
-// sobre la imagen (zonas claras de la foto se mezclaban con el texto blanco).
-// Las páginas de tema claro (legales, reclamos, etc.) también arrancan sólidas:
-// con el header transparente, su barra dejaba ver el negro del body detrás
-// (franja negra bajo la topbar antes de hacer scroll).
-const solidHeader =
-  headerTheme === "light" ||
-  /\/soluciones\/[^/]+/.test(Astro.url.pathname) ||
-  /\/fiberlux-app\/?$/.test(Astro.url.pathname);
 
 // ─── Maintenance mode check ───
 let maintenanceMode = false;
@@ -172,7 +139,7 @@ const whatsappBubbleMessage =
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     />
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
@@ -198,15 +165,20 @@ const whatsappBubbleMessage =
       #a11y-content {
         overflow-x: clip;
       }
-      /* Selección de texto en morado de marca (SPEC 99 obs5). Vive aquí porque
-         global.css no se bundlea; el footer en modo morado la sobreescribe. */
+      /* Tema claro del rediseño (SPEC 117). */
+      html,
+      body {
+        background: #f7f7f7;
+        color: #453c46;
+        -webkit-font-smoothing: antialiased;
+      }
       ::selection {
-        background-color: rgba(150, 35, 122, 0.3);
-        color: #ffffff;
+        background-color: #ebd1e4;
+        color: #650d4a;
       }
       ::-moz-selection {
-        background-color: rgba(150, 35, 122, 0.3);
-        color: #ffffff;
+        background-color: #ebd1e4;
+        color: #650d4a;
       }
       .reveal-js [data-reveal]:not([data-reveal-stagger]) {
         opacity: 0;
@@ -248,37 +220,6 @@ const whatsappBubbleMessage =
         opacity: 0;
         visibility: hidden;
       }
-      /* Hero cinematic (SPEC 97): el header ENTRA escalonado, ítem por ítem, con
-         el mismo feel que la coreografía del hero (rise + fade). Cada elemento
-         marcado con .cine-hitem define su retardo en --cine-d. El logo grande lo
-         anima aparte la intro FLX→FIBERLUX. Aplicado desde el SSR (no parpadea);
-         `both` mantiene el estado inicial oculto hasta que corre su retardo. */
-      @media (prefers-reduced-motion: no-preference) {
-        .cine-intro-page .cine-hitem {
-          animation: cine-item-in 0.85s cubic-bezier(0.2, 0.7, 0.2, 1)
-            var(--cine-d, 0ms) both;
-        }
-      }
-      @keyframes cine-item-in {
-        from { opacity: 0; transform: translateY(22px); }
-        to { opacity: 1; transform: none; }
-      }
-      /* El logo grande del hero arranca OCULTO en cinematic (desktop, sin
-         reduced-motion) para no mostrar "FIBERLUX" antes de la intro
-         FLX→FIBERLUX; HeroLogoIntro lo revela al terminar el morph. Aplicado
-         desde el SSR (no parpadea). Safety: si el JS no corre (sin-JS), se
-         auto-revela a los 6 s — margen amplio sobre la duración de la intro,
-         incluso en dispositivos lentos, para que el safety NUNCA muestre el
-         logo antes de que el morph termine. Con JS, el handoff lo revela antes. */
-      @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-        .cine-intro-page [data-hero-logo] {
-          visibility: hidden;
-          animation: cine-logo-safety 0.01s linear 6000ms forwards;
-        }
-        @keyframes cine-logo-safety {
-          to { visibility: visible; }
-        }
-      }
       /* ═══ View Transitions (SPEC 110) ═══
          Efecto de navegación entre páginas. Se define aquí (y no con
          `transition:animate` por componente) para que aplique a TODO el sitio
@@ -314,13 +255,6 @@ const whatsappBubbleMessage =
       ::view-transition-old(fbx-header),
       ::view-transition-new(fbx-header) {
         animation-duration: 180ms;
-      }
-      /* El preloader del Home (hoy DESACTIVADO en index.astro) era de bienvenida
-         —primera carga de la sesión— y en una navegación interna no debía asomar
-         ni un frame. La regla queda por si se reactiva junto al hero 3D;
-         `data-astro-navigated` lo pone transitions.ts en astro:after-swap. */
-      html[data-astro-navigated] #site-preloader {
-        display: none !important;
       }
       @media (prefers-reduced-motion: reduce) {
         ::view-transition-old(root),
@@ -447,12 +381,11 @@ const whatsappBubbleMessage =
         <Fragment>
           {/* Page content — the accessibility color filter is applied here so
               the fixed overlays below stay reachable while a filter is on. */}
-          <div id="a11y-content" class:list={[{ "cine-intro-page": homeHeroCinematic }]}>
-            {/* <Header theme={headerTheme} /> */}
-            <HeaderV2 theme={headerTheme} heroLogo={isHome} heroLogoAlign={homeHeroMorph ? "left" : "center"} solidOnLoad={solidHeader} locale={locale} />
+          <div id="a11y-content">
+            <HeaderV3 locale={locale} />
             <slot />
-            <div class="-mt-6 relative z-40">
-              <Footer locale={locale} />
+            <div class="relative z-40 mt-12 lg:mt-40">
+              <FooterV2 locale={locale} />
             </div>
           </div>
           <CookieConsent />
@@ -466,6 +399,7 @@ const whatsappBubbleMessage =
             message={whatsappMessage}
             bubbleMessage={whatsappBubbleMessage}
             bubbleKey={bubbleCtx ?? "global"}
+            locale={locale}
           />
           <AccessibilityPanel client:idle transition:persist="a11y" locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina
@@ -494,10 +428,6 @@ const whatsappBubbleMessage =
 
 {/* Overlap sticky del hero (SPEC 70): efecto al ser cubierto. */}
 {!maintenanceMode && <script>import "../scripts/heroOverlap.ts";</script>}
-
-{/* SPEC 113 — corte entre capítulos del tramo narrativo. No hace nada fuera de
-    la home en modo `fiber`: solo ahí existe `[data-narrative]`. */}
-{!maintenanceMode && <script>import "../scripts/narrativeCut.ts";</script>}
 
 {/* Overlap del panel de testimonios (SPEC 109): la sección anterior se fija
     y el panel sube por encima. */}

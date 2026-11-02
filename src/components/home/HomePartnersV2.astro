@@ -1,0 +1,67 @@
+---
+import { client } from "../../../tina/__generated__/client";
+import { tField } from "../../utils/i18n";
+import { mediaUrl } from "../../utils/mediaUrl";
+import type { Locale } from "../../i18n/config";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "es" } = Astro.props;
+
+const [conn, globalQuery] = await Promise.all([
+  client.queries.serviceConnection({ last: 100 }),
+  client.queries.global({ relativePath: "index.json" }),
+]);
+
+const seen = new Set<string>();
+const logos = (conn.data?.serviceConnection?.edges || [])
+  .flatMap((e: any) => e?.node?.partners?.logos || [])
+  .filter((l: any) => l?.image && !seen.has(l.image) && seen.add(l.image));
+
+const rows = [logos.filter((_: any, i: number) => i % 2 === 0), logos.filter((_: any, i: number) => i % 2 === 1)].filter(
+  (row) => row.length
+);
+const partners = (globalQuery.data?.global as any)?.partners;
+const eyebrow = tField(partners, "eyebrow", locale);
+const titleParts = tField(partners, "title", locale).split("*");
+---
+
+{
+  logos.length > 0 && (
+    <section class="pt-[88px] lg:pt-[140px]">
+      <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" class="fx-container text-center">
+        {eyebrow && <div class="font-mono text-[12px] font-medium tracking-[.2em] text-fx-muted lg:text-[13px]">{eyebrow}</div>}
+        <h2 class="mb-0 mt-3.5 text-[28px] font-normal leading-[1.15] tracking-[-.02em] text-fx-ink [text-wrap:balance] lg:mt-[18px] lg:text-[40px]">
+          {titleParts.map((part: string, i: number) => (i % 2 === 1 ? <span class="font-semibold text-fx-purple">{part}</span> : part))}
+        </h2>
+      </div>
+      <div class="mt-10 flex flex-col gap-7 [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)] lg:mt-16 lg:gap-10">
+        {
+          rows.map((row: any[], r: number) => (
+            <div
+              class:list={["flex w-max opacity-[.72] transition-opacity duration-[400ms] hover:opacity-100", r === 0 ? "fx-marquee" : "fx-marquee-reverse"]}
+              style={`--fx-marquee-duration:${Math.max(row.length * 4, 40) + r * 6}s`}
+            >
+              {[0, 1].map((copy) => (
+                <ul class="m-0 flex shrink-0 list-none items-center gap-12 p-0 pr-12 lg:gap-16 lg:pr-16" aria-hidden={copy === 1 ? "true" : undefined}>
+                  {row.map((logo: any) => (
+                    <li class="shrink-0">
+                      <img
+                        src={mediaUrl(logo.image)}
+                        alt={copy === 0 ? logo.alt || "" : ""}
+                        loading="lazy"
+                        class="block h-9 w-auto max-w-[150px] object-contain [filter:grayscale(1)_brightness(.32)] lg:h-14 lg:max-w-[200px]"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  )
+}
