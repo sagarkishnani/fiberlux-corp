@@ -24,7 +24,11 @@ export function whenHydrated<T extends HTMLElement | SVGElement>(
   run: (el: T) => void
 ): () => void {
   const island = el.closest("astro-island[ssr]");
-  if (!island) {
+  // Las islas `client:tina` solo hidratan dentro del editor visual (que corre
+  // en un iframe). Fuera de él quedan estáticas para siempre: esperar su
+  // hidratación dejaría el reveal oculto.
+  const staticTinaIsland = island?.getAttribute("client") === "tina" && window.self === window.top;
+  if (!island || staticTinaIsland) {
     run(el);
     return () => {};
   }

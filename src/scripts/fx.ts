@@ -2,6 +2,7 @@
  * Efectos de scroll (SPEC 71) — Motion.
  *
  *   <span data-count-up>+40</span>          ← cuenta 0 → 40 al entrar (mantiene "+")
+ *   <span data-count-up data-count-nogroup>+5500</span> ← sin separador de miles
  *   <div  data-parallax="0.15">…</div>       ← parallax vertical sutil ligado al scroll
  *
  * Respeta prefers-reduced-motion: no anima (las cifras quedan en su valor final del
@@ -31,9 +32,10 @@ function initCountUp(cleanup: Cleanup) {
     const decimals = dot >= 0 ? numStr.length - dot - 1 : 0;
     const dur = Number(el.dataset.countDuration || 1.6);
 
+    const useGrouping = el.dataset.countNogroup == null;
     const fmt = (v: number) =>
       prefix +
-      v.toLocaleString("es-PE", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) +
+      v.toLocaleString("es-PE", { minimumFractionDigits: decimals, maximumFractionDigits: decimals, useGrouping }) +
       suffix;
 
     let stop: (() => void) | undefined;
