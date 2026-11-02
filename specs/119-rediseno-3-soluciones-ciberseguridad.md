@@ -82,6 +82,45 @@ Todos los strings tienen su `_en`. Si `cyberguard` existe, la ruta de esa catego
 
 ---
 
+## Mapeo prototipo ↔ Tina (resultado del paso 1)
+
+**Categoría genérica (`service`)**: se cubre con los campos actuales.
+
+| Sección del prototipo | Fuente |
+| --- | --- |
+| Hero (breadcrumb, H1, bajada, CTA, foto a la derecha) | `hero.heading/intro/ctaLabel/heroImage` |
+| Marquee | `title` en mayúsculas, repetido |
+| Desafío / Nuestra solución / Industrias destacadas | `valor.title/subtitle` + `valor.cards[0..2]` (`heading`, `text`, `image`) |
+| Catálogo | `catalogo.items` (`title`, `description`, `url`) |
+| Partners | `partners.logos` |
+| Artículos relacionados | posts filtrados por `blogTags` |
+| Formulario | form CMS `servicios` |
+
+Las fotos `cat-hero-*`, `cat-desafio-*` y `cat-industria-*` del prototipo se cargan como contenido en `hero.heroImage` y `valor.cards[0|2].image`.
+
+**Solución (`subservicio`)**: se cubre con los campos actuales: `hero.heading/intro/note` ("Ideal para") `/ctaLabel/formTitle`, `beneficios.items`, `casosDeUso.statement`, testimonios de `home.testimonials` y "Otras soluciones" desde el `catalogo` de la categoría padre. La FAQ de subservicios no aparece en el prototipo; se mantiene oculta (hoy todas tienen `visible: false`).
+
+**Ciberseguridad (`service/ciberseguridad.json` → bloque `cyberguard`)**: el modelo del spec se ajusta al contenido real del prototipo:
+
+```ts
+cyberguard?: {
+  hero:      { badge, title, text, ctaPrimary: { label, href }, ctaSecondary: { label, href }, highlights: [{ icon, text }] },
+  frentes:   { eyebrow, title, text, items: [{ icon, title, text }] },
+  escalas:   { eyebrow, title, items: [{ tag, title, text }] },          // "La protección crece"
+  planes:    { eyebrow, title, text, note, items: [{ tag, name, subtitle, idealFor, includes, features: [{ text }], cta: { label, href }, highlighted }] },
+  queCambia: { eyebrow, title, text, colSituation, colWithout, colWith, items: [{ situation, without, with }] },
+  porQue:    { eyebrow, title, text, items: [{ title, text }] },
+  porArea:   { eyebrow, title, items: [{ area, benefit }] },
+  pasos:     { eyebrow, title, text, items: [{ title, text }] },
+  faq:       { eyebrow, title, text, items: [{ question, answer }] },
+  cta:       { badge, title, text, button: { label, href } },
+}
+```
+
+Todos los textos tienen `_en`. "Beneficio por área" está vacío en el prototipo (solo título): la sección se oculta mientras `porArea.items` esté vacío.
+
+---
+
 ## Implementation plan
 
 1. Rama `spec-119-rediseno-soluciones` desde `staging`. Mapear el prototipo contra `service` y `subservicio` y listar los faltantes.
