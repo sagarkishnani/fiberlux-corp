@@ -3,23 +3,39 @@ import { client } from "../../../tina/__generated__/client";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NosotrosIntroReact from "../../components/nosotros/NosotrosIntroReact";
 import NosotrosMetodologiaReact from "../../components/nosotros/NosotrosMetodologiaReact";
+import NosotrosHistoriaReact from "../../components/nosotros/NosotrosHistoriaReact";
 import NosotrosMisionValoresReact from "../../components/nosotros/NosotrosMisionValoresReact";
-import TimelineReact from "../../components/nosotros/TimelineReact.tsx";
-import RubrosReact from "../../components/nosotros/RubrosReact.tsx";
+import NosotrosSgsiReact from "../../components/nosotros/NosotrosSgsiReact";
+import NosotrosCierreReact from "../../components/nosotros/NosotrosCierreReact";
+import HomeCertificacionesReact from "../../components/home/HomeCertificacionesReact";
+import { loadCertificaciones } from "../../utils/certificaciones";
 import { getLocale } from "../../utils/i18n";
 import { isLocale } from "../../i18n/config";
 
-const aboutQuery = await client.queries.about({ relativePath: "index.json" });
+const [aboutQuery, homeQuery, certificaciones] = await Promise.all([
+  client.queries.about({ relativePath: "index.json" }),
+  client.queries.home({ relativePath: "index.json" }),
+  loadCertificaciones(),
+]);
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 const aboutProps = { query: aboutQuery.query, variables: aboutQuery.variables, data: aboutQuery.data, locale };
+const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data: homeQuery.data, locale };
+const rubros = (aboutQuery.data?.about as any)?.rubros ?? null;
 ---
 
-<BaseLayout title="Nosotros">
+<BaseLayout title="Nosotros" footerOverlap>
   <main class="bg-fx-bg">
     <NosotrosIntroReact client:load {...aboutProps} />
     <NosotrosMetodologiaReact client:visible {...aboutProps} />
-    <TimelineReact client:visible {...aboutProps} />
+    <NosotrosHistoriaReact client:visible {...aboutProps} />
+    <HomeCertificacionesReact
+      client:visible
+      {...homeProps}
+      certificaciones={certificaciones}
+      sectionClassName="relative z-[4] -mt-10 rounded-t-[24px] bg-fx-bg pb-[67px] pt-[50px] lg:rounded-t-[40px] lg:pb-40 lg:pt-[120px]"
+    />
     <NosotrosMisionValoresReact client:visible {...aboutProps} />
-    <RubrosReact client:visible {...aboutProps} />
+    <NosotrosSgsiReact client:tina {...aboutProps} />
+    <NosotrosCierreReact client:visible {...homeProps} rubros={rubros} />
   </main>
 </BaseLayout>

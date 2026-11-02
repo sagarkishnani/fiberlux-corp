@@ -72,12 +72,16 @@ function StepsTimeline({ steps, locale }: { steps: any[]; locale: "es" | "en" })
         {steps.map((step, i) => (
           <div
             key={i}
-            ref={(el) => (colRefs.current[i] = el)}
+            ref={(el) => {
+              colRefs.current[i] = el;
+            }}
             className="relative min-w-0 pl-11 opacity-[.38] transition-opacity duration-[600ms] ease-fx-out lg:pl-0"
             data-tina-field={tinaField(step, "title")}
           >
             <span
-              ref={(el) => (dotRefs.current[i] = el)}
+              ref={(el) => {
+                dotRefs.current[i] = el;
+              }}
               className="absolute left-0 top-1.5 block h-[22px] w-[22px] rounded-full border-[1.5px] border-[#C9C3CA] bg-white transition-[background,border-color,box-shadow] duration-[400ms] lg:static"
             />
             <h3 className="m-0 text-[22px] font-medium leading-[1.1] tracking-[-.03em] text-fx-ink [overflow-wrap:anywhere] [text-wrap:balance] lg:mt-14 lg:text-[34px]">

@@ -31,6 +31,7 @@ export const UI: Record<Locale, Record<string, string>> = {
     "blog.eyebrow": "[ BLOG ]",
     "blog.viewAllMobile": "Ver todos los artículos",
     "page.nosotros": "Nosotros",
+    "casos.eyebrow": "[ CASOS DE ÉXITO ]",
     "page.casos": "Casos de éxito",
     "page.blog": "Blog",
 
@@ -70,6 +71,7 @@ export const UI: Record<Locale, Record<string, string>> = {
     "blog.eyebrow": "[ BLOG ]",
     "blog.viewAllMobile": "View all articles",
     "page.nosotros": "About us",
+    "casos.eyebrow": "[ SUCCESS STORIES ]",
     "page.casos": "Success stories",
     "page.blog": "Blog",
 

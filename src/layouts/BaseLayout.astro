@@ -30,6 +30,8 @@ interface Props {
   whatsappContext?: string;
   /** Tipo de página para el mensaje de WhatsApp. */
   whatsappKind?: "servicio" | "solución";
+  /** El footer se monta sobre el último panel de la página (rediseño, páginas con paneles apilados). */
+  footerOverlap?: boolean;
 }
 
 const {
@@ -37,6 +39,7 @@ const {
   description = "Soluciones de conectividad y TI para tu empresa",
   whatsappContext,
   whatsappKind = "servicio",
+  footerOverlap = false,
 } = Astro.props;
 
 // ─── Home detection (burbuja de WhatsApp) — BASE_URL-aware ───
@@ -384,7 +387,7 @@ const whatsappBubbleMessage =
           <div id="a11y-content">
             <HeaderV3 locale={locale} />
             <slot />
-            <div class="relative z-40 mt-12 lg:mt-40">
+            <div class:list={["relative z-40", footerOverlap ? "-mt-7 lg:-mt-10" : "mt-12 lg:mt-40"]}>
               <FooterV2 locale={locale} />
             </div>
           </div>

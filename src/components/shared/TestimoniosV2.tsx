@@ -230,7 +230,7 @@ export default function TestimoniosV2({
           <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx">
             <Eyebrow>{eyebrow}</Eyebrow>
             <h2
-              className="mb-0 mt-3.5 text-[32px] font-normal leading-[1.12] tracking-[-.02em] text-fx-ink lg:mt-[18px] lg:max-w-[520px] lg:text-[48px] lg:leading-[1.1]"
+              className="mb-0 mt-3.5 text-[32px] font-normal leading-[1.12] tracking-[-.02em] text-fx-ink lg:mt-[18px] lg:w-[560px] lg:text-[48px] lg:leading-[1.1]"
               data-tina-field={titleTinaField}
             >
               {renderEmphasis(title)}
