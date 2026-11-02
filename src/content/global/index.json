@@ -17,14 +17,19 @@
     },
     "desktopNav": [
       {
+        "text": "Nosotros",
+        "url": "/nosotros",
+        "text_en": "About us"
+      },
+      {
         "text": "Soluciones",
         "url": "/soluciones",
         "text_en": "Solutions"
       },
       {
-        "text": "Nosotros",
-        "url": "/nosotros",
-        "text_en": "About us"
+        "text": "Soporte técnico",
+        "url": "/soporte-tecnico",
+        "text_en": "Technical support"
       },
       {
         "text": "Casos de éxito",
@@ -35,11 +40,6 @@
         "text": "Blog",
         "url": "/blog",
         "text_en": "Blog"
-      },
-      {
-        "text": "Soporte técnico",
-        "url": "/soporte-tecnico",
-        "text_en": "Technical support"
       },
       {
         "text": "Contacto",

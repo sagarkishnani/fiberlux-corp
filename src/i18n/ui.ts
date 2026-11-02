@@ -17,6 +17,11 @@ export const UI: Record<Locale, Record<string, string>> = {
     "menu.open.aria": "Abrir menú",
     "menu.close.aria": "Cerrar menú",
     "breadcrumb.home": "Inicio",
+    "menu.close": "Cerrar",
+    "menu.back": "Atrás",
+    "mega.label": "SOLUCIONES",
+    "mega.viewAll": "Ver todo",
+    "social.follow": "Síguenos",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -40,6 +45,11 @@ export const UI: Record<Locale, Record<string, string>> = {
     "menu.open.aria": "Open menu",
     "menu.close.aria": "Close menu",
     "breadcrumb.home": "Home",
+    "menu.close": "Close",
+    "menu.back": "Back",
+    "mega.label": "SOLUTIONS",
+    "mega.viewAll": "See all",
+    "social.follow": "Follow us",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",
