@@ -3601,9 +3601,8 @@ export default defineConfig({
             label: "Estilo visual",
             type: "string",
             options: [
-              { value: "default", label: "Estándar (formularios OSIPTEL)" },
-              { value: "contact", label: "Contacto (estilo Tailwind, claro)" },
-              { value: "contact-dark", label: "Contacto (oscuro / corp)" },
+              { value: "default", label: "Estándar (secciones numeradas en tarjetas, formularios OSIPTEL)" },
+              { value: "contact", label: "Contacto (campos sin tarjetas, botón a todo el ancho)" },
             ],
             description: "Define la apariencia visual del formulario.",
           },

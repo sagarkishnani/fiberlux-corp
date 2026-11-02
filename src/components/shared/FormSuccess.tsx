@@ -2,80 +2,46 @@ interface FormSuccessProps {
   title?: string;
   subtitle?: string;
   correlativo?: string;
+  compact?: boolean;
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 export function FormSuccess({
   title = "¡Formulario enviado!",
   subtitle = "Tu solicitud ha sido registrada correctamente.",
   correlativo,
+  compact = false,
+  actionLabel,
+  onAction,
 }: FormSuccessProps) {
   return (
     <div
-      style={{
-        minHeight: "calc(100vh - 160px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "48px 24px",
-      }}
+      className={`flex flex-col items-center justify-center text-center ${
+        compact ? "min-h-[420px] lg:min-h-[640px]" : "rounded-[28px] border border-fx-line bg-white px-6 py-16 lg:px-16 lg:py-24"
+      }`}
     >
-      <div style={{ textAlign: "center", maxWidth: "480px" }}>
-        <div
-          style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "50%",
-            backgroundColor: "rgba(34,197,94,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            margin: "0 auto 20px",
-          }}
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M5 13l4 4L19 7" stroke="#22C55E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 600,
-            color: "#1A1A1A",
-            fontFamily: "Poppins, sans-serif",
-            margin: "0 0 8px",
-          }}
-        >
-          {title}
-        </h2>
-        <p
-          style={{
-            fontSize: "14px",
-            color: "#5B5B5B",
-            lineHeight: 1.6,
-            fontFamily: "Poppins, sans-serif",
-            margin: 0,
-          }}
-        >
-          {subtitle}
-        </p>
-        {correlativo && (
-          <span
-            style={{
-              display: "inline-block",
-              marginTop: "16px",
-              padding: "6px 16px",
-              borderRadius: "20px",
-              backgroundColor: "#F3E5F0",
-              color: "#96237A",
-              fontSize: "13px",
-              fontWeight: 600,
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            N° {correlativo}
-          </span>
-        )}
+      <div className="grid h-[72px] w-[72px] place-items-center rounded-full bg-fx-purple text-white shadow-[0_20px_40px_-16px_rgba(150,33,122,.6)] lg:h-[88px] lg:w-[88px]">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12l5 5L20 7" />
+        </svg>
       </div>
+      <h2 className="mb-0 mt-8 text-[28px] font-medium leading-[1.15] tracking-[-.02em] text-fx-ink lg:text-[36px]">{title}</h2>
+      <p className="mb-0 mt-3 max-w-[420px] text-[16px] leading-[1.6] text-fx-body">{subtitle}</p>
+      {correlativo && (
+        <span className="mt-6 inline-flex h-11 items-center rounded-full bg-[#FAF0F6] px-5 font-mono text-[14px] font-medium text-fx-purple-deep">
+          N° {correlativo}
+        </span>
+      )}
+      {actionLabel && onAction && (
+        <button
+          type="button"
+          onClick={onAction}
+          className="mt-8 h-12 rounded-full border border-fx-line-strong bg-white px-6 text-[14px] font-medium text-fx-ink transition-colors duration-300 hover:border-fx-ink hover:bg-fx-ink hover:text-white"
+        >
+          {actionLabel}
+        </button>
+      )}
     </div>
   );
 }

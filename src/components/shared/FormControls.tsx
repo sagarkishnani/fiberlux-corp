@@ -1,46 +1,64 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
-/* ── Styles ── */
-const labelStyle: React.CSSProperties = {
-  display: "block",
-  fontSize: "12px",
-  fontWeight: 600,
-  color: "#1A1A1A",
-  letterSpacing: "0.03em",
-  textTransform: "uppercase",
-  marginBottom: "8px",
-  fontFamily: "Poppins, sans-serif",
-};
+export const fieldLabelCls = "mb-2 block text-[13px] font-medium leading-[1.5] text-fx-ink";
+export const fieldBaseCls =
+  "w-full rounded-2xl border bg-fx-bg font-sans text-[14px] text-fx-ink outline-none transition-[border-color,background-color,box-shadow] duration-[250ms] placeholder:text-fx-muted hover:border-fx-lilac-strong focus:border-fx-purple focus:bg-white focus:shadow-[0_0_0_4px_rgba(150,33,122,.12)] disabled:cursor-not-allowed disabled:opacity-60";
+export const fieldOkCls = "border-[#E6E3E6]";
+export const fieldErrCls = "border-[#C81D87] bg-[#FDF5FA]";
+export const fieldErrorTextCls = "mt-1.5 text-[12px] leading-[1.5] text-[#C81D87]";
+export const fieldHintCls = "mt-2 text-[12px] leading-[1.5] text-fx-muted";
 
-const inputBaseStyle: React.CSSProperties = {
-  width: "100%",
-  border: "1px solid #E8E1E5",
-  borderRadius: "12px",
-  padding: "14px 16px",
-  fontSize: "14px",
-  color: "#1A1A1A",
-  backgroundColor: "#ffffff",
-  fontFamily: "Poppins, sans-serif",
-  outline: "none",
-  transition: "border-color 0.2s, box-shadow 0.2s",
-};
+const inputCls = (error?: string) => `${fieldBaseCls} h-14 px-5 ${error ? fieldErrCls : fieldOkCls}`;
 
-const inputErrorStyle: React.CSSProperties = {
-  ...inputBaseStyle,
-  borderColor: "#EF4444",
-};
+export function RequiredMark() {
+  return <span className="text-[#C81D87]"> *</span>;
+}
 
-const errorTextStyle: React.CSSProperties = {
-  fontSize: "12px",
-  color: "#EF4444",
-  marginTop: "4px",
-  fontFamily: "Poppins, sans-serif",
-};
+export function FieldLabel({ label, required, className = "" }: { label: string; required?: boolean; className?: string }) {
+  if (!label) return null;
+  return (
+    <label className={`${fieldLabelCls} ${className}`}>
+      {label}
+      {required && <RequiredMark />}
+    </label>
+  );
+}
 
-const placeholderColor = "#9CA3AF";
+export function FieldError({ error, className = "" }: { error?: string; className?: string }) {
+  return error ? <p className={`${fieldErrorTextCls} ${className}`}>{error}</p> : null;
+}
+
+export function SelectChevron() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#96217A"
+      strokeWidth={2.2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="pointer-events-none absolute right-5 top-5"
+      aria-hidden="true"
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+function RadioDot({ selected }: { selected: boolean }) {
+  return (
+    <span
+      className={`h-[18px] w-[18px] shrink-0 rounded-full border-2 shadow-[inset_0_0_0_3px_#fff] transition-all duration-[250ms] ${
+        selected ? "border-fx-purple bg-fx-purple" : "border-fx-line-strong bg-white"
+      }`}
+    />
+  );
+}
 
 /* ══════════════════════════════════════════════════
-   SECTION HEADER — numbered circle + title
+   SECTION HEADER — numbered badge + title
    ══════════════════════════════════════════════════ */
 interface SectionHeaderProps {
   number: number;
@@ -49,28 +67,11 @@ interface SectionHeaderProps {
 
 export function FormSectionHeader({ number, title }: SectionHeaderProps) {
   return (
-    <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "24px" }}>
-      <div
-        style={{
-          width: "32px",
-          height: "32px",
-          borderRadius: "50%",
-          backgroundColor: "#96237A",
-          color: "#ffffff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "14px",
-          fontWeight: 700,
-          flexShrink: 0,
-          fontFamily: "Poppins, sans-serif",
-        }}
-      >
+    <div className="mb-1 flex items-center gap-3.5 text-[18px] font-semibold leading-[1.3] text-fx-ink lg:text-[20px]">
+      <span className="grid h-[34px] w-[34px] shrink-0 place-items-center rounded-[10px] bg-fx-purple font-mono text-[13px] font-medium text-white">
         {number}
-      </div>
-      <div style={{ fontSize: "16px", fontWeight: 600, color: "#1A1A1A", fontFamily: "Poppins, sans-serif", lineHeight: 1.3, margin: 0 }}>
-        {title}
-      </div>
+      </span>
+      {title}
     </div>
   );
 }
@@ -96,11 +97,7 @@ export function FormInput({
 }: InputProps) {
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
+      <FieldLabel label={label} required={required} />
       <input
         type={type}
         inputMode={inputMode}
@@ -109,20 +106,9 @@ export function FormInput({
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}
         maxLength={maxLength}
         disabled={disabled}
-        style={{
-          ...(error ? inputErrorStyle : inputBaseStyle),
-          ...(disabled ? { backgroundColor: "#F9FAFB", color: "#9CA3AF", cursor: "not-allowed" } : {}),
-        }}
-        onFocus={(e) => {
-          if (!error) e.currentTarget.style.borderColor = "#96237A";
-          e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-        }}
-        onBlur={(e) => {
-          if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-          e.currentTarget.style.boxShadow = "none";
-        }}
+        className={inputCls(error)}
       />
-      {error && <p style={errorTextStyle}>{error}</p>}
+      <FieldError error={error} />
     </div>
   );
 }
@@ -141,7 +127,7 @@ interface SelectProps {
 }
 
 /* Render <option>s, grouping into <optgroup> when a `group` is present. */
-function renderOptions(options: { value: string; label: string; group?: string }[]) {
+export function renderOptions(options: { value: string; label: string; group?: string }[]) {
   if (!options.some((o) => o.group)) {
     return options.map((opt, i) => (
       <option key={i} value={opt.value}>{opt.label}</option>
@@ -167,28 +153,19 @@ export function FormSelect({
 }: SelectProps) {
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          ...(error ? inputErrorStyle : inputBaseStyle),
-          appearance: "none",
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right 16px center",
-          backgroundSize: "12px",
-          color: value ? "#1A1A1A" : placeholderColor,
-        }}
-      >
-        <option value="" disabled>{placeholder || "Selecciona"}</option>
-        {renderOptions(options)}
-      </select>
-      {error && <p style={errorTextStyle}>{error}</p>}
+      <FieldLabel label={label} required={required} />
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${inputCls(error)} cursor-pointer appearance-none pr-12 ${value ? "" : "text-fx-muted"}`}
+        >
+          <option value="" disabled>{placeholder || "Selecciona"}</option>
+          {renderOptions(options)}
+        </select>
+        <SelectChevron />
+      </div>
+      <FieldError error={error} />
     </div>
   );
 }
@@ -212,34 +189,19 @@ export function FormTextarea({
 }: TextareaProps) {
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
+      <FieldLabel label={label} required={required} />
       <textarea
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(maxLength ? e.target.value.slice(0, maxLength) : e.target.value)}
         rows={rows}
         maxLength={maxLength}
-        style={{
-          ...(error ? inputErrorStyle : inputBaseStyle),
-          resize: "none",
-        }}
-        onFocus={(e) => {
-          if (!error) e.currentTarget.style.borderColor = "#96237A";
-          e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-        }}
-        onBlur={(e) => {
-          if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-          e.currentTarget.style.boxShadow = "none";
-        }}
+        className={`${fieldBaseCls} min-h-[140px] resize-y px-5 py-4 leading-[1.6] ${error ? fieldErrCls : fieldOkCls}`}
       />
-      <div style={{ display: "flex", justifyContent: "space-between", marginTop: "4px" }}>
-        {error ? <p style={errorTextStyle}>{error}</p> : <span />}
+      <div className="flex justify-between gap-4">
+        <FieldError error={error} />
         {maxLength && (
-          <span style={{ fontSize: "12px", color: "#9CA3AF", fontFamily: "Poppins, sans-serif" }}>
+          <span className="ml-auto mt-1.5 font-mono text-[12px] text-fx-muted">
             {value.length}/{maxLength}
           </span>
         )}
@@ -265,9 +227,15 @@ interface FileUploadProps {
 export function FormFileUpload({
   label, helpText, files, onChange, multiple = true, accept, required, error,
 }: FileUploadProps) {
+  const [dragging, setDragging] = useState(false);
+
+  const addFiles = (incoming: File[]) => {
+    if (!incoming.length) return;
+    onChange(multiple ? [...files, ...incoming] : incoming.slice(0, 1));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newFiles = Array.from(e.target.files || []);
-    onChange(multiple ? [...files, ...newFiles] : newFiles);
+    addFiles(Array.from(e.target.files || []));
     e.target.value = "";
   };
 
@@ -277,90 +245,58 @@ export function FormFileUpload({
 
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-        <label
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "10px 20px",
-            borderRadius: "12px",
-            border: "1px solid #96237A",
-            color: "#96237A",
-            fontSize: "13px",
-            fontWeight: 600,
-            cursor: "pointer",
-            fontFamily: "Poppins, sans-serif",
-            transition: "all 0.2s",
-          }}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M8 3v10M3 8h10" stroke="#96237A" strokeWidth="2" strokeLinecap="round" />
+      <FieldLabel label={label} required={required} />
+      <label
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragging(false);
+          addFiles(Array.from(e.dataTransfer.files || []));
+        }}
+        className={`group/drop flex cursor-pointer items-center gap-[18px] rounded-2xl border-[1.5px] border-dashed px-6 py-[22px] transition-[border-color,background-color] duration-300 hover:border-fx-purple hover:bg-[#FAF0F6] ${
+          dragging ? "border-fx-purple bg-[#FAF0F6]" : error ? "border-[#C81D87] bg-[#FDF5FA]" : "border-fx-lilac-strong bg-[#FCF8FB]"
+        }`}
+      >
+        <input type="file" multiple={multiple} accept={accept} onChange={handleChange} className="hidden" />
+        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-white text-fx-purple transition-colors duration-300 group-hover/drop:bg-fx-purple group-hover/drop:text-white">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
           </svg>
-          Elegir archivos
-          <input
-            type="file"
-            multiple={multiple}
-            accept={accept}
-            onChange={handleChange}
-            style={{ display: "none" }}
-          />
-        </label>
-        <span style={{ fontSize: "13px", color: "#9CA3AF", fontFamily: "Poppins, sans-serif" }}>
-          {files.length === 0 ? "Sin archivos seleccionados" : `${files.length} archivo(s)`}
         </span>
-      </div>
+        <span className="flex flex-col gap-0.5">
+          <span className="text-[14px] font-semibold text-fx-ink">Arrastra o selecciona archivos</span>
+          <span className="text-[13px] text-fx-muted">
+            {files.length === 0 ? helpText || "Sin archivos seleccionados" : `${files.length} archivo(s) seleccionado(s)`}
+          </span>
+        </span>
+      </label>
 
-      {/* File list */}
       {files.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "8px" }}>
+        <div className="mt-3 flex flex-col gap-2">
           {files.map((file, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "6px 12px",
-                backgroundColor: "#FBF7FA",
-                borderRadius: "8px",
-                fontSize: "12px",
-                color: "#1A1A1A",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              <span>{file.name}</span>
+            <div key={i} className="flex items-center justify-between gap-3 rounded-xl bg-fx-bg px-4 py-2.5 text-[13px] text-fx-ink">
+              <span className="min-w-0 truncate">{file.name}</span>
               <button
                 type="button"
                 onClick={() => removeFile(i)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#EF4444",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  padding: "0 4px",
-                }}
+                aria-label={`Quitar ${file.name}`}
+                className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-fx-muted transition-colors hover:bg-white hover:text-[#C81D87]"
               >
-                ×
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" />
+                </svg>
               </button>
             </div>
           ))}
         </div>
       )}
 
-      {helpText && (
-        <p style={{ fontSize: "12px", color: "#9CA3AF", marginTop: "6px", fontFamily: "Poppins, sans-serif" }}>
-          {helpText}
-        </p>
-      )}
-      {error && <p style={errorTextStyle}>{error}</p>}
+      {files.length > 0 && helpText && <p className={fieldHintCls}>{helpText}</p>}
+      <FieldError error={error} />
     </div>
   );
 }
@@ -378,24 +314,20 @@ interface CheckboxProps {
 export function FormCheckbox({ checked, onChange, children, error }: CheckboxProps) {
   return (
     <div>
-      <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", cursor: "pointer" }}>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => onChange(e.target.checked)}
-          style={{
-            marginTop: "3px",
-            width: "16px",
-            height: "16px",
-            accentColor: "#96237A",
-            flexShrink: 0,
-          }}
-        />
-        <span style={{ fontSize: "13px", color: "#5B5B5B", lineHeight: 1.5, fontFamily: "Poppins, sans-serif" }}>
-          {children}
+      <label className="flex cursor-pointer items-start gap-3.5 text-[13px] leading-[1.55] text-fx-body">
+        <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
+        <span
+          className={`mt-px grid h-[22px] w-[22px] shrink-0 place-items-center rounded-[7px] border-[1.5px] text-white transition-all duration-[250ms] peer-focus-visible:shadow-[0_0_0_4px_rgba(150,33,122,.12)] ${
+            checked ? "border-fx-purple bg-fx-purple" : error ? "border-[#C81D87] bg-white" : "border-fx-line-strong bg-white"
+          }`}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" className={`transition-opacity duration-200 ${checked ? "opacity-100" : "opacity-0"}`} aria-hidden="true">
+            <path d="M5 12l5 5L20 7" />
+          </svg>
         </span>
+        <span>{children}</span>
       </label>
-      {error && <p style={{ ...errorTextStyle, marginLeft: "26px" }}>{error}</p>}
+      <FieldError error={error} className="ml-9" />
     </div>
   );
 }
@@ -423,62 +355,31 @@ export function FormRadioGroup({
 }: RadioGroupProps) {
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+      <FieldLabel label={label} required={required} className="!mb-3" />
+      <div className="grid gap-3 sm:grid-cols-2">
         {options.map((opt, i) => {
-          const isSelected = value === opt.value;
+          const selected = value === opt.value;
           return (
-            <label
+            <button
               key={i}
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "12px",
-                padding: "16px 20px",
-                borderRadius: "12px",
-                border: `1px solid ${isSelected ? "#96237A" : "#E8E1E5"}`,
-                backgroundColor: isSelected ? "#FBF7FA" : "#ffffff",
-                cursor: "pointer",
-                transition: "all 0.2s",
-              }}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onChange(opt.value)}
+              className={`flex flex-col gap-2 rounded-[18px] border-[1.5px] px-6 py-[22px] text-left transition-[border-color,background-color] duration-300 hover:border-fx-purple ${
+                selected ? "border-fx-purple bg-[#FAF0F6]" : "border-[#E6E3E6] bg-white"
+              }`}
             >
-              <input
-                type="radio"
-                checked={isSelected}
-                onChange={() => onChange(opt.value)}
-                style={{
-                  marginTop: "2px",
-                  width: "18px",
-                  height: "18px",
-                  accentColor: "#96237A",
-                  flexShrink: 0,
-                }}
-              />
-              <div>
-                <div style={{ fontSize: "14px", fontWeight: 600, color: "#1A1A1A", fontFamily: "Poppins, sans-serif" }}>
-                  {opt.title}
-                </div>
-                {opt.description && (
-                  <p style={{
-                    fontSize: "13px",
-                    color: "#5B5B5B",
-                    lineHeight: 1.5,
-                    marginTop: "4px",
-                    fontFamily: "Poppins, sans-serif",
-                  }}>
-                    {opt.description}
-                  </p>
-                )}
-              </div>
-            </label>
+              <span className="flex items-center justify-between gap-3 text-[16px] font-semibold text-fx-ink">
+                {opt.title}
+                <RadioDot selected={selected} />
+              </span>
+              {opt.description && <span className="text-[13px] leading-[1.55] text-fx-body">{opt.description}</span>}
+            </button>
           );
         })}
       </div>
-      {error && <p style={errorTextStyle}>{error}</p>}
+      <FieldError error={error} />
     </div>
   );
 }
@@ -508,47 +409,19 @@ export function FormCurrency({
 
   return (
     <div>
-      {label && (
-        <label style={labelStyle}>
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ position: "relative" }}>
-        <span
-          style={{
-            position: "absolute",
-            left: "16px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "14px",
-            color: "#5B5B5B",
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 500,
-          }}
-        >
-          S/
-        </span>
+      <FieldLabel label={label} required={required} />
+      <div className="relative">
+        <span className="pointer-events-none absolute left-5 top-0 flex h-14 items-center text-[14px] font-medium text-fx-muted">S/</span>
         <input
           type="text"
           inputMode="decimal"
           placeholder={placeholder}
           value={value}
           onChange={(e) => handleChange(e.target.value)}
-          style={{
-            ...(error ? inputErrorStyle : inputBaseStyle),
-            paddingLeft: "40px",
-          }}
-          onFocus={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#96237A";
-            e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-          }}
-          onBlur={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-            e.currentTarget.style.boxShadow = "none";
-          }}
+          className={`${inputCls(error)} !pl-12`}
         />
       </div>
-      {error && <p style={errorTextStyle}>{error}</p>}
+      <FieldError error={error} />
     </div>
   );
 }
@@ -563,50 +436,12 @@ interface PageHeaderProps {
 }
 
 export function FormPageHeader({ badge, title, description }: PageHeaderProps) {
-  const isLongDescription = (description?.length ?? 0) > 320;
   return (
-    <div style={{ textAlign: "center", marginBottom: "40px" }}>
-      {badge && (
-        <span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#96237A",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            marginBottom: "16px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          — {badge}
-        </span>
-      )}
-      <h1
-        style={{
-          fontSize: "clamp(28px, 4vw, 40px)",
-          fontWeight: 500,
-          color: "#1A1A1A",
-          lineHeight: 1.2,
-          fontFamily: "Poppins, sans-serif",
-        }}
-      >
-        {title}
-      </h1>
+    <div className="mb-5">
+      {badge && <div className="mb-3 font-mono text-[13px] font-medium tracking-[.18em] text-fx-purple">— {badge.toUpperCase()}</div>}
+      {title && <h2 className="m-0 text-[26px] font-medium leading-[1.15] tracking-[-.02em] text-fx-ink lg:text-[32px]">{title}</h2>}
       {description && (
-        <p style={{
-          fontSize: "14px",
-          color: "#5B5B5B",
-          lineHeight: 1.7,
-          maxWidth: isLongDescription ? "760px" : "500px",
-          margin: "16px auto 0",
-          textAlign: isLongDescription ? "justify" : "center",
-          fontFamily: "Poppins, sans-serif",
-        }}>
-          {renderInlineLinks(description)}
-        </p>
+        <p className="mb-0 mt-4 max-w-[820px] text-[15px] leading-[1.7] text-fx-body [text-wrap:pretty]">{renderInlineLinks(description)}</p>
       )}
     </div>
   );
@@ -628,7 +463,7 @@ export function renderInlineLinks(text: string): ReactNode {
         href={m[2]}
         target="_blank"
         rel="noopener noreferrer"
-        style={{ color: "#96237A", textDecoration: "underline" }}
+        className="text-fx-purple underline underline-offset-[3px] hover:text-fx-purple-hover"
       >
         {m[1]}
       </a>
@@ -646,47 +481,19 @@ interface SubmitProps {
   text: string;
   onClick: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
-export function FormSubmitButton({ text, onClick, disabled }: SubmitProps) {
+export function FormSubmitButton({ text, onClick, disabled, className = "" }: SubmitProps) {
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: "32px" }}>
-      <button
-        type="button"
-        onClick={onClick}
-        disabled={disabled}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "48px",
-          padding: "0 32px",
-          borderRadius: "8px",
-          backgroundColor: "#96237A",
-          color: "#ffffff",
-          fontSize: "14px",
-          fontWeight: 600,
-          border: "none",
-          cursor: disabled ? "not-allowed" : "pointer",
-          opacity: disabled ? 0.5 : 1,
-          fontFamily: "Poppins, sans-serif",
-          transition: "all 0.2s",
-        }}
-      >
-        {text}
-      </button>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════
-   ROW HELPER — 1-column mobile, 2-column desktop
-   ══════════════════════════════════════════════════ */
-export function FormRow({ children }: { children: ReactNode }) {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {children}
-    </div>
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`inline-flex h-14 items-center justify-center rounded-full bg-fx-purple px-10 text-[15px] font-medium text-white transition-[background-color,opacity] duration-300 hover:bg-fx-purple-hover disabled:cursor-not-allowed disabled:opacity-60 ${className}`}
+    >
+      {text}
+    </button>
   );
 }
 
@@ -700,15 +507,8 @@ interface NoteProps {
 
 export function FormNote({ text, size = "sm" }: NoteProps) {
   return (
-    <p
-      style={{
-        fontSize: size === "xs" ? "11px" : "13px",
-        lineHeight: 1.6,
-        color: size === "xs" ? "#9CA3AF" : "#5B5B5B",
-        fontFamily: "Poppins, sans-serif",
-      }}
-    >
-      {text}
+    <p className={`m-0 leading-[1.6] ${size === "xs" ? "text-[11px] text-fx-muted" : "text-[13px] text-fx-body"}`}>
+      {renderInlineLinks(text)}
     </p>
   );
 }
@@ -717,12 +517,11 @@ export function FormNote({ text, size = "sm" }: NoteProps) {
    DIVIDER — horizontal line
    ══════════════════════════════════════════════════ */
 export function FormDivider() {
-  return <div style={{ borderTop: "1px solid #E8E1E5", margin: "16px 0" }} />;
+  return <div className="my-2 border-t border-fx-soft" />;
 }
 
 /* ══════════════════════════════════════════════════
-   INLINE RADIO — horizontal radio buttons
-   (like services in QuejaFormReact)
+   INLINE RADIO — horizontal radio pills
    ══════════════════════════════════════════════════ */
 interface InlineRadioProps {
   label: string;
@@ -743,58 +542,28 @@ export function FormInlineRadio({
 }: InlineRadioProps) {
   return (
     <div>
-      {label && (
-        <label
-          style={{
-            display: "block",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#1A1A1A",
-            letterSpacing: "0.03em",
-            textTransform: "uppercase",
-            marginBottom: "12px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
-        {options.map((opt, i) => (
-          <label
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              cursor: "pointer",
-              fontSize: "14px",
-              color: "#1A1A1A",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            <input
-              type="radio"
-              checked={value === opt.value}
-              onChange={() => onChange(opt.value)}
-              style={{ width: "18px", height: "18px", accentColor: "#96237A" }}
-            />
-            {opt.label}
-          </label>
-        ))}
+      <FieldLabel label={label} required={required} className="!mb-3" />
+      <div className="flex flex-wrap gap-2.5" role="radiogroup">
+        {options.map((opt, i) => {
+          const selected = value === opt.value;
+          return (
+            <button
+              key={i}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onChange(opt.value)}
+              className={`flex min-h-[52px] items-center gap-3 rounded-[14px] border-[1.5px] px-[22px] py-3 text-left text-[14px] leading-[1.5] text-fx-ink transition-[border-color,background-color] duration-[250ms] hover:border-fx-purple ${
+                selected ? "border-fx-purple bg-[#FAF0F6]" : "border-[#E6E3E6] bg-white"
+              }`}
+            >
+              <RadioDot selected={selected} />
+              {opt.label}
+            </button>
+          );
+        })}
       </div>
-      {error && (
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#EF4444",
-            marginTop: "4px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {error}
-        </p>
-      )}
+      <FieldError error={error} />
     </div>
   );
 }
@@ -829,70 +598,27 @@ export function FormCheckboxGroup({
 
   return (
     <div>
-      {label && (
-        <label
-          style={{
-            display: "block",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#1A1A1A",
-            letterSpacing: "0.03em",
-            textTransform: "uppercase",
-            marginBottom: "12px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <FieldLabel label={label} required={required} className="!mb-3" />
+      <div className="flex flex-col gap-3">
         {options.map((opt, i) => (
-          <label
-            key={i}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              cursor: "pointer",
-              fontSize: "14px",
-              color: "#1A1A1A",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
+          <label key={i} className="flex cursor-pointer items-start gap-3 text-[14px] leading-[1.55] text-fx-ink">
             <input
               type="checkbox"
               checked={value.includes(opt.value)}
               onChange={() => toggle(opt.value)}
-              style={{
-                width: "16px",
-                height: "16px",
-                accentColor: "#96237A",
-                flexShrink: 0,
-              }}
+              className="mt-px h-5 w-5 shrink-0 accent-fx-purple"
             />
             {opt.label}
           </label>
         ))}
       </div>
-      {error && (
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#EF4444",
-            marginTop: "4px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {error}
-        </p>
-      )}
+      <FieldError error={error} />
     </div>
   );
 }
 
 /* ══════════════════════════════════════════════════
    DATE TRIPLET — Día / Mes / Año
-   (like ApelacionFormReact date fields)
    ══════════════════════════════════════════════════ */
 interface DateTripletValue {
   day: string;
@@ -915,106 +641,37 @@ export function FormDateTriplet({
   required,
   error,
 }: DateTripletProps) {
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    border: `1px solid ${error ? "#EF4444" : "#E8E1E5"}`,
-    borderRadius: "12px",
-    padding: "14px 16px",
-    fontSize: "14px",
-    color: "#1A1A1A",
-    backgroundColor: "#ffffff",
-    fontFamily: "Poppins, sans-serif",
-    outline: "none",
-    transition: "border-color 0.2s, box-shadow 0.2s",
-    textAlign: "center" as const,
-  };
-
+  const partCls = `${inputCls(error)} text-center`;
   return (
     <div>
-      {label && (
-        <label
-          style={{
-            display: "block",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#1A1A1A",
-            letterSpacing: "0.03em",
-            textTransform: "uppercase",
-            marginBottom: "8px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {label} {required && <span style={{ color: "#96237A" }}>*</span>}
-        </label>
-      )}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "12px" }}>
+      <FieldLabel label={label} required={required} />
+      <div className="grid grid-cols-3 gap-3">
         <input
           type="text"
           inputMode="numeric"
           placeholder="Día"
           value={value.day}
-          onChange={(e) =>
-            onChange({ ...value, day: e.target.value.replace(/\D/g, "").slice(0, 2) })
-          }
-          style={inputStyle}
-          onFocus={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#96237A";
-            e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-          }}
-          onBlur={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-            e.currentTarget.style.boxShadow = "none";
-          }}
+          onChange={(e) => onChange({ ...value, day: e.target.value.replace(/\D/g, "").slice(0, 2) })}
+          className={partCls}
         />
         <input
           type="text"
           inputMode="numeric"
           placeholder="Mes"
           value={value.month}
-          onChange={(e) =>
-            onChange({ ...value, month: e.target.value.replace(/\D/g, "").slice(0, 2) })
-          }
-          style={inputStyle}
-          onFocus={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#96237A";
-            e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-          }}
-          onBlur={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-            e.currentTarget.style.boxShadow = "none";
-          }}
+          onChange={(e) => onChange({ ...value, month: e.target.value.replace(/\D/g, "").slice(0, 2) })}
+          className={partCls}
         />
         <input
           type="text"
           inputMode="numeric"
           placeholder="Año"
           value={value.year}
-          onChange={(e) =>
-            onChange({ ...value, year: e.target.value.replace(/\D/g, "").slice(0, 4) })
-          }
-          style={inputStyle}
-          onFocus={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#96237A";
-            e.currentTarget.style.boxShadow = "0 0 0 2px rgba(150,35,122,0.1)";
-          }}
-          onBlur={(e) => {
-            if (!error) e.currentTarget.style.borderColor = "#E8E1E5";
-            e.currentTarget.style.boxShadow = "none";
-          }}
+          onChange={(e) => onChange({ ...value, year: e.target.value.replace(/\D/g, "").slice(0, 4) })}
+          className={partCls}
         />
       </div>
-      {error && (
-        <p
-          style={{
-            fontSize: "12px",
-            color: "#EF4444",
-            marginTop: "4px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          {error}
-        </p>
-      )}
+      <FieldError error={error} />
     </div>
   );
 }

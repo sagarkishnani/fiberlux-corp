@@ -4,7 +4,7 @@
   "formTitle_en": "Let's talk?",
   "description": "Completa tus datos y te responderemos pronto.",
   "description_en": "Fill in your details and we'll get back to you soon.",
-  "styleVariant": "contact-dark",
+  "styleVariant": "contact",
   "submitButtonText": "Enviar",
   "submitButtonText_en": "Send",
   "successTitle": "¡Mensaje enviado!",

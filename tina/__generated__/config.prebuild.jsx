@@ -3433,9 +3433,8 @@ var config_default = defineConfig({
             label: "Estilo visual",
             type: "string",
             options: [
-              { value: "default", label: "Est\xE1ndar (formularios OSIPTEL)" },
-              { value: "contact", label: "Contacto (estilo Tailwind, claro)" },
-              { value: "contact-dark", label: "Contacto (oscuro / corp)" }
+              { value: "default", label: "Est\xE1ndar (secciones numeradas en tarjetas, formularios OSIPTEL)" },
+              { value: "contact", label: "Contacto (campos sin tarjetas, bot\xF3n a todo el ancho)" }
             ],
             description: "Define la apariencia visual del formulario."
           },

@@ -2,7 +2,7 @@
   "formId": "servicios",
   "formTitle": "",
   "description": "",
-  "styleVariant": "contact-dark",
+  "styleVariant": "contact",
   "submitButtonText": "Contactar",
   "submitButtonText_en": "Contact",
   "successTitle": "¡Datos enviados!",
