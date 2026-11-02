@@ -80,53 +80,6 @@ export default {
           night:       '#110C10',
           whatsapp:    '#51C859',
         },
-        brand: {
-          purple: {
-            darkest:  '#3B0E30',
-            dark:     '#650F50',
-            DEFAULT:  '#96237A',
-            light:    '#D5A7CA',
-            lightest: '#F3E4EF',
-          },
-          gray: {
-            darkest:  '#3D3D3E',
-            dark:     '#5C5C5D',
-            DEFAULT:  '#868687',
-            light:    '#C2C2C3',
-            lightest: '#EDEDEE',
-          },
-        },
-        semantics: {
-          success: {
-            darkest:  '#1E612A',
-            dark:     '#267C35',
-            DEFAULT:  '#37B24D',
-            light:    '#73C982',
-            lightest: '#EBF7ED',
-          },
-          alert: {
-            darkest:  '#7E4B00',
-            dark:     '#CA7900',
-            DEFAULT:  '#FC9700',
-            light:    '#FCDA6A',
-            lightest: '#FFF4D8',
-          },
-          error: {
-            darkest:  '#6E1717',
-            dark:     '#8C1D1D',
-            DEFAULT:  '#EB0E0E',
-            light:    '#D96A6A',
-            lightest: '#F9EBEA',
-          },
-        },
-        greyscale: {
-          darkest:  '#0A0A0A',
-          dark:     '#3F3F3F',
-          DEFAULT:  '#717274',
-          light:    '#E5E7EB',
-          lightest: '#F2F3F5',
-          white:    '#FFFFFF',
-        },
       },
       borderRadius: {
         'sm':  '4px',

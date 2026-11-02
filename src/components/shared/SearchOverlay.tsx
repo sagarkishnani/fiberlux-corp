@@ -123,37 +123,37 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
     >
       {/* Fondo difuminado — click cierra */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
+        className="absolute inset-0 bg-[rgba(20,8,17,.45)] backdrop-blur-md"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Panel */}
-      <div className="relative flex w-full max-w-[720px] max-h-[75vh] flex-col overflow-hidden rounded-2xl border border-white/10 bg-greyscale-darkest/95 shadow-[0_24px_80px_-20px_rgba(0,0,0,0.85)]">
+      <div className="relative flex w-full max-w-[720px] max-h-[75vh] flex-col overflow-hidden rounded-[28px] border border-fx-line bg-white shadow-[0_40px_80px_-40px_rgba(101,13,74,.45)]">
         <div className="flex items-center justify-between px-6 pt-6 pb-4">
-          <p className="text-[15px] font-medium text-white">
+          <p className="text-[15px] font-medium text-fx-ink">
             {ui.title}
           </p>
           <button
             type="button"
             aria-label={ui.close}
             onClick={onClose}
-            className="text-white/60 transition-colors hover:text-white"
+            className="text-fx-muted transition-colors hover:text-fx-ink"
           >
             <FaXmark className="h-5 w-5" />
           </button>
         </div>
 
         <div className="px-6">
-          <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 transition-colors focus-within:border-[#96237A]">
-            <FaMagnifyingGlass className="h-4 w-4 shrink-0 text-white/40" />
+          <div className="flex items-center gap-3 h-14 rounded-2xl border border-[#E6E3E6] bg-fx-bg px-5 transition-[border-color,background-color,box-shadow] focus-within:border-fx-purple focus-within:bg-white focus-within:shadow-[0_0_0_4px_rgba(150,33,122,.12)]">
+            <FaMagnifyingGlass className="h-4 w-4 shrink-0 text-fx-purple" />
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={ui.placeholder}
-              className="w-full bg-transparent text-[15px] text-white outline-none placeholder:text-white/40"
+              className="w-full bg-transparent text-[15px] text-fx-ink outline-none placeholder:text-fx-muted"
               aria-label={ui.aria}
             />
           </div>
@@ -169,7 +169,7 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
                 <li key={i}>
                   <a
                     href={c.url}
-                    className="block rounded-lg px-3 py-3 text-white/85 transition-colors hover:bg-white/5 hover:text-white"
+                    className="block rounded-xl px-3 py-3 text-fx-ink transition-colors hover:bg-[#FAF0F6] hover:text-fx-purple"
                   >
                     {c.title}
                   </a>
@@ -177,7 +177,7 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
               ))}
             </ul>
           ) : results.length === 0 ? (
-            <p className="px-3 py-6 text-sm text-white/50">
+            <p className="px-3 py-6 text-[14px] text-fx-muted">
               {ui.noResults(query.trim())}
             </p>
           ) : (
@@ -186,27 +186,27 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
                 <li key={i}>
                   <a
                     href={r.url}
-                    className="group flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 transition-colors hover:border-[#96237A]/60 hover:bg-white/[0.06]"
+                    className="group flex items-start gap-3 rounded-2xl border border-fx-line bg-white px-4 py-3 transition-colors hover:border-fx-lilac-strong hover:bg-[#FCF8FB]"
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="truncate text-[15px] font-medium text-white">
+                        <span className="truncate text-[15px] font-medium text-fx-ink">
                           {r.title}
                         </span>
-                        <span className="shrink-0 rounded-full bg-[#96237A]/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#c65fac]">
+                        <span className="shrink-0 rounded-full bg-[#FAF0F6] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-fx-purple">
                           {typeLabel[r.type]}
                         </span>
                       </div>
                       {r.category && (
-                        <p className="mt-0.5 text-xs text-white/40">{r.category}</p>
+                        <p className="mt-0.5 text-[12px] text-fx-muted">{r.category}</p>
                       )}
                       {r.description && (
-                        <p className="mt-1 line-clamp-2 text-[13px] text-white/55">
+                        <p className="mt-1 line-clamp-2 text-[13px] text-fx-body">
                           {r.description}
                         </p>
                       )}
                     </div>
-                    <FaArrowRight className="mt-1 h-3.5 w-3.5 shrink-0 text-white/30 transition-colors group-hover:text-[#c65fac]" />
+                    <FaArrowRight className="mt-1 h-3.5 w-3.5 shrink-0 text-fx-muted transition-colors group-hover:text-fx-purple" />
                   </a>
                 </li>
               ))}
