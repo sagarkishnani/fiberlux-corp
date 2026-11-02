@@ -172,7 +172,7 @@ const whatsappBubbleMessage =
     />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap"
     />
     <title>
       {maintenanceMode ? "Mantenimiento | Fiberlux" : `${title} | Fiberlux`}
@@ -198,15 +198,20 @@ const whatsappBubbleMessage =
       #a11y-content {
         overflow-x: clip;
       }
-      /* Selección de texto en morado de marca (SPEC 99 obs5). Vive aquí porque
-         global.css no se bundlea; el footer en modo morado la sobreescribe. */
+      /* Tema claro del rediseño (SPEC 117). */
+      html,
+      body {
+        background: #f7f7f7;
+        color: #453c46;
+        -webkit-font-smoothing: antialiased;
+      }
       ::selection {
-        background-color: rgba(150, 35, 122, 0.3);
-        color: #ffffff;
+        background-color: #ebd1e4;
+        color: #650d4a;
       }
       ::-moz-selection {
-        background-color: rgba(150, 35, 122, 0.3);
-        color: #ffffff;
+        background-color: #ebd1e4;
+        color: #650d4a;
       }
       .reveal-js [data-reveal]:not([data-reveal-stagger]) {
         opacity: 0;

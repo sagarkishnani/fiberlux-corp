@@ -4,7 +4,7 @@ export default {
   theme: {
     fontFamily: {
       sans: ['Poppins', 'system-ui', 'sans-serif'],
-      mono: ['Space Mono', 'monospace'],
+      mono: ['JetBrains Mono', 'monospace'],
     },
     fontSize: {
       /* Headings — clamp(min≈mobile, preferido, max=desktop); lineHeight unitless para que acompañe al clamp.
@@ -56,6 +56,30 @@ export default {
         'popup-icon-glow': 'popup-icon-glow 3.2s ease-in-out infinite',
       },
       colors: {
+        /* SPEC 117 — tokens del rediseño claro, valores exactos del prototipo. */
+        fx: {
+          bg:          '#F7F7F7',
+          surface:     '#FFFFFF',
+          soft:        '#F2F1F2',
+          line:        '#ECE9EC',
+          'line-strong': '#D8D5D8',
+          ink:         '#453C46',
+          'ink-dark':  '#2E272F',
+          body:        '#6B636C',
+          muted:       '#868687',
+          subtle:      '#5E5560',
+          purple:      '#96217A',
+          'purple-hover': '#7F1666',
+          'purple-deep':  '#650D4A',
+          magenta:     '#C81D87',
+          lilac:       '#EBD1E4',
+          'lilac-strong': '#D5A7CA',
+          blush:       '#F3DDEC',
+          'blush-soft': '#E9D3E2',
+          tint:        '#F5E9F2',
+          night:       '#110C10',
+          whatsapp:    '#51C859',
+        },
         brand: {
           purple: {
             darkest:  '#3B0E30',
@@ -110,6 +134,15 @@ export default {
         'lg':  '12px',
         'xl':  '16px',
         '2xl': '24px',
+        '3xl': '32px',
+      },
+      maxWidth: {
+        'fx': '1320px',
+      },
+      transitionTimingFunction: {
+        'fx-out': 'cubic-bezier(.16,1,.3,1)',
+        'fx-spring': 'cubic-bezier(.2,.8,.2,1)',
+        'fx-drawer': 'cubic-bezier(.76,0,.24,1)',
       },
     },
   },
