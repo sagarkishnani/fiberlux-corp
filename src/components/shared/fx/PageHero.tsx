@@ -49,12 +49,12 @@ export default function PageHero({
   });
 
   return (
-    <section className={`relative ${full ? "pt-[50px] lg:pt-[120px]" : "overflow-clip pt-[50px] lg:pt-24"}`}>
+    <section className={`relative ${full ? "pt-[50px] lg:pt-[120px]" : "pt-[50px] lg:pt-24"}`}>
       <div
         ref={bgRef}
         aria-hidden="true"
         className={`pointer-events-none absolute inset-x-0 -top-10 will-change-transform ${
-          full ? "h-[1300px]" : "bottom-0 [mask-image:linear-gradient(180deg,#000_55%,transparent_95%)]"
+          full ? "h-[1300px]" : "bottom-0 overflow-hidden [mask-image:linear-gradient(180deg,#000_55%,transparent_95%)]"
         }`}
       >
         <img

@@ -21,6 +21,107 @@ interface Props {
 
 const DESKTOP_STEP = 564;
 
+export interface CaseCardData {
+  company: string;
+  cover: string;
+  logo: string;
+  title: string;
+  body: string;
+  name: string;
+  role: string;
+  youtubeUrl?: string | null;
+  titleField?: string;
+  bodyField?: string;
+  logoField?: string;
+}
+
+export function fromTestimonial(item: any, locale: Locale): CaseCardData {
+  return {
+    company: item.company || "",
+    cover: mediaUrl(item.cover),
+    logo: mediaUrl(item.logo),
+    title: tField(item, "quote", locale),
+    body: tField(item, "description", locale),
+    name: item.name || "",
+    role: tField(item, "role", locale),
+    youtubeUrl: item.youtubeUrl,
+    titleField: tinaField(item, "quote"),
+    bodyField: tinaField(item, "description"),
+    logoField: tinaField(item, "logo"),
+  };
+}
+
+export function caseVideo(data: CaseCardData, locale: Locale): VideoModalContent {
+  return {
+    title: `${t("testimonios.caseTitle", locale)} ${data.company}`.trim(),
+    youtubeUrl: data.youtubeUrl,
+    cover: data.cover,
+    footerLogo: data.logo,
+    footerName: data.name,
+    footerRole: data.role,
+  };
+}
+
+export function CaseCard({ data, mobile, locale, onOpen }: { data: CaseCardData; mobile: boolean; locale: Locale; onOpen: () => void }) {
+  return (
+    <article
+            onClick={mobile ? undefined : onOpen}
+      className={
+        mobile
+          ? "flex w-[316px] shrink-0 snap-start flex-col rounded-[22px] border border-fx-line bg-white px-2.5 pb-5 pt-2.5"
+          : "group/card flex w-[460px] shrink-0 cursor-pointer flex-col rounded-[24px] border border-fx-line bg-white px-3.5 pb-[26px] pt-3.5 shadow-[0_1px_2px_rgba(17,12,16,.04)] transition-[transform,box-shadow,border-color] duration-500 ease-fx-spring hover:-translate-y-2 hover:border-fx-line-strong hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.35)]"
+      }
+    >
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+        aria-label={t("casos.vervideo", locale)}
+        className={`relative block aspect-video w-full overflow-hidden bg-[#F2EEF1] ${mobile ? "rounded-[14px]" : "rounded-2xl"}`}
+      >
+        {data.cover && (
+          <img
+            src={data.cover}
+            alt={data.company}
+            loading="lazy"
+            draggable={false}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-fx-out group-hover/card:scale-105"
+          />
+        )}
+        <span
+          className={`absolute left-1/2 top-1/2 grid place-items-center rounded-full bg-fx-purple text-white transition-transform duration-[400ms] ease-fx-spring group-hover/card:scale-[1.08] ${
+            mobile ? "-ml-6 -mt-6 h-12 w-12 shadow-[0_0_0_8px_rgba(150,33,122,.18)]" : "-ml-7 -mt-7 h-14 w-14 shadow-[0_0_0_10px_rgba(150,33,122,.16)]"
+          }`}
+        >
+          <PlayIcon size={mobile ? 18 : 20} />
+        </span>
+      </button>
+      <div className={`flex flex-1 flex-col ${mobile ? "px-2.5 pt-[18px]" : "px-3.5 pt-6"}`}>
+        <div className={`flex items-center ${mobile ? "h-9" : "h-10"}`} data-tina-field={data.logoField}>
+          {data.logo && <img src={data.logo} alt={data.company} draggable={false} className="block max-h-[34px] w-auto max-w-[120px] lg:max-h-10 lg:max-w-[140px]" />}
+        </div>
+        <div className="flex-1">
+          <h3
+            className={`mb-0 font-medium leading-[1.4] text-fx-ink [text-wrap:pretty] ${mobile ? "mt-3.5 text-[16px]" : "mt-5 text-[18px] tracking-[-.01em]"}`}
+            data-tina-field={data.titleField}
+          >
+            {data.title}
+          </h3>
+          <p className={`mb-0 leading-[1.6] text-fx-body [text-wrap:pretty] ${mobile ? "mt-2 text-[13px]" : "mt-2.5 text-[14px]"}`} data-tina-field={data.bodyField}>
+            {data.body}
+          </p>
+        </div>
+        <div className={`border-t border-fx-soft ${mobile ? "mt-4 pt-3.5" : "mt-[22px] pt-[18px]"}`}>
+          <div className={`font-semibold text-fx-ink ${mobile ? "text-[14px]" : "text-[15px]"}`}>{data.name}</div>
+          <div className={`mt-0.5 text-fx-muted ${mobile ? "text-[12px]" : "text-[13px]"}`}>{data.role}</div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function ArrowButton({ dir, onClick, label, size }: { dir: "prev" | "next"; onClick: () => void; label: string; size: "sm" | "lg" }) {
   const base = size === "lg" ? "h-14 w-14" : "h-11 w-11";
   const tone =
@@ -153,75 +254,10 @@ export default function TestimoniosV2({
   }, []);
 
   if (!items.length) return null;
+  const cards = items.map((item) => fromTestimonial(item, locale));
 
-  const open = (item: any) =>
-    setVideo({
-      title: `${t("testimonios.caseTitle", locale)} ${item.company || ""}`.trim(),
-      youtubeUrl: item.youtubeUrl,
-      cover: mediaUrl(item.cover),
-      footerLogo: mediaUrl(item.logo),
-      footerName: item.name,
-      footerRole: tField(item, "role", locale),
-    });
+  const open = (data: CaseCardData) => setVideo(caseVideo(data, locale));
 
-  const card = (item: any, i: number, mobile: boolean) => (
-    <article
-      key={i}
-      onClick={mobile ? undefined : () => open(item)}
-      className={
-        mobile
-          ? "flex w-[316px] shrink-0 snap-start flex-col rounded-[22px] border border-fx-line bg-white px-2.5 pb-5 pt-2.5"
-          : "group/card flex w-[460px] shrink-0 cursor-pointer flex-col rounded-[24px] border border-fx-line bg-white px-3.5 pb-[26px] pt-3.5 shadow-[0_1px_2px_rgba(17,12,16,.04)] transition-[transform,box-shadow,border-color] duration-500 ease-fx-spring hover:-translate-y-2 hover:border-fx-line-strong hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.35)]"
-      }
-    >
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          open(item);
-        }}
-        aria-label={t("casos.vervideo", locale)}
-        className={`relative block aspect-video w-full overflow-hidden bg-[#F2EEF1] ${mobile ? "rounded-[14px]" : "rounded-2xl"}`}
-      >
-        {item.cover && (
-          <img
-            src={mediaUrl(item.cover)}
-            alt={item.company || ""}
-            loading="lazy"
-            draggable={false}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-fx-out group-hover/card:scale-105"
-          />
-        )}
-        <span
-          className={`absolute left-1/2 top-1/2 grid place-items-center rounded-full bg-fx-purple text-white transition-transform duration-[400ms] ease-fx-spring group-hover/card:scale-[1.08] ${
-            mobile ? "-ml-6 -mt-6 h-12 w-12 shadow-[0_0_0_8px_rgba(150,33,122,.18)]" : "-ml-7 -mt-7 h-14 w-14 shadow-[0_0_0_10px_rgba(150,33,122,.16)]"
-          }`}
-        >
-          <PlayIcon size={mobile ? 18 : 20} />
-        </span>
-      </button>
-      <div className={`flex flex-1 flex-col ${mobile ? "px-2.5 pt-[18px]" : "px-3.5 pt-6"}`}>
-        <div className={`flex items-center ${mobile ? "h-9" : "h-10"}`} data-tina-field={tinaField(item, "logo")}>
-          {item.logo && <img src={mediaUrl(item.logo)} alt={item.company || ""} draggable={false} className="block max-h-[34px] w-auto max-w-[120px] lg:max-h-10 lg:max-w-[140px]" />}
-        </div>
-        <div className="flex-1">
-          <h3
-            className={`mb-0 font-medium leading-[1.4] text-fx-ink [text-wrap:pretty] ${mobile ? "mt-3.5 text-[16px]" : "mt-5 text-[18px] tracking-[-.01em]"}`}
-            data-tina-field={tinaField(item, "quote")}
-          >
-            {tField(item, "quote", locale)}
-          </h3>
-          <p className={`mb-0 leading-[1.6] text-fx-body [text-wrap:pretty] ${mobile ? "mt-2 text-[13px]" : "mt-2.5 text-[14px]"}`} data-tina-field={tinaField(item, "description")}>
-            {tField(item, "description", locale)}
-          </p>
-        </div>
-        <div className={`border-t border-fx-soft ${mobile ? "mt-4 pt-3.5" : "mt-[22px] pt-[18px]"}`}>
-          <div className={`font-semibold text-fx-ink ${mobile ? "text-[14px]" : "text-[15px]"}`}>{item.name}</div>
-          <div className={`mt-0.5 text-fx-muted ${mobile ? "text-[12px]" : "text-[13px]"}`}>{tField(item, "role", locale)}</div>
-        </div>
-      </div>
-    </article>
-  );
 
   return (
     <section id="testimonios" className={sectionClassName}>
@@ -251,7 +287,7 @@ export default function TestimoniosV2({
           className="mt-14 hidden cursor-grab select-none touch-pan-y lg:block"
         >
           <div ref={trackRef} className="flex w-max gap-6 pb-6 pt-3 transition-transform duration-[800ms] ease-fx-out">
-            {items.map((item, i) => card(item, i, false))}
+            {cards.map((data, i) => <CaseCard key={i} data={data} mobile={false} locale={locale} onOpen={() => open(data)} />)}
           </div>
         </div>
         <div className="mt-4 hidden h-0.5 overflow-hidden rounded-sm bg-fx-line lg:block">
@@ -264,7 +300,7 @@ export default function TestimoniosV2({
         onScroll={onMobileScroll}
         className="fx-no-scrollbar mt-7 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 pt-1 lg:hidden"
       >
-        {items.map((item, i) => card(item, i, true))}
+        {cards.map((data, i) => <CaseCard key={i} data={data} mobile locale={locale} onOpen={() => open(data)} />)}
       </div>
       <div className="fx-container mt-4 flex items-center justify-between gap-5 lg:hidden">
         <div className="h-0.5 flex-1 overflow-hidden rounded-sm bg-fx-line">
