@@ -478,9 +478,11 @@ interface DynamicFormProps {
   prefill?: Record<string, string>;
   /** Idioma activo. En 'en' usa los campos `_en` con fallback al ES. */
   locale?: Locale;
+  /** Fuerza una variante visual distinta a la del CMS (p. ej. la clara del rediseño sobre una tarjeta blanca). */
+  styleVariant?: FormConfig["styleVariant"];
 }
 
-export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false, prefill, locale = "es" }: DynamicFormProps) {
+export default function DynamicFormReact({ query, variables, data: initialData, hideHeader = false, prefill, locale = "es", styleVariant }: DynamicFormProps) {
   const { data } = useTina({ query, variables, data: initialData });
   const formConfig: FormConfig = data?.dynamicForms || initialData?.dynamicForms;
   if (!formConfig) return null;
@@ -498,7 +500,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
     }));
 
   const fields: FormField[] = (formConfig.fields || []).filter(Boolean);
-  const variant = formConfig.styleVariant || "default";
+  const variant = styleVariant || formConfig.styleVariant || "default";
   const isDark = variant === "contact-dark";
   const isContact = variant === "contact" || isDark;
 

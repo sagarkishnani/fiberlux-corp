@@ -1,10 +1,9 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { client } from "../../../tina/__generated__/client";
-import ServicePartners from "../../components/shared/ServicePartners.astro";
-import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
-import BlogPreview from "../../components/blog/BlogPreview.astro";
 import CategoriaV2React from "../../components/servicios/CategoriaV2React";
+import CategoriaCierreReact from "../../components/servicios/CategoriaCierreReact";
+import { loadRelatedPosts, loadServiciosForm } from "../../utils/relatedPosts";
 import HtmlInjection from "../../components/shared/HtmlInjection.astro";
 import { getLocale } from "../../utils/i18n";
 import { isLocale } from "../../i18n/config";
@@ -32,6 +31,8 @@ const serviceQuery = await client.queries.service({ relativePath });
 const service = serviceQuery.data?.service;
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
+const [relatedPosts, serviciosForm] = await Promise.all([loadRelatedPosts(service?.blogTags), loadServiciosForm()]);
+
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const globalSeo = globalQuery.data?.global?.seo;
 
@@ -41,6 +42,7 @@ const metaDescription =
 ---
 
 <BaseLayout
+  footerOverlap
   title={metaTitle}
   description={metaDescription}
   whatsappContext={service?.title ?? undefined}
@@ -55,9 +57,15 @@ const metaDescription =
       locale={locale}
     />
     <HtmlInjection location="solucion-after-hero" />
-    <ServicePartners relativePath={relativePath} />
-    <ServiciosForm />
-    <BlogPreview tags={service?.blogTags} />
+    <CategoriaCierreReact
+      client:visible
+      query={serviceQuery.query}
+      variables={serviceQuery.variables}
+      data={serviceQuery.data}
+      locale={locale}
+      posts={relatedPosts}
+      form={serviciosForm}
+    />
     <HtmlInjection location="solucion-before-footer" />
   </main>
 </BaseLayout>
