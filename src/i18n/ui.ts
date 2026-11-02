@@ -22,6 +22,8 @@ export const UI: Record<Locale, Record<string, string>> = {
     "mega.label": "SOLUCIONES",
     "mega.viewAll": "Ver todo",
     "social.follow": "Síguenos",
+    "video.more": "Más videos en YouTube",
+    "video.close": "Cerrar video",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -50,6 +52,8 @@ export const UI: Record<Locale, Record<string, string>> = {
     "mega.label": "SOLUTIONS",
     "mega.viewAll": "See all",
     "social.follow": "Follow us",
+    "video.more": "More videos on YouTube",
+    "video.close": "Close video",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",

@@ -1,9 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import type { HomeQuery, HomeQueryVariables } from "../../../tina/__generated__/types";
 import type { Locale } from "../../i18n/config";
 import { tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
+import { t } from "../../i18n/ui";
+import { PlayIcon } from "../shared/fx/FxPrimitives";
+import VideoModal, { type VideoModalContent } from "../shared/fx/VideoModal";
 import { clamp, easeOutCubic, isDesktop, prefersReducedMotion, useScrollFrame } from "./useScrollFrame";
 
 interface Props {
@@ -37,6 +40,11 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const videoRef = useRef<HTMLVideoElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [fullVideo, setFullVideo] = useState<VideoModalContent | null>(null);
+  const closeFullVideo = useCallback(() => {
+    setFullVideo(null);
+    videoRef.current?.play().catch(() => {});
+  }, []);
 
   useScrollFrame(() => {
     const section = sectionRef.current;
@@ -99,6 +107,20 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
 
   if (!reel) return null;
   const poster = withBase(reel.poster);
+  const fullLabel = tField(reel, "fullVideoLabel", locale);
+  const hasFullVideo = !!(reel.fullVideoYoutubeUrl || reel.fullVideoMp41080 || reel.fullVideoMp4720);
+
+  const openFullVideo = () => {
+    const desktop = isDesktop();
+    const file = (desktop ? reel.fullVideoMp41080 : reel.fullVideoMp4720) || reel.fullVideoMp41080 || reel.fullVideoMp4720;
+    videoRef.current?.pause();
+    setFullVideo({
+      title: tField(reel, "fullVideoTitle", locale) || "Fiberlux",
+      youtubeUrl: reel.fullVideoYoutubeUrl,
+      sources: file ? [{ src: withBase(file), type: "video/mp4" }] : [],
+      cover: poster,
+    });
+  };
 
   return (
     <section ref={sectionRef} id="reel" className="relative -mt-[12vh] h-[150vh] lg:mt-6 lg:h-[240vh]">
@@ -134,7 +156,26 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
             className="absolute inset-0 h-full w-full scale-[1.15] object-cover will-change-transform lg:scale-[1.18]"
           />
         </div>
+        {hasFullVideo && fullLabel && (
+          <button
+            type="button"
+            onClick={openFullVideo}
+            className="group/play absolute bottom-[14vh] left-1/2 z-[2] inline-flex h-[52px] -translate-x-1/2 items-center gap-3 whitespace-nowrap rounded-full bg-white py-0 pl-1.5 pr-6 text-[15px] font-medium text-fx-ink shadow-[0_20px_40px_-20px_rgba(17,12,16,.45)] transition-[background,color] duration-300 hover:bg-fx-purple hover:text-white lg:bottom-[8vh] lg:h-14 lg:pl-2 lg:pr-7"
+            data-tina-field={tinaField(reel as any, "fullVideoLabel")}
+          >
+            <span className="grid h-10 w-10 place-items-center rounded-full bg-fx-purple text-white transition-[transform,background] duration-[450ms] ease-fx-spring group-hover/play:scale-[1.08] group-hover/play:bg-white group-hover/play:text-fx-purple">
+              <PlayIcon size={16} />
+            </span>
+            {fullLabel}
+          </button>
+        )}
       </div>
+      <VideoModal
+        content={fullVideo}
+        onClose={closeFullVideo}
+        moreVideosLabel={t("video.more", locale)}
+        closeLabel={t("video.close", locale)}
+      />
     </section>
   );
 }
