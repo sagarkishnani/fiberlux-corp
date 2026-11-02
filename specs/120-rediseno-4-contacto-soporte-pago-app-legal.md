@@ -1,6 +1,6 @@
 # SPEC 120 — Rediseño 4: Contacto, Soporte, Formas de pago, Fiberlux App, Legales y formularios
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 117 (fundaciones), SPEC 118 (bloques compartidos testimonios/CTA casos)
 > **Fecha:** 2026-11-01
 > **Objetivo:** Rehacer las páginas de servicio al cliente y legales con el diseño claro del prototipo y adaptar al tema claro las páginas sin prototipo (Info abonados y formularios OSIPTEL), cerrando el rediseño.
