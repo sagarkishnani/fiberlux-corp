@@ -66,6 +66,32 @@ Los nombres definitivos se fijan al leer el prototipo y el schema actual en el p
 
 ---
 
+## Mapeo prototipo ↔ Tina (resultado del paso 1)
+
+**Nosotros (`about`):**
+
+| Sección del prototipo | Fuente | Estado |
+| --- | --- | --- |
+| Hero (breadcrumb, título, bajada) | `about.hero.title/subtitle` | Existe |
+| ¿Por qué Fiberlux? (3 pilares + 2 bloques Data Center / NOC-SOC con foto) | `about.porQue` | **Nuevo** |
+| Metodología (4 pasos con línea de progreso) | `about.metodologia` | **Nuevo** |
+| Ciberseguridad (texto, 2 etiquetas, CTA, escudo 3D) | `about.ciberseguridad` | **Nuevo** |
+| Historia (hitos alternados con línea) | `about.timeline` + `timeline.heading` | Existe + campo nuevo |
+| Certificación ISO | colección `certificaciones` + `home.certificacionesIntro` | Existe |
+| Misión / visión (fotos) | `about.missionVisionTitle`, `mission`, `vision`, `hero.image`, `missionImage` + `missionVisionEyebrow` | Existe + campo nuevo |
+| Valores | `about.values` + `values.eyebrow` | Existe + campo nuevo |
+| Política SGSI | `about.sgsi` | Existe |
+| Testimonios + CTA casos | `home.testimonials` (`items`, `ctaLabel`, `ctaUrl`) | Existe |
+| Rubros (marquee de íconos) | `about.rubros` + `rubros.eyebrow` | Existe + campo nuevo |
+
+**Casos de éxito (`casosDeExito`):** hero (`breadcrumb`, `heading`, `intro`), grilla de casos (`items`; se agrega `title` + `title_en` por caso para el titular de la card, la cita queda como cuerpo), cifras (`about.stats`), rubros (`about.rubros`).
+
+**Blog / Artículo (`post`):** se reutilizan `title`, `coverImage`, `tags`, `date` y `readTime`. **No se agrega `readingMinutes`**: `readTime` ya existe y cubre la meta "fecha · minutos". Los textos fijos de la página de blog y del artículo (bajada del blog, "Último artículo", "Todos los artículos", "Sigue leyendo", índice, CTA lateral) van al diccionario `t()`, porque el blog no tiene colección de página.
+
+**Énfasis:** los títulos con texto en morado usan la convención `*asteriscos*` del SPEC 117.
+
+---
+
 ## Implementation plan
 
 1. Rama `spec-118-rediseno-nosotros-casos-blog` desde `staging`. Mapear cada sección del prototipo contra el campo de Tina existente y listar los faltantes.
