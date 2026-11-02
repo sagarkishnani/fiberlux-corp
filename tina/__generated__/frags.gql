@@ -2,60 +2,85 @@ fragment HomeParts on Home {
   __typename
   hero {
     __typename
-    title
-    title_en
+    titleBefore
+    titleBefore_en
+    titleEmphasis
+    titleEmphasis_en
+    titleAfter
+    titleAfter_en
     subtitle
     subtitle_en
-    heroBackground
-    splineSceneUrl
-    splinePosterUrl
-    heroBgVideo
-    heroBgImage
-    heroBgOpacity
-    buttons {
+    ctaPrimary {
       __typename
-      text
-      text_en
-      url
-      variant
+      label
+      label_en
+      href
     }
-    morph {
+    ctaSecondary {
       __typename
-      triggerLabel
-      triggerLabel_en
-      solutionNodes {
-        __typename
-        label
-        label_en
-        url
-        icon
-      }
+      label
+      label_en
+      href
     }
-    cinematic {
+  }
+  reel {
+    __typename
+    marqueeTop
+    marqueeTop_en
+    marqueeBottom
+    marqueeBottom_en
+    loopWebm1080
+    loopMp41080
+    loopWebm720
+    loopMp4720
+    poster
+    fullVideoLabel
+    fullVideoLabel_en
+    fullVideoTitle
+    fullVideoTitle_en
+    fullVideoMp41080
+    fullVideoMp4720
+    fullVideoYoutubeUrl
+  }
+  manifesto {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+  }
+  cyberguardBanner {
+    __typename
+    brand
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
+    cta {
       __typename
-      floatingTokens {
-        __typename
-        text
-      }
+      label
+      label_en
+      href
     }
-    dotfield {
-      __typename
-      intensity
-    }
-    lattice {
-      __typename
-      intensity
-    }
-    fiber {
-      __typename
-      variant
-      intensity
-    }
+    image
+  }
+  certificacionesIntro {
+    __typename
+    eyebrow
+    eyebrow_en
+    title
+    title_en
+    text
+    text_en
   }
   services {
     __typename
     title
     title_en
+    subtitle
+    subtitle_en
     items {
       __typename
       number
@@ -64,6 +89,7 @@ fragment HomeParts on Home {
       description
       description_en
       icon
+      cover
       tabIcon
       tabLabel
       tabLabel_en
@@ -96,6 +122,8 @@ fragment HomeParts on Home {
       company
       avatar
       logo
+      cover
+      youtubeUrl
     }
   }
   manifiesto {

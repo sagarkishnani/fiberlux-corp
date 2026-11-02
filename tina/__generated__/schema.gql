@@ -144,64 +144,82 @@ type Collection {
 
 union DocumentNode = Home | Service | Subservicio | About | Post | Contact | SoporteTecnico | Servicios | CasosDeExito | Certificaciones | FormasDePago | Global | Maintenance | InfoAbonados | FormConfig | DynamicForms | Legal | CookieConsent | FiberluxApp | Popup | Folder
 
-type HomeHeroButtons {
-  text: String!
-  text_en: String
-  url: String
-  variant: String
-}
-
-type HomeHeroMorphSolutionNodes {
+type HomeHeroCtaPrimary {
   label: String
   label_en: String
-  url: String
-  icon: String
+  href: String
 }
 
-type HomeHeroMorph {
-  triggerLabel: String
-  triggerLabel_en: String
-  solutionNodes: [HomeHeroMorphSolutionNodes]
-}
-
-type HomeHeroCinematicFloatingTokens {
-  text: String
-}
-
-type HomeHeroCinematic {
-  floatingTokens: [HomeHeroCinematicFloatingTokens]
-}
-
-type HomeHeroDotfield {
-  intensity: String
-}
-
-type HomeHeroLattice {
-  intensity: String
-}
-
-type HomeHeroFiber {
-  variant: String
-  intensity: String
+type HomeHeroCtaSecondary {
+  label: String
+  label_en: String
+  href: String
 }
 
 type HomeHero {
-  title: String!
-  title_en: String
+  titleBefore: String
+  titleBefore_en: String
+  titleEmphasis: String
+  titleEmphasis_en: String
+  titleAfter: String
+  titleAfter_en: String
   subtitle: String
   subtitle_en: String
-  heroBackground: String
-  splineSceneUrl: String
-  splinePosterUrl: String
-  heroBgVideo: String
-  heroBgImage: String
-  heroBgOpacity: Float
-  buttons: [HomeHeroButtons]
-  morph: HomeHeroMorph
-  cinematic: HomeHeroCinematic
-  dotfield: HomeHeroDotfield
-  lattice: HomeHeroLattice
-  fiber: HomeHeroFiber
+  ctaPrimary: HomeHeroCtaPrimary
+  ctaSecondary: HomeHeroCtaSecondary
+}
+
+type HomeReel {
+  marqueeTop: String
+  marqueeTop_en: String
+  marqueeBottom: String
+  marqueeBottom_en: String
+  loopWebm1080: String
+  loopMp41080: String
+  loopWebm720: String
+  loopMp4720: String
+  poster: String
+  fullVideoLabel: String
+  fullVideoLabel_en: String
+  fullVideoTitle: String
+  fullVideoTitle_en: String
+  fullVideoMp41080: String
+  fullVideoMp4720: String
+  fullVideoYoutubeUrl: String
+}
+
+type HomeManifesto {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+}
+
+type HomeCyberguardBannerCta {
+  label: String
+  label_en: String
+  href: String
+}
+
+type HomeCyberguardBanner {
+  brand: String
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  cta: HomeCyberguardBannerCta
+  image: String
+}
+
+type HomeCertificacionesIntro {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
 }
 
 type HomeServicesItemsBullets {
@@ -217,6 +235,7 @@ type HomeServicesItems {
   description: String
   description_en: String
   icon: String
+  cover: String
   tabIcon: String
   tabLabel: String
   tabLabel_en: String
@@ -227,6 +246,8 @@ type HomeServicesItems {
 type HomeServices {
   title: String
   title_en: String
+  subtitle: String
+  subtitle_en: String
   items: [HomeServicesItems]
 }
 
@@ -241,6 +262,8 @@ type HomeTestimonialsItems {
   company: String
   avatar: String
   logo: String
+  cover: String
+  youtubeUrl: String
 }
 
 type HomeTestimonials {
@@ -319,6 +342,10 @@ type HomeBlogPreview {
 
 type Home implements Node & Document {
   hero: HomeHero
+  reel: HomeReel
+  manifesto: HomeManifesto
+  cyberguardBanner: HomeCyberguardBanner
+  certificacionesIntro: HomeCertificacionesIntro
   services: HomeServices
   testimonials: HomeTestimonials
   manifiesto: HomeManifiesto
@@ -337,6 +364,31 @@ input StringFilter {
   in: [String]
 }
 
+input HomeHeroCtaPrimaryFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input HomeHeroCtaSecondaryFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input HomeHeroFilter {
+  titleBefore: StringFilter
+  titleBefore_en: StringFilter
+  titleEmphasis: StringFilter
+  titleEmphasis_en: StringFilter
+  titleAfter: StringFilter
+  titleAfter_en: StringFilter
+  subtitle: StringFilter
+  subtitle_en: StringFilter
+  ctaPrimary: HomeHeroCtaPrimaryFilter
+  ctaSecondary: HomeHeroCtaSecondaryFilter
+}
+
 input ImageFilter {
   startsWith: String
   eq: String
@@ -344,74 +396,57 @@ input ImageFilter {
   in: [String]
 }
 
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
+input HomeReelFilter {
+  marqueeTop: StringFilter
+  marqueeTop_en: StringFilter
+  marqueeBottom: StringFilter
+  marqueeBottom_en: StringFilter
+  loopWebm1080: StringFilter
+  loopMp41080: StringFilter
+  loopWebm720: StringFilter
+  loopMp4720: StringFilter
+  poster: ImageFilter
+  fullVideoLabel: StringFilter
+  fullVideoLabel_en: StringFilter
+  fullVideoTitle: StringFilter
+  fullVideoTitle_en: StringFilter
+  fullVideoMp41080: StringFilter
+  fullVideoMp4720: StringFilter
+  fullVideoYoutubeUrl: StringFilter
 }
 
-input HomeHeroButtonsFilter {
-  text: StringFilter
-  text_en: StringFilter
-  url: StringFilter
-  variant: StringFilter
-}
-
-input HomeHeroMorphSolutionNodesFilter {
-  label: StringFilter
-  label_en: StringFilter
-  url: StringFilter
-  icon: StringFilter
-}
-
-input HomeHeroMorphFilter {
-  triggerLabel: StringFilter
-  triggerLabel_en: StringFilter
-  solutionNodes: HomeHeroMorphSolutionNodesFilter
-}
-
-input HomeHeroCinematicFloatingTokensFilter {
-  text: StringFilter
-}
-
-input HomeHeroCinematicFilter {
-  floatingTokens: HomeHeroCinematicFloatingTokensFilter
-}
-
-input HomeHeroDotfieldFilter {
-  intensity: StringFilter
-}
-
-input HomeHeroLatticeFilter {
-  intensity: StringFilter
-}
-
-input HomeHeroFiberFilter {
-  variant: StringFilter
-  intensity: StringFilter
-}
-
-input HomeHeroFilter {
+input HomeManifestoFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
   title: StringFilter
   title_en: StringFilter
-  subtitle: StringFilter
-  subtitle_en: StringFilter
-  heroBackground: StringFilter
-  splineSceneUrl: StringFilter
-  splinePosterUrl: ImageFilter
-  heroBgVideo: ImageFilter
-  heroBgImage: ImageFilter
-  heroBgOpacity: NumberFilter
-  buttons: HomeHeroButtonsFilter
-  morph: HomeHeroMorphFilter
-  cinematic: HomeHeroCinematicFilter
-  dotfield: HomeHeroDotfieldFilter
-  lattice: HomeHeroLatticeFilter
-  fiber: HomeHeroFiberFilter
+}
+
+input HomeCyberguardBannerCtaFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input HomeCyberguardBannerFilter {
+  brand: StringFilter
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  cta: HomeCyberguardBannerCtaFilter
+  image: ImageFilter
+}
+
+input HomeCertificacionesIntroFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
 }
 
 input HomeServicesItemsBulletsFilter {
@@ -427,6 +462,7 @@ input HomeServicesItemsFilter {
   description: StringFilter
   description_en: StringFilter
   icon: ImageFilter
+  cover: ImageFilter
   tabIcon: StringFilter
   tabLabel: StringFilter
   tabLabel_en: StringFilter
@@ -437,6 +473,8 @@ input HomeServicesItemsFilter {
 input HomeServicesFilter {
   title: StringFilter
   title_en: StringFilter
+  subtitle: StringFilter
+  subtitle_en: StringFilter
   items: HomeServicesItemsFilter
 }
 
@@ -456,6 +494,8 @@ input HomeTestimonialsItemsFilter {
   company: StringFilter
   avatar: ImageFilter
   logo: ImageFilter
+  cover: ImageFilter
+  youtubeUrl: StringFilter
 }
 
 input HomeTestimonialsFilter {
@@ -477,6 +517,16 @@ input HomeManifiestoItemsFilter {
 
 input HomeManifiestoFilter {
   items: HomeManifiestoItemsFilter
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
 }
 
 input HomePlanetaPuntosFilter {
@@ -534,6 +584,10 @@ input HomeBlogPreviewFilter {
 
 input HomeFilter {
   hero: HomeHeroFilter
+  reel: HomeReelFilter
+  manifesto: HomeManifestoFilter
+  cyberguardBanner: HomeCyberguardBannerFilter
+  certificacionesIntro: HomeCertificacionesIntroFilter
   services: HomeServicesFilter
   testimonials: HomeTestimonialsFilter
   manifiesto: HomeManifiestoFilter
@@ -2988,64 +3042,82 @@ input DocumentMutation {
   popup: PopupMutation
 }
 
-input HomeHeroButtonsMutation {
-  text: String
-  text_en: String
-  url: String
-  variant: String
-}
-
-input HomeHeroMorphSolutionNodesMutation {
+input HomeHeroCtaPrimaryMutation {
   label: String
   label_en: String
-  url: String
-  icon: String
+  href: String
 }
 
-input HomeHeroMorphMutation {
-  triggerLabel: String
-  triggerLabel_en: String
-  solutionNodes: [HomeHeroMorphSolutionNodesMutation]
-}
-
-input HomeHeroCinematicFloatingTokensMutation {
-  text: String
-}
-
-input HomeHeroCinematicMutation {
-  floatingTokens: [HomeHeroCinematicFloatingTokensMutation]
-}
-
-input HomeHeroDotfieldMutation {
-  intensity: String
-}
-
-input HomeHeroLatticeMutation {
-  intensity: String
-}
-
-input HomeHeroFiberMutation {
-  variant: String
-  intensity: String
+input HomeHeroCtaSecondaryMutation {
+  label: String
+  label_en: String
+  href: String
 }
 
 input HomeHeroMutation {
-  title: String
-  title_en: String
+  titleBefore: String
+  titleBefore_en: String
+  titleEmphasis: String
+  titleEmphasis_en: String
+  titleAfter: String
+  titleAfter_en: String
   subtitle: String
   subtitle_en: String
-  heroBackground: String
-  splineSceneUrl: String
-  splinePosterUrl: String
-  heroBgVideo: String
-  heroBgImage: String
-  heroBgOpacity: Float
-  buttons: [HomeHeroButtonsMutation]
-  morph: HomeHeroMorphMutation
-  cinematic: HomeHeroCinematicMutation
-  dotfield: HomeHeroDotfieldMutation
-  lattice: HomeHeroLatticeMutation
-  fiber: HomeHeroFiberMutation
+  ctaPrimary: HomeHeroCtaPrimaryMutation
+  ctaSecondary: HomeHeroCtaSecondaryMutation
+}
+
+input HomeReelMutation {
+  marqueeTop: String
+  marqueeTop_en: String
+  marqueeBottom: String
+  marqueeBottom_en: String
+  loopWebm1080: String
+  loopMp41080: String
+  loopWebm720: String
+  loopMp4720: String
+  poster: String
+  fullVideoLabel: String
+  fullVideoLabel_en: String
+  fullVideoTitle: String
+  fullVideoTitle_en: String
+  fullVideoMp41080: String
+  fullVideoMp4720: String
+  fullVideoYoutubeUrl: String
+}
+
+input HomeManifestoMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+}
+
+input HomeCyberguardBannerCtaMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input HomeCyberguardBannerMutation {
+  brand: String
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  cta: HomeCyberguardBannerCtaMutation
+  image: String
+}
+
+input HomeCertificacionesIntroMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
 }
 
 input HomeServicesItemsBulletsMutation {
@@ -3061,6 +3133,7 @@ input HomeServicesItemsMutation {
   description: String
   description_en: String
   icon: String
+  cover: String
   tabIcon: String
   tabLabel: String
   tabLabel_en: String
@@ -3071,6 +3144,8 @@ input HomeServicesItemsMutation {
 input HomeServicesMutation {
   title: String
   title_en: String
+  subtitle: String
+  subtitle_en: String
   items: [HomeServicesItemsMutation]
 }
 
@@ -3085,6 +3160,8 @@ input HomeTestimonialsItemsMutation {
   company: String
   avatar: String
   logo: String
+  cover: String
+  youtubeUrl: String
 }
 
 input HomeTestimonialsMutation {
@@ -3163,6 +3240,10 @@ input HomeBlogPreviewMutation {
 
 input HomeMutation {
   hero: HomeHeroMutation
+  reel: HomeReelMutation
+  manifesto: HomeManifestoMutation
+  cyberguardBanner: HomeCyberguardBannerMutation
+  certificacionesIntro: HomeCertificacionesIntroMutation
   services: HomeServicesMutation
   testimonials: HomeTestimonialsMutation
   manifiesto: HomeManifiestoMutation

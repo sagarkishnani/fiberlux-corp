@@ -217,7 +217,7 @@ var config_default = defineConfig({
           allowedActions: { create: false, delete: false }
         },
         fields: [
-          // ── Hero ──
+          // ── Hero (SPEC 117) ──
           {
             type: "object",
             name: "hero",
@@ -225,244 +225,150 @@ var config_default = defineConfig({
             fields: [
               {
                 type: "string",
-                name: "title",
-                label: "T\xEDtulo principal",
-                required: true,
-                description: "Mant\xE9n \u2264 60 caracteres para evitar saltos largos en mobile."
+                name: "titleBefore",
+                label: "T\xEDtulo \u2014 texto antes del \xE9nfasis",
+                description: 'Ej. "Soluciones de".'
               },
-              { type: "string", name: "title_en", label: "T\xEDtulo principal (EN)" },
+              { type: "string", name: "titleBefore_en", label: "T\xEDtulo \u2014 antes del \xE9nfasis (EN)" },
+              {
+                type: "string",
+                name: "titleEmphasis",
+                label: "T\xEDtulo \u2014 texto en morado",
+                description: 'Ej. "conectividad y TI".'
+              },
+              { type: "string", name: "titleEmphasis_en", label: "T\xEDtulo \u2014 texto en morado (EN)" },
+              {
+                type: "string",
+                name: "titleAfter",
+                label: "T\xEDtulo \u2014 texto despu\xE9s del \xE9nfasis",
+                description: 'Ej. "para tu empresa".'
+              },
+              { type: "string", name: "titleAfter_en", label: "T\xEDtulo \u2014 despu\xE9s del \xE9nfasis (EN)" },
               {
                 type: "string",
                 name: "subtitle",
                 label: "Subt\xEDtulo",
-                ui: { component: "textarea" },
-                description: "Frase de apoyo bajo el t\xEDtulo. \u2264 140 caracteres."
+                ui: { component: "textarea" }
               },
               { type: "string", name: "subtitle_en", label: "Subt\xEDtulo (EN)", ui: { component: "textarea" } },
               {
-                type: "string",
-                name: "heroBackground",
-                label: "Fondo del hero",
-                options: [
-                  { value: "3d", label: "Escena 3D (Spline)" },
-                  { value: "video", label: "Video de fondo" },
-                  { value: "imagen", label: "Imagen de fondo" },
-                  { value: "waveform", label: "Waveform (shader animado)" },
-                  { value: "nodefield", label: "Node field (part\xEDculas plexus)" },
-                  { value: "morph", label: "Morph (globo de part\xEDculas \u2192 soluciones)" },
-                  { value: "cinematic", label: "Planeta de fibra (globo punteado)" },
-                  { value: "dotfield", label: "Campo de puntos (ondas por scroll)" },
-                  { value: "lattice", label: "Ret\xEDcula volum\xE9trica (onda que la atraviesa)" },
-                  { value: "fiber", label: "T\xFAnel de fibra (filamentos de luz)" },
-                  {
-                    value: "planeta",
-                    label: "Planeta narrativo (globo + frases por scroll)"
-                  }
-                ],
-                description: "Elige qu\xE9 se muestra detr\xE1s del texto del hero. Default: Escena 3D."
-              },
-              {
-                type: "string",
-                name: "splineSceneUrl",
-                label: "URL de la escena de Spline (modo 3D)",
-                description: "Pega aqu\xED la URL .splinecode exportada desde Spline. Formato: https://prod.spline.design/XXXX/scene.splinecode"
-              },
-              {
-                type: "image",
-                name: "splinePosterUrl",
-                label: "Imagen est\xE1tica mobile (modo 3D)",
-                description: "Imagen a sangre que se muestra en mobile en lugar del 3D (el 3D solo carga en desktop)."
-              },
-              {
-                type: "image",
-                name: "heroBgVideo",
-                label: "Video de fondo (modo Video)",
-                description: "Video a sangre (mp4) detr\xE1s del texto. Se reproduce en loop, silenciado, en desktop y mobile."
-              },
-              {
-                type: "image",
-                name: "heroBgImage",
-                label: "Imagen de fondo (modo Imagen)",
-                description: "Imagen a sangre detr\xE1s del texto."
-              },
-              {
-                type: "number",
-                name: "heroBgOpacity",
-                label: "Opacidad del fondo (video/imagen) \u2014 0 a 100",
-                description: "Opacidad del video/imagen de fondo. Baja el valor para que se funda con el negro y el texto se lea mejor. Default 60."
-              },
-              {
                 type: "object",
-                name: "buttons",
-                label: "Botones (CTAs)",
-                list: true,
-                ui: {
-                  itemProps: (item) => ({
-                    label: item?.text || "Bot\xF3n sin texto"
-                  })
-                },
+                name: "ctaPrimary",
+                label: "Bot\xF3n principal (morado)",
                 fields: [
-                  {
-                    type: "string",
-                    name: "text",
-                    label: "Texto del bot\xF3n",
-                    required: true
-                  },
-                  { type: "string", name: "text_en", label: "Texto del bot\xF3n (EN)" },
-                  {
-                    type: "string",
-                    name: "url",
-                    label: "Enlace (URL o ancla #seccion)"
-                  },
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Estilo del bot\xF3n",
-                    options: [
-                      { value: "primary", label: "Primario (magenta s\xF3lido)" },
-                      { value: "secondary", label: "Secundario (outline)" }
-                    ]
-                  }
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace (URL o ancla #seccion)" }
                 ]
               },
-              // ── Modo Morph (SPEC 96): globo de partículas → soluciones ──
               {
                 type: "object",
-                name: "morph",
-                label: "Hero \u2014 modo Morph (globo \u2192 soluciones)",
-                description: "Solo aplica si el 'Fondo del hero' es 'Morph'. Texto del trigger y los 4 nodos-soluci\xF3n que aparecen al pulsarlo.",
+                name: "ctaSecondary",
+                label: "Bot\xF3n secundario (oscuro)",
                 fields: [
-                  { type: "string", name: "triggerLabel", label: "Texto del trigger (ES)" },
-                  { type: "string", name: "triggerLabel_en", label: "Texto del trigger (EN)" },
-                  {
-                    type: "object",
-                    name: "solutionNodes",
-                    label: "Nodos-soluci\xF3n (hasta 4)",
-                    list: true,
-                    ui: {
-                      itemProps: (item) => ({ label: item?.label || "Nodo" })
-                    },
-                    fields: [
-                      { type: "string", name: "label", label: "Label (ES)" },
-                      { type: "string", name: "label_en", label: "Label (EN)" },
-                      {
-                        type: "string",
-                        name: "url",
-                        label: "URL destino (p\xE1gina de soluci\xF3n)"
-                      },
-                      {
-                        type: "string",
-                        name: "icon",
-                        label: "\xCDcono",
-                        options: [
-                          { value: "datacenter", label: "Data Center / Cloud" },
-                          { value: "conectividad", label: "Conectividad" },
-                          { value: "ciberseguridad", label: "Ciberseguridad" },
-                          { value: "gestionados", label: "Servicios Gestionados" }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              },
-              // ── Modo Planeta (SPEC 97): globo punteado + tokens flotantes ──
-              {
-                type: "object",
-                name: "cinematic",
-                label: "Hero \u2014 modo Planeta de fibra (tokens flotantes)",
-                description: "Solo aplica si el 'Fondo del hero' es 'Cinematic'. Tokens de conectividad que flotan en el fondo (ej. 1 Gbps, 99.9%, 12 ms). Si lo dejas vac\xEDo se usa un set por defecto.",
-                fields: [
-                  {
-                    type: "object",
-                    name: "floatingTokens",
-                    label: "Tokens flotantes (fondo)",
-                    list: true,
-                    ui: {
-                      itemProps: (item) => ({
-                        label: item?.text || "Token"
-                      })
-                    },
-                    fields: [
-                      {
-                        type: "string",
-                        name: "text",
-                        label: "Texto del token (ej. Gbps, 99.9%, 12 ms)"
-                      }
-                    ]
-                  }
-                ]
-              },
-              // ── Modo Campo de puntos (SPEC 100) ──
-              {
-                type: "object",
-                name: "dotfield",
-                label: "Hero \u2014 modo Campo de puntos",
-                description: "Solo aplica si el 'Fondo del hero' es 'Campo de puntos'. Malla de puntos que reacciona al mouse y lanza ondas al hacer scroll.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" }
-                    ],
-                    description: "Controla densidad de puntos, brillo y fuerza de las ondas. Default: Medio."
-                  }
-                ]
-              },
-              // ── Modo Retícula volumétrica (SPEC 112) ──
-              {
-                type: "object",
-                name: "lattice",
-                label: "Hero \u2014 modo Ret\xEDcula volum\xE9trica",
-                description: "Solo aplica si el 'Fondo del hero' es 'Ret\xEDcula volum\xE9trica'. Ret\xEDcula 3D de puntos por la que se avanza; cada onda la atraviesa encendi\xE9ndola y soltando los puntos de su formaci\xF3n.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" }
-                    ],
-                    description: "Controla densidad de la ret\xEDcula, brillo y fuerza de las ondas. Default: Medio."
-                  }
-                ]
-              },
-              // ── Modo Túnel de fibra (SPEC 113) ──
-              {
-                type: "object",
-                name: "fiber",
-                label: "Hero \u2014 modo T\xFAnel de fibra",
-                description: "Solo aplica si el 'Fondo del hero' es 'T\xFAnel de fibra'. Filamentos de luz con paquetes recorri\xE9ndolos, que avanzan con el scroll.",
-                fields: [
-                  {
-                    type: "string",
-                    name: "variant",
-                    label: "Tratamiento",
-                    options: [
-                      { value: "tunel", label: "T\xFAnel (haces hacia el punto de fuga)" },
-                      { value: "haz", label: "Haz (filamentos horizontales)" },
-                      { value: "reticula", label: "Ret\xEDcula (malla con paquetes)" }
-                    ],
-                    description: "Default: T\xFAnel."
-                  },
-                  {
-                    type: "string",
-                    name: "intensity",
-                    label: "Intensidad del efecto",
-                    options: [
-                      { value: "sutil", label: "Sutil" },
-                      { value: "medio", label: "Medio" },
-                      { value: "intenso", label: "Intenso" }
-                    ],
-                    description: "Brillo general del fondo. Default: Medio."
-                  }
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace (URL o ancla #seccion)" }
                 ]
               }
+            ]
+          },
+          // ── Reel con video (SPEC 117) ──
+          {
+            type: "object",
+            name: "reel",
+            label: "Reel (video del Home)",
+            description: "Secci\xF3n con el video en loop que se expande con el scroll. El loop va sin audio; el video completo solo se descarga al abrir el visor.",
+            fields: [
+              { type: "string", name: "marqueeTop", label: "Texto en movimiento \u2014 fila superior" },
+              { type: "string", name: "marqueeTop_en", label: "Texto en movimiento \u2014 fila superior (EN)" },
+              { type: "string", name: "marqueeBottom", label: "Texto en movimiento \u2014 fila inferior (contorno)" },
+              { type: "string", name: "marqueeBottom_en", label: "Texto en movimiento \u2014 fila inferior (EN)" },
+              { type: "string", name: "loopWebm1080", label: "Loop desktop \u2014 WebM", description: "Ej. /videos/home/reel-1080.webm" },
+              { type: "string", name: "loopMp41080", label: "Loop desktop \u2014 MP4", description: "Ej. /videos/home/reel-1080.mp4" },
+              { type: "string", name: "loopWebm720", label: "Loop mobile \u2014 WebM", description: "Ej. /videos/home/reel-720.webm" },
+              { type: "string", name: "loopMp4720", label: "Loop mobile \u2014 MP4", description: "Ej. /videos/home/reel-720.mp4" },
+              { type: "image", name: "poster", label: "Imagen de portada del video" },
+              { type: "string", name: "fullVideoLabel", label: "Bot\xF3n \u2014 ver video completo" },
+              { type: "string", name: "fullVideoLabel_en", label: "Bot\xF3n \u2014 ver video completo (EN)" },
+              { type: "string", name: "fullVideoTitle", label: "T\xEDtulo del visor" },
+              { type: "string", name: "fullVideoTitle_en", label: "T\xEDtulo del visor (EN)" },
+              { type: "string", name: "fullVideoMp41080", label: "Video completo \u2014 MP4 desktop", description: "Ej. /videos/home/fiberlux-corp-full-1080.mp4" },
+              { type: "string", name: "fullVideoMp4720", label: "Video completo \u2014 MP4 mobile", description: "Ej. /videos/home/fiberlux-corp-full-720.mp4" },
+              {
+                type: "string",
+                name: "fullVideoYoutubeUrl",
+                label: "Video completo \u2014 URL de YouTube (opcional)",
+                description: "Si se completa, el visor muestra YouTube en lugar del video alojado."
+              }
+            ]
+          },
+          // ── Somos más que internet (SPEC 117) ──
+          {
+            type: "object",
+            name: "manifesto",
+            label: "Somos m\xE1s que internet",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Antet\xEDtulo" },
+              { type: "string", name: "eyebrow_en", label: "Antet\xEDtulo (EN)" },
+              {
+                type: "string",
+                name: "title",
+                label: "T\xEDtulo",
+                description: "Encierra entre *asteriscos* la palabra que va en morado."
+              },
+              { type: "string", name: "title_en", label: "T\xEDtulo (EN)" }
+            ]
+          },
+          // ── Banner Cyberguard (SPEC 117) ──
+          {
+            type: "object",
+            name: "cyberguardBanner",
+            label: "Banner Cyberguard",
+            fields: [
+              { type: "string", name: "brand", label: "Marca", description: "Ej. Cyberguard" },
+              { type: "string", name: "eyebrow", label: "Antet\xEDtulo" },
+              { type: "string", name: "eyebrow_en", label: "Antet\xEDtulo (EN)" },
+              { type: "string", name: "title", label: "T\xEDtulo" },
+              { type: "string", name: "title_en", label: "T\xEDtulo (EN)" },
+              { type: "string", name: "text", label: "Texto", ui: { component: "textarea" } },
+              { type: "string", name: "text_en", label: "Texto (EN)", ui: { component: "textarea" } },
+              {
+                type: "object",
+                name: "cta",
+                label: "Bot\xF3n",
+                fields: [
+                  { type: "string", name: "label", label: "Texto" },
+                  { type: "string", name: "label_en", label: "Texto (EN)" },
+                  { type: "string", name: "href", label: "Enlace" }
+                ]
+              },
+              {
+                type: "image",
+                name: "image",
+                label: "Imagen (opcional)",
+                description: "Si se deja vac\xEDa se muestra el escudo animado."
+              }
+            ]
+          },
+          // ── Certificaciones — intro del Home (SPEC 117) ──
+          {
+            type: "object",
+            name: "certificacionesIntro",
+            label: "Certificaciones (intro del Home)",
+            description: "Si se deja vac\xEDo se usa el t\xEDtulo y texto de la colecci\xF3n Certificaciones.",
+            fields: [
+              { type: "string", name: "eyebrow", label: "Antet\xEDtulo" },
+              { type: "string", name: "eyebrow_en", label: "Antet\xEDtulo (EN)" },
+              {
+                type: "string",
+                name: "title",
+                label: "T\xEDtulo",
+                description: "Encierra entre *asteriscos* el texto que va en morado."
+              },
+              { type: "string", name: "title_en", label: "T\xEDtulo (EN)" },
+              { type: "string", name: "text", label: "Texto", ui: { component: "textarea" } },
+              { type: "string", name: "text_en", label: "Texto (EN)", ui: { component: "textarea" } }
             ]
           },
           // ── Servicios ──
@@ -471,8 +377,15 @@ var config_default = defineConfig({
             label: "Servicios",
             type: "object",
             fields: [
-              { name: "title", label: "T\xEDtulo de secci\xF3n", type: "string" },
+              {
+                name: "title",
+                label: "T\xEDtulo de secci\xF3n",
+                type: "string",
+                description: "Encierra entre *asteriscos* el texto que va en morado."
+              },
               { name: "title_en", label: "T\xEDtulo de secci\xF3n (EN)", type: "string" },
+              { name: "subtitle", label: "Bajada de secci\xF3n", type: "string", ui: { component: "textarea" } },
+              { name: "subtitle_en", label: "Bajada de secci\xF3n (EN)", type: "string", ui: { component: "textarea" } },
               {
                 name: "items",
                 label: "Servicios",
@@ -496,6 +409,12 @@ var config_default = defineConfig({
                     name: "icon",
                     label: "\xCDcono (SVG o imagen)",
                     type: "image"
+                  },
+                  {
+                    name: "cover",
+                    label: "Imagen de la card abierta",
+                    type: "image",
+                    description: "Foto que aparece al desplegar la categor\xEDa en el bloque de soluciones del Home."
                   },
                   // SPEC 103 — panel de soluciones (chips + card en stack).
                   {
@@ -603,7 +522,14 @@ var config_default = defineConfig({
                   { name: "role_en", label: "Cargo (EN)", type: "string" },
                   { name: "company", label: "Empresa", type: "string" },
                   { name: "avatar", label: "Foto", type: "image" },
-                  { name: "logo", label: "Logo empresa", type: "image" }
+                  { name: "logo", label: "Logo empresa", type: "image" },
+                  { name: "cover", label: "Portada del video", type: "image" },
+                  {
+                    name: "youtubeUrl",
+                    label: "Video de YouTube",
+                    type: "string",
+                    description: "URL del video del caso. Vac\xEDo \u21D2 la card abre el visor con la portada."
+                  }
                 ]
               }
             ]

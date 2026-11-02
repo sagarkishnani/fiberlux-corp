@@ -1,104 +1,26 @@
 {
   "hero": {
-    "title": "Soluciones de conectividad y TI para tu empresa",
-    "subtitle": "Desde Fiberlux impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
-    "heroBackground": "planeta",
-    "splineSceneUrl": "https://prod.spline.design/NPf6t5Aswe3I4AKw/scene.splinecode",
-    "splinePosterUrl": "images/home/cover-3d-mobile.jpeg",
-    "heroBgOpacity": 60,
-    "cinematic": {
-      "floatingTokens": [
-        {
-          "text": "1 Gbps"
-        },
-        {
-          "text": "99.9%"
-        },
-        {
-          "text": "12 ms"
-        },
-        {
-          "text": "FTTH"
-        },
-        {
-          "text": "IPv6"
-        },
-        {
-          "text": "24/7"
-        },
-        {
-          "text": "SLA"
-        },
-        {
-          "text": "10G"
-        }
-      ]
+    "titleBefore": "Soluciones de",
+    "titleBefore_en": "Connectivity and",
+    "titleEmphasis": "conectividad y TI",
+    "titleEmphasis_en": "IT solutions",
+    "titleAfter": "para tu empresa",
+    "titleAfter_en": "for your business",
+    "subtitle": "Impulsamos tu operación con servicios de alta calidad sobre una red privada 100% de fibra óptica.",
+    "subtitle_en": "We power your operation with high-quality services over a 100% private fiber-optic network.",
+    "ctaPrimary": {
+      "label": "Ver soluciones",
+      "label_en": "View solutions",
+      "href": "#soluciones"
     },
-    "morph": {
-      "triggerLabel": "Explora nuestras soluciones",
-      "triggerLabel_en": "Explore our solutions",
-      "solutionNodes": [
-        {
-          "label": "Conectividad",
-          "label_en": "Connectivity",
-          "url": "/soluciones/conectividad",
-          "icon": "conectividad"
-        },
-        {
-          "label": "Ciberseguridad",
-          "label_en": "Cybersecurity",
-          "url": "/soluciones/ciberseguridad",
-          "icon": "ciberseguridad"
-        },
-        {
-          "label": "Data Center",
-          "label_en": "Data Center",
-          "url": "/soluciones/data-center",
-          "icon": "datacenter"
-        },
-        {
-          "label": "Infraestructura",
-          "label_en": "Infrastructure",
-          "url": "/soluciones/infraestructura",
-          "icon": "infraestructura"
-        },
-        {
-          "label": "Comunicaciones Unificadas",
-          "label_en": "Unified Communications",
-          "url": "/soluciones/comunicaciones",
-          "icon": "comunicaciones"
-        }
-      ]
-    },
-    "buttons": [
-      {
-        "text": "Ver soluciones",
-        "url": "/soluciones",
-        "variant": "primary",
-        "text_en": "View solutions"
-      },
-      {
-        "text": "Conoce más",
-        "url": "/nosotros",
-        "variant": "secondary",
-        "text_en": "Learn more"
-      }
-    ],
-    "title_en": "Connectivity and IT solutions for your business",
-    "subtitle_en": "We power your business with high-quality services over a 100% private fiber-optic network.",
-    "dotfield": {
-      "intensity": "medio"
-    },
-    "lattice": {
-      "intensity": "medio"
-    },
-    "fiber": {
-      "variant": "tunel",
-      "intensity": "medio"
+    "ctaSecondary": {
+      "label": "Conoce más",
+      "label_en": "Learn more",
+      "href": "/nosotros"
     }
   },
   "services": {
-    "title": "Soluciones para tu negocio",
+    "title": "*Soluciones* para tu empresa",
     "items": [
       {
         "number": "01",
@@ -142,7 +64,8 @@
         ],
         "title_en": "Connectivity",
         "description_en": "High-capacity links and 24/7 monitoring for operations that can't stop.",
-        "tabLabel_en": "Connectivity"
+        "tabLabel_en": "Connectivity",
+        "cover": "/images/rediseno/soluciones/cat-hero-conectividad.jpeg"
       },
       {
         "number": "02",
@@ -191,7 +114,8 @@
         ],
         "title_en": "Cybersecurity",
         "description_en": "Active security for networks, users and applications, managed end to end.",
-        "tabLabel_en": "Cybersecurity"
+        "tabLabel_en": "Cybersecurity",
+        "cover": "/images/rediseno/soluciones/cat-hero-ciberseguridad.jpeg"
       },
       {
         "number": "03",
@@ -235,7 +159,8 @@
         ],
         "title_en": "Data Center",
         "description_en": "Specialized infrastructure to host, protect and scale your most critical systems.",
-        "tabLabel_en": "Data Center"
+        "tabLabel_en": "Data Center",
+        "cover": "/images/rediseno/soluciones/cat-hero-datacenter.jpeg"
       },
       {
         "number": "04",
@@ -279,7 +204,8 @@
         ],
         "title_en": "Infrastructure",
         "description_en": "Technology ready to support an increasingly demanding operation.",
-        "tabLabel_en": "Infrastructure"
+        "tabLabel_en": "Infrastructure",
+        "cover": "/images/rediseno/soluciones/cat-hero-infrastructure.jpeg"
       },
       {
         "number": "05",
@@ -318,14 +244,17 @@
         ],
         "title_en": "Unified Communications",
         "description_en": "Voice, collaboration and customer service integrated into a single experience.",
-        "tabLabel_en": "Communications"
+        "tabLabel_en": "Communications",
+        "cover": "/images/rediseno/soluciones/cat-hero-comunicaciones.jpeg"
       }
     ],
-    "title_en": "Solutions for your business"
+    "title_en": "*Solutions* for your business",
+    "subtitle": "Diseñadas para operaciones que no pueden detenerse. Pasa el cursor para explorar cada una.",
+    "subtitle_en": "Built for operations that can't stop. Hover to explore each one."
   },
   "testimonials": {
     "visible": true,
-    "sectionTitle": "Empresas que confían en nuestra red",
+    "sectionTitle": "*Empresas* que confían en nuestra red",
     "items": [
       {
         "quote": "La cobertura de Fiberlux nos permite a Boticas Hogar y Salud abrir más sedes a nivel nacional.",
@@ -337,7 +266,9 @@
         "logo": "images/testimonials/logo-boticas-y-hogar-salud.png",
         "role_en": "Head of Technology, IT and Communications",
         "quote_en": "Fiberlux's coverage allows us at Boticas Hogar y Salud to open more locations nationwide.",
-        "description_en": "This year we opened stores in provinces, all with Fiberlux service, reaching 115 branches."
+        "description_en": "This year we opened stores in provinces, all with Fiberlux service, reaching 115 branches.",
+        "cover": "/images/casos/caso-de-exito-boticas.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=TaATVXtIusQ"
       },
       {
         "quote": "La pandemia nos trajo un cambio en la forma de trabajar y las reuniones virtuales se volvieron esenciales.",
@@ -349,7 +280,9 @@
         "logo": "images/testimonials/logo-camara-de-comercio-arequipa.png",
         "role_en": "General Manager",
         "quote_en": "The pandemic changed the way we work and virtual meetings became essential.",
-        "description_en": "Fiberlux has been a pillar in that transition and in strengthening our bond with Arequipa's business community."
+        "description_en": "Fiberlux has been a pillar in that transition and in strengthening our bond with Arequipa's business community.",
+        "cover": "/images/casos/caso-de-exito-camara-comercio.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=gxpyAK36Dfg"
       },
       {
         "quote": "A raíz de fenómenos naturales, Fiberlux nos ofreció la conexión a una fibra oscura de 10G.",
@@ -361,10 +294,12 @@
         "logo": "images/testimonials/logo-grupo-gloria.svg",
         "role_en": "IT Manager",
         "quote_en": "Following natural events, Fiberlux offered us a 10G dark fiber connection.",
-        "description_en": "Response times improved notably, delivering efficiency between our headquarters and the Huachipa plant."
+        "description_en": "Response times improved notably, delivering efficiency between our headquarters and the Huachipa plant.",
+        "cover": "/images/casos/caso-de-exito-grupo-gloria.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=HcRVcEckZxs"
       }
     ],
-    "sectionTitle_en": "Companies that trust our network",
+    "sectionTitle_en": "*Companies* that trust our network",
     "ctaLabel": "Ver casos de éxito",
     "ctaLabel_en": "View success stories",
     "ctaUrl": "/casos-de-exito"
@@ -373,32 +308,32 @@
     "title": "¿Por qué Fiberlux?",
     "items": [
       {
-        "number": "+5,500",
-        "label": "Clientes satisfechos",
-        "description": "clientes satisfechos que confían en nuestra red en todo el Perú",
-        "label_en": "Satisfied clients",
-        "description_en": "satisfied clients who trust our network across Peru"
-      },
-      {
-        "number": "+17,000 km",
-        "label": "Fibra óptica",
+        "number": "+17K km",
+        "label": "Fibra óptica desplegada",
+        "label_en": "Fiber optics deployed",
         "description": "de infraestructura de fibra óptica desplegada",
-        "label_en": "Fiber optics",
         "description_en": "of deployed fiber-optic infrastructure"
       },
       {
-        "number": "99",
-        "label": "Presencia nacional",
+        "number": "+5500",
+        "label": "Clientes satisfechos",
+        "label_en": "Satisfied clients",
+        "description": "clientes satisfechos que confían en nuestra red en todo el Perú",
+        "description_en": "satisfied clients who trust our network across Peru"
+      },
+      {
+        "number": "+100",
+        "label": "Ciudades conectadas",
+        "label_en": "Connected cities",
         "description": "ciudades en cobertura en todo el Perú",
-        "label_en": "National presence",
         "description_en": "cities covered across Peru"
       },
       {
-        "number": "100%",
-        "label": "Red propia",
-        "description": "red privada de fibra óptica de última generación",
-        "label_en": "Own network",
-        "description_en": "state-of-the-art private fiber-optic network"
+        "number": "24/7",
+        "label": "Soporte especializado",
+        "label_en": "Specialized support",
+        "description": "soporte especializado todo el año",
+        "description_en": "specialized support all year round"
       }
     ],
     "title_en": "Why Fiberlux?",
@@ -422,10 +357,10 @@
     ]
   },
   "blogPreview": {
-    "title": "Insights & Novedades",
+    "title": "*Insights* & Novedades",
     "buttonText": "Ver todos",
     "buttonUrl": "/blog",
-    "title_en": "Insights & News",
+    "title_en": "*Insights* & News",
     "buttonText_en": "View all"
   },
   "manifiesto": {
@@ -496,5 +431,52 @@
         "label_en": "Cities covered"
       }
     ]
+  },
+  "reel": {
+    "marqueeTop": "DATA CENTER • INFRAESTRUCTURA • CONECTIVIDAD • CIBERSEGURIDAD • DATA CENTER • INFRAESTRUCTURA •",
+    "marqueeTop_en": "DATA CENTER • INFRASTRUCTURE • CONNECTIVITY • CYBERSECURITY • DATA CENTER • INFRASTRUCTURE •",
+    "marqueeBottom": "COMUNICACIONES UNIFICADAS • CLOUD • FIBRA ÓPTICA • COMUNICACIONES UNIFICADAS • CLOUD •",
+    "marqueeBottom_en": "UNIFIED COMMUNICATIONS • CLOUD • FIBER OPTICS • UNIFIED COMMUNICATIONS • CLOUD •",
+    "loopWebm1080": "/videos/home/reel-1080.webm",
+    "loopMp41080": "/videos/home/reel-1080.mp4",
+    "loopWebm720": "/videos/home/reel-720.webm",
+    "loopMp4720": "/videos/home/reel-720.mp4",
+    "poster": "/videos/home/reel-poster.jpg",
+    "fullVideoLabel": "Ver video completo",
+    "fullVideoLabel_en": "Watch full video",
+    "fullVideoTitle": "Fiberlux Corporativo",
+    "fullVideoTitle_en": "Fiberlux Corporate",
+    "fullVideoMp41080": "/videos/home/fiberlux-corp-full-1080.mp4",
+    "fullVideoMp4720": "/videos/home/fiberlux-corp-full-720.mp4",
+    "fullVideoYoutubeUrl": ""
+  },
+  "manifesto": {
+    "eyebrow": "SOMOS MÁS QUE INTERNET",
+    "eyebrow_en": "WE'RE MORE THAN INTERNET",
+    "title": "Somos la *infraestructura* que sostiene tus decisiones",
+    "title_en": "We are the *infrastructure* behind your decisions"
+  },
+  "cyberguardBanner": {
+    "brand": "Cyberguard",
+    "eyebrow": "LA AMENAZA NO AVISA",
+    "eyebrow_en": "THREATS DON'T WARN YOU",
+    "title": "Protección inteligente para tu empresa",
+    "title_en": "Smart protection for your business",
+    "text": "Monitoreo, detección y respuesta gestionada para que tu operación siga en línea, pase lo que pase.",
+    "text_en": "Managed monitoring, detection and response so your operation stays online, no matter what.",
+    "cta": {
+      "label": "Conocer planes",
+      "label_en": "See plans",
+      "href": "/soluciones/ciberseguridad"
+    },
+    "image": ""
+  },
+  "certificacionesIntro": {
+    "eyebrow": "[ CERTIFICACIONES ]",
+    "eyebrow_en": "[ CERTIFICATIONS ]",
+    "title": "Certificaciones del *grupo Fiberlux*",
+    "title_en": "Certifications of the *Fiberlux group*",
+    "text": "Trabajamos bajo altos estándares de seguridad, calidad y transparencia. Contamos con la certificación ISO 27001 de Seguridad de la Información, reafirmando nuestro compromiso con la confianza y la excelencia en cada proyecto.",
+    "text_en": "We work to high standards of security, quality and transparency. We hold the ISO 27001 Information Security certification, reaffirming our commitment to trust and excellence in every project."
   }
 }

@@ -6,6 +6,7 @@ import TestimonialCard from './TestimonialCard';
 import { useSlider, type SliderEffect } from '../../hooks/useSlider';
 import SliderArrows from './SliderArrows';
 import SliderSideArrows from './SliderSideArrows';
+import { stripEmphasis } from "../../utils/emphasis";
 
 /* ── Types ── */
 interface TestimonialSliderProps {
@@ -43,7 +44,7 @@ export default function TestimonialSliderReact({
     (data?.home as any)?.testimonials ||
     (initialData?.home as any)?.testimonials;
 
-  const sectionTitle = tField(testimonials as any, "sectionTitle", locale) || 'Empresas que confían en nuestra red';
+  const sectionTitle = stripEmphasis(tField(testimonials as any, "sectionTitle", locale)) || 'Empresas que confían en nuestra red';
   const items: Testimonial[] = testimonials?.items || [];
   // Hidden when the CMS toggle is off (default: hidden until there are enough quotes).
   const isVisible = testimonials?.visible === true;
