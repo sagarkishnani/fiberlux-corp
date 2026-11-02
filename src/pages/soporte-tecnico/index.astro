@@ -1,26 +1,33 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import HeroSoporte from "../../components/soporte/HeroSoporte.astro";
-import CanalesSoporte from "../../components/soporte/CanalesSoporte.astro";
-import SolucionesStack from "../../components/shared/SolucionesStack.astro";
-import EmpresasRed from "../../components/home/EmpresasRed.astro";
+import SoporteV2React from "../../components/soporte/SoporteV2React";
+import HomeSolucionesReact from "../../components/home/HomeSolucionesReact";
+import HomeTestimoniosReact from "../../components/home/HomeTestimoniosReact";
+import client from "../../../tina/__generated__/client";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const [soporteQuery, homeQuery] = await Promise.all([
+  client.queries.soporteTecnico({ relativePath: "index.json" }),
+  client.queries.home({ relativePath: "index.json" }),
+]);
+const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data: homeQuery.data, locale };
 ---
 
 <BaseLayout
   title="Soporte técnico"
   description="Contáctate con nuestros ingenieros especializados. Soporte técnico de Fiberlux Corp por WhatsApp, llamada o correo."
 >
-  <main>
-    <HeroSoporte />
-    <div data-reveal="up">
-      <CanalesSoporte />
-    </div>
-    <SolucionesStack />
-    {/* Fondo negro detrás del panel claro de cifras + testimonios: sus esquinas
-        superiores redondeadas dejan ver este fondo (aquí el <main> no es oscuro
-        como en home). */}
-    <div class="-mt-2 relative z-25 bg-greyscale-darkest" data-reveal="up" data-overlap-rise>
-      <EmpresasRed scrubCounters />
-    </div>
+  <main class="bg-fx-bg">
+    <SoporteV2React
+      client:load
+      query={soporteQuery.query}
+      variables={soporteQuery.variables}
+      data={soporteQuery.data}
+      locale={locale}
+    />
+    <HomeSolucionesReact client:visible {...homeProps} />
+    <HomeTestimoniosReact client:visible {...homeProps} withCta />
   </main>
 </BaseLayout>
