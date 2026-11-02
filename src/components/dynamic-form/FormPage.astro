@@ -1,0 +1,28 @@
+---
+import client from "../../../tina/__generated__/client";
+import DynamicFormReact from "./DynamicFormReact";
+import LegalHero, { LegalIntro } from "../legal/LegalHero";
+import { getLocale, tField } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+interface Props {
+  formSlug: string;
+  section: string;
+}
+
+const { formSlug, section } = Astro.props;
+const result = await client.queries.dynamicForms({ relativePath: `${formSlug}.json` });
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const form = result.data?.dynamicForms as any;
+const description = tField(form, "description", locale);
+---
+
+<div class="pb-[67px] lg:pb-40">
+  <LegalHero locale={locale} section={section} eyebrow={form?.badge || ""} title={tField(form, "formTitle", locale)} />
+  <div class="mt-[34px] lg:mt-14">
+    <div class="fx-container"><div class="mx-auto max-w-[1000px]">
+      {description && <LegalIntro text={description} />}
+      <DynamicFormReact query={result.query} variables={result.variables} data={result.data} locale={locale} hideHeader client:load />
+    </div></div>
+  </div>
+</div>

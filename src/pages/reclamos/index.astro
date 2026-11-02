@@ -1,14 +1,18 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ReclamosSelectorReact from "../../components/reclamos/ReclamosSelectorReact";
+import { getLocale } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
 <BaseLayout
   title="Reclamos"
   description="Formularios de reclamo, apelación y queja ante OSIPTEL."
-  headerTheme="light"
+  footerOverlap
 >
-  <main style={{ backgroundColor: "#ffffff", minHeight: "100vh" }}>
-    <ReclamosSelectorReact client:load />
+  <main class="bg-fx-bg">
+    <ReclamosSelectorReact locale={locale} />
   </main>
 </BaseLayout>

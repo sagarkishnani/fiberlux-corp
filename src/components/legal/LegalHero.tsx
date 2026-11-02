@@ -3,6 +3,7 @@ import type { Locale } from "../../i18n/config";
 import { t } from "../../i18n/ui";
 import { localizedPath } from "../../utils/i18n";
 import { fxAsset } from "../shared/fx/FxPrimitives";
+import { renderInlineLinks } from "../shared/FormControls";
 
 const REVEAL = { "data-reveal-distance": "56", "data-reveal-duration": "1.2", "data-reveal-ease": "fx" } as const;
 
@@ -19,10 +20,18 @@ export function LegalShell({ children }: { children: ReactNode }) {
   return <div className="fx-container"><div className="mx-auto max-w-[1000px]">{children}</div></div>;
 }
 
+export function LegalIntro({ text }: { text: string }) {
+  return (
+    <div className="fx-intro mb-5 rounded-[28px] border border-fx-lilac bg-[#FAF0F6] p-5 text-[15px] leading-[1.75] text-fx-ink [text-wrap:pretty] lg:px-11 lg:py-10">
+      <p>{renderInlineLinks(text)}</p>
+    </div>
+  );
+}
+
 export default function LegalHero({ locale, section, title, eyebrow, titleTinaField, eyebrowTinaField }: LegalHeroProps) {
   const cleanEyebrow = (eyebrow || "").replace(/^[—–-]\s*/, "");
   return (
-    <section className="relative overflow-clip pt-[30px] lg:pt-[72px]">
+    <section className="relative pt-[30px] lg:pt-[72px]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 -top-10 h-[400px] overflow-hidden [mask-image:linear-gradient(180deg,#000_20%,transparent_100%)]"

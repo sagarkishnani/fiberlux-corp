@@ -1,149 +1,70 @@
-import { FaFileLines, FaScaleBalanced, FaTriangleExclamation } from "react-icons/fa6";
+import type { Locale } from "../../i18n/config";
+import { localizeHref } from "../../utils/i18n";
+import { ArrowIcon } from "../shared/fx/FxPrimitives";
+import PageHero from "../shared/fx/PageHero";
+
+const REVEAL = { "data-reveal-distance": "56", "data-reveal-duration": "1.2", "data-reveal-ease": "fx" } as const;
 
 const cards = [
   {
     title: "Formulario de Reclamo",
     description: "Registre su reclamo sobre nuestros servicios de telecomunicaciones.",
-    icon: FaFileLines,
-    href: "reclamo",
+    icon: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8",
+    href: "/reclamos/reclamo",
   },
   {
     title: "Formulario de Apelación",
     description: "Presente un recurso de apelación contra una resolución emitida.",
-    icon: FaScaleBalanced,
-    href: "apelacion",
+    icon: "M12 3v18M3 7h18M6 7l-3 9h6L6 7zM18 7l-3 9h6l-3-9z",
+    href: "/reclamos/apelacion",
   },
   {
     title: "Formulario de Queja",
     description: "Interponga una queja por transgresión de normas de procedimiento.",
-    icon: FaTriangleExclamation,
-    href: "queja",
+    icon: "M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z",
+    href: "/reclamos/queja",
   },
 ];
 
-export default function ReclamosSelectorReact() {
-  const base = (import.meta as any).env?.BASE_URL || "/";
-
+export default function ReclamosSelectorReact({ locale = "es" }: { locale?: Locale }) {
   return (
-    <section style={{ padding: "clamp(48px, 8vw, 80px) 24px", maxWidth: "960px", margin: "0 auto" }}>
-      {/* Header */}
-      <div style={{ textAlign: "center", marginBottom: "48px" }}>
-        <span
-          style={{
-            display: "inline-block",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "#96237A",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            marginBottom: "16px",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          — ATENCIÓN AL CLIENTE
-        </span>
-        <h1
-          style={{
-            fontSize: "clamp(28px, 4vw, 40px)",
-            fontWeight: 500,
-            color: "#1A1A1A",
-            lineHeight: 1.2,
-            fontFamily: "Poppins, sans-serif",
-            fontStyle: "italic",
-            margin: "0 0 16px",
-          }}
-        >
-          Selecciona una opción
-        </h1>
-        <p
-          style={{
-            fontSize: "14px",
-            color: "#5B5B5B",
-            lineHeight: 1.7,
-            maxWidth: "500px",
-            margin: "0 auto",
-            fontFamily: "Poppins, sans-serif",
-          }}
-        >
-          Elige el tipo de formulario que deseas completar según tu necesidad.
-        </p>
-      </div>
-
-      {/* Cards */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: "24px",
-        }}
-      >
-        {cards.map((card, i) => {
-          const Icon = card.icon;
-          return (
+    <>
+      <PageHero
+        crumb="Reclamos"
+        title="Selecciona una opción"
+        subtitle="Elige el tipo de formulario que deseas completar según tu necesidad."
+        locale={locale}
+        variant="soft"
+      />
+      <section className="fx-container mt-10 pb-[67px] lg:mt-16 lg:pb-40">
+        <div className="grid gap-4 lg:grid-cols-3 lg:gap-5">
+          {cards.map((card, i) => (
             <a
-              key={i}
-              href={`${base}reclamos/${card.href}`}
-              style={{
-                display: "block",
-                padding: "32px 24px",
-                borderRadius: "16px",
-                backgroundColor: "#FBF7FA",
-                border: "1px solid transparent",
-                textDecoration: "none",
-                transition: "all 0.25s ease",
-                cursor: "pointer",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#96237A";
-                e.currentTarget.style.boxShadow = "0 4px 24px rgba(150,35,122,0.1)";
-                e.currentTarget.style.transform = "translateY(-2px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "transparent";
-                e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
+              key={card.href}
+              href={localizeHref(card.href, locale)}
+              data-reveal="up"
+              {...REVEAL}
+              data-reveal-delay={String(i * 0.08)}
+              className="group/card flex flex-col gap-10 rounded-[28px] border border-fx-line bg-white p-6 text-fx-ink transition-[transform,border-color,box-shadow] duration-500 ease-fx-spring hover:-translate-y-1.5 hover:border-fx-lilac-strong hover:text-fx-ink hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.4)] lg:min-h-[260px] lg:p-9"
             >
-              <div
-                style={{
-                  width: "48px",
-                  height: "48px",
-                  borderRadius: "12px",
-                  backgroundColor: "#F3E5F0",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                <Icon size={22} color="#96237A" />
+              <div className="flex items-start justify-between">
+                <span className="grid h-14 w-14 place-items-center rounded-2xl bg-[#FAF0F6] text-fx-purple transition-colors duration-[400ms] group-hover/card:bg-fx-purple group-hover/card:text-white">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d={card.icon} />
+                  </svg>
+                </span>
+                <span className="grid h-10 w-10 place-items-center rounded-full border border-[#E6E3E6] transition-all duration-[450ms] ease-fx-spring group-hover/card:-rotate-45 group-hover/card:border-fx-purple group-hover/card:bg-fx-purple group-hover/card:text-white">
+                  <ArrowIcon size={16} />
+                </span>
               </div>
-              <h3
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#1A1A1A",
-                  margin: "0 0 8px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                {card.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: "13px",
-                  color: "#5B5B5B",
-                  lineHeight: 1.6,
-                  margin: 0,
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
-                {card.description}
-              </p>
+              <div className="mt-auto">
+                <h2 className="m-0 text-[20px] font-medium leading-[1.3] text-fx-ink lg:text-[22px]">{card.title}</h2>
+                <p className="mb-0 mt-2.5 text-[15px] leading-[1.6] text-fx-body">{card.description}</p>
+              </div>
             </a>
-          );
-        })}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
