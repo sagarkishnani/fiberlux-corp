@@ -1,50 +1,35 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { client } from "../../tina/__generated__/client";
-import HeroFiberluxApp from "../components/fiberlux-app/HeroFiberluxApp.astro";
-import BeneficiosApp from "../components/fiberlux-app/BeneficiosApp.astro";
-import VideoShowcaseApp from "../components/fiberlux-app/VideoShowcaseApp.astro";
-import EmpresasRed from "../components/home/EmpresasRed.astro";
-import BlogPreview from "../components/blog/BlogPreview.astro";
+import FiberluxAppV2React from "../components/fiberlux-app/FiberluxAppV2React";
+import HomeTestimoniosReact from "../components/home/HomeTestimoniosReact";
 import { getLocale } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 
-/* ── SEO / meta (falls back to global.seo) ── */
-const appQuery = await client.queries.fiberluxApp({
-  relativePath: "index.json",
-});
+const [appQuery, homeQuery, globalQuery] = await Promise.all([
+  client.queries.fiberluxApp({ relativePath: "index.json" }),
+  client.queries.home({ relativePath: "index.json" }),
+  client.queries.global({ relativePath: "index.json" }),
+]);
 const app = appQuery.data?.fiberluxApp;
-
-const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const globalSeo = globalQuery.data?.global?.seo;
+const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data: homeQuery.data, locale };
 
 const metaTitle = app?.seo?.metaTitle || app?.hero?.heading || "Fiberlux App";
-const metaDescription =
-  app?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
+const metaDescription = app?.seo?.metaDescription || globalSeo?.defaultDescription || undefined;
 ---
 
 <BaseLayout title={metaTitle} description={metaDescription}>
-  <main>
-    {/* Overlap sticky (SPEC 70): el hero queda fijo y Beneficios sube por
-        encima cubriéndolo; el hero se libera al terminar la sección. */}
-    <div class="relative">
-      <div class="sticky top-0 z-0" data-hero-sticky>
-        <HeroFiberluxApp />
-      </div>
-      <div class="relative z-10">
-        <BeneficiosApp />
-      </div>
-    </div>
-    <div class="relative z-10" data-reveal="up">
-      <VideoShowcaseApp />
-    </div>
-    <div class="-mt-16 relative z-20" data-reveal="up" data-overlap-rise>
-      <EmpresasRed scrubCounters />
-    </div>
-    <div class="-mt-16 relative z-20" data-reveal="up">
-      <BlogPreview />
-    </div>
+  <main class="bg-fx-bg">
+    <FiberluxAppV2React
+      client:load
+      query={appQuery.query}
+      variables={appQuery.variables}
+      data={appQuery.data}
+      locale={locale}
+    />
+    <HomeTestimoniosReact client:visible {...homeProps} withCta />
   </main>
 </BaseLayout>
