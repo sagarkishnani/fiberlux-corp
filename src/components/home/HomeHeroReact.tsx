@@ -132,6 +132,7 @@ export default function HomeHeroReact({ query, variables, data: initialData, loc
           data-reveal="up"
           data-reveal-distance="56"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           className="m-0 text-[38px] font-normal leading-[1.1] tracking-[-.025em] text-fx-ink [text-wrap:balance] lg:text-[64px] lg:leading-[1.08]"
         >
           <span data-tina-field={tinaField(hero as any, "titleBefore")}>{tField(hero, "titleBefore", locale)}</span>{" "}
@@ -144,6 +145,7 @@ export default function HomeHeroReact({ query, variables, data: initialData, loc
           data-reveal="up"
           data-reveal-distance="56"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           data-reveal-delay="0.1"
           className="mb-0 mt-[18px] text-[16px] leading-[1.6] text-fx-body [text-wrap:pretty] lg:mt-7 lg:max-w-[500px] lg:text-[18px]"
           data-tina-field={tinaField(hero as any, "subtitle")}
@@ -154,6 +156,7 @@ export default function HomeHeroReact({ query, variables, data: initialData, loc
           data-reveal="up"
           data-reveal-distance="56"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           data-reveal-delay="0.2"
           className="mt-7 flex flex-col gap-2.5 lg:mt-10 lg:flex-row lg:gap-3.5"
         >

@@ -27,6 +27,7 @@ export default function HomeStatsReact({ query, variables, data: initialData, lo
       <div
         data-reveal="scale"
         data-reveal-duration="1.2"
+        data-reveal-ease="fx"
         className="relative grid grid-cols-2 overflow-hidden rounded-[24px] bg-fx-purple p-2 text-white lg:grid-cols-4 lg:rounded-[32px] lg:px-16 lg:py-[52px]"
       >
         <div

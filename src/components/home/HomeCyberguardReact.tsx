@@ -34,6 +34,7 @@ export default function HomeCyberguardReact({ query, variables, data: initialDat
         data-reveal="up"
         data-reveal-distance="56"
         data-reveal-duration="1.2"
+        data-reveal-ease="fx"
         className="relative overflow-hidden rounded-[24px] border border-fx-line bg-gradient-to-b from-white to-fx-soft lg:grid lg:min-h-[540px] lg:grid-cols-2 lg:rounded-[32px] lg:shadow-[0_30px_80px_-40px_rgba(150,33,122,.25)]"
       >
         <div

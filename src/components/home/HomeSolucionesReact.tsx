@@ -86,7 +86,7 @@ export default function HomeSolucionesReact({ query, variables, data: initialDat
       />
       <div className="fx-container relative">
         <div className="lg:flex lg:items-end lg:justify-between lg:gap-10">
-          <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2">
+          <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx">
             <Eyebrow>{t("sol.eyebrow", locale)}</Eyebrow>
             <h2
               className="mb-0 mt-3.5 text-[32px] font-normal leading-[1.12] tracking-[-.02em] text-fx-ink lg:mt-[18px] lg:max-w-[420px] lg:text-[48px] lg:leading-[1.1]"
@@ -105,6 +105,7 @@ export default function HomeSolucionesReact({ query, variables, data: initialDat
             data-reveal="up"
             data-reveal-distance="56"
             data-reveal-duration="1.2"
+            data-reveal-ease="fx"
             data-reveal-delay="0.12"
             className="m-0 hidden max-w-[300px] text-[16px] leading-[1.6] text-fx-body lg:block"
             data-tina-field={tinaField(services as any, "subtitle")}
@@ -117,6 +118,7 @@ export default function HomeSolucionesReact({ query, variables, data: initialDat
           data-reveal="up"
           data-reveal-distance="56"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           data-reveal-delay="0.16"
           className="mt-14 hidden h-[520px] gap-4 lg:flex"
         >

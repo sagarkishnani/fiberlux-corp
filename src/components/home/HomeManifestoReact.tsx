@@ -42,7 +42,7 @@ export default function HomeManifestoReact({ query, variables, data: initialData
 
   return (
     <section ref={sectionRef} className="relative pt-[88px] lg:pt-[60px]">
-      <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" className="fx-container relative z-[2] text-center">
+      <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx" className="fx-container relative z-[2] text-center">
         <div
           className="font-mono text-[12px] font-medium tracking-[.3em] text-fx-ink lg:text-[14px] lg:tracking-[.4em]"
           data-tina-field={tinaField(manifesto as any, "eyebrow")}

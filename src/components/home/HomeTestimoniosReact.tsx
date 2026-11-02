@@ -220,7 +220,7 @@ export default function HomeTestimoniosReact({ query, variables, data: initialDa
     <section id="testimonios" className="pt-[88px] lg:pt-[140px]">
       <div className="fx-container">
         <div className="lg:flex lg:items-end lg:justify-between">
-          <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2">
+          <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx">
             <Eyebrow>{t("testimonios.eyebrow", locale)}</Eyebrow>
             <h2
               className="mb-0 mt-3.5 text-[32px] font-normal leading-[1.12] tracking-[-.02em] text-fx-ink lg:mt-[18px] lg:max-w-[520px] lg:text-[48px] lg:leading-[1.1]"
@@ -239,6 +239,7 @@ export default function HomeTestimoniosReact({ query, variables, data: initialDa
           data-reveal="up"
           data-reveal-distance="56"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           data-reveal-delay="0.12"
           className="mt-14 hidden cursor-grab select-none touch-pan-y lg:block"
         >

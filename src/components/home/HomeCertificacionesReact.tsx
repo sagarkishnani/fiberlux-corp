@@ -89,7 +89,7 @@ export default function HomeCertificacionesReact({ query, variables, data: initi
   return (
     <section className="fx-container mt-14 lg:mt-[140px]">
       <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-20">
-        <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2">
+        <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx">
           {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
           <h2
             className="mb-0 mt-3.5 text-[32px] font-normal leading-[1.12] tracking-[-.02em] text-fx-ink lg:mt-[18px] lg:text-[48px] lg:leading-[1.1]"
@@ -107,6 +107,7 @@ export default function HomeCertificacionesReact({ query, variables, data: initi
         <div
           data-reveal="scale"
           data-reveal-duration="1.2"
+          data-reveal-ease="fx"
           className="relative mt-7 overflow-hidden rounded-[24px] border border-fx-line bg-white px-6 py-10 lg:mt-0 lg:h-[460px] lg:rounded-[32px] lg:p-0"
         >
           <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_35%,#FAF0F6,rgba(250,240,246,0))] lg:bg-[radial-gradient(50%_60%_at_50%_40%,#FAF0F6,rgba(250,240,246,0))]" />

@@ -50,7 +50,7 @@ export default function HomeInsightsReact({ query, variables, data: initialData,
 
   return (
     <section id="insights" className="fx-container mt-[88px] lg:mt-[140px]">
-      <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" className="lg:flex lg:items-end lg:justify-between">
+      <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx" className="lg:flex lg:items-end lg:justify-between">
         <div>
           <Eyebrow>{t("blog.eyebrow", locale)}</Eyebrow>
           <h2
@@ -76,6 +76,7 @@ export default function HomeInsightsReact({ query, variables, data: initialData,
               data-reveal="up"
               data-reveal-distance="56"
               data-reveal-duration="1.2"
+              data-reveal-ease="fx"
               className="group/post flex flex-col overflow-hidden rounded-[22px] border border-fx-line bg-white text-fx-ink transition-[box-shadow,border-color,transform] duration-500 hover:border-fx-line-strong hover:text-fx-ink active:scale-[.985] lg:rounded-[24px] lg:hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.35)] lg:active:scale-100"
             >
               <div className="relative aspect-video overflow-hidden bg-[#EFECEF] lg:aspect-[16/10]">
