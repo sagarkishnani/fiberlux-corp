@@ -71,9 +71,9 @@ Every CMS-driven section uses a pair:
 
 Hydration directives: `client:load` for above-fold interactive components, `client:visible` for below-fold.
 
-Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, `contact`, and `shared` (cross-page: `Header`, `Footer`, `StickyCards`, testimonial slider, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`). A few components (e.g. `StatsReact`) live directly under `src/components/`.
+Components are grouped by page/feature under `src/components/`: `home`, `nosotros`, `blog`, `info-abonados`, `dynamic-form`, `reclamos`, `contact`, and `shared` (cross-page: `HeaderV3`, `FooterV2`, the `fx/` redesign primitives, and the form primitives `FormControls.tsx` / `FormSuccess.tsx`).
 
-Some pages compose several islands in the page file itself rather than via paired `.astro` wrappers. `src/pages/nosotros/index.astro` resolves the `about` query once and passes it to `HeroNosotrosReact`, `MissionVisionReact`, `ValuesReact`, `TimelineReact`, and `RubrosReact` (plus `StatsReact` fed by the `home` query). The `nosotros` Timeline renders an editable animated history strip driven by `about.timeline` (eyebrow `title`, `startYear`/`endYear` bar labels, and a `milestones[]` list of `{ year, heading }`). `RubrosReact` renders an editable industries/sectors carousel driven by `about.rubros` (`title` + an `items[]` list of `{ icon, label }`, where `icon` is one of a fixed set of options mapped to a `react-icons` glyph); it supports arrow navigation, pointer drag with snap, autoplay with pause-on-interaction, and honors `prefers-reduced-motion`.
+Some pages compose several islands in the page file itself rather than via paired `.astro` wrappers. `src/pages/nosotros/index.astro` resolves the `about` query once and passes it to `HeroNosotrosReact`, `MissionVisionReact`, `ValuesReact`, `TimelineReact`, and `RubrosReact` . The `nosotros` Timeline renders an editable animated history strip driven by `about.timeline` (eyebrow `title`, `startYear`/`endYear` bar labels, and a `milestones[]` list of `{ year, heading }`). `RubrosReact` renders an editable industries/sectors carousel driven by `about.rubros` (`title` + an `items[]` list of `{ icon, label }`, where `icon` is one of a fixed set of options mapped to a `react-icons` glyph); it supports arrow navigation, pointer drag with snap, autoplay with pause-on-interaction, and honors `prefers-reduced-motion`.
 
 ### Content & collections
 
@@ -111,17 +111,27 @@ Paths in form/runtime code are `BASE_URL`-aware (`import.meta.env.BASE_URL`) so 
 
 ### Styling
 
-Tailwind CSS 3 with custom design tokens in `tailwind.config.mjs`. Reusable CSS component classes (`btn-primary`, `btn-secondary`, `card`, `card-magenta`, `section`, `section-dark`, `container-xl`, `container-lg`, gradient utilities) are defined in `src/styles/global.css` — prefer these over inline Tailwind for repeated patterns. Note: several form/reclamos components use inline `style` objects rather than Tailwind classes.
+Tailwind CSS 3 with custom design tokens in `tailwind.config.mjs`. Note: the theme **overrides** `fontSize`, so stock utilities like `text-sm`/`text-xs` do not exist — use explicit sizes (`text-[14px]`). `src/styles/global.css` is never bundled (dead code); global CSS lives in `src/styles/site-container.css`, `src/styles/fx.css` (both imported by `BaseLayout`) or in component `<style>`. Several form/reclamos components use inline `style` objects.
 
-Icons come from `react-icons` (Font Awesome 6 set, `react-icons/fa6`).
+Icons come from `react-icons` (Font Awesome 6 set, `react-icons/fa6`) and inline SVGs in `shared/fx/FxPrimitives.tsx`.
 
-**Brand colors:** `brand-purple` (`#96237A`), `brand-purple-dark` (`#650F50`), `brand-purple-darkest` (`#3B0E30`). Background is near-black (`greyscale-darkest` `#0A0A0A`).
+**Redesign (light theme, SPEC 117–120).** The site is being moved page by page from the old dark design to a light redesign defined in prototypes unpacked under `references/rediseno/` (`desktop/pages/*.dc.html`, `mobile/pages/*.dc.html`; regenerate assets with `node scripts/unpack-prototipo.mjs <bundle.html> <out>` — the raw bundles and `assets/` are git-ignored). Values (sizes, colors, timings) are taken 1:1 from those HTML files. The dark design is frozen in branch `archive/staging-v1-dark` / tag `staging-v1-final-2026-11-01`.
 
-**Fonts:** Poppins (headings + body), Space Mono (technical accents). Typography scale defined as Tailwind utilities (`heading-xxl` → `caption-sm`).
+- **Tokens:** `fx-*` colors in Tailwind (`fx-bg` `#F7F7F7`, `fx-ink` `#453C46`, `fx-body`, `fx-muted`, `fx-line`, `fx-purple` `#96217A`, `fx-purple-hover`, `fx-purple-deep` `#650D4A`, `fx-lilac`, `fx-blush`…), easings `ease-fx-out` / `ease-fx-spring` / `ease-fx-drawer`, container class `.fx-container` (1320px, 16px gutter mobile / 32px desktop).
+- **Primitives:** `src/components/shared/fx/FxPrimitives.tsx` (`PillLink`, `Eyebrow`, icons, `fxAsset()`, `socialIconSrc()`), `shared/fx/VideoModal.tsx` (YouTube or self-hosted video viewer). Static redesign assets live in `public/images/rediseno/`.
+- **Chrome:** `HeaderV3` (topbar + pill nav + Soluciones mega-menu from `global.nav`, desktop side drawer / mobile full-screen drawer, search via `SearchOverlay`) and `FooterV2` (4 `global.footer.columns`, accordion on mobile). `HeaderV2`/`Footer` remain only until SPEC 120 deletes them.
+- **Emphasis convention:** in titles, text wrapped in `*asterisks*` renders purple/semibold via `renderEmphasis()` (`src/utils/emphasis.tsx`); legacy components that show those titles use `stripEmphasis()`.
+- **Animations:** `data-reveal` (`src/scripts/reveal.ts`) with `data-reveal-ease="fx"` for the prototype curve; count-ups via `data-count-up` (+ `data-count-nogroup`). `whenHydrated` treats `client:tina` islands as static outside the Tina editor (they never hydrate there).
 
-### 3D / animations
+**Fonts:** Poppins (headings + body), JetBrains Mono (`font-mono`, eyebrows/technical accents). Atkinson Hyperlegible for the a11y dyslexia mode.
 
-Spline scenes are embedded via `@splinetool/react-spline` in `HeroHome`. Scene URL is CMS-managed. Smooth scroll uses Lenis, initialized in `BaseLayout.astro`.
+### Home & video
+
+The Home (`src/pages/index.astro`) queries `home` once and renders React islands in prototype order: `HomeHeroReact` (dotted world map), `HomeStatsReact`, `HomeReelReact`, `HomeSolucionesReact`, `HomeManifestoReact`, `HomeCyberguardReact`, `HomePartnersV2` (logos aggregated from every `service`), `HomeTestimoniosReact`, `HomeCertificacionesReact` (`certificaciones` collection + `home.certificacionesIntro`), `HomeInsightsReact` (3 latest posts). Scroll-driven effects use `useScrollFrame` and honor `prefers-reduced-motion`.
+
+The Reel plays a 20 s muted loop (`public/videos/home/reel-{1080,720}.{webm,mp4}` + `reel-poster.jpg`), loaded only when the section nears the viewport and paused off-screen. "Ver video completo" opens `VideoModal` with the 92 s video (`fiberlux-corp-full-{1080,720}.mp4`), downloaded only on open; if `home.reel.fullVideoYoutubeUrl` is set the modal embeds YouTube instead. The 107 MB source video is NOT in the repo; re-encode with the ffmpeg commands in `specs/117-*.md`.
+
+Spline and the dark hero modes (cinematic, narrative planet, etc.) were removed in SPEC 117. `three` stays only for `effects/CinematicRays` (solutions hero). Smooth scroll uses Lenis, initialized in `BaseLayout.astro` and exposed as `window.__lenis`.
 
 ### Internationalization (i18n ES/EN) — SPEC 80
 
