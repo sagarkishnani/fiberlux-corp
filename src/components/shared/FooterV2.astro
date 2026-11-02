@@ -1,0 +1,21 @@
+---
+import { client } from '../../../tina/__generated__/client';
+import FooterV2React from './FooterV2React';
+import type { Locale } from '../../i18n/config';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'es' } = Astro.props;
+
+const globalQuery = await client.queries.global({ relativePath: 'index.json' });
+---
+
+<FooterV2React
+  client:visible
+  query={globalQuery.query}
+  variables={globalQuery.variables}
+  data={globalQuery.data}
+  locale={locale}
+/>

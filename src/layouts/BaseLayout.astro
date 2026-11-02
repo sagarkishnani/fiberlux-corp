@@ -1,5 +1,5 @@
 ---
-import Footer from "../components/shared/Footer.astro";
+import FooterV2 from "../components/shared/FooterV2.astro";
 import HeaderV3 from "../components/shared/HeaderV3.astro";
 import CookieConsent from "../components/cookies/CookieConsent.astro";
 import Popup from "../components/popup/Popup.astro";
@@ -436,8 +436,8 @@ const whatsappBubbleMessage =
           <div id="a11y-content" class:list={[{ "cine-intro-page": homeHeroCinematic }]}>
             <HeaderV3 locale={locale} />
             <slot />
-            <div class="-mt-6 relative z-40">
-              <Footer locale={locale} />
+            <div class="relative z-40 mt-12 lg:mt-40">
+              <FooterV2 locale={locale} />
             </div>
           </div>
           <CookieConsent />
@@ -451,6 +451,7 @@ const whatsappBubbleMessage =
             message={whatsappMessage}
             bubbleMessage={whatsappBubbleMessage}
             bubbleKey={bubbleCtx ?? "global"}
+            locale={locale}
           />
           <AccessibilityPanel client:idle transition:persist="a11y" locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina
