@@ -6,18 +6,52 @@ import HomeReelReact from "../components/home/HomeReelReact";
 import HomeSolucionesReact from "../components/home/HomeSolucionesReact";
 import HomeManifestoReact from "../components/home/HomeManifestoReact";
 import HomeCyberguardReact from "../components/home/HomeCyberguardReact";
-import BlogPreview from "../components/blog/BlogPreview.astro";
-import EmpresasRed from "../components/home/EmpresasRed.astro";
-import HomePartners from "../components/shared/HomePartners.astro";
-import CertificacionesSlider from "../components/certificaciones/CertificacionesSlider.astro";
+import HomePartnersV2 from "../components/home/HomePartnersV2.astro";
+import HomeTestimoniosReact from "../components/home/HomeTestimoniosReact";
+import HomeCertificacionesReact from "../components/home/HomeCertificacionesReact";
+import HomeInsightsReact, { type InsightPost } from "../components/home/HomeInsightsReact";
 import HtmlInjection from "../components/shared/HtmlInjection.astro";
 import client from "../../tina/__generated__/client";
 import { getLocale } from "../utils/i18n";
 import { isLocale } from "../i18n/config";
 
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
-const homeQuery = await client.queries.home({ relativePath: "index.json" });
+const [homeQuery, certQuery, postsQuery] = await Promise.all([
+  client.queries.home({ relativePath: "index.json" }),
+  client.queries.certificaciones({ relativePath: "index.json" }),
+  client.queries.postConnection({ first: 50, sort: "date" }),
+]);
 const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data: homeQuery.data, locale };
+
+const cert = certQuery.data?.certificaciones as any;
+const certificaciones = {
+  sectionTitle: cert?.sectionTitle ?? null,
+  sectionTitle_en: cert?.sectionTitle_en ?? null,
+  sectionDescription: cert?.sectionDescription ?? null,
+  sectionDescription_en: cert?.sectionDescription_en ?? null,
+  items: ((cert?.items || []).filter(Boolean) as any[]).map((c) => ({
+    code: c.code ?? null,
+    norm: c.norm ?? null,
+    norm_en: c.norm_en ?? null,
+    label: c.label ?? null,
+    label_en: c.label_en ?? null,
+  })),
+};
+
+const posts: InsightPost[] = ((postsQuery.data?.postConnection?.edges || []) as any[])
+  .map((e) => e?.node)
+  .filter(Boolean)
+  .sort((a, b) => new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime())
+  .slice(0, 3)
+  .map((p) => ({
+    title: p.title ?? null,
+    title_en: p.title_en ?? null,
+    coverImage: p.coverImage ?? null,
+    tags: p.tags ?? null,
+    readTime: p.readTime ?? null,
+    date: p.date ?? null,
+    slug: p._sys.filename,
+  }));
 ---
 
 <BaseLayout title="Inicio">
@@ -29,10 +63,10 @@ const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data
     <HomeSolucionesReact client:visible {...homeProps} />
     <HomeManifestoReact client:visible {...homeProps} />
     <HomeCyberguardReact client:tina {...homeProps} />
-    <HomePartners />
-    <EmpresasRed />
-    <CertificacionesSlider />
-    <BlogPreview />
+    <HomePartnersV2 locale={locale} />
+    <HomeTestimoniosReact client:visible {...homeProps} />
+    <HomeCertificacionesReact client:visible {...homeProps} certificaciones={certificaciones} />
+    <HomeInsightsReact client:tina {...homeProps} posts={posts} />
     <HtmlInjection location="home-before-footer" />
   </main>
 </BaseLayout>

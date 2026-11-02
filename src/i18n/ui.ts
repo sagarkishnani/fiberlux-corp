@@ -24,6 +24,12 @@ export const UI: Record<Locale, Record<string, string>> = {
     "social.follow": "Síguenos",
     "video.more": "Más videos en YouTube",
     "video.close": "Cerrar video",
+    "slider.prev": "Anterior",
+    "slider.next": "Siguiente",
+    "testimonios.eyebrow": "[ TESTIMONIOS ]",
+    "testimonios.caseTitle": "Caso de Éxito -",
+    "blog.eyebrow": "[ BLOG ]",
+    "blog.viewAllMobile": "Ver todos los artículos",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -54,6 +60,12 @@ export const UI: Record<Locale, Record<string, string>> = {
     "social.follow": "Follow us",
     "video.more": "More videos on YouTube",
     "video.close": "Close video",
+    "slider.prev": "Previous",
+    "slider.next": "Next",
+    "testimonios.eyebrow": "[ TESTIMONIALS ]",
+    "testimonios.caseTitle": "Success story -",
+    "blog.eyebrow": "[ BLOG ]",
+    "blog.viewAllMobile": "View all articles",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",
