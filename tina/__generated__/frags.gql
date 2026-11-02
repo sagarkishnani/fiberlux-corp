@@ -160,6 +160,209 @@ fragment HomeParts on Home {
 
 fragment ServiceParts on Service {
   __typename
+  cyberguard {
+    __typename
+    hero {
+      __typename
+      badge
+      badge_en
+      title
+      title_en
+      text
+      text_en
+      ctaPrimary {
+        __typename
+        label
+        label_en
+        href
+      }
+      ctaSecondary {
+        __typename
+        label
+        label_en
+        href
+      }
+      highlights {
+        __typename
+        icon
+        text
+        text_en
+      }
+    }
+    frentes {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        icon
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    escalas {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      items {
+        __typename
+        tag
+        tag_en
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    planes {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      recommendedLabel
+      recommendedLabel_en
+      idealLabel
+      idealLabel_en
+      note
+      note_en
+      items {
+        __typename
+        tag
+        tag_en
+        name
+        subtitle
+        subtitle_en
+        idealFor
+        idealFor_en
+        includes
+        includes_en
+        features {
+          __typename
+          text
+          text_en
+        }
+        cta {
+          __typename
+          label
+          label_en
+          href
+        }
+        highlighted
+      }
+    }
+    queCambia {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      colSituation
+      colSituation_en
+      colWithout
+      colWithout_en
+      colWith
+      colWith_en
+      items {
+        __typename
+        situation
+        situation_en
+        without
+        without_en
+        with
+        with_en
+      }
+    }
+    porQue {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    porArea {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      items {
+        __typename
+        area
+        area_en
+        benefit
+        benefit_en
+      }
+    }
+    pasos {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    faq {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        question
+        question_en
+        answer
+        answer_en
+      }
+    }
+    cta {
+      __typename
+      badge
+      badge_en
+      title
+      title_en
+      text
+      text_en
+      button {
+        __typename
+        label
+        label_en
+        href
+      }
+    }
+  }
   title
   title_en
   slug

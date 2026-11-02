@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/route-background.webp",
+    "heroImage": "/images/rediseno/soluciones/cat-hero-conectividad.jpeg",
     "ctaLabel_en": "View solutions",
     "formTitle_en": "Let's talk?",
     "heading_en": "Connectivity designed for operations that can't stop",
@@ -20,7 +20,7 @@
       {
         "heading": "El desafío",
         "text": "Un corte de internet paraliza la facturación, detiene operaciones industriales y bloquea transacciones.",
-        "image": "/images/soluciones/valor-desafio.svg",
+        "image": "/images/rediseno/soluciones/cat-desafio-conectividad.jpeg",
         "heading_en": "The challenge",
         "text_en": "An internet outage stops invoicing, halts industrial operations and blocks transactions."
       },
@@ -41,7 +41,7 @@
       {
         "heading": "Industrias destacadas",
         "text": "Aplicable a empresas de todos los tamaños que requieren conectividad confiable para soportar operaciones críticas, múltiples sedes o servicios digitales.",
-        "image": "",
+        "image": "/images/rediseno/soluciones/cat-industria-conectividad.jpeg",
         "heading_en": "Featured industries",
         "text_en": "Applicable to companies of any size that need reliable connectivity to support critical operations, multiple sites or digital services."
       }

@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/infraestructura.webp",
+    "heroImage": "/images/rediseno/soluciones/cat-hero-infrastructure.jpeg",
     "heading_en": "Technology ready to support an increasingly demanding operation",
     "intro_en": "We design and deploy scalable technology infrastructure to connect, manage and strengthen the environments where your users, devices and applications run.",
     "ctaLabel_en": "View solutions",
@@ -20,7 +20,7 @@
       {
         "heading": "El desafío",
         "text": "El crecimiento de usuarios, dispositivos y aplicaciones aumenta la complejidad tecnológica y exige infraestructuras capaces de mantener rendimiento, disponibilidad y control.",
-        "image": "/images/soluciones/valor-desafio.svg",
+        "image": "/images/rediseno/soluciones/cat-desafio-infrastructure.jpeg",
         "heading_en": "The challenge",
         "text_en": "Growth in users, devices and applications increases technical complexity and demands infrastructure able to sustain performance, availability and control."
       },
@@ -41,7 +41,7 @@
       {
         "heading": "Industrias destacadas",
         "text": "Aplicable a organizaciones de todos los sectores que requieren modernizar, ampliar o administrar su infraestructura tecnológica.",
-        "image": "",
+        "image": "/images/rediseno/soluciones/cat-industria-infrastructure.jpeg",
         "heading_en": "Featured industries",
         "text_en": "Applicable to organizations in every sector that need to modernize, expand or manage their technology infrastructure."
       }

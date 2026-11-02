@@ -614,6 +614,361 @@ var config_default = defineConfig({
           }
         },
         fields: [
+          // ── Cyberguard (SPEC 119): plantilla propia de Ciberseguridad ──
+          {
+            name: "cyberguard",
+            label: "Cyberguard (solo Ciberseguridad)",
+            type: "object",
+            description: "Si este bloque tiene contenido, la categor\xEDa usa la plantilla de Ciberseguridad en vez de la gen\xE9rica.",
+            fields: [
+              {
+                name: "hero",
+                label: "Hero",
+                type: "object",
+                fields: [
+                  { name: "badge", label: "Etiqueta", type: "string" },
+                  { name: "badge_en", label: "Etiqueta (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "ctaPrimary",
+                    label: "Bot\xF3n principal",
+                    type: "object",
+                    fields: [
+                      { name: "label", label: "Texto", type: "string" },
+                      { name: "label_en", label: "Texto (EN)", type: "string" },
+                      { name: "href", label: "Enlace", type: "string" }
+                    ]
+                  },
+                  {
+                    name: "ctaSecondary",
+                    label: "Bot\xF3n secundario",
+                    type: "object",
+                    fields: [
+                      { name: "label", label: "Texto", type: "string" },
+                      { name: "label_en", label: "Texto (EN)", type: "string" },
+                      { name: "href", label: "Enlace", type: "string" }
+                    ]
+                  },
+                  {
+                    name: "highlights",
+                    label: "Franja de mensajes",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.text || "Franja de mensajes" }) },
+                    fields: [
+                      {
+                        name: "icon",
+                        label: "\xCDcono",
+                        type: "string",
+                        options: [
+                          { value: "shield", label: "Escudo" },
+                          { value: "laptop", label: "Equipo / laptop" },
+                          { value: "mail", label: "Correo" },
+                          { value: "globe", label: "Globo / DNS" },
+                          { value: "database", label: "Base de datos / backup" },
+                          { value: "eye", label: "Ojo / monitoreo" },
+                          { value: "alert", label: "Alerta" },
+                          { value: "phone", label: "Dispositivo m\xF3vil" },
+                          { value: "radar", label: "Radar / vigilancia" }
+                        ]
+                      },
+                      { name: "text", label: "Texto", type: "string" },
+                      { name: "text_en", label: "Texto (EN)", type: "string" }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "frentes",
+                label: "Seis frentes",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "items",
+                    label: "Frentes",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.title || "Frentes" }) },
+                    fields: [
+                      {
+                        name: "icon",
+                        label: "\xCDcono",
+                        type: "string",
+                        options: [
+                          { value: "shield", label: "Escudo" },
+                          { value: "laptop", label: "Equipo / laptop" },
+                          { value: "mail", label: "Correo" },
+                          { value: "globe", label: "Globo / DNS" },
+                          { value: "database", label: "Base de datos / backup" },
+                          { value: "eye", label: "Ojo / monitoreo" },
+                          { value: "alert", label: "Alerta" },
+                          { value: "phone", label: "Dispositivo m\xF3vil" },
+                          { value: "radar", label: "Radar / vigilancia" }
+                        ]
+                      },
+                      { name: "title", label: "T\xEDtulo", type: "string" },
+                      { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                      { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "escalas",
+                label: "La protecci\xF3n crece",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  {
+                    name: "items",
+                    label: "Niveles",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.title || "Niveles" }) },
+                    fields: [
+                      { name: "tag", label: "Etiqueta", type: "string" },
+                      { name: "tag_en", label: "Etiqueta (EN)", type: "string" },
+                      { name: "title", label: "T\xEDtulo", type: "string" },
+                      { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                      { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "planes",
+                label: "Planes Cyberguard",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  { name: "recommendedLabel", label: "Etiqueta del plan destacado", type: "string" },
+                  { name: "recommendedLabel_en", label: "Etiqueta del plan destacado (EN)", type: "string" },
+                  { name: "idealLabel", label: "Etiqueta \xABIdeal para\xBB", type: "string" },
+                  { name: "idealLabel_en", label: "Etiqueta \xABIdeal para\xBB (EN)", type: "string" },
+                  { name: "note", label: "Nota bajo los planes", type: "string", ui: { component: "textarea" } },
+                  { name: "note_en", label: "Nota bajo los planes (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "items",
+                    label: "Planes",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.name || "Planes" }) },
+                    fields: [
+                      { name: "tag", label: "Etiqueta", type: "string" },
+                      { name: "tag_en", label: "Etiqueta (EN)", type: "string" },
+                      { name: "name", label: "Nombre", type: "string" },
+                      { name: "subtitle", label: "Subt\xEDtulo", type: "string" },
+                      { name: "subtitle_en", label: "Subt\xEDtulo (EN)", type: "string" },
+                      { name: "idealFor", label: "Ideal para", type: "string" },
+                      { name: "idealFor_en", label: "Ideal para (EN)", type: "string" },
+                      { name: "includes", label: "Encabezado de la lista (ej. \xABTodo lo de Start, m\xE1s:\xBB)", type: "string" },
+                      { name: "includes_en", label: "Encabezado de la lista (ej. \xABTodo lo de Start, m\xE1s:\xBB) (EN)", type: "string" },
+                      {
+                        name: "features",
+                        label: "Incluye",
+                        type: "object",
+                        list: true,
+                        ui: { itemProps: (item) => ({ label: item?.text || "Incluye" }) },
+                        fields: [
+                          { name: "text", label: "Texto", type: "string" },
+                          { name: "text_en", label: "Texto (EN)", type: "string" }
+                        ]
+                      },
+                      {
+                        name: "cta",
+                        label: "Bot\xF3n",
+                        type: "object",
+                        fields: [
+                          { name: "label", label: "Texto", type: "string" },
+                          { name: "label_en", label: "Texto (EN)", type: "string" },
+                          { name: "href", label: "Enlace", type: "string" }
+                        ]
+                      },
+                      { name: "highlighted", label: "Destacado (recomendado)", type: "boolean" }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "queCambia",
+                label: "Qu\xE9 cambia",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  { name: "colSituation", label: "Columna 1", type: "string" },
+                  { name: "colSituation_en", label: "Columna 1 (EN)", type: "string" },
+                  { name: "colWithout", label: "Columna 2", type: "string" },
+                  { name: "colWithout_en", label: "Columna 2 (EN)", type: "string" },
+                  { name: "colWith", label: "Columna 3", type: "string" },
+                  { name: "colWith_en", label: "Columna 3 (EN)", type: "string" },
+                  {
+                    name: "items",
+                    label: "Filas",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.situation || "Filas" }) },
+                    fields: [
+                      { name: "situation", label: "Situaci\xF3n", type: "string" },
+                      { name: "situation_en", label: "Situaci\xF3n (EN)", type: "string" },
+                      { name: "without", label: "Sin Cyberguard", type: "string" },
+                      { name: "without_en", label: "Sin Cyberguard (EN)", type: "string" },
+                      { name: "with", label: "Con Cyberguard", type: "string" },
+                      { name: "with_en", label: "Con Cyberguard (EN)", type: "string" }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "porQue",
+                label: "Por qu\xE9 Cyberguard",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "items",
+                    label: "Razones",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.title || "Razones" }) },
+                    fields: [
+                      { name: "title", label: "T\xEDtulo", type: "string" },
+                      { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                      { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "porArea",
+                label: "Beneficio por \xE1rea",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  {
+                    name: "items",
+                    label: "\xC1reas",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.area || "\xC1reas" }) },
+                    fields: [
+                      { name: "area", label: "\xC1rea", type: "string" },
+                      { name: "area_en", label: "\xC1rea (EN)", type: "string" },
+                      { name: "benefit", label: "Beneficio", type: "string", ui: { component: "textarea" } },
+                      { name: "benefit_en", label: "Beneficio (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "pasos",
+                label: "C\xF3mo empezamos",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "items",
+                    label: "Pasos",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.title || "Pasos" }) },
+                    fields: [
+                      { name: "title", label: "T\xEDtulo", type: "string" },
+                      { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                      { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "faq",
+                label: "Preguntas frecuentes",
+                type: "object",
+                fields: [
+                  { name: "eyebrow", label: "Antet\xEDtulo", type: "string" },
+                  { name: "eyebrow_en", label: "Antet\xEDtulo (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Bajada", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Bajada (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "items",
+                    label: "Preguntas",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.question || "Preguntas" }) },
+                    fields: [
+                      { name: "question", label: "Pregunta", type: "string" },
+                      { name: "question_en", label: "Pregunta (EN)", type: "string" },
+                      { name: "answer", label: "Respuesta", type: "string", ui: { component: "textarea" } },
+                      { name: "answer_en", label: "Respuesta (EN)", type: "string", ui: { component: "textarea" } }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "cta",
+                label: "Llamado final",
+                type: "object",
+                fields: [
+                  { name: "badge", label: "Etiqueta", type: "string" },
+                  { name: "badge_en", label: "Etiqueta (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
+                  { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                  {
+                    name: "button",
+                    label: "Bot\xF3n",
+                    type: "object",
+                    fields: [
+                      { name: "label", label: "Texto", type: "string" },
+                      { name: "label_en", label: "Texto (EN)", type: "string" },
+                      { name: "href", label: "Enlace", type: "string" }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
           {
             name: "title",
             label: "Nombre de la soluci\xF3n",

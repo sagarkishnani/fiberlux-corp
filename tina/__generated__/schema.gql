@@ -529,6 +529,233 @@ type HomeConnection implements Connection {
   edges: [HomeConnectionEdges]
 }
 
+type ServiceCyberguardHeroCtaPrimary {
+  label: String
+  label_en: String
+  href: String
+}
+
+type ServiceCyberguardHeroCtaSecondary {
+  label: String
+  label_en: String
+  href: String
+}
+
+type ServiceCyberguardHeroHighlights {
+  icon: String
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardHero {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  ctaPrimary: ServiceCyberguardHeroCtaPrimary
+  ctaSecondary: ServiceCyberguardHeroCtaSecondary
+  highlights: [ServiceCyberguardHeroHighlights]
+}
+
+type ServiceCyberguardFrentesItems {
+  icon: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardFrentes {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardFrentesItems]
+}
+
+type ServiceCyberguardEscalasItems {
+  tag: String
+  tag_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardEscalas {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  items: [ServiceCyberguardEscalasItems]
+}
+
+type ServiceCyberguardPlanesItemsFeatures {
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardPlanesItemsCta {
+  label: String
+  label_en: String
+  href: String
+}
+
+type ServiceCyberguardPlanesItems {
+  tag: String
+  tag_en: String
+  name: String
+  subtitle: String
+  subtitle_en: String
+  idealFor: String
+  idealFor_en: String
+  includes: String
+  includes_en: String
+  features: [ServiceCyberguardPlanesItemsFeatures]
+  cta: ServiceCyberguardPlanesItemsCta
+  highlighted: Boolean
+}
+
+type ServiceCyberguardPlanes {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  recommendedLabel: String
+  recommendedLabel_en: String
+  idealLabel: String
+  idealLabel_en: String
+  note: String
+  note_en: String
+  items: [ServiceCyberguardPlanesItems]
+}
+
+type ServiceCyberguardQueCambiaItems {
+  situation: String
+  situation_en: String
+  without: String
+  without_en: String
+  with: String
+  with_en: String
+}
+
+type ServiceCyberguardQueCambia {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  colSituation: String
+  colSituation_en: String
+  colWithout: String
+  colWithout_en: String
+  colWith: String
+  colWith_en: String
+  items: [ServiceCyberguardQueCambiaItems]
+}
+
+type ServiceCyberguardPorQueItems {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardPorQue {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardPorQueItems]
+}
+
+type ServiceCyberguardPorAreaItems {
+  area: String
+  area_en: String
+  benefit: String
+  benefit_en: String
+}
+
+type ServiceCyberguardPorArea {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  items: [ServiceCyberguardPorAreaItems]
+}
+
+type ServiceCyberguardPasosItems {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+type ServiceCyberguardPasos {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardPasosItems]
+}
+
+type ServiceCyberguardFaqItems {
+  question: String
+  question_en: String
+  answer: String
+  answer_en: String
+}
+
+type ServiceCyberguardFaq {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardFaqItems]
+}
+
+type ServiceCyberguardCtaButton {
+  label: String
+  label_en: String
+  href: String
+}
+
+type ServiceCyberguardCta {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  button: ServiceCyberguardCtaButton
+}
+
+type ServiceCyberguard {
+  hero: ServiceCyberguardHero
+  frentes: ServiceCyberguardFrentes
+  escalas: ServiceCyberguardEscalas
+  planes: ServiceCyberguardPlanes
+  queCambia: ServiceCyberguardQueCambia
+  porQue: ServiceCyberguardPorQue
+  porArea: ServiceCyberguardPorArea
+  pasos: ServiceCyberguardPasos
+  faq: ServiceCyberguardFaq
+  cta: ServiceCyberguardCta
+}
+
 type ServiceHero {
   heading: String
   heading_en: String
@@ -611,6 +838,7 @@ type ServiceSeo {
 }
 
 type Service implements Node & Document {
+  cyberguard: ServiceCyberguard
   title: String!
   title_en: String
   slug: String!
@@ -626,6 +854,233 @@ type Service implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input ServiceCyberguardHeroCtaPrimaryFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input ServiceCyberguardHeroCtaSecondaryFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input ServiceCyberguardHeroHighlightsFilter {
+  icon: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardHeroFilter {
+  badge: StringFilter
+  badge_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  ctaPrimary: ServiceCyberguardHeroCtaPrimaryFilter
+  ctaSecondary: ServiceCyberguardHeroCtaSecondaryFilter
+  highlights: ServiceCyberguardHeroHighlightsFilter
+}
+
+input ServiceCyberguardFrentesItemsFilter {
+  icon: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardFrentesFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  items: ServiceCyberguardFrentesItemsFilter
+}
+
+input ServiceCyberguardEscalasItemsFilter {
+  tag: StringFilter
+  tag_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardEscalasFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  items: ServiceCyberguardEscalasItemsFilter
+}
+
+input ServiceCyberguardPlanesItemsFeaturesFilter {
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardPlanesItemsCtaFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input ServiceCyberguardPlanesItemsFilter {
+  tag: StringFilter
+  tag_en: StringFilter
+  name: StringFilter
+  subtitle: StringFilter
+  subtitle_en: StringFilter
+  idealFor: StringFilter
+  idealFor_en: StringFilter
+  includes: StringFilter
+  includes_en: StringFilter
+  features: ServiceCyberguardPlanesItemsFeaturesFilter
+  cta: ServiceCyberguardPlanesItemsCtaFilter
+  highlighted: BooleanFilter
+}
+
+input ServiceCyberguardPlanesFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  recommendedLabel: StringFilter
+  recommendedLabel_en: StringFilter
+  idealLabel: StringFilter
+  idealLabel_en: StringFilter
+  note: StringFilter
+  note_en: StringFilter
+  items: ServiceCyberguardPlanesItemsFilter
+}
+
+input ServiceCyberguardQueCambiaItemsFilter {
+  situation: StringFilter
+  situation_en: StringFilter
+  without: StringFilter
+  without_en: StringFilter
+  with: StringFilter
+  with_en: StringFilter
+}
+
+input ServiceCyberguardQueCambiaFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  colSituation: StringFilter
+  colSituation_en: StringFilter
+  colWithout: StringFilter
+  colWithout_en: StringFilter
+  colWith: StringFilter
+  colWith_en: StringFilter
+  items: ServiceCyberguardQueCambiaItemsFilter
+}
+
+input ServiceCyberguardPorQueItemsFilter {
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardPorQueFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  items: ServiceCyberguardPorQueItemsFilter
+}
+
+input ServiceCyberguardPorAreaItemsFilter {
+  area: StringFilter
+  area_en: StringFilter
+  benefit: StringFilter
+  benefit_en: StringFilter
+}
+
+input ServiceCyberguardPorAreaFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  items: ServiceCyberguardPorAreaItemsFilter
+}
+
+input ServiceCyberguardPasosItemsFilter {
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+}
+
+input ServiceCyberguardPasosFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  items: ServiceCyberguardPasosItemsFilter
+}
+
+input ServiceCyberguardFaqItemsFilter {
+  question: StringFilter
+  question_en: StringFilter
+  answer: StringFilter
+  answer_en: StringFilter
+}
+
+input ServiceCyberguardFaqFilter {
+  eyebrow: StringFilter
+  eyebrow_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  items: ServiceCyberguardFaqItemsFilter
+}
+
+input ServiceCyberguardCtaButtonFilter {
+  label: StringFilter
+  label_en: StringFilter
+  href: StringFilter
+}
+
+input ServiceCyberguardCtaFilter {
+  badge: StringFilter
+  badge_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  text: StringFilter
+  text_en: StringFilter
+  button: ServiceCyberguardCtaButtonFilter
+}
+
+input ServiceCyberguardFilter {
+  hero: ServiceCyberguardHeroFilter
+  frentes: ServiceCyberguardFrentesFilter
+  escalas: ServiceCyberguardEscalasFilter
+  planes: ServiceCyberguardPlanesFilter
+  queCambia: ServiceCyberguardQueCambiaFilter
+  porQue: ServiceCyberguardPorQueFilter
+  porArea: ServiceCyberguardPorAreaFilter
+  pasos: ServiceCyberguardPasosFilter
+  faq: ServiceCyberguardFaqFilter
+  cta: ServiceCyberguardCtaFilter
 }
 
 input ServiceHeroFilter {
@@ -716,6 +1171,7 @@ input ServiceSeoFilter {
 }
 
 input ServiceFilter {
+  cyberguard: ServiceCyberguardFilter
   title: StringFilter
   title_en: StringFilter
   slug: StringFilter
@@ -3310,6 +3766,233 @@ input HomeMutation {
   blogPreview: HomeBlogPreviewMutation
 }
 
+input ServiceCyberguardHeroCtaPrimaryMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input ServiceCyberguardHeroCtaSecondaryMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input ServiceCyberguardHeroHighlightsMutation {
+  icon: String
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardHeroMutation {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  ctaPrimary: ServiceCyberguardHeroCtaPrimaryMutation
+  ctaSecondary: ServiceCyberguardHeroCtaSecondaryMutation
+  highlights: [ServiceCyberguardHeroHighlightsMutation]
+}
+
+input ServiceCyberguardFrentesItemsMutation {
+  icon: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardFrentesMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardFrentesItemsMutation]
+}
+
+input ServiceCyberguardEscalasItemsMutation {
+  tag: String
+  tag_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardEscalasMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  items: [ServiceCyberguardEscalasItemsMutation]
+}
+
+input ServiceCyberguardPlanesItemsFeaturesMutation {
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardPlanesItemsCtaMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input ServiceCyberguardPlanesItemsMutation {
+  tag: String
+  tag_en: String
+  name: String
+  subtitle: String
+  subtitle_en: String
+  idealFor: String
+  idealFor_en: String
+  includes: String
+  includes_en: String
+  features: [ServiceCyberguardPlanesItemsFeaturesMutation]
+  cta: ServiceCyberguardPlanesItemsCtaMutation
+  highlighted: Boolean
+}
+
+input ServiceCyberguardPlanesMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  recommendedLabel: String
+  recommendedLabel_en: String
+  idealLabel: String
+  idealLabel_en: String
+  note: String
+  note_en: String
+  items: [ServiceCyberguardPlanesItemsMutation]
+}
+
+input ServiceCyberguardQueCambiaItemsMutation {
+  situation: String
+  situation_en: String
+  without: String
+  without_en: String
+  with: String
+  with_en: String
+}
+
+input ServiceCyberguardQueCambiaMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  colSituation: String
+  colSituation_en: String
+  colWithout: String
+  colWithout_en: String
+  colWith: String
+  colWith_en: String
+  items: [ServiceCyberguardQueCambiaItemsMutation]
+}
+
+input ServiceCyberguardPorQueItemsMutation {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardPorQueMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardPorQueItemsMutation]
+}
+
+input ServiceCyberguardPorAreaItemsMutation {
+  area: String
+  area_en: String
+  benefit: String
+  benefit_en: String
+}
+
+input ServiceCyberguardPorAreaMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  items: [ServiceCyberguardPorAreaItemsMutation]
+}
+
+input ServiceCyberguardPasosItemsMutation {
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+}
+
+input ServiceCyberguardPasosMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardPasosItemsMutation]
+}
+
+input ServiceCyberguardFaqItemsMutation {
+  question: String
+  question_en: String
+  answer: String
+  answer_en: String
+}
+
+input ServiceCyberguardFaqMutation {
+  eyebrow: String
+  eyebrow_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  items: [ServiceCyberguardFaqItemsMutation]
+}
+
+input ServiceCyberguardCtaButtonMutation {
+  label: String
+  label_en: String
+  href: String
+}
+
+input ServiceCyberguardCtaMutation {
+  badge: String
+  badge_en: String
+  title: String
+  title_en: String
+  text: String
+  text_en: String
+  button: ServiceCyberguardCtaButtonMutation
+}
+
+input ServiceCyberguardMutation {
+  hero: ServiceCyberguardHeroMutation
+  frentes: ServiceCyberguardFrentesMutation
+  escalas: ServiceCyberguardEscalasMutation
+  planes: ServiceCyberguardPlanesMutation
+  queCambia: ServiceCyberguardQueCambiaMutation
+  porQue: ServiceCyberguardPorQueMutation
+  porArea: ServiceCyberguardPorAreaMutation
+  pasos: ServiceCyberguardPasosMutation
+  faq: ServiceCyberguardFaqMutation
+  cta: ServiceCyberguardCtaMutation
+}
+
 input ServiceHeroMutation {
   heading: String
   heading_en: String
@@ -3392,6 +4075,7 @@ input ServiceSeoMutation {
 }
 
 input ServiceMutation {
+  cyberguard: ServiceCyberguardMutation
   title: String
   title_en: String
   slug: String

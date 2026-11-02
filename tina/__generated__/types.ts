@@ -912,6 +912,258 @@ export type HomeConnection = Connection & {
   edges?: Maybe<Array<Maybe<HomeConnectionEdges>>>;
 };
 
+export type ServiceCyberguardHeroCtaPrimary = {
+  __typename?: 'ServiceCyberguardHeroCtaPrimary';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardHeroCtaSecondary = {
+  __typename?: 'ServiceCyberguardHeroCtaSecondary';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardHeroHighlights = {
+  __typename?: 'ServiceCyberguardHeroHighlights';
+  icon?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardHero = {
+  __typename?: 'ServiceCyberguardHero';
+  badge?: Maybe<Scalars['String']['output']>;
+  badge_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  ctaPrimary?: Maybe<ServiceCyberguardHeroCtaPrimary>;
+  ctaSecondary?: Maybe<ServiceCyberguardHeroCtaSecondary>;
+  highlights?: Maybe<Array<Maybe<ServiceCyberguardHeroHighlights>>>;
+};
+
+export type ServiceCyberguardFrentesItems = {
+  __typename?: 'ServiceCyberguardFrentesItems';
+  icon?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardFrentes = {
+  __typename?: 'ServiceCyberguardFrentes';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardFrentesItems>>>;
+};
+
+export type ServiceCyberguardEscalasItems = {
+  __typename?: 'ServiceCyberguardEscalasItems';
+  tag?: Maybe<Scalars['String']['output']>;
+  tag_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardEscalas = {
+  __typename?: 'ServiceCyberguardEscalas';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardEscalasItems>>>;
+};
+
+export type ServiceCyberguardPlanesItemsFeatures = {
+  __typename?: 'ServiceCyberguardPlanesItemsFeatures';
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardPlanesItemsCta = {
+  __typename?: 'ServiceCyberguardPlanesItemsCta';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardPlanesItems = {
+  __typename?: 'ServiceCyberguardPlanesItems';
+  tag?: Maybe<Scalars['String']['output']>;
+  tag_en?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  subtitle?: Maybe<Scalars['String']['output']>;
+  subtitle_en?: Maybe<Scalars['String']['output']>;
+  idealFor?: Maybe<Scalars['String']['output']>;
+  idealFor_en?: Maybe<Scalars['String']['output']>;
+  includes?: Maybe<Scalars['String']['output']>;
+  includes_en?: Maybe<Scalars['String']['output']>;
+  features?: Maybe<Array<Maybe<ServiceCyberguardPlanesItemsFeatures>>>;
+  cta?: Maybe<ServiceCyberguardPlanesItemsCta>;
+  highlighted?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type ServiceCyberguardPlanes = {
+  __typename?: 'ServiceCyberguardPlanes';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  recommendedLabel?: Maybe<Scalars['String']['output']>;
+  recommendedLabel_en?: Maybe<Scalars['String']['output']>;
+  idealLabel?: Maybe<Scalars['String']['output']>;
+  idealLabel_en?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  note_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardPlanesItems>>>;
+};
+
+export type ServiceCyberguardQueCambiaItems = {
+  __typename?: 'ServiceCyberguardQueCambiaItems';
+  situation?: Maybe<Scalars['String']['output']>;
+  situation_en?: Maybe<Scalars['String']['output']>;
+  without?: Maybe<Scalars['String']['output']>;
+  without_en?: Maybe<Scalars['String']['output']>;
+  with?: Maybe<Scalars['String']['output']>;
+  with_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardQueCambia = {
+  __typename?: 'ServiceCyberguardQueCambia';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  colSituation?: Maybe<Scalars['String']['output']>;
+  colSituation_en?: Maybe<Scalars['String']['output']>;
+  colWithout?: Maybe<Scalars['String']['output']>;
+  colWithout_en?: Maybe<Scalars['String']['output']>;
+  colWith?: Maybe<Scalars['String']['output']>;
+  colWith_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardQueCambiaItems>>>;
+};
+
+export type ServiceCyberguardPorQueItems = {
+  __typename?: 'ServiceCyberguardPorQueItems';
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardPorQue = {
+  __typename?: 'ServiceCyberguardPorQue';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardPorQueItems>>>;
+};
+
+export type ServiceCyberguardPorAreaItems = {
+  __typename?: 'ServiceCyberguardPorAreaItems';
+  area?: Maybe<Scalars['String']['output']>;
+  area_en?: Maybe<Scalars['String']['output']>;
+  benefit?: Maybe<Scalars['String']['output']>;
+  benefit_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardPorArea = {
+  __typename?: 'ServiceCyberguardPorArea';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardPorAreaItems>>>;
+};
+
+export type ServiceCyberguardPasosItems = {
+  __typename?: 'ServiceCyberguardPasosItems';
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardPasos = {
+  __typename?: 'ServiceCyberguardPasos';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardPasosItems>>>;
+};
+
+export type ServiceCyberguardFaqItems = {
+  __typename?: 'ServiceCyberguardFaqItems';
+  question?: Maybe<Scalars['String']['output']>;
+  question_en?: Maybe<Scalars['String']['output']>;
+  answer?: Maybe<Scalars['String']['output']>;
+  answer_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardFaq = {
+  __typename?: 'ServiceCyberguardFaq';
+  eyebrow?: Maybe<Scalars['String']['output']>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  items?: Maybe<Array<Maybe<ServiceCyberguardFaqItems>>>;
+};
+
+export type ServiceCyberguardCtaButton = {
+  __typename?: 'ServiceCyberguardCtaButton';
+  label?: Maybe<Scalars['String']['output']>;
+  label_en?: Maybe<Scalars['String']['output']>;
+  href?: Maybe<Scalars['String']['output']>;
+};
+
+export type ServiceCyberguardCta = {
+  __typename?: 'ServiceCyberguardCta';
+  badge?: Maybe<Scalars['String']['output']>;
+  badge_en?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  text_en?: Maybe<Scalars['String']['output']>;
+  button?: Maybe<ServiceCyberguardCtaButton>;
+};
+
+export type ServiceCyberguard = {
+  __typename?: 'ServiceCyberguard';
+  hero?: Maybe<ServiceCyberguardHero>;
+  frentes?: Maybe<ServiceCyberguardFrentes>;
+  escalas?: Maybe<ServiceCyberguardEscalas>;
+  planes?: Maybe<ServiceCyberguardPlanes>;
+  queCambia?: Maybe<ServiceCyberguardQueCambia>;
+  porQue?: Maybe<ServiceCyberguardPorQue>;
+  porArea?: Maybe<ServiceCyberguardPorArea>;
+  pasos?: Maybe<ServiceCyberguardPasos>;
+  faq?: Maybe<ServiceCyberguardFaq>;
+  cta?: Maybe<ServiceCyberguardCta>;
+};
+
 export type ServiceHero = {
   __typename?: 'ServiceHero';
   heading?: Maybe<Scalars['String']['output']>;
@@ -1005,6 +1257,7 @@ export type ServiceSeo = {
 
 export type Service = Node & Document & {
   __typename?: 'Service';
+  cyberguard?: Maybe<ServiceCyberguard>;
   title: Scalars['String']['output'];
   title_en?: Maybe<Scalars['String']['output']>;
   slug: Scalars['String']['output'];
@@ -1020,6 +1273,233 @@ export type Service = Node & Document & {
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
+};
+
+export type ServiceCyberguardHeroCtaPrimaryFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardHeroCtaSecondaryFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardHeroHighlightsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardHeroFilter = {
+  badge?: InputMaybe<StringFilter>;
+  badge_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  ctaPrimary?: InputMaybe<ServiceCyberguardHeroCtaPrimaryFilter>;
+  ctaSecondary?: InputMaybe<ServiceCyberguardHeroCtaSecondaryFilter>;
+  highlights?: InputMaybe<ServiceCyberguardHeroHighlightsFilter>;
+};
+
+export type ServiceCyberguardFrentesItemsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardFrentesFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardFrentesItemsFilter>;
+};
+
+export type ServiceCyberguardEscalasItemsFilter = {
+  tag?: InputMaybe<StringFilter>;
+  tag_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardEscalasFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardEscalasItemsFilter>;
+};
+
+export type ServiceCyberguardPlanesItemsFeaturesFilter = {
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardPlanesItemsCtaFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardPlanesItemsFilter = {
+  tag?: InputMaybe<StringFilter>;
+  tag_en?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  subtitle?: InputMaybe<StringFilter>;
+  subtitle_en?: InputMaybe<StringFilter>;
+  idealFor?: InputMaybe<StringFilter>;
+  idealFor_en?: InputMaybe<StringFilter>;
+  includes?: InputMaybe<StringFilter>;
+  includes_en?: InputMaybe<StringFilter>;
+  features?: InputMaybe<ServiceCyberguardPlanesItemsFeaturesFilter>;
+  cta?: InputMaybe<ServiceCyberguardPlanesItemsCtaFilter>;
+  highlighted?: InputMaybe<BooleanFilter>;
+};
+
+export type ServiceCyberguardPlanesFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  recommendedLabel?: InputMaybe<StringFilter>;
+  recommendedLabel_en?: InputMaybe<StringFilter>;
+  idealLabel?: InputMaybe<StringFilter>;
+  idealLabel_en?: InputMaybe<StringFilter>;
+  note?: InputMaybe<StringFilter>;
+  note_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardPlanesItemsFilter>;
+};
+
+export type ServiceCyberguardQueCambiaItemsFilter = {
+  situation?: InputMaybe<StringFilter>;
+  situation_en?: InputMaybe<StringFilter>;
+  without?: InputMaybe<StringFilter>;
+  without_en?: InputMaybe<StringFilter>;
+  with?: InputMaybe<StringFilter>;
+  with_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardQueCambiaFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  colSituation?: InputMaybe<StringFilter>;
+  colSituation_en?: InputMaybe<StringFilter>;
+  colWithout?: InputMaybe<StringFilter>;
+  colWithout_en?: InputMaybe<StringFilter>;
+  colWith?: InputMaybe<StringFilter>;
+  colWith_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardQueCambiaItemsFilter>;
+};
+
+export type ServiceCyberguardPorQueItemsFilter = {
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardPorQueFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardPorQueItemsFilter>;
+};
+
+export type ServiceCyberguardPorAreaItemsFilter = {
+  area?: InputMaybe<StringFilter>;
+  area_en?: InputMaybe<StringFilter>;
+  benefit?: InputMaybe<StringFilter>;
+  benefit_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardPorAreaFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardPorAreaItemsFilter>;
+};
+
+export type ServiceCyberguardPasosItemsFilter = {
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardPasosFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardPasosItemsFilter>;
+};
+
+export type ServiceCyberguardFaqItemsFilter = {
+  question?: InputMaybe<StringFilter>;
+  question_en?: InputMaybe<StringFilter>;
+  answer?: InputMaybe<StringFilter>;
+  answer_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardFaqFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  items?: InputMaybe<ServiceCyberguardFaqItemsFilter>;
+};
+
+export type ServiceCyberguardCtaButtonFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+};
+
+export type ServiceCyberguardCtaFilter = {
+  badge?: InputMaybe<StringFilter>;
+  badge_en?: InputMaybe<StringFilter>;
+  title?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
+  text_en?: InputMaybe<StringFilter>;
+  button?: InputMaybe<ServiceCyberguardCtaButtonFilter>;
+};
+
+export type ServiceCyberguardFilter = {
+  hero?: InputMaybe<ServiceCyberguardHeroFilter>;
+  frentes?: InputMaybe<ServiceCyberguardFrentesFilter>;
+  escalas?: InputMaybe<ServiceCyberguardEscalasFilter>;
+  planes?: InputMaybe<ServiceCyberguardPlanesFilter>;
+  queCambia?: InputMaybe<ServiceCyberguardQueCambiaFilter>;
+  porQue?: InputMaybe<ServiceCyberguardPorQueFilter>;
+  porArea?: InputMaybe<ServiceCyberguardPorAreaFilter>;
+  pasos?: InputMaybe<ServiceCyberguardPasosFilter>;
+  faq?: InputMaybe<ServiceCyberguardFaqFilter>;
+  cta?: InputMaybe<ServiceCyberguardCtaFilter>;
 };
 
 export type ServiceHeroFilter = {
@@ -1110,6 +1590,7 @@ export type ServiceSeoFilter = {
 };
 
 export type ServiceFilter = {
+  cyberguard?: InputMaybe<ServiceCyberguardFilter>;
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
   slug?: InputMaybe<StringFilter>;
@@ -4131,6 +4612,233 @@ export type HomeMutation = {
   blogPreview?: InputMaybe<HomeBlogPreviewMutation>;
 };
 
+export type ServiceCyberguardHeroCtaPrimaryMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardHeroCtaSecondaryMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardHeroHighlightsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardHeroMutation = {
+  badge?: InputMaybe<Scalars['String']['input']>;
+  badge_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  ctaPrimary?: InputMaybe<ServiceCyberguardHeroCtaPrimaryMutation>;
+  ctaSecondary?: InputMaybe<ServiceCyberguardHeroCtaSecondaryMutation>;
+  highlights?: InputMaybe<Array<InputMaybe<ServiceCyberguardHeroHighlightsMutation>>>;
+};
+
+export type ServiceCyberguardFrentesItemsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardFrentesMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardFrentesItemsMutation>>>;
+};
+
+export type ServiceCyberguardEscalasItemsMutation = {
+  tag?: InputMaybe<Scalars['String']['input']>;
+  tag_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardEscalasMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardEscalasItemsMutation>>>;
+};
+
+export type ServiceCyberguardPlanesItemsFeaturesMutation = {
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardPlanesItemsCtaMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardPlanesItemsMutation = {
+  tag?: InputMaybe<Scalars['String']['input']>;
+  tag_en?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  subtitle?: InputMaybe<Scalars['String']['input']>;
+  subtitle_en?: InputMaybe<Scalars['String']['input']>;
+  idealFor?: InputMaybe<Scalars['String']['input']>;
+  idealFor_en?: InputMaybe<Scalars['String']['input']>;
+  includes?: InputMaybe<Scalars['String']['input']>;
+  includes_en?: InputMaybe<Scalars['String']['input']>;
+  features?: InputMaybe<Array<InputMaybe<ServiceCyberguardPlanesItemsFeaturesMutation>>>;
+  cta?: InputMaybe<ServiceCyberguardPlanesItemsCtaMutation>;
+  highlighted?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ServiceCyberguardPlanesMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  recommendedLabel?: InputMaybe<Scalars['String']['input']>;
+  recommendedLabel_en?: InputMaybe<Scalars['String']['input']>;
+  idealLabel?: InputMaybe<Scalars['String']['input']>;
+  idealLabel_en?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+  note_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardPlanesItemsMutation>>>;
+};
+
+export type ServiceCyberguardQueCambiaItemsMutation = {
+  situation?: InputMaybe<Scalars['String']['input']>;
+  situation_en?: InputMaybe<Scalars['String']['input']>;
+  without?: InputMaybe<Scalars['String']['input']>;
+  without_en?: InputMaybe<Scalars['String']['input']>;
+  with?: InputMaybe<Scalars['String']['input']>;
+  with_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardQueCambiaMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  colSituation?: InputMaybe<Scalars['String']['input']>;
+  colSituation_en?: InputMaybe<Scalars['String']['input']>;
+  colWithout?: InputMaybe<Scalars['String']['input']>;
+  colWithout_en?: InputMaybe<Scalars['String']['input']>;
+  colWith?: InputMaybe<Scalars['String']['input']>;
+  colWith_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardQueCambiaItemsMutation>>>;
+};
+
+export type ServiceCyberguardPorQueItemsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardPorQueMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardPorQueItemsMutation>>>;
+};
+
+export type ServiceCyberguardPorAreaItemsMutation = {
+  area?: InputMaybe<Scalars['String']['input']>;
+  area_en?: InputMaybe<Scalars['String']['input']>;
+  benefit?: InputMaybe<Scalars['String']['input']>;
+  benefit_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardPorAreaMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardPorAreaItemsMutation>>>;
+};
+
+export type ServiceCyberguardPasosItemsMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardPasosMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardPasosItemsMutation>>>;
+};
+
+export type ServiceCyberguardFaqItemsMutation = {
+  question?: InputMaybe<Scalars['String']['input']>;
+  question_en?: InputMaybe<Scalars['String']['input']>;
+  answer?: InputMaybe<Scalars['String']['input']>;
+  answer_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardFaqMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  items?: InputMaybe<Array<InputMaybe<ServiceCyberguardFaqItemsMutation>>>;
+};
+
+export type ServiceCyberguardCtaButtonMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ServiceCyberguardCtaMutation = {
+  badge?: InputMaybe<Scalars['String']['input']>;
+  badge_en?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  text_en?: InputMaybe<Scalars['String']['input']>;
+  button?: InputMaybe<ServiceCyberguardCtaButtonMutation>;
+};
+
+export type ServiceCyberguardMutation = {
+  hero?: InputMaybe<ServiceCyberguardHeroMutation>;
+  frentes?: InputMaybe<ServiceCyberguardFrentesMutation>;
+  escalas?: InputMaybe<ServiceCyberguardEscalasMutation>;
+  planes?: InputMaybe<ServiceCyberguardPlanesMutation>;
+  queCambia?: InputMaybe<ServiceCyberguardQueCambiaMutation>;
+  porQue?: InputMaybe<ServiceCyberguardPorQueMutation>;
+  porArea?: InputMaybe<ServiceCyberguardPorAreaMutation>;
+  pasos?: InputMaybe<ServiceCyberguardPasosMutation>;
+  faq?: InputMaybe<ServiceCyberguardFaqMutation>;
+  cta?: InputMaybe<ServiceCyberguardCtaMutation>;
+};
+
 export type ServiceHeroMutation = {
   heading?: InputMaybe<Scalars['String']['input']>;
   heading_en?: InputMaybe<Scalars['String']['input']>;
@@ -4213,6 +4921,7 @@ export type ServiceSeoMutation = {
 };
 
 export type ServiceMutation = {
+  cyberguard?: InputMaybe<ServiceCyberguardMutation>;
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -5243,7 +5952,7 @@ export type PopupMutation = {
 
 export type HomePartsFragment = { __typename: 'Home', hero?: { __typename: 'HomeHero', titleBefore?: string | null, titleBefore_en?: string | null, titleEmphasis?: string | null, titleEmphasis_en?: string | null, titleAfter?: string | null, titleAfter_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, ctaPrimary?: { __typename: 'HomeHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'HomeHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, reel?: { __typename: 'HomeReel', marqueeTop?: string | null, marqueeTop_en?: string | null, marqueeBottom?: string | null, marqueeBottom_en?: string | null, loopWebm1080?: string | null, loopMp41080?: string | null, loopWebm720?: string | null, loopMp4720?: string | null, poster?: string | null, fullVideoLabel?: string | null, fullVideoLabel_en?: string | null, fullVideoTitle?: string | null, fullVideoTitle_en?: string | null, fullVideoMp41080?: string | null, fullVideoMp4720?: string | null, fullVideoYoutubeUrl?: string | null } | null, manifesto?: { __typename: 'HomeManifesto', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null } | null, cyberguardBanner?: { __typename: 'HomeCyberguardBanner', brand?: string | null, eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, image?: string | null, cta?: { __typename: 'HomeCyberguardBannerCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null, certificacionesIntro?: { __typename: 'HomeCertificacionesIntro', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null, services?: { __typename: 'HomeServices', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, items?: Array<{ __typename: 'HomeServicesItems', number?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, icon?: string | null, cover?: string | null, tabIcon?: string | null, tabLabel?: string | null, tabLabel_en?: string | null, url?: string | null, bullets?: Array<{ __typename: 'HomeServicesItemsBullets', label?: string | null, label_en?: string | null, url?: string | null } | null> | null } | null> | null } | null, testimonials?: { __typename: 'HomeTestimonials', visible?: boolean | null, sectionTitle?: string | null, sectionTitle_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, ctaUrl?: string | null, items?: Array<{ __typename: 'HomeTestimonialsItems', quote?: string | null, quote_en?: string | null, description?: string | null, description_en?: string | null, name?: string | null, role?: string | null, role_en?: string | null, company?: string | null, avatar?: string | null, logo?: string | null, cover?: string | null, youtubeUrl?: string | null } | null> | null } | null, stats?: { __typename: 'HomeStats', title?: string | null, title_en?: string | null, clientsHighlight?: string | null, clientsHighlight_en?: string | null, clientsNote?: string | null, clientsNote_en?: string | null, items?: Array<{ __typename: 'HomeStatsItems', number?: string | null, label?: string | null, label_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, clientLogos?: Array<{ __typename: 'HomeStatsClientLogos', name?: string | null, image?: string | null } | null> | null } | null, blogPreview?: { __typename: 'HomeBlogPreview', title?: string | null, title_en?: string | null, buttonText?: string | null, buttonText_en?: string | null, buttonUrl?: string | null } | null };
 
-export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type ServicePartsFragment = { __typename: 'Service', title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, cyberguard?: { __typename: 'ServiceCyberguard', hero?: { __typename: 'ServiceCyberguardHero', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, ctaPrimary?: { __typename: 'ServiceCyberguardHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'ServiceCyberguardHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null, highlights?: Array<{ __typename: 'ServiceCyberguardHeroHighlights', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, frentes?: { __typename: 'ServiceCyberguardFrentes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFrentesItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, escalas?: { __typename: 'ServiceCyberguardEscalas', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardEscalasItems', tag?: string | null, tag_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, planes?: { __typename: 'ServiceCyberguardPlanes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, recommendedLabel?: string | null, recommendedLabel_en?: string | null, idealLabel?: string | null, idealLabel_en?: string | null, note?: string | null, note_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPlanesItems', tag?: string | null, tag_en?: string | null, name?: string | null, subtitle?: string | null, subtitle_en?: string | null, idealFor?: string | null, idealFor_en?: string | null, includes?: string | null, includes_en?: string | null, highlighted?: boolean | null, features?: Array<{ __typename: 'ServiceCyberguardPlanesItemsFeatures', text?: string | null, text_en?: string | null } | null> | null, cta?: { __typename: 'ServiceCyberguardPlanesItemsCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null> | null } | null, queCambia?: { __typename: 'ServiceCyberguardQueCambia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, colSituation?: string | null, colSituation_en?: string | null, colWithout?: string | null, colWithout_en?: string | null, colWith?: string | null, colWith_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardQueCambiaItems', situation?: string | null, situation_en?: string | null, without?: string | null, without_en?: string | null, with?: string | null, with_en?: string | null } | null> | null } | null, porQue?: { __typename: 'ServiceCyberguardPorQue', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorQueItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, porArea?: { __typename: 'ServiceCyberguardPorArea', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorAreaItems', area?: string | null, area_en?: string | null, benefit?: string | null, benefit_en?: string | null } | null> | null } | null, pasos?: { __typename: 'ServiceCyberguardPasos', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPasosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceCyberguardFaq', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFaqItems', question?: string | null, question_en?: string | null, answer?: string | null, answer_en?: string | null } | null> | null } | null, cta?: { __typename: 'ServiceCyberguardCta', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, button?: { __typename: 'ServiceCyberguardCtaButton', label?: string | null, label_en?: string | null, href?: string | null } | null } | null } | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type SubservicioPartsFragment = { __typename: 'Subservicio', title: string, title_en?: string | null, slug: string, solucionSlug: string, solucionTitle?: string | null, solucionTitle_en?: string | null, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, hero?: { __typename: 'SubservicioHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, note?: string | null, note_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroBackground?: string | null, heroImage?: string | null } | null, beneficios?: { __typename: 'SubservicioBeneficios', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioBeneficiosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, plantilla?: string | null, image?: string | null, datos?: { __typename: 'SubservicioBeneficiosItemsDatos', etiqueta?: string | null, etiqueta_en?: string | null, valor?: string | null, unidad?: string | null, unidad_en?: string | null, porcentaje?: number | null, hilos?: number | null, barras?: number | null, tarjetas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosTarjetas', etiqueta?: string | null, etiqueta_en?: string | null, porcentaje?: number | null } | null> | null, filas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosFilas', label?: string | null, label_en?: string | null, nivel?: string | null, porcentaje?: number | null } | null> | null, rutas?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosRutas', label?: string | null, label_en?: string | null, activa?: boolean | null } | null> | null, nodos?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosNodos', label?: string | null, label_en?: string | null } | null> | null, chips?: Array<{ __typename: 'SubservicioBeneficiosItemsDatosChips', label?: string | null, label_en?: string | null } | null> | null } | null } | null> | null } | null, casosDeUso?: { __typename: 'SubservicioCasosDeUso', eyebrow?: string | null, eyebrow_en?: string | null, statement?: any | null, statement_en?: any | null } | null, faq?: { __typename: 'SubservicioFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'SubservicioFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'SubservicioSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
@@ -5305,7 +6014,7 @@ export type ServiceQueryVariables = Exact<{
 }>;
 
 
-export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type ServiceQuery = { __typename?: 'Query', service: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cyberguard?: { __typename: 'ServiceCyberguard', hero?: { __typename: 'ServiceCyberguardHero', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, ctaPrimary?: { __typename: 'ServiceCyberguardHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'ServiceCyberguardHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null, highlights?: Array<{ __typename: 'ServiceCyberguardHeroHighlights', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, frentes?: { __typename: 'ServiceCyberguardFrentes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFrentesItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, escalas?: { __typename: 'ServiceCyberguardEscalas', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardEscalasItems', tag?: string | null, tag_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, planes?: { __typename: 'ServiceCyberguardPlanes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, recommendedLabel?: string | null, recommendedLabel_en?: string | null, idealLabel?: string | null, idealLabel_en?: string | null, note?: string | null, note_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPlanesItems', tag?: string | null, tag_en?: string | null, name?: string | null, subtitle?: string | null, subtitle_en?: string | null, idealFor?: string | null, idealFor_en?: string | null, includes?: string | null, includes_en?: string | null, highlighted?: boolean | null, features?: Array<{ __typename: 'ServiceCyberguardPlanesItemsFeatures', text?: string | null, text_en?: string | null } | null> | null, cta?: { __typename: 'ServiceCyberguardPlanesItemsCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null> | null } | null, queCambia?: { __typename: 'ServiceCyberguardQueCambia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, colSituation?: string | null, colSituation_en?: string | null, colWithout?: string | null, colWithout_en?: string | null, colWith?: string | null, colWith_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardQueCambiaItems', situation?: string | null, situation_en?: string | null, without?: string | null, without_en?: string | null, with?: string | null, with_en?: string | null } | null> | null } | null, porQue?: { __typename: 'ServiceCyberguardPorQue', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorQueItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, porArea?: { __typename: 'ServiceCyberguardPorArea', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorAreaItems', area?: string | null, area_en?: string | null, benefit?: string | null, benefit_en?: string | null } | null> | null } | null, pasos?: { __typename: 'ServiceCyberguardPasos', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPasosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceCyberguardFaq', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFaqItems', question?: string | null, question_en?: string | null, answer?: string | null, answer_en?: string | null } | null> | null } | null, cta?: { __typename: 'ServiceCyberguardCta', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, button?: { __typename: 'ServiceCyberguardCtaButton', label?: string | null, label_en?: string | null, href?: string | null } | null } | null } | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type ServiceConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -5317,7 +6026,7 @@ export type ServiceConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type ServiceConnectionQuery = { __typename?: 'Query', serviceConnection: { __typename?: 'ServiceConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiceConnectionEdges', cursor: string, node?: { __typename: 'Service', id: string, title: string, title_en?: string | null, slug: string, blogTags?: Array<string | null> | null, whyUsTitle?: string | null, whyUsTitle_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, cyberguard?: { __typename: 'ServiceCyberguard', hero?: { __typename: 'ServiceCyberguardHero', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, ctaPrimary?: { __typename: 'ServiceCyberguardHeroCtaPrimary', label?: string | null, label_en?: string | null, href?: string | null } | null, ctaSecondary?: { __typename: 'ServiceCyberguardHeroCtaSecondary', label?: string | null, label_en?: string | null, href?: string | null } | null, highlights?: Array<{ __typename: 'ServiceCyberguardHeroHighlights', icon?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, frentes?: { __typename: 'ServiceCyberguardFrentes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFrentesItems', icon?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, escalas?: { __typename: 'ServiceCyberguardEscalas', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardEscalasItems', tag?: string | null, tag_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, planes?: { __typename: 'ServiceCyberguardPlanes', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, recommendedLabel?: string | null, recommendedLabel_en?: string | null, idealLabel?: string | null, idealLabel_en?: string | null, note?: string | null, note_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPlanesItems', tag?: string | null, tag_en?: string | null, name?: string | null, subtitle?: string | null, subtitle_en?: string | null, idealFor?: string | null, idealFor_en?: string | null, includes?: string | null, includes_en?: string | null, highlighted?: boolean | null, features?: Array<{ __typename: 'ServiceCyberguardPlanesItemsFeatures', text?: string | null, text_en?: string | null } | null> | null, cta?: { __typename: 'ServiceCyberguardPlanesItemsCta', label?: string | null, label_en?: string | null, href?: string | null } | null } | null> | null } | null, queCambia?: { __typename: 'ServiceCyberguardQueCambia', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, colSituation?: string | null, colSituation_en?: string | null, colWithout?: string | null, colWithout_en?: string | null, colWith?: string | null, colWith_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardQueCambiaItems', situation?: string | null, situation_en?: string | null, without?: string | null, without_en?: string | null, with?: string | null, with_en?: string | null } | null> | null } | null, porQue?: { __typename: 'ServiceCyberguardPorQue', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorQueItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, porArea?: { __typename: 'ServiceCyberguardPorArea', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPorAreaItems', area?: string | null, area_en?: string | null, benefit?: string | null, benefit_en?: string | null } | null> | null } | null, pasos?: { __typename: 'ServiceCyberguardPasos', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardPasosItems', title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceCyberguardFaq', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, items?: Array<{ __typename: 'ServiceCyberguardFaqItems', question?: string | null, question_en?: string | null, answer?: string | null, answer_en?: string | null } | null> | null } | null, cta?: { __typename: 'ServiceCyberguardCta', badge?: string | null, badge_en?: string | null, title?: string | null, title_en?: string | null, text?: string | null, text_en?: string | null, button?: { __typename: 'ServiceCyberguardCtaButton', label?: string | null, label_en?: string | null, href?: string | null } | null } | null } | null, hero?: { __typename: 'ServiceHero', heading?: string | null, heading_en?: string | null, intro?: string | null, intro_en?: string | null, ctaLabel?: string | null, ctaLabel_en?: string | null, formTitle?: string | null, formTitle_en?: string | null, heroMode?: string | null, heroImage?: string | null } | null, valor?: { __typename: 'ServiceValor', title?: string | null, title_en?: string | null, subtitle?: string | null, subtitle_en?: string | null, desafioClickable?: boolean | null, cards?: Array<{ __typename: 'ServiceValorCards', heading?: string | null, heading_en?: string | null, text?: string | null, text_en?: string | null, tags?: Array<string | null> | null, image?: string | null } | null> | null } | null, catalogo?: { __typename: 'ServiceCatalogo', title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceCatalogoItems', icon?: string | null, title?: string | null, title_en?: string | null, description?: string | null, description_en?: string | null, url?: string | null } | null> | null } | null, partners?: { __typename: 'ServicePartners', eyebrow?: string | null, eyebrow_en?: string | null, title?: string | null, title_en?: string | null, rows?: string | null, logos?: Array<{ __typename: 'ServicePartnersLogos', image?: string | null, alt?: string | null, url?: string | null } | null> | null } | null, faq?: { __typename: 'ServiceFaq', visible?: boolean | null, title?: string | null, title_en?: string | null, items?: Array<{ __typename: 'ServiceFaqItems', question?: string | null, question_en?: string | null, answer?: any | null, answer_en?: any | null } | null> | null } | null, seo?: { __typename: 'ServiceSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type SubservicioQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -5825,6 +6534,209 @@ export const HomePartsFragmentDoc = gql`
 export const ServicePartsFragmentDoc = gql`
     fragment ServiceParts on Service {
   __typename
+  cyberguard {
+    __typename
+    hero {
+      __typename
+      badge
+      badge_en
+      title
+      title_en
+      text
+      text_en
+      ctaPrimary {
+        __typename
+        label
+        label_en
+        href
+      }
+      ctaSecondary {
+        __typename
+        label
+        label_en
+        href
+      }
+      highlights {
+        __typename
+        icon
+        text
+        text_en
+      }
+    }
+    frentes {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        icon
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    escalas {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      items {
+        __typename
+        tag
+        tag_en
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    planes {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      recommendedLabel
+      recommendedLabel_en
+      idealLabel
+      idealLabel_en
+      note
+      note_en
+      items {
+        __typename
+        tag
+        tag_en
+        name
+        subtitle
+        subtitle_en
+        idealFor
+        idealFor_en
+        includes
+        includes_en
+        features {
+          __typename
+          text
+          text_en
+        }
+        cta {
+          __typename
+          label
+          label_en
+          href
+        }
+        highlighted
+      }
+    }
+    queCambia {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      colSituation
+      colSituation_en
+      colWithout
+      colWithout_en
+      colWith
+      colWith_en
+      items {
+        __typename
+        situation
+        situation_en
+        without
+        without_en
+        with
+        with_en
+      }
+    }
+    porQue {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    porArea {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      items {
+        __typename
+        area
+        area_en
+        benefit
+        benefit_en
+      }
+    }
+    pasos {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        title
+        title_en
+        text
+        text_en
+      }
+    }
+    faq {
+      __typename
+      eyebrow
+      eyebrow_en
+      title
+      title_en
+      text
+      text_en
+      items {
+        __typename
+        question
+        question_en
+        answer
+        answer_en
+      }
+    }
+    cta {
+      __typename
+      badge
+      badge_en
+      title
+      title_en
+      text
+      text_en
+      button {
+        __typename
+        label
+        label_en
+        href
+      }
+    }
+  }
   title
   title_en
   slug

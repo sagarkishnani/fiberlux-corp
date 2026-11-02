@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/datacenter.webp",
+    "heroImage": "/images/rediseno/soluciones/cat-hero-datacenter.jpeg",
     "ctaLabel_en": "View solutions",
     "formTitle_en": "Let's talk?",
     "heading_en": "Specialized infrastructure for your most critical systems",
@@ -20,7 +20,7 @@
       {
         "heading": "El desafío",
         "text": "Las organizaciones dependen de aplicaciones y datos críticos que deben mantenerse disponibles y protegidos frente a incidentes e interrupciones.",
-        "image": "/images/soluciones/valor-desafio.svg",
+        "image": "/images/rediseno/soluciones/cat-desafio-datacenter.jpeg",
         "heading_en": "The challenge",
         "text_en": "Organizations depend on critical applications and data that must stay available and protected against incidents and outages."
       },
@@ -41,7 +41,7 @@
       {
         "heading": "Industrias destacadas",
         "text": "E-commerce/Retail, Salud (Historias Clínicas), Startups, Logística, Educación.",
-        "image": "",
+        "image": "/images/rediseno/soluciones/cat-industria-datacenter.jpeg",
         "heading_en": "Featured industries",
         "text_en": "E-commerce/Retail, Healthcare (medical records), Startups, Logistics, Education."
       }

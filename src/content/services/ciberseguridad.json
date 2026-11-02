@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaciberseguridad1.webp",
+    "heroImage": "/images/rediseno/soluciones/cat-hero-ciberseguridad.jpeg",
     "ctaLabel_en": "View solutions",
     "formTitle_en": "Let's talk?",
     "heading_en": "Active security for networks, users and applications",
@@ -20,7 +20,7 @@
       {
         "heading": "El desafío",
         "text": "Un incidente de seguridad expone datos sensibles, detiene la operación y compromete la confianza de tus clientes.",
-        "image": "/images/soluciones/valor-desafio.svg",
+        "image": "/images/rediseno/soluciones/cat-desafio-ciberseguridad.jpeg",
         "heading_en": "The challenge",
         "text_en": "A security incident exposes sensitive data, halts operations and undermines your clients' trust."
       },
@@ -41,7 +41,7 @@
       {
         "heading": "Industrias destacadas",
         "text": "Banca y seguros, gobierno, salud, retail, educación, infraestructura crítica y organizaciones con múltiples sedes o esquemas de trabajo híbrido.",
-        "image": "",
+        "image": "/images/rediseno/soluciones/cat-industria-ciberseguridad.jpeg",
         "heading_en": "Featured industries",
         "text_en": "Banking and insurance, government, healthcare, retail, education, critical infrastructure and organizations with multiple sites or hybrid work models."
       }
@@ -238,5 +238,451 @@
     "Ciberseguridad"
   ],
   "whyUsTitle_en": "Why Fiberlux?",
-  "title_en": "Cybersecurity"
+  "title_en": "Cybersecurity",
+  "cyberguard": {
+    "hero": {
+      "badge": "Ciberseguridad gestionada para empresas",
+      "badge_en": "Managed cybersecurity for businesses",
+      "title": "El firewall ya no es la única puerta de entrada",
+      "title_en": "The firewall is no longer the only way in",
+      "text": "Hoy la mayoría de los ataques no rompen el perímetro: entran por un correo, una laptop fuera de la oficina o una contraseña robada. Cyberguard protege los seis frentes reales de su operación, con un solo proveedor y una cuota mensual previsible.",
+      "text_en": "Most attacks today don't break the perimeter: they come in through an email, a laptop outside the office or a stolen password. Cyberguard protects the six real fronts of your operation, with a single provider and a predictable monthly fee.",
+      "ctaPrimary": {
+        "label": "Agendar diagnóstico gratuito",
+        "label_en": "Book a free assessment",
+        "href": "#formulario"
+      },
+      "ctaSecondary": {
+        "label": "Ver planes",
+        "label_en": "See plans",
+        "href": "#planes"
+      },
+      "highlights": [
+        {
+          "icon": "alert",
+          "text": "Las amenazas no tocan la puerta, ya están adentro.",
+          "text_en": "Threats don't knock, they're already inside."
+        },
+        {
+          "icon": "phone",
+          "text": "Más dispositivos, más accesos, más puntos ciegos.",
+          "text_en": "More devices, more access points, more blind spots."
+        },
+        {
+          "icon": "radar",
+          "text": "Nosotros vigilamos mientras operas tu negocio.",
+          "text_en": "We keep watch while you run your business."
+        }
+      ]
+    },
+    "frentes": {
+      "eyebrow": "PROTECCIÓN DE PUNTA A PUNTA",
+      "eyebrow_en": "END-TO-END PROTECTION",
+      "title": "Seis frentes. Una sola estrategia.",
+      "title_en": "Six fronts. One strategy.",
+      "text": "Cyberguard coordina tecnologías líderes para proteger cada lugar por donde hoy puede entrar una amenaza.",
+      "text_en": "Cyberguard coordinates leading technologies to protect every place a threat can get in today.",
+      "items": [
+        {
+          "icon": "shield",
+          "title": "Perímetro virtual",
+          "title_en": "Virtual perimeter",
+          "text": "Firewall, VPN y control de tráfico administrados en la nube, sin comprar ni mantener equipos.",
+          "text_en": "Cloud-managed firewall, VPN and traffic control, with no hardware to buy or maintain."
+        },
+        {
+          "icon": "laptop",
+          "title": "Endpoints y servidores",
+          "title_en": "Endpoints and servers",
+          "text": "Protege cada laptop y servidor esté donde esté: oficina, casa o de viaje.",
+          "text_en": "Protects every laptop and server wherever it is: office, home or on the road."
+        },
+        {
+          "icon": "mail",
+          "title": "Correo y antiphishing",
+          "title_en": "Email and anti-phishing",
+          "text": "Filtra el phishing y el fraude antes de que lleguen a la bandeja.",
+          "text_en": "Filters phishing and fraud before they reach the inbox."
+        },
+        {
+          "icon": "globe",
+          "title": "DNS y servicios publicados",
+          "title_en": "DNS and published services",
+          "text": "DNS seguro, WAF y protección DDoS ilimitada para tu sitio y aplicaciones.",
+          "text_en": "Secure DNS, WAF and unlimited DDoS protection for your site and applications."
+        },
+        {
+          "icon": "database",
+          "title": "Backup y recuperación",
+          "title_en": "Backup and recovery",
+          "text": "Respaldos de hasta 2 TB por plan para volver a operar rápido si algo pasa.",
+          "text_en": "Backups of up to 2 TB per plan to get back up and running fast if something happens."
+        },
+        {
+          "icon": "eye",
+          "title": "Monitoreo SOC",
+          "title_en": "SOC monitoring",
+          "text": "Un equipo vigila, investiga y te notifica mientras tú operas tu negocio.",
+          "text_en": "A team watches, investigates and notifies you while you run your business."
+        }
+      ]
+    },
+    "escalas": {
+      "eyebrow": "UNA RUTA CLARA",
+      "eyebrow_en": "A CLEAR PATH",
+      "title": "La protección crece con su empresa",
+      "title_en": "Protection that grows with your business",
+      "items": [
+        {
+          "tag": "TODOS LOS PLANES",
+          "tag_en": "ALL PLANS",
+          "title": "Prevenir",
+          "title_en": "Prevent",
+          "text": "Bloquea antes de que pase: antivirus de nueva generación, control de aplicaciones y parches al día en cada equipo.",
+          "text_en": "Stop it before it happens: next-gen antivirus, application control and up-to-date patches on every device."
+        },
+        {
+          "tag": "PRO Y MAX",
+          "tag_en": "PRO AND MAX",
+          "title": "Detectar y responder",
+          "title_en": "Detect and respond",
+          "text": "Si algo se cuela, lo vemos: el SOC investiga el comportamiento sospechoso y lo contiene antes de que escale.",
+          "text_en": "If something slips through, we see it: the SOC investigates suspicious behavior and contains it before it escalates."
+        },
+        {
+          "tag": "SOLO MAX",
+          "tag_en": "MAX ONLY",
+          "title": "Automatizar y conectar",
+          "title_en": "Automate and connect",
+          "text": "Identidad, nube y endpoints en una sola vista, con reversión automática ante un ataque confirmado.",
+          "text_en": "Identity, cloud and endpoints in a single view, with automatic rollback on a confirmed attack."
+        }
+      ]
+    },
+    "planes": {
+      "eyebrow": "PLANES CYBERGUARD",
+      "eyebrow_en": "CYBERGUARD PLANS",
+      "title": "El nivel correcto, sin comprar de más",
+      "title_en": "The right level, without overbuying",
+      "text": "Las seis capas están incluidas desde el inicio. Elija hasta dónde quiere llevar la detección, respuesta y automatización.",
+      "text_en": "All six layers are included from day one. Choose how far you want to take detection, response and automation.",
+      "recommendedLabel": "RECOMENDADO",
+      "recommendedLabel_en": "RECOMMENDED",
+      "idealLabel": "IDEAL PARA",
+      "idealLabel_en": "IDEAL FOR",
+      "note": "**Todos incluyen las seis capas.** Si su empresa ya tiene firewall propio con funciones avanzadas, puede empezar directamente en Pro.",
+      "note_en": "**All plans include the six layers.** If your company already has its own firewall with advanced features, you can start directly with Pro.",
+      "items": [
+        {
+          "tag": "Prevenir",
+          "tag_en": "Prevent",
+          "name": "Cyberguard Start",
+          "subtitle": "Protección esencial",
+          "subtitle_en": "Essential protection",
+          "idealFor": "Empresa pequeña, con pocos equipos.",
+          "idealFor_en": "Small business with few devices.",
+          "includes": "",
+          "includes_en": "",
+          "features": [
+            {
+              "text": "Firewall, VPN y filtrado web administrados",
+              "text_en": "Managed firewall, VPN and web filtering"
+            },
+            {
+              "text": "Antivirus de nueva generación en todos los equipos",
+              "text_en": "Next-gen antivirus on every device"
+            },
+            {
+              "text": "Antispam y protección de correo",
+              "text_en": "Anti-spam and email protection"
+            },
+            {
+              "text": "Backup de hasta 2 TB",
+              "text_en": "Backup of up to 2 TB"
+            },
+            {
+              "text": "Protección y aceleración de su sitio web",
+              "text_en": "Website protection and acceleration"
+            },
+            {
+              "text": "Monitoreo y soporte en horario de oficina",
+              "text_en": "Monitoring and support during office hours"
+            }
+          ],
+          "cta": {
+            "label": "Cotizar Start",
+            "label_en": "Get a Start quote",
+            "href": "#formulario"
+          },
+          "highlighted": false
+        },
+        {
+          "tag": "Detectar y responder",
+          "tag_en": "Detect and respond",
+          "name": "Cyberguard Pro",
+          "subtitle": "Protección avanzada",
+          "subtitle_en": "Advanced protection",
+          "idealFor": "Mediana empresa que no puede parar.",
+          "idealFor_en": "Mid-sized company that can't stop.",
+          "includes": "Todo lo de Start, más:",
+          "includes_en": "Everything in Start, plus:",
+          "features": [
+            {
+              "text": "Detección y respuesta en endpoints (EDR)",
+              "text_en": "Endpoint detection and response (EDR)"
+            },
+            {
+              "text": "Prevención de intrusos y control de aplicaciones",
+              "text_en": "Intrusion prevention and application control"
+            },
+            {
+              "text": "Investigación de incidentes por el SOC",
+              "text_en": "Incident investigation by the SOC"
+            },
+            {
+              "text": "Revisión y recomendaciones trimestrales",
+              "text_en": "Quarterly review and recommendations"
+            },
+            {
+              "text": "Soporte a requerimientos 12x5",
+              "text_en": "12x5 request support"
+            }
+          ],
+          "cta": {
+            "label": "Cotizar Pro",
+            "label_en": "Get a Pro quote",
+            "href": "#formulario"
+          },
+          "highlighted": true
+        },
+        {
+          "tag": "Automatizar, nube e identidades",
+          "tag_en": "Automation, cloud and identities",
+          "name": "Cyberguard Max",
+          "subtitle": "Protección total",
+          "subtitle_en": "Total protection",
+          "idealFor": "Operación crítica, regulada o multisede.",
+          "idealFor_en": "Critical, regulated or multi-site operation.",
+          "includes": "Todo lo de Pro, más:",
+          "includes_en": "Everything in Pro, plus:",
+          "features": [
+            {
+              "text": "Protección avanzada de Microsoft 365 e identidades (XDR)",
+              "text_en": "Advanced Microsoft 365 and identity protection (XDR)"
+            },
+            {
+              "text": "Acceso de confianza cero (ZTNA) para remotos",
+              "text_en": "Zero-trust access (ZTNA) for remote users"
+            },
+            {
+              "text": "Sandbox, rollback y respuesta automatizada",
+              "text_en": "Sandbox, rollback and automated response"
+            },
+            {
+              "text": "Reporte ejecutivo y soporte a cumplimiento (PCI DSS)",
+              "text_en": "Executive reporting and compliance support (PCI DSS)"
+            },
+            {
+              "text": "Monitoreo y soporte 24/7",
+              "text_en": "24/7 monitoring and support"
+            }
+          ],
+          "cta": {
+            "label": "Cotizar Max",
+            "label_en": "Get a Max quote",
+            "href": "#formulario"
+          },
+          "highlighted": false
+        }
+      ]
+    },
+    "queCambia": {
+      "eyebrow": "LA DIFERENCIA SE VE AL ACTUAR",
+      "eyebrow_en": "THE DIFFERENCE SHOWS WHEN IT MATTERS",
+      "title": "Qué cambia cuando algo pasa",
+      "title_en": "What changes when something happens",
+      "text": "La seguridad no se mide por lo que compra, sino por lo que ocurre en el momento decisivo.",
+      "text_en": "Security isn't measured by what you buy, but by what happens at the decisive moment.",
+      "colSituation": "SITUACIÓN",
+      "colSituation_en": "SITUATION",
+      "colWithout": "SOLO FIREWALL",
+      "colWithout_en": "FIREWALL ONLY",
+      "colWith": "CON CYBERGUARD",
+      "colWith_en": "WITH CYBERGUARD",
+      "items": [
+        {
+          "situation": "Un correo de phishing llega a la bandeja",
+          "situation_en": "A phishing email reaches the inbox",
+          "without": "La decisión queda en manos del usuario",
+          "without_en": "The decision is left to the user",
+          "with": "Se filtra antes de llegar",
+          "with_en": "Filtered before it arrives"
+        },
+        {
+          "situation": "Alguien entra con una contraseña robada",
+          "situation_en": "Someone logs in with a stolen password",
+          "without": "Nadie se entera",
+          "without_en": "Nobody notices",
+          "with": "El SOC lo detecta y contiene",
+          "with_en": "The SOC detects and contains it"
+        },
+        {
+          "situation": "Se pierde o roban una laptop fuera de oficina",
+          "situation_en": "A laptop is lost or stolen outside the office",
+          "without": "Datos expuestos",
+          "without_en": "Data exposed",
+          "with": "Equipo protegido y gestionable a distancia",
+          "with_en": "Device protected and remotely manageable"
+        },
+        {
+          "situation": "Un ransomware intenta cifrar servidores",
+          "situation_en": "Ransomware tries to encrypt servers",
+          "without": "Depende de la suerte",
+          "without_en": "It comes down to luck",
+          "with": "Se contiene y se recupera con backup",
+          "with_en": "Contained and recovered from backup"
+        }
+      ]
+    },
+    "porQue": {
+      "eyebrow": "POR QUÉ CYBERGUARD",
+      "eyebrow_en": "WHY CYBERGUARD",
+      "title": "Menos complejidad. Más control.",
+      "title_en": "Less complexity. More control.",
+      "text": "Convertimos un ecosistema fragmentado en un servicio claro, coordinado y fácil de gestionar.",
+      "text_en": "We turn a fragmented ecosystem into a clear, coordinated and easy-to-manage service.",
+      "items": [
+        {
+          "title": "Protección integral, no aislada",
+          "title_en": "Integrated, not isolated, protection",
+          "text": "Seis capas coordinadas frente a una sola caja.",
+          "text_en": "Six coordinated layers instead of a single box."
+        },
+        {
+          "title": "Lo mejor de cada categoría",
+          "title_en": "Best in each category",
+          "text": "Nuestra protección se construye sobre fabricantes líderes del mercado, con reportes y accesos documentados",
+          "text_en": "Our protection is built on market-leading vendors, with documented reporting and access"
+        },
+        {
+          "title": "Sin inversión en equipos",
+          "title_en": "No hardware investment",
+          "text": "No hay que comprar, financiar ni reemplazar hardware.",
+          "text_en": "No hardware to buy, finance or replace."
+        },
+        {
+          "title": "Cuota mensual previsible",
+          "title_en": "Predictable monthly fee",
+          "text": "Presupuesto estable, sin picos por renovaciones.",
+          "text_en": "A stable budget, with no renewal spikes."
+        },
+        {
+          "title": "Alguien vigila por usted",
+          "title_en": "Someone keeps watch for you",
+          "text": "El SOC de Fiberlux monitorea e investiga.",
+          "text_en": "Fiberlux's SOC monitors and investigates."
+        },
+        {
+          "title": "Un solo responsable",
+          "title_en": "A single point of accountability",
+          "text": "Un proveedor, un contrato, un soporte.",
+          "text_en": "One provider, one contract, one support line."
+        }
+      ]
+    },
+    "porArea": {
+      "eyebrow": "UN BENEFICIO PARA CADA DECISIÓN",
+      "eyebrow_en": "A BENEFIT FOR EVERY DECISION",
+      "title": "Seguridad que habla el idioma de su empresa",
+      "title_en": "Security that speaks your company's language",
+      "items": []
+    },
+    "pasos": {
+      "eyebrow": "CÓMO EMPEZAMOS",
+      "eyebrow_en": "HOW WE START",
+      "title": "Cuatro pasos, sin interrumpir su operación",
+      "title_en": "Four steps, without interrupting your operation",
+      "text": "Primero entendemos. Después recomendamos e implementamos.",
+      "text_en": "First we understand. Then we recommend and implement.",
+      "items": [
+        {
+          "title": "Diagnóstico gratuito",
+          "title_en": "Free assessment",
+          "text": "Revisamos su situación actual sin costo ni compromiso.",
+          "text_en": "We review your current situation at no cost and with no commitment."
+        },
+        {
+          "title": "Mapa de capas",
+          "title_en": "Layer map",
+          "text": "Vemos juntos qué está cubierto hoy y qué no.",
+          "text_en": "Together we see what's covered today and what isn't."
+        },
+        {
+          "title": "Plan a su medida",
+          "title_en": "A tailored plan",
+          "text": "Recomendamos el plan correcto, no un catálogo genérico.",
+          "text_en": "We recommend the right plan, not a generic catalog."
+        },
+        {
+          "title": "Migración sin pausas",
+          "title_en": "Seamless migration",
+          "text": "Implementamos de forma gradual, sin detener su operación.",
+          "text_en": "We implement gradually, without stopping your operation."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "PREGUNTAS FRECUENTES",
+      "eyebrow_en": "FREQUENTLY ASKED QUESTIONS",
+      "title": "Respuestas claras antes de empezar",
+      "title_en": "Clear answers before you start",
+      "text": "Si su pregunta no está aquí, conversemos. El diagnóstico inicial no tiene costo.",
+      "text_en": "If your question isn't here, let's talk. The initial assessment is free.",
+      "items": [
+        {
+          "question": "Ya tenemos antivirus, ¿para qué necesitamos algo más?",
+          "question_en": "We already have antivirus, why do we need anything else?",
+          "answer": "Un antivirus reconoce amenazas conocidas. Cyberguard añade detección de comportamientos, aislamiento, parches, cifrado y monitoreo de perímetro, correo y backup.",
+          "answer_en": "Antivirus recognizes known threats. Cyberguard adds behavior detection, isolation, patching, encryption and monitoring of the perimeter, email and backup."
+        },
+        {
+          "question": "¿Es más caro que lo que pagamos hoy?",
+          "question_en": "Is it more expensive than what we pay today?",
+          "answer": "Normalmente no. Al reemplazar equipos, licencias y renovaciones dispersas por una cuota mensual, el costo total suele ser similar o menor, con mucha más protección.",
+          "answer_en": "Usually not. By replacing scattered hardware, licenses and renewals with a monthly fee, the total cost is usually similar or lower, with much more protection."
+        },
+        {
+          "question": "Somos una empresa pequeña, ¿esto aplica?",
+          "question_en": "We're a small business, does this apply?",
+          "answer": "Sí. Cyberguard Start está pensado para empresas pequeñas con pocos equipos que necesitan cubrir lo esencial sin un equipo de seguridad propio.",
+          "answer_en": "Yes. Cyberguard Start is designed for small businesses with few devices that need to cover the essentials without an in-house security team."
+        },
+        {
+          "question": "¿Qué pasa si se cae el internet o la nube?",
+          "question_en": "What happens if the internet or the cloud goes down?",
+          "answer": "Los equipos mantienen su protección local y el backup permite recuperar la información. Al restablecerse la conexión, el monitoreo continúa de forma automática.",
+          "answer_en": "Devices keep their local protection and the backup lets you recover your information. Once the connection is restored, monitoring resumes automatically."
+        },
+        {
+          "question": "¿Quedamos dependiendo de un solo proveedor?",
+          "question_en": "Do we end up depending on a single provider?",
+          "answer": "Usted tiene un solo responsable del servicio, pero la protección se construye sobre fabricantes líderes del mercado, con reportes y accesos documentados.",
+          "answer_en": "You have a single party responsible for the service, but protection is built on market-leading vendors, with documented reporting and access."
+        }
+      ]
+    },
+    "cta": {
+      "badge": "Su próximo paso",
+      "badge_en": "Your next step",
+      "title": "Hablemos de la seguridad de su empresa",
+      "title_en": "Let's talk about your company's security",
+      "text": "Un diagnóstico gratuito, sin compromiso. Vemos juntos qué está cubierto hoy y qué plan de Cyberguard le conviene.",
+      "text_en": "A free, no-commitment assessment. Together we see what's covered today and which Cyberguard plan is right for you.",
+      "button": {
+        "label": "Agendar diagnóstico gratuito",
+        "label_en": "Book a free assessment",
+        "href": "#formulario"
+      }
+    }
+  }
 }

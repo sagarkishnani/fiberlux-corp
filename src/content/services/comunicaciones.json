@@ -7,7 +7,7 @@
     "ctaLabel": "Ver soluciones",
     "formTitle": "¿Conversamos?",
     "heroMode": "image",
-    "heroImage": "images/soluciones/categoriaserviciosgestionados1.webp",
+    "heroImage": "/images/rediseno/soluciones/cat-hero-comunicaciones.jpeg",
     "heading_en": "Business communications that connect your organization",
     "intro_en": "Modernize voice communication with telephony solutions designed to connect users, departments and sites efficiently and at scale.",
     "ctaLabel_en": "View solutions",
@@ -20,7 +20,7 @@
       {
         "heading": "El desafío",
         "text": "Las soluciones telefónicas tradicionales pueden limitar la movilidad, dificultar la administración y generar mayor complejidad a medida que crecen los usuarios y sedes.",
-        "image": "/images/soluciones/valor-desafio.svg",
+        "image": "/images/rediseno/soluciones/cat-desafio-comunicaciones.jpeg",
         "heading_en": "The challenge",
         "text_en": "Traditional phone systems can limit mobility, complicate administration and add complexity as users and sites grow."
       },
@@ -41,7 +41,7 @@
       {
         "heading": "Industrias destacadas",
         "text": "Servicios, Retail, Salud, Educación, Banca, Contact Centers y organizaciones con múltiples sedes o alta interacción con clientes.",
-        "image": "",
+        "image": "/images/rediseno/soluciones/cat-industria-comunicaciones.jpeg",
         "heading_en": "Featured industries",
         "text_en": "Services, Retail, Healthcare, Education, Banking, Contact Centers and organizations with multiple sites or heavy customer interaction."
       }
