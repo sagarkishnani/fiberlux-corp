@@ -1,33 +1,43 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import HeroServicios from "../../components/servicios/HeroServicios.astro";
-// StickyCards: bloque de soluciones anterior (apilamiento sticky). Reemplazado
-// por SolucionesSlider (SPEC 35). Se conserva comentado para reutilizarlo luego.
-// import StickyCards from "../../components/shared/StickyCards.astro";
-import SolucionesStack from "../../components/shared/SolucionesStack.astro";
-import HomePartners from "../../components/shared/HomePartners.astro";
-import CertificacionesSlider from "../../components/certificaciones/CertificacionesSlider.astro";
-import ServiciosForm from "../../components/servicios/ServiciosForm.astro";
+import PageHero from "../../components/shared/fx/PageHero";
+import HomeSolucionesReact from "../../components/home/HomeSolucionesReact";
+import HomePartnersV2 from "../../components/home/HomePartnersV2.astro";
+import HomeCertificacionesReact from "../../components/home/HomeCertificacionesReact";
+import { ServiceFormSection } from "../../components/servicios/CategoriaCierreReact";
+import client from "../../../tina/__generated__/client";
+import { getLocale, tField } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+import { loadCertificaciones } from "../../utils/certificaciones";
+import { loadServiciosForm } from "../../utils/relatedPosts";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const [serviciosQuery, homeQuery, certificaciones, serviciosForm] = await Promise.all([
+  client.queries.servicios({ relativePath: "index.json" }),
+  client.queries.home({ relativePath: "index.json" }),
+  loadCertificaciones(),
+  loadServiciosForm(),
+]);
+const page = serviciosQuery.data?.servicios as any;
+const homeProps = { query: homeQuery.query, variables: homeQuery.variables, data: homeQuery.data, locale };
 ---
 
 <BaseLayout
   title="Soluciones"
   description="Conoce nuestras soluciones: soluciones tecnológicas de conectividad, ciberseguridad, data center y servicios gestionados respaldadas por la red 100% fibra óptica de Fiberlux Corp."
+  footerOverlap
 >
-  <main>
-    <HeroServicios />
-    {/* <StickyCards /> → SolucionesSlider (SPEC 35) → SolucionesScroll (SPEC 89) → SolucionesPanel (SPEC 103) →
-          SolucionesStack (SPEC 108) */}
-    <SolucionesStack />
-    {/* Partners e ISO (certificaciones) reutilizados del home, debajo de las cards */}
-    <div data-reveal="up">
-      <HomePartners />
-    </div>
-    <div data-reveal="up">
-      <CertificacionesSlider />
-    </div>
-    <div data-reveal="up">
-      <ServiciosForm />
-    </div>
+  <main class="bg-fx-bg">
+    <PageHero
+      crumb={tField(page, "breadcrumb", locale)}
+      title={tField(page, "heading", locale)}
+      subtitle={tField(page, "intro", locale)}
+      locale={locale}
+      variant="soft"
+    />
+    <HomeSolucionesReact client:visible {...homeProps} />
+    <HomePartnersV2 locale={locale} />
+    <HomeCertificacionesReact client:visible {...homeProps} certificaciones={certificaciones} />
+    <ServiceFormSection client:visible form={serviciosForm} locale={locale} />
   </main>
 </BaseLayout>
