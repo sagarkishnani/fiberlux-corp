@@ -54,6 +54,27 @@ Se reutilizan `contact`, `soporte-tecnico`, `formas-de-pago`, `fiberlux-app`, `l
 
 ---
 
+## Mapeo prototipo ↔ Tina (resultado del paso 1)
+
+| Página | Sección del prototipo | Fuente | Estado |
+| --- | --- | --- | --- |
+| Contacto | Hero, 3 tarjetas de contacto, formulario | `contact.breadcrumb/heading/intro/cards` + form `contacto` | Existe |
+| Soporte | Hero con foto oscura | `soporteTecnico.heading/intro/heroImage` | Existe (foto `soporte-cover` del prototipo como contenido) |
+| Soporte | "¿Tienes algún problema con tu servicio?" + "Gestiónalo aquí" | `soporteTecnico.heroQuestion`, `heroCtaLabel` | **Nuevo** |
+| Soporte | Canales (paneles que se expanden) | `soporteTecnico.sectionTitle/sectionSubtitle/channels` | Existe |
+| Soporte | Soluciones, testimonios, CTA casos | `home.services`, `home.testimonials` | Existe |
+| Formas de pago | Hero con selects de banco y canal, pasos con imagen | `formasDePago.heading/banks[].methods[].steps` | Existe |
+| Fiberlux App | Hero con teléfono y botones de tiendas | `fiberluxApp.hero` (`mockup` pasa a la foto `app-phone` del prototipo) | Existe |
+| Fiberlux App | Beneficios "Todo tu servicio, en un solo toque" | `fiberluxApp.beneficios.items` + `beneficios.heading` | Existe + **campo nuevo** |
+| Fiberlux App | Eficiencia (video) | `fiberluxApp.videoShowcase` (`imageDesktop` pasa a `mockup-app` del prototipo) | Existe |
+| Fiberlux App | Testimonios, CTA casos | `home.testimonials` | Existe |
+| Legal | Hero (breadcrumb, eyebrow, título) + documento | `legal.eyebrow/title/body` | Existe |
+| Formularios OSIPTEL | Secciones numeradas en tarjetas blancas, campos de 56px con fondo gris | `dynamicForms` (`section_header` → tarjeta) | Existe; solo cambia el estilo |
+
+**Sin prototipo:** Info abonados, `/reclamos` (selector) y **`/soluciones` (índice)**. Este último no estaba asignado a ningún spec del rediseño; se adapta aquí con los bloques del sistema nuevo (hero de página + bloque de soluciones del Home + formulario) para cumplir el criterio "ninguna ruta conserva el diseño oscuro".
+
+---
+
 ## Implementation plan
 
 1. Rama `spec-120-rediseno-servicio-legal` desde `staging`. Mapear el prototipo contra las colecciones y listar los faltantes.
