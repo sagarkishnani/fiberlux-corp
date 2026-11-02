@@ -1,8 +1,4 @@
 ---
-/**
- * LegalPage — resolves a `legal` collection doc by slug and renders it.
- * Content via LegalPageReact; the embedded form (if any) is added in a later step.
- */
 import { client } from "../../../tina/__generated__/client";
 import LegalPageReact from "./LegalPageReact.tsx";
 import DynamicForm from "../dynamic-form/DynamicForm.astro";
@@ -20,27 +16,23 @@ const embeddedFormSlug = result.data?.legal?.embeddedFormSlug;
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
 ---
 
-<section style={{ backgroundColor: "#ffffff" }}>
+<div class="pb-[67px] lg:pb-40">
   <LegalPageReact
     client:load
     query={result.query}
     variables={result.variables}
     data={result.data}
     locale={locale}
+    hasForm={!!embeddedFormSlug}
   />
 
   {
     embeddedFormSlug && (
-      <div
-        style={{
-          maxWidth: "820px",
-          margin: "0 auto",
-          padding: "8px 24px 80px",
-          fontFamily: "Poppins, sans-serif",
-        }}
-      >
-        <DynamicForm formSlug={embeddedFormSlug} />
+      <div class="fx-container mt-5">
+        <div class="mx-auto max-w-[1000px]">
+          <DynamicForm formSlug={embeddedFormSlug} />
+        </div>
       </div>
     )
   }
-</section>
+</div>

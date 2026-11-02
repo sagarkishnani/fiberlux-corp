@@ -58,6 +58,23 @@
 .fx-art blockquote p { margin: 0; }
 .fx-art img { max-width: 100%; height: auto; border-radius: 24px; }
 
+/* Documento legal e intro de formularios (prototipo Legal `.fx-doc` / `.fx-intro`). */
+.fx-doc h2, .fx-doc h3 { margin: 36px 0 12px; font-size: 20px; font-weight: 600; line-height: 1.3; color: #453C46; }
+.fx-doc > :first-child { margin-top: 0; }
+.fx-doc p, .fx-intro p { margin: 0 0 18px; }
+.fx-doc > :last-child, .fx-intro > :last-child { margin-bottom: 0; }
+.fx-doc ol, .fx-doc ul, .fx-intro ol, .fx-intro ul { margin: 0 0 24px; padding-left: 22px; }
+.fx-doc ol, .fx-intro ol { list-style: decimal; }
+.fx-doc ul, .fx-intro ul { list-style: disc; }
+.fx-doc li, .fx-intro li { margin: 0 0 10px; padding-left: 6px; }
+.fx-doc li::marker, .fx-intro li::marker { color: #96217A; font-weight: 600; }
+.fx-doc strong, .fx-intro strong { font-weight: 600; color: #2B252C; }
+.fx-doc blockquote { margin: 28px 0 0; padding: 24px 28px; border-radius: 18px; background: #FAF0F6; color: #650D4A; font-weight: 500; }
+.fx-doc blockquote p { margin: 0; }
+.fx-doc a, .fx-intro a { color: #96217A; text-decoration: underline; text-underline-offset: 3px; }
+.fx-intro h2, .fx-intro h3 { margin: 0 0 16px; font-size: 21px; font-weight: 600; line-height: 1.3; color: #650D4A; }
+@media (min-width: 1024px) { .fx-intro h2, .fx-intro h3 { font-size: 24px; } }
+
 @media (prefers-reduced-motion: reduce) {
   .fx-wave, .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse, .fx-ch-in { animation: none; }
 }
