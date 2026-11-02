@@ -39,6 +39,21 @@
 .fx-no-scrollbar { scrollbar-width: none; }
 .fx-no-scrollbar::-webkit-scrollbar { display: none; }
 
+/* Prosa del artículo del blog (prototipo `.fx-art`). */
+.fx-art h2 { margin: 72px 0 24px; font-size: 40px; line-height: 1.15; font-weight: 600; letter-spacing: -.025em; color: #2B252C; }
+.fx-art h3 { margin: 48px 0 18px; font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -.02em; color: #2B252C; }
+.fx-art p { margin: 0 0 22px; }
+.fx-art strong { font-weight: 600; color: #2B252C; }
+.fx-art a { color: #96217A; text-decoration: underline; text-underline-offset: 3px; }
+.fx-art ul, .fx-art ol { margin: 0 0 28px; padding-left: 24px; }
+.fx-art ul { list-style: disc; }
+.fx-art ol { list-style: decimal; }
+.fx-art li { margin: 0 0 12px; padding-left: 6px; }
+.fx-art li::marker { color: #96217A; font-weight: 600; }
+.fx-art blockquote { margin: 36px 0; padding: 32px 36px; border-radius: 24px; background: #FAF0F6; font-size: 24px; line-height: 1.45; font-weight: 500; color: #650D4A; }
+.fx-art blockquote p { margin: 0; }
+.fx-art img { max-width: 100%; height: auto; border-radius: 24px; }
+
 @media (prefers-reduced-motion: reduce) {
   .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse { animation: none; }
 }

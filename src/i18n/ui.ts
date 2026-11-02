@@ -39,6 +39,16 @@ export const UI: Record<Locale, Record<string, string>> = {
     "blog.allPosts": "Todos los artículos",
     "blog.all": "Todos",
     "blog.empty": "Aún no hay artículos en esta categoría.",
+    "article.back": "TODOS LOS ARTÍCULOS",
+    "article.share": "Compartir",
+    "article.shareTitle": "COMPARTIR",
+    "article.copy": "Copiar enlace",
+    "article.copied": "Enlace copiado",
+    "article.reading": "de lectura",
+    "article.toc": "EN ESTE ARTÍCULO",
+    "article.ctaTitle": "¿Tu red está lista para la nube?",
+    "article.ctaText": "Habla con un especialista",
+    "article.keepReading": "Sigue leyendo",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUCIONES ]",
@@ -84,6 +94,16 @@ export const UI: Record<Locale, Record<string, string>> = {
     "blog.allPosts": "All articles",
     "blog.all": "All",
     "blog.empty": "There are no articles in this category yet.",
+    "article.back": "ALL ARTICLES",
+    "article.share": "Share",
+    "article.shareTitle": "SHARE",
+    "article.copy": "Copy link",
+    "article.copied": "Link copied",
+    "article.reading": "read",
+    "article.toc": "IN THIS ARTICLE",
+    "article.ctaTitle": "Is your network ready for the cloud?",
+    "article.ctaText": "Talk to a specialist",
+    "article.keepReading": "Keep reading",
 
     /* Bloque de soluciones (SPEC 108). */
     "sol.eyebrow": "[ SOLUTIONS ]",

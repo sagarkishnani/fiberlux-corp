@@ -1,77 +1,58 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { client } from '../../../tina/__generated__/client';
-import BlogDetailReact from '../../components/blog/BlogDetailReact.tsx';
+import ArticleV2React from '../../components/blog/ArticleV2React';
+import { byDateDesc, toPostSummary } from '../../utils/postMeta';
 import { getLocale } from '../../utils/i18n';
 import { isLocale } from '../../i18n/config';
 
-/* ── Static paths from all blog posts ── */
 export async function getStaticPaths() {
-  let paths: { params: { slug: string } }[] = [];
   try {
     const postsQuery = await client.queries.postConnection({ last: 100 });
-    const edges = postsQuery.data?.postConnection?.edges || [];
-    paths = edges
+    return (postsQuery.data?.postConnection?.edges || [])
       .filter((e: any) => e?.node)
-      .map((e: any) => ({
-        params: { slug: e!.node!._sys.filename },
-      }));
+      .map((e: any) => ({ params: { slug: e.node._sys.filename } }));
   } catch {
-    paths = [];
+    return [];
   }
-  return paths;
 }
 
 const { slug } = Astro.params;
-
-/* ── Fetch current post ── */
-const postQuery = await client.queries.post({
-  relativePath: `${slug}.mdx`,
-});
-
+const postQuery = await client.queries.post({ relativePath: `${slug}.mdx` });
 const currentPost = postQuery.data?.post;
 
-/* ── Fetch related posts (same tags, excluding current) ── */
-let relatedPosts: any[] = [];
+let related: ReturnType<typeof toPostSummary>[] = [];
 try {
-  const allPostsQuery = await client.queries.postConnection({
-    sort: 'date',
-    last: 100,
-  });
-  const edges = allPostsQuery.data?.postConnection?.edges || [];
-  const currentTags = (currentPost?.tags || []).filter(Boolean);
-
-  // Score posts by tag overlap, exclude current
-  const scored = edges
-    .filter((e: any) => e?.node && e.node._sys.filename !== slug)
-    .map((e: any) => {
-      const postTags = (e.node.tags || []).filter(Boolean);
-      const overlap = postTags.filter((t: string) =>
-        currentTags.includes(t)
-      ).length;
-      return { post: e.node, score: overlap };
-    })
-    .sort((a: any, b: any) => b.score - a.score)
-    .slice(0, 3);
-
-  relatedPosts = scored.map((s: any) => s.post);
+  const allPostsQuery = await client.queries.postConnection({ sort: 'date', last: 100 });
+  const currentTags = (currentPost?.tags || []).filter(Boolean) as string[];
+  related = ((allPostsQuery.data?.postConnection?.edges || []) as any[])
+    .map((e) => e?.node)
+    .filter((node) => node && node._sys.filename !== slug)
+    .map((node) => ({
+      summary: toPostSummary(node),
+      score: ((node.tags || []) as string[]).filter((tag) => currentTags.includes(tag)).length,
+    }))
+    .sort((a, b) => b.score - a.score || byDateDesc(a.summary, b.summary))
+    .slice(0, 3)
+    .map((r) => r.summary);
 } catch {
-  relatedPosts = [];
+  related = [];
 }
 
-const pageTitle = currentPost?.title || 'Blog';
-const pageDescription =
-  currentPost?.excerpt || 'Lee nuestro artículo sobre tecnología y conectividad empresarial';
 const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const pageTitle = currentPost?.title || 'Blog';
+const pageDescription = currentPost?.excerpt || 'Lee nuestro artículo sobre tecnología y conectividad empresarial';
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
-  <BlogDetailReact
-    client:load
-    query={postQuery.query}
-    variables={postQuery.variables}
-    data={postQuery.data}
-    locale={locale}
-    relatedPosts={relatedPosts}
-  />
+<BaseLayout title={pageTitle} description={pageDescription} footerOverlap>
+  <main class="bg-fx-bg">
+    <ArticleV2React
+      client:load
+      query={postQuery.query}
+      variables={postQuery.variables}
+      data={postQuery.data}
+      locale={locale}
+      related={related}
+    />
+  </main>
 </BaseLayout>
