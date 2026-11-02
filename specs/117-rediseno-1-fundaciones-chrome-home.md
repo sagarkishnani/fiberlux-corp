@@ -1,6 +1,6 @@
 # SPEC 117 — Rediseño 1: fundaciones, chrome y Home
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 80 (i18n ES/EN), SPEC 81 (búsqueda overlay), SPEC 110 (View Transitions), SPEC 111 (popup promocional)
 > **Fecha:** 2026-11-01
 > **Objetivo:** Montar el nuevo sistema visual claro del prototipo (tokens, tipografía, header, footer, flotantes) y rehacer el Home completo, incluido el Reel con video loop y el visor del video completo.
