@@ -57,7 +57,7 @@ export default function HomeManifestoReact({ query, variables, data: initialData
         </h2>
       </div>
       <div className="overflow-x-clip">
-        <div className="relative -ml-[85px] mt-6 aspect-[100/31] w-[560px] blur-[1px] lg:ml-0 lg:mt-8 lg:w-full lg:blur-[1.6px]">
+        <div className="relative -ml-[85px] mt-6 aspect-[100/31] w-[560px] lg:ml-0 lg:mt-8 lg:w-full lg:blur-[1.6px]">
           <img
             ref={leftRef}
             src={fxAsset("hand-left.png")}
