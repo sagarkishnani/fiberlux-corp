@@ -210,12 +210,13 @@ export default function TestimoniosV2({
       startTx = tx.current;
       tr.style.transition = "none";
       w.style.cursor = "grabbing";
-      w.setPointerCapture(e.pointerId);
     };
     const move = (e: PointerEvent) => {
       if (!dragging) return;
       const dx = e.clientX - startX;
       moved = Math.abs(dx);
+      // Capturar en pointerdown redirige el click al wrapper y el botón del video nunca lo recibe.
+      if (moved > 6 && !w.hasPointerCapture(e.pointerId)) w.setPointerCapture(e.pointerId);
       const min = minTx();
       let v = startTx + dx;
       if (v > 0) v *= 0.35;
