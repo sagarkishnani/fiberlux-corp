@@ -48,7 +48,7 @@ export default function NosotrosSgsiReact(props: AboutProps) {
         </div>
         <div className="flex flex-col">
           {items.map((item, i) => (
-            <div key={i} className="border-b border-fx-soft py-6 text-[16px] leading-[1.6] text-fx-ink" data-tina-field={tinaField(item, "text")}>
+            <div key={i} className="border-b border-fx-line-strong py-6 text-[16px] leading-[1.6] text-fx-ink" data-tina-field={tinaField(item, "text")}>
               {tField(item, "text", locale)}
             </div>
           ))}
