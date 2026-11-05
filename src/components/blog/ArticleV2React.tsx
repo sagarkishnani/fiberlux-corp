@@ -174,7 +174,7 @@ export default function ArticleV2React({ query, variables, data: initialData, lo
           data-reveal-duration="1.2"
           data-reveal-ease="fx"
           data-reveal-delay="0.08"
-          className="mb-0 mt-[43px] max-w-[1080px] text-[43px] font-semibold leading-[1.04] tracking-[-.04em] text-fx-ink [text-wrap:balance] lg:mt-[72px] lg:text-[72px]"
+          className="mb-0 mt-[43px] max-w-[1080px] text-[37px] font-semibold leading-[1.04] tracking-[-.04em] text-fx-ink [text-wrap:balance] lg:mt-[72px] lg:text-[72px]"
           data-tina-field={tinaField(post, "title")}
         >
           {title}

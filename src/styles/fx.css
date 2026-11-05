@@ -46,6 +46,7 @@
 /* Prosa del artículo del blog (prototipo `.fx-art`). */
 .fx-art h2 { margin: 72px 0 24px; font-size: 40px; line-height: 1.15; font-weight: 600; letter-spacing: -.025em; color: #2B252C; }
 .fx-art h3 { margin: 48px 0 18px; font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -.02em; color: #2B252C; }
+@media (max-width: 1023px) { .fx-art h2 { font-size: 34px; } .fx-art h3 { font-size: 24px; } }
 .fx-art p { margin: 0 0 22px; }
 .fx-art strong { font-weight: 600; color: #2B252C; }
 .fx-art a { color: #96217A; text-decoration: underline; text-underline-offset: 3px; }
