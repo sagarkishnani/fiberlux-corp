@@ -451,7 +451,8 @@ export default function HeaderV3React({ query, variables, data: initialData, loc
         </div>
         <div className="relative flex-1 overflow-hidden">
           <div
-            className="absolute inset-0 overflow-y-auto transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(.65,0,.35,1)]"
+            data-lenis-prevent
+            className="absolute inset-0 overflow-y-auto overscroll-contain transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(.65,0,.35,1)]"
             style={{ transform: drawerSub ? "translateX(-30%)" : "translateX(0)", opacity: drawerSub ? 0 : 1 }}
           >
             <div className="fx-container pb-[140px] pt-10">
@@ -519,7 +520,8 @@ export default function HeaderV3React({ query, variables, data: initialData, loc
             </div>
           </div>
           <div
-            className="absolute inset-0 overflow-y-auto transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(.65,0,.35,1)]"
+            data-lenis-prevent
+            className="absolute inset-0 overflow-y-auto overscroll-contain transition-[transform,opacity] duration-[550ms] ease-[cubic-bezier(.65,0,.35,1)]"
             style={{ transform: drawerSub ? "translateX(0)" : "translateX(100%)", opacity: drawerSub ? 1 : 0 }}
           >
             <div className="fx-container pb-[140px] pt-10">
