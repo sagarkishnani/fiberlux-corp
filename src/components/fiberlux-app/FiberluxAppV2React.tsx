@@ -7,7 +7,7 @@ import { t } from "../../i18n/ui";
 import { richField, tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
 import { renderEmphasis } from "../../utils/emphasis";
-import { prefersReducedMotion, useScrollFrame } from "../home/useScrollFrame";
+import { isDesktop, prefersReducedMotion, useScrollFrame } from "../home/useScrollFrame";
 import { Eyebrow, PlayIcon } from "../shared/fx/FxPrimitives";
 import { Breadcrumb } from "../shared/fx/PageHero";
 import PageHeroBackdrop from "../shared/fx/PageHeroBackdrop";
@@ -71,7 +71,7 @@ export default function FiberluxAppV2React({ query, variables, data: initialData
   useScrollFrame(() => {
     if (prefersReducedMotion()) return;
     const y = window.scrollY;
-    if (phoneRef.current) phoneRef.current.style.transform = `translate3d(0,${Math.min(y, 700) * -0.06}px,0)`;
+    if (phoneRef.current) phoneRef.current.style.transform = isDesktop() ? `translate3d(0,${Math.min(y, 700) * -0.06}px,0)` : "";
     const mock = mockRef.current;
     if (mock) {
       const rect = mock.getBoundingClientRect();
