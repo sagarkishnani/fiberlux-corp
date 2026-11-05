@@ -470,7 +470,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
           type="button"
           onClick={close}
           aria-label={ui.close}
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-fx-night/85 text-white/80 backdrop-blur transition hover:bg-white/10 hover:text-white lg:right-6 lg:top-6"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 lg:right-6 lg:top-6"
         >
           <FaXmark aria-hidden="true" className="text-lg" />
         </button>
@@ -548,7 +548,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                     <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:gap-4 lg:border-0 lg:p-0" key={i}>
                       {Icon && (
                         <span
-                          className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-fx-purple/40 bg-fx-purple/10 text-fx-purple motion-reduce:animate-none lg:h-10 lg:w-10"
+                          className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-[#E9A7DC]/40 bg-[#E9A7DC]/[.12] text-[#E9A7DC] motion-reduce:animate-none lg:h-10 lg:w-10"
                           style={{ animationDelay: `${140 + i * 90}ms` }}
                         >
                           <Icon aria-hidden="true" />
