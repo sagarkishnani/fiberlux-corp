@@ -156,12 +156,12 @@ export default function ArticleV2React({ query, variables, data: initialData, lo
   return (
     <>
       <section className="fx-container relative pt-5 lg:pt-12">
-        <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx" className="flex items-center justify-between">
+        <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" data-reveal-ease="fx" className="flex items-center gap-2 lg:justify-between">
           <a
             href={localizeHref("/blog", locale)}
-            className="group/back inline-flex h-[52px] items-center gap-3.5 rounded-[14px] border border-fx-line bg-white pl-[18px] pr-6 font-mono text-[13px] font-medium tracking-[.14em] text-fx-ink transition-[border-color,color] duration-300 hover:border-fx-purple hover:text-fx-purple"
+            className="group/back inline-flex h-[52px] min-w-0 flex-1 items-center gap-2.5 whitespace-nowrap rounded-[14px] border border-fx-line bg-white pl-3.5 pr-4 font-mono text-[12px] font-medium tracking-[.08em] lg:flex-none lg:gap-3.5 lg:pl-[18px] lg:pr-6 lg:text-[13px] lg:tracking-[.14em] text-fx-ink transition-[border-color,color] duration-300 hover:border-fx-purple hover:text-fx-purple"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="transition-transform duration-300 group-hover/back:-translate-x-1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="shrink-0 transition-transform duration-300 group-hover/back:-translate-x-1">
               <path d="M19 12H5M11 6l-6 6 6 6" />
             </svg>
             {t("article.back", locale)}
