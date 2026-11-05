@@ -135,7 +135,7 @@ export default function CategoriaV2React(props: ServiceProps) {
                 <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full border border-white/[.16]" />
                 <div className="absolute -right-5 -top-5 h-[200px] w-[200px] rounded-full border border-white/[.12]" />
                 <CornerArrow tone="light" />
-                <div className="relative mt-auto px-7 pb-7">
+                <div className="relative mt-auto px-7 pb-7 pt-[76px] lg:pt-0">
                   <h3 className="m-0 text-[22px] font-medium leading-[1.15] tracking-[-.02em] lg:text-[30px]">{tField(solucion, "heading", locale)}</h3>
                   <p className="mb-0 mt-4 text-[16px] leading-[1.6] text-fx-blush [text-wrap:pretty]">{tField(solucion, "text", locale)}</p>
                 </div>
