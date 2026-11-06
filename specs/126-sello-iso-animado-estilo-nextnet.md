@@ -1,6 +1,6 @@
 # SPEC 126 — Sello ISO animado (estampado estilo Nextnet) en Certificaciones
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 117, SPEC 118
 > **Fecha:** 2026-11-06
 > **Objetivo:** Reemplazar el sello CSS de la sección de Certificaciones por el sello SVG que se "estampa" al entrar en pantalla, portado de `nextnet.pe` y con los colores de Fiberlux.
