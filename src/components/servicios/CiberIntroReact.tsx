@@ -234,6 +234,7 @@ export default function CiberIntroReact(props: ServiceProps) {
                 <div
                   key={i}
                   id={slug ? `plan-${slug}` : undefined}
+                  data-anchor-flash
                   data-reveal="up"
                   {...REVEAL}
                   data-reveal-delay={String(i * 0.08)}

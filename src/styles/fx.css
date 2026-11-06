@@ -101,3 +101,7 @@
   .fx-orbit-card::before { animation: none; background: linear-gradient(135deg, #E9A7DC, #96237A); }
   .fx-orbit-card::after { animation: none; opacity: .5; }
 }
+
+/* Destino de un ancla con `data-anchor-flash` (SPEC 124): anillo morado 1.6 s al llegar. */
+@keyframes fx-anchor-flash { 0%, 70% { outline-color: #96217A; } 100% { outline-color: transparent; } }
+.fx-anchor-flash { outline: 3px solid transparent; outline-offset: 6px; animation: fx-anchor-flash 1.6s ease-out; }
