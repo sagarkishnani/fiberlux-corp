@@ -539,17 +539,27 @@ export default function HeaderV3React({ query, variables, data: initialData, loc
                   const sols = ((cat.children || []).filter(Boolean) as NavNode[]);
                   return (
                     <div key={ci}>
-                      <button
-                        type="button"
-                        onClick={() => setDrawerCategory(on ? -1 : ci)}
-                        aria-expanded={on}
-                        className="flex min-h-[52px] items-center gap-3 text-left text-[20px] font-bold text-white"
-                      >
-                        {tx(cat)}
-                        <span className={`flex text-[#E9C7DD] transition-transform duration-[400ms] ${on ? "rotate-90" : ""}`}>
-                          <ChevronRightIcon size={20} />
-                        </span>
-                      </button>
+                      <div className="flex items-center justify-between gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setDrawerCategory(on ? -1 : ci)}
+                          aria-expanded={on}
+                          className="flex min-h-[52px] items-center gap-3 text-left text-[20px] font-bold text-white"
+                        >
+                          {tx(cat)}
+                          <span className={`flex text-[#E9C7DD] transition-transform duration-[400ms] ${on ? "rotate-90" : ""}`}>
+                            <ChevronRightIcon size={20} />
+                          </span>
+                        </button>
+                        {cat.url && (
+                          <a
+                            href={hx(cat.url)}
+                            className="flex min-h-11 shrink-0 items-center whitespace-nowrap text-[14px] font-semibold text-[#E9C7DD] underline-offset-4 hover:text-white hover:underline"
+                          >
+                            {t("drawer.more", locale)}
+                          </a>
+                        )}
+                      </div>
                       <div
                         className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.65,0,.35,1)]"
                         style={{ gridTemplateRows: on ? "1fr" : "0fr" }}
