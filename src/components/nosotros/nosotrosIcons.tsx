@@ -1,3 +1,5 @@
+import Icon, { pathGlyphs } from "../shared/Icon";
+
 export const NOSOTROS_ICONS: Record<string, string> = {
   pulse: "M2 12h4l3-8 4 16 3-8h6",
   clock: "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2",
@@ -17,9 +19,10 @@ export const NOSOTROS_ICONS: Record<string, string> = {
 };
 
 export function NosotrosIcon({ name, size = 22 }: { name?: string | null; size?: number }) {
-  return (
+  const legacy = pathGlyphs(NOSOTROS_ICONS, (d) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d={NOSOTROS_ICONS[name || ""] || NOSOTROS_ICONS.shield} />
+      <path d={d} />
     </svg>
-  );
+  ));
+  return <Icon name={name || "shield"} legacy={legacy} size={size} />;
 }

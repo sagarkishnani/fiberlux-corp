@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { tinaField } from "tinacms/dist/react";
 import type { Locale } from "../../i18n/config";
 import { tField } from "../../utils/i18n";
+import Icon, { pathGlyphs } from "./Icon";
 
 const ICONS: Record<string, string> = {
   consultoria: "M4 7h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M3 13h18",
@@ -23,13 +24,17 @@ const ICONS: Record<string, string> = {
     "M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z",
 };
 
+const RUBRO_GLYPHS = pathGlyphs(ICONS, (d) => (
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={d} />
+  </svg>
+));
+
 function RubroTile({ item, locale }: { item: any; locale: Locale }) {
   return (
     <div className="flex w-24 shrink-0 cursor-default flex-col items-center gap-2.5 lg:w-[150px] lg:gap-4">
       <div className="grid h-[76px] w-[76px] place-items-center rounded-[18px] border border-white/10 bg-white/[.04] text-[#B9B2BA] lg:h-[116px] lg:w-[116px] lg:rounded-[24px]">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d={ICONS[item.icon] || ICONS.servicios} />
-        </svg>
+        <Icon name={item.icon || "servicios"} legacy={RUBRO_GLYPHS} size={30} />
       </div>
       <div className="whitespace-nowrap text-[13px] text-[#B9B2BA] lg:text-[15px]">{tField(item, "label", locale)}</div>
     </div>

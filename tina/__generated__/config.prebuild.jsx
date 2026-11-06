@@ -1818,11 +1818,9 @@ var config_default = defineConfig({
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.title || "Pilar" }) },
                 fields: [
-                  {
-                    name: "icon",
+                  iconField({
                     label: "\xCDcono",
-                    type: "string",
-                    options: [
+                    legacy: [
                       { value: "pulse", label: "Pulso / Red" },
                       { value: "clock", label: "Reloj / Experiencia" },
                       { value: "users", label: "Personas / Clientes" },
@@ -1830,7 +1828,7 @@ var config_default = defineConfig({
                       { value: "server", label: "Servidor" },
                       { value: "globe", label: "Globo" }
                     ]
-                  },
+                  }),
                   { name: "title", label: "T\xEDtulo", type: "string" },
                   { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
@@ -1945,11 +1943,9 @@ var config_default = defineConfig({
             label: "Misi\xF3n",
             type: "object",
             fields: [
-              {
-                name: "icon",
+              iconField({
                 label: "\xCDcono",
-                type: "string",
-                options: [
+                legacy: [
                   "globe",
                   "target",
                   "rocket",
@@ -1961,7 +1957,7 @@ var config_default = defineConfig({
                   "star",
                   "zap"
                 ]
-              },
+              }),
               { name: "title", label: "T\xEDtulo", type: "string" },
               { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
@@ -1978,11 +1974,9 @@ var config_default = defineConfig({
             label: "Visi\xF3n",
             type: "object",
             fields: [
-              {
-                name: "icon",
+              iconField({
                 label: "\xCDcono",
-                type: "string",
-                options: [
+                legacy: [
                   "sparkles",
                   "eye",
                   "telescope",
@@ -1994,7 +1988,7 @@ var config_default = defineConfig({
                   "bolt",
                   "chart"
                 ]
-              },
+              }),
               { name: "title", label: "T\xEDtulo", type: "string" },
               { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
               {
@@ -2086,11 +2080,9 @@ var config_default = defineConfig({
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.name || "Valor" }) },
                 fields: [
-                  {
-                    name: "icon",
+                  iconField({
                     label: "\xCDcono",
-                    type: "string",
-                    options: [
+                    legacy: [
                       { value: "eye", label: "Ojo (transparencia)" },
                       { value: "shield", label: "Escudo (resiliencia)" },
                       { value: "check", label: "Check (confiabilidad)" },
@@ -2103,7 +2095,7 @@ var config_default = defineConfig({
                       { value: "spark", label: "Destello (calidad)" },
                       { value: "star", label: "Estrella (calidad)" }
                     ]
-                  },
+                  }),
                   { name: "name", label: "Nombre", type: "string" },
                   { name: "name_en", label: "Nombre (EN)", type: "string" },
                   {
@@ -2177,11 +2169,9 @@ var config_default = defineConfig({
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.label || "Rubro" }) },
                 fields: [
-                  {
-                    name: "icon",
+                  iconField({
                     label: "\xCDcono",
-                    type: "string",
-                    options: [
+                    legacy: [
                       { value: "mineria", label: "Miner\xEDa" },
                       { value: "restaurantes", label: "Restaurantes" },
                       { value: "educacion", label: "Educaci\xF3n" },
@@ -2203,7 +2193,7 @@ var config_default = defineConfig({
                       { value: "consultoria", label: "Consultor\xEDa" },
                       { value: "servicios", label: "Servicios" }
                     ]
-                  },
+                  }),
                   { name: "label", label: "Nombre del rubro", type: "string" },
                   { name: "label_en", label: "Nombre del rubro (EN)", type: "string" },
                   {
