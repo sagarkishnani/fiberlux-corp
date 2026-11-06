@@ -718,7 +718,8 @@ var config_default = defineConfig({
                       { name: "title", label: "T\xEDtulo", type: "string" },
                       { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                       { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
-                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } }
+                      { name: "text_en", label: "Texto (EN)", type: "string", ui: { component: "textarea" } },
+                      { name: "highlight", label: "Destacar (borde animado 24/7)", type: "boolean" }
                     ]
                   }
                 ]
@@ -804,6 +805,53 @@ var config_default = defineConfig({
                         ]
                       },
                       { name: "highlighted", label: "Destacado (recomendado)", type: "boolean" }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "matriz",
+                label: "Matriz de funciones por plan",
+                type: "object",
+                fields: [
+                  { name: "visible", label: "Mostrar bot\xF3n \xABVer m\xE1s\xBB", type: "boolean" },
+                  { name: "buttonLabel", label: "Texto del bot\xF3n para abrir", type: "string" },
+                  { name: "buttonLabel_en", label: "Texto del bot\xF3n para abrir (EN)", type: "string" },
+                  { name: "closeLabel", label: "Texto del bot\xF3n para cerrar", type: "string" },
+                  { name: "closeLabel_en", label: "Texto del bot\xF3n para cerrar (EN)", type: "string" },
+                  { name: "title", label: "T\xEDtulo", type: "string" },
+                  { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
+                  {
+                    name: "showVendors",
+                    label: "Mostrar proveedores",
+                    type: "boolean",
+                    description: "Muestra el proveedor de cada capa junto a su nombre."
+                  },
+                  {
+                    name: "capas",
+                    label: "Capas",
+                    type: "object",
+                    list: true,
+                    ui: { itemProps: (item) => ({ label: item?.name || "Capa" }) },
+                    fields: [
+                      { name: "name", label: "Nombre", type: "string" },
+                      { name: "name_en", label: "Nombre (EN)", type: "string" },
+                      { name: "vendor", label: "Proveedor", type: "string" },
+                      {
+                        name: "rows",
+                        label: "Funciones",
+                        type: "object",
+                        list: true,
+                        description: "En cada plan escribe \xABsi\xBB (incluido), \xABno\xBB (no incluido) o un texto, por ejemplo \xAB8 x 5\xBB.",
+                        ui: { itemProps: (item) => ({ label: item?.feature || "Funci\xF3n" }) },
+                        fields: [
+                          { name: "feature", label: "Funci\xF3n", type: "string" },
+                          { name: "feature_en", label: "Funci\xF3n (EN)", type: "string" },
+                          { name: "start", label: "Start", type: "string" },
+                          { name: "pro", label: "Pro", type: "string" },
+                          { name: "max", label: "Max", type: "string" }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2729,6 +2777,13 @@ var config_default = defineConfig({
                       { name: "text", label: "Texto", type: "string" },
                       { name: "text_en", label: "Texto (EN)", type: "string" },
                       { name: "url", label: "URL", type: "string" },
+                      {
+                        name: "megaLabel",
+                        label: "Etiqueta de la columna del men\xFA",
+                        type: "string",
+                        description: "Vac\xEDo \u21D2 \xABSOLUCIONES\xBB."
+                      },
+                      { name: "megaLabel_en", label: "Etiqueta de la columna del men\xFA (EN)", type: "string" },
                       {
                         name: "children",
                         label: "Sub-servicios (solo mobile)",

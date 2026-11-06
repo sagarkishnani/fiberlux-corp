@@ -565,6 +565,7 @@ type ServiceCyberguardFrentesItems {
   title_en: String
   text: String
   text_en: String
+  highlight: Boolean
 }
 
 type ServiceCyberguardFrentes {
@@ -634,6 +635,33 @@ type ServiceCyberguardPlanes {
   note: String
   note_en: String
   items: [ServiceCyberguardPlanesItems]
+}
+
+type ServiceCyberguardMatrizCapasRows {
+  feature: String
+  feature_en: String
+  start: String
+  pro: String
+  max: String
+}
+
+type ServiceCyberguardMatrizCapas {
+  name: String
+  name_en: String
+  vendor: String
+  rows: [ServiceCyberguardMatrizCapasRows]
+}
+
+type ServiceCyberguardMatriz {
+  visible: Boolean
+  buttonLabel: String
+  buttonLabel_en: String
+  closeLabel: String
+  closeLabel_en: String
+  title: String
+  title_en: String
+  showVendors: Boolean
+  capas: [ServiceCyberguardMatrizCapas]
 }
 
 type ServiceCyberguardQueCambiaItems {
@@ -748,6 +776,7 @@ type ServiceCyberguard {
   frentes: ServiceCyberguardFrentes
   escalas: ServiceCyberguardEscalas
   planes: ServiceCyberguardPlanes
+  matriz: ServiceCyberguardMatriz
   queCambia: ServiceCyberguardQueCambia
   porQue: ServiceCyberguardPorQue
   porArea: ServiceCyberguardPorArea
@@ -892,6 +921,7 @@ input ServiceCyberguardFrentesItemsFilter {
   title_en: StringFilter
   text: StringFilter
   text_en: StringFilter
+  highlight: BooleanFilter
 }
 
 input ServiceCyberguardFrentesFilter {
@@ -961,6 +991,33 @@ input ServiceCyberguardPlanesFilter {
   note: StringFilter
   note_en: StringFilter
   items: ServiceCyberguardPlanesItemsFilter
+}
+
+input ServiceCyberguardMatrizCapasRowsFilter {
+  feature: StringFilter
+  feature_en: StringFilter
+  start: StringFilter
+  pro: StringFilter
+  max: StringFilter
+}
+
+input ServiceCyberguardMatrizCapasFilter {
+  name: StringFilter
+  name_en: StringFilter
+  vendor: StringFilter
+  rows: ServiceCyberguardMatrizCapasRowsFilter
+}
+
+input ServiceCyberguardMatrizFilter {
+  visible: BooleanFilter
+  buttonLabel: StringFilter
+  buttonLabel_en: StringFilter
+  closeLabel: StringFilter
+  closeLabel_en: StringFilter
+  title: StringFilter
+  title_en: StringFilter
+  showVendors: BooleanFilter
+  capas: ServiceCyberguardMatrizCapasFilter
 }
 
 input ServiceCyberguardQueCambiaItemsFilter {
@@ -1075,6 +1132,7 @@ input ServiceCyberguardFilter {
   frentes: ServiceCyberguardFrentesFilter
   escalas: ServiceCyberguardEscalasFilter
   planes: ServiceCyberguardPlanesFilter
+  matriz: ServiceCyberguardMatrizFilter
   queCambia: ServiceCyberguardQueCambiaFilter
   porQue: ServiceCyberguardPorQueFilter
   porArea: ServiceCyberguardPorAreaFilter
@@ -2386,6 +2444,8 @@ type GlobalNavLinksChildren {
   text: String
   text_en: String
   url: String
+  megaLabel: String
+  megaLabel_en: String
   children: [GlobalNavLinksChildrenChildren]
 }
 
@@ -2609,6 +2669,8 @@ input GlobalNavLinksChildrenFilter {
   text: StringFilter
   text_en: StringFilter
   url: StringFilter
+  megaLabel: StringFilter
+  megaLabel_en: StringFilter
   children: GlobalNavLinksChildrenChildrenFilter
 }
 
@@ -3816,6 +3878,7 @@ input ServiceCyberguardFrentesItemsMutation {
   title_en: String
   text: String
   text_en: String
+  highlight: Boolean
 }
 
 input ServiceCyberguardFrentesMutation {
@@ -3885,6 +3948,33 @@ input ServiceCyberguardPlanesMutation {
   note: String
   note_en: String
   items: [ServiceCyberguardPlanesItemsMutation]
+}
+
+input ServiceCyberguardMatrizCapasRowsMutation {
+  feature: String
+  feature_en: String
+  start: String
+  pro: String
+  max: String
+}
+
+input ServiceCyberguardMatrizCapasMutation {
+  name: String
+  name_en: String
+  vendor: String
+  rows: [ServiceCyberguardMatrizCapasRowsMutation]
+}
+
+input ServiceCyberguardMatrizMutation {
+  visible: Boolean
+  buttonLabel: String
+  buttonLabel_en: String
+  closeLabel: String
+  closeLabel_en: String
+  title: String
+  title_en: String
+  showVendors: Boolean
+  capas: [ServiceCyberguardMatrizCapasMutation]
 }
 
 input ServiceCyberguardQueCambiaItemsMutation {
@@ -3999,6 +4089,7 @@ input ServiceCyberguardMutation {
   frentes: ServiceCyberguardFrentesMutation
   escalas: ServiceCyberguardEscalasMutation
   planes: ServiceCyberguardPlanesMutation
+  matriz: ServiceCyberguardMatrizMutation
   queCambia: ServiceCyberguardQueCambiaMutation
   porQue: ServiceCyberguardPorQueMutation
   porArea: ServiceCyberguardPorAreaMutation
@@ -4634,6 +4725,8 @@ input GlobalNavLinksChildrenMutation {
   text: String
   text_en: String
   url: String
+  megaLabel: String
+  megaLabel_en: String
   children: [GlobalNavLinksChildrenChildrenMutation]
 }
 

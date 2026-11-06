@@ -204,6 +204,7 @@ fragment ServiceParts on Service {
         title_en
         text
         text_en
+        highlight
       }
     }
     escalas {
@@ -259,6 +260,31 @@ fragment ServiceParts on Service {
           href
         }
         highlighted
+      }
+    }
+    matriz {
+      __typename
+      visible
+      buttonLabel
+      buttonLabel_en
+      closeLabel
+      closeLabel_en
+      title
+      title_en
+      showVendors
+      capas {
+        __typename
+        name
+        name_en
+        vendor
+        rows {
+          __typename
+          feature
+          feature_en
+          start
+          pro
+          max
+        }
       }
     }
     queCambia {
@@ -944,6 +970,8 @@ fragment GlobalParts on Global {
         text
         text_en
         url
+        megaLabel
+        megaLabel_en
         children {
           __typename
           text
