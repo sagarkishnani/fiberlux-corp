@@ -6,6 +6,7 @@ import { PillLink } from "../shared/fx/FxPrimitives";
 import PageHeroBackdrop from "../shared/fx/PageHeroBackdrop";
 import Shield3D from "../shared/fx/Shield3D";
 import SolutionsBreadcrumb from "./SolutionsBreadcrumb";
+import CyberMatrix from "./CyberMatrix";
 import { CyberguardIcon } from "./cyberguardIcons";
 import { REVEAL, useService, type ServiceProps } from "./useService";
 
@@ -70,7 +71,7 @@ export default function CiberIntroReact(props: ServiceProps) {
   const service = useService(props);
   const cg = service?.cyberguard;
   if (!cg) return null;
-  const { hero, frentes, escalas, planes } = cg;
+  const { hero, frentes, escalas, planes, matriz } = cg;
   const highlights = ((hero?.highlights || []).filter(Boolean) as any[]);
   const frenteItems = ((frentes?.items || []).filter(Boolean) as any[]);
   const escalaItems = ((escalas?.items || []).filter(Boolean) as any[]);
@@ -285,6 +286,7 @@ export default function CiberIntroReact(props: ServiceProps) {
               <span>{renderBold(tField(planes, "note", locale))}</span>
             </div>
           )}
+          <CyberMatrix matriz={matriz} plans={plans} locale={locale} />
         </section>
       )}
     </>
