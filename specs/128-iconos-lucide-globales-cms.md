@@ -1,6 +1,6 @@
 # SPEC 128 — Íconos Lucide en todo el sitio: selector con buscador en Tina
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 117–120
 > **Fecha:** 2026-11-06
 > **Objetivo:** Que todos los campos de ícono del CMS permitan elegir cualquier ícono de Lucide con un selector con buscador, sin cambiar los íconos ya cargados ni inflar el JavaScript del sitio.
