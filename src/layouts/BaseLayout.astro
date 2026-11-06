@@ -66,6 +66,8 @@ try {
 let whatsappPhone: string | undefined;
 let whatsappBaseMessage: string | undefined;
 let whatsappBubble: any = null;
+let whatsappEnabled = true;
+let callButton: { phone: string; label?: string; desktop?: boolean } | undefined;
 let injectHead = "";
 let injectBodyEnd = "";
 // ─── Cursor config (editable in Tina: global.cursor) — SPEC 99 obs1 ───
@@ -78,6 +80,11 @@ try {
   whatsappPhone = wa?.phone || undefined;
   whatsappBaseMessage = wa?.message || undefined;
   whatsappBubble = wa?.bubble || null;
+  whatsappEnabled = wa?.enabled !== false;
+  const call = g?.callButton;
+  if (call?.enabled && call.phone?.trim()) {
+    callButton = { phone: call.phone.trim(), label: tField(call, "label", locale) || undefined, desktop: !!call.desktop };
+  }
   injectHead = g?.codeInjection?.head || "";
   injectBodyEnd = g?.codeInjection?.bodyEnd || "";
   if (["none", "trail", "reticle", "dot"].includes(g?.cursor?.type))
@@ -406,6 +413,8 @@ const whatsappBubbleMessage =
             bubbleMessage={whatsappBubbleMessage}
             bubbleKey={bubbleCtx ?? "global"}
             locale={locale}
+            showWhatsApp={whatsappEnabled}
+            callButton={callButton}
           />
           <AccessibilityPanel client:idle transition:persist="a11y" locale={locale} />
           {/* Cursor del sitio (SPEC 99 obs1): tipo e intensidad editables en Tina

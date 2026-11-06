@@ -10,6 +10,9 @@ import { fxAsset } from "./fx/FxPrimitives";
  * Diseño del rediseño claro (SPEC 117): píldora verde que despliega
  * "Escríbenos" al pasar el cursor. Si la página tiene mensaje, una burbuja
  * asoma sola a los `delayMs` y se cierra con la ✕.
+ *
+ * Con `callButton` (global.callButton, SPEC 125) suma encima un botón morado de
+ * llamada; `showWhatsApp` (global.whatsapp.enabled) oculta el de WhatsApp.
  */
 interface WhatsAppButtonProps {
   /** Phone in international format, digits only (e.g. "51986176790"). */
@@ -24,9 +27,18 @@ interface WhatsAppButtonProps {
   /** Retraso hasta que asoma la burbuja, en milisegundos. */
   delayMs?: number;
   locale?: Locale;
+  showWhatsApp?: boolean;
+  callButton?: CallButtonConfig;
+}
+
+export interface CallButtonConfig {
+  phone: string;
+  label?: string;
+  desktop?: boolean;
 }
 
 const LABEL: Record<Locale, string> = { es: "Escríbenos", en: "Message us" };
+const CALL_LABEL: Record<Locale, string> = { es: "Llámanos", en: "Call us" };
 
 const DEFAULT_PHONE = "51986176790";
 const DEFAULT_MESSAGE =
@@ -93,6 +105,8 @@ export default function WhatsAppButton({
   bubbleKey = "global",
   delayMs = 7000,
   locale = "es",
+  showWhatsApp = true,
+  callButton,
 }: WhatsAppButtonProps) {
   const digits = (phone || DEFAULT_PHONE).replace(/\D/g, "");
   const href = `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(message)}`;
@@ -134,10 +148,29 @@ export default function WhatsAppButton({
   }, [fase]);
 
   const claseFase = fase === "entra" ? "wa-bubble--in" : fase === "sale" ? "wa-bubble--out" : "";
+  const callHref = callButton ? `tel:${callButton.phone.replace(/[^\d+]/g, "")}` : "";
+  const callLabel = callButton?.label || CALL_LABEL[locale];
+
+  if (!showWhatsApp && !callButton) return null;
+
+  const wrapClasses = [
+    "wa-fab-wrap",
+    callButton ? "wa-fab-wrap--call" : "",
+    callButton?.desktop ? "wa-fab-wrap--call-desktop" : "",
+    showWhatsApp ? "" : "wa-fab-wrap--call-only",
+  ].filter(Boolean).join(" ");
 
   return (
-    <div className="wa-fab-wrap">
-      {gancho && fase !== "oculta" && (
+    <div className={wrapClasses}>
+      {callButton && (
+        <a href={callHref} aria-label={callLabel} title={callLabel} className="call-fab">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+        </a>
+      )}
+
+      {showWhatsApp && gancho && fase !== "oculta" && (
         /* `role="status"` y no `dialog`: la burbuja se anuncia una vez y no roba
            el foco a quien está leyendo la página. */
         <div
@@ -170,18 +203,20 @@ export default function WhatsAppButton({
         </div>
       )}
 
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contáctanos por WhatsApp"
-        className="wa-fab"
-      >
-        <span className="wa-fab__label">{LABEL[locale]}</span>
-        <span className="wa-fab__icon">
-          <img src={fxAsset("wa-float.svg")} alt="" />
-        </span>
-      </a>
+      {showWhatsApp && (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contáctanos por WhatsApp"
+          className="wa-fab"
+        >
+          <span className="wa-fab__label">{LABEL[locale]}</span>
+          <span className="wa-fab__icon">
+            <img src={fxAsset("wa-float.svg")} alt="" />
+          </span>
+        </a>
+      )}
 
       <style>{`
         /* El envoltorio mide lo que el botón: la burbuja cuelga de él en
@@ -329,6 +364,68 @@ export default function WhatsAppButton({
             max-width: 160px;
             padding-left: 22px;
             opacity: 1;
+          }
+        }
+
+        /* ── Botón de llamada: apilado 12px encima del de WhatsApp ── */
+        .call-fab {
+          position: absolute;
+          right: 0;
+          bottom: calc(100% + 12px);
+          display: grid;
+          place-items: center;
+          width: 56px;
+          height: 56px;
+          border-radius: 9999px;
+          background: #96237A;
+          color: #fff;
+          box-shadow: 0 10px 24px -8px rgba(150, 35, 122, 0.6);
+          transition: box-shadow 0.3s, background-color 0.3s;
+        }
+        .call-fab:hover {
+          color: #fff;
+          background: #7E1C66;
+          box-shadow: 0 0 0 6px rgba(150, 35, 122, 0.2);
+        }
+        .call-fab:focus-visible {
+          outline: 3px solid rgba(150, 35, 122, 0.4);
+          outline-offset: 2px;
+        }
+        .wa-fab-wrap--call-only .call-fab {
+          position: static;
+        }
+
+        /* Con el de llamada encima, la burbuja sale al costado del de WhatsApp
+           para no taparlo. */
+        .wa-fab-wrap--call:not(.wa-fab-wrap--call-only) .wa-bubble {
+          right: 100%;
+          bottom: 0;
+          margin: 0 14px 0 0;
+          max-width: calc(100vw - 184px);
+          transform-origin: bottom right;
+        }
+        .wa-fab-wrap--call:not(.wa-fab-wrap--call-only) .wa-bubble__tail {
+          right: -4px;
+          bottom: 20px;
+        }
+
+        @media (min-width: 1024px) {
+          .call-fab {
+            width: 60px;
+            height: 60px;
+          }
+          .wa-fab-wrap--call:not(.wa-fab-wrap--call-desktop) .call-fab {
+            display: none;
+          }
+          .wa-fab-wrap--call:not(.wa-fab-wrap--call-desktop) .wa-bubble {
+            right: 0;
+            bottom: 100%;
+            margin: 0 0 16px;
+            max-width: calc(100vw - 3rem);
+          }
+          .wa-fab-wrap--call:not(.wa-fab-wrap--call-desktop) .wa-bubble__tail {
+            right: 20px;
+            bottom: -4px;
           }
         }
 
