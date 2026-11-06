@@ -1,6 +1,6 @@
 # SPEC 125 — Formulario de soluciones como el prototipo, canales de Soporte editables y botón flotante de llamada
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 120, SPEC 124
 > **Fecha:** 2026-11-06
 > **Objetivo:** Dejar el formulario de soluciones con los campos y el orden del prototipo (incluye Sede y Cuéntanos), confirmar que los canales de Soporte se agregan y eliminan desde Tina, y sumar un botón flotante de llamada configurable junto al de WhatsApp.
