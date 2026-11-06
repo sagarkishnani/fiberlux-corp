@@ -35,6 +35,9 @@ export function pickLoopSource(reel: Record<string, any>): string {
 const VIDEO_RATIO = 9 / 16;
 const DESKTOP_START_WIDTH = 0.44;
 const DESKTOP_START_RADIUS = 28;
+const MOBILE_START_SCALE = 0.7;
+const MOBILE_GUTTER = 16;
+const MOBILE_RADIUS = 24;
 
 type CardFrame = { width: number; height: number; scale: number; radius: number };
 
@@ -47,6 +50,13 @@ function desktopCardFrame(p: number, reduced: boolean): CardFrame {
   const progress = reduced ? 1 : p;
   const scale = DESKTOP_START_WIDTH + (coverScale - DESKTOP_START_WIDTH) * progress;
   return { width, height, scale, radius: DESKTOP_START_RADIUS * (1 - progress) };
+}
+
+function mobileCardFrame(p: number, reduced: boolean): CardFrame {
+  const side = document.documentElement.clientWidth - MOBILE_GUTTER * 2;
+  const progress = reduced ? 1 : p;
+  const scale = MOBILE_START_SCALE + (1 - MOBILE_START_SCALE) * progress;
+  return { width: side, height: side, scale, radius: MOBILE_RADIUS };
 }
 
 function applyCardFrame(card: HTMLElement, frame: CardFrame) {
@@ -79,15 +89,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     const H = window.innerHeight;
     const rect = section.getBoundingClientRect();
     const p = reduced ? 1 : easeOutCubic(clamp(-rect.top / Math.max(1, rect.height - H), 0, 1));
-    if (desktop) {
-      card.style.clipPath = "none";
-      applyCardFrame(card, desktopCardFrame(p, reduced));
-      if (videoRef.current) videoRef.current.style.transform = "none";
-    } else {
-      const iv = 24 * (1 - p), ix = 16 * (1 - p), rad = 24 * (1 - p);
-      card.style.clipPath = `inset(${iv}% ${ix}px ${iv}% ${ix}px round ${rad}px)`;
-      if (videoRef.current) videoRef.current.style.transform = `scale(${1.15 - 0.15 * p})`;
-    }
+    applyCardFrame(card, desktop ? desktopCardFrame(p, reduced) : mobileCardFrame(p, reduced));
     if (reduced) return;
     const travel = desktop ? 900 : 500;
     const raw = clamp((H - rect.top) / (rect.height + H), 0, 1);
@@ -167,7 +169,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
         </div>
         <div
           ref={cardRef}
-          className="absolute inset-0 overflow-hidden bg-fx-night will-change-[clip-path] [clip-path:inset(24%_16px_24%_16px_round_24px)] lg:inset-auto lg:left-1/2 lg:top-1/2 lg:aspect-video lg:w-screen lg:origin-center lg:-translate-x-1/2 lg:-translate-y-1/2 lg:scale-[.44] lg:rounded-[64px] lg:will-change-transform lg:[clip-path:none]"
+          className="absolute left-1/2 top-1/2 aspect-square w-[calc(100vw-32px)] origin-center -translate-x-1/2 -translate-y-1/2 scale-[.7] overflow-hidden rounded-[34px] bg-fx-night will-change-transform lg:aspect-video lg:w-screen lg:scale-[.44] lg:rounded-[64px]"
         >
           <video
             ref={videoRef}
@@ -177,7 +179,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
             preload="none"
             poster={poster || undefined}
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full scale-[1.15] object-cover will-change-transform lg:scale-100"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
         {hasFullVideo && fullLabel && (
