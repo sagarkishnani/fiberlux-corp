@@ -199,7 +199,7 @@
         "description_en": "of deployed fiber-optic infrastructure"
       },
       {
-        "number": "92",
+        "number": "+100",
         "label": "Presencia nacional",
         "description": "ciudades en cobertura en todo el Perú",
         "description_en": "cities covered across Peru"
@@ -237,8 +237,8 @@
       },
       {
         "icon": "users",
-        "title": "+10000 clientes del segmento empresarial",
-        "title_en": "10,000+ business clients",
+        "title": "+5500 clientes del segmento empresarial",
+        "title_en": "5,500+ business clients",
         "text": "Nuestros clientes nos respaldan como sus aliados tecnológicos",
         "text_en": "Our clients back us as their technology partners"
       }

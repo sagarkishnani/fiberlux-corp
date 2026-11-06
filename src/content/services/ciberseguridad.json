@@ -342,8 +342,8 @@
           "text_en": "Stop it before it happens: next-gen antivirus, application control and up-to-date patches on every device."
         },
         {
-          "tag": "PRO Y MAX",
-          "tag_en": "PRO AND MAX",
+          "tag": "PRO",
+          "tag_en": "PRO",
           "title": "Detectar y responder",
           "title_en": "Detect and respond",
           "text": "Si algo se cuela, lo vemos: el SOC investiga el comportamiento sospechoso y lo contiene antes de que escale.",
