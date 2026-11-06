@@ -12,6 +12,7 @@ import { Eyebrow, PlayIcon } from "../shared/fx/FxPrimitives";
 import { Breadcrumb } from "../shared/fx/PageHero";
 import PageHeroBackdrop from "../shared/fx/PageHeroBackdrop";
 import VideoModal, { type VideoModalContent } from "../shared/fx/VideoModal";
+import Icon, { pathGlyphs } from "../shared/Icon";
 
 interface Props {
   query: string;
@@ -47,6 +48,12 @@ const BENEFIT_ICONS: Record<string, string> = {
   grafico: "M3 3v18h18M7 15l4-4 3 3 5-6",
   generico: "M20 6L9 17l-5-5",
 };
+
+const BENEFIT_GLYPHS = pathGlyphs(BENEFIT_ICONS, (d) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={d} />
+  </svg>
+));
 
 /* El último bloque de beneficios (2 cards) ocupa media fila cada uno; los anteriores un tercio (6 columnas del prototipo). */
 function benefitSpan(index: number, total: number): string {
@@ -189,9 +196,7 @@ export default function FiberluxAppV2React({ query, variables, data: initialData
                 data-tina-field={tinaField(item, "text")}
               >
                 <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#FAF0F6] text-fx-purple transition-colors duration-[400ms] group-hover/benefit:bg-fx-purple group-hover/benefit:text-white">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d={BENEFIT_ICONS[item.icon || ""] || BENEFIT_ICONS.generico} />
-                  </svg>
+                  <Icon name={item.icon || "generico"} legacy={BENEFIT_GLYPHS} size={24} />
                 </div>
                 <p className="m-0 max-w-[440px] text-[18px] font-medium leading-[1.45] text-fx-ink [text-wrap:pretty] lg:text-[19px]">{tField(item, "text", locale)}</p>
               </div>

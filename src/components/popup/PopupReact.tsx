@@ -26,6 +26,7 @@ import type { PopupQuery, PopupQueryVariables } from "../../../tina/__generated_
 import type { Locale } from "../../i18n/config";
 import { localizeHref, tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
+import Icon from "../shared/Icon";
 
 interface Props {
   query: string;
@@ -537,7 +538,6 @@ export default function PopupReact({ query, variables, data: initialData, locale
             {features.length > 0 && (
               <ul className="mt-6 space-y-3 lg:mt-8 lg:space-y-5">
                 {features.map((f: any, i: number) => {
-                  const Icon = FEATURE_ICONS[f?.icon || ""];
                   return (
                     /* Obs. cliente: los íconos se veían desalineados respecto al
                        texto. En desktop iban anclados arriba (`items-start`) y
@@ -546,12 +546,12 @@ export default function PopupReact({ query, variables, data: initialData, locale
                        bloque de texto —como en el artboard de referencia— la
                        relación es la misma tenga el punto una línea o dos. */
                     <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:gap-4 lg:border-0 lg:p-0" key={i}>
-                      {Icon && (
+                      {f?.icon && (
                         <span
                           className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-[#E9A7DC]/40 bg-[#E9A7DC]/[.12] text-[#E9A7DC] motion-reduce:animate-none lg:h-10 lg:w-10"
                           style={{ animationDelay: `${140 + i * 90}ms` }}
                         >
-                          <Icon aria-hidden="true" />
+                          <Icon name={f.icon} legacy={FEATURE_ICONS} />
                         </span>
                       )}
                       <span className="text-[14px] leading-relaxed text-white/70 lg:text-[15px]">
@@ -601,7 +601,6 @@ export default function PopupReact({ query, variables, data: initialData, locale
                    error del diseño. */
                 <div className="mx-auto mt-7 flex max-w-[420px] flex-col gap-3 lg:mx-0 lg:mt-10">
                   {buttons.map((b: any, i: number) => {
-                    const Icon = BUTTON_ICONS[b?.icon || ""];
                     const primary = b?.variant !== "secundario";
                     return (
                       <a
@@ -613,7 +612,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                             : "border border-white/25 text-white hover:bg-white/10"
                         }`}
                       >
-                        {Icon && <Icon aria-hidden="true" className="text-lg" />}
+                        {b?.icon && <Icon name={b.icon} legacy={BUTTON_ICONS} className="text-lg" />}
                         {L(b, "label")}
                       </a>
                     );

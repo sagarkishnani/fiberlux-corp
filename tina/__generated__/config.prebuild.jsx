@@ -2330,16 +2330,14 @@ var config_default = defineConfig({
               itemProps: (item) => ({ label: item?.label || "Tarjeta" })
             },
             fields: [
-              {
-                name: "icon",
+              iconField({
                 label: "\xCDcono",
-                type: "string",
-                options: [
+                legacy: [
                   { value: "phone", label: "Tel\xE9fono" },
                   { value: "email", label: "Correo" },
                   { value: "location", label: "Ubicaci\xF3n" }
                 ]
-              },
+              }),
               { name: "label", label: "Etiqueta", type: "string" },
               { name: "label_en", label: "Etiqueta (EN)", type: "string" },
               { name: "value", label: "Valor", type: "string" },
@@ -4305,11 +4303,9 @@ var config_default = defineConfig({
                 list: true,
                 ui: { itemProps: (i) => ({ label: i?.text || "Beneficio" }) },
                 fields: [
-                  {
-                    name: "icon",
+                  iconField({
                     label: "\xCDcono",
-                    type: "string",
-                    options: [
+                    legacy: [
                       "monitoreo",
                       "sedes",
                       "diagnostico",
@@ -4321,7 +4317,7 @@ var config_default = defineConfig({
                       "grafico",
                       "generico"
                     ]
-                  },
+                  }),
                   {
                     name: "text",
                     label: "Texto",
@@ -4529,12 +4525,10 @@ var config_default = defineConfig({
             list: true,
             ui: { itemProps: (item) => ({ label: item?.text || "Punto" }) },
             fields: [
-              {
-                name: "icon",
+              iconField({
                 label: "\xCDcono",
-                type: "string",
-                options: FEATURE_ICON_OPTIONS
-              },
+                legacy: FEATURE_ICON_OPTIONS
+              }),
               {
                 name: "text",
                 label: "Texto",
@@ -4570,12 +4564,10 @@ var config_default = defineConfig({
                 type: "image",
                 description: "Opcional. Para los badges oficiales de App Store / Google Play: sube el arte y sustituye al bot\xF3n (el texto y el \xEDcono se ignoran, pero el texto se sigue usando como alternativa para lectores de pantalla). Si TODOS los botones traen badge se muestran en fila y a la misma altura; si no, se apilan al mismo ancho."
               },
-              {
-                name: "icon",
+              iconField({
                 label: "\xCDcono",
-                type: "string",
-                options: BUTTON_ICON_OPTIONS
-              },
+                legacy: BUTTON_ICON_OPTIONS
+              }),
               {
                 name: "variant",
                 label: "Estilo",

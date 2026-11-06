@@ -6,6 +6,7 @@ import type { Locale } from "../../i18n/config";
 import { ArrowIcon } from "../shared/fx/FxPrimitives";
 import { Breadcrumb } from "../shared/fx/PageHero";
 import PageHeroBackdrop from "../shared/fx/PageHeroBackdrop";
+import Icon, { pathGlyphs } from "../shared/Icon";
 
 const CARD_ICONS: Record<string, string> = {
   phone:
@@ -13,6 +14,12 @@ const CARD_ICONS: Record<string, string> = {
   email: "M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM22 6l-10 7L2 6",
   location: "M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z",
 };
+
+const CARD_GLYPHS = pathGlyphs(CARD_ICONS, (d) => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d={d} />
+  </svg>
+));
 
 const REVEAL = { "data-reveal-distance": "56", "data-reveal-duration": "1.2", "data-reveal-ease": "fx" } as const;
 
@@ -95,9 +102,7 @@ export default function ContactReact({ query, variables, data: initialData, form
                   data-tina-field={tinaField(card, "value")}
                 >
                   <span className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-2xl bg-[#FAF0F6] text-fx-purple transition-colors duration-[400ms] group-hover/card:bg-fx-purple group-hover/card:text-white">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <path d={CARD_ICONS[card.icon || ""] || CARD_ICONS.phone} />
-                    </svg>
+                    <Icon name={card.icon || "phone"} legacy={CARD_GLYPHS} size={22} />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block font-mono text-[12px] font-medium tracking-[.18em] text-fx-muted">
