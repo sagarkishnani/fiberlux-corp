@@ -14,3 +14,6 @@ public/fiberlux-config.php
 # Rediseño: bundles originales y assets desempaquetados (se regeneran con scripts/unpack-prototipo.mjs)
 references/rediseno/prototipo-*.html
 references/rediseno/assets/
+
+# Íconos Lucide generados en predev/prebuild (SPEC 128)
+src/icons/*.generated.*

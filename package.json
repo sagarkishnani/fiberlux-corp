@@ -3,7 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "predev": "node scripts/gen-used-icons.mjs",
     "dev": "tinacms dev -c \"astro dev\"",
+    "prebuild": "node scripts/gen-used-icons.mjs",
     "build": "tinacms build && astro build",
     "preview": "astro preview",
     "deploy": "bash scripts/deploy-gh-pages.sh"
