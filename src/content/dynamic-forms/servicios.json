@@ -17,58 +17,36 @@
   "fields": [
     {
       "fieldType": "text",
-      "name": "empresa",
-      "label": "Empresa",
-      "label_en": "Company",
-      "placeholder": "Empresa",
-      "placeholder_en": "Company",
+      "name": "nombre",
+      "label": "Nombre",
+      "label_en": "First name",
+      "placeholder": "Tu nombre",
+      "placeholder_en": "Your first name",
       "required": true,
       "width": "half",
       "order": 1
     },
     {
-      "fieldType": "ruc",
-      "name": "ruc",
-      "label": "RUC",
-      "label_en": "Tax ID (RUC)",
-      "placeholder": "20123456789",
-      "placeholder_en": "20123456789",
+      "fieldType": "text",
+      "name": "apellidos",
+      "label": "Apellido",
+      "label_en": "Last name",
+      "placeholder": "Tu apellido",
+      "placeholder_en": "Your last name",
       "required": true,
       "width": "half",
       "order": 2
     },
     {
-      "fieldType": "text",
-      "name": "nombre",
-      "label": "Nombre",
-      "label_en": "First name",
-      "placeholder": "Nombre",
-      "placeholder_en": "First name",
-      "required": true,
-      "width": "half",
-      "order": 3
-    },
-    {
-      "fieldType": "text",
-      "name": "apellidos",
-      "label": "Apellidos",
-      "label_en": "Last name",
-      "placeholder": "Apellidos",
-      "placeholder_en": "Last name",
-      "required": true,
-      "width": "half",
-      "order": 4
-    },
-    {
       "fieldType": "select",
       "name": "servicio",
-      "label": "Servicio de interés",
+      "label": "Servicio de tu interés",
       "label_en": "Service of interest",
-      "placeholder": "Servicio de interés",
-      "placeholder_en": "Service of interest",
+      "placeholder": "Selecciona un servicio",
+      "placeholder_en": "Select a service",
       "required": true,
       "width": "full",
-      "order": 5,
+      "order": 3,
       "options": [
         {
           "value": "internet-dedicado",
@@ -262,6 +240,166 @@
       ]
     },
     {
+      "fieldType": "select",
+      "name": "sede",
+      "label": "Sede",
+      "label_en": "Location",
+      "placeholder": "Selecciona una sede",
+      "placeholder_en": "Select a location",
+      "required": true,
+      "width": "full",
+      "options": [
+        {
+          "value": "amazonas",
+          "label": "Amazonas",
+          "label_en": "Amazonas"
+        },
+        {
+          "value": "ancash",
+          "label": "Áncash",
+          "label_en": "Áncash"
+        },
+        {
+          "value": "apurimac",
+          "label": "Apurímac",
+          "label_en": "Apurímac"
+        },
+        {
+          "value": "arequipa",
+          "label": "Arequipa",
+          "label_en": "Arequipa"
+        },
+        {
+          "value": "ayacucho",
+          "label": "Ayacucho",
+          "label_en": "Ayacucho"
+        },
+        {
+          "value": "cajamarca",
+          "label": "Cajamarca",
+          "label_en": "Cajamarca"
+        },
+        {
+          "value": "callao",
+          "label": "Callao",
+          "label_en": "Callao"
+        },
+        {
+          "value": "cusco",
+          "label": "Cusco",
+          "label_en": "Cusco"
+        },
+        {
+          "value": "huancavelica",
+          "label": "Huancavelica",
+          "label_en": "Huancavelica"
+        },
+        {
+          "value": "huanuco",
+          "label": "Huánuco",
+          "label_en": "Huánuco"
+        },
+        {
+          "value": "ica",
+          "label": "Ica",
+          "label_en": "Ica"
+        },
+        {
+          "value": "junin",
+          "label": "Junín",
+          "label_en": "Junín"
+        },
+        {
+          "value": "la-libertad",
+          "label": "La Libertad",
+          "label_en": "La Libertad"
+        },
+        {
+          "value": "lambayeque",
+          "label": "Lambayeque",
+          "label_en": "Lambayeque"
+        },
+        {
+          "value": "lima",
+          "label": "Lima",
+          "label_en": "Lima"
+        },
+        {
+          "value": "loreto",
+          "label": "Loreto",
+          "label_en": "Loreto"
+        },
+        {
+          "value": "madre-de-dios",
+          "label": "Madre de Dios",
+          "label_en": "Madre de Dios"
+        },
+        {
+          "value": "moquegua",
+          "label": "Moquegua",
+          "label_en": "Moquegua"
+        },
+        {
+          "value": "pasco",
+          "label": "Pasco",
+          "label_en": "Pasco"
+        },
+        {
+          "value": "piura",
+          "label": "Piura",
+          "label_en": "Piura"
+        },
+        {
+          "value": "puno",
+          "label": "Puno",
+          "label_en": "Puno"
+        },
+        {
+          "value": "san-martin",
+          "label": "San Martín",
+          "label_en": "San Martín"
+        },
+        {
+          "value": "tacna",
+          "label": "Tacna",
+          "label_en": "Tacna"
+        },
+        {
+          "value": "tumbes",
+          "label": "Tumbes",
+          "label_en": "Tumbes"
+        },
+        {
+          "value": "ucayali",
+          "label": "Ucayali",
+          "label_en": "Ucayali"
+        }
+      ],
+      "order": 4
+    },
+    {
+      "fieldType": "text",
+      "name": "empresa",
+      "label": "Empresa",
+      "label_en": "Company",
+      "placeholder": "Nombre de la empresa",
+      "placeholder_en": "Company name",
+      "required": true,
+      "width": "half",
+      "order": 5
+    },
+    {
+      "fieldType": "ruc",
+      "name": "ruc",
+      "label": "RUC",
+      "label_en": "Tax ID (RUC)",
+      "placeholder": "20123456789",
+      "placeholder_en": "20123456789",
+      "required": true,
+      "width": "half",
+      "order": 6
+    },
+    {
       "fieldType": "tel",
       "name": "telefono",
       "label": "Teléfono / Celular",
@@ -270,18 +408,30 @@
       "placeholder_en": "987654321",
       "required": true,
       "width": "half",
-      "order": 6
+      "order": 7
     },
     {
       "fieldType": "email",
       "name": "correo",
       "label": "Correo",
       "label_en": "Email",
-      "placeholder": "Correo",
-      "placeholder_en": "Email",
+      "placeholder": "tu@correo.com",
+      "placeholder_en": "you@company.com",
       "required": true,
       "width": "half",
-      "order": 7
+      "order": 8
+    },
+    {
+      "fieldType": "textarea",
+      "name": "comentario",
+      "label": "Cuéntanos",
+      "label_en": "Tell us more",
+      "placeholder": "Cuéntanos cómo podemos ayudarte…",
+      "placeholder_en": "Tell us how we can help you…",
+      "required": false,
+      "width": "full",
+      "rows": 4,
+      "order": 9
     },
     {
       "fieldType": "checkbox",
@@ -290,7 +440,7 @@
       "label_en": "Do you give us your consent for the processing of personal data?",
       "required": true,
       "width": "full",
-      "order": 8,
+      "order": 10,
       "linkText": "tratamiento de datos personales",
       "linkText_en": "processing of personal data",
       "linkUrl": "/legales/tratamiento-datos"
@@ -302,7 +452,7 @@
       "label_en": "I agree to receive commercial information about services, promotions, offers, activities and events, in accordance with the privacy policy.",
       "required": false,
       "width": "full",
-      "order": 9,
+      "order": 11,
       "linkText": "política de privacidad",
       "linkText_en": "privacy policy",
       "linkUrl": "/legales/politica-privacidad.pdf"
