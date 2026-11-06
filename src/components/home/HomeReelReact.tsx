@@ -32,6 +32,30 @@ export function pickLoopSource(reel: Record<string, any>): string {
   return key ? withBase(reel[key]) : "";
 }
 
+const VIDEO_RATIO = 9 / 16;
+const DESKTOP_START_WIDTH = 0.44;
+const DESKTOP_START_RADIUS = 28;
+
+type CardFrame = { width: number; height: number; scale: number; radius: number };
+
+function desktopCardFrame(p: number, reduced: boolean): CardFrame {
+  const W = window.innerWidth;
+  const H = window.innerHeight;
+  const width = W;
+  const height = W * VIDEO_RATIO;
+  const coverScale = Math.max(1, H / height);
+  const progress = reduced ? 1 : p;
+  const scale = DESKTOP_START_WIDTH + (coverScale - DESKTOP_START_WIDTH) * progress;
+  return { width, height, scale, radius: DESKTOP_START_RADIUS * (1 - progress) };
+}
+
+function applyCardFrame(card: HTMLElement, frame: CardFrame) {
+  card.style.width = `${frame.width}px`;
+  card.style.height = `${frame.height}px`;
+  card.style.transform = `translate3d(-50%,-50%,0) scale(${frame.scale})`;
+  card.style.borderRadius = `${frame.radius / frame.scale}px`;
+}
+
 export default function HomeReelReact({ query, variables, data: initialData, locale = "es" }: Props) {
   const { data } = useTina<HomeQuery>({ query, variables, data: initialData });
   const reel = (data?.home?.reel || initialData?.home?.reel) as Record<string, any> | null | undefined;
@@ -56,9 +80,9 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     const rect = section.getBoundingClientRect();
     const p = reduced ? 1 : easeOutCubic(clamp(-rect.top / Math.max(1, rect.height - H), 0, 1));
     if (desktop) {
-      const it = 6 * (1 - p), ib = 42 * (1 - p), ix = 28 * (1 - p), rad = 28 * (1 - p);
-      card.style.clipPath = `inset(${it}% ${ix}% ${ib}% ${ix}% round ${rad}px)`;
-      if (videoRef.current) videoRef.current.style.transform = `scale(${1.18 - 0.18 * p})`;
+      card.style.clipPath = "none";
+      applyCardFrame(card, desktopCardFrame(p, reduced));
+      if (videoRef.current) videoRef.current.style.transform = "none";
     } else {
       const iv = 24 * (1 - p), ix = 16 * (1 - p), rad = 24 * (1 - p);
       card.style.clipPath = `inset(${iv}% ${ix}px ${iv}% ${ix}px round ${rad}px)`;
@@ -143,7 +167,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
         </div>
         <div
           ref={cardRef}
-          className="absolute inset-0 bg-fx-night will-change-[clip-path] [clip-path:inset(24%_16px_24%_16px_round_24px)] lg:[clip-path:inset(6%_28%_42%_28%_round_28px)]"
+          className="absolute inset-0 overflow-hidden bg-fx-night will-change-[clip-path] [clip-path:inset(24%_16px_24%_16px_round_24px)] lg:inset-auto lg:left-1/2 lg:top-1/2 lg:aspect-video lg:w-screen lg:origin-center lg:-translate-x-1/2 lg:-translate-y-1/2 lg:scale-[.44] lg:rounded-[64px] lg:will-change-transform lg:[clip-path:none]"
         >
           <video
             ref={videoRef}
@@ -153,7 +177,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
             preload="none"
             poster={poster || undefined}
             aria-hidden="true"
-            className="absolute inset-0 h-full w-full scale-[1.15] object-cover will-change-transform lg:scale-[1.18]"
+            className="absolute inset-0 h-full w-full scale-[1.15] object-cover will-change-transform lg:scale-100"
           />
         </div>
         {hasFullVideo && fullLabel && (
