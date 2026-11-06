@@ -1,6 +1,6 @@
 # SPEC 123 — Home: reel con sonido, activación en pantalla y expansión sin máscara
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 117, SPEC 122
 > **Fecha:** 2026-11-06
 > **Objetivo:** Que el reel del Home arranque cuando ya se ve, crezca mostrando el cuadro completo del video (no como una ventana recortada), se pueda activar el sonido con un botón flotante y en mobile no ocupe toda la pantalla.
