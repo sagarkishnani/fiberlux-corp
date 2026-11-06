@@ -20,19 +20,27 @@ export default function HomeManifestoReact({ query, variables, data: initialData
   const sectionRef = useRef<HTMLElement>(null);
   const leftRef = useRef<HTMLImageElement>(null);
   const rightRef = useRef<HTMLImageElement>(null);
+  const handsRef = useRef<HTMLDivElement>(null);
 
   useScrollFrame(() => {
     const section = sectionRef.current;
-    if (!section || !leftRef.current || !rightRef.current) return;
+    if (!section || !handsRef.current || !leftRef.current || !rightRef.current) return;
     if (prefersReducedMotion()) {
       leftRef.current.style.transform = rightRef.current.style.transform = "none";
       return;
     }
     const H = window.innerHeight;
-    const rect = section.getBoundingClientRect();
-    const center = rect.top + rect.height * 0.55 - H / 2;
     const desktop = isDesktop();
-    const p = easeOutCubic(clamp(1 - center / (H * (desktop ? 0.75 : 0.7)), 0, 1));
+    let p: number;
+    if (desktop) {
+      const rect = section.getBoundingClientRect();
+      const center = rect.top + rect.height * 0.55 - H / 2;
+      p = easeOutCubic(clamp(1 - center / (H * 0.75), 0, 1));
+    } else {
+      const hands = handsRef.current.getBoundingClientRect();
+      const handsCenter = hands.top + hands.height / 2 - H / 2;
+      p = clamp(1 - handsCenter / (H * 0.5), 0, 1);
+    }
     const offset = (1 - p) * (desktop ? window.innerWidth * 0.2 : 90);
     leftRef.current.style.transform = `translate3d(${-offset}px,0,0)`;
     rightRef.current.style.transform = `translate3d(${offset}px,0,0)`;
@@ -57,7 +65,7 @@ export default function HomeManifestoReact({ query, variables, data: initialData
         </h2>
       </div>
       <div className="overflow-x-clip">
-        <div className="relative -ml-[85px] mt-6 aspect-[100/31] w-[560px] lg:ml-0 lg:mt-8 lg:w-full lg:blur-[1.6px]">
+        <div ref={handsRef} className="relative -ml-[85px] mt-6 aspect-[100/31] w-[560px] lg:ml-0 lg:mt-8 lg:w-full lg:blur-[1.6px]">
           <img
             ref={leftRef}
             src={fxAsset("hand-left.png")}
