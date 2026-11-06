@@ -109,6 +109,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const inViewRef = useRef(false);
   const modalOpenRef = useRef(false);
   const sourceRef = useRef<"loop" | "full">("loop");
+  const userStartedRef = useRef(false);
   const soundButtonRef = useRef<HTMLButtonElement>(null);
   const [sound, setSound] = useState(false);
   const [fullVideo, setFullVideo] = useState<VideoModalContent | null>(null);
@@ -127,7 +128,8 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const syncPlayback = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-    const shouldPlay = inViewRef.current && !modalOpenRef.current && !prefersReducedMotion();
+    const autoplayAllowed = !prefersReducedMotion() || userStartedRef.current;
+    const shouldPlay = inViewRef.current && !modalOpenRef.current && autoplayAllowed;
     if (!shouldPlay) {
       if (!video.paused) video.pause();
       return;
@@ -151,6 +153,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     if (!video) return;
     sourceRef.current = "loop";
     loadedRef.current = false;
+    userStartedRef.current = false;
     video.loop = true;
     video.muted = true;
     setSound(false);
@@ -179,6 +182,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
       video.addEventListener("loadedmetadata", () => (video.currentTime = resumeAt), { once: true });
     }
     startedRef.current = true;
+    userStartedRef.current = true;
     video.muted = false;
     setSound(true);
     video.play().catch(() => {
