@@ -21,7 +21,6 @@ export default function StepsTimeline({ steps, locale }: { steps: any[]; locale:
     if (!root || !track || !fill || !head || !dots.length) return;
     const H = window.innerHeight;
     const rect = root.getBoundingClientRect();
-    const p = prefersReducedMotion() ? 1 : clamp((H * 0.82 - rect.top) / (H * 0.5), 0, 1);
     const horizontal = isDesktop();
     const centers = dots.map((d) => {
       const b = d.getBoundingClientRect();
@@ -29,6 +28,11 @@ export default function StepsTimeline({ steps, locale }: { steps: any[]; locale:
     });
     const start = centers[0];
     const end = centers[centers.length - 1];
+    const span = Math.max(1, end - start);
+    const progress = horizontal
+      ? (H * 0.82 - rect.top) / (H * 0.5)
+      : (H * 0.5 - rect.top - start) / span;
+    const p = prefersReducedMotion() ? 1 : clamp(progress, 0, 1);
     const pos = start + (end - start) * p;
     if (horizontal) {
       Object.assign(track.style, { left: `${start}px`, width: `${end - start}px`, top: "10px", height: "1px" });
