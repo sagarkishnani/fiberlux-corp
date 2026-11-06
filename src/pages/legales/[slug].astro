@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LegalPage from "../../components/legal/LegalPage.astro";
+import { client } from "../../../tina/__generated__/client";
+import { getLocale, tField } from "../../utils/i18n";
+import { isLocale } from "../../i18n/config";
+
+export async function getStaticPaths() {
+  // Estos documentos tienen su propia carpeta en src/pages/legales (con formulario o flujo propio).
+  const OWN_PAGE = ["tratamiento-datos", "derechos-arco"];
+  const docs = import.meta.glob("/src/content/legal/*.json");
+  return Object.keys(docs)
+    .map((key) => key.split("/").pop()!.replace(/\.json$/, ""))
+    .filter((slug) => !OWN_PAGE.includes(slug))
+    .map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params as { slug: string };
+const res = await client.queries.legal({ relativePath: `${slug}.json` });
+const legal: any = res.data?.legal;
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : getLocale(Astro.url);
+const title = tField(legal, "title", locale) || "Legales";
+---
+
+<BaseLayout
+  title={legal?.seo?.metaTitle || title}
+  description={legal?.seo?.metaDescription || title}
+  footerOverlap
+>
+  <main class="bg-fx-bg">
+    <LegalPage slug={slug} />
+  </main>
+</BaseLayout>

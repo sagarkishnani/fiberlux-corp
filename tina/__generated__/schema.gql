@@ -3219,6 +3219,7 @@ type Legal implements Node & Document {
   title: String!
   title_en: String
   updatedAt: String
+  pdfUrl: String
   body: JSON
   body_en: JSON
   embeddedFormSlug: String
@@ -3240,6 +3241,7 @@ input LegalFilter {
   title: StringFilter
   title_en: StringFilter
   updatedAt: DatetimeFilter
+  pdfUrl: StringFilter
   body: RichTextFilter
   body_en: RichTextFilter
   embeddedFormSlug: StringFilter
@@ -5096,6 +5098,7 @@ input LegalMutation {
   title: String
   title_en: String
   updatedAt: String
+  pdfUrl: String
   body: JSON
   body_en: JSON
   embeddedFormSlug: String

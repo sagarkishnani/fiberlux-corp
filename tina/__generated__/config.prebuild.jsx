@@ -3885,6 +3885,12 @@ var config_default = defineConfig({
           },
           { name: "title_en", label: "T\xEDtulo (H1) (EN)", type: "string" },
           { name: "updatedAt", label: "\xDAltima actualizaci\xF3n", type: "datetime" },
+          {
+            name: "pdfUrl",
+            label: "PDF descargable (opcional)",
+            type: "string",
+            description: "Ruta del PDF, ej. /legales/politica-cookies.pdf. Si tiene valor, la p\xE1gina muestra la fecha y el bot\xF3n \xABDescargar PDF\xBB."
+          },
           { name: "body", label: "Contenido", type: "rich-text" },
           {
             name: "body_en",

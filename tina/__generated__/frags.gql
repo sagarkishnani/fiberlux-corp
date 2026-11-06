@@ -1279,6 +1279,7 @@ fragment LegalParts on Legal {
   title
   title_en
   updatedAt
+  pdfUrl
   body
   body_en
   embeddedFormSlug

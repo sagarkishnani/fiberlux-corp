@@ -3772,6 +3772,7 @@ export type Legal = Node & Document & {
   title: Scalars['String']['output'];
   title_en?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['String']['output']>;
+  pdfUrl?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
   body_en?: Maybe<Scalars['JSON']['output']>;
   embeddedFormSlug?: Maybe<Scalars['String']['output']>;
@@ -3793,6 +3794,7 @@ export type LegalFilter = {
   title?: InputMaybe<StringFilter>;
   title_en?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DatetimeFilter>;
+  pdfUrl?: InputMaybe<StringFilter>;
   body?: InputMaybe<RichTextFilter>;
   body_en?: InputMaybe<RichTextFilter>;
   embeddedFormSlug?: InputMaybe<StringFilter>;
@@ -5946,6 +5948,7 @@ export type LegalMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   title_en?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['String']['input']>;
+  pdfUrl?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
   body_en?: InputMaybe<Scalars['JSON']['input']>;
   embeddedFormSlug?: InputMaybe<Scalars['String']['input']>;
@@ -6130,7 +6133,7 @@ export type FormConfigPartsFragment = { __typename: 'FormConfig', forms?: Array<
 
 export type DynamicFormsPartsFragment = { __typename: 'DynamicForms', formId: string, formTitle?: string | null, formTitle_en?: string | null, badge?: string | null, description?: string | null, description_en?: string | null, styleVariant?: string | null, submitButtonText?: string | null, submitButtonText_en?: string | null, successTitle?: string | null, successTitle_en?: string | null, successMessage?: string | null, successMessage_en?: string | null, errorMessage?: string | null, errorMessage_en?: string | null, validationMessage?: string | null, validationMessage_en?: string | null, showCorrelativo?: boolean | null, privacyText?: string | null, privacyUrl?: string | null, dataUrl?: string | null, fields?: Array<{ __typename: 'DynamicFormsFields', fieldType: string, name?: string | null, label?: string | null, label_en?: string | null, placeholder?: string | null, placeholder_en?: string | null, required?: boolean | null, width?: string | null, order?: number | null, orderMobile?: number | null, sectionNumber?: number | null, noteContent?: string | null, noteContent_en?: string | null, rows?: number | null, errorMessage?: string | null, errorMessage_en?: string | null, helpText?: string | null, helpText_en?: string | null, defaultValue?: string | null, accept?: string | null, maxFileSize?: number | null, multiple?: boolean | null, linkText?: string | null, linkText_en?: string | null, linkUrl?: string | null, validation?: { __typename: 'DynamicFormsFieldsValidation', minLength?: number | null, maxLength?: number | null, pattern?: string | null, patternMessage?: string | null, patternMessage_en?: string | null } | null, options?: Array<{ __typename: 'DynamicFormsFieldsOptions', value?: string | null, label?: string | null, label_en?: string | null, group?: string | null, group_en?: string | null, description?: string | null, description_en?: string | null } | null> | null, conditionalField?: { __typename: 'DynamicFormsFieldsConditionalField', dependsOn?: string | null, showWhen?: string | null } | null } | null> | null };
 
-export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
+export type LegalPartsFragment = { __typename: 'Legal', eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, pdfUrl?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null };
 
 export type CookieConsentPartsFragment = { __typename: 'CookieConsent', title?: string | null, intro?: any | null, showMoreText?: string | null, showMoreUrl?: string | null, btnReject?: string | null, btnSave?: string | null, btnAccept?: string | null, alwaysActiveLabel?: string | null, categories?: Array<{ __typename: 'CookieConsentCategories', key?: string | null, name?: string | null, description?: string | null, alwaysActive?: boolean | null } | null> | null };
 
@@ -6447,7 +6450,7 @@ export type LegalQueryVariables = Exact<{
 }>;
 
 
-export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, pdfUrl?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } };
 
 export type LegalConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -6459,7 +6462,7 @@ export type LegalConnectionQueryVariables = Exact<{
 }>;
 
 
-export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, eyebrow?: string | null, eyebrow_en?: string | null, title: string, title_en?: string | null, updatedAt?: string | null, pdfUrl?: string | null, body?: any | null, body_en?: any | null, embeddedFormSlug?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, seo?: { __typename: 'LegalSeo', metaTitle?: string | null, metaDescription?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type CookieConsentQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -7816,6 +7819,7 @@ export const LegalPartsFragmentDoc = gql`
   title
   title_en
   updatedAt
+  pdfUrl
   body
   body_en
   embeddedFormSlug
@@ -9277,7 +9281,7 @@ export const ExperimentalGetTinaClient = () =>
   getSdk(
     generateRequester(
       createClient({
-        url: "http://localhost:4001/graphql",
+        url: "https://content.tinajs.io/1.6/content/b7c4f7b2-044d-45ce-ad83-b851ea96927b/github/staging",
         queries,
       })
     )

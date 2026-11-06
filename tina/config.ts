@@ -4080,6 +4080,12 @@ export default defineConfig({
           },
           { name: "title_en", label: "Título (H1) (EN)", type: "string" },
           { name: "updatedAt", label: "Última actualización", type: "datetime" },
+          {
+            name: "pdfUrl",
+            label: "PDF descargable (opcional)",
+            type: "string",
+            description: "Ruta del PDF, ej. /legales/politica-cookies.pdf. Si tiene valor, la página muestra la fecha y el botón «Descargar PDF».",
+          },
           { name: "body", label: "Contenido", type: "rich-text" },
           {
             name: "body_en",
