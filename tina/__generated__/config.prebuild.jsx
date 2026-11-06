@@ -1,5 +1,224 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
+
+// tina/fields/iconField.tsx
+import React, { useMemo, useState } from "react";
+import * as Lucide from "react-icons/lu";
+var MAX_RESULTS = 120;
+var ES_ALIASES = {
+  escudo: ["shield"],
+  seguridad: ["shield", "lock"],
+  candado: ["lock"],
+  llave: ["key"],
+  documento: ["file", "scroll"],
+  archivo: ["file", "folder"],
+  carpeta: ["folder"],
+  certificado: ["badge", "award", "file-badge"],
+  premio: ["award", "trophy"],
+  balanza: ["scale"],
+  legal: ["scale", "gavel"],
+  ley: ["scale", "gavel"],
+  portapapeles: ["clipboard"],
+  correo: ["mail"],
+  email: ["mail"],
+  telefono: ["phone"],
+  llamada: ["phone"],
+  celular: ["smartphone"],
+  movil: ["smartphone"],
+  ubicacion: ["map-pin", "map"],
+  mapa: ["map"],
+  direccion: ["map-pin", "navigation"],
+  casa: ["house", "home"],
+  hogar: ["house", "home"],
+  edificio: ["building"],
+  empresa: ["building", "briefcase"],
+  oficina: ["building", "briefcase"],
+  usuario: ["user"],
+  persona: ["user"],
+  personas: ["users"],
+  clientes: ["users", "handshake"],
+  equipo: ["users", "laptop"],
+  reloj: ["clock", "timer"],
+  tiempo: ["clock", "timer", "hourglass"],
+  calendario: ["calendar"],
+  fecha: ["calendar"],
+  nube: ["cloud"],
+  red: ["network", "wifi", "globe"],
+  internet: ["globe", "wifi", "earth"],
+  mundo: ["globe", "earth"],
+  globo: ["globe", "earth"],
+  senal: ["signal", "radio"],
+  antena: ["antenna", "radio-tower"],
+  satelite: ["satellite"],
+  fibra: ["cable", "zap"],
+  cable: ["cable", "plug"],
+  rayo: ["zap"],
+  energia: ["zap", "battery", "plug"],
+  bateria: ["battery"],
+  grafico: ["chart"],
+  estadistica: ["chart"],
+  dinero: ["banknote", "dollar", "wallet"],
+  pago: ["credit-card", "wallet", "banknote"],
+  tarjeta: ["credit-card"],
+  factura: ["receipt"],
+  carrito: ["shopping-cart"],
+  tienda: ["store", "shopping"],
+  estrella: ["star"],
+  corazon: ["heart"],
+  ojo: ["eye"],
+  ver: ["eye"],
+  buscar: ["search"],
+  lupa: ["search", "scan-search"],
+  configuracion: ["settings", "cog", "sliders"],
+  ajustes: ["settings", "sliders"],
+  engranaje: ["cog", "settings"],
+  herramienta: ["wrench", "hammer"],
+  alerta: ["alert", "triangle-alert", "bell"],
+  aviso: ["bell", "megaphone"],
+  campana: ["bell"],
+  ayuda: ["help", "life-buoy"],
+  soporte: ["headset", "life-buoy", "headphones"],
+  auricular: ["headphones", "headset"],
+  informacion: ["info"],
+  check: ["check"],
+  listo: ["check", "circle-check"],
+  servidor: ["server"],
+  datos: ["database"],
+  "base de datos": ["database"],
+  computadora: ["monitor", "laptop", "computer"],
+  laptop: ["laptop"],
+  pantalla: ["monitor", "screen"],
+  chat: ["message"],
+  mensaje: ["message"],
+  descarga: ["download"],
+  descargar: ["download"],
+  subir: ["upload"],
+  flecha: ["arrow", "chevron"],
+  camara: ["camera", "cctv"],
+  video: ["video"],
+  videovigilancia: ["cctv", "camera"],
+  cohete: ["rocket"],
+  objetivo: ["target"],
+  meta: ["target", "flag"],
+  idea: ["lightbulb"],
+  foco: ["lightbulb"],
+  innovacion: ["lightbulb", "sparkles", "rocket"],
+  brillo: ["sparkles", "sun"],
+  sol: ["sun"],
+  pulso: ["activity", "heart-pulse"],
+  monitoreo: ["activity", "monitor", "radar"],
+  salud: ["heart-pulse", "stethoscope", "hospital"],
+  educacion: ["graduation-cap", "book", "school"],
+  libro: ["book"],
+  mineria: ["pickaxe", "mountain"],
+  industria: ["factory"],
+  fabrica: ["factory"],
+  banco: ["landmark"],
+  banca: ["landmark", "banknote"],
+  restaurante: ["utensils", "chef-hat"],
+  comida: ["utensils"],
+  transporte: ["truck", "bus", "car"],
+  camion: ["truck"],
+  avion: ["plane"],
+  telescopio: ["telescope"],
+  diamante: ["gem"],
+  apoyo: ["handshake", "hand-heart"],
+  manos: ["handshake", "hand"],
+  hoja: ["leaf"],
+  planta: ["leaf", "sprout"],
+  agua: ["droplet", "waves"]
+};
+var normalize = (text) => text.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+function toLucideExport(name) {
+  return "Lu" + name.split("-").filter(Boolean).map((part) => part[0].toUpperCase() + part.slice(1)).join("");
+}
+function toKebab(exportName) {
+  return exportName.slice(2).replace(/([A-Z])([A-Z][a-z])/g, "$1-$2").replace(/([a-z])([A-Z0-9])/g, "$1-$2").replace(/([0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+var LUCIDE_ICONS = Lucide;
+var catalog = null;
+function getCatalog() {
+  catalog ?? (catalog = Object.keys(LUCIDE_ICONS).filter((key) => key.startsWith("Lu") && typeof LUCIDE_ICONS[key] === "function").map((key) => ({ key, name: toKebab(key) })).filter(({ key, name }) => toLucideExport(name) === key).map(({ key, name }) => ({ name, Icon: LUCIDE_ICONS[key] })).sort((a, b) => a.name.localeCompare(b.name)));
+  return catalog;
+}
+function searchTerms(query) {
+  const q = normalize(query);
+  if (!q) return [];
+  const terms = /* @__PURE__ */ new Set([q.replace(/\s+/g, "-")]);
+  for (const [alias, targets] of Object.entries(ES_ALIASES)) {
+    if (alias.startsWith(q) || q.length >= 4 && q.startsWith(alias)) targets.forEach((t) => terms.add(t));
+  }
+  return [...terms];
+}
+var styles = {
+  wrap: { display: "flex", flexDirection: "column", gap: 10, marginBottom: 24 },
+  label: { fontSize: 13, fontWeight: 600, color: "#433E52" },
+  description: { fontSize: 12, color: "#8A8597", margin: 0 },
+  current: { display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", border: "1px solid #E1DDEC", borderRadius: 8, background: "#fff" },
+  currentIcon: { display: "grid", placeItems: "center", width: 36, height: 36, borderRadius: 8, background: "#FAF0F6", color: "#96217A", flexShrink: 0 },
+  input: { width: "100%", padding: "8px 10px", border: "1px solid #E1DDEC", borderRadius: 8, fontSize: 14 },
+  grid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(44px, 1fr))", gap: 6, maxHeight: 280, overflowY: "auto", padding: 2 },
+  cell: { display: "grid", placeItems: "center", height: 44, border: "1px solid #E1DDEC", borderRadius: 8, background: "#fff", cursor: "pointer", color: "#433E52" },
+  chip: { padding: "4px 10px", border: "1px solid #E1DDEC", borderRadius: 999, background: "#fff", fontSize: 12, cursor: "pointer" },
+  link: { marginLeft: "auto", border: 0, background: "none", color: "#96217A", fontSize: 12, cursor: "pointer" },
+  muted: { fontSize: 12, color: "#8A8597" }
+};
+function IconPicker({ input, field, legacy }) {
+  const [query, setQuery] = useState("");
+  const value = (input.value || "").trim();
+  const all = getCatalog();
+  const results = useMemo(() => {
+    const terms = searchTerms(query);
+    const matches = terms.length ? all.filter(({ name }) => terms.some((term) => name.includes(term))) : all;
+    return { total: matches.length, items: matches.slice(0, MAX_RESULTS) };
+  }, [query, all]);
+  const legacyMatch = legacy.find((option) => option.value === value);
+  const CurrentIcon = legacyMatch ? null : all.find((icon) => icon.name === value)?.Icon;
+  return React.createElement("div", { style: styles.wrap }, React.createElement("span", { style: styles.label }, field.label || "\xCDcono"), field.description && React.createElement("p", { style: styles.description }, field.description), React.createElement("div", { style: styles.current }, React.createElement("span", { style: styles.currentIcon }, CurrentIcon ? React.createElement(CurrentIcon, { size: 20, strokeWidth: 1.75 }) : React.createElement("span", { style: { fontSize: 11 } }, value ? "Aa" : "\u2014")), React.createElement("span", { style: { fontSize: 13 } }, value ? legacyMatch ? `${legacyMatch.label || value} (\xEDcono actual)` : value : "Sin \xEDcono"), value && React.createElement("button", { type: "button", style: styles.link, onClick: () => input.onChange("") }, "Quitar")), legacy.length > 0 && React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 6 } }, React.createElement("span", { style: { ...styles.muted, width: "100%" } }, "\xCDconos actuales de esta secci\xF3n"), legacy.map((option) => React.createElement(
+    "button",
+    {
+      key: option.value,
+      type: "button",
+      style: { ...styles.chip, ...option.value === value ? { border: "1px solid #96217A", color: "#96217A" } : {} },
+      onClick: () => input.onChange(option.value)
+    },
+    option.label || option.value
+  ))), React.createElement(
+    "input",
+    {
+      type: "search",
+      style: styles.input,
+      placeholder: "Buscar en Lucide (ej. escudo, shield, documento, correo)",
+      value: query,
+      onChange: (event) => setQuery(event.target.value)
+    }
+  ), React.createElement("span", { style: styles.muted }, results.total, " \xEDconos", results.total > MAX_RESULTS ? ` \xB7 se muestran ${MAX_RESULTS}, afina la b\xFAsqueda` : "", " \xB7 cat\xE1logo en lucide.dev"), React.createElement("div", { style: styles.grid }, results.items.map(({ name, Icon }) => React.createElement(
+    "button",
+    {
+      key: name,
+      type: "button",
+      title: name,
+      "aria-label": name,
+      style: { ...styles.cell, ...name === value ? { border: "1px solid #96217A", color: "#96217A", background: "#FAF0F6" } : {} },
+      onClick: () => input.onChange(name)
+    },
+    React.createElement(Icon, { size: 20, strokeWidth: 1.75 })
+  ))));
+}
+function iconField(opts = {}) {
+  const legacy = (opts.legacy || []).map((option) => typeof option === "string" ? { value: option } : option);
+  return {
+    name: opts.name ?? "icon",
+    label: opts.label ?? "\xCDcono",
+    type: "string",
+    description: opts.description,
+    ui: {
+      component: (props) => React.createElement(IconPicker, { ...props, legacy })
+    }
+  };
+}
+
+// tina/config.ts
 var BLOG_TAG_OPTIONS = [
   "Conectividad",
   "Ciberseguridad",
@@ -3387,11 +3606,8 @@ var config_default = defineConfig({
                   { name: "title", label: "T\xEDtulo", type: "string" },
                   { name: "title_en", label: "T\xEDtulo (EN)", type: "string" },
                   { name: "url", label: "URL del documento", type: "string" },
-                  {
-                    name: "icon",
-                    label: "\xCDcono",
-                    type: "string",
-                    options: [
+                  iconField({
+                    legacy: [
                       { value: "document", label: "Documento" },
                       { value: "shield", label: "Escudo (seguridad)" },
                       { value: "scale", label: "Balanza (legal)" },
@@ -3399,7 +3615,7 @@ var config_default = defineConfig({
                       { value: "folder", label: "Carpeta" },
                       { value: "certificate", label: "Certificado" }
                     ]
-                  },
+                  }),
                   { name: "visible", label: "Visible", type: "boolean" }
                 ]
               }

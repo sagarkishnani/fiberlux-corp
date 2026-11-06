@@ -2,6 +2,7 @@ import { useTina, tinaField } from "tinacms/dist/react";
 import { tField } from "../../utils/i18n";
 import type { Locale } from "../../i18n/config";
 import PageHero from "../shared/fx/PageHero";
+import Icon from "../shared/Icon";
 
 interface InfoAbonadosProps {
   query: string;
@@ -107,7 +108,6 @@ export default function InfoAbonadosReact({
               )}
               <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:mt-8 lg:grid-cols-4 lg:gap-5">
                 {docs.map((doc: any, j: number) => {
-                  const IconComp = iconMap[doc.icon || "document"] || DocumentIcon;
                   const rawUrl: string = doc.url || "";
                   const hasUrl = rawUrl && rawUrl !== "#";
                   /* Externo (http) o PDF → nueva pestaña. Interno → misma pestaña y BASE_URL-aware. */
@@ -132,7 +132,7 @@ export default function InfoAbonadosReact({
                       data-tina-field={tinaField(doc, "title")}
                     >
                       <span className="grid h-[52px] w-[52px] place-items-center rounded-2xl bg-[#FAF0F6] text-fx-purple transition-colors duration-[400ms] group-hover/doc:bg-fx-purple group-hover/doc:text-white">
-                        <IconComp />
+                        <Icon name={doc.icon || "document"} legacy={iconMap} size={24} />
                       </span>
                       <span className="text-[14px] font-medium leading-[1.4] text-fx-ink lg:text-[16px]">{tField(doc, "title", locale)}</span>
                     </Tag>

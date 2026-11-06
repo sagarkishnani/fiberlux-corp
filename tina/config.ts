@@ -1,4 +1,5 @@
 import { defineConfig } from "tinacms";
+import { iconField } from "./fields/iconField";
 
 /* SPEC 63: lista compartida de tags del blog. La usan el campo `tags` del post
    y el campo `blogTags` de cada página de solución/subservicio. Agregar un tag
@@ -3549,11 +3550,8 @@ export default defineConfig({
                   { name: "title", label: "Título", type: "string" },
                   { name: "title_en", label: "Título (EN)", type: "string" },
                   { name: "url", label: "URL del documento", type: "string" },
-                  {
-                    name: "icon",
-                    label: "Ícono",
-                    type: "string",
-                    options: [
+                  iconField({
+                    legacy: [
                       { value: "document", label: "Documento" },
                       { value: "shield", label: "Escudo (seguridad)" },
                       { value: "scale", label: "Balanza (legal)" },
@@ -3561,7 +3559,7 @@ export default defineConfig({
                       { value: "folder", label: "Carpeta" },
                       { value: "certificate", label: "Certificado" },
                     ],
-                  },
+                  }),
                   { name: "visible", label: "Visible", type: "boolean" },
                 ],
               },
