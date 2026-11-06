@@ -1,6 +1,6 @@
 # SPEC 127 — Legales como páginas en vez de PDF
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 120
 > **Fecha:** 2026-11-06
 > **Objetivo:** Que las 5 políticas legales que el footer enlaza como PDF se lean como páginas del sitio, editables en Tina con la plantilla legal existente.
