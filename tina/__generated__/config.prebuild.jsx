@@ -2885,6 +2885,12 @@ var config_default = defineConfig({
             type: "object",
             fields: [
               {
+                name: "enabled",
+                label: "Mostrar bot\xF3n de WhatsApp",
+                type: "boolean",
+                description: "Vac\xEDo cuenta como activado."
+              },
+              {
                 name: "phone",
                 label: "N\xFAmero (formato internacional, solo d\xEDgitos)",
                 type: "string",
@@ -2931,6 +2937,19 @@ var config_default = defineConfig({
                   { name: "solucion_en", label: "Mensaje en Soluci\xF3n (EN)", type: "string", ui: { component: "textarea" } }
                 ]
               }
+            ]
+          },
+          {
+            name: "callButton",
+            label: "Bot\xF3n flotante de llamada",
+            type: "object",
+            description: "Se apila encima del bot\xF3n de WhatsApp. Sin tel\xE9fono no se muestra.",
+            fields: [
+              { name: "enabled", label: "Mostrar bot\xF3n de llamada", type: "boolean" },
+              { name: "phone", label: "Tel\xE9fono (con c\xF3digo de pa\xEDs, ej. +5116000000)", type: "string" },
+              { name: "label", label: "Texto accesible", type: "string" },
+              { name: "label_en", label: "Texto accesible (EN)", type: "string" },
+              { name: "desktop", label: "Mostrar tambi\xE9n en desktop", type: "boolean" }
             ]
           },
           // ── Footer ──

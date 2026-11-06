@@ -3021,6 +3021,12 @@ export default defineConfig({
             type: "object",
             fields: [
               {
+                name: "enabled",
+                label: "Mostrar botón de WhatsApp",
+                type: "boolean",
+                description: "Vacío cuenta como activado.",
+              },
+              {
                 name: "phone",
                 label: "Número (formato internacional, solo dígitos)",
                 type: "string",
@@ -3069,6 +3075,20 @@ export default defineConfig({
                   { name: "solucion_en", label: "Mensaje en Solución (EN)", type: "string", ui: { component: "textarea" } },
                 ],
               },
+            ],
+          },
+
+          {
+            name: "callButton",
+            label: "Botón flotante de llamada",
+            type: "object",
+            description: "Se apila encima del botón de WhatsApp. Sin teléfono no se muestra.",
+            fields: [
+              { name: "enabled", label: "Mostrar botón de llamada", type: "boolean" },
+              { name: "phone", label: "Teléfono (con código de país, ej. +5116000000)", type: "string" },
+              { name: "label", label: "Texto accesible", type: "string" },
+              { name: "label_en", label: "Texto accesible (EN)", type: "string" },
+              { name: "desktop", label: "Mostrar también en desktop", type: "boolean" },
             ],
           },
 

@@ -1012,6 +1012,7 @@ fragment GlobalParts on Global {
   }
   whatsapp {
     __typename
+    enabled
     phone
     message
     bubble {
@@ -1024,6 +1025,14 @@ fragment GlobalParts on Global {
       solucion
       solucion_en
     }
+  }
+  callButton {
+    __typename
+    enabled
+    phone
+    label
+    label_en
+    desktop
   }
   footer {
     __typename

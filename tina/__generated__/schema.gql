@@ -2503,9 +2503,18 @@ type GlobalWhatsappBubble {
 }
 
 type GlobalWhatsapp {
+  enabled: Boolean
   phone: String
   message: String
   bubble: GlobalWhatsappBubble
+}
+
+type GlobalCallButton {
+  enabled: Boolean
+  phone: String
+  label: String
+  label_en: String
+  desktop: Boolean
 }
 
 type GlobalFooterColumnsLinks {
@@ -2643,6 +2652,7 @@ type Global implements Node & Document {
   nav: GlobalNav
   header: GlobalHeader
   whatsapp: GlobalWhatsapp
+  callButton: GlobalCallButton
   footer: GlobalFooter
   partners: GlobalPartners
   seo: GlobalSeo
@@ -2728,9 +2738,18 @@ input GlobalWhatsappBubbleFilter {
 }
 
 input GlobalWhatsappFilter {
+  enabled: BooleanFilter
   phone: StringFilter
   message: StringFilter
   bubble: GlobalWhatsappBubbleFilter
+}
+
+input GlobalCallButtonFilter {
+  enabled: BooleanFilter
+  phone: StringFilter
+  label: StringFilter
+  label_en: StringFilter
+  desktop: BooleanFilter
 }
 
 input GlobalFooterColumnsLinksFilter {
@@ -2868,6 +2887,7 @@ input GlobalFilter {
   nav: GlobalNavFilter
   header: GlobalHeaderFilter
   whatsapp: GlobalWhatsappFilter
+  callButton: GlobalCallButtonFilter
   footer: GlobalFooterFilter
   partners: GlobalPartnersFilter
   seo: GlobalSeoFilter
@@ -4784,9 +4804,18 @@ input GlobalWhatsappBubbleMutation {
 }
 
 input GlobalWhatsappMutation {
+  enabled: Boolean
   phone: String
   message: String
   bubble: GlobalWhatsappBubbleMutation
+}
+
+input GlobalCallButtonMutation {
+  enabled: Boolean
+  phone: String
+  label: String
+  label_en: String
+  desktop: Boolean
 }
 
 input GlobalFooterColumnsLinksMutation {
@@ -4924,6 +4953,7 @@ input GlobalMutation {
   nav: GlobalNavMutation
   header: GlobalHeaderMutation
   whatsapp: GlobalWhatsappMutation
+  callButton: GlobalCallButtonMutation
   footer: GlobalFooterMutation
   partners: GlobalPartnersMutation
   seo: GlobalSeoMutation
