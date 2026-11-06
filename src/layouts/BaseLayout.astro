@@ -451,6 +451,7 @@ const whatsappBubbleMessage =
   !maintenanceMode && (
     <script>
       import Lenis from "lenis";
+      import { requestFormPrefill } from "../utils/formPrefill";
 
       const lenis = new Lenis({
         duration: 1.2,
@@ -519,6 +520,11 @@ const whatsappBubbleMessage =
 
           e.preventDefault();
           e.stopPropagation();
+          if (link.dataset.prefill) {
+            try {
+              requestFormPrefill(JSON.parse(link.dataset.prefill));
+            } catch {}
+          }
           scrollToAnchor(target);
           history.replaceState(history.state, "", url.hash);
         },

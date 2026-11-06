@@ -60,6 +60,10 @@ export function renderBold(text: string): ReactNode {
   );
 }
 
+function planSlug(name: string | null | undefined) {
+  return (name || "").trim().toLowerCase().replace(/^cyberguard\s+/, "").replace(/[^a-z0-9]+/g, "-");
+}
+
 const ESCALA_STYLES = [
   { offset: "lg:mt-[120px]", pad: "lg:pt-10", bars: ["bg-fx-purple", "bg-[#EFE6EC]", "bg-[#EFE6EC]"] },
   { offset: "lg:mt-[60px]", pad: "lg:pt-20", bars: ["bg-fx-lilac-strong", "bg-fx-purple", "bg-[#EFE6EC]"] },
@@ -225,9 +229,11 @@ export default function CiberIntroReact(props: ServiceProps) {
             {plans.map((plan, i) => {
               const features = ((plan.features || []).filter(Boolean) as any[]);
               const includes = tField(plan, "includes", locale);
+              const slug = planSlug(plan.name);
               return (
                 <div
                   key={i}
+                  id={slug ? `plan-${slug}` : undefined}
                   data-reveal="up"
                   {...REVEAL}
                   data-reveal-delay={String(i * 0.08)}
@@ -261,6 +267,7 @@ export default function CiberIntroReact(props: ServiceProps) {
                   {plan.cta?.label && (
                     <a
                       href={localizeHref(plan.cta.href, locale)}
+                      data-prefill={slug ? JSON.stringify({ servicio: `cyberguard-${slug}` }) : undefined}
                       className={`mt-auto inline-flex h-14 items-center justify-center rounded-full text-[15px] font-medium transition-[background,color,border-color] duration-300 ${
                         plan.highlighted
                           ? "bg-fx-purple text-white hover:bg-fx-purple-hover hover:text-white"

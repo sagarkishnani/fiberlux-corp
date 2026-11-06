@@ -189,6 +189,12 @@ function isStructural(type: string): boolean {
   return STRUCTURAL_TYPES.includes(type);
 }
 
+function acceptsPrefill(field: FormField, value: string | undefined): value is string {
+  if (!value) return false;
+  if (field.fieldType !== "select" && field.fieldType !== "radio") return true;
+  return (field.options || []).some((option) => option?.value === value);
+}
+
 function getDefaultValue(field: FormField): any {
   if (field.defaultValue !== undefined && field.defaultValue !== "") return field.defaultValue;
   switch (field.fieldType) {
@@ -276,10 +282,7 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
     for (const f of fields) {
       if (f.name && !isStructural(f.fieldType)) {
         const prefilled = prefill?.[f.name];
-        init[f.name] =
-          prefilled !== undefined && prefilled !== ""
-            ? prefilled
-            : getDefaultValue(f);
+        init[f.name] = acceptsPrefill(f, prefilled) ? prefilled : getDefaultValue(f);
       }
     }
     return init;
@@ -359,6 +362,19 @@ export default function DynamicFormReact({ query, variables, data: initialData, 
       /* ignore */
     }
   }, []);
+
+  const prefillKey = JSON.stringify(prefill || {});
+  const appliedPrefillKey = useRef(prefillKey);
+  useEffect(() => {
+    if (appliedPrefillKey.current === prefillKey) return;
+    appliedPrefillKey.current = prefillKey;
+    const updates: Record<string, string> = {};
+    for (const f of fields) {
+      const prefilled = f.name ? prefill?.[f.name] : undefined;
+      if (f.name && acceptsPrefill(f, prefilled)) updates[f.name] = prefilled;
+    }
+    if (Object.keys(updates).length) setValues((prev) => ({ ...prev, ...updates }));
+  }, [prefillKey]);
 
   /* ── Helpers ── */
   const updateField = (name: string, value: any) => {
