@@ -114,41 +114,23 @@
           {
             "text": "Ciberseguridad",
             "url": "/soluciones/ciberseguridad",
+            "megaLabel": "PLANES CYBERGUARD",
+            "megaLabel_en": "CYBERGUARD PLANS",
             "children": [
               {
-                "text": "Perimetral",
-                "url": "/soluciones/ciberseguridad/perimetral",
-                "text_en": "Perimeter"
+                "text": "Cyberguard Start",
+                "text_en": "Cyberguard Start",
+                "url": "/soluciones/ciberseguridad#plan-start"
               },
               {
-                "text": "End Point",
-                "url": "/soluciones/ciberseguridad/end-point",
-                "text_en": "End Point"
+                "text": "Cyberguard Pro",
+                "text_en": "Cyberguard Pro",
+                "url": "/soluciones/ciberseguridad#plan-pro"
               },
               {
-                "text": "Correo",
-                "url": "/soluciones/ciberseguridad/correo",
-                "text_en": "Email"
-              },
-              {
-                "text": "Usuarios",
-                "url": "/soluciones/ciberseguridad/usuarios",
-                "text_en": "Users"
-              },
-              {
-                "text": "Aplicaciones",
-                "url": "/soluciones/ciberseguridad/aplicaciones",
-                "text_en": "Applications"
-              },
-              {
-                "text": "Concientización en Phishing",
-                "url": "/soluciones/ciberseguridad/concientizacion-phishing",
-                "text_en": "Phishing Awareness"
-              },
-              {
-                "text": "Transporte (redes)",
-                "url": "/soluciones/ciberseguridad/transporte-redes",
-                "text_en": "Transport (networks)"
+                "text": "Cyberguard Max",
+                "text_en": "Cyberguard Max",
+                "url": "/soluciones/ciberseguridad#plan-max"
               }
             ],
             "text_en": "Cybersecurity"
@@ -186,6 +168,11 @@
                 "text": "NAS (on premise)",
                 "url": "/soluciones/data-center/nas",
                 "text_en": "NAS (on premise)"
+              },
+              {
+                "text": "Construcción de Data Center",
+                "text_en": "Data Center Construction",
+                "url": "/soluciones/data-center/construccion-data-center"
               }
             ],
             "text_en": "Data Center"
@@ -200,16 +187,6 @@
                 "text_en": "Managed WiFi"
               },
               {
-                "text": "Switches",
-                "url": "/soluciones/infraestructura/switches",
-                "text_en": "Switches"
-              },
-              {
-                "text": "Balanceadores",
-                "url": "/soluciones/infraestructura/balanceadores",
-                "text_en": "Load Balancers"
-              },
-              {
                 "text": "Servidores",
                 "url": "/soluciones/infraestructura/servidores",
                 "text_en": "Servers"
@@ -218,11 +195,6 @@
                 "text": "Video Vigilancia",
                 "url": "/soluciones/infraestructura/video-vigilancia",
                 "text_en": "Video Surveillance"
-              },
-              {
-                "text": "Energía",
-                "url": "/soluciones/infraestructura/energia",
-                "text_en": "Power"
               }
             ],
             "text_en": "Infrastructure"
@@ -232,9 +204,9 @@
             "url": "/soluciones/comunicaciones",
             "children": [
               {
-                "text": "Comunicaciones Unificadas",
+                "text": "Comunicaciones Unificadas (UCaaS)",
                 "url": "/soluciones/comunicaciones/comunicaciones-unificadas",
-                "text_en": "Unified Communications"
+                "text_en": "Unified Communications (UCaaS)"
               },
               {
                 "text": "Cloud PBX",
@@ -245,11 +217,6 @@
                 "text": "Colaboración IA",
                 "url": "/soluciones/comunicaciones/colaboracion-ia",
                 "text_en": "AI Collaboration"
-              },
-              {
-                "text": "Pantallas táctiles",
-                "url": "/soluciones/comunicaciones/pantallas-tactiles",
-                "text_en": "Touch screens"
               },
               {
                 "text": "Contact Center Multicanal",
