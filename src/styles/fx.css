@@ -72,6 +72,12 @@
 .fx-doc strong, .fx-intro strong { font-weight: 600; color: #2B252C; }
 .fx-doc blockquote { margin: 28px 0 0; padding: 24px 28px; border-radius: 18px; background: #FAF0F6; color: #650D4A; font-weight: 500; }
 .fx-doc blockquote p { margin: 0; }
+.fx-doc table { display: block; max-width: 100%; overflow-x: auto; margin: 0 0 24px; border-collapse: collapse; font-size: 14px; line-height: 1.55; -webkit-overflow-scrolling: touch; }
+.fx-doc th, .fx-doc td { padding: 10px 14px; border: 1px solid #ECE9EC; text-align: left; vertical-align: top; }
+.fx-doc th { background: #FAF0F6; color: #650D4A; font-weight: 600; white-space: nowrap; }
+.fx-doc td:first-child { white-space: nowrap; font-weight: 500; }
+.fx-doc td p, .fx-doc th p { margin: 0; }
+@media (max-width: 767px) { .fx-doc td { min-width: 110px; } .fx-doc td:nth-child(4) { min-width: 220px; } }
 .fx-doc a, .fx-intro a { color: #96217A; text-decoration: underline; text-underline-offset: 3px; }
 .fx-intro h2, .fx-intro h3 { margin: 0 0 16px; font-size: 21px; font-weight: 600; line-height: 1.3; color: #650D4A; }
 @media (min-width: 1024px) { .fx-intro h2, .fx-intro h3 { font-size: 24px; } }
