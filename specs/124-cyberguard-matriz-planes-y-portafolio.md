@@ -1,6 +1,6 @@
 # SPEC 124 — Cyberguard: matriz de funciones por plan, capa 24/7 destacada, planes en el formulario y portafolio del menú
 
-> **Estado:** Borrador
+> **Estado:** Aprobado
 > **Depende de:** SPEC 119, SPEC 122
 > **Fecha:** 2026-11-06
 > **Objetivo:** Mostrar en Cyberguard la matriz completa de funciones por plan (Excel del cliente), destacar la capa de monitoreo 24/7, ofrecer los planes Cyberguard en el formulario y dejar el menú de soluciones como en el prototipo.
