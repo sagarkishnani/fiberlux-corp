@@ -126,10 +126,12 @@ export default function CiberCierreReact(props: ServiceProps & { form: FormSourc
                       </span>
                     </button>
                     <div
-                      className="overflow-hidden transition-[max-height,opacity] duration-500 ease-fx-spring"
-                      style={{ maxHeight: open ? 260 : 0, opacity: open ? 1 : 0 }}
+                      className="grid transition-[grid-template-rows,opacity] duration-500 ease-fx-spring"
+                      style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
                     >
-                      <p className="m-0 pb-[30px] pr-0 text-[16px] leading-[1.7] text-fx-body lg:pr-[72px]">{tField(item, "answer", locale)}</p>
+                      <div className="min-h-0 overflow-hidden">
+                        <p className="m-0 pb-[30px] pr-0 text-[16px] leading-[1.7] text-fx-body lg:pr-[72px]">{tField(item, "answer", locale)}</p>
+                      </div>
                     </div>
                   </div>
                 );
