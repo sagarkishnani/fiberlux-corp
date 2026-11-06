@@ -1,3 +1,5 @@
+import Icon, { pathGlyphs } from "../shared/Icon";
+
 const CYBERGUARD_ICONS: Record<string, string> = {
   shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4",
   laptop: "M4 5h16a1 1 0 0 1 1 1v10H3V6a1 1 0 0 1 1-1zM1 19h22",
@@ -12,9 +14,10 @@ const CYBERGUARD_ICONS: Record<string, string> = {
 };
 
 export function CyberguardIcon({ name, size = 22 }: { name?: string | null; size?: number }) {
-  return (
+  const legacy = pathGlyphs(CYBERGUARD_ICONS, (d) => (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d={CYBERGUARD_ICONS[name || ""] || CYBERGUARD_ICONS.shield} />
+      <path d={d} />
     </svg>
-  );
+  ));
+  return <Icon name={name || "shield"} legacy={legacy} size={size} />;
 }

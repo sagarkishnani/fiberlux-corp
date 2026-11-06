@@ -1,9 +1,10 @@
-import { isValidElement, useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { isValidElement, useEffect, useState, type ComponentType, type ReactElement, type ReactNode } from "react";
 import type { IconType } from "react-icons";
 import { LuCircle } from "react-icons/lu";
 import { USED_ICONS } from "../../icons/used-icons.generated";
 
-type LegacyGlyph = ComponentType<{ size?: number | string; className?: string }> | ReactNode;
+type GlyphProps = { size?: number | string; className?: string; "aria-hidden"?: boolean };
+type LegacyGlyph = ComponentType<GlyphProps> | ReactNode;
 
 interface IconProps {
   name?: string | null;
@@ -11,6 +12,10 @@ interface IconProps {
   size?: number | string;
   strokeWidth?: number;
   className?: string;
+}
+
+export function pathGlyphs(paths: Record<string, string>, render: (d: string) => ReactElement) {
+  return Object.fromEntries(Object.entries(paths).map(([key, d]) => [key, render(d)]));
 }
 
 export function toLucideExport(name: string) {
@@ -53,8 +58,8 @@ export default function Icon({ name, legacy, size = "1em", strokeWidth = 1.75, c
 
   if (legacyGlyph !== undefined) {
     if (isValidElement(legacyGlyph) || typeof legacyGlyph !== "function") return <>{legacyGlyph}</>;
-    const Glyph = legacyGlyph as ComponentType<{ size?: number | string; className?: string }>;
-    return <Glyph size={size} className={className} />;
+    const Glyph = legacyGlyph as ComponentType<GlyphProps>;
+    return <Glyph size={size} className={className} aria-hidden />;
   }
 
   const LucideIcon = usedIcon ?? editorIcon;

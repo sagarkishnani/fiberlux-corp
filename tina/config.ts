@@ -716,11 +716,9 @@ export default defineConfig({
                     list: true,
                     ui: { itemProps: (item: any) => ({ label: item?.text || "Franja de mensajes" }) },
                     fields: [
-                      {
-                        name: "icon",
+                      iconField({
                         label: "Ícono",
-                        type: "string",
-                        options: [
+                        legacy: [
                           { value: "shield", label: "Escudo" },
                           { value: "laptop", label: "Equipo / laptop" },
                           { value: "mail", label: "Correo" },
@@ -731,7 +729,7 @@ export default defineConfig({
                           { value: "phone", label: "Dispositivo móvil" },
                           { value: "radar", label: "Radar / vigilancia" },
                         ],
-                      },
+                      }),
                       { name: "text", label: "Texto", type: "string" },
                       { name: "text_en", label: "Texto (EN)", type: "string" },
                     ],
@@ -756,11 +754,9 @@ export default defineConfig({
                     list: true,
                     ui: { itemProps: (item: any) => ({ label: item?.title || "Frentes" }) },
                     fields: [
-                      {
-                        name: "icon",
+                      iconField({
                         label: "Ícono",
-                        type: "string",
-                        options: [
+                        legacy: [
                           { value: "shield", label: "Escudo" },
                           { value: "laptop", label: "Equipo / laptop" },
                           { value: "mail", label: "Correo" },
@@ -771,7 +767,7 @@ export default defineConfig({
                           { value: "phone", label: "Dispositivo móvil" },
                           { value: "radar", label: "Radar / vigilancia" },
                         ],
-                      },
+                      }),
                       { name: "title", label: "Título", type: "string" },
                       { name: "title_en", label: "Título (EN)", type: "string" },
                       { name: "text", label: "Texto", type: "string", ui: { component: "textarea" } },
@@ -1217,11 +1213,9 @@ export default defineConfig({
                 list: true,
                 ui: { itemProps: (item) => ({ label: item?.title || "Item" }) },
                 fields: [
-                  {
-                    name: "icon",
+                  iconField({
                     label: "Ícono",
-                    type: "string",
-                    options: [
+                    legacy: [
                       { value: "internet", label: "Internet / Fibra" },
                       { value: "disponibilidad", label: "Alta disponibilidad" },
                       { value: "satelital", label: "Satelital" },
@@ -1262,7 +1256,7 @@ export default defineConfig({
                       { value: "contact-center", label: "Contact Center" },
                       { value: "generico", label: "Genérico" },
                     ],
-                  },
+                  }),
                   { name: "title", label: "Título", type: "string" },
                   { name: "title_en", label: "Título (EN)", type: "string" },
                   {
