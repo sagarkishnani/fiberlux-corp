@@ -323,7 +323,8 @@
           "title": "Monitoreo SOC",
           "title_en": "SOC monitoring",
           "text": "Un equipo vigila, investiga y te notifica mientras tú operas tu negocio.",
-          "text_en": "A team watches, investigates and notifies you while you run your business."
+          "text_en": "A team watches, investigates and notifies you while you run your business.",
+          "highlight": true
         }
       ]
     },

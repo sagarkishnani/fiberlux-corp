@@ -79,3 +79,25 @@
 @media (prefers-reduced-motion: reduce) {
   .fx-wave, .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse, .fx-ch-in { animation: none; }
 }
+
+/* Card de frente con vigilancia 24/7 (SPEC 124): borde luminoso que recorre la card + halo que respira. */
+@property --fx-orbit-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes fx-orbit-spin { to { --fx-orbit-angle: 360deg; } }
+@keyframes fx-orbit-breathe { 0%, 100% { opacity: .35; } 50% { opacity: .8; } }
+.fx-orbit-card { position: relative; isolation: isolate; }
+.fx-orbit-card::before {
+  content: ""; position: absolute; inset: -1px; z-index: 1; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from var(--fx-orbit-angle), rgba(233,167,220,.25) 0deg, rgba(233,167,220,.25) 210deg, #E9A7DC 290deg, #96237A 340deg, rgba(233,167,220,.25) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: fx-orbit-spin 6s linear infinite;
+}
+.fx-orbit-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 48px -10px rgba(233,167,220,.9);
+  animation: fx-orbit-breathe 4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx-orbit-card::before { animation: none; background: linear-gradient(135deg, #E9A7DC, #96237A); }
+  .fx-orbit-card::after { animation: none; opacity: .5; }
+}

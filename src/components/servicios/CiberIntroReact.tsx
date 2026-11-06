@@ -161,7 +161,9 @@ export default function CiberIntroReact(props: ServiceProps) {
                 key={i}
                 data-reveal="up"
                 {...REVEAL}
-                className="group/fr flex flex-col gap-7 rounded-[28px] border border-fx-line bg-white p-7 transition-[transform,border-color,box-shadow] duration-500 ease-fx-spring hover:-translate-y-1.5 hover:border-fx-lilac-strong hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.4)] lg:p-9"
+                className={`group/fr flex flex-col gap-7 rounded-[28px] border border-fx-line bg-white p-7 transition-[transform,border-color,box-shadow] duration-500 ease-fx-spring hover:-translate-y-1.5 hover:border-fx-lilac-strong hover:shadow-[0_30px_60px_-30px_rgba(150,33,122,.4)] lg:p-9 ${
+                  item.highlight ? "fx-orbit-card !border-transparent" : ""
+                }`}
                 data-tina-field={tinaField(item, "title")}
               >
                 <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#FAF0F6] text-fx-purple transition-all duration-[400ms] group-hover/fr:bg-fx-purple group-hover/fr:text-white">
