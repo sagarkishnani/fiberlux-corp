@@ -496,6 +496,697 @@
         }
       ]
     },
+    "matriz": {
+      "visible": true,
+      "buttonLabel": "Ver más",
+      "buttonLabel_en": "See more",
+      "closeLabel": "Ver menos",
+      "closeLabel_en": "See less",
+      "title": "Todo lo que incluye cada plan",
+      "title_en": "Everything each plan includes",
+      "showVendors": false,
+      "capas": [
+        {
+          "name": "Seguridad perimetral virtual",
+          "name_en": "",
+          "vendor": "Fortigate",
+          "rows": [
+            {
+              "feature": "Firewall",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Políticas UTM",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Segmentación de VLAN (router)",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "IPsec VPN",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Antivirus Network",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Web Filtering",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "DNAT (publicaciones de servicios)",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Políticas DDoS",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "NAT / Routing",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "IDS",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "IPS",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Control de aplicaciones",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Seguridad DNS",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "FFSO (navegación por usuario)",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Traffic Shaping",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "LDAP",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "ZTNA",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            }
+          ]
+        },
+        {
+          "name": "Endpoint seguro",
+          "name_en": "",
+          "vendor": "WithSecure",
+          "rows": [
+            {
+              "feature": "Antimalware",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Control navegación web",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Control de aplicaciones",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Firewall de endpoint",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Análisis de postura de ciberseguridad",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Protección frente a exploits conocidos",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Protección contra comportamiento malicioso",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Inventario de hardware",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Inventario de software",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Punto de restauración DR",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Cifrado de discos",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Gestión de parches (manual y programado)",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Centralización de descargas para parches",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Administración de vulnerabilidades (MITRE)",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Generación de alertas",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Reportes ejecutivos y técnicos",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Detección de accesos no autorizados",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Protección URL maliciosas",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "USB / Control de dispositivo",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Threat Hunting",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Gestion de inventario de aplicaciones",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Monitoreo y telemetria",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Detección zero day, APT, fileless",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Investigación forense",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Reducción de movimiento lateral",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Reducción de impacto de ransomware",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Aislamiento de dispositivo",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Analisis de comportamiento",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Arbol de procesos",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Protección M365 (Teams, email, Sharepoint y Onedrive)",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Sandbox",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Control de identidad",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Cronologia de ataques",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Rollback",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Broad Context Detection (Correlacion de eventos)",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Automated Response",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Vulnerability Management",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Identity Security",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Microsoft 365 Security",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Cloud Security",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            }
+          ]
+        },
+        {
+          "name": "Antispam",
+          "name_en": "",
+          "vendor": "Sophos",
+          "rows": [
+            {
+              "feature": "Anti-Spam",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Anti-Phishing",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "SPF / DKIM / DMARC",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "URL Protección",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "QR Phishing Protección",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Email Encryption",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            }
+          ]
+        },
+        {
+          "name": "Servicio al cliente",
+          "name_en": "",
+          "vendor": "Fiberlux",
+          "rows": [
+            {
+              "feature": "Reporte básico de seguridad mensual",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Recomendaciones de seguridad y optimización",
+              "feature_en": "",
+              "start": "no",
+              "pro": "Trimestral",
+              "max": "Mensual"
+            },
+            {
+              "feature": "Notificación de incidentes",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Investigación de incidentes",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Revisión de seguridad",
+              "feature_en": "",
+              "start": "Anual",
+              "pro": "Trimestral",
+              "max": "Mensual"
+            },
+            {
+              "feature": "Reporte ejecutivo",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Atención presencial (si aplica, identificar condiciones)",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Monitoreo SOC",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Soporte técnico requerimientos",
+              "feature_en": "",
+              "start": "8 x 5",
+              "pro": "12 x 5",
+              "max": "24 x 7"
+            },
+            {
+              "feature": "Soporte técnico incidencias 24 x 7",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            }
+          ]
+        },
+        {
+          "name": "Backup",
+          "name_en": "",
+          "vendor": "Acronis",
+          "rows": [
+            {
+              "feature": "Backup de imagen completa: captura todo el sistema operativo, aplicaciones y datos en una sola copia.",
+              "feature_en": "",
+              "start": "Hasta 2 TB",
+              "pro": "Hasta 2 TB",
+              "max": "Hasta 2 TB"
+            },
+            {
+              "feature": "Backup a nivel de archivo: permite seleccionar carpetas o archivos específicos para respaldar.",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Backup incremental y diferencial: optimiza espacio y ancho de banda al copiar solo los cambios desde la última copia.",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Backup continuo: monitorea en tiempo real y guarda automáticamente modificaciones críticas.",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Backup en múltiples destinos: nube de Acronis, almacenamiento local, NAS, SAN o soluciones externas como HP StoreOnce Catalyst.",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Backup de aplicaciones SaaS: cubre Microsoft 365, Google Workspace y otros entornos colaborativos.",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            }
+          ]
+        },
+        {
+          "name": "DNS seguro",
+          "name_en": "",
+          "vendor": "Cloudflare",
+          "rows": [
+            {
+              "feature": "Protección DDoS ilimitada",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "CDN",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Certificado SSL universal",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Conjunto de reglas administradas gratuito",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Cortafuegos de aplicaciones web (WAF) Básico",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Compatibilidad con inicio de sesión único (SSO)",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Control de cuentas basado en roles",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Mitigación de Bots sencillos",
+              "feature_en": "",
+              "start": "si",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Optimización de imágenes sin pérdida",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Páginas móviles aceleradas (AMP)",
+              "feature_en": "",
+              "start": "no",
+              "pro": "si",
+              "max": "si"
+            },
+            {
+              "feature": "Acuerdo de nivel de servicio (SLA) de tiempo de actividad",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            },
+            {
+              "feature": "Créditos de servicio por tiempo de actividad",
+              "feature_en": "",
+              "start": "no",
+              "pro": "no",
+              "max": "si"
+            }
+          ]
+        }
+      ]
+    },
     "queCambia": {
       "eyebrow": "LA DIFERENCIA SE VE AL ACTUAR",
       "eyebrow_en": "THE DIFFERENCE SHOWS WHEN IT MATTERS",
