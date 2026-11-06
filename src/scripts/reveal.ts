@@ -157,8 +157,15 @@ function wireReveal(el: HTMLElement, mobile: boolean, cleanup: Cleanup) {
       }
     };
   };
-  stop = inView(el, onEnter, { amount: 0.2 });
+  stop = inView(el, onEnter, { amount: revealAmount(el) });
   cleanup(() => stop?.());
+}
+
+/* Un 20% visible es inalcanzable en elementos de más de 5 viewports de alto
+   (p. ej. un documento legal largo): nunca se revelarían. */
+function revealAmount(el: HTMLElement) {
+  const height = el.getBoundingClientRect().height || 1;
+  return Math.min(0.2, (window.innerHeight * 0.5) / height);
 }
 
 function wireSvgDraw(svg: SVGSVGElement, cleanup: Cleanup) {
