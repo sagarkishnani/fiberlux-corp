@@ -1,0 +1,138 @@
+{
+  "title": "Construcción de Data Center",
+  "slug": "construccion-data-center",
+  "solucionSlug": "data-center",
+  "solucionTitle": "Data Center",
+  "hero": {
+    "heading": "Construcción de Data Center",
+    "intro": "Diseñamos y construimos tu centro de datos de punta a punta: obra civil, energía, climatización, cableado estructurado, seguridad física y monitoreo, listos para operar.",
+    "note": "Ideal para organizaciones que necesitan una sala de datos propia, diseñada a la medida de su operación y preparada para crecer.",
+    "ctaLabel": "Conocer más",
+    "formTitle": "¿Conversamos?",
+    "heroBackground": "imagen",
+    "heroImage": "images/soluciones/imagenes/categoria-data-center-cloud.webp",
+    "heading_en": "Data Center Construction",
+    "intro_en": "We design and build your data center end to end: civil works, power, cooling, structured cabling, physical security and monitoring, ready to operate.",
+    "note_en": "Ideal for organizations that need their own data room, designed around their operation and ready to grow.",
+    "ctaLabel_en": "Learn more",
+    "formTitle_en": "Let's talk?"
+  },
+  "beneficios": {
+    "title": "Beneficios",
+    "items": [
+      {
+        "title": "Diseño a la medida de tu operación",
+        "text": "Dimensionamos espacio, carga eléctrica y climatización según tus equipos y tu crecimiento.",
+        "plantilla": "checklist",
+        "datos": {
+          "chips": [
+            {
+              "label": "Obra civil",
+              "label_en": "Civil works"
+            },
+            {
+              "label": "Energía y UPS",
+              "label_en": "Power and UPS"
+            },
+            {
+              "label": "Climatización",
+              "label_en": "Cooling"
+            },
+            {
+              "label": "Cableado estructurado",
+              "label_en": "Structured cabling"
+            }
+          ]
+        },
+        "title_en": "Designed around your operation",
+        "text_en": "We size space, power load and cooling for your equipment and your growth."
+      },
+      {
+        "title": "Disponibilidad desde el diseño",
+        "text": "Energía y climatización redundantes para que tus sistemas críticos no se detengan.",
+        "plantilla": "escudo",
+        "datos": {
+          "etiqueta": "Redundancia",
+          "etiqueta_en": "Redundancy"
+        },
+        "title_en": "Availability by design",
+        "text_en": "Redundant power and cooling so your critical systems never stop."
+      },
+      {
+        "title": "Preparado para crecer",
+        "text": "Una sala modular que suma racks y capacidad sin rehacer la instalación.",
+        "plantilla": "escalera",
+        "datos": {
+          "porcentaje": 60
+        },
+        "title_en": "Ready to grow",
+        "text_en": "A modular room that adds racks and capacity without redoing the installation."
+      },
+      {
+        "title": "Operación bajo control",
+        "text": "Monitoreo de energía, clima y accesos desde una sola consola.",
+        "plantilla": "consola",
+        "datos": {
+          "etiqueta": "SALA DE DATOS",
+          "valor": "OK",
+          "nodos": [
+            {
+              "label": "Energía",
+              "label_en": "Power"
+            },
+            {
+              "label": "Clima",
+              "label_en": "Cooling"
+            },
+            {
+              "label": "Acceso",
+              "label_en": "Access"
+            }
+          ],
+          "etiqueta_en": "DATA ROOM"
+        },
+        "title_en": "Operations under control",
+        "text_en": "Power, climate and access monitoring from a single console."
+      }
+    ],
+    "title_en": "Benefits"
+  },
+  "casosDeUso": {
+    "eyebrow": "[ CASOS DE USO ]",
+    "statement": "Sedes corporativas, plantas industriales, campus y organizaciones que necesitan **una sala de datos propia** o modernizar la que ya tienen.",
+    "eyebrow_en": "[ USE CASES ]",
+    "statement_en": "Corporate headquarters, industrial plants, campuses and organizations that need **their own data room** or want to modernize the one they have."
+  },
+  "whyUsTitle": "¿Por qué Fiberlux?",
+  "faq": {
+    "visible": false,
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Qué incluye este servicio?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo se implementa y en qué plazos?",
+        "answer": ""
+      },
+      {
+        "question": "¿Qué nivel de soporte y SLA ofrece Fiberlux?",
+        "answer": ""
+      },
+      {
+        "question": "¿Cómo verifico la cobertura para mi empresa?",
+        "answer": ""
+      }
+    ],
+    "title_en": "Frequently asked questions"
+  },
+  "seo": {
+    "metaTitle": "Construcción de Data Center | Fiberlux Corp",
+    "metaDescription": "Diseñamos y construimos tu centro de datos de punta a punta: obra civil, energía, climatización, cableado estructurado, seguridad física y monitoreo, listos para operar.",
+    "ogImage": ""
+  },
+  "title_en": "Data Center Construction",
+  "solucionTitle_en": "Data Center",
+  "whyUsTitle_en": "Why Fiberlux?"
+}
