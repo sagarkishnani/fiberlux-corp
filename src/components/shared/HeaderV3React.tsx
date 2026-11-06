@@ -28,6 +28,8 @@ type NavNode = {
   text_en?: string | null;
   url?: string | null;
   external?: boolean | null;
+  megaLabel?: string | null;
+  megaLabel_en?: string | null;
   children?: (NavNode | null)[] | null;
 };
 
@@ -295,7 +297,7 @@ export default function HeaderV3React({ query, variables, data: initialData, loc
                       </div>
                       <div className="flex min-h-[340px] flex-col rounded-[22px] bg-fx-bg px-3 pb-3 pt-5">
                         <div className="px-3.5 pb-2.5 font-mono text-[12px] font-medium tracking-[.18em] text-fx-muted">
-                          {t("mega.label", locale)}
+                          {tField(activeCategory, "megaLabel", locale) || t("mega.label", locale)}
                         </div>
                         {activeSolutions.map((sol, si) => (
                           <a
@@ -566,6 +568,9 @@ export default function HeaderV3React({ query, variables, data: initialData, loc
                       >
                         <div className="overflow-hidden">
                           <div className="mb-4 ml-1 mt-1.5 flex flex-col border-l-2 border-white/20 pl-5">
+                            {tField(cat, "megaLabel", locale) && (
+                              <span className="pb-1 pt-2 font-mono text-[12px] font-medium tracking-[.18em] text-[#E9C7DD]">{tField(cat, "megaLabel", locale)}</span>
+                            )}
                             {sols.map((sol, si) => (
                               <a key={si} href={hx(sol.url)} className="flex min-h-12 items-center text-[17px] text-white hover:text-white active:text-fx-blush">
                                 {tx(sol)}
