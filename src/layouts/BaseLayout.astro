@@ -465,32 +465,61 @@ const whatsappBubbleMessage =
 
       requestAnimationFrame(raf);
 
-      // Smooth-scroll in-page anchor links (e.g. "Ver soluciones" → #catalogo)
-      // through Lenis instead of the browser's instant jump. Offset leaves room
-      // for the fixed header.
-      document.addEventListener("click", (e) => {
-        const link = (e.target as HTMLElement)?.closest?.(
-          'a[href*="#"]'
-        ) as HTMLAnchorElement | null;
-        if (!link) return;
+      const HEADER_OFFSET = 80;
+      const ANCHOR_TOLERANCE = 8;
 
-        const url = new URL(link.href, window.location.href);
-        // Only handle same-page hashes.
-        if (
-          url.pathname !== window.location.pathname ||
-          url.search !== window.location.search
-        )
-          return;
+      // Lenis ya descuenta el scroll-margin-top del destino; el offset del
+      // header solo se suma cuando el destino no declara uno propio.
+      function anchorGap(target: HTMLElement) {
+        const margin = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        return margin > 0 ? { extra: 0, total: margin } : { extra: HEADER_OFFSET, total: HEADER_OFFSET };
+      }
 
-        const id = decodeURIComponent(url.hash.slice(1));
-        if (!id) return;
-        const target = document.getElementById(id);
-        if (!target) return;
+      function scrollToAnchor(target: HTMLElement) {
+        const { extra, total } = anchorGap(target);
+        const immediate = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        lenis.scrollTo(target, {
+          offset: -extra,
+          immediate,
+          force: true,
+          onComplete: () => {
+            // Las secciones pinneadas y los reveals cambian el layout mientras
+            // Lenis anima: se re-apunta al destino real al terminar.
+            const drift = target.getBoundingClientRect().top - total;
+            if (Math.abs(drift) > ANCHOR_TOLERANCE) {
+              lenis.scrollTo(target, { offset: -extra, immediate: true, force: true });
+            }
+          },
+        });
+      }
 
-        e.preventDefault();
-        lenis.scrollTo(target, { offset: -80 });
-        history.pushState(null, "", url.hash);
-      });
+      // Capture phase: runs before ClientRouter's click listener, which would
+      // otherwise take the same-page hash and do the browser's instant jump.
+      document.addEventListener(
+        "click",
+        (e) => {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+          const link = (e.target as HTMLElement)?.closest?.('a[href*="#"]') as HTMLAnchorElement | null;
+          if (!link || link.target === "_blank") return;
+
+          const url = new URL(link.href, window.location.href);
+          const samePage =
+            url.origin === window.location.origin &&
+            url.pathname.replace(/\/$/, "") === window.location.pathname.replace(/\/$/, "") &&
+            url.search === window.location.search;
+          if (!samePage) return;
+
+          const id = decodeURIComponent(url.hash.slice(1));
+          const target = id ? document.getElementById(id) : null;
+          if (!target) return;
+
+          e.preventDefault();
+          e.stopPropagation();
+          scrollToAnchor(target);
+          history.replaceState(history.state, "", url.hash);
+        },
+        { capture: true }
+      );
     </script>
   )
 }
