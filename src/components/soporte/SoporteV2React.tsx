@@ -61,6 +61,10 @@ function linkifyPhone(text: string): ReactNode {
   );
 }
 
+function hasRows(channel: any): boolean {
+  return (channel?.rows || []).some((row: any) => row && (row.label || row.value));
+}
+
 function initialChannel(channels: any[]): number {
   const idx = channels.findIndex((c) => c?.defaultOpen);
   return idx >= 0 ? idx : 0;
@@ -69,9 +73,11 @@ function initialChannel(channels: any[]): number {
 export default function SoporteV2React({ query, variables, data: initialData, locale = "es" }: Props) {
   const { data } = useTina<SoporteTecnicoQuery>({ query, variables, data: initialData });
   const page = (data?.soporteTecnico || initialData?.soporteTecnico) as any;
-  const channels = ((page?.channels || []).filter(Boolean) as any[]);
-  const [active, setActive] = useState(() => initialChannel(channels));
-  const [mobileOpen, setMobileOpen] = useState(() => initialChannel(channels));
+  const channels = ((page?.channels || []).filter(hasRows) as any[]);
+  const [selected, setActive] = useState(() => initialChannel(channels));
+  const [mobileSelected, setMobileOpen] = useState(() => initialChannel(channels));
+  const active = selected < channels.length ? selected : initialChannel(channels);
+  const mobileOpen = mobileSelected < channels.length ? mobileSelected : -1;
   const imgRef = useRef<HTMLImageElement>(null);
 
   useScrollFrame(() => {
@@ -86,7 +92,7 @@ export default function SoporteV2React({ query, variables, data: initialData, lo
   const heroImage = mediaUrl(page.heroImage);
 
   const renderRows = (channel: any, mobile: boolean) => {
-    const rows = ((channel.rows || []).filter(Boolean) as any[]);
+    const rows = ((channel.rows || []).filter((row: any) => row && (row.label || row.value)) as any[]);
     return (
       <div className={`flex flex-col ${mobile ? "mt-4" : "mt-9"}`}>
         {rows.map((row, i) => {

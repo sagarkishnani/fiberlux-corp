@@ -2222,8 +2222,10 @@ var config_default = defineConfig({
             label: "Canales de contacto",
             type: "object",
             list: true,
+            description: "Un canal sin filas no se muestra en la p\xE1gina.",
             ui: {
-              itemProps: (item) => ({ label: item?.title || "Canal" })
+              itemProps: (item) => ({ label: item?.tabLabel || item?.title || "Canal nuevo (sin filas no se muestra)" }),
+              defaultItem: { type: "call", tabLabel: "Nuevo canal", title: "Nuevo canal", rows: [] }
             },
             fields: [
               {
@@ -2259,7 +2261,8 @@ var config_default = defineConfig({
                 type: "object",
                 list: true,
                 ui: {
-                  itemProps: (item) => ({ label: item?.label || "Fila" })
+                  itemProps: (item) => ({ label: item?.label || item?.value || "Fila" }),
+                  defaultItem: { label: "Nueva fila", value: "" }
                 },
                 fields: [
                   { name: "label", label: "Etiqueta", type: "string" },
