@@ -107,6 +107,27 @@
 
 ---
 
+## Inventario de campos de ícono del CMS (SPEC 128 · obs 96)
+
+| # | Línea `tina/config.ts` | Colección · ruta | Componente que lo pinta | Mapa legacy | Notas |
+|---|---|---|---|---|---|
+| 1 | L454 | `home` · `services.items[].icon` | — (no se pinta en el rediseño) | — | Es `type: "image"` (ruta a un SVG subido, p. ej. `/images/soluciones/onda-magenta.svg`), no un select. **No se migra**: pasarlo a string Lucide rompería los valores cargados. |
+| 2 | L719 | `service` · `cyberguard.hero.highlights[].icon` | `servicios/CiberIntroReact` → `CyberguardIcon` | `servicios/cyberguardIcons.tsx` (SVG propios) | |
+| 3 | L759 | `service` · `cyberguard.frentes.items[].icon` | `servicios/CiberIntroReact` → `CyberguardIcon` | `servicios/cyberguardIcons.tsx` | |
+| 4 | L1220 | `service` · `catalogo.items[].icon` | — (las cards del catálogo no pintan ícono) | — | Se migra el control; sin efecto visible hasta que un componente lo use. |
+| 5 | L1699 | `about` · `porQue.items[].icon` | `nosotros/NosotrosIntroReact` → `NosotrosIcon` | `NosotrosIcon` | |
+| 6 | L1826 | `about` · `mission.icon` | — (no se pinta) | — | Igual que #4. |
+| 7 | L1859 | `about` · `vision.icon` | — (no se pinta) | — | Igual que #4. |
+| 8 | L1970 | `about` · `values.items[].icon` | `nosotros/NosotrosMisionValoresReact` → `NosotrosIcon` | `NosotrosIcon` | |
+| 9 | L2063 | `about` · `rubros.items[].icon` | `shared/RubrosV2` | `ICONS` (paths SVG) | Fallback actual: `servicios`. |
+| 10 | L2231 | `contact` · `cards[].icon` | `contact/ContactReact` | `CARD_ICONS` (paths SVG) | La clave también decide el enlace (`phone` → `tel:`, `email` → `mailto:`, `location` → Maps). Esa lógica se conserva sobre las claves legacy. |
+| 11 | L3553 | `infoAbonados` · `sections.documents[].icon` | `info-abonados/InfoAbonadosReact` | `iconMap` | Campo de la captura de la obs 96. |
+| 12 | L4309 | `fiberluxApp` · `beneficios.items[].icon` | `fiberlux-app/FiberluxAppV2React` | `BENEFIT_ICONS` (paths SVG) | Fallback actual: `generico`. |
+| 13 | L4550 | `popup` · `features[].icon` | `popup/PopupReact` | `FEATURE_ICONS` (`react-icons/lu`) | |
+| 14 | L4593 | `popup` · `buttons[].icon` | `popup/PopupReact` | `BUTTON_ICONS` | |
+
+---
+
 ## Agrupaciones sugeridas (para specs)
 
 - **A · Motor de sliders (flechas + drag):** 2, 7, 8 → un solo fix del `useDragSlider` (flechas que no avanzan / drag a medias).
