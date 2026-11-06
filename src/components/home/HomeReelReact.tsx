@@ -38,6 +38,7 @@ const DESKTOP_START_RADIUS = 28;
 const MOBILE_START_SCALE = 0.7;
 const MOBILE_GUTTER = 16;
 const MOBILE_RADIUS = 24;
+const PLAY_VISIBLE_RATIO = 0.5;
 
 type CardFrame = { width: number; height: number; scale: number; radius: number };
 
@@ -59,6 +60,15 @@ function mobileCardFrame(p: number, reduced: boolean): CardFrame {
   return { width: side, height: side, scale, radius: MOBILE_RADIUS };
 }
 
+function visibleRatio(el: HTMLElement): number {
+  const r = el.getBoundingClientRect();
+  const area = r.width * r.height;
+  if (!area) return 0;
+  const w = Math.max(0, Math.min(r.right, window.innerWidth) - Math.max(r.left, 0));
+  const h = Math.max(0, Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0));
+  return (w * h) / area;
+}
+
 function applyCardFrame(card: HTMLElement, frame: CardFrame) {
   card.style.width = `${frame.width}px`;
   card.style.height = `${frame.height}px`;
@@ -74,11 +84,46 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const videoRef = useRef<HTMLVideoElement>(null);
   const topRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const reelRef = useRef(reel);
+  reelRef.current = reel;
+  const loadedRef = useRef(false);
+  const startedRef = useRef(false);
+  const inViewRef = useRef(false);
+  const modalOpenRef = useRef(false);
   const [fullVideo, setFullVideo] = useState<VideoModalContent | null>(null);
+
+  const loadLoop = useCallback(() => {
+    const video = videoRef.current;
+    const current = reelRef.current;
+    if (loadedRef.current || !video || !current) return;
+    const src = pickLoopSource(current);
+    if (!src) return;
+    loadedRef.current = true;
+    video.src = src;
+    video.preload = "auto";
+  }, []);
+
+  const syncPlayback = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const shouldPlay = inViewRef.current && !modalOpenRef.current && !prefersReducedMotion();
+    if (!shouldPlay) {
+      if (!video.paused) video.pause();
+      return;
+    }
+    loadLoop();
+    if (!startedRef.current) {
+      startedRef.current = true;
+      video.currentTime = 0;
+    }
+    if (video.paused) video.play().catch(() => {});
+  }, [loadLoop]);
+
   const closeFullVideo = useCallback(() => {
     setFullVideo(null);
-    videoRef.current?.play().catch(() => {});
-  }, []);
+    modalOpenRef.current = false;
+    syncPlayback();
+  }, [syncPlayback]);
 
   useScrollFrame(() => {
     const section = sectionRef.current;
@@ -90,6 +135,11 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     const rect = section.getBoundingClientRect();
     const p = reduced ? 1 : easeOutCubic(clamp(-rect.top / Math.max(1, rect.height - H), 0, 1));
     applyCardFrame(card, desktop ? desktopCardFrame(p, reduced) : mobileCardFrame(p, reduced));
+    const inView = visibleRatio(card) >= PLAY_VISIBLE_RATIO;
+    if (inView !== inViewRef.current) {
+      inViewRef.current = inView;
+      syncPlayback();
+    }
     if (reduced) return;
     const travel = desktop ? 900 : 500;
     const raw = clamp((H - rect.top) / (rect.height + H), 0, 1);
@@ -102,34 +152,13 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     const video = videoRef.current;
     if (!section || !video || !reel) return;
     video.muted = true;
-    let loaded = false;
-    const load = () => {
-      if (loaded) return;
-      const src = pickLoopSource(reel);
-      if (!src) return;
-      loaded = true;
-      video.src = src;
-      video.preload = "auto";
-    };
     const near = new IntersectionObserver(
-      (entries) => entries.some((e) => e.isIntersecting) && (load(), near.disconnect()),
+      (entries) => entries.some((e) => e.isIntersecting) && (loadLoop(), near.disconnect()),
       { rootMargin: "50% 0px" }
     );
-    const visible = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          load();
-          video.play().catch(() => {});
-        } else video.pause();
-      });
-    });
     near.observe(section);
-    visible.observe(section);
-    return () => {
-      near.disconnect();
-      visible.disconnect();
-    };
-  }, [reel]);
+    return () => near.disconnect();
+  }, [reel, loadLoop]);
 
   if (!reel) return null;
   const poster = withBase(reel.poster);
@@ -139,7 +168,8 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const openFullVideo = () => {
     const desktop = isDesktop();
     const file = (desktop ? reel.fullVideoMp41080 : reel.fullVideoMp4720) || reel.fullVideoMp41080 || reel.fullVideoMp4720;
-    videoRef.current?.pause();
+    modalOpenRef.current = true;
+    syncPlayback();
     setFullVideo({
       title: tField(reel, "fullVideoTitle", locale) || "Fiberlux",
       youtubeUrl: reel.fullVideoYoutubeUrl,
