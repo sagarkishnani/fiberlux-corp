@@ -76,7 +76,12 @@
 .fx-intro h2, .fx-intro h3 { margin: 0 0 16px; font-size: 21px; font-weight: 600; line-height: 1.3; color: #650D4A; }
 @media (min-width: 1024px) { .fx-intro h2, .fx-intro h3 { font-size: 24px; } }
 
+/* Sello ISO (SPEC 126): el eje se resuelve contra el viewBox; el bbox del texto curvo no está centrado en el sello. */
+.fx-seal-axis { transform-box: view-box; transform-origin: 120px 120px; }
+@keyframes fx-seal-spin { to { transform: rotate(360deg); } }
+
 @media (prefers-reduced-motion: reduce) {
+  .fx-seal-axis { animation: none !important; }
   .fx-wave, .fx-twinkle, .fx-pulse, .fx-breath, .fx-drift, .fx-shield, .fx-shadow-pulse, .fx-spin, .fx-marquee, .fx-marquee-reverse, .fx-ch-in { animation: none; }
 }
 
