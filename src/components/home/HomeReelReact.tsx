@@ -137,7 +137,13 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
       startedRef.current = true;
       video.currentTime = 0;
     }
-    if (video.paused) video.play().catch(() => {});
+    if (!video.paused) return;
+    video.play().catch(() => {
+      if (video.muted) return;
+      video.muted = true;
+      setSound(false);
+      video.play().catch(() => {});
+    });
   }, [loadLoop]);
 
   const backToLoop = useCallback(() => {
