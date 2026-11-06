@@ -93,51 +93,23 @@
           "group_en": "Connectivity"
         },
         {
-          "value": "perimetral",
-          "label": "Perimetral",
-          "label_en": "Perimeter",
+          "value": "cyberguard-start",
+          "label": "Cyberguard Start",
+          "label_en": "Cyberguard Start",
           "group": "Ciberseguridad",
           "group_en": "Cybersecurity"
         },
         {
-          "value": "end-point",
-          "label": "End Point",
-          "label_en": "End Point",
+          "value": "cyberguard-pro",
+          "label": "Cyberguard Pro",
+          "label_en": "Cyberguard Pro",
           "group": "Ciberseguridad",
           "group_en": "Cybersecurity"
         },
         {
-          "value": "correo",
-          "label": "Correo",
-          "label_en": "Email",
-          "group": "Ciberseguridad",
-          "group_en": "Cybersecurity"
-        },
-        {
-          "value": "usuarios",
-          "label": "Usuarios",
-          "label_en": "Users",
-          "group": "Ciberseguridad",
-          "group_en": "Cybersecurity"
-        },
-        {
-          "value": "aplicaciones",
-          "label": "Aplicaciones",
-          "label_en": "Applications",
-          "group": "Ciberseguridad",
-          "group_en": "Cybersecurity"
-        },
-        {
-          "value": "concientizacion-phishing",
-          "label": "Concientización en Phishing",
-          "label_en": "Phishing Awareness",
-          "group": "Ciberseguridad",
-          "group_en": "Cybersecurity"
-        },
-        {
-          "value": "transporte-redes",
-          "label": "Transporte (redes)",
-          "label_en": "Transport (networks)",
+          "value": "cyberguard-max",
+          "label": "Cyberguard Max",
+          "label_en": "Cyberguard Max",
           "group": "Ciberseguridad",
           "group_en": "Cybersecurity"
         },
