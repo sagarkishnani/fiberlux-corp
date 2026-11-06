@@ -1,5 +1,5 @@
 import { useId, useMemo, type CSSProperties } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion, type Transition } from "motion/react";
 import type { Locale } from "../../../i18n/config";
 import { tField } from "../../../utils/i18n";
 
@@ -66,14 +66,15 @@ function useRingLoop(ringText: string) {
 
 export default function IsoSeal({ cert, locale, go, tone, halo = true, className = "" }: IsoSealProps) {
   const uid = useId().replace(/:/g, "");
-  const reducedMotion = useReducedMotion();
-  const animate = !reducedMotion;
+  const still = Boolean(useReducedMotion());
+  const shown = go || still;
+  const timing = (transition: Transition): Transition => (still ? { duration: 0, delay: 0 } : transition);
   const ringLoop = useRingLoop(tField(cert, "ringText", locale));
   const label = tField(cert, "label", locale);
   const centerColor = tone === "dark" ? "#FFFFFF" : "#453C46";
 
   const spin = (seconds: number, reverse = false): CSSProperties =>
-    animate && go ? { animation: `fx-seal-spin ${seconds}s linear ${TRACE_END}s infinite${reverse ? " reverse" : ""}` } : {};
+    go && !still ? { animation: `fx-seal-spin ${seconds}s linear ${TRACE_END}s infinite${reverse ? " reverse" : ""}` } : {};
 
   return (
     <svg
@@ -95,15 +96,15 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
         </radialGradient>
       </defs>
 
-      {animate && halo && (
+      {halo && (
         <motion.circle
           cx={120}
           cy={120}
           r={118}
           fill={`url(#seal-halo-${uid})`}
           initial={{ opacity: 0 }}
-          animate={go ? { opacity: [0, 1, 0] } : { opacity: 0 }}
-          transition={{ duration: HALO_MS / 1000, delay: TRACE_END, times: [0, 0.35, 1] }}
+          animate={go && !still ? { opacity: [0, 1, 0] } : { opacity: 0 }}
+          transition={timing({ duration: HALO_MS / 1000, delay: TRACE_END, times: [0, 0.35, 1] })}
         />
       )}
 
@@ -115,9 +116,9 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
         stroke={`url(#seal-stroke-${uid})`}
         strokeWidth={2}
         transform="rotate(-90 120 120)"
-        initial={animate ? { pathLength: 0 } : false}
-        animate={animate ? { pathLength: go ? 1 : 0 } : undefined}
-        transition={{ duration: TRACE_MS / 1000, delay: START_DELAY, ease: "easeInOut" }}
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: shown ? 1 : 0 }}
+        transition={timing({ duration: TRACE_MS / 1000, delay: START_DELAY, ease: "easeInOut" })}
       />
 
       {TICKS.map((tick, i) => (
@@ -128,9 +129,9 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
           strokeOpacity={0.6}
           strokeWidth={1.5}
           strokeLinecap="round"
-          initial={animate ? { opacity: 0 } : false}
-          animate={animate ? { opacity: go ? 1 : 0 } : undefined}
-          transition={{ duration: 0.2, delay: START_DELAY + (i * TRACE_MS) / 1000 / TICKS.length }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: shown ? 1 : 0 }}
+          transition={timing({ duration: 0.2, delay: START_DELAY + (i * TRACE_MS) / 1000 / TICKS.length })}
         />
       ))}
 
@@ -157,9 +158,9 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
 
       <motion.g
         style={{ transformOrigin: "120px 120px" }}
-        initial={animate ? { opacity: 0, scale: 0.9 } : false}
-        animate={animate ? (go ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }) : undefined}
-        transition={{ duration: 0.4, delay: TRACE_END, ease: EASE }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={shown ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+        transition={timing({ duration: 0.4, delay: TRACE_END, ease: EASE })}
       >
         <text x={120} y={126} textAnchor="middle" fill={centerColor} fontSize={46} fontWeight={600} letterSpacing={-1}>
           {cert.code}
