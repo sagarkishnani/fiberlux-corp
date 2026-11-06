@@ -24,12 +24,13 @@ const rows = [logos.filter((_: any, i: number) => i % 2 === 0), logos.filter((_:
   (row) => row.length
 );
 const partners = (globalQuery.data?.global as any)?.partners;
+const partnersVisible = partners?.visible === true;
 const eyebrow = tField(partners, "eyebrow", locale);
 const titleParts = tField(partners, "title", locale).split("*");
 ---
 
 {
-  logos.length > 0 && (
+  partnersVisible && logos.length > 0 && (
     <section class="pt-[88px] lg:pt-[140px]">
       <div data-reveal="up" data-reveal-distance="56" data-reveal-duration="1.2" class="fx-container text-center">
         {eyebrow && <div class="font-mono text-[12px] font-medium tracking-[.2em] text-fx-muted lg:text-[13px]">{eyebrow}</div>}

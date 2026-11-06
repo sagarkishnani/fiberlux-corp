@@ -1037,6 +1037,7 @@ fragment GlobalParts on Global {
   }
   partners {
     __typename
+    visible
     eyebrow
     eyebrow_en
     title

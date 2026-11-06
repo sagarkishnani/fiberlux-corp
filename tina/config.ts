@@ -3172,6 +3172,12 @@ export default defineConfig({
             label: "Partners tecnológicos",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar franja de aliados en el sitio",
+                type: "boolean",
+                description: "Apagado = no se muestra la franja de partners en ninguna página (Home, Soluciones y categorías).",
+              },
               { name: "eyebrow", label: "Eyebrow", type: "string" },
               { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "Título", type: "string" },

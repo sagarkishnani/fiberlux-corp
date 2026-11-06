@@ -39,6 +39,7 @@ const [relatedPosts, serviciosForm] = await Promise.all([loadRelatedPosts(servic
 
 const globalQuery = await client.queries.global({ relativePath: "index.json" });
 const globalSeo = globalQuery.data?.global?.seo;
+const partnersVisible = (globalQuery.data?.global as any)?.partners?.visible === true;
 
 const metaTitle = service?.seo?.metaTitle || service?.title || "Soluciones";
 const metaDescription =
@@ -64,7 +65,7 @@ const metaDescription =
         <Fragment>
           <CategoriaV2React client:load {...serviceProps} />
           <HtmlInjection location="solucion-after-hero" />
-          <CategoriaCierreReact client:visible {...serviceProps} posts={relatedPosts} form={serviciosForm} />
+          <CategoriaCierreReact client:visible {...serviceProps} posts={relatedPosts} form={serviciosForm} partnersVisible={partnersVisible} />
         </Fragment>
       )
     }

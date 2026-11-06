@@ -29,7 +29,7 @@ export function ServiceFormSection({ form, locale, prefill }: { form: FormSource
   );
 }
 
-export default function CategoriaCierreReact(props: ServiceProps & { posts: PostSummary[]; form: FormSource }) {
+export default function CategoriaCierreReact(props: ServiceProps & { posts: PostSummary[]; form: FormSource; partnersVisible?: boolean }) {
   const locale = props.locale || "es";
   const service = useService(props);
   if (!service) return null;
@@ -38,7 +38,7 @@ export default function CategoriaCierreReact(props: ServiceProps & { posts: Post
 
   return (
     <>
-      {logos.length > 0 && (
+      {props.partnersVisible && logos.length > 0 && (
         <section className="pt-[84px] lg:pt-[140px]">
           <div data-reveal="up" {...REVEAL} className="fx-container text-center">
             <Eyebrow className="!text-[13px]" >{tField(partners, "eyebrow", locale)}</Eyebrow>

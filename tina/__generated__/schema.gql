@@ -2498,6 +2498,7 @@ type GlobalPartnersLogos {
 }
 
 type GlobalPartners {
+  visible: Boolean
   eyebrow: String
   eyebrow_en: String
   title: String
@@ -2720,6 +2721,7 @@ input GlobalPartnersLogosFilter {
 }
 
 input GlobalPartnersFilter {
+  visible: BooleanFilter
   eyebrow: StringFilter
   eyebrow_en: StringFilter
   title: StringFilter
@@ -4744,6 +4746,7 @@ input GlobalPartnersLogosMutation {
 }
 
 input GlobalPartnersMutation {
+  visible: Boolean
   eyebrow: String
   eyebrow_en: String
   title: String

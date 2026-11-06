@@ -497,6 +497,7 @@
     }
   },
   "partners": {
+    "visible": false,
     "eyebrow": "[ PARTNERS TECNOLÓGICOS ]",
     "eyebrow_en": "[ TECHNOLOGY PARTNERS ]",
     "title": "Trabajamos con los *líderes* de la industria",

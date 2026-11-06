@@ -3023,6 +3023,12 @@ var config_default = defineConfig({
             label: "Partners tecnol\xF3gicos",
             type: "object",
             fields: [
+              {
+                name: "visible",
+                label: "Mostrar franja de aliados en el sitio",
+                type: "boolean",
+                description: "Apagado = no se muestra la franja de partners en ninguna p\xE1gina (Home, Soluciones y categor\xEDas)."
+              },
               { name: "eyebrow", label: "Eyebrow", type: "string" },
               { name: "eyebrow_en", label: "Eyebrow (EN)", type: "string" },
               { name: "title", label: "T\xEDtulo", type: "string" },
