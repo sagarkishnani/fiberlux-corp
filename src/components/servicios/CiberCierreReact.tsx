@@ -35,15 +35,15 @@ export default function CiberCierreReact(props: ServiceProps & { form: FormSourc
             {rows.map((row, i) => (
               <div key={i} className={`grid lg:grid-cols-[1.2fr_1fr_1fr] ${i ? "border-t border-fx-soft" : ""}`} data-tina-field={tinaField(row, "situation")}>
                 <div className="px-6 pb-3 pt-6 text-[16px] font-medium text-fx-ink lg:px-10 lg:py-[30px] lg:font-normal">{tField(row, "situation", locale)}</div>
-                <div className="flex items-center gap-3.5 px-6 py-3 text-[15px] text-fx-muted lg:border-l lg:border-fx-soft lg:px-10 lg:py-[30px] lg:text-[16px]">
-                  <span className="h-0.5 w-[18px] shrink-0 bg-fx-lilac-strong" />
+                <div className="flex items-start gap-3.5 px-6 py-3 text-[15px] text-fx-muted lg:border-l lg:border-fx-soft lg:px-10 lg:py-[30px] lg:text-[16px]">
+                  <span className="h-0.5 w-[18px] mt-[11px] shrink-0 bg-fx-lilac-strong" />
                   <span>
                     <span className="mr-1 font-semibold lg:hidden">{tField(queCambia, "colWithout", locale)}:</span>
                     {tField(row, "without", locale)}
                   </span>
                 </div>
-                <div className="flex items-center gap-3.5 bg-[#FCF8FB] px-6 pb-6 pt-3 text-[15px] font-medium text-fx-purple-deep lg:border-l lg:border-fx-soft lg:px-10 lg:py-[30px] lg:text-[16px]">
-                  <span className="flex shrink-0 text-fx-purple">
+                <div className="flex items-start gap-3.5 bg-[#FCF8FB] px-6 pb-6 pt-3 text-[15px] font-medium text-fx-purple-deep lg:border-l lg:border-fx-soft lg:px-10 lg:py-[30px] lg:text-[16px]">
+                  <span className="mt-[3px] flex shrink-0 text-fx-purple">
                     <CyberguardIcon name="check" size={18} />
                   </span>
                   {tField(row, "with", locale)}
