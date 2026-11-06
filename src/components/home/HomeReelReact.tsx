@@ -5,6 +5,7 @@ import type { Locale } from "../../i18n/config";
 import { tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
 import { t } from "../../i18n/ui";
+import { LuVolume2, LuVolumeX } from "react-icons/lu";
 import { PlayIcon } from "../shared/fx/FxPrimitives";
 import VideoModal, { type VideoModalContent } from "../shared/fx/VideoModal";
 import { clamp, easeOutCubic, isDesktop, prefersReducedMotion, useScrollFrame } from "./useScrollFrame";
@@ -20,6 +21,20 @@ function withBase(path?: string | null): string {
   if (!path) return "";
   if (/^https?:\/\//.test(path)) return path;
   return mediaUrl(path) || `${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
+}
+
+function pickFullSource(reel: Record<string, any>): string {
+  const file = isDesktop()
+    ? reel.fullVideoMp41080 || reel.fullVideoMp4720
+    : reel.fullVideoMp4720 || reel.fullVideoMp41080;
+  return file ? withBase(file) : "";
+}
+
+function placeSoundButton(button: HTMLElement, card: HTMLElement) {
+  const r = card.getBoundingClientRect();
+  const right = Math.min(r.right, document.documentElement.clientWidth) - SOUND_BUTTON_INSET;
+  const bottom = Math.min(r.bottom - SOUND_BUTTON_INSET, window.innerHeight - SOUND_BUTTON_MAX_BOTTOM);
+  button.style.transform = `translate3d(${right - SOUND_BUTTON_SIZE}px,${bottom - SOUND_BUTTON_SIZE}px,0)`;
 }
 
 export function pickLoopSource(reel: Record<string, any>): string {
@@ -39,6 +54,9 @@ const MOBILE_START_SCALE = 0.7;
 const MOBILE_GUTTER = 16;
 const MOBILE_RADIUS = 24;
 const PLAY_VISIBLE_RATIO = 0.5;
+const SOUND_BUTTON_INSET = 16;
+const SOUND_BUTTON_SIZE = 48;
+const SOUND_BUTTON_MAX_BOTTOM = 120;
 
 type CardFrame = { width: number; height: number; scale: number; radius: number };
 
@@ -90,6 +108,9 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
   const startedRef = useRef(false);
   const inViewRef = useRef(false);
   const modalOpenRef = useRef(false);
+  const sourceRef = useRef<"loop" | "full">("loop");
+  const soundButtonRef = useRef<HTMLButtonElement>(null);
+  const [sound, setSound] = useState(false);
   const [fullVideo, setFullVideo] = useState<VideoModalContent | null>(null);
 
   const loadLoop = useCallback(() => {
@@ -119,6 +140,47 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     if (video.paused) video.play().catch(() => {});
   }, [loadLoop]);
 
+  const backToLoop = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    sourceRef.current = "loop";
+    loadedRef.current = false;
+    video.loop = true;
+    video.muted = true;
+    setSound(false);
+    loadLoop();
+    syncPlayback();
+  }, [loadLoop, syncPlayback]);
+
+  const toggleSound = () => {
+    const video = videoRef.current;
+    const current = reelRef.current;
+    if (!video || !current) return;
+    if (sound) {
+      video.muted = true;
+      setSound(false);
+      return;
+    }
+    if (sourceRef.current === "loop") {
+      const fullSrc = pickFullSource(current);
+      if (!fullSrc) return;
+      const resumeAt = video.currentTime || 0;
+      sourceRef.current = "full";
+      loadedRef.current = true;
+      video.loop = false;
+      video.src = fullSrc;
+      video.preload = "auto";
+      video.addEventListener("loadedmetadata", () => (video.currentTime = resumeAt), { once: true });
+    }
+    startedRef.current = true;
+    video.muted = false;
+    setSound(true);
+    video.play().catch(() => {
+      video.muted = true;
+      setSound(false);
+    });
+  };
+
   const closeFullVideo = useCallback(() => {
     setFullVideo(null);
     modalOpenRef.current = false;
@@ -136,6 +198,7 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
     const p = reduced ? 1 : easeOutCubic(clamp(-rect.top / Math.max(1, rect.height - H), 0, 1));
     applyCardFrame(card, desktop ? desktopCardFrame(p, reduced) : mobileCardFrame(p, reduced));
     const inView = visibleRatio(card) >= PLAY_VISIBLE_RATIO;
+    if (soundButtonRef.current) placeSoundButton(soundButtonRef.current, card);
     if (inView !== inViewRef.current) {
       inViewRef.current = inView;
       syncPlayback();
@@ -157,13 +220,19 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
       { rootMargin: "50% 0px" }
     );
     near.observe(section);
-    return () => near.disconnect();
-  }, [reel, loadLoop]);
+    const onEnded = () => sourceRef.current === "full" && backToLoop();
+    video.addEventListener("ended", onEnded);
+    return () => {
+      near.disconnect();
+      video.removeEventListener("ended", onEnded);
+    };
+  }, [reel, loadLoop, backToLoop]);
 
   if (!reel) return null;
   const poster = withBase(reel.poster);
   const fullLabel = tField(reel, "fullVideoLabel", locale);
   const hasFullVideo = !!(reel.fullVideoYoutubeUrl || reel.fullVideoMp41080 || reel.fullVideoMp4720);
+  const hasFullMp4 = !!(reel.fullVideoMp41080 || reel.fullVideoMp4720);
 
   const openFullVideo = () => {
     const desktop = isDesktop();
@@ -212,6 +281,18 @@ export default function HomeReelReact({ query, variables, data: initialData, loc
             className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
+        {hasFullMp4 && (
+          <button
+            ref={soundButtonRef}
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={sound}
+            aria-label={t(sound ? "reel.soundOff" : "reel.soundOn", locale)}
+            className="absolute left-0 top-0 z-[3] grid h-12 w-12 place-items-center rounded-full bg-white/90 text-fx-purple shadow-[0_12px_30px_-12px_rgba(17,12,16,.5)] backdrop-blur-[8px] transition-[background,color] duration-300 will-change-transform hover:bg-fx-purple hover:text-white"
+          >
+            {sound ? <LuVolume2 size={22} aria-hidden="true" /> : <LuVolumeX size={22} aria-hidden="true" />}
+          </button>
+        )}
         {hasFullVideo && fullLabel && (
           <button
             type="button"
