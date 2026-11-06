@@ -48,7 +48,8 @@ export default function BlogV2React({ posts, locale = "es" }: { posts: PostSumma
     });
     return Array.from(seen);
   }, [posts]);
-  const visible = category === ALL ? posts.slice(1) : posts.filter((p) => (p.tags || []).includes(category));
+  const rest = posts.slice(1);
+  const visible = category === ALL ? rest : rest.filter((p) => (p.tags || []).includes(category));
 
   return (
     <>
