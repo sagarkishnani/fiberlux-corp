@@ -109,9 +109,25 @@ export default function CyberMatrix({ matriz, plans, locale }: { matriz: any; pl
                   onClick={() => toggleLayer(index)}
                   aria-expanded={expanded}
                   aria-controls={layerPanelId}
-                  className="flex w-full items-center justify-between gap-4 px-4 py-5 text-left transition-colors duration-300 hover:bg-fx-bg lg:px-10 lg:py-6"
+                  className="group/capa flex w-full items-center gap-3 bg-fx-bg px-4 py-4 text-left transition-colors duration-300 hover:bg-[#FAF0F6] lg:gap-4 lg:px-10 lg:py-5"
                   data-tina-field={tinaField(capa, "name")}
                 >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    className={`shrink-0 text-fx-muted transition-[transform,color] duration-300 ease-fx-spring group-hover/capa:text-fx-purple ${
+                      expanded ? "rotate-90 text-fx-purple" : ""
+                    }`}
+                  >
+                    <path d="M9 6l6 6-6 6" />
+                  </svg>
                   <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="text-[17px] font-medium text-fx-ink lg:text-[20px]">{tField(capa, "name", locale)}</span>
                     {matriz.showVendors && capa.vendor && (
@@ -120,16 +136,6 @@ export default function CyberMatrix({ matriz, plans, locale }: { matriz: any; pl
                       </span>
                     )}
                     <span className="text-[13px] text-fx-muted">({rows.length})</span>
-                  </span>
-                  <span
-                    className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-fx-line-strong text-fx-ink transition-transform duration-300 ease-fx-spring ${
-                      expanded ? "rotate-45 border-fx-purple bg-fx-purple text-white" : ""
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
                   </span>
                 </button>
                 {expanded && (
