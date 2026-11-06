@@ -15,6 +15,8 @@ export async function loadCertificaciones(): Promise<CertificacionesSource> {
       norm_en: c.norm_en ?? null,
       label: c.label ?? null,
       label_en: c.label_en ?? null,
+      ringText: c.ringText ?? null,
+      ringText_en: c.ringText_en ?? null,
     })),
   };
 }

@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "motion/react";
 import type { Locale } from "../../i18n/config";
 import { tField } from "../../utils/i18n";
 import { renderEmphasis } from "../../utils/emphasis";
 import { Eyebrow } from "./fx/FxPrimitives";
+import IsoSeal from "./fx/IsoSeal";
 
 export interface CertItem {
   code?: string | null;
@@ -10,6 +12,8 @@ export interface CertItem {
   norm_en?: string | null;
   label?: string | null;
   label_en?: string | null;
+  ringText?: string | null;
+  ringText_en?: string | null;
 }
 
 interface Props {
@@ -28,22 +32,6 @@ function splitNorm(norm: string) {
   return { name: name || norm, desc: rest.join(" — ") };
 }
 
-function Seal({ code, small }: { code: string; small: boolean }) {
-  return (
-    <div className={`relative grid place-items-center ${small ? "h-[176px] w-[176px]" : "h-[220px] w-[220px]"}`}>
-      <div className="fx-spin absolute inset-0 rounded-full border-[1.5px] border-dashed border-fx-lilac-strong" />
-      <div className={`absolute rounded-full border border-fx-lilac ${small ? "inset-3.5" : "inset-[18px]"}`} />
-      <div
-        className={`absolute rounded-full bg-white ${small ? "inset-7 shadow-[0_16px_40px_-18px_rgba(150,33,122,.4)]" : "inset-9 shadow-[0_20px_50px_-20px_rgba(150,33,122,.4)]"}`}
-      />
-      <div className="relative text-center">
-        <div className={`font-mono font-medium tracking-[.3em] text-fx-muted ${small ? "text-[11px]" : "text-[12px]"}`}>ISO</div>
-        <div className={`font-semibold leading-[1.1] tracking-[-.02em] text-fx-purple ${small ? "text-[36px]" : "text-[44px]"}`}>{code}</div>
-      </div>
-    </div>
-  );
-}
-
 export default function CertificacionesV2({
   eyebrow,
   title,
@@ -56,10 +44,16 @@ export default function CertificacionesV2({
 }: Props) {
   const items = rawItems.filter((c) => c?.code);
   const [active, setActive] = useState(0);
+  const [rotated, setRotated] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(panelRef, { once: true, amount: 0.35 });
 
   useEffect(() => {
     if (items.length < 2) return;
-    const id = window.setInterval(() => setActive((a) => (a + 1) % items.length), 5000);
+    const id = window.setInterval(() => {
+      setRotated(true);
+      setActive((a) => (a + 1) % items.length);
+    }, 5000);
     return () => window.clearInterval(id);
   }, [items.length]);
 
@@ -84,7 +78,9 @@ export default function CertificacionesV2({
           }
           aria-hidden={!on}
         >
-          <Seal code={item.code || ""} small={small} />
+          <div className={small ? "w-[240px] max-w-full" : "w-[280px]"}>
+            <IsoSeal cert={item} locale={locale} go={inView && on} tone="light" halo={!rotated} />
+          </div>
           <div className={`relative font-semibold text-fx-ink ${small ? "mt-6 text-[16px]" : "mt-8 text-[18px]"}`}>{name}</div>
           {desc && <div className={`relative leading-[1.5] text-fx-body ${small ? "mt-1 text-[14px]" : "mt-1.5 text-[15px]"}`}>{desc}</div>}
         </div>
@@ -110,6 +106,7 @@ export default function CertificacionesV2({
           </p>
         </div>
         <div
+          ref={panelRef}
           data-reveal="scale"
           data-reveal-duration="1.2"
           data-reveal-ease="fx"
