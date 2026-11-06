@@ -36,16 +36,19 @@ const TRACE_END = START_DELAY + TRACE_MS / 1000;
 const RING_R = 84;
 const RING_FONT = 10;
 const RING_TRACKING = 2.6;
-const RING_CHARS = Math.floor((2 * Math.PI * RING_R) / (RING_FONT * 0.6 + RING_TRACKING));
+const RING_LENGTH = 2 * Math.PI * RING_R;
+const RING_CHARS = Math.floor(RING_LENGTH / (RING_FONT * 0.6 + RING_TRACKING));
 const RING_PATH = `M 120,${120 - RING_R} a ${RING_R},${RING_R} 0 1,1 0,${RING_R * 2} a ${RING_R},${RING_R} 0 1,1 0,-${RING_R * 2}`;
+
+const round = (value: number) => Math.round(value * 1000) / 1000;
 
 const TICKS = Array.from({ length: 12 }, (_, i) => {
   const angle = ((i * 30 - 90) * Math.PI) / 180;
   return {
-    x1: 120 + 104 * Math.cos(angle),
-    y1: 120 + 104 * Math.sin(angle),
-    x2: 120 + 110 * Math.cos(angle),
-    y2: 120 + 110 * Math.sin(angle),
+    x1: round(120 + 104 * Math.cos(angle)),
+    y1: round(120 + 104 * Math.sin(angle)),
+    x2: round(120 + 110 * Math.cos(angle)),
+    y2: round(120 + 110 * Math.sin(angle)),
   };
 });
 
@@ -56,8 +59,8 @@ function useRingLoop(ringText: string) {
     const base = ringText.trim();
     if (!base) return "";
     const unit = `${base} · `;
-    const turns = Math.max(1, Math.ceil(RING_CHARS / unit.length));
-    return unit.repeat(turns).slice(0, RING_CHARS);
+    const turns = Math.max(1, Math.floor(RING_CHARS / unit.length));
+    return unit.repeat(turns);
   }, [ringText]);
 }
 
@@ -147,7 +150,7 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
       {ringLoop && (
         <g className="fx-seal-axis hidden md:block" style={spin(TEXT_SPIN_S, true)}>
           <text className="font-mono" fontSize={RING_FONT} letterSpacing={RING_TRACKING} fill={PURPLE} fillOpacity={0.75}>
-            <textPath href={`#seal-ring-${uid}`}>{ringLoop}</textPath>
+            <textPath href={`#seal-ring-${uid}`} textLength={round(RING_LENGTH)} lengthAdjust="spacing">{ringLoop}</textPath>
           </text>
         </g>
       )}
@@ -167,8 +170,8 @@ export default function IsoSeal({ cert, locale, go, tone, halo = true, className
             y={150}
             textAnchor="middle"
             className="font-mono"
-            fontSize={label.length > 22 ? 7 : 9}
-            letterSpacing={label.length > 22 ? 0.8 : 1.6}
+            fontSize={label.length > 18 ? 7 : 9}
+            letterSpacing={label.length > 18 ? 0.8 : 1.6}
             fill={centerColor}
             fillOpacity={0.55}
           >
