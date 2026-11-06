@@ -8,13 +8,13 @@ import { useAbout, type AboutProps } from "./useAbout";
 
 const REVEAL = { "data-reveal-distance": "56", "data-reveal-duration": "1.2", "data-reveal-ease": "fx" } as const;
 
-function Photo({ src, alt, field }: { src?: string | null; alt: string; field?: string }) {
+function Photo({ src, alt, field, className = "" }: { src?: string | null; alt: string; field?: string; className?: string }) {
   return (
     <div
       data-reveal="scale"
       data-reveal-duration="1.2"
       data-reveal-ease="fx"
-      className="group/img relative h-[360px] overflow-hidden rounded-[24px] bg-fx-ink lg:h-[580px] lg:rounded-[32px]"
+      className={`group/img relative h-[360px] overflow-hidden rounded-[24px] bg-fx-ink lg:h-[580px] lg:rounded-[32px] ${className}`}
       data-tina-field={field}
     >
       {src && (
@@ -65,8 +65,8 @@ export default function NosotrosMisionValoresReact(props: AboutProps) {
           </h2>
         </div>
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-[88px]">
-          <Photo src={about.hero?.image} alt={tField(mission, "title", locale)} field={tinaField(about.hero, "image")} />
           <Statement eyebrow={tField(mission, "title", locale)} text={tField(mission, "text", locale)} field={tinaField(mission, "text")} large />
+          <Photo src={about.hero?.image} alt={tField(mission, "title", locale)} field={tinaField(about.hero, "image")} className="lg:order-first" />
         </div>
         <div className="mt-[84px] grid items-center gap-10 lg:mt-[140px] lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-[88px]">
           <Statement eyebrow={tField(vision, "title", locale)} text={tField(vision, "text", locale)} field={tinaField(vision, "text")} large={false} />

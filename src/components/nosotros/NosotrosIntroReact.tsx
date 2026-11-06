@@ -86,7 +86,7 @@ export default function NosotrosIntroReact(props: AboutProps) {
                   data-reveal="scale"
                   data-reveal-duration="1.2"
                   data-reveal-ease="fx"
-                  className={`group/img relative min-h-[285px] overflow-hidden rounded-[24px] bg-fx-ink lg:min-h-[460px] lg:rounded-[40px]`}
+                  className={`group/img relative min-h-[285px] overflow-hidden rounded-[24px] bg-fx-ink lg:min-h-[460px] lg:rounded-[40px] ${imageFirst ? "lg:order-first" : ""}`}
                   data-tina-field={tinaField(feature, "image")}
                 >
                   {feature.image && (
@@ -104,17 +104,8 @@ export default function NosotrosIntroReact(props: AboutProps) {
                   key={i}
                   className={`grid gap-6 ${imageFirst ? "lg:grid-cols-[minmax(0,2.05fr)_minmax(0,1fr)]" : "lg:grid-cols-[minmax(0,1fr)_minmax(0,2.05fr)]"}`}
                 >
-                  {imageFirst ? (
-                    <>
-                      {image}
-                      {text}
-                    </>
-                  ) : (
-                    <>
-                      {text}
-                      {image}
-                    </>
-                  )}
+                  {text}
+                  {image}
                 </div>
               );
             })}
