@@ -75,7 +75,23 @@
         "url": "/soluciones/ciberseguridad",
         "tabIcon": "escudo",
         "tabLabel": "Ciberseguridad",
-        "bullets": [],
+        "bullets": [
+          {
+            "label": "Cyberguard Start",
+            "url": "/soluciones/ciberseguridad#plan-start",
+            "label_en": "Cyberguard Start"
+          },
+          {
+            "label": "Cyberguard Pro",
+            "url": "/soluciones/ciberseguridad#plan-pro",
+            "label_en": "Cyberguard Pro"
+          },
+          {
+            "label": "Cyberguard Max",
+            "url": "/soluciones/ciberseguridad#plan-max",
+            "label_en": "Cyberguard Max"
+          }
+        ],
         "title_en": "Cybersecurity",
         "description_en": "Active security for networks, users and applications, managed end to end.",
         "tabLabel_en": "Cybersecurity",
