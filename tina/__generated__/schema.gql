@@ -772,6 +772,7 @@ type ServiceCyberguardCta {
 }
 
 type ServiceCyberguard {
+  searchKeywords: [String]
   hero: ServiceCyberguardHero
   frentes: ServiceCyberguardFrentes
   escalas: ServiceCyberguardEscalas
@@ -1128,6 +1129,7 @@ input ServiceCyberguardCtaFilter {
 }
 
 input ServiceCyberguardFilter {
+  searchKeywords: StringFilter
   hero: ServiceCyberguardHeroFilter
   frentes: ServiceCyberguardFrentesFilter
   escalas: ServiceCyberguardEscalasFilter
@@ -4107,6 +4109,7 @@ input ServiceCyberguardCtaMutation {
 }
 
 input ServiceCyberguardMutation {
+  searchKeywords: [String]
   hero: ServiceCyberguardHeroMutation
   frentes: ServiceCyberguardFrentesMutation
   escalas: ServiceCyberguardEscalasMutation

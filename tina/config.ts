@@ -679,6 +679,13 @@ export default defineConfig({
             description: "Si este bloque tiene contenido, la categoría usa la plantilla de Ciberseguridad en vez de la genérica.",
             fields: [
               {
+                name: "searchKeywords",
+                label: "Palabras clave para el buscador",
+                description: "Términos que deben encontrar esta página aunque no aparezcan en el texto (siglas, marcas, sinónimos). Uno por elemento.",
+                type: "string",
+                list: true,
+              },
+              {
                 name: "hero",
                 label: "Hero",
                 type: "object",

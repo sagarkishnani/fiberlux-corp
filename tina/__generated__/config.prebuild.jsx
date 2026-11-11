@@ -841,6 +841,13 @@ var config_default = defineConfig({
             description: "Si este bloque tiene contenido, la categor\xEDa usa la plantilla de Ciberseguridad en vez de la gen\xE9rica.",
             fields: [
               {
+                name: "searchKeywords",
+                label: "Palabras clave para el buscador",
+                description: "T\xE9rminos que deben encontrar esta p\xE1gina aunque no aparezcan en el texto (siglas, marcas, sin\xF3nimos). Uno por elemento.",
+                type: "string",
+                list: true
+              },
+              {
                 name: "hero",
                 label: "Hero",
                 type: "object",

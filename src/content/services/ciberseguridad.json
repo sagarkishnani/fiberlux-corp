@@ -183,6 +183,20 @@
   "whyUsTitle_en": "Why Fiberlux?",
   "title_en": "Cybersecurity",
   "cyberguard": {
+    "searchKeywords": [
+      "EPP",
+      "EDR",
+      "XDR",
+      "MDR",
+      "SOC",
+      "NOC",
+      "Firewall",
+      "Antivirus",
+      "Antispam",
+      "Backup",
+      "DNS",
+      "Zero Trust"
+    ],
     "hero": {
       "badge": "Ciberseguridad gestionada para empresas",
       "badge_en": "Managed cybersecurity for businesses",
@@ -579,7 +593,7 @@
         {
           "name": "Endpoint seguro",
           "name_en": "",
-          "vendor": "WithSecure",
+          "vendor": "WithSecure EPP / EDR / XDR",
           "rows": [
             {
               "feature": "Antimalware",

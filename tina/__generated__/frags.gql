@@ -162,6 +162,7 @@ fragment ServiceParts on Service {
   __typename
   cyberguard {
     __typename
+    searchKeywords
     hero {
       __typename
       badge
