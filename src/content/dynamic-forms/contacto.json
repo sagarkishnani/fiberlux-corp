@@ -235,6 +235,144 @@
       ]
     },
     {
+      "fieldType": "select",
+      "name": "sede",
+      "label": "Sede",
+      "label_en": "Location",
+      "placeholder": "Selecciona una sede",
+      "placeholder_en": "Select a location",
+      "required": true,
+      "width": "full",
+      "options": [
+        {
+          "value": "amazonas",
+          "label": "Amazonas",
+          "label_en": "Amazonas"
+        },
+        {
+          "value": "ancash",
+          "label": "Áncash",
+          "label_en": "Áncash"
+        },
+        {
+          "value": "apurimac",
+          "label": "Apurímac",
+          "label_en": "Apurímac"
+        },
+        {
+          "value": "arequipa",
+          "label": "Arequipa",
+          "label_en": "Arequipa"
+        },
+        {
+          "value": "ayacucho",
+          "label": "Ayacucho",
+          "label_en": "Ayacucho"
+        },
+        {
+          "value": "cajamarca",
+          "label": "Cajamarca",
+          "label_en": "Cajamarca"
+        },
+        {
+          "value": "callao",
+          "label": "Callao",
+          "label_en": "Callao"
+        },
+        {
+          "value": "cusco",
+          "label": "Cusco",
+          "label_en": "Cusco"
+        },
+        {
+          "value": "huancavelica",
+          "label": "Huancavelica",
+          "label_en": "Huancavelica"
+        },
+        {
+          "value": "huanuco",
+          "label": "Huánuco",
+          "label_en": "Huánuco"
+        },
+        {
+          "value": "ica",
+          "label": "Ica",
+          "label_en": "Ica"
+        },
+        {
+          "value": "junin",
+          "label": "Junín",
+          "label_en": "Junín"
+        },
+        {
+          "value": "la-libertad",
+          "label": "La Libertad",
+          "label_en": "La Libertad"
+        },
+        {
+          "value": "lambayeque",
+          "label": "Lambayeque",
+          "label_en": "Lambayeque"
+        },
+        {
+          "value": "lima",
+          "label": "Lima",
+          "label_en": "Lima"
+        },
+        {
+          "value": "loreto",
+          "label": "Loreto",
+          "label_en": "Loreto"
+        },
+        {
+          "value": "madre-de-dios",
+          "label": "Madre de Dios",
+          "label_en": "Madre de Dios"
+        },
+        {
+          "value": "moquegua",
+          "label": "Moquegua",
+          "label_en": "Moquegua"
+        },
+        {
+          "value": "pasco",
+          "label": "Pasco",
+          "label_en": "Pasco"
+        },
+        {
+          "value": "piura",
+          "label": "Piura",
+          "label_en": "Piura"
+        },
+        {
+          "value": "puno",
+          "label": "Puno",
+          "label_en": "Puno"
+        },
+        {
+          "value": "san-martin",
+          "label": "San Martín",
+          "label_en": "San Martín"
+        },
+        {
+          "value": "tacna",
+          "label": "Tacna",
+          "label_en": "Tacna"
+        },
+        {
+          "value": "tumbes",
+          "label": "Tumbes",
+          "label_en": "Tumbes"
+        },
+        {
+          "value": "ucayali",
+          "label": "Ucayali",
+          "label_en": "Ucayali"
+        }
+      ],
+      "order": 4
+    },
+    {
       "fieldType": "text",
       "name": "empresa",
       "label": "Empresa",
