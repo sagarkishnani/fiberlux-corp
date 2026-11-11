@@ -11,17 +11,70 @@
 
 import { client } from "../../tina/__generated__/client";
 
-export type SearchType = "solucion" | "subservicio" | "pagina" | "blog";
+import type { SearchEntry, SearchFragment } from "../utils/search";
 
-export interface SearchEntry {
-  title: string;
-  title_en?: string;
-  description?: string;
-  description_en?: string;
-  url: string;
-  type: SearchType;
-  category?: string;
-  category_en?: string;
+const PLAN_KEYS = [
+  ["start", "Start"],
+  ["pro", "Pro"],
+  ["max", "Max"],
+] as const;
+
+const INCLUDED_IN = { es: "incluido en", en: "included in" };
+
+function plansIncluding(row: any) {
+  return PLAN_KEYS.flatMap(([key, label]) => {
+    const value = String(row?.[key] ?? "").trim();
+    if (!value || value.toLowerCase() === "no") return [];
+    return value.toLowerCase() === "si" ? [label] : [`${label} (${value})`];
+  });
+}
+
+function fragment(es: string | undefined, en?: string): SearchFragment | null {
+  const text = (es || "").trim();
+  if (!text) return null;
+  return { text, text_en: (en || "").trim() || undefined };
+}
+
+function cyberguardFragments(cyberguard: any): SearchFragment[] {
+  const fragments: Array<SearchFragment | null> = [];
+
+  for (const plan of cyberguard.planes?.items || []) {
+    if (!plan) continue;
+    fragments.push(fragment(plan.subtitle ? `${plan.name} · ${plan.subtitle}` : plan.name, plan.subtitle_en && `${plan.name} · ${plan.subtitle_en}`));
+    fragments.push(fragment(plan.idealFor && `${plan.name} · ${plan.idealFor}`, plan.idealFor_en && `${plan.name} · ${plan.idealFor_en}`));
+    for (const feature of plan.features || []) {
+      fragments.push(fragment(feature?.text && `${plan.name} · ${feature.text}`, feature?.text_en && `${plan.name} · ${feature.text_en}`));
+    }
+  }
+
+  for (const front of cyberguard.frentes?.items || []) {
+    fragments.push(fragment(front?.title && `${front.title} · ${front.text || ""}`, front?.title_en && `${front.title_en} · ${front.text_en || ""}`));
+  }
+
+  for (const item of cyberguard.faq?.items || []) {
+    fragments.push(fragment(item?.question, item?.question_en));
+  }
+
+  for (const layer of cyberguard.matriz?.capas || []) {
+    if (!layer) continue;
+    const layerEn = layer.name_en || layer.name;
+    if (layer.vendor) {
+      fragments.push(fragment(`${layer.name} (${layer.vendor})`, `${layerEn} (${layer.vendor})`));
+    }
+    for (const row of layer.rows || []) {
+      if (!row?.feature) continue;
+      const plans = plansIncluding(row).join(", ");
+      const featureEn = row.feature_en || row.feature;
+      fragments.push(
+        fragment(
+          plans ? `${layer.name} · ${row.feature} — ${INCLUDED_IN.es} ${plans}` : `${layer.name} · ${row.feature}`,
+          plans ? `${layerEn} · ${featureEn} — ${INCLUDED_IN.en} ${plans}` : `${layerEn} · ${featureEn}`
+        )
+      );
+    }
+  }
+
+  return fragments.filter((f): f is SearchFragment => f !== null);
 }
 
 /* URLs BASE_URL-aware (el sitio puede desplegarse bajo /staging). */
@@ -46,14 +99,23 @@ export async function GET() {
   for (const [key, mod] of Object.entries(services)) {
     const doc: any = (mod as any).default ?? mod;
     const slug = doc.slug || fileSlug(key);
-    entries.push({
+    const entry: SearchEntry = {
       title: doc.title || slug,
       title_en: doc.title_en || "",
       description: doc.hero?.intro || doc.hero?.heading || "",
       description_en: doc.hero?.intro_en || "",
       url: withBase(`soluciones/${slug}`),
       type: "solucion",
-    });
+    };
+    if (doc.cyberguard?.hero?.title) {
+      entry.title = "Cyberguard";
+      entry.title_en = "Cyberguard";
+      entry.category = doc.title || slug;
+      entry.category_en = doc.title_en || "";
+      entry.fragments = cyberguardFragments(doc.cyberguard);
+      entry.keywords = (doc.cyberguard.searchKeywords || []).filter(Boolean);
+    }
+    entries.push(entry);
   }
 
   // ── Subservicios (colección subservicio) ──
