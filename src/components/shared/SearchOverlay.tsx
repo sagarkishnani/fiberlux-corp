@@ -39,6 +39,7 @@ function localize(e: SearchEntry, locale: Locale): SearchEntry {
     description: e.description_en || e.description,
     category: e.category_en || e.category,
     url: localizeHref(e.url, "en"),
+    fragments: e.fragments?.map((f) => ({ text: f.text_en || f.text })),
   };
 }
 
@@ -171,7 +172,7 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
                     href={c.url}
                     className="block rounded-xl px-3 py-3 text-fx-ink transition-colors hover:bg-[#FAF0F6] hover:text-fx-purple"
                   >
-                    {c.title}
+                    {c.category || c.title}
                   </a>
                 </li>
               ))}
@@ -182,7 +183,7 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
-              {results.map((r, i) => (
+              {results.map(({ entry: r, excerpt }, i) => (
                 <li key={i}>
                   <a
                     href={r.url}
@@ -200,9 +201,9 @@ export default function SearchOverlay({ open, onClose, locale = "es" }: SearchOv
                       {r.category && (
                         <p className="mt-0.5 text-[12px] text-fx-muted">{r.category}</p>
                       )}
-                      {r.description && (
+                      {(excerpt || r.description) && (
                         <p className="mt-1 line-clamp-2 text-[13px] text-fx-body">
-                          {r.description}
+                          {excerpt || r.description}
                         </p>
                       )}
                     </div>
