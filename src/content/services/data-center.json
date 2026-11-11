@@ -100,14 +100,6 @@
         "url": "/soluciones/data-center/nas",
         "title_en": "NAS (on premise)",
         "description_en": "A network-attached storage solution that centralizes files and data so multiple users and systems can access them securely."
-      },
-      {
-        "icon": "autocontenido",
-        "title": "Construcción de Data Center",
-        "description": "Diseñamos y construimos tu centro de datos de punta a punta: obra civil, energía, climatización, cableado y monitoreo.",
-        "url": "/soluciones/data-center/construccion-data-center",
-        "title_en": "Data Center Construction",
-        "description_en": "We design and build your data center end to end: civil works, power, cooling, cabling and monitoring."
       }
     ]
   },

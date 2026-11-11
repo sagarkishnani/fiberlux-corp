@@ -154,13 +154,6 @@
           "group_en": "Data Center"
         },
         {
-          "value": "construccion-data-center",
-          "label": "Construcción de Data Center",
-          "label_en": "Data Center Construction",
-          "group": "Data Center",
-          "group_en": "Data Center"
-        },
-        {
           "value": "wifi-gestionado",
           "label": "WiFi Gestionado",
           "label_en": "Managed WiFi",

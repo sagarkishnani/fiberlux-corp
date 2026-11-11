@@ -75,43 +75,7 @@
         "url": "/soluciones/ciberseguridad",
         "tabIcon": "escudo",
         "tabLabel": "Ciberseguridad",
-        "bullets": [
-          {
-            "label": "Perimetral",
-            "url": "/soluciones/ciberseguridad/perimetral",
-            "label_en": "Perimeter"
-          },
-          {
-            "label": "End Point",
-            "url": "/soluciones/ciberseguridad/end-point",
-            "label_en": "End Point"
-          },
-          {
-            "label": "Correo",
-            "url": "/soluciones/ciberseguridad/correo",
-            "label_en": "Email"
-          },
-          {
-            "label": "Usuarios",
-            "url": "/soluciones/ciberseguridad/usuarios",
-            "label_en": "Users"
-          },
-          {
-            "label": "Aplicaciones",
-            "url": "/soluciones/ciberseguridad/aplicaciones",
-            "label_en": "Applications"
-          },
-          {
-            "label": "Concientización en Phishing",
-            "url": "/soluciones/ciberseguridad/concientizacion-phishing",
-            "label_en": "Phishing Awareness"
-          },
-          {
-            "label": "Transporte (redes)",
-            "url": "/soluciones/ciberseguridad/transporte-redes",
-            "label_en": "Transport (networks)"
-          }
-        ],
+        "bullets": [],
         "title_en": "Cybersecurity",
         "description_en": "Active security for networks, users and applications, managed end to end.",
         "tabLabel_en": "Cybersecurity",
