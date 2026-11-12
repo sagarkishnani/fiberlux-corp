@@ -3031,6 +3031,21 @@ export default defineConfig({
                   "Mensaje prellenado en páginas generales. En páginas de servicio/solución se reemplaza automáticamente por uno que alude a ese servicio.",
               },
               {
+                name: "preForm",
+                label: "Miniformulario antes de WhatsApp",
+                type: "object",
+                description:
+                  "Al hacer clic en el botón, pide RUC y celular antes de abrir WhatsApp. El mensaje de la página se mantiene y se le agrega el RUC.",
+                fields: [
+                  {
+                    name: "enabled",
+                    label: "Pedir RUC y celular antes de abrir WhatsApp",
+                    type: "boolean",
+                    description: "Desactívalo para volver al botón que abre WhatsApp directo.",
+                  },
+                ],
+              },
+              {
                 name: "bubble",
                 label: "Mensaje flotante (burbuja)",
                 type: "object",

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 import type { Locale } from "../../i18n/config";
 import { fxAsset } from "./fx/FxPrimitives";
+import WhatsAppPreForm, { WhatsAppGlyph } from "./WhatsAppPreForm";
 
 /**
  * Botón flotante de WhatsApp. El número y los textos se editan en Tina
@@ -13,6 +14,10 @@ import { fxAsset } from "./fx/FxPrimitives";
  *
  * Con `callButton` (global.callButton, SPEC 125) suma encima un botón morado de
  * llamada; `showWhatsApp` (global.whatsapp.enabled) oculta el de WhatsApp.
+ *
+ * Con `preForm` (global.whatsapp.preForm.enabled) el botón ya no abre WhatsApp
+ * directo: despliega un miniformulario que pide RUC y celular y recién entonces
+ * abre el chat con el mensaje de la página + el RUC (`WhatsAppPreForm`).
  */
 interface WhatsAppButtonProps {
   /** Phone in international format, digits only (e.g. "51986176790"). */
@@ -28,6 +33,8 @@ interface WhatsAppButtonProps {
   delayMs?: number;
   locale?: Locale;
   showWhatsApp?: boolean;
+  /** Pedir RUC y celular antes de abrir WhatsApp. */
+  preForm?: boolean;
   callButton?: CallButtonConfig;
 }
 
@@ -106,12 +113,48 @@ export default function WhatsAppButton({
   delayMs = 7000,
   locale = "es",
   showWhatsApp = true,
+  preForm = false,
   callButton,
 }: WhatsAppButtonProps) {
   const digits = (phone || DEFAULT_PHONE).replace(/\D/g, "");
   const href = `https://api.whatsapp.com/send?phone=${digits}&text=${encodeURIComponent(message)}`;
 
   const [fase, setFase] = useState<Fase>("oculta");
+
+  /* Miniformulario previo (SPEC: obs. medición de chats de Google). */
+  const [abierto, setAbierto] = useState(false);
+  const panelId = useId();
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+
+  const cerrarPanel = (devolverFoco = true) => {
+    setAbierto(false);
+    if (devolverFoco) fabRef.current?.focus({ preventScroll: true });
+  };
+
+  /* Escape y clic fuera cierran el panel. */
+  useEffect(() => {
+    if (!abierto) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") cerrarPanel();
+    };
+    const onDown = (e: PointerEvent) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target as Node)) cerrarPanel(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [abierto]);
+
+  /* Al navegar (el botón persiste entre páginas) el panel se cierra. */
+  useEffect(() => {
+    const onNav = () => setAbierto(false);
+    document.addEventListener("astro:after-swap", onNav);
+    return () => document.removeEventListener("astro:after-swap", onNav);
+  }, []);
 
   const gancho = (bubbleMessage || "").trim();
 
@@ -153,15 +196,19 @@ export default function WhatsAppButton({
 
   if (!showWhatsApp && !callButton) return null;
 
+  const conForm = preForm && showWhatsApp;
+
   const wrapClasses = [
     "wa-fab-wrap",
+    conForm ? "wa-fab-wrap--form" : "",
+    abierto ? "is-open" : "",
     callButton ? "wa-fab-wrap--call" : "",
     callButton?.desktop ? "wa-fab-wrap--call-desktop" : "",
     showWhatsApp ? "" : "wa-fab-wrap--call-only",
   ].filter(Boolean).join(" ");
 
   return (
-    <div className={wrapClasses}>
+    <div className={wrapClasses} ref={wrapRef}>
       {callButton && (
         <a href={callHref} aria-label={callLabel} title={callLabel} className="call-fab">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -170,7 +217,7 @@ export default function WhatsAppButton({
         </a>
       )}
 
-      {showWhatsApp && gancho && fase !== "oculta" && (
+      {showWhatsApp && gancho && fase !== "oculta" && !abierto && (
         /* `role="status"` y no `dialog`: la burbuja se anuncia una vez y no roba
            el foco a quien está leyendo la página. */
         <div
@@ -178,15 +225,28 @@ export default function WhatsAppButton({
           onAnimationEnd={() => setFase(siguienteFase)}
           className={`wa-bubble ${claseFase}`}
         >
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="wa-bubble__text"
-            onClick={cerrar}
-          >
-            {gancho}
-          </a>
+          {conForm ? (
+            <button
+              type="button"
+              className="wa-bubble__text"
+              onClick={() => {
+                cerrar();
+                setAbierto(true);
+              }}
+            >
+              {gancho}
+            </button>
+          ) : (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="wa-bubble__text"
+              onClick={cerrar}
+            >
+              {gancho}
+            </a>
+          )}
 
           {/* La cola se pinta después de la tarjeta y del mismo color: donde se
               solapan no se nota, y apunta al centro del botón. */}
@@ -203,7 +263,31 @@ export default function WhatsAppButton({
         </div>
       )}
 
-      {showWhatsApp && (
+      {conForm && (
+        <>
+          <WhatsAppPreForm
+            id={panelId}
+            open={abierto}
+            onClose={() => cerrarPanel()}
+            phone={digits}
+            message={message || DEFAULT_MESSAGE}
+            locale={locale}
+          />
+          <button
+            ref={fabRef}
+            type="button"
+            className="wa-fab2"
+            aria-label={locale === "en" ? "Open WhatsApp chat" : "Abrir chat de WhatsApp"}
+            aria-expanded={abierto}
+            aria-controls={panelId}
+            onClick={() => setAbierto((v) => !v)}
+          >
+            <WhatsAppGlyph />
+          </button>
+        </>
+      )}
+
+      {showWhatsApp && !conForm && (
         <a
           href={href}
           target="_blank"
@@ -367,6 +451,51 @@ export default function WhatsAppButton({
           }
         }
 
+        /* ── FAB del miniformulario (prototipo): círculo magenta con anillo ── */
+        .wa-fab2 {
+          position: relative;
+          display: grid;
+          place-items: center;
+          width: 56px;
+          height: 56px;
+          border: 0;
+          padding: 0;
+          border-radius: 50%;
+          background: #96237A;
+          color: #fff;
+          cursor: pointer;
+          transition: background .15s, transform .15s;
+        }
+        .wa-fab2:hover { background: #7F1866; transform: scale(1.05); }
+        .wa-fab2:focus-visible { outline: 3px solid #D5A7CA; outline-offset: 3px; }
+        .wa-fab2 svg { display: block; width: 30px; height: 30px; }
+        .wa-fab2::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          border: 2px solid #D5A7CA;
+          animation: wa-ring 2.8s ease-out infinite;
+          pointer-events: none;
+        }
+        .wa-fab-wrap.is-open .wa-fab2::after { animation: none; opacity: 0; }
+        @keyframes wa-ring {
+          0% { transform: scale(1); opacity: .9; }
+          70%, 100% { transform: scale(1.55); opacity: 0; }
+        }
+        @media (min-width: 1024px) {
+          .wa-fab2 { width: 60px; height: 60px; }
+          .wa-fab2 svg { width: 32px; height: 32px; }
+        }
+        /* Con el panel abierto, el de llamada se aparta para no quedar debajo. */
+        .wa-fab-wrap.is-open .call-fab { visibility: hidden; }
+        .wa-bubble button.wa-bubble__text {
+          width: 100%;
+          border: 0;
+          font-family: inherit;
+          cursor: pointer;
+        }
+
         /* ── Botón de llamada: apilado 12px encima del de WhatsApp ── */
         .call-fab {
           position: absolute;
@@ -433,6 +562,7 @@ export default function WhatsAppButton({
           .wa-bubble--in,
           .wa-bubble--out { animation: none; }
           .wa-fab__label { transition: none; }
+          .wa-fab2::after { animation: none; opacity: 0; }
         }
       `}</style>
     </div>

@@ -3112,6 +3112,20 @@ var config_default = defineConfig({
                 description: "Mensaje prellenado en p\xE1ginas generales. En p\xE1ginas de servicio/soluci\xF3n se reemplaza autom\xE1ticamente por uno que alude a ese servicio."
               },
               {
+                name: "preForm",
+                label: "Miniformulario antes de WhatsApp",
+                type: "object",
+                description: "Al hacer clic en el bot\xF3n, pide RUC y celular antes de abrir WhatsApp. El mensaje de la p\xE1gina se mantiene y se le agrega el RUC.",
+                fields: [
+                  {
+                    name: "enabled",
+                    label: "Pedir RUC y celular antes de abrir WhatsApp",
+                    type: "boolean",
+                    description: "Desact\xEDvalo para volver al bot\xF3n que abre WhatsApp directo."
+                  }
+                ]
+              },
+              {
                 name: "bubble",
                 label: "Mensaje flotante (burbuja)",
                 type: "object",

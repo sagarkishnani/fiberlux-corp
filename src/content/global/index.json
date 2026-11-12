@@ -255,6 +255,9 @@
     "enabled": true,
     "phone": "51986176790",
     "message": "¡Hola Fiberlux! Quiero iniciar la Transformación Digital de mi empresa. 🛜 Mi número de RUC es:",
+    "preForm": {
+      "enabled": true
+    },
     "bubble": {
       "enabled": true,
       "home": "¡Hola! ¿Listo para llevar la conectividad de tu empresa al siguiente nivel? Escríbenos 👋",

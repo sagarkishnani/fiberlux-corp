@@ -1016,6 +1016,10 @@ fragment GlobalParts on Global {
     enabled
     phone
     message
+    preForm {
+      __typename
+      enabled
+    }
     bubble {
       __typename
       enabled

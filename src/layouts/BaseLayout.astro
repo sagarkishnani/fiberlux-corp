@@ -67,6 +67,7 @@ let whatsappPhone: string | undefined;
 let whatsappBaseMessage: string | undefined;
 let whatsappBubble: any = null;
 let whatsappEnabled = true;
+let whatsappPreForm = false;
 let callButton: { phone: string; label?: string; desktop?: boolean } | undefined;
 let injectHead = "";
 let injectBodyEnd = "";
@@ -81,6 +82,7 @@ try {
   whatsappBaseMessage = wa?.message || undefined;
   whatsappBubble = wa?.bubble || null;
   whatsappEnabled = wa?.enabled !== false;
+  whatsappPreForm = wa?.preForm?.enabled === true;
   const call = g?.callButton;
   if (call?.enabled && call.phone?.trim()) {
     callButton = { phone: call.phone.trim(), label: tField(call, "label", locale) || undefined, desktop: !!call.desktop };
@@ -414,6 +416,7 @@ const whatsappBubbleMessage =
             bubbleKey={bubbleCtx ?? "global"}
             locale={locale}
             showWhatsApp={whatsappEnabled}
+            preForm={whatsappPreForm}
             callButton={callButton}
           />
           <AccessibilityPanel client:idle transition:persist="a11y" locale={locale} />

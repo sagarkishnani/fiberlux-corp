@@ -2494,6 +2494,10 @@ type GlobalHeader {
   secondaryNav: [GlobalHeaderSecondaryNav]
 }
 
+type GlobalWhatsappPreForm {
+  enabled: Boolean
+}
+
 type GlobalWhatsappBubble {
   enabled: Boolean
   home: String
@@ -2508,6 +2512,7 @@ type GlobalWhatsapp {
   enabled: Boolean
   phone: String
   message: String
+  preForm: GlobalWhatsappPreForm
   bubble: GlobalWhatsappBubble
 }
 
@@ -2729,6 +2734,10 @@ input GlobalHeaderFilter {
   secondaryNav: GlobalHeaderSecondaryNavFilter
 }
 
+input GlobalWhatsappPreFormFilter {
+  enabled: BooleanFilter
+}
+
 input GlobalWhatsappBubbleFilter {
   enabled: BooleanFilter
   home: StringFilter
@@ -2743,6 +2752,7 @@ input GlobalWhatsappFilter {
   enabled: BooleanFilter
   phone: StringFilter
   message: StringFilter
+  preForm: GlobalWhatsappPreFormFilter
   bubble: GlobalWhatsappBubbleFilter
 }
 
@@ -4798,6 +4808,10 @@ input GlobalHeaderMutation {
   secondaryNav: [GlobalHeaderSecondaryNavMutation]
 }
 
+input GlobalWhatsappPreFormMutation {
+  enabled: Boolean
+}
+
 input GlobalWhatsappBubbleMutation {
   enabled: Boolean
   home: String
@@ -4812,6 +4826,7 @@ input GlobalWhatsappMutation {
   enabled: Boolean
   phone: String
   message: String
+  preForm: GlobalWhatsappPreFormMutation
   bubble: GlobalWhatsappBubbleMutation
 }
 
