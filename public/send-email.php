@@ -218,6 +218,16 @@ try {
             }
         }
 
+        // === Leads CRM (flx_leads_web) ===
+        if (in_array($formType, ['contacto', 'servicios'], true) && is_readable('/var/www/fiberlux-persistent/flx_leads_api.php')) {
+            parse_str((string) parse_url($_SERVER['HTTP_REFERER'] ?? '', PHP_URL_QUERY), $ref);
+            $lead = $input + $ref;
+            $lead['apellido']  = $lead['apellido']  ?? $lead['apellidos']  ?? '';
+            $lead['cuentanos'] = $lead['cuentanos'] ?? $lead['comentario'] ?? '';
+            require_once '/var/www/fiberlux-persistent/flx_leads_api.php';
+            flx_leads_enqueue($lead);
+        }
+
         echo json_encode(['success' => true, 'correlativo' => $correlativo]);
 
 } catch (Exception $e) {
