@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Genera src/icons/used-icons.generated.ts con solo los íconos Lucide que usa el contenido (SPEC 128).
-import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -61,7 +61,10 @@ function writeIfChanged(file, content) {
   try {
     previous = readFileSync(file, "utf8");
   } catch {}
-  if (previous !== content) writeFileSync(file, content);
+  if (previous === content) return;
+  // src/icons/ solo contiene archivos ignorados por git: en un clon limpio la carpeta no existe.
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, content);
 }
 
 writeIfChanged(outFile, source);
