@@ -27,6 +27,7 @@ import type { Locale } from "../../i18n/config";
 import { localizeHref, tField } from "../../utils/i18n";
 import { mediaUrl } from "../../utils/mediaUrl";
 import Icon from "../shared/Icon";
+import { renderEmphasis } from "../../utils/emphasis";
 
 interface Props {
   query: string;
@@ -63,16 +64,10 @@ const BUTTON_ICONS: Record<string, IconType> = {
    desvanece (desktop). Debe cubrir la transición más larga, la de mobile. */
 const EXIT_MS = 420;
 
-/* Fondo del panel. Los tres stops salen del artboard: el diseño no es negro
-   plano sino un barrido de ciruela que ENTRA por la derecha, donde vive la
-   captura del teléfono, y se apaga hacia la columna de texto — de ahí la
-   observación de que el lado izquierdo tiene que ser el oscuro. */
-const PANEL_BG =
-  "linear-gradient(90deg, #0B0309 0%, #150410 42%, #2A0821 100%)";
-
-/* Mismo ciruela para la columna de la derecha: es el extremo claro del
-   degradado, ahora tomado del artboard en vez de aproximado. */
-const PHONE_BG = "#2A0821";
+/* Rediseño claro (SPEC 117–120): el pop-up usa el mismo lenguaje que la
+   página de Fiberlux App — fondo `fx-bg`, tarjetas blancas con ícono lila y
+   el teléfono sobre un resplandor morado — en vez del ciruela oscuro del
+   diseño anterior. */
 
 function prefersReducedMotion(): boolean {
   try {
@@ -444,7 +439,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
       aria-label={L(popup, "heading") ? undefined : ariaFallback}
     >
       <div
-        className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ease-out motion-reduce:transition-none ${
+        className={`absolute inset-0 bg-fx-night/55 backdrop-blur-sm transition-opacity duration-300 ease-out motion-reduce:transition-none ${
           entered ? "opacity-100" : "opacity-0"
         }`}
         onClick={close}
@@ -455,8 +450,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
         /* Mobile: sube desde abajo y baja al cerrar, con la curva de las hojas
            de iOS (arranca rápido y frena largo), que es lo que la hacía sentir
            tosca con `ease-out` a 300ms. Desktop: sólo funde, sin desplazamiento. */
-        style={imageMode ? undefined : { background: PANEL_BG }}
-        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-3xl text-white shadow-[0_32px_120px_-24px_rgba(0,0,0,0.9)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-[transform,opacity] motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-3xl lg:duration-300 lg:ease-out ${
+        className={`relative flex max-h-[88vh] w-full flex-col overflow-hidden rounded-t-[28px] bg-fx-bg text-fx-ink shadow-[0_40px_120px_-30px_rgba(17,12,16,0.55)] transition-[transform,opacity] duration-[420ms] ease-[cubic-bezier(0.32,0.72,0,1)] will-change-[transform,opacity] motion-reduce:transition-none lg:max-h-[90vh] lg:rounded-[32px] lg:duration-300 lg:ease-out ${
           hasPhone ? "max-w-[1000px]" : "max-w-[560px]"
         } ${
           entered
@@ -471,7 +465,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
           type="button"
           onClick={close}
           aria-label={ui.close}
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition hover:bg-white/20 lg:right-6 lg:top-6"
+          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-fx-line bg-white text-fx-ink transition-colors duration-200 hover:border-fx-purple hover:bg-fx-purple hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fx-lilac-strong lg:right-6 lg:top-6"
         >
           <FaXmark aria-hidden="true" className="text-lg" />
         </button>
@@ -491,11 +485,10 @@ export default function PopupReact({ query, variables, data: initialData, locale
         >
           {/* ── Columna de contenido ── */}
           <div className="relative px-6 pb-6 pt-11 text-center lg:p-12 lg:text-left">
-            {/* Tinte ciruela en la esquina superior, como en el diseño: el
-                panel izquierdo no es negro plano. */}
+            {/* Tinte lila muy suave arriba, como los heroes del rediseño. */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_10%_0%,rgba(150,35,122,0.18),transparent_65%)]"
+              className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_60%_at_10%_0%,rgba(213,167,202,0.28),transparent_65%)]"
             />
             <div className="relative">
             {/* Ícono de app: la imagen que suba el editor o, si no hay, el
@@ -511,32 +504,32 @@ export default function PopupReact({ query, variables, data: initialData, locale
               ) : (
                 <span
                   aria-hidden="true"
-                  className="flex h-16 w-16 animate-popup-icon-glow items-center justify-center rounded-[20px] bg-gradient-to-br from-[#E9A7DC] via-[#C86BB0] to-[#96237A] text-[#3B0E30] shadow-[0_0_36px_-4px_rgba(200,90,175,0.65)] motion-reduce:animate-none"
+                  className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-fx-purple text-white shadow-[0_18px_36px_-14px_rgba(150,33,122,0.6)]"
                 >
                   <LuSmartphone className="h-7 w-7" strokeWidth={1.75} />
                 </span>
               )}
             </div>
             {L(popup, "badge") && (
-              /* Obs. cliente: en magenta sobre el ciruela del panel el chip no
-                 se leía. Borde y letra en blanco; el relleno magenta se queda,
-                 sólo que ahora aporta color de fondo en vez de ser también el
-                 color del texto. El punto sí sigue magenta claro: es el único
-                 acento de marca que el chip necesita. */
-              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/70 bg-gradient-to-r from-fx-purple/30 via-fx-purple/10 to-transparent px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white lg:mb-6">
-                <span className="h-1 w-1 rounded-full bg-[#e07cc6]" aria-hidden="true" />
-                {L(popup, "badge")}
-              </span>
+              /* Eyebrow mono entre corchetes: la convención de etiquetas del
+                 rediseño (ver `Eyebrow` en FxPrimitives). */
+              <div className="mb-4 font-mono text-[12px] font-medium uppercase tracking-[.2em] text-fx-muted lg:mb-5 lg:text-[13px]">
+                [ {L(popup, "badge")} ]
+              </div>
             )}
 
             {L(popup, "heading") && (
-              <h2 id={headingId} className="text-[24px] font-semibold leading-[1.2] lg:text-[40px]">
-                {L(popup, "heading")}
+              <h2
+                id={headingId}
+                className="m-0 text-[26px] font-semibold leading-[1.1] tracking-[-.03em] text-fx-ink [text-wrap:balance] lg:pr-10 lg:text-[40px]"
+              >
+                {/* `*palabra*` en el CMS ⇒ morado, como el resto de títulos. */}
+                {renderEmphasis(L(popup, "heading"))}
               </h2>
             )}
 
             {features.length > 0 && (
-              <ul className="mt-6 space-y-3 lg:mt-8 lg:space-y-5">
+              <ul className="mt-6 space-y-2.5 lg:mt-8 lg:space-y-3">
                 {features.map((f: any, i: number) => {
                   return (
                     /* Obs. cliente: los íconos se veían desalineados respecto al
@@ -545,16 +538,16 @@ export default function PopupReact({ query, variables, data: initialData, locale
                        ícono quedaba alto y con una, bajo. Centrados contra el
                        bloque de texto —como en el artboard de referencia— la
                        relación es la misma tenga el punto una línea o dos. */
-                    <li className="flex items-center gap-3 rounded-2xl border border-white/10 p-3.5 text-left lg:gap-4 lg:border-0 lg:p-0" key={i}>
+                    <li className="flex items-center gap-3 rounded-2xl border border-fx-line bg-white p-3.5 text-left lg:gap-4 lg:p-4" key={i}>
                       {f?.icon && (
                         <span
-                          className="flex h-9 w-9 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl border border-[#E9A7DC]/40 bg-[#E9A7DC]/[.12] text-[#E9A7DC] motion-reduce:animate-none lg:h-10 lg:w-10"
+                          className="flex h-10 w-10 shrink-0 animate-popup-icon-in items-center justify-center rounded-xl bg-[#FAF0F6] text-fx-purple motion-reduce:animate-none lg:h-11 lg:w-11"
                           style={{ animationDelay: `${140 + i * 90}ms` }}
                         >
                           <Icon name={f.icon} legacy={FEATURE_ICONS} />
                         </span>
                       )}
-                      <span className="text-[14px] leading-relaxed text-white/70 lg:text-[15px]">
+                      <span className="text-[14px] font-medium leading-[1.45] text-fx-ink lg:text-[15px]">
                         {L(f, "text")}
                       </span>
                     </li>
@@ -585,7 +578,7 @@ export default function PopupReact({ query, variables, data: initialData, locale
                     <a
                       key={i}
                       href={localizeHref(b.url, locale)}
-                      className="block h-[46px] w-[146px] rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:h-[56px] lg:w-[178px]"
+                      className="block h-[46px] w-[146px] rounded-lg transition hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fx-purple lg:h-[56px] lg:w-[178px]"
                     >
                       <img
                         src={mediaUrl(b.image)}
@@ -606,10 +599,10 @@ export default function PopupReact({ query, variables, data: initialData, locale
                       <a
                         key={i}
                         href={localizeHref(b.url, locale)}
-                        className={`flex w-full items-center justify-center gap-3 rounded-lg px-6 py-4 text-[15px] font-semibold transition ${
+                        className={`flex h-14 w-full items-center justify-center gap-3 rounded-full px-6 text-[15px] font-semibold transition-colors duration-300 ${
                           primary
-                            ? "border border-transparent bg-fx-purple text-white hover:bg-fx-purple-hover"
-                            : "border border-white/25 text-white hover:bg-white/10"
+                            ? "border border-transparent bg-fx-purple text-white hover:bg-fx-purple-hover hover:text-white"
+                            : "border border-fx-line-strong bg-white text-fx-ink hover:border-fx-purple hover:text-fx-purple"
                         }`}
                       >
                         {b?.icon && <Icon name={b.icon} legacy={BUTTON_ICONS} className="text-lg" />}
@@ -624,14 +617,11 @@ export default function PopupReact({ query, variables, data: initialData, locale
 
           {/* ── Columna de imagen (solo desktop) ── */}
           {hasPhone && (
-            <div
-              style={{ background: PHONE_BG }}
-              className="relative hidden overflow-hidden lg:block"
-            >
-              {/* Resplandor suave arriba a la izquierda, como en el diseño. */}
+            <div className="relative m-3 ml-0 hidden overflow-hidden rounded-[24px] bg-white lg:block">
+              {/* Mismo resplandor que el teléfono del hero de Fiberlux App. */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 bg-[radial-gradient(120%_90%_at_25%_0%,rgba(150,35,122,0.30),transparent_72%)]"
+                className="absolute inset-0 bg-[radial-gradient(closest-side_at_50%_60%,rgba(150,33,122,.30),rgba(213,167,202,.16)_55%,rgba(255,255,255,0))]"
               />
               <img
                 src={mediaUrl(popup.phoneImage)}
@@ -641,8 +631,8 @@ export default function PopupReact({ query, variables, data: initialData, locale
                   phoneAtBottom
                     ? /* Pegada al borde inferior: se recorta contra él, que es
                          como la imagen entra a sangre en el diseño. */
-                      "absolute inset-x-0 bottom-0 mx-auto h-auto w-[96%] max-w-none"
-                    : "absolute inset-x-0 top-1/2 mx-auto h-auto w-[84%] max-w-none -translate-y-1/2"
+                      "absolute inset-x-0 bottom-0 mx-auto h-auto w-[92%] max-w-none drop-shadow-[0_40px_50px_rgba(101,13,74,.28)]"
+                    : "absolute inset-x-0 top-1/2 mx-auto h-auto w-[80%] max-w-none -translate-y-1/2 drop-shadow-[0_40px_50px_rgba(101,13,74,.28)]"
                 }
               />
             </div>
@@ -672,7 +662,7 @@ function ImagePopup({
       <img
         src={mediaUrl(mobile || desktop)}
         alt=""
-        className="block h-auto w-full rounded-t-3xl lg:rounded-3xl"
+        className="block h-auto w-full rounded-t-[28px] lg:rounded-[32px]"
       />
     </picture>
   );
